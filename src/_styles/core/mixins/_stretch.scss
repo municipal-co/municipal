@@ -1,0 +1,17 @@
+// -------------------------
+// Mixin - Stretch
+// -------------------------
+
+@mixin background-image-stretch() {
+  background-position: center center;
+  background-size: cover;
+}
+
+// requires parent to have position: relative
+@mixin stretch-within() {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+}

@@ -1,0 +1,117 @@
+// -----------------------------------------------------------------------------
+// Banners
+// -----------------------------------------------------------------------------
+
+.banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up('lg') {
+    flex-direction: row;
+  }
+
+  .cta-group {
+    margin-top: 45px;
+  }
+}
+
+.banner__panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-top:    $banner-panel-padding-vertical;
+  padding-bottom: $banner-panel-padding-vertical;
+
+  @include media-breakpoint-up('lg') {
+    flex: (1 1 0); // Make all panels equal width
+  }
+
+  &--light {
+
+    &, a,
+    .banner__title,
+    .banner__text {
+      color: $white;
+    }
+  }
+
+  // Modifier classes to make tall + short banners
+  .banner--small > & {
+    padding-top:    $banner-panel-padding-vertical-small;
+    padding-bottom: $banner-panel-padding-vertical-small;
+  }
+
+  .banner--large > & {
+    padding-top:    $banner-panel-padding-vertical-large;
+    padding-bottom: $banner-panel-padding-vertical-large;
+  }
+}
+
+.banner__bg-container,
+.banner__bg-image {
+  @include stretch-within;
+  z-index: -1;
+}
+
+.banner__bg-image {
+  background: {
+    size: cover;
+    position: center;
+  }
+}
+
+.banner__overlay {
+  @include stretch-within;
+
+  &--light {
+    background-color: $banner-panel-overlay-light-color;
+  }
+
+  &--dark {
+    background-color: $banner-panel-overlay-dark-color;
+  }
+}
+
+.banner__content-container {
+  position: relative;
+  @extend .mx-auto;
+  text-align: center;
+  max-width: 400px;
+
+  // Center everything on mobile
+  // Apply these justification classes above large
+  @include media-breakpoint-up('lg') {
+
+    &--left {
+      margin-left: 0;
+    }
+
+    &--right {
+      margin-right: 0;
+    }
+
+    &--center {
+      //
+    }
+  }
+}
+
+.banner__title,
+.banner__text {
+  margin-top: ($spacer * 1.5);
+  margin-bottom: ($spacer * 1.5);
+}
+
+.banner__title {
+  line-height: 1.1;
+  text-transform: none; // Undo the default heading text transformation to allow them to type upper / lowercase
+}
+
+.banner__text {
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

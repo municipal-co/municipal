@@ -1,0 +1,73 @@
+// --------------------------------------------------------
+// Product Detail
+// --------------------------------------------------------
+
+// Slideshow / Zoom
+// --------------------------------------------------------
+
+.product-galleries {
+  position: relative;
+}
+
+// Make these go flush on mobile
+.product-gallery {
+  margin-left: -($grid-gutter-width / 2);
+  margin-right: -($grid-gutter-width / 2);
+
+  @include media-breakpoint-up('md') {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.product-gallery__slideshow {
+  margin: 0 auto;
+  max-width: 500px;
+
+  @include media-breakpoint-up('sm') { max-width: none; }
+
+  html.js & {
+    opacity: 0;
+
+    &.swiper-container-initialized {
+      opacity: 1;
+      transition: opacity 300ms ease-out;
+    }
+  }
+
+  .swiper-slide {
+    display: inline-block;
+    // Because we want the gallery to be flush, add back the grid padding here - see .product-gallery above
+    padding: 0 $grid-gutter-width / 2;
+
+    @include media-breakpoint-up('md') {
+      padding: 0;
+    }
+
+    &.is-zoomable {
+      cursor: zoom-in;
+      cursor: -webkit-zoom-in;
+    }
+
+    &.is-zoomed {
+      cursor: zoom-out;
+      cursor: -webkit-zoom-out;
+      border: 1px solid #ccc;
+    }    
+
+    &:focus { outline: 0; }
+
+    img {
+      width: 100%;
+      &:focus { outline: 0; }
+    }
+  }
+}
+
+.product-gallery__thumbnails {
+  margin-top: $spacer;
+}
+
+.product-gallery__thumbnails-slide {
+  display: inline-block;
+}

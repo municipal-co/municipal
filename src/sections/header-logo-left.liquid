@@ -1,0 +1,271 @@
+{% assign menu_html          = '' %}
+{% assign MAX_DROPDOWN_MENUS = 2 %}
+{% assign MAX_DROPDOWN_CTAS  = 4 %}
+
+{% for block in section.blocks %}
+  {% if block.type == "nav_item" %}
+
+    {% comment %} These variables get redefined / captured below {% endcomment %}
+    {% assign menu_item_html = '' %}
+    {% assign dropdown_html  = '' %}
+    {% assign dropdown_content_html = '' %}
+    {% assign dropdown_id = "dropdown-" | append: block.id %}  
+
+    {% assign cta_count = 0 %}
+
+    {% comment %} Generate the dropdown contents and then we can check if it's blank {% endcomment %}
+    {% capture dropdown_menus_html %}
+      {% if block.settings.linklist_1 != blank or block.settings.linklist_2 != blank %}
+        {% for i in (1..MAX_DROPDOWN_MENUS) %}
+          {% assign linklist_setting_handle = 'linklist_' | append: i %}
+          {% include 'header-dropdown-menu', ll_handle: block.settings[linklist_setting_handle] %}
+        {% endfor %}
+      {% endif %}
+    {% endcapture %}
+
+    {% capture dropdown_ctas_html %}
+      {% for i in (1..MAX_DROPDOWN_CTAS) %}
+        {% assign cta_link_setting_handle  = "cta_" | append: i | append: "_url" %}
+        {% assign cta_text_setting_handle  = "cta_" | append: i | append: "_text" %}
+        {% assign cta_image_setting_handle = "cta_" | append: i | append: "_image" %}
+        {% capture dropdown_cta_html %}
+          {% include 'header-dropdown-cta',
+                      cta_link: block.settings[cta_link_setting_handle],
+                      cta_image: block.settings[cta_image_setting_handle],
+                      cta_text: block.settings[cta_text_setting_handle]
+          %}
+        {% endcapture %}
+
+        {% comment %} If the settings are there to render a CTA, then output it here in this capture block {% endcomment %}
+        {% if dropdown_cta_html != blank %}
+          {{ dropdown_cta_html }}
+          {% assign cta_count = cta_count | plus: 1 %}
+        {% endif %}        
+      {% endfor %}
+    {% endcapture %}
+    {% comment %} END Generate the dropdown contents {% endcomment %}
+
+    {% capture dropdown_content_html %}
+      {% if dropdown_menus_html != blank or dropdown_ctas_html != blank %}
+        <div class="row">
+          <div class="col-md-4">
+            {% if dropdown_menus_html != blank %}
+              <div class="header-dropdown__menus">
+                {{ dropdown_menus_html }}
+              </div>
+            {% endif %}            
+          </div>
+          <div class="col-md-8">
+            {% if dropdown_ctas_html != blank %}
+              <div class="header-dropdown__ctas">
+                {{ dropdown_ctas_html }}
+              </div>
+            {% endif %}            
+          </div>
+        </div>
+      {% endif %}
+    {% endcapture %}
+
+    {% comment %} Put the dropdown content inside a dropdown {% endcomment %}
+    {% capture dropdown_html %}
+      {% include 'header-dropdown',
+                  dropdown_id: dropdown_id,
+                  dropdown_content: dropdown_content_html
+      %}
+    {% endcapture %}
+
+    {% comment %} Now that we have the dropdown {% endcomment %}
+
+    {% assign has_dropdown = false %}
+    {% if dropdown_html != blank %}
+      {% assign has_dropdown = true %}
+    {% endif %}
+
+    {% comment %} Create a menu item {% endcomment %}
+    {% capture menu_item_html %}
+
+      <li class="header-nav__menu-item" {{ block.shopify_attributes }}>
+        <a href="{{ block.settings.url }}" {% if has_dropdown %}data-block="{{ block.id }}" data-dropdown-trigger="#{{ dropdown_id }}"{% endif %}>
+          {{ block.settings.title }}          
+        </a>
+      </li>
+
+    {% endcapture %}
+
+    {% comment %} Append the menu item + dropdown to the correct variable to be outputted later {% endcomment %}
+    {% assign dropdowns_html = dropdowns_html | append: dropdown_html %}
+    {% assign menu_html = menu_html | append: menu_item_html %}
+
+  {% endif %}
+{% endfor %}
+
+{% if menu_html != blank %}
+  {% assign menu_html = menu_html | prepend: '<ul class="header-nav__menu">' %}
+  {% assign menu_html = menu_html | append: '</ul>' %}
+{% endif %}
+
+
+<div data-section-id="{{ section.id }}" data-section-type="header">
+
+  <header class="header" role="banner" data-header>
+    <div class="header-container">
+      
+      {% comment %} Logo {% endcomment %}
+      <div class="header-nav header-nav--left header-nav--logo">
+        {% include 'header-logo' %}
+      </div>
+
+      {% comment %} Main Menu {% endcomment %}
+      <div class="header-nav header-nav--center header-nav--hide-on-mobile">
+
+        {{ menu_html }}
+
+      </div>
+
+      {% comment %} User Nav (Account + Cart) {% endcomment %}
+      <div class="header-nav header-nav--right header-nav--hide-on-mobile">
+        
+        {% include 'header-menu-user' %}
+
+      </div>
+
+      {% comment %} Header nav on mobile size screens - search, account, hamburger {% endcomment %}
+      <div class="header-nav header-nav--right header-nav--hide-on-desktop">
+        
+        {% include 'header-menu-mobile' %}
+
+      </div>
+
+    </div>
+
+    {{ dropdowns_html }}
+    
+  </header>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "nav_item",
+        "name": "Navigation Item",
+        "settings": [
+          {
+             "type": "header",
+             "content": "Info",
+             "info": "A title and a link are required for each navigation item.  If a menu or CTA is added, the nav item will display a dropdown below it on hover."
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Link"
+          },
+          {
+             "type": "header",
+             "content": "Menus",
+             "info": "Each navigation item dropdown supports up to 2 menus."
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_1",
+            "label": "Menu 1"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_2",
+            "label": "Menu 2"
+          },
+          {
+             "type": "header",
+             "content": "CTAs",
+             "info": "Each navigation item dropdown supports up to 4 CTA blocks.  A link and text are required, the image is optional."
+          },
+          {
+            "type": "header",
+            "content": "CTA 1"
+          },
+          {
+            "type": "text",
+            "id": "cta_1_text",
+            "label": "Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_1_url",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "cta_1_image",
+            "label": "Image"
+          },
+          {
+            "type": "header",
+            "content": "CTA 2"
+          },
+          {
+            "type": "text",
+            "id": "cta_2_text",
+            "label": "Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_2_url",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "cta_2_image",
+            "label": "Image"
+          },
+          {
+            "type": "header",
+            "content": "CTA 3"
+          },
+          {
+            "type": "text",
+            "id": "cta_3_text",
+            "label": "Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_3_url",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "cta_3_image",
+            "label": "Image"
+          },
+          {
+            "type": "header",
+            "content": "CTA 4"
+          },
+          {
+            "type": "text",
+            "id": "cta_4_text",
+            "label": "Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_4_url",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "cta_4_image",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

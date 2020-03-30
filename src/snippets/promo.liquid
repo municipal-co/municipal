@@ -1,0 +1,111 @@
+{%- comment %}
+
+  Promo
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'promo',
+              p_id: { string } - required
+              p_layout: { string } - "left" or "right" - optional - defaults to "left",
+              p_type: { number } - 1, 2, 3, 4, 5 - optional
+              p_content_max_width: { number } - optional - only applied above $screen-md-min
+              p_image: { image }
+              p_image_small: { image }
+              p_frame_ratio: { string } - optional - see frames.scss
+              p_frame_ratio_small: { string } - optional - see frames.scss - defaults to frame_ratio if set
+              p_title: { string } - optional
+              p_text: { string } - optional
+              p_cta_url: { url }
+              p_cta_text: { string }
+  %}
+
+{% endcomment -%}
+
+{% if p_layout != "left" or p_layout != "right" %}
+  {% assign p_layout = "left" %}
+{% endif %}
+
+{% if p_type != blank and "1 2 3 4 5" contains p_type %}
+  {% assign promo_type = p_type %}
+{% endif %}
+
+{% if p_frame_ratio != blank and p_frame_ratio_small == blank %}
+  {% assign p_frame_ratio_small = p_frame_ratio %}
+{% endif %}
+
+<style type="text/css">
+  {% if p_frame_ratio != blank %}
+    {% if p_image != blank %}
+      #promo-{{ p_id }} .frame {
+        background-image: url({{ p_image | img_url: '1600x' }});
+      } 
+    {% endif %}
+    {% if p_image_small != blank or p_image != blank %}
+      @media (max-width: 767px) {
+        #promo-{{ p_id }} .frame {
+          {% if p_image_small != blank %}  
+            background-image: url({{ p_image_small | img_url: '900x' }});
+          {% elsif p_image != blank %}
+            background-image: url({{ p_image | img_url: '900x' }});
+          {% endif %}
+        }
+      }
+    {% endif %}
+  {% endif %}
+  @media (min-width: 768px) {
+    {% if p_content_max_width != blank %}
+      #promo-{{ p_id }} .promo__text {
+        max-width: {{ p_content_max_width | append: 'px' }};
+      }
+    {% endif %}
+  }
+</style>
+
+{% capture promo_classes %}
+  promo promo--layout-{{ p_layout }}
+  {% if promo_type != blank %}
+    promo--type-{{ promo_type }}
+  {% endif %}
+{% endcapture %}
+
+<div id="promo-{{ p_id }}" class="{{- promo_classes -}}">
+  <div class="promo__col promo__col--image">
+    <div class="promo__col-inner">
+      <div class="promo__img-wrapper">
+        {% if p_frame_ratio != blank %}
+          <div class="frame
+                      frame--{{ p_frame_ratio_small }}
+                      frame--lg-{{ p_frame_ratio }}"
+               role="img"
+               aria-label="{{ p_image.alt }}">
+          </div>
+        {% else %}
+          {% if p_image != blank %}
+            {% if p_image_small != blank %}
+              <img src="{{ p_image       | img_url: '1600x' }}" class="d-none  d-md-block" alt="{{ p_image.alt }}" />
+              <img src="{{ p_image_small | img_url: '900x' }}"  class="d-block d-md-none" alt="{{ p_image_small.alt }}" />
+            {% else %}
+              <img src="{{ p_image | img_url: '1600x' }}" alt="{{ p_image.alt }}" />
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="promo__col promo__col--text">
+    <div class="promo__col-inner">
+      <div class="promo__text-wrapper">
+        {% if p_title != blank %}
+          <h2 class="promo__title">{{ p_title }}</h2>
+        {% endif %}
+        {% if p_text != blank %}
+          <div class="promo__text">{{ p_text }}</div>
+        {% endif %}
+        {% if p_cta_url != blank and p_cta_text != blank %}
+          <a href="{{ p_cta_url }}" class="btn btn-primary">{{ p_cta_text }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

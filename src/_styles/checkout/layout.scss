@@ -1,0 +1,29 @@
+// -------------------------
+// Layout
+// -------------------------
+
+.wrap {
+  max-width: 100%;
+}
+
+.main,
+.sidebar {
+
+}
+
+.main__header {
+
+
+  .logo {
+
+    .logo__image,
+    .logo__image--large,
+    .logo__image--small {
+
+    }
+
+    .logo__image {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}

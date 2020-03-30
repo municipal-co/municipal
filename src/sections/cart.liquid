@@ -1,0 +1,181 @@
+<div data-section-id="{{ section.id }}" data-section-type="cart">
+  <div class="layout-content-wrapper">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-9">
+
+          {% assign page_title = 'cart.general.title' | t %}
+          {% include 'page-header', ph_title: page_title %}
+
+          {% if cart.item_count > 0 %}
+
+            <form action="/cart" method="post" novalidate data-cart-form>
+
+              <div class="cart-list">
+                <div class="cart-list__header">
+                  <div class="cart-list__col-product">{{ 'cart.label.product' | t }}</div>
+                  <div class="cart-list__col-quantity">{{ 'cart.label.quantity' | t }}</div>
+                  <div class="cart-list__col-subtotal">{{ 'cart.general.subtotal' | t }}</div>
+                  <div class="cart-list__col-remove">{{ 'cart.general.remove' | t }}</div>
+                </div>
+                <div class="cart-list__body">
+                  {% for item in cart.items %}
+
+                    {% comment %}
+                      - Variant quantity logic may also be contained in templates/cart.json.liquid
+                      - If you make changes here, make sure those changes are reflected there and vice-versa
+                    {% endcomment %}
+                    {% assign variant_quantity_limit = 0 %}
+                    {% if variant.available %}
+                      {% assign variant_quantity_limit = 10 %}
+                      {% if variant.inventory_quantity < variant_quantity_limit and variant.inventory_policy == "deny" %}
+                        {% assign variant_quantity_limit = variant.inventory_quantity %}
+                      {% endif %}
+                      {% if item.quantity >= variant_quantity_limit %}
+                        {% assign variant_quantity_limit = item.quantity %}
+                      {% endif %}
+                    {% endif %}
+
+                    <div class="cart-list__row">
+                      <div class="cart-list__col-product">
+                        <a href="{{ item.url | within: collections.all }}">
+                          <img src="{{ item | img_url: '240x240' }}" class="cart-list__item-image" alt="{{ item.title | escape }}">
+                        </a>
+                        <div class="cart-list__item-details">
+                          <h5 class="cart-list__item-details-title">
+                            <a href="{{ item.url }}">{{ item.product.title }}</a>
+                          </h5>
+
+                          <ul class="list-unstyled">
+
+                            {% for option in item.product.options %}
+                              {% assign option_key = 'option' | append: forloop.index %}
+                              {% assign option_val = item.variant[option_key] %}
+                              {% unless option == "Title" and option_val == "Default Title" %}
+                                <li>{{ option }}: {{ option_val }}</li>
+                              {% endunless %}
+                            {% endfor %}
+
+                            {% unless item.properties == empty %}
+                              {% for p in item.properties %}
+                                {% unless p.last == blank %}
+                                <li>
+                                  {{ p.first }}:
+                                  {% if p.last contains '/uploads/' %}
+                                    <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                                  {% else %}
+                                    {{ p.last }}
+                                  {% endif %}
+                                </li>
+                                {% endunless %}
+                              {% endfor %}
+                            {% endunless %}
+
+                            <li class="d-lg-none">{{ item.line_price | money }}</li>
+                          </ul>
+
+                          <div class="d-lg-none">
+                            <div class="quantity-adjuster" data-quantity-adjuster>
+                              <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                              <input type="number" value="{{ item.quantity }}" min="0" max="{{ variant_quantity_limit }}" data-item-qa-input="updates_{{ item.key }}" />
+                              <button class="quantity-adjuster__increment" data-increment>+</button>
+                            </div>                            
+                            {% comment %}
+                            <div style="max-width: 80px;">
+                              <select class="cart-list__item-quantity form-control" aria-label="{{ 'cart.general.item_quantity' | t }}" data-item-quantity-select="updates_{{ item.key }}">
+                                {% for i in (0..10) %}
+                                  <option value="{{ i }}" {% if i == item.quantity %}selected="selected"{% endif %}>{{ i }}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                            {% endcomment %}
+                          </div>
+
+                          <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart-list__item-details-remove">
+                            {% include 'icon-close' %}
+                          </a>
+                        </div>
+                      </div>
+                      <div class="cart-list__col-quantity">
+                        <input type="number" value="{{ item.quantity }}" name="updates[]" id="updates_{{ item.key }}" style="display: none !important" />
+                        <div class="quantity-adjuster" data-quantity-adjuster>
+                          <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                          <input type="number" value="{{ item.quantity }}" min="0" max="{{ variant_quantity_limit }}" data-item-qa-input="updates_{{ item.key }}" />
+                          <button class="quantity-adjuster__increment" data-increment>+</button>
+                        </div>                         
+                        {% comment %}
+                        <div style="max-width: 80px; margin: 0 auto">
+                          <select class="cart-list__item-quantity form-control" aria-label="{{ 'cart.general.item_quantity' | t }}" data-item-quantity-select="updates_{{ item.key }}">
+                            {% for i in (0..10) %}
+                              <option value="{{ i }}" {% if i == item.quantity %}selected="selected"{% endif %}>{{ i }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                        {% endcomment %}
+                      </div>
+                      <div class="cart-list__col-subtotal">
+                        <span class="h5">{{ item.line_price | money }}</span>
+                      </div>
+                      <div class="cart-list__col-remove">
+                        <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                          {% include 'icon-close' %}
+                        </a>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+                <div class="cart-list__footer">
+                  <div class="cart-list__footer-row cart-list__footer-row--secondary d-none d-lg-block">
+                    {{ 'cart.general.shipping_at_checkout' | t }}
+                  </div>
+                  <div class="cart-list__footer-row cart-list__footer-row--primary">
+                    <div class="cart-list__footer-width-container">
+                      <p class="h5 text-body clearfix" style="margin-bottom: 2rem;">
+                        <span class="float-left">{{ 'cart.general.subtotal' | t }}</span>
+                        <span class="float-right">{{ cart.total_price | money }}</span>
+                      </p>
+                      {% if cart.total_discounts > 0 %}
+                        <p>{{ 'cart.general.savings' | t }} {{ cart.total_discounts | money }}</p>
+                      {% endif %}
+                      <p class="d-lg-none">{{ 'cart.general.shipping_at_checkout' | t }}<br /><br/></p>
+                    </div>
+                    <div class="cart-list__footer-width-container">
+                      <p>
+                        <input type="submit" name="checkout" class="btn btn-primary btn-block" value="{{ 'cart.general.checkout' | t }}">
+                      </p>
+                      {% if additional_checkout_buttons %}
+                        <div class="additional-checkout-buttons">
+                          {{ content_for_additional_checkout_buttons }}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          {% else %}
+
+            {% comment %}
+            Cart empty state
+            {% endcomment %}
+            <div class="supports-cookies text-center">
+              <p>{{ 'cart.general.empty' | t }}</p>
+              <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+            </div>
+
+            {% comment %}
+            Cart no cookies state
+            ---------------------
+            Browser cookies are required to use the cart. If cookies aren't enabled in the
+            browser a message is displayed prompting the user to enable them.
+            {% endcomment %}
+            <div class="supports-no-cookies text-center">
+              <p>{{ 'cart.general.cookies_required' | t }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

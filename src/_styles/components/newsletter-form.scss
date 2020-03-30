@@ -1,0 +1,43 @@
+// -------------------------
+// Newsletter Form
+// -------------------------
+
+$t-d-start: 300ms;
+$t-d-end: 500ms;
+
+.newsletter-form-contents {
+  position: relative;
+}
+
+.newsletter-form-inputs {
+  transition: opacity $t-d-end ease-out;
+  transition-delay: $t-d-start;
+}
+
+.newsletter-form-message {
+  @include stretch-within();
+  z-index: 1;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity $t-d-start ease-out;
+  transition-delay: 0ms;
+}
+
+.newsletter-form-contents.show-message {
+  .newsletter-form-inputs {
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: $t-d-start;
+    transition-delay: 0ms;
+    transition-timing-function: ease-in;
+  }
+
+  .newsletter-form-message {
+    opacity: 1;
+    pointer-events: auto;
+    transition-duration: $t-d-end;
+    transition-delay: $t-d-start;
+    transition-timing-function: ease-out;
+  }
+}

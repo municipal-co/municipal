@@ -1,0 +1,1072 @@
+<div class="layout-content-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+
+        {% include 'page-header',
+                    ph_title: 'Z-Theme Components',
+                    ph_subtitle: 'This page is here to document available components for use on the site. These are hard coded in an alternate page template file named <code>page.components.liquid</code>.'
+        %}
+
+        <h3>Table of Contents</h3>
+        <ul>
+          <li><a href="#docs-product-card">Product Card</a></li>
+          <li><a href="#docs-article-card">Article Card</a></li>
+          <li><a href="#docs-content-card">Content Card</a></li>
+          <li><a href="#docs-overlay-card">Overlay Card</a></li>
+          <li><a href="#docs-banners">Banners</a></li>
+          <li><a href="#docs-page-hero">Page Hero</a></li>
+          <li><a href="#docs-promo">Promo</a></li>
+          <li><a href="#docs-modals">Modals</a></li>
+          <li><a href="#docs-overlays">Overlays</a></li>
+          <li><a href="#docs-drawer">Drawer</a></li>
+          <li><a href="#docs-tabs">Tabs</a></li>
+          <li><a href="#docs-slideup">Slideup</a></li>
+          <li><a href="#docs-slideup-alert">Slideup Alert</a></li>
+          <li><a href="#docs-collapse">Collapse</a></li>
+          <li><a href="#docs-quantity-adjuster">Quantity Adjuster</a></li>
+          <li><a href="#docs-newsletter-form">Newsletter Form</a></li>
+          <li><a href="#docs-video-player">Video Player</a></li>
+        </ul>
+
+        <h3 class="docs-title">Note About Liquid Snippets</h3>
+        <p>The majority of the components listed on this page are generated using <a href="https://help.shopify.com/en/themes/liquid/tags/theme-tags#include" target="_blank">liquid snippets</a>.  The documentation for liquid snippets is fairly limited and glosses over a crucial aspect of how they work with regards to variables.  All the snippets that we've created are built to accept variables as arguments that affect the snippet output.  The majority of these snippets include default values defined inside the snippets themselves which allows you to pass in only the variables that you need.  Unfortunately, liquid doesn't have any concept of variable scoping <em>inside</em> the snippet so the distinction between variables inside and outside is a little loose.</p>
+
+        <p>Take the example below:</p>
+
+        <div class="docs-well docs-well--constrained">
+<pre style="margin: 0;">
+// snippets/test.liquid
+//
+// Usage - {% raw %}{% include 'test', color: { string } %}{% endraw %}
+{% raw %}
+{% if color == blank %}
+  {% assign color = 'red' %}
+{% endif %}
+
+The color is "{{ color }}"
+{% endraw %}
+</pre>          
+        </div>
+
+        <div class="docs-well">
+<pre style="margin: 0;">
+// Usage
+//  
+{% raw %}
+{% assign test_color = 'roygbiv' %} 
+{% include 'test', color: test_color %} <strong>// The color is "roygbiv"</strong>
+{% include 'test' %} <strong>// The color is "red"</strong>
+{{ color }} <strong>// red</strong>
+
+{% assign color = 'green' %}
+{% include 'test' %} <strong>// The color is "green"</strong>
+{% include 'test', color: 'blue' %} <strong>// The color is "blue"</strong>
+{% include 'test' %} <strong>// The color is "green"</strong>
+{% endraw %}
+</pre> 
+        </div>
+
+        <p>As you can see, if a variable is defined <em>inside</em> a snippet, it becomes available outside of the snippet anywhere <em>after</em> the point where that snippet was included.  In the example above, we defined <code>color</code> to be <code>red</code> inside the snippet and were able to output it's value immediately after including it.</p>
+        <p>The best protection against these kinds of variable scoping issues is to pass in argument values as variables with different names that those used inside the snippet.  In this case, passing in the color argument using the variable <code>test_color</code> avoids any variable naming confusion.</p>
+
+        <h3 id="docs-product-card" class="docs-title">Product Card</h3>
+        <p>See <code>snippets/product-card.liquid</code>.</p>
+        {% assign all_collection = collections['all'] %}
+        {% if all_collection.products.size > 0 %}
+          {% assign test_product = all_collection.products[0] %}
+          <div class="docs-well docs-well--constrained">
+            {% include 'product-card', product: test_product %}
+          </div>
+        {% else %}
+          <em>The product card requires a Shopify product in order to work.  <a href="{{ shop.url }}/admin/products/new">Go here to make one</a></em>.
+        {% endif %}
+
+        <h4 class="docs-subtitle">Snippet API</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Values</th>                
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>product</code></td>
+                <td>Product</td>
+                <td>None</td>
+                <td>Shopify product object.  Required.</td>
+              </tr>
+              <tr>
+                <td><code>quick_view</code></td>
+                <td>Boolean</td>
+                <td>false</td>
+                <td>Controls if the product card has a quickview trigger</td>
+              </tr>
+              <tr>
+                <td><code>lazy_load</code></td>
+                <td>Boolean</td>
+                <td>False</td>
+                <td>Lazy loads the main product image</td>
+              </tr>                
+              <tr>
+                <td><code>show_swatches</code></td>
+                <td>Boolean</td>
+                <td>True</td>
+                <td>Controls visibility of swatches</td>
+              </tr>
+              <tr>
+                <td><code>show_reviews</code></td>
+                <td>Boolean</td>
+                <td>False</td>
+                <td>Controls visibility of reviews</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>         
+
+        <h3 id="docs-article-card" class="docs-title">Article Card</h3>
+        <p>See <code>snippets/article-card.liquid</code>.</p>
+        {% assign news_blog = blogs['news'] %}
+        {% if news_blog.articles_count > 0 %}
+          {% assign test_article = news_blog.articles[0] %}
+          <div class="docs-well docs-well--constrained">
+            {% include 'article-card', article: test_article %}
+          </div>
+        {% else %}
+          The article card requires a Shopify article in order to work.  <a href="{{ shop.url }}/admin/products/new">Go here to make one</a> and add it to the default "News" blog to see this component.
+        {% endif %}
+
+        <h4 class="docs-subtitle">Snippet API</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Values</th>                
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>article</code></td>
+                <td>Article</td>
+                <td>None</td>
+                <td>Shopify article object.  Required.</td>
+              </tr>
+              <tr>
+                <td><code>show_author</code></td>
+                <td>Boolean</td>
+                <td>true</td>
+                <td>Controls visibility of article author</td>
+              </tr>
+              <tr>
+                <td><code>show_date</code></td>
+                <td>Boolean</td>
+                <td>true</td>
+                <td>Controls visibility of article date</td>
+              </tr>
+              <tr>
+                <td><code>show_tags</code></td>
+                <td>Boolean</td>
+                <td>true</td>
+                <td>Controls visibility of article tags</td>
+              </tr>
+              <tr>
+                <td><code>show_excerpt</code></td>
+                <td>Boolean</td>
+                <td>false</td>
+                <td>Controls visibility of article excerpt</td>
+              </tr>
+              <tr>
+                <td><code>img_size</code></td>
+                <td>String</td>
+                <td>600x450</td>
+                <td>Specifies crop of the displayed article image.  See <a href="https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters">URL Filter Size Parameters</a> for more info.</td>
+              </tr>  
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="docs-content-card" class="docs-title">Content Card</h3>
+        <p>Generic card for displaying text content and a call to action.</code>.</p>
+        <p>See <code>snippets/content-card.liquid</code>.</p>
+        <div class="docs-well docs-well--constrained">
+          {% include 'content-card',
+                      cc_title: "Content Card Title",
+                      cc_subtitle: "Subtitle goes here",
+                      cc_text: "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>",
+                      cc_cta_text: "Shop Now",
+                      cc_cta_url: "#"
+          %} 
+        </div>
+
+        <h3 id="docs-overlay-card" class="docs-title">Overlay Card</h3>
+        <p>A card with background image and overlaid text.</p>
+        <p>See <code>snippets/overlay-card.liquid</code>.</p>
+
+        <div class="docs-well docs-well--constrained">
+
+          <style type="text/css">
+            #overlay-card-overlay-card-test .overlay-card__bg {
+              background-image: url({{ 'test-bg-1.jpg' | asset_img_url: '800x'}});
+            }
+          </style>
+
+          {% include 'overlay-card',
+                      oc_id: 'overlay-card-test',
+                      oc_title: "Overlay Card Title",
+                      oc_subtitle: "Subtitle goes here",
+                      oc_text: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>',
+                      oc_url: '#',
+                      oc_overlay_bg_brightness: 'light'
+          %} 
+        </div>
+
+        <p>Play with the options and apply a blend mode to the background and make something cool.</p>
+     
+        <div class="docs-well docs-well--constrained">
+          <div style="height: 500px;">
+
+            <style type="text/css">
+              #overlay-card-overlay-card-test-2 .overlay-card__bg {
+                background-image: url({{ 'test-bg-1.jpg' | asset_img_url: '800x'}});
+              }
+              #overlay-card-overlay-card-test-2 .overlay-card__bg:before {
+                background-color: #b50244;
+                mix-blend-mode: multiply;
+              }
+            </style>
+
+            {% include 'overlay-card',
+                        oc_id: 'overlay-card-test-2',
+                        oc_title: 'Overlay Card Title',
+                        oc_subtitle: 'Subtitle goes here',
+                        oc_text: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>',
+                        oc_url: '#',
+                        oc_overlay_bg_brightness: 'dark',
+                        oc_content_vertical_alignment: 'bottom',
+                        oc_light_text: true
+            %}
+          </div>
+        </div>
+
+        <h4 class="docs-subtitle">Snippet API</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Values</th>                
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>oc_background_image</code></td>
+                <td>Image</td>
+                <td>None</td>
+                <td>Shopify image object.</td>
+              </tr>
+              <tr>
+                <td><code>oc_background_image_vertical_alignment</code></td>
+                <td>String</td>
+                <td>center</td>
+                <td>Controls vertical alignment of the background image.  Accepts any valid CSS background-position value.</td>
+              </tr>
+              <tr>
+                <td><code>oc_background_image_width</code></td>
+                <td>Integer</td>
+                <td>800</td>
+                <td>Controls crop width of the background image.</td>
+              </tr>
+              <tr>
+                <td><code>oc_overlay_bg_brightness</code></td>
+                <td>"Dark" / "Light"</td>
+                <td>None</td>
+                <td>Enables a dark or light layer over the background image.</td>
+              </tr>
+              <tr>
+                <td><code>oc_content_vertical_alignment</code></td>
+                <td>"Top" / "Bottom"</td>
+                <td>"Top"</td>
+                <td>Controls vertical alignment of card content</td>
+              </tr>
+              <tr>
+                <td><code>oc_light_text</code></td>
+                <td>Boolean</td>
+                <td>False</td>
+                <td>Makes content display in a light color.</td>
+              </tr> 
+            </tbody>
+          </table>
+        </div>        
+
+        <h3 id="docs-banners" class="docs-title">Banners</h3>
+        <p>Banners are one of the most flexible and re-usable components on the site.  They consist of a parent <code>.banner</code> element and any number of child <code>.banner__panel</code> elements. The parent <code>.banner</code> element accepts <code>.banner--large</code> and <code>.banner--small</code> modifier classes to create different sized banners.  Note that these modifier classes affect the vertical padding of the child banner panels.</p>
+
+        <p>Each banner panel has options for content alignment, text alignment, ctas, color inversion, custom vertical padding and content width, overlays and background images plus positioning at 3 different screen sizes.  Most options are optional and have fallbacks.  See <code>snippets/banner-panel.liquid</code> for the full list of options.</p>
+
+        <p>Banners should generally be used <em>outside</em> of <code>.container</code> elements in order to be full bleed.  They have their own child <code>.container</code> elements to ensure that content doesn't stretch beyond the max content width for the site.</p>
+
+        <p><strong>Note</strong>: Banner panel styling is set via a small style block contained within the snippet.  Because we use an ID inside this style block to target the specific panel, you <strong>must</strong> pass a unique ID string into the snippet.  For most use cases, some combination of section ID, block ID, and forloop index will do the trick.</p>
+
+        <div class="banner">
+          {% include 'banner-panel',
+                      bp_id: "123abc",
+                      bp_content_alignment: "center",
+                      bp_title: "Banner Panel Title 1",
+                      bp_content_alignment: "left",
+                      bp_text: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                      bp_light_text: false
+          %}
+          {% include 'banner-panel',
+                      bp_id: "abc123",
+                      bp_content_alignment: "center",
+                      bp_title: "Banner Panel Title 2",
+                      bp_content_alignment: "right",
+                      bp_text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                      bp_light_text: false
+          %}  
+        </div>
+
+        <h3 id="docs-page-hero" class="docs-title">Page Hero</h3>
+        <p>Page heroes function similar to banners but should only be used at the top of a page.  They are typically used as an enhancement over the text-only <code>.page-header</code> element when we want to display text over a background image.  Although their base styling is similar, they are built separately from banners to allow more flexibility.  The snippet API is also slightly different to support different features.</p>
+        
+        <p><strong>Note</strong>: Because of the limitations of liquid code and the fact that the page-hero snippet is built to accept an image object as opposed to an image file url, it is impossible to pass a theme image asset to the snippet in order to show a fully featured example.  The example below shows the page hero without a background image, but one can be easily passed in as as a section setting (<code>section.settings.image</code>) or a reference from another object (<code>product.featured_image</code>).</p>
+
+        {% assign subtitle = 'Subtext goes down here' %}
+
+        {% include 'page-hero',
+                    ph_id: 'page-hero-123',
+                    ph_title: 'Page Hero Title',
+                    ph_toptitle: 'Introductory text goes here',
+                    ph_subtitle: 'Subtext goes down here',
+                    ph_cta_url: '/collections/all',
+                    ph_cta_text: 'Call to action link goes here',
+                    ph_light_text: false
+        %}        
+
+        <h3 id="docs-promo" class="docs-title">Promo</h3>
+        <p>Promos consist of an image and text laid out vertically on mobile and horizontally on desktop.  Listed below are the available options that affect layout / styling.</p>
+        <h4 class="docs-subtitle">Snippet API</h4>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Values</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>p_layout</code></td>
+                <td>Left / Right</td>
+                <td>Left</td>
+                <td>Positions image on the left / right side.</td>
+              </tr>
+              <tr>
+                <td><code>p_type</code></td>
+                <td>1 / 2 / 3 / 4 / 5</td>
+                <td>None</td>
+                <td>Different types determine how the two columns of the promo share space.  See <code>promo.scss</code> for the list of widths.</td>
+              </tr>
+              <tr>
+                <td><code>p_content_max_width</code></td>
+                <td>Integer</td>
+                <td>None</td>
+                <td>Sets the maximum width of the text content on desktop sized screens</td>
+              </tr>
+              <tr>
+                <td><code>p_frame_ratio</code></td>
+                <td>String</td>
+                <td>None</td>
+                <td>If set, images will be applied as a background image to a frame element with this aspect ratio.  See <code>frames.scss</code></td>
+              </tr>
+              <tr>
+                <td><code>p_frame_ratio_small</code></td>
+                <td>String</td>
+                <td>None</td>
+                <td>If set, images will be applied as a background image to a frame element with this aspect ratio on mobile sized screens.  See <code>frames.scss</code></td>
+              </tr>            
+            </tbody>
+          </table>
+        </div>
+        {% include 'promo',
+                    p_id: 'abc-123',
+                    p_layout: 'left',
+                    p_type: 3,
+                    p_content_max_width: 500,
+                    p_title: 'Promo Title',
+                    p_text: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>',
+                    p_cta_url: '#',
+                    p_cta_text: 'CTA Text'
+        %}
+
+        <h3 id="docs-modals" class="docs-title">Modals</h3>
+        <p>Built using Bootstrap's Modal, use these to create an overlay to focus the user's attention.  <a href="https://getbootstrap.com/docs/4.0/components/modal/" target="_blank">Click here to see the docs for more info</a></p>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test-modal-1">
+          Launch Modal
+        </button>
+
+        <div class="modal fade" id="test-modal-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">Modal title</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  {% include 'icon-close' %}
+                </button>                
+              </div>
+              <div class="modal-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="docs-overlays" class="docs-title">Overlays</h3>
+
+        <p>Overlays are similar to modals but are more generic and have more flexibility.  They take over the entire screen but don't use a dialog box to hold content.  Content is vertically centered within the viewport, but horizontal alignment is up to you.  See the "search" example.  They use a data-api that is similar to modals.</p>
+        <p><strong>NOTE:</strong> These are still a work in progress, I'm having trouble with the close button on mobile.</p>
+
+        <p>
+          <button data-toggle="overlay" data-target="#test-overlay" class="btn btn-primary">Trigger overlay</button>
+          <button data-toggle="overlay" data-target="#test-overlay-2" class="btn btn-primary">Trigger search overlay</button>
+        </p>
+
+        <div id="test-overlay" class="overlay" tabindex="-1">
+          <a href="#" class="overlay__close" data-overlay-close title="Close overlay">{% include 'icon-close' %}</a>
+          <div class="overlay__content-wrapper">
+            <div class="overlay__content">    
+              {% comment %} Put whatever you want in here {% endcomment %}
+                <h1>Here's some important stuff</h1>
+                {% for i in (1..10) %}
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                {% endfor %}
+            </div>
+          </div>
+        </div>        
+
+        <div id="test-overlay-2" class="overlay" tabindex="-1">
+          <div class="overlay__content-wrapper">
+            <div class="overlay__content">
+              <div style="width: 500px; max-width: 100%; padding: 20px 35px; margin: 0 auto; position: relative;">
+                <a href="#" class="overlay__close" data-overlay-close style="position: absolute; top: 0; right: 0;" title="Close overlay">{% include 'icon-close' %}</a>
+                <div class="minimal-input-box minimal-input-box--large">
+                  <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
+                  <button type="submit" class="minimal-input-box__submit">
+                    {% include 'icon-search' %}
+                    <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="docs-subtitle">Events</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>hide.overlay</code></td>
+                <td>Triggered when the <code>hide</code> method is called even if the overlay is already closed.</td>
+              </tr>
+              <tr>
+                <td><code>hidden.overlay</code></td>
+                <td>Triggered when the hide animation completes.</td>
+              </tr>
+              <tr>
+                <td><code>show.overlay</code></td>
+                <td>Triggered when the <code>show</code> method is called even if the overlay is already open.</td>
+              </tr>
+              <tr>
+                <td><code>shown.overlay</code></td>
+                <td>Triggered when the show animation completes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>   
+
+        <h3 id="docs-drawer" class="docs-title">Drawer</h3>
+
+        <p>Drawers are elements that are fixed to the side of the screen and are hidden by default.  Opening them will transition the element on screen and apply a backdrop to focus user attention and act as a clickable area that dismisses the drawer.</p>
+
+        <p>The example below is included statically to use as reference while styling.  Clicking the triggers below will show a live, working demo.</p>
+
+        <div class="docs-well docs-well--constrained">
+          <div class="drawer is-visible" style="position: relative; z-index: 1">
+            <div class="drawer__inner">
+              <div class="drawer__header">
+                <a href="#" class="drawer__close" data-drawer-close>
+                  {% include 'icon-close' %}
+                </a>        
+                <h5 class="drawer__header-title">Example Drawer</h5>
+              </div>
+              <div class="drawer__body">
+                <div class="drawer__body-contents">
+                  <p>Drawer contents goes here, inside the body.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat.</p>
+                </div>
+              </div>
+              <div class="drawer__body drawer__body--flush">
+                <div class="drawer__body-contents" style="background-color: #F3F3F3">
+                  <p>Use the <code>.drawer__body--flush</code> modifier class to allow the drawer body contents to extend to the edge.</p>
+                </div>
+              </div>
+              <div class="drawer__footer">
+                <p><a href="#" class="btn btn-primary btn-block">Use the footer for a CTA</a></p>
+                <p class="text-center small">Or for promotional messaging</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>You can use the drawer with or without a backdrop.  If the backdrop is used, scrolling will be killed on the body when the drawer is opened.</p>
+
+        <p>The API closely follows the one for Bootstrap's modals.  You can create the drawer programatically by calling the <code>Drawer</code> constructor and passing in options or by using <code>data-*</code> attributes to specify the element, trigger and options.  The example below uses the data API.</p>        
+
+        <p>
+          <button data-toggle="drawer" data-target="#my-drawer" data-backdrop="true" class="btn btn-primary">Trigger drawer</button>
+          <button data-toggle="drawer" data-target="#my-drawer" data-backdrop="false" class="btn btn-primary">Trigger drawer without backdrop</button>
+        </p>
+
+        <div id="my-drawer" class="drawer">
+          <div class="drawer__inner">
+            <div class="drawer__header">
+              <a href="#" class="drawer__close" data-drawer-close>
+                {% include 'icon-close' %}
+              </a>        
+              <h5 class="drawer__header-title">Drawer Header</h5>
+            </div>
+            <div class="drawer__body">
+              <div class="drawer__body-contents">
+                <p>Drawer content goes here.</p>
+              </div>
+            </div>
+            <div class="drawer__body drawer__body--flush">
+              <div class="drawer__body-contents" style="background: #fff6d0; padding-top: 30px; padding-bottom:30px;">
+                <p>I'm content that is using the flush drawer body modifier class.</p>
+              </div>
+            </div> 
+            <div class="drawer__footer">
+              Throw some content in the footer of this drawer.
+            </div>           
+          </div>
+        </div>    
+
+        <h4 class="docs-subtitle">Options</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>closeSelector</code></td>
+                <td>String</td>
+                <td>[data-drawer-close]</td>
+                <td>Selector for the close button contained within the drawer element.</td>
+              </tr>
+              <tr>
+                <td><code>backdrop</code></td>
+                <td>Boolean</td>
+                <td>true</td>
+                <td>Turns on / off a clickable backdrop.</td>
+              </tr>            
+            </tbody>
+          </table>
+        </div> 
+
+        <h4 class="docs-subtitle">Events</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>hide.drawer</code></td>
+                <td>Triggered when the <code>hide</code> method is called even if the drawer is already closed.</td>
+              </tr>
+              <tr>
+                <td><code>hidden.drawer</code></td>
+                <td>Triggered when the hide animation completes.</td>
+              </tr>
+              <tr>
+                <td><code>show.drawer</code></td>
+                <td>Triggered when the <code>show</code> method is called even if the drawer is already open.</td>
+              </tr>
+              <tr>
+                <td><code>shown.drawer</code></td>
+                <td>Triggered when the show animation completes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="docs-tabs" class="docs-title">Tabs</h3>
+
+        <p>Tabs are elements consisting of a list of clickable tabs and corresponding tab panel elements.  Clicking a tab will hide any visible tab panel before displaying the panel connected to the clicked on tab.</p>
+
+        <div class="tabs-container" data-tab-container>
+          <div class="tabs-list-wrapper">
+            <ul class="tabs-list">
+              <li><a href="#tab-panel-1" class="tab" id="tab-1" role="tab" aria-controls="tab-panel-1">Tab 1</a></li>
+              <li><a href="#tab-panel-2" class="tab" id="tab-2" role="tab" aria-controls="tab-panel-2">Tab 2</a></li>
+              <li><a href="#tab-panel-3" class="tab" id="tab-3" role="tab" aria-controls="tab-panel-3">Tab 3</a></li>
+            </ul>
+          </div>
+          <div class="tabs-panels-wrapper">
+            <div class="tab-panel" role="tabpanel" aria-labelledby="{{ block_tab_id }}" id="tab-panel-1">
+              Lorem ipsum #1
+            </div>
+            <div class="tab-panel" role="tabpanel" aria-labelledby="{{ block_tab_id }}" id="tab-panel-2">
+              Lorem ipsum #2
+            </div>
+            <div class="tab-panel" role="tabpanel" aria-labelledby="{{ block_tab_id }}" id="tab-panel-3">
+              Lorem ipsum #3
+            </div>
+          </div>
+        </div>
+
+        <h3 id="docs-slideup" class="docs-title">Slideup</h3>
+        <p>Slideups are similar to drawers in that they are fixed to the screen but they are positioned at the bottom of the viewport and are generally used for site notices as opposed to site functionality.</p>
+
+        <p>The example below is included statically to use as reference while styling.  Clicking the trigger below will show a live, working demo.</p>        
+
+        <div class="docs-well">
+          <div class="slideup is-visible" style="position: relative; z-index: 1">
+            <div class="container">
+              <a href="#" class="slideup__close" data-slideup-close>{% include 'icon-close' %}</a>
+              <div class="slideup__content">
+                <h4 class="slideup__title">Slideup Title</h4>
+                <div class="slideup__text">
+                  <p class="p1">Throw some text in here that you want to force the user to see.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>    
+
+        <p>The API closely follows the one for Bootstrap's modals.  You can create the slideup programatically by calling the <code>Slideup</code> constructor and passing in options or by using <code>data-*</code> attributes to specify the element, trigger and options.  The example below uses the data API.</p>
+
+        <p>
+          <button data-toggle="slideup" data-target="#my-slideup" class="btn btn-primary">Trigger slideup</button>
+        </p>
+
+        <div id="my-slideup" class="slideup">
+          <div class="container">
+            <a href="#" class="slideup__close" data-slideup-close>{% include 'icon-close' %}</a>
+            <div class="slideup__content">
+              <h4 class="slideup__title">Slideup Title</h4>
+              <div class="slideup__text">
+                <p class="p1">Throw some text in here that you want to force the user to see.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="docs-subtitle">Options</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>closeSelector</code></td>
+                <td>String</td>
+                <td>[data-slideup-close]</td>
+                <td>Selector for the close button contained within the slideup element.</td>
+              </tr>           
+            </tbody>
+          </table>
+        </div> 
+
+        <h4 class="docs-subtitle">Events</h4>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>hide.slideup</code></td>
+                <td>Triggered when the <code>hide</code> method is called even if the slideup is already closed.</td>
+              </tr>
+              <tr>
+                <td><code>hidden.slideup</code></td>
+                <td>Triggered when the hide animation completes</td>
+              </tr>
+              <tr>
+                <td><code>show.slideup</code></td>
+                <td>Triggered when the <code>show</code> method is called even if the slideup is already open.</td>
+              </tr>
+              <tr>
+                <td><code>shown.slideup</code></td>
+                <td>Triggered when the show animation completes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="docs-slideup-alert" class="docs-title">Slideup Alert</h3>
+        <p>Slideup alerts are one time alerts that utilize the slideup class.  Use the form below to test how alerts will show up.</p>
+
+        <form class="form-inline" data-slideup-alert-form>
+          <div class="form-group">
+            <input type="text" name="title" class="form-control" placeholder="Enter Title">
+            <input type="text" name="text" class="form-control" placeholder="Enter Message">
+          </div>
+          <button type="submit" class="btn btn-primary">Show Alert</button>
+        </form>
+
+        <h3 id="docs-collapse" class="docs-title">Collapse</h3>
+
+        <p>Bootstrap "collapse" is included, we can use this feature to build single elements with toggle-able visibility and multiple elements with accordion behavior.</p>
+        <p><span class="font-weight-bold">NOTE:</span> Cards should be wrapped in a parent <code>.accordion</code> class to prevent double borders from showing while in a collapsed state.  Also, be sure not to apply margins and padding directly to the elements that you are collapsing as it will cause stuttering during the transition between states.</p>
+
+        <h4 class="docs-subtitle">Single Collapsible Item</h4>
+
+        <div class="docs-well">
+          <div class="accordion">
+            <div class="card">
+              <div class="card-header" id="testHeading">
+                <h5 class="mb-0">
+                  <a href="#testCollapseOne" class="card-header__title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="testCollapseOne">
+                    Collapsible Item 1
+                    <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
+                  </a>                  
+                </h5>
+              </div>
+              <div id="testCollapseOne" class="collapse" aria-labelledby="testHeading">
+                <div class="card-body">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+              </div>
+            </div>          
+          </div>
+        </div>
+
+        <p>The above example uses the <code>.card</code> element but you can apply the collapse behavior to any elements.</p>
+
+        <div class="docs-well docs-well--constrained">
+          <a href="#collapse-item-2" class="btn btn-primary" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-item-2">Toggle Contents</a>
+          <div id="collapse-item-2" class="collapse">
+            <br />
+            <h3>Test Content</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="dots">
+              <div class="dot dot--solid dot--white">
+                <div class="dot__inner"></div>
+              </div>
+              <div class="dot dot--solid dot--black">
+                <div class="dot__inner"></div>
+              </div>
+              <div class="dot dot--solid dot--gray">
+                <div class="dot__inner"></div>
+              </div>
+              <div class="dot dot--solid dot--khaki">
+                <div class="dot__inner"></div>
+              </div>
+            </div>         
+          </div>
+        </div>
+
+        <h4 class="docs-subtitle">Accordion</h4>
+
+        <div class="docs-well">
+          <div id="accordion" class="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <a href="#collapseOne" class="card-header__title" data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne">
+                    Collapsible Group Item #1
+                    <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
+                  </a>
+                </h5>
+              </div>
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <a href="#collapseTwo" class="card-header__title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo">
+                    Collapsible Group Item #2
+                    <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
+                  </a>                  
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  <a href="#collapseThree" class="card-header__title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapseThree">
+                    Collapsible Group Item #3
+                    <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
+                  </a>                  
+                </h5>                
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="docs-subtitle">Expandable List</h4>
+
+        <p>The expandable list is it's own component.  Each list is made up of a header and body with child items.  See <code>_styles/components/expandable-list.scss</code> for styling.</p>
+
+        <div class="docs-well docs-well--constrained">
+          <div class="expandable-list">
+            <div class="expandable-list__header">
+              <a href="#sublist-1" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="true" aria-controls="sublist-1">
+                Category 1 {% include 'icon-caret-down' %}
+              </a>
+            </div>
+            <div id="sublist-1" class="collapse show">
+              <div class="expandable-list__body">
+                <div class="expandable-list__item is-selected">
+                  <a href="#" class="expandable-list__item-title">
+                    Subcategory 1
+                    <div class="expandable-list__item-status-icon">
+                      {% include 'icon-checkmark' %}
+                    </div>
+                  </a>
+                </div>
+                <div class="expandable-list__item">
+                  <a href="#" class="expandable-list__item-title">
+                  Subcategory 2
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+                </div>
+                <div class="expandable-list__item">
+                  <a href="#" class="expandable-list__item-title">
+                  Subcategory 3
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+                </div>
+                <div class="expandable-list__item">
+                  <a href="#" class="expandable-list__item-title">
+                  Subcategory 4
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="expandable-list">
+            <div class="expandable-list__header">
+              <a href="#sublist-2" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="true" aria-controls="sublist-2">
+                Category 2 {% include 'icon-caret-down' %}
+              </a>
+            </div>
+            <div id="sublist-2" class="collapse">
+              <div class="expandable-list__body">
+                <div class="expandable-list__item">
+                  <a href="#" class="expandable-list__item-title">
+                  Subcategory 1
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+                </div>
+                <div class="expandable-list__item is-selected">
+                  <a href="#" class="expandable-list__item-title">
+                  Subcategory 2
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+                </div>
+                <div class="expandable-list__item">
+                  <a href="#" class="expandable-list__item-title">
+                  Subcategory 3
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+                </div>
+                <div class="expandable-list__item">
+                  <a href="#" class="expandable-list__item-title">
+                  Subcategory 4
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="docs-quantity-adjuster" class="docs-title">Quantity Adjuster</h3>
+        <p>The quantity adjuster automatically comes with javascript functionality that provides input validation and UI constraints around <code>min</code> / <code>max</code> attributes set on the input element (including responding to changes during the component's lifetime).  It requires a specific markup structure with the following data attributes.</p>
+
+        <div class="docs-well docs-well--constrained">
+<pre style="margin: 0;">
+- [data-quantity-adjuster]
+  - [data-increment]
+  - input[type="number"]
+  - [data-decrement]
+</pre>
+        </div>
+
+        <p>By default, the component's javascript will initialize all quantityAdjuster components on page load as well as on all Shopify them editor events.  There is a static method available available as <code>QuantityAdjuster.refresh()</code> which will initialize any components on the page that have yet to be initialized.</p>
+
+        <p>The example below has a default value of <strong>2</strong> with min / max values set at <strong>1</strong> and <strong>10</strong> respectively.  Click the buttons below to make changes to the component and see how it responds.</p>
+
+        <div class="docs-well">
+          <div class="quantity-adjuster" data-quantity-adjuster>
+            <button class="quantity-adjuster__decrement" data-decrement>-</button>
+            <input type="number" value="2" min="1" max="10" />
+            <button class="quantity-adjuster__increment" data-increment>+</button>
+          </div>
+          <br />
+          <br />
+
+          <a href="#" class="btn btn-secondary" data-qa-set-max="2">Set max to 2</a>
+          <a href="#" class="btn btn-secondary" data-qa-set-max="10">Set Max to 10</a>
+          <a href="#" class="btn btn-secondary" data-qa-toggle-enabled>Toggle Enabled</a>
+        </div>
+
+        <h3 id="docs-newsletter-form" class="docs-title">Newsletter Form</h3>
+        <p>The newsletter form is a UI component for displaying a form input with associated messaging for different subscription states.  The contents element wraps the form inputs as well as the form message.  Different message strings are stored as data attributes and inserted into the dom as necessary.  It requires a specific markup structure with the following data attributes.</p>
+
+        <div class="docs-well">
+<pre style="margin: 0;">
+- form
+  - .newsletter-form-contents[data-form-contents]
+    - .newsletter-form-inputs
+    - .newsletter-form-message[data-form-message][data-message-success][data-message-fail]
+</pre>
+        </div>        
+
+        <p>Use the buttons below to toggle various states of the form.</p>
+
+        <div class="docs-well docs-well--accent">
+          <form id="newsletter-form">
+            <div class="newsletter-form-contents" data-form-contents>
+              <div class="newsletter-form-inputs">
+                <div class="form-group">
+                  <div class="minimal-input-box">
+                    <input type="email" class="minimal-input-box__input" placeholder="Enter your text here" required="required"/>
+                    <button type="submit" class="minimal-input-box__submit">
+                      {% include 'icon-arrow-right' %}
+                      <span class="icon-fallback-text">Submit</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="newsletter-form-message"
+                 data-form-message
+                 data-message-success="Success Message!"
+                 data-message-already-subscribed="Already subscribed message"
+                 data-message-fail="Failure message :("></div>
+            </div>
+            <br />
+            <br />
+
+            <a href="#" class="btn btn-secondary" data-newsletter-trigger-success>Trigger Success</a>
+            <a href="#" class="btn btn-secondary" data-newsletter-trigger-subscribed>Trigger Already Subscribed</a>
+            <a href="#" class="btn btn-secondary" data-newsletter-trigger-fail>Trigger Failure</a>
+          </form>
+        </div>
+
+        <h3 id="docs-video-player" class="docs-title">Video Player</h3>
+        <p>The video player component supports both YouTube and Vimeo videos.  All settings are passed as data attributes.  The component consists of a specific markup structure which loads an iframe from the required video provider when initialized.</p>
+
+        <h4 class="docs-subtitle">YouTube Example</h4>
+        <div class="docs-well">
+          <div id="video-player-ScMzIvxBSi4" class="video-player" data-video-player data-video-id="ScMzIvxBSi4" data-video-type="youtube">
+            <div class="video-player__cover" data-video-player-cover>
+              <div class="video-player__cover-still" style="background-image: url({{ 'test-video-bg.png' | asset_url }});"></div>
+              <span class="video-player__cover-play">{% include 'icon-play' %}</span>
+            </div>
+            <div class="video-player__embed" data-video-player-embed></div>
+          </div>
+        </div>
+
+        <h4 class="docs-subtitle">Vimeo Example</h4>
+        <p>This example uses the <strong>background</strong> setting that Vimeo offers.  This setting removes all controls and branding on the player, as well as autoplaying and looping the video.  This setting can be toggled via the <code>data-background</code> attribute on the <code>.video-player</code> element.</p>
+        <div class="docs-well">
+          <div id="video-player-72223143" class="video-player" data-video-player data-video-id="72223143" data-video-type="vimeo" data-background="true">
+            <div class="video-player__cover" data-video-player-cover>
+              <div class="video-player__cover-still" style="background-image: url({{ 'test-video-bg.png' | asset_url }});"></div>
+              <span class="video-player__cover-play">{% include 'icon-play' %}</span>
+            </div>
+            <div class="video-player__embed" data-video-player-embed></div>
+          </div>
+        </div>        
+
+      </div>
+    </div>
+  </div>
+</div>

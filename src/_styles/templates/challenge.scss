@@ -1,0 +1,13 @@
+// -------------------------
+// Challenge Page
+// -------------------------
+
+.shopify-challenge__container {
+  margin-top: 100px !important;
+  margin-bottom: 100px !important;
+
+  .shopify-challenge__message,
+  .shopify-challenge__errors {
+    font-size: $font-size-sm;
+  }  
+}

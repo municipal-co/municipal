@@ -1,0 +1,108 @@
+{%- comment %}
+
+  Product Dots - Color
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'product-dots-color',
+              product: { product } - required
+              selected_color: { string } - optional
+  %}
+
+  Swatches based on the product
+  =============================
+
+  This snippet does the following..
+
+  - Look through all product options
+  - If one of the options is "color" and that option has more than 1 value...
+  - Loop through all the colors
+    - Construct a set of variables to use in the Logic / HTML (e.g. color option value = "Faded Khaki")
+      - `color_downcase` : 'faded khaki'
+      - `color_slug` : "faded-khaki"
+      - `color_display` : "Faded Khaki"
+      - `color_css` : "FadedKhaki"
+    - Look for an image in the product images with alt text that contains the color and and the `alt_swatch_identifier` variable to use as the swatch image
+    - Look through all variants and find the first one that has the current color as it's color option value, use that to pull a URL and image
+    - Use the variables to create the color dots HTML
+
+  - You should define the `product_thumb_size` variable outside of this file, but if not you can define it below
+
+  - Accepted arguments
+    - `selected_color` - Should match one of the color names.  If this option is passed in, the corresponding swatch will have the `is-active` class applied to it.
+
+{% endcomment %}
+
+{% assign product_swatch_size = '50x50' %}
+{% assign alt_swatch_identifier = 'swatch' %}
+
+{% comment %} Defaults {% endcomment %}
+{% assign product_thumb_size = product_thumb_size | default: '480x480' %}
+
+{% if product != blank %}
+
+  {% for option in product.options_with_values %}
+
+    {% assign option_name_downcase = option.name | downcase %}
+
+    {% if option_name_downcase == "color" and option.values.size > 0 %}
+
+      {% assign option_handle = 'option' | append: option.position %}
+
+      <div class="dots" data-option-position="{{ option.position }}" data-variant-option-value-list>
+        {% for color in option.values %}
+
+          {% assign color_downcase = color | downcase %}
+          {% assign color_slug = color | handleize %}
+          {% assign color_slug_parts = color_slug | split: '-' %}
+          {% capture color_display %}{% for part in color_slug_parts %}{{ part | capitalize | append: ' ' }}{% endfor %}{% endcapture %}
+          {% assign color_display = color_display | strip %}
+          {% assign color_css = color_display | replace: ' ', '' %}
+
+          {% assign swatch_image   = false %}
+          {% assign swatch_variant = false %}
+
+          {% comment %}
+            Loop through all product images and see if any swatches match the current color
+          {% endcomment %}
+          {% for image in product.images %}
+            {% assign image_alt_downcase = image.alt | downcase %}
+            {% if image_alt_downcase contains alt_swatch_identifier and image_alt_downcase contains color_downcase %}
+              {% assign swatch_image = image %}
+            {% endif %}
+          {% endfor %}
+
+          {% comment %} Loop through all variants and pull the first one matching the color to use for main image / url. {% endcomment %}
+          {% for variant in product.variants %}
+            {% assign variant_color = variant[option_handle] %}
+            {% if variant_color == color %}
+
+              {% if swatch_variant == false %}
+                {% assign swatch_variant = variant %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+          {% comment %}
+            background-color property must be set by capitalizing the color and removing spaces.
+            We're looking for valid CSS color names - see: https://www.w3schools.com/cssref/css_colors.asp
+          {% endcomment %}
+          <div class="dot dot--{{ color_slug }}{% if selected_color == color %} is-active{% endif %}"
+               title="{{ color }}"
+               data-variant-option-value="{{ color }}"
+               {% if swatch_variant %}
+               data-variant-url="{{ swatch_variant.url }}"
+               data-variant-img="{{ swatch_variant.image | img_url: product_thumb_size, crop: product_thumb_crop }}"
+               {% endif %}>
+            <div class="dot__inner" 
+                 style="background-color:{{ color_css }};
+  {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}"></div>
+          </div>
+
+        {% endfor %}
+
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}

@@ -1,0 +1,111 @@
+// -------------------------
+// Overlay Card
+// -------------------------
+
+// Base Class: .overlay-card
+// Modifier Classes:
+//   - .overlay-card--bg-dark
+//   - .overlay-card--bg-light
+//   - .overlay-card--content-top
+//   - .overlay-card--content-bottom
+//   - .overlay-card--light-text
+//   - .overlay-card--has-link
+
+.overlay-card {
+  position: relative;
+  height: 100%;
+  padding: $overlay-card-padding-vertical $overlay-card-padding-horizontal;
+  border-radius: $overlay-card-border-radius;
+  overflow: hidden;
+}
+
+.overlay-card__bg {
+  @include stretch-within;
+  z-index: -1;
+  background: {
+    size: cover;
+    position: center center;
+  }
+
+  &:before {
+    content: "";
+    @include stretch-within;
+
+    .overlay-card--bg-dark & {
+      background-color: $overlay-card-bg-overlay-dark-color;
+    }
+
+    .overlay-card--bg-light & {
+      background-color: $overlay-card-bg-overlay-light-color;
+    }
+  }
+}
+
+.overlay-card__contents {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: $overlay-card-content-max-width;
+
+  // This is the default behavior
+  .overlay-card--content-top & {
+    justify-content: flex-start;
+  }
+
+  .overlay-card--content-bottom & {
+    justify-content: flex-end;
+  }
+}
+
+.overlay-card__header {
+
+}
+
+.overlay-card__title {
+
+}
+
+.overlay-card__subtitle {
+
+}
+
+.overlay-card__body {
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Light text version
+.overlay-card--light-text  {
+  .overlay-card__title,
+  .overlay-card__subtitle,
+  .overlay-card__body {
+    color: $overlay-card-light-text-color;
+  }
+}
+
+// Linkable version
+.overlay-card--has-link {
+
+  // Add your hover effects here
+  .overlay-card__bg,
+  .overlay-card__contents {
+    transform: transition $transition-duration-slow $transition-timing-function-in-out-ui;
+  }
+
+  &:hover,
+  &:focus {
+
+    .overlay-card__bg,
+    .overlay-card__contents {
+      transform: transition $transition-duration-base $transition-timing-function-in-out-ui;
+    }
+    .overlay-card__bg {
+      transform: scale(1.06);
+    }
+    .overlay-card__contents {
+      transform: translateY(-5px);
+    }
+  }
+}
+

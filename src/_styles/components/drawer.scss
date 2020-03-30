@@ -1,0 +1,105 @@
+// -------------------------
+// Drawer
+// -------------------------
+
+body.drawer-open {
+  overflow: hidden;
+}
+
+.drawer {
+  position: fixed;
+  z-index: $zindex-drawer;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-height: 100%;
+  background: $drawer-bg;
+  border: 1px solid $drawer-border-color;
+  pointer-events: none;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  transform: translateX(100%);
+  transition: all $transition-duration-base $transition-timing-function-base;
+
+  // For a drawer that slides out from the left side
+  &--left {
+    left: 0;
+    right: auto;
+    transform: translateX(-100%);
+  }
+
+  &.is-visible {
+    pointer-events: auto;
+    transform: translateX(0%);
+    transition: all $transition-duration-base $transition-timing-function-base;
+  }
+
+  // Ensure that the drawer is full width on screen sizes below this
+  @include media-breakpoint-up('sm') {
+    max-width: $drawer-max-width;
+  }
+
+  .drawer__inner {
+    padding: $drawer-padding-vertical $drawer-padding-horizontal;
+  }
+
+  .drawer__header {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 30px 0 $headings-margin-bottom;
+    border-bottom: 2px solid $drawer-border-color;
+
+    .drawer__close {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .drawer__header-title {
+    margin: 0;
+    padding: 0;
+    font-size: $drawer-header-font-size;
+  }
+
+  .drawer__body {
+
+    &--flush {
+      margin-left: -#{$drawer-padding-horizontal};
+      margin-right: -#{$drawer-padding-horizontal};
+    }
+  }
+
+  .drawer__body-contents {
+
+    .drawer__body--flush & {
+      padding-left: $drawer-padding-horizontal;
+      padding-right: $drawer-padding-horizontal;
+    }
+  }
+
+  .drawer__footer {
+    margin-top: 20px;
+    padding: $headings-margin-bottom 0 0;
+    border-top: 2px solid $drawer-border-color;
+  }
+}
+
+.drawer-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-drawer-backdrop;
+  background-color: $drawer-backdrop-color;
+  opacity: 0;
+  pointer-events: none;
+  transition: all $transition-duration-slide $transition-timing-function-slide-out;
+
+  &.is-visible {
+    opacity: $drawer-backdrop-opacity;
+    pointer-events: auto;
+    transition: all $transition-duration-slide $transition-timing-function-slide-in;
+  }
+}

@@ -1,0 +1,138 @@
+{% comment %} assign defaults {% endcomment %}
+{% assign hero_title = blog.title %}
+{% assign hero_light_text = section.settings.content_light_text %}
+{% assign hero_background_image = section.settings.hero_background_image %}
+
+{% if section.settings.title != blank %}
+  {% assign hero_title = section.settings.title %}
+{% endif %}
+
+{% comment %} Override the defaults if a block specific to the current blog is found {% endcomment %}
+{% for block in section.blocks %}
+  {% if block.settings.blog == blog.handle and block.settings.article != blank %}
+    {% assign article = articles[block.settings.article] %}
+    {% assign blog_handle = article.url | replace: 'blogs/', '' | replace: '/', ' ' | split: ' ' | first %}  {% comment %} Shopify doesn't have a way to access article.blog directly so we have to parse out the url {% endcomment %}
+    {% assign hero_background_image = article.image %}
+    {% assign hero_light_text = block.settings.content_light_text %}
+    {% assign hero_title = article.title %}
+    {% assign hero_title_link = article.url %}
+    {% capture hero_toptitle %}
+      {% if article.tags.size > 0 %}
+        {% for tag in article.tags %}
+          <a href="/blogs/{{ blog_handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+          {% unless forloop.last %}&middot;{% endunless %}
+        {% endfor %}
+      {% endif %}
+    {% endcapture %}
+    {% capture hero_subtitle %}
+      <div class="text-transform-none">
+        {% if article.author != blank %}
+          By {{ article.author }} | 
+        {% endif %}
+        {{ article.published_at | date: "%B %e" }}
+      </div>
+    {% endcapture %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="blog">
+  {% paginate blog.articles by 16 %}
+
+   {% include 'page-hero',
+               ph_id: section.id,
+               ph_background_image: hero_background_image,
+               ph_title: hero_title,
+               ph_toptitle: hero_toptitle,
+               ph_subtitle: hero_subtitle,
+               ph_title_link: hero_title_link,
+               ph_content_alignment: 'center',
+               ph_light_text: hero_light_text
+     %}
+
+    <div class="container">
+
+      {% comment %}
+
+      Article Previews
+      ====================
+      {% endcomment %}
+
+      <div class="content-grid">
+        {% for article in blog.articles %}
+          <div class="content-grid__item">
+            {% include 'article-card', article: article, show_author: false, show_tags: false %}
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if paginate.next.is_link %}
+        {% comment %} See _scripts/sections/blog.js {% endcomment %}
+        <div class="text-center" style="padding: 10px 0" data-pagination>
+          <a href="{{ paginate.next.url }}" data-next-page>Load More</a>
+        </div>
+      {% endif %}
+    </div>
+
+  {% endpaginate %}
+</div>
+
+{% schema %}
+  {
+    "name": "Blog",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Page Hero",
+        "info": "Used as the fallback hero if a blog-specific one is not selected.  See 'Add blog hero' below."
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "info": "Title of the selected blog will be used if blank"
+      },
+      {
+        "type": "checkbox",
+        "id" : "content_light_text",
+        "label": "Light Text",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_background_image",
+        "label": "Image"
+      }
+    ],
+    "blocks" : [
+      {
+        "type": "blog_hero",
+        "name": "Blog Hero",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Page Hero",
+            "info": "These settings will affect the page hero for the selected blog home page."
+          },
+          {
+            "type": "blog",
+            "id": "blog",
+            "label": "Blog"
+          },
+          {
+             "type": "article",
+             "id": "article",
+             "label": "Article",
+             "info" : "The featured image for this article will be used as the background image"
+          },
+          {
+            "type": "checkbox",
+            "id" : "content_light_text",
+            "label": "Light Text",
+            "default": false
+          }
+        ]
+      }    
+    ]
+  }
+{% endschema %}

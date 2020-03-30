@@ -1,0 +1,118 @@
+{% capture sidebar_html %}
+  {% include 'account-sidebar' %}
+{% endcapture %}
+
+{% capture title %}
+  {% if customer.first_name %}
+    {{ 'Welcome, ' | append: customer.first_name | append: '!' }}
+  {% else %}
+    {{ 'customer.account.title' | t }}
+  {% endif %}
+{% endcapture %}
+
+{% paginate customer.orders by 1000 %}
+
+  <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-account">
+    <div class="container">
+      
+      {% include 'page-header', ph_title: title %}
+
+      <div class="row">
+
+        {{ sidebar_html }}        
+
+        <div class="account-content{% if sidebar_html != blank %} account-content--has-sidebar{% endif %}">
+
+          {% comment %} Account Stuff {% endcomment %}
+          <div data-account-section="account">
+
+            <h3>{{ 'customer.account.details' | t }}</h1>
+
+            <div class="row">
+              <div class="col-md-6 col-lg-5 col-xl-4">
+                <div class="account-block">
+                  <h6 class="account-block__title">{{ 'customer.account.email' | t }}</h6>
+                  <div class="account-block__content">{{ customer.email }}</div>
+                </div>
+                {% if customer.default_address %}
+                  <div class="account-block">
+                    <h6 class="account-block__title">{{ 'customer.addresses.default_address' | t }}</h6>
+                    <div class="account-block__content">
+                      {{ customer.default_address | format_address | replace: '<p>', '<address>' | replace: '</p>', '</address>' }}
+                      <a href="/account/addresses#edit-{{ customer.default_address.id }}">Edit</a>
+                    </div>
+                  </div>
+                {% endif %}            
+              </div> 
+              <div class="col-md-6 col-lg-5 col-xl-4 col-xxl-3">
+                <a href="#recover" class="btn btn-primary btn-block" data-toggle-password>{{ 'customer.recover_password.title' | t }}</a>
+                <br />
+                <a href="/account/addresses#new" class="btn btn-primary btn-block">{{ 'customer.account.add_new_address' | t }}</a>
+              </div>         
+            </div>
+
+            <div class="form-success hide" id="ResetSuccess">
+              {{ 'customer.recover_password.success' | t }}
+            </div>
+
+            {% if form.posted_successfully? %}
+              {% assign resetPassword = true %}
+            {% endif %}
+
+          </div>
+
+          {% comment %} Password Stuff {% endcomment %}
+          <div class="hide" data-account-section="password-recover">
+
+            <h3>{{ 'customer.recover_password.title' | t }}</h1>
+
+            <div class="row">
+              <div class="col-md-6 col-lg-5 col-xl-4">
+                <div class="account-block">
+                  <div class="account-block__content">
+                    <p>{{ 'customer.recover_password.subtext' | t }}</p>
+                  </div>
+                </div>
+                <div class="account-block">
+                  {% form 'recover_customer_password' %}
+                    {{ form.errors | default_errors }}
+
+                    {% if form.posted_successfully? %}
+                      <span class="hide reset-password-success"></span>
+                    {% endif %}
+
+                    <div class="form-group">
+                      <label for="RecoverEmail" class="sr-only">
+                        {{ 'customer.recover_password.email' | t }}
+                      </label>
+                      <input type="email"
+                        name="email"
+                        id="RecoverEmail"
+                        class="form-control"
+                        placeholder="{{ 'customer.recover_password.email' | t }}"
+                        spellcheck="false"
+                        autocomplete="off"
+                        autocapitalize="off">
+                    </div>
+
+                    <div class="form-group">
+                      <input type="submit" class="btn btn-primary" value="{{ 'customer.recover_password.submit' | t }}">
+                      <button type="button" class="btn btn-link" data-toggle-password>
+                        {{ 'customer.recover_password.cancel' | t }}
+                      </button>
+                    </div>
+
+                  {% endform %}
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+{% endpaginate %}

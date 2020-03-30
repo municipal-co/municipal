@@ -1,0 +1,78 @@
+// -------------------------
+// Footer
+// -------------------------
+
+.footer {
+  padding-top: $footer-padding-top;
+  padding-bottom: $footer-padding-bottom;
+  background-color: $footer-bg;
+
+  &, a, h1, h2, h3, h4, h5, h6 {
+    color: $footer-text-color;
+  }
+}
+
+.footer-block {
+  margin-bottom: $footer-block-spacing;
+  text-align: center;
+
+  @media (min-width: $footer-bp-min) {
+    margin-bottom: 0;
+    text-align: left;
+  }
+}
+
+.footer-menu {
+
+  &:not(:last-child) {
+    margin-bottom: $footer-block-spacing;
+  }
+
+  @media (min-width: $footer-bp-min) {
+    display: inline-block;
+    vertical-align: top;
+
+    & + & {
+      margin-left: 30px;
+    }
+  }
+
+  // Add extra horizontal spacing between menus on large screens
+  // @media (min-width: $screen-lg-min) {
+  //   & + & {
+  //     margin-left: 80px;
+  //   }
+  // }
+
+  .footer-menu__title {
+    margin-bottom: 20px;
+  }
+
+  .footer-menu__list {
+    @extend .list-unstyled;
+    font-size: $footer-menu-font-size;
+
+    li:not(:last-child) {
+      margin-bottom: 5px;
+    }
+
+    a {
+      color: $footer-menu-text-color;
+    }
+  }
+}
+
+.footer-social-list {
+  @include list-unstyled;
+  margin-bottom: 0;
+  margin-left: -10px;
+
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  .icon {
+    width: $footer-social-icon-width;
+  }
+}

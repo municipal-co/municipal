@@ -1,0 +1,107 @@
+{% assign article_count = 0 %}
+{% capture content_grid_html %}
+  {% for block in section.blocks %}
+    {% if block.type == "article" %}
+      <div class="content-grid__item" {{ block.shopify_attributes }}>
+        {% include 'article-card', 
+                    article: articles[block.settings.article],
+                    show_excerpt: section.settings.show_excerpt,
+                    show_author: section.settings.show_author,
+                    show_date: section.settings.show_date
+                    show_tags: section.settings.show_tags
+        %}
+      </div>
+      {% assign article_count = article_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}   
+{% endcapture %}
+
+<div class="container">
+
+  {% include 'content-header', ch_title: section.settings.title %}
+
+  {% if content_grid_html != blank %}
+    <div class="content-grid content-grid--centered content-grid--1-col content-grid--lg-{{ article_count }}-col">
+      {{ content_grid_html }}
+    </div>
+  {% endif %}
+
+  {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
+    <div class="content-footer">
+      <a href="{{ section.settings.cta_url }}" class="btn btn-primary">{{ section.settings.cta_text }}</a>
+    </div>
+  {% endif %} 
+     
+</div>
+
+
+{% schema %}
+  {
+    "name": "Article Grid",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },      
+      {
+        "type": "checkbox",
+        "id" : "show_excerpt",
+        "label": "Show Excerpt",
+        "default": false
+      },       
+      {
+        "type": "checkbox",
+        "id" : "show_author",
+        "label": "Show Author",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id" : "show_date",
+        "label": "Show Date",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id" : "show_tags",
+        "label": "Show Tags",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "article",
+        "name": "Article",
+        "settings": [
+          {
+            "type": "article",
+            "id": "article",
+            "label": "Article"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "Blog",
+        "name": "Article Grid",
+        "settings": {
+          "title": "Latest News"
+        },
+        "blocks": []
+      }
+    ]    
+  }
+{% endschema %}

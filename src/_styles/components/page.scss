@@ -1,0 +1,125 @@
+// -------------------------
+// Page
+// -------------------------
+
+
+// Page Header
+.page-header {
+  margin: $grid-gutter-width 0;
+  text-align: center;
+
+  &--left {
+    @include media-breakpoint-up('md') {
+      text-align: left;
+    }
+  }
+
+  &--right {
+    @include media-breakpoint-up('md') {
+      text-align: right;
+    }
+  }
+}
+
+.page-header__title {
+  margin: 0;
+}
+
+.page-header__subtitle {
+  max-width: 50em;
+  margin: 0 auto;
+
+  @include media-breakpoint-up('md') {
+    .page-header--left & {
+      margin-left: 0;
+    }
+    .page-header--right & {
+      margin-right: 0;
+    }
+  }
+
+
+  .page-header__title + & {
+    margin-top: 15px;
+  }
+}
+
+// Page Hero
+.page-hero {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0 0 $page-hero-margin-bottom;
+  padding-top: $page-hero-padding-small-vertical;
+  padding-bottom: $page-hero-padding-small-vertical;
+  text-align: center;
+
+  @include media-breakpoint-up('lg') {
+    padding-top: $page-hero-padding-vertical;
+    padding-bottom: $page-hero-padding-vertical;
+  }
+
+  &--text-left {
+    @include media-breakpoint-up('md') {
+      text-align: left;
+    }
+  }
+
+  &--text-right {
+    @include media-breakpoint-up('md') {
+      text-align: right;
+    }
+  }
+
+  &--light a {
+    color: $page-hero-light-text-color;
+  }
+}
+
+.page-hero__title {
+  line-height: 0.9;
+
+  .page-hero--light & {
+    color: $page-hero-light-text-color;
+  }
+}
+
+.page-hero__toptitle {
+  @extend .h5;
+  margin-bottom: 20px;
+
+  .page-hero--light & {
+    color: $page-hero-light-text-color;
+  }
+}
+
+.page-hero__subtitle {
+  @extend .h4;
+
+  .page-hero--light & {
+    color: $page-hero-light-text-color;
+  }
+}
+
+.page-hero__bg,
+.page-hero__bg-image {
+  @include stretch-within;
+  z-index: -1;
+  background: {
+    size: cover;
+    position: center;
+    repeat: no-repeat;
+  }
+}
+
+.page-hero__content {
+  @extend .mx-auto;
+
+  .page-hero--content-left & {
+    margin-left: 0;
+  }
+
+  .page-hero--content-right & {
+    margin-right: 0;
+  }
+}

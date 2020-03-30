@@ -1,0 +1,95 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "forOf": true,
+      "es6": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "globals": {
+    "Modernizr": "readonly",
+    "theme": "readonly"
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "no-useless-constructor": "off",
+    "class-methods-use-this": "off",
+    "default-case": "off",
+    "no-unused-vars": [
+      "warn",
+      {
+        "args": "none"
+      }
+    ],
+    "no-underscore-dangle": "off",
+    "no-plusplus": "off",
+    "no-trailing-spaces": [
+      "warn",
+      {
+        "ignoreComments": true,
+        "skipBlankLines": true
+      }
+    ],
+    "eol-last": "error",
+    "no-multi-spaces": "off",
+    "key-spacing": [
+      "error",
+      {
+        "afterColon": true,
+        "mode": "minimum"
+      }
+    ],
+    "brace-style": "off", // defer to Prettier
+    "space-before-function-paren": [
+      "warn",
+      {
+        "named": "never",
+        "anonymous": "never"
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 200
+      }
+    ],
+    "radix": "off",
+    "prefer-destructuring": "off",
+    "prefer-template": "off",
+    "func-names": "off",
+    "no-prototype-builtins": "off",
+    "space-infix-ops": "off",
+    "no-param-reassign": "off",
+    "quotes": ["error", "single"],
+    "quote-props": ["warn", "consistent-as-needed"],
+    "comma-spacing": "warn",
+    "no-useless-escape": "off",
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "arrow-body-style": "off",
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
+    "object-shorthand": ["error", "consistent-as-needed"],
+    "operator-linebreak": "off", // Defer to Prettier
+    "no-new": "off",
+    "no-alert": "off"
+  }
+}

@@ -1,0 +1,60 @@
+<div data-section-id="{{ section.id }}" data-section-type="video">
+  <div class="container">
+    <div id="video-player-{{ section.id }}" class="video-player" data-video-player data-video-id="{{ section.settings.video_url.id }}" data-video-type="{{ section.settings.video_url.type }}" data-background="{% if section.settings.background %}true{% else %}false{% endif %}" data-embed-color="{{ section.settings.embed_color | remove: '#' }}">
+      {% if section.settings.cover_image and section.settings.background == false %}
+        <div class="video-player__cover" data-video-player-cover>
+          <div class="video-player__cover-still" style="background-image: url({{ section.settings.cover_image | img_url: '2000x' }});"></div>
+          <span class="video-player__cover-play">
+            {% include 'icon-play' %}
+          </span>
+        </div>
+      {% endif %}
+      <div class="video-player__embed" data-video-player-embed></div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Video",
+    "settings": [
+      {
+         "id": "video_url",
+         "type": "video_url",
+         "label": "Video URL",
+         "accept": ["vimeo", "youtube"],
+         "info": "Both Vimeo and YouTube videos are supported"
+      },
+      {
+        "type": "image_picker",
+        "id": "cover_image",
+        "label": "Cover Image"
+      },
+      {
+        "type": "header",
+        "content": "Vimeo Embed Options",
+        "info": "The options below only apply to Vimeo videos"
+      },
+      {
+        "type": "color",
+        "id": "embed_color",
+        "label": "Embed Color",
+        "default": "#000"
+      },          
+      {
+        "type": "checkbox",
+        "id" : "background",
+        "label": "Background Video",
+        "info": "Enabling this will remove video controls, cover image and autoplay the video.  [See Vimeo Help Page for info](https://help.vimeo.com/hc/en-us/articles/115011183028-Embedding-background-videos)",
+        "default": false
+      }
+    ],
+    "presets": [{
+      "name": "Video",
+      "category": "Media",
+      "settings": {
+        "video_url": "https://vimeo.com/72223143"
+      }
+    }]
+  }
+{% endschema %}

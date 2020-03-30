@@ -1,0 +1,77 @@
+// -------------------------
+// Account Pages
+// -------------------------
+
+// Not scoped to a specific account page
+
+.account-block {
+  margin-bottom: 25px;
+
+  address {
+    margin-bottom: $spacer;
+  }
+}
+
+.account-block__title {
+
+}
+
+.account-block__content {
+  
+}
+
+table.order-detail-totals {
+  @include media-breakpoint-up('lg') {
+    max-width: 450px;
+    margin-left: auto;
+  }
+}
+
+.account-content {
+
+}
+
+.account-sidebar {
+  @extend .col-lg-3;
+  @extend .col-xxl-2;
+  @extend .offset-xxl-1;
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 45px;
+  }  
+}
+
+.account-content--has-sidebar {
+  @extend .col-lg-9;
+  @extend .col-xxl-8;
+}
+
+.account-sidebar__content {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid $gray;
+
+  @include media-breakpoint-up('xl') {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}
+
+.account-sidebar__title {
+  margin-bottom: 2.5rem;
+}
+
+.account-sidebar__menu {
+  @include list-unstyled;
+
+  li {
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+
+    &.is-active {
+      font-weight: $font-weight-bold;
+    }
+  }
+}

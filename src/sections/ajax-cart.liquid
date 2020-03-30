@@ -1,0 +1,124 @@
+<div data-section-id="{{ section.id }}" data-section-type="ajax-cart" data-footer-text="{{ section.settings.footer_text }}">
+  <div class="ajax-cart-container" data-ajax-cart-container>
+      <form action="/cart" method="post" class="ajax-cart-form" novalidate>
+        <div class="ajax-cart__header">
+          <a href="#" class="ajax-cart__close" data-ajax-cart-close>{% include 'icon-close' %}</a>
+          <h4>{{ 'cart.general.title' | t }}</h4>
+        </div>
+        <div class="ajax-cart__body" data-ajax-cart-body>
+          {% comment %} Filled in via JS {% endcomment %}
+        </div>
+        <div class="ajax-cart__footer" data-ajax-cart-footer>
+          <div class="ajax-cart__footer-top" data-ajax-cart-footer-top>
+            {% comment %} Filled in via JS {% endcomment %}
+          </div>
+          <div class="ajax-cart__footer-bottom">
+            <div class="ajax-cart__footer-row">
+              <button type="submit" name="checkout" class="btn btn-block btn-primary">{{ 'cart.general.checkout' | t }}</button>
+            </div>
+            {% comment %} Hide additional checkout buttons in theme editor {% endcomment %}
+            {% if additional_checkout_buttons %}
+              {% unless content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+                <div class="ajax-cart__footer-row">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+              {% endunless %}
+            {% endif %}
+            <div class="ajax-cart__footer-row text-center">
+              <a href="/cart">{{ 'cart.general.view' | t }}</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% raw %}
+  <script type="text/x-handlebars-template" data-ajax-cart-body-template>
+    {{#if items}}
+      <ul class="ajax-cart__list">
+      {{#each items}}
+        <li class="ajax-cart__item" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
+          <img src="{{ image }}" class="ajax-cart__item-image">
+          <div class="ajax-cart__item-info">
+            <a href="{{ url }}" class="ajax-cart__item-header">
+              <div class="ajax-cart__item-title">{{ product_title }}</div>
+            </a>    
+            <ul class="ajax-cart__item-options">
+              {{#unless has_only_default_variant}}
+                {{#if variant_options}}
+                  {{#each variant_options}}
+                    <li>
+                      {{ name }}: {{ value }}
+                    </li>
+                  {{/each}}
+                {{else}}
+                  {{#if variant_title}}
+                    <li>{{ variant_title }}</li>
+                  {{/if}}
+                {{/if}}
+              {{/unless}}
+              <li>Price: {{ price }}</li>
+              <li>
+                {{#if variant_quantity_limit}}
+                  <div class="quantity-adjuster" data-quantity-adjuster>
+                    <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                    <input type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
+                    <button class="quantity-adjuster__increment" data-increment>+</button>
+                  </div>
+                {{else}}
+                  Quantity: {{ quantity }}
+                {{/if}}
+              </li>
+              <li>
+                <a href="#" class="ajax-cart__item-remove" data-ajax-cart-item-remove>Remove</a>
+              </li>            
+            </ul>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class="ajax-cart__empty-message">
+      {% endraw %}
+      {% if section.settings.empty_text != blank %}
+        {{ section.settings.empty_text }}
+      {% else %}
+        {{ 'cart.general.empty' | t }}
+      {% endif %}
+      {% raw %}
+    </div>
+  {{/if}}
+  </script>
+
+  <script type="text/x-handlebars-template" data-ajax-cart-footer-top-template>
+    <div class="ajax-cart__footer-row">
+      <p class="clearfix u-fw-bold">Subtotal <span style="float: right">{{ total_price }}</span></p>  
+    </div>
+    <div class="ajax-cart__footer-row">
+      {{{ footer_text }}}
+    </div>
+  </script>
+{% endraw %}
+
+
+{% schema %}
+  {
+    "name": "Ajax Cart",
+    "settings": [
+      {
+        "id": "empty_text",
+        "type": "richtext",
+        "label": "Empty Text",
+        "default": "<p>Your bag is empty</p>"
+      },
+      {
+        "id": "footer_text",
+        "type": "richtext",
+        "label": "Footer Text",
+        "default": "<p>Promotional Message Here</p>"
+      }
+    ]
+  }
+{% endschema %}

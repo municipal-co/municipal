@@ -1,0 +1,35 @@
+{%- comment %}
+
+  Header Dropdown Menu
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'header-dropdown-menu',
+              ll_handle: { string}
+  %}
+
+{% endcomment -%}
+
+{% assign linklist = linklists[ll_handle] %}
+
+{% if linklist and linklist.links.size > 0 %}
+    <div class="header-dropdown__menu">
+      <ul>
+        {% for link in linklist.links %}
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+            {% if link.links.size > 0 %}
+              <ul>
+                {% for sublink in link.links %}
+                  <li>
+                    <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+{% endif %}

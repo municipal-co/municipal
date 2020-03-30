@@ -1,0 +1,128 @@
+<div data-section-id="{{ section.id }}" data-section-type="swatches">
+
+  {% assign available_colors  = 'White|Black|Gray|Khaki|Pink|Orange|Purple|Brown|Tan|Red|Green|Yellow|Blue' | split: '|' %}
+  {% assign block_colors      = '' %}
+  {% assign preview_dots_html = '' %}
+  {% assign style_tag_content = '' %}
+
+  {% if section.blocks.size > 0 %}
+    {% for block in section.blocks %}
+
+      {% assign dot_handle = block.settings.title | handle %}    
+      {% assign block_colors = block_colors | append: dot_handle %}
+
+      {% if block.settings.color != blank %}
+        {% assign color_hsl_parts = block.settings.color | color_to_hsl | remove_first: 'hsl(' | remove_first : ')' | split: ',' %}
+        {% assign hue        = color_hsl_parts[0] | strip | times: 1 %}
+        {% assign saturation = color_hsl_parts[1] | remove: '%' | strip | times: 1 %}
+        {% assign lightness  = color_hsl_parts[2] | remove: '%' | strip | times: 1 %}
+
+        {% capture dot_styles %}
+          .dot.dot--{{ dot_handle }} .dot__inner {
+            {% if block.settings.color != blank %}
+              background-color: {{ block.settings.color }} !important;
+              {% if lightness and lightness >= 90 %}
+                border-color: {{ block.settings.color | color_darken: 7 }} !important;
+              {% else %}
+                border-color: {{ block.settings.color }} !important;
+              {% endif %}
+            {% endif %}
+            {% if block.settings.image %}
+              background: none;
+              background-color: transparent !important;            
+              background-image:url({{ block.settings.image | img_url: '50x50', crop: 'center' }}) !important;
+              border: none !important;
+            {% endif %}
+
+            {% if block.settings.image %}
+              .dot.dot--{{ dot_handle }} .dot__inner:before {
+                display: none;
+              }
+            {% endif %}            
+          }
+        {% endcapture %}
+      {% endif %}
+
+      {% capture preview_dot_html %}
+        <div class="dots-preview-item" data-dots-preview-item="{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="dot dot--swatch dot--{{ dot_handle }} is-active" title="{{ block.settings.title }}">
+            <div class="dot__inner"></div>
+          </div>
+          <div class="dots-preview-item__title">{{ block.settings.title | default: '&nbsp' }}</div>
+        </div>
+      {% endcapture %}
+
+      {% assign style_tag_content = style_tag_content | append: dot_styles %}
+      {% assign preview_dots_html = preview_dots_html | append: preview_dot_html %}
+    {% endfor %}
+  {% endif %}
+
+  <style type="text/css">
+    {{ style_tag_content }}
+  </style>
+
+  {% capture preview_html %}
+    <div class="dots-preview" style="display: none" data-dots-preview>
+      <div class="container">
+        <div class="text-center" style="padding: 40px 0;">
+          <div class="alert alert-info">This swatch preview is only visible inside of the theme editor.</div>
+          <br />
+          <div class="dots">
+            {{ preview_dots_html }}
+
+            {% comment %} Display remaining colors that haven't been set in the theme editor {% endcomment %}
+            {% for c in available_colors %}
+              {% assign c_handle = c | handle %}
+              {% unless block_colors contains c_handle %}
+                <div class="dots-preview-item">
+                  <div class="dot dot--swatch dot--{{ c_handle }} is-active" title="{{ c }}">
+                    <div class="dot__inner"></div>
+                  </div>
+                  <div class="dots-preview-item__title">{{ c }}</div>
+                </div>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endcapture %}
+
+  {% include 'content-for-theme-editor' with preview_html %}  
+</div>
+
+{% schema %}
+  {
+    "name": "Swatches",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Swatches",
+        "info": "Use this section to define swatch colors / images to be used throughout the site.  If a swatch image is set at the product level, that will override the color / image set here.  The 'title' of the swatch must match the value of the associated product color tag.  For instance, if you are tagging products with 'color:Dark Blue', you must name the swatch 'Dark Blue'.  You can also hover over a swatch to reveal it's name."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "swatch",
+        "name": "Swatch",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "color",
+            "id": "color",
+            "label": "Color"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

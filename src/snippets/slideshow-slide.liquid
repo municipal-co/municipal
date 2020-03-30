@@ -1,0 +1,117 @@
+{%- comment %}
+
+  Default Slideshow Slide
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'slideshow-slide',
+              id: { string } - optional
+              attributes: { string } - optional
+              link: { string } - optional
+              title: { string } - optional
+              subtitle: { string } - optional
+              text_position: { string } - optional ("top" or "bottom") - defaults to bottom
+              background_image: { image } - optional
+              background_image_vertical_alignment: { string } - optional - defaults to center
+              background_image_aspect_ratio: { string } - optional - defaults to '6x4'
+              background_image_small: { image } - optional
+              background_image_small_aspect_ratio: { string } - optional - defaults to '3x4'
+              background_image_small_vertical_alignment: { string } - optional - defaults to center              
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if background_image_vertical_alignment == blank %}
+  {% assign background_image_vertical_alignment = 'center' %}
+{% endif %}
+{% if background_image_aspect_ratio == blank %}
+  {% assign background_image_aspect_ratio = '6x4' %}
+{% endif %}
+{% if background_image_small_vertical_alignment == blank %}
+  {% assign background_image_small_vertical_alignment = 'center' %}
+{% endif %}
+{% if background_image_small_aspect_ratio == blank %}
+  {% assign background_image_small_aspect_ratio = '3x4' %}
+{% endif %}
+{% comment %} End Defaults {% endcomment %}
+
+{% if text_position != 'top' or text_position != 'bottom' %}
+  {% assign text_position = 'bottom' %}
+{% endif %}
+
+{% comment %} Only output the slide html if there is an image to use {% endcomment %}
+{% if background_image != blank or background_image_small != blank %}
+
+  {% comment %} Can't use IDs here because the slideshow clones slides and doesn't carry over the IDs {% endcomment %}
+  <div class="slideshow-slide-{{ id }} slideshow-slide swiper-slide" data-slideshow-slide {{ attributes }}>
+    <style type="text/css">
+      .slideshow-slide-{{ id }} .slideshow-slide__image {
+        background-position: center {{ background_image_vertical_alignment }};
+      }
+      {% if background_image %}
+      .slideshow-slide-{{ id }} .slideshow-slide__image {
+        background-image: url('{{ background_image | img_url: '1800x' }}');
+      }
+      {% endif %}
+
+      @media (max-width: 767px) {
+        .slideshow-slide-{{ id }} .slideshow-slide__image {
+          background-position: center {{ background_image_small_vertical_alignment }};
+          {% if background_image_small %}
+            background-image: url({{ background_image_small | img_url: '800x' }});
+          {% elsif background_image %}
+            background-image: url('{{ background_image | img_url: '800x' }}');
+          {% endif %}
+        }
+      }
+    </style>
+
+    {% capture text_content_html %}
+      {% if title != blank or subtitle != blank %}
+        <div class="slideshow-slide__text-content">
+          {% if title != blank %}
+            <h3 class="slideshow-slide_title">
+              {{ title }}
+            </h3>
+          {% endif %}
+          {% if subtitle != blank %}
+            <div class="slideshow-slide_subtitle">
+              {{ subtitle | escape }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endcapture %}
+
+    <div class="slideshow-slide__inner">
+      {% if link != blank %}
+        <a href="{{ link }}" class="slideshow-slide__link">
+      {% endif %}
+
+        {% if text_position == 'top' %}
+          {{ text_content_html }}
+        {% endif %}
+
+        <div class="slideshow-slide__image 
+                    frame 
+                    frame--{{ background_image_small_aspect_ratio }}
+                    frame--md-{{ background_image_aspect_ratio }}">
+        </div>
+
+        {% if background_image == blank and background_image_small == blank %}
+          {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+          {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+
+        {% if text_position == 'bottom' %}
+          {{ text_content_html }}
+        {% endif %}
+
+      {% if link != blank %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

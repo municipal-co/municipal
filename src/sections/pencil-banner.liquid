@@ -1,0 +1,37 @@
+<div data-section-id="{{ section.id }}" data-section-type="pencil-banner">
+  {% if section.settings.banner_enabled %}
+    <div class="pencil-banner">
+      <div class="container">
+        <div class="d-none d-md-block">{{ section.settings.banner_content }}</div>
+        <div class="d-block d-md-none">{{ section.settings.banner_mobile_content | default: section.settings.banner_content }}</div>
+        {% comment %}<a href="#" class="pencil-banner__close" data-pencil-banner-close>&times;</a>{% endcomment %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Pencil Banner",
+    "settings": [
+      {
+        "id": "banner_enabled",
+        "type": "checkbox",
+        "label": "Show Pencil Banner",
+        "default": true
+      },
+      {
+        "id": "banner_content",
+        "type": "richtext", 
+        "label": "Content",
+        "default": "<p>Default Banner Text</p>"
+      },
+      {
+        "id": "banner_mobile_content",
+        "type": "richtext", 
+        "label": "Mobile Content",
+        "info": "Alternate text for small screens, will fall back to regular content if left blank"
+      }
+    ]
+  }
+{% endschema %}

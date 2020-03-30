@@ -1,0 +1,116 @@
+{% comment %} Changing this will turn on / off the fixed header behavior {% endcomment %}
+{% assign FIXED_HEADER = true %}
+
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon != blank %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | img_url: '180x180' }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | img_url: '32x32' }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ settings.favicon | img_url: '16x16' }}">
+  {% endif %}
+
+  {% capture seo_title %}
+    {{ page_title }}
+    {% if current_tags %}
+      {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {% endif %}
+    {% if current_page != 1 %}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {% endif %}
+    {% unless page_title contains shop.name %}
+      &ndash; {{ shop.name }}
+    {% endunless %}
+  {% endcapture %}
+  <title>{{ seo_title }}</title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {% include 'social-meta-tags' %}
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+    window.theme = {
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        adding: {{ 'products.product.adding' | t | json }}
+      },
+      moneyFormat: {{ shop.money_format | json }}
+    };
+
+  {% if settings.yotpo_client_id != blank %}
+    window.yotpoConfig = {
+      appKey: '{{ settings.yotpo_client_id }}'
+    };
+  {% endif %}
+  </script>
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'theme.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
+
+  {{ content_for_header }}
+
+  {% include 'third-party-scripts-head' %}
+</head>
+
+{% capture body_class %}
+  template-{{ template.name | handle }}
+  {% if template.suffix != blank %} template-{{ template.name | append: '-' | append: template.suffix | handle }} {% endif %}
+  {% if FIXED_HEADER == true %} site-fixed-header {% endif %}
+{% endcapture %}
+
+<body id="{{ page_title | handle }}" class="{{ body_class | strip | strip_newlines }}">
+
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+  
+  {% comment %} If you don't need swatch functionality, remove this section along with the associated JS {% endcomment %}
+  {% section 'swatches' %} 
+  {% section 'pencil-banner' %}
+  {% section 'mobile-menu' %}
+
+  <div class="layout-wrapper">
+
+    {% comment %} Select the appropriate 'header-*' section for the theme you are building and remove the files for the others {% endcomment %}
+    {% section 'header-logo-center' %}
+    {% comment %}{% section 'header-logo-left' %} {% endcomment %}
+
+    <main role="main" id="MainContent">
+      <div class="layout-main-content">
+        {{ content_for_layout }}
+      </div>
+    </main>
+
+    {% section 'footer' %}
+
+  </div>
+
+  {% comment %} Select the appropriate 'newsletter-*' section for the theme you are building and remove the associated files for the other {% endcomment %}
+  {% section 'newsletter-modal' %}
+  {% comment %}{% section 'newsletter-slideup' %}{% endcomment %}
+
+  {% unless template == 'cart' %}
+    {% section 'ajax-cart' %}
+  {% endunless %}
+
+  {% include 'slideup-template' %}
+  {% include 'search-overlay' %}
+  {% include 'third-party-scripts-foot' %}
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+// -----------------------------------------------------------------------------
+// Arrows
+// -----------------------------------------------------------------------------
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: $arrow-dimension;
+  width: $arrow-dimension;
+  padding: $arrow-padding;
+  background-color: $arrow-bg;
+  border-radius: $arrow-border-radius;
+  overflow: hidden;
+  cursor: pointer;
+  vertical-align: top;
+  transition: background-color $transition-duration-fast $transition-timing-function-in-out-ui;
+
+  // No focus here because slideshow a11y causes these to keep focus at weird times
+  &:hover {
+    background-color: $arrow-bg-hover;
+    transition: background-color $transition-duration-fast $transition-timing-function-in-out-ui;
+  }
+
+  &--right {
+    // Default
+  }
+
+  &--left {
+    transform: rotate(180deg);
+  }
+
+  &--up {
+    transform: rotate(-90deg);
+  }
+
+  &--down {
+    transform: rotate(90deg);
+  }
+}
+
+.arrow__icon {
+  position: relative;
+  width: $arrow-icon-length;
+  height: $arrow-icon-width;
+  background: $arrow-icon-color;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    background: $arrow-icon-color;
+    height: $arrow-icon-tip-length;
+    right: 0;
+    width: $arrow-icon-width;
+  }
+
+  &:before {
+    top: -#{$arrow-icon-tip-length};
+    transform: rotate(-#{$arrow-icon-tip-skew});
+    transform-origin: bottom right;
+  }
+
+  &:after {
+    top: $arrow-icon-width;
+    transform: rotate($arrow-icon-tip-skew);
+    transform-origin: top right;
+  }
+}

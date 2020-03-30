@@ -1,0 +1,108 @@
+<div data-section-id="{{ section.id }}" data-section-type="promo">
+  
+  {% comment %} 
+
+    Since the promo contains column-like elements with grid-based horozontal padding,
+    all you need to do to create a promo with a restricted width is wrap it in a container and row element like this..
+
+    <div class="container">
+      <div class="row">
+        {% include 'promo' ... %}
+      </div>
+    </div>
+  {% endcomment %}
+
+  {% include 'promo',
+              p_id: section.id,
+              p_layout: section.settings.layout,
+              p_type: section.settings.type,
+              p_content_max_width: section.settings.content_max_width,
+              p_image: section.settings.image,
+              p_image_small: section.settings.image_small,
+              p_title: section.settings.title,
+              p_text: section.settings.text,
+              p_cta_url: section.settings.cta_url,
+              p_cta_text: section.settings.cta_text
+  %}
+</div>
+
+{% schema %}
+  {
+    "name": "Promo",
+    "settings": [
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "options": [
+          { "value": "left", "label": "Image Left" },
+          { "value": "right", "label": "Image Right" }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "select",
+        "id": "type",
+        "label": "Content Split",
+        "options": [
+          { "value": "1", "label": "4/8" },
+          { "value": "2", "label": "5/7" },
+          { "value": "3", "label": "6/6" },
+          { "value": "4", "label": "7/5" },
+          { "value": "5", "label": "8/4" }
+        ],
+        "default": "3"
+      },      
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type": "range",
+        "id":   "content_max_width",
+        "min":  300,
+        "max":  850,
+        "step": 25,
+        "unit": "px",
+        "label": "Max Content Width",
+        "default": 450
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },      
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_small",
+        "label": "Image - Mobile"
+      }  
+    ],
+    "presets": [
+      {
+        "name": "Promo",
+        "category": "Media",
+        "settings": {
+          "title": "Promo Title",
+          "text": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p>"
+        }
+      }
+    ]    
+  }
+{% endschema %}

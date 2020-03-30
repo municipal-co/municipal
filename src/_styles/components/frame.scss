@@ -1,0 +1,48 @@
+$frame-ratios: (
+  (1, 1),
+  (6, 4),
+  (16, 9),
+  (4, 3)
+);
+
+@mixin aspect-ratio-padding($width, $height) {
+  padding-top: ($height / $width) * 100%;
+}
+
+.frame {
+  position: relative;
+
+  background: {
+    size: cover;
+    position: center;
+  }
+
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+  }
+
+  .frame__inner {
+    @include stretch-within;
+  }
+
+  // Generate a base class for each ratio at each breakpoint (including reverse ratios)
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix-rear($breakpoint, $grid-breakpoints);
+
+      @each $ratio-x, $ratio-y in $frame-ratios {
+        &--#{$infix}#{$ratio-x}x#{$ratio-y}::before {
+          @include aspect-ratio-padding($ratio-x, $ratio-y);
+        }
+
+        @if $ratio-x != $ratio-y {
+          &--#{$infix}#{$ratio-y}x#{$ratio-x}::before {
+            @include aspect-ratio-padding($ratio-y, $ratio-x);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{%- comment %}
+
+  Page Hero
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'page-hero',
+              ph_id: { string } - required
+              ph_background_image: { image }
+              ph_background_image_medium: { image }
+              ph_background_image_small: { image }
+              ph_content_alignment: { string } - defaults to 'center' - only has effect when `content_max_width` is set and less than page-hero width
+              ph_text_alignment: { string } - defaults to content_alignment
+              ph_light_text: { boolean } - defaults to false
+              ph_content_max_width: { number } - optional
+              ph_title: { string } - optional
+              ph_toptitle: { string } - optional - text that goes on the top of the title
+              ph_subtitle: { string } - optional
+              ph_title_link: { string } - optional
+              ph_cta_url: { url }
+              ph_cta_text { string }
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if ph_content_alignment == blank %}
+  {% assign ph_content_alignment = 'center' %}
+{% endif %}
+
+{% if ph_text_alignment == blank %}
+  {% assign ph_text_alignment = ph_content_alignment %}
+{% endif %}
+
+{% if ph_light_text == blank %}
+  {% assign ph_light_text = false %}
+{% endif %}
+{% comment %} End Defaults {% endcomment %}
+
+<style type="text/css">
+{% if ph_background_image %}
+#page-hero-{{ ph_id }} .page-hero__bg-image {
+  background-image: url({{ ph_background_image | img_url: '1800x' }});
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #page-hero-{{ ph_id }} .page-hero__bg-image {
+    background-image: url({{ ph_background_image | img_url: '2400x' }});
+  }
+}
+{% endif %}
+{% if ph_content_max_width != blank %}
+  #page-hero-{{ ph_id }} .page-hero__content {
+    max-width: {{ ph_content_max_width | append: 'px' }};
+  }
+{% endif %}
+@media (max-width: 991px) {
+  #page-hero-{{ ph_id }} .page-hero__bg-image {
+    {% if ph_background_image_medium %}
+      background-image: url({{ ph_background_image_medium | img_url: '1000x' }});
+    {% elsif ph_background_image %}
+      background-image: url({{ ph_background_image | img_url: '1000x' }});
+    {% endif %}
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2) and (max-width: 991px),
+        (min-resolution: 192dpi)           and (max-width: 991px) {
+  #page-hero-{{ ph_id }} .page-hero__bg-image {
+    {% if ph_background_image_medium %}
+      background-image: url({{ ph_background_image_medium | img_url: '1500x' }});
+    {% elsif ph_background_image %}
+      background-image: url({{ ph_background_image | img_url: '1500x' }});
+    {% endif %}
+  }
+}
+@media (max-width: 767px) {
+  #page-hero-{{ ph_id }} .page-hero__bg-image {
+    {% if ph_background_image_small %}
+      background-image: url({{ ph_background_image_small | img_url: '800x' }});
+    {% elsif ph_background_image %}
+      background-image: url({{ ph_background_image | img_url: '800x' }});
+    {% endif %}
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2) and (max-width: 767px),
+        (min-resolution: 192dpi)           and (max-width: 767px) {
+  #page-hero-{{ ph_id }} .page-hero__bg-image {
+    {% if ph_background_image_small %}
+      background-image: url({{ ph_background_image_small | img_url: '1200x' }});
+    {% elsif ph_background_image %}
+      background-image: url({{ ph_background_image | img_url: '1200x' }});
+    {% endif %}
+  }
+}
+
+</style>
+
+<div id="page-hero-{{ ph_id }}" class="page-hero page-hero--content-{{ ph_content_alignment }} page-hero--text-{{ ph_text_alignment }}{% if ph_light_text %} page-hero--light{% endif %}">
+  {% if ph_background_image %}
+    <div class="page-hero__bg">
+      <div class="page-hero__bg-image" role="img" aria-label="{{ ph_background_image.alt }}"></div>
+    </div>
+  {% endif %}
+  <div class="container">
+    <div class="page-hero__content">
+      {% if ph_toptitle != blank %}
+        <div class="page-hero__toptitle">
+          {{ ph_toptitle }}
+        </div>
+      {% endif %}
+      {% if ph_title != blank %}
+        <h1 class="page-hero__title">
+          {% if ph_title_link != blank %}
+            <a href="{{ ph_title_link }}">{{ ph_title }}</a>
+          {% else %}
+            {{ ph_title }}
+          {% endif %}
+        </h1>
+      {% endif %}
+      {% if ph_subtitle != blank %}
+        <div class="page-hero__subtitle">{{ ph_subtitle }}</div>
+      {% endif %}
+      {% if ph_cta_url != blank and ph_cta_text != blank %}
+        <a href="{{ ph_cta_url }}" class="btn btn-primary">
+          {{ ph_cta_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

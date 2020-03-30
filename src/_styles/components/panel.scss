@@ -1,0 +1,101 @@
+// -------------------------
+// Panels
+// -------------------------
+
+
+/*
+ *  .panel
+ *    .panel__header
+ *      .panel__title
+ *        a
+ *          .panel__title-icon
+ *    .panel__body
+ */
+
+/* Leave root .panel styling alone!
+ * The bootstrap collapse plugin depends on it but we'd like to be able to use the collapsible behavior on anything
+ */
+.panel {
+
+}
+
+.panel__header,
+.panel__body {
+  padding: $panel-padding-vertical $panel-padding-horizontal;
+  border: $panel-border;
+}
+
+.panel__header {
+
+}
+
+.panel__title {
+  margin: 0;
+  @include clearfix;
+
+  a {
+    display: block;
+  }
+}
+
+.panel__title-icon {
+  float: right;
+}
+
+.panel__body {
+  border-top: none;
+  margin-bottom: $panel-margin-vertical;
+}
+
+.panel-group {
+  margin-bottom: $panel-margin-vertical;
+
+  .panel__body {
+    margin-bottom: 0;
+  }
+
+  .panel + .panel {
+    margin-top: 0;
+
+    .panel__header {
+      border-top: none;
+    }
+  }
+}
+
+// Plus sign that responds to .is-open state class and turns into an "x"
+.panel__title-icon-expand-trigger {
+  position: relative;
+  display: inline-block;
+  height: $panel-expand-icon-size;
+  width: $panel-expand-icon-size;
+
+  transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    background: $black;
+  }
+
+  &:before {
+    height: $panel-expand-icon-stroke-width;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-#{$panel-expand-icon-stroke-width/2});
+  }
+
+  &:after {
+    width: $panel-expand-icon-stroke-width;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-#{$panel-expand-icon-stroke-width/2});
+  }
+
+  .is-open & {
+    transform: rotate(135deg);
+  }
+}

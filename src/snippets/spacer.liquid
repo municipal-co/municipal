@@ -1,0 +1,51 @@
+{%- comment %}
+
+  Spacer
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'spacer',
+              id: { string } - optional - required if you want to use pixel values for spacer height
+              height_name: { string } - optional, spacer modifier suffix (see spacer.scss)
+              height_px: { number } - optional 
+              height_px_tablet: { number } - optional
+              height_px_mobile: { number } - optional
+  %}
+
+  Use the `height_name` argument to give the spacer a base height.
+  Use the `height_px_*` values to override the base height.
+
+  Ideally you shouldn't be using both at the same time but that's still an option if you need that kind of control.
+
+{% endcomment -%}
+
+{% if id != blank %}
+  <style type="text/css">
+    {% if height_px != blank %}
+      #spacer-{{ id }} {
+        height: {{ height_px | append: 'px' }};
+      }
+    {% endif %}
+
+    {% if height_px_tablet != blank %}
+      @media (max-width: 991px) {
+        #spacer-{{ id }} {
+          height: {{ height_px_tablet | append: 'px' }};
+        }
+      }
+    {% endif %}
+
+    {% if height_px_mobile != blank %}
+      @media (max-width: 767px) {
+        #spacer-{{ id }} {
+          height: {{ height_px_mobile | append: 'px' }};
+        }
+      }
+    {% endif %}    
+  </style>
+{% endif %}
+
+<div {% if id != blank %}id="spacer-{{ id }}"{% endif %}
+      class="spacer {% if height_name != blank %} spacer--{{ height_name }}{% endif %}">
+</div>

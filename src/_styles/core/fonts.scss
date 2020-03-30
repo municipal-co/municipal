@@ -1,0 +1,15 @@
+// --------------------------------------------------------
+// Fonts
+// --------------------------------------------------------
+
+// Import your fonts using the font-face mixin built for shopify assets
+// Make sure to set the font-weight / font-style correctly for each one that you include.
+// The second argument is the filename *excluding* the file extension.  This allows us to generate all the extensions inside the mixin.
+
+// @include font-face('Font Family', 'font-family-normal', $font-weight-normal);
+// @include font-face('Font Family', 'font-family-bold', $font-weight-bold);
+
+// If you have italic versions of the font, add them below
+// =======================================================
+// @include font-face('Font Family', 'font-family-italic', $font-weight-normal, italic);
+// @include font-face('Font Family', 'font-family-bold-italic', $font-weight-bold, italic);

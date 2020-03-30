@@ -1,0 +1,26 @@
+// -------------------------
+// Breadcrumbs
+// -------------------------
+
+.main__header {
+
+  .breadcrumb {
+
+  }
+
+  .breadcrumb__item {
+
+    // Add a number to the front of each breadcrumbs
+    // &:before {
+    //   display: inline-block;
+    //   vertical-align: middle;
+    //   padding-right: 8px;
+    //   counter-increment: breadcrumbs;
+    //   content: counter(breadcrumbs) '.';
+    // }
+
+    svg {
+      display: none;
+    }
+  }
+}

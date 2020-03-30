@@ -1,0 +1,84 @@
+{%- comment %}
+
+  Article Card
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'article-card',
+              article: { article },
+              show_author: { boolean } - defaults to true
+              show_date: { boolean } - defaults to true
+              show_tags: { boolean } - defaults to true
+              show_excerpt: { boolean } - defaults to false
+              img_size: { string } - optional - defaults to '600x450' // see https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if show_author == blank %}
+  {% assign show_author = true %}
+{% endif %}
+
+{% if show_date == blank %}
+  {% assign show_date = true %}
+{% endif %}
+
+{% if show_tags == blank %}
+  {% assign show_tags = true %}
+{% endif %}
+
+{% if show_excerpt == blank %}
+  {% assign show_excerpt = true %}
+{% endif %}
+
+{% if img_size == blank %}
+  {% assign img_size = '600x450' %}
+{% endif %}
+
+{% if article and article != blank %}
+  
+  {% comment %} Shopify doesn't have a way to access article.blog directly so we have to parse out the url {% endcomment %}
+  {% assign blog_handle = article.url | replace: 'blogs/', '' | replace: '/', ' ' | split: ' ' | first %}
+
+  <div class="article-card">
+    {% if article.image %}
+      <a href="{{ article.url }}">
+        <img src="{{ article | img_url: img_size, crop: 'center' }}" class="article-card__image" alt="{{ article.image.alt }}"/>
+      </a>
+    {% endif %}
+    <div class="article-card__info">
+      {% if article.tags.size > 0 and show_tags %}
+        <div class="article-card__info-tags">
+          {% for tag in article.tags %}
+            <a href="/blogs/{{ blog_handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+            {% unless forloop.last %}&middot;{% endunless %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <a href="{{ article.url }}">
+        <h3 class="article-card__info-title">{{ article.title }}</h3>
+      </a>
+      {% if show_excerpt and article.excerpt != blank %}
+        <div class="article-card__info-excerpt">
+          {{ article.excerpt }}
+        </div>
+      {% endif %}
+      {% if show_author or show_date %}
+        <div class="article-card__info-meta">
+          {% capture author_link %}<a href="{{ article.user.homepage }}">{{ article.author }}</a>{% endcapture %}
+          {% capture date %}{{ article.published_at | time_tag: format: 'month_day' }}{% endcapture %}
+          {% if show_author and show_date %}
+            {{ 'blogs.article.author_on_date_html' | t: author: author_link, date: date }}
+          {% elsif show_author %}
+            {{ 'blogs.article.author_html' | t: author: author_link }}
+          {% elsif show_date %}
+            {{ date }}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+{% endif %}

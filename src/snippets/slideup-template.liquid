@@ -1,0 +1,17 @@
+{% raw %}
+<script type="text/x-handlebars-template" data-slideup-template>
+  <div class="slideup">
+    <div class="container">
+      <a href="#" class="slideup__close" data-slideup-close>{% endraw %}{% include 'icon-close' %}{% raw %}</a>
+      <div class="slideup__content">
+        {{#if title}}
+          <div class="slideup__title">{{ title }}</div>
+        {{/if}}
+        {{#if text}}
+          <div class="slideup__text">{{ text }}</div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</script>
+{% endraw %}

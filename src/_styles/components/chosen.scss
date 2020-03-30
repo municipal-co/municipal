@@ -1,0 +1,120 @@
+// Overrides for chosen dropdowns
+
+.chosen-container {
+  width: 100% !important;
+  max-width: 100%;
+  font-size: $font-size-sm;
+
+  .chosen-drop {
+    box-shadow: none;
+    border-color: $input-focus-border-color;
+    border-top: 1px solid $input-focus-border-color;
+    clip: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: all $transition-duration-fast $transition-timing-function-base;
+  }
+
+  &.chosen-with-drop .chosen-drop {
+    opacity: 1;
+    pointer-events: auto;
+    transition: all $transition-duration-fast $transition-timing-function-base;
+  }
+
+  .chosen-results {
+    margin: 0;
+    padding: 0;
+    color: $input-color;
+
+    li {
+      padding: $spacer / 2;
+      line-height: inherit;
+      transition: all $transition-duration-fastest $transition-timing-function-base;
+
+      &.result-selected {
+        color: $input-color;
+        background-color: $gray-light;
+      }
+
+      &.highlighted {
+        color: $input-color;
+        background-color: $gray-lighter;
+        background-image: none;
+      }
+    }
+  }
+}
+
+.chosen-container-single {
+  .chosen-single {
+    @extend .form-control;
+    box-shadow: none;
+    background-image: none; // Remove default gradient background image
+
+    div {
+      width: 30px;
+
+      b {
+        opacity: 0.3;
+        transition: all $transition-duration-fast $transition-timing-function-base;
+      }
+    }
+  }
+
+  .chosen-search,
+  .chosen-search-input {
+    display: none;
+  }
+
+  .chosen-drop {
+    border-radius: $input-border-radius;
+  }
+}
+
+.chosen-container-active {
+
+  .chosen-single {
+    box-shadow: none;
+  }
+
+  &.chosen-with-drop .chosen-single {
+    border-color: $input-focus-border-color;
+    background-color: $input-bg;
+    background-image: none;
+
+    div b {
+      opacity: 1;
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.chosen-disabled {
+
+  &, .chosen-single {
+    cursor: $cursor-disabled;
+  }
+}
+
+// Fix sprite path
+.chosen-rtl .chosen-search input[type="text"],
+.chosen-container-single .chosen-single abbr,
+.chosen-container-single .chosen-single div b,
+.chosen-container-single .chosen-search input[type="text"],
+.chosen-container-multi .chosen-choices .search-choice .search-choice-close,
+.chosen-container .chosen-results-scroll-down span,
+.chosen-container .chosen-results-scroll-up span {
+  background-image: none !important;
+}
+
+/* stylelint-disable-next-line no-duplicate-selectors */
+.chosen-container-single .chosen-single div b {
+  background-position: right center;
+  background: {
+    image: $custom-select-indicator !important;
+    repeat: no-repeat;
+    position: center !important;
+    color: transparent;
+    size: 12px auto !important;
+  }
+}

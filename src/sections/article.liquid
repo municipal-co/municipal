@@ -1,0 +1,59 @@
+{% assign has_image = false %}
+{% if article.image %}
+  {% assign has_image = true %}
+{% endif %}
+
+{% capture article_date %}{{ article.published_at | time_tag: format: 'month_day' }}{% endcapture %}
+{% capture subtitle %}{{ 'blogs.article.author_on_date_html' | t: author: article.author, date: article_date }}{% endcapture %}
+
+<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="article">
+
+  <div class="article-content-wrapper" data-article-content-wrapper>
+    <article role="article" itemscope itemtype="http://schema.org/Article">
+
+      <div class="container-fluid-max">
+        {% include 'page-hero',
+                    ph_id: article.id,
+                    ph_background_image: article.image,
+                    ph_light_text: has_image,
+                    ph_title: article.title,
+                    ph_subtitle: subtitle
+        %}
+      </div>
+      
+      <div class="container">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+
+            {% if settings.social_sharing_blog %}
+              {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+            {% endif %}
+
+            {% if article.tags.size > 0 %}
+              <ul class="list-inline">
+                {% for tag in article.tags %}
+                  <li>
+                    <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}        
+
+            <div class="rte" itemprop="articleBody" data-article-content>
+              {{ article.content }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Article",
+    "settings": []
+  }
+{% endschema %}

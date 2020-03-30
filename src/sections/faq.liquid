@@ -1,0 +1,42 @@
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="faq">
+  <div class="container">
+
+    {% include 'page-header', ph_title: page.title %}
+
+    {{ page.content }}
+
+    {% for block in section.blocks %}
+      <h4>{{ block.settings.title }}</h4>
+      <div class="rte">
+        {{ block.settings.text }}
+      </div>
+      <hr />
+    {% endfor %}    
+
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "FAQ Page",
+    "settings": [],
+    "blocks":[
+      {
+        "type": "text",
+        "name": "FAQ",
+        "settings":[
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Question"
+          },
+          {
+            "id": "text",
+            "type": "richtext",
+            "label": "Answer"
+          }
+        ]
+      }
+    ]    
+  }
+{% endschema %}

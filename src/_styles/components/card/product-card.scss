@@ -1,0 +1,100 @@
+// -------------------------
+// Product Card
+// -------------------------
+
+.product-card {
+  height: 100%;
+}
+
+.product-card__gallery {
+  position: relative;
+  width: 100%;
+  margin-bottom: 11px;
+  overflow: hidden;
+
+  .product-card__qv-trigger-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 55px;
+    text-align: center;
+  }
+}
+
+.product-card__gallery-image {
+
+  &,
+  img {
+    width: 100%;
+  }
+}
+
+.product-card__gallery-image--alt {
+  @include stretch-within;
+  background: $body-bg;
+  opacity: 0;
+  transition: opacity $transition-timing-function-out $transition-duration-base;
+
+  // We add the class 'alt-loaded' to the product card so we know it's safe to display the alt image
+  .product-card.alt-loaded:hover &,
+  .product-card.alt-loaded:focus & {
+    opacity: 1;
+    transition: opacity $transition-timing-function-in $transition-duration-fast;
+  }
+}
+
+.product-card__gallery-placeholder {
+  @include stretch-within;
+  background: $body-bg;
+  opacity: 1;
+
+  // Hide the placeholder once the loading is complete
+  .is-loaded & {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-timing-function-out $transition-duration-base;
+  }
+}
+
+.product-card__info {
+  text-align: $product-card-text-align;
+}
+
+.product-card__info-swatches {
+  margin-bottom: 15px;
+}
+
+.product-card__info-title,
+.product-card__info-price {
+
+}
+
+.product-card__info-title {
+  font-size: $product-card-title-size;
+}
+
+.product-card__info-price {
+  font-size: $product-card-price-size;
+
+  // Gray out crossed out price
+  s {
+    color: $gray;
+  }
+}
+
+
+.product-card__qv-trigger-wrap {
+  display: none;
+  opacity: 0;
+  transition: opacity $transition-timing-function-out $transition-duration-base;
+
+  @include media-breakpoint-up('md') {
+    display: block;
+  }
+
+  .product-card:hover &,
+  .product-card:focus & {
+    opacity: 1;
+    transition: opacity $transition-timing-function-in $transition-duration-fast;
+  }
+}

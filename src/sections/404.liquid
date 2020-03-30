@@ -1,0 +1,36 @@
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="fourofour">
+  <div class="container">
+    <div class="four04__content-wrapper">
+      <h1 class="h3 four04__heading">
+        {% if section.settings.title != blank %}
+          {{ section.settings.title }}
+        {% else %}
+          {{ 'general.404.title' | t }}
+        {% endif %}
+      </h1>
+
+      {% unless section.settings.content == blank %}
+        <div class="p1 four04__content">{{ section.settings.content }}</div>
+      {% endunless %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "404 Page",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "content",
+        "type": "richtext",
+        "label": "Content",
+        "default": "<p>Need help finding your way?  Let us take you <a href=\"/\">home</a>.</p>"
+      }
+    ]
+  }
+{% endschema %}

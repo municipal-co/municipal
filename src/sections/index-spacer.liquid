@@ -1,0 +1,65 @@
+<div data-section-id="{{ section.id }}" data-section-type="spacer">
+  {% include 'spacer',
+              id: section.id,
+              height_name: section.settings.height_name,
+              height_px: section.settings.height_px,
+              height_px_tablet: section.settings.height_px_tablet,
+              height_px_mobile: section.settings.height_px_mobile,
+  %}
+</div>
+
+{% schema %}
+  {
+    "name": "Spacer",
+    "settings": [
+      {
+        "type":      "select",
+        "id":        "height_name",
+        "label":     "Height",
+        "options": [
+          { "value": "small", "label": "Small" },
+          { "value": "medium", "label": "Medium" },
+          { "value": "large", "label": "Large" },
+          { "value": "xlarge", "label": "Extra Large" },
+          { "value": "huge", "label": "Huge" }
+        ],
+        "default":   "medium",
+        "info": "This height will be overridden by heights set below"
+      },
+      {
+        "type": "range",
+        "id":   "height_px",
+        "min":  0,
+        "max":  600,
+        "step": 25,
+        "unit": "px",
+        "label": "Height - Desktop",
+        "default": 200
+      },
+      {
+        "type": "range",
+        "id":   "height_px_tablet",
+        "min":  0,
+        "max":  600,
+        "step": 25,
+        "unit": "px",
+        "label": "Height - Tablet",
+        "default": 200
+      },
+      {
+        "type": "range",
+        "id":   "height_px_mobile",
+        "min":  0,
+        "max":  600,
+        "step": 25,
+        "unit": "px",
+        "label": "Height - Mobile",
+        "default": 200
+      }
+    ],
+    "presets": [{
+      "name": "Spacer",
+      "category": "Misc"
+    }]
+  }
+{% endschema %}

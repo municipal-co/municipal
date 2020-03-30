@@ -1,0 +1,158 @@
+{%- comment %}
+
+  Product Detail Form Snippet
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'product-detail-form',
+              product: { product } - required
+              current_variant: { variant} - optional
+  %}
+
+{% endcomment -%}
+
+{% if template.name == 'product' and template.suffix == 'quick-view' %}
+  {% assign is_quick_view = true %}
+{% endif %}
+
+{% if current_variant == blank %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+{% endif %}
+
+<div data-product-detail-form>
+  <h1>{{ product.title }}</h1>
+  <p>{{ product.vendor }}</p>
+
+  {% include 'product-detail-price', product: product, current_variant: current_variant %}
+
+  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+    <meta itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+    <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+
+    <div data-add-to-cart-form-wrapper>
+      <form action="/cart/add" method="post" enctype="multipart/form-data" data-add-to-cart-form>
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            
+            {% assign option_name_downcase = option.name | downcase %}
+
+            {% capture option_alt_ui %}
+              {% if option_name_downcase == "color" %}
+                {% include 'product-dots-color', product: product, selected_color: option.selected_value %}
+              {% endif %}
+            {% endcapture %}
+
+            <div class="selector-wrapper form-group js">
+
+              <label for="SingleOptionSelector-{{ forloop.index0 }}">
+                {{ option.name }}
+              </label>
+
+
+              <select
+                id="SingleOptionSelector-{{ forloop.index0 }}"
+                class="form-control"
+                data-single-option-selector
+                data-index="option{{ option.position }}"
+                {% if option_alt_ui != blank %}style="display: none" data-no-chosen{% endif %}>
+                {% for value in option.values %}
+                  <option
+                    value="{{ value | escape }}"
+                    {% if option.selected_value == value %}selected="selected"{% endif %}>
+                      {{ value }}
+                  </option>
+                {% endfor %}
+              </select>
+
+              {% comment %} Output alternative option UI here {% endcomment %}
+              {{ option_alt_ui }}
+
+            </div>
+
+            {% comment %}
+              To enable alternative variant option value select UI, create your markup here with the following data attributes.
+
+              parent - 'data-option-position="{{ option.position }}" data-variant-option-value-list'
+                child - 'data-variant-option-value="{{ value }}"'
+
+              These data attributes are used to attach click events and update the selected variant when one is clicked.
+              The child element should respond to some sort of 'active' class to reflect the selected value.
+
+              See: `_scripts/view/product/productDetailForm.js:onVariantOptionValueClick`
+
+              For example, to show a list of sizes..
+
+              {% if option.name == "Size" %}
+                <div data-option-position="{{ option.position }}" data-variant-option-value-list>
+                  {% for value in option.values %}
+                    <span class="{% if option.selected_value == value %} is-active{% endif %}" data-variant-option-value="{{ value }}">
+                      {{ value }}
+                    </span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              Be sure to hide the corresponding select tag for that option
+            {% endcomment %}
+
+          {% endfor %}
+        {% endunless %}
+
+        <select name="id" class="no-js" data-product-select>
+          {% for variant in product.variants %}
+            <option
+              {% if variant == current_variant %}selected="selected"{% endif %}
+              {% unless variant.available %}disabled="disabled"{% endunless %}
+              value="{{ variant.id }}">
+                {{ variant.title }}
+            </option>
+          {% endfor %}
+        </select>
+
+        <div class="selector-wrapper form-group" style="min-width: 0;">
+          <label for="Quantity">{{ 'products.product.quantity' | t }}:</label>
+          <div style="max-width: 80px;">
+            <select id="Quantity" name="quantity" class="form-control" {% if current_variant.available == false %}disabled="true"{% endif %} data-product-quantity-select>
+              {% for i in (1..5) %}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          name="add"
+          class="btn btn-primary"
+          data-add-to-cart
+          {% unless current_variant.available %}disabled="disabled"{% endunless %}>
+            <span data-add-to-cart-text>
+              {% if current_variant.available %}
+                {{ 'products.product.add_to_cart' | t }}
+              {% else %}
+                {{ 'products.product.sold_out' | t }}
+              {% endif %}
+            </span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="rte">
+    {{ product.description }}
+  </div>
+
+  {% if is_quick_view %}
+    {% comment %} This link will get updated on variant change.  See productDetailForm.js {% endcomment %}
+    <a href="{{ current_variant.url }}" data-full-details-link>View Full Details</a>
+  {% endif %}
+
+  {% unless product == empty %}
+    <script type="application/json" data-product-json>
+    {% include 'product-json', product: product %}
+    </script>
+  {% endunless %}
+</div>

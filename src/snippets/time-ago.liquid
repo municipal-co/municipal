@@ -1,0 +1,63 @@
+{%- comment %}
+
+  Time Ago
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'time-ago',
+              time: {date/time} - required
+  %}
+
+{% endcomment -%}
+
+{% if time != blank %}
+  {% assign time_seconds = time | date: '%s' %}
+  {% assign now_seconds = 'now' | date: '%s' %}
+  {% assign interval_seconds = now_seconds | minus: time_seconds %}
+  {% assign interval_years = interval_seconds | divided_by: 31536000 | floor %}
+  {% assign interval_months = interval_seconds | divided_by: 2592000 | floor %}
+  {% assign interval_days = interval_seconds | divided_by: 86400 | floor %}
+  {% assign interval_hours = interval_seconds | divided_by: 3600 | floor %}
+  {% assign interval_minutes = interval_seconds | divided_by: 60 | floor %}
+
+  {% assign return = '' %}
+
+  {% if interval_years >= 1 %}
+
+    {% assign return = interval_years %}
+    {% capture unit %}{{ interval_years | pluralize: 'year', 'years' }}{% endcapture %}
+
+  {% elsif interval_months >= 1 %}
+
+    {% assign return = interval_months %}
+    {% capture unit %}{{ interval_months | pluralize: 'month', 'months' }}{% endcapture %}
+
+  {% elsif interval_days >= 1 %}
+
+    {% assign return = interval_days %}
+    {% capture unit %}{{ interval_days | pluralize: 'day', 'days' }}{% endcapture %}
+
+  {% elsif interval_hours >= 1 %}
+
+    {% assign return = interval_hours %}
+    {% capture unit %}{{ interval_hours | pluralize: 'hour', 'hours' }}{% endcapture %}
+
+  {% elsif interval_minutes >= 1 %}
+
+    {% assign return = interval_minutes %}
+    {% capture unit %}{{ interval_minutes | pluralize: 'minute', 'minutes' }}{% endcapture %}
+
+  {% else %}
+
+    {% assign return = 'moments' %}
+
+  {% endif %}
+
+  {% if unit != blank %}
+    {% assign return = return | append: ' ' | append: unit %}
+  {% endif %}
+
+  {{ return }} ago
+
+{% endif %}

@@ -1,0 +1,26 @@
+// -------------------------
+// Content Card
+// -------------------------
+
+.content-card {
+  height: 100%;
+  padding: $content-card-padding-vertical $content-card-padding-horizontal;
+}
+
+.content-card__header {
+  margin-bottom: $spacer * 2;
+}
+
+.content-card__title {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.content-card__subtitle {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.content-card__body {
+  margin-bottom: 8px;
+}

@@ -1,0 +1,114 @@
+{%- comment %}
+
+  Overlay Card 
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'overlay-card',
+              oc_id: { string } - required
+              oc_background_image: { image } - optional
+              oc_background_image_vertical_alignment: { string } - optional - defaults to "center"
+              oc_background_image_width: { integer } - optional - defaults to 800 - override this if you make a wide card
+              oc_overlay_bg_brightness: { string } - optional - "dark" or "light" - defaults to none
+              oc_content_vertical_alignment: { string } - optional - "top" or "bottom"
+              oc_light_text: { boolean } - defaults to false
+              oc_title: { string } - optional
+              oc_subtitle: { string } - optional
+              oc_text: { string } - optional
+              oc_url: { url } - optional              
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if oc_light_text == blank %}
+  {% assign oc_light_text = false %}
+{% endif %}
+
+{% if oc_background_image_width == blank %}
+  {% assign oc_background_image_width = 800 %}
+{% endif %}
+
+{% if oc_background_image_vertical_alignment == blank %}
+  {% assign oc_background_image_vertical_alignment = 'center' %}
+{% endif %}
+
+{% assign oc_background_image_size = oc_background_image_width | append: 'x' %}
+
+{% assign valid_content_vertical_alignment = false %}
+{% assign oc_content_vertical_alignment = oc_content_vertical_alignment | downcase %}
+{% if oc_content_vertical_alignment != blank and "top bottom" contains oc_content_vertical_alignment %}
+  {% assign valid_content_vertical_alignment = true %}
+{% endif %}
+
+{% assign valid_overlay_brightness = false %}
+{% assign oc_overlay_bg_brightness = oc_overlay_bg_brightness | downcase %}
+{% if oc_overlay_bg_brightness  != blank and "dark light" contains oc_overlay_bg_brightness  %}
+  {% assign valid_overlay_bg_brightness = true %}
+{% endif %}
+
+{% assign has_url = false %}
+{% if oc_url != blank %}
+  {% assign has_url = true %}
+{% endif %} 
+
+{% capture class %}
+  overlay-card
+  {% if valid_content_vertical_alignment %}
+    overlay-card--content-{{ oc_content_vertical_alignment }}
+  {% endif %}
+  {% if valid_overlay_bg_brightness %}
+    overlay-card--bg-{{ oc_overlay_bg_brightness }}
+  {% endif %}
+  {% if oc_light_text %}
+    overlay-card--light-text
+  {% endif %}
+  {% if has_url %}
+    overlay-card--has-link
+  {% endif %}
+{% endcapture %}
+
+<div id="overlay-card-{{ oc_id }}" class="{{ class | strip }}">
+
+  <style type="text/css">
+    #overlay-card-{{ oc_id }} .overlay-card__bg {
+      background-position: center {{ oc_background_image_vertical_alignment }};
+      {% if oc_background_image %}
+        background-image: url({{ oc_background_image | img_url: oc_background_image_size }});
+      {% endif %}
+    }
+  </style>
+
+  {% if has_url %}
+    <a href="{{ oc_url }}">
+  {% endif %}  
+    
+    {% if oc_background_image %}
+      <div class="overlay-card__bg" role="img" aria-label="{{ oc_background_image.alt }}"></div>
+    {% endif %}
+
+    <div class="overlay-card__contents">
+
+      {% if oc_title != blank or oc_subtitle != blank %}
+        <div class="overlay-card__header">
+          {% if oc_title != blank %}
+            <h3 class="overlay-card__title">{{ oc_title }}</h3>
+          {% endif %}
+          {% if oc_subtitle != blank %}
+            <h5 class="overlay-card__subtitle">{{ oc_subtitle }}</h5>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if oc_text != blank %}
+        <div class="overlay-card__body">{{ oc_text }}</div>
+      {% endif %}
+
+    </div>
+
+  {% if has_url %}
+    </a>
+  {% endif %}  
+
+</div>

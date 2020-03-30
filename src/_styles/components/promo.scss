@@ -1,0 +1,96 @@
+// -------------------------
+// Promo - Image + text + cta
+// -------------------------
+
+/*
+ * Promos are made up of a parent element (.promo) with 2 direct children (.promo__col).
+ * On small screens they stack vertically, above $screen-md-min they split the screen in different ratios depending on type.
+ * The column with the image should always come *first* in the markup, we use flexbox to re-order the columns depending on the layout
+ */
+
+// The version of SCSS that Shopify is running doesn't support reverse() ... ugh
+// Since we're using a 12 column grid (unless you change it!) - let's make splits like 4/8, 5/7, 6/6, 7/5, 8/4
+$type-first-col-widths:         percentage(4/12), percentage(5/12), percentage(6/12), percentage(7/12), percentage(8/12);
+$type-first-col-widths-reverse: reverse($type-first-col-widths);
+
+.promo {
+
+  @include media-breakpoint-up('lg') {
+    display: flex;
+    align-items: stretch;
+
+    &--layout-right {
+      flex-direction: row-reverse;
+    }
+
+    // By default, promos have 2 columns that split the space evenly
+    .promo__col {
+      width: 50%;
+    }
+
+    // Generate rules for different types (1->5) that allow the columns to split the space differently..
+    @for $i from 0 to length($type-first-col-widths) {
+      &.promo--type-#{$i + 1} {
+        .promo__col:first-child {
+          width: nth($type-first-col-widths, $i+1);
+        }
+        .promo__col:last-child {
+          width: 100% - nth($type-first-col-widths, $i+1);
+        }
+      }
+    }
+
+    // If the layout is reversed, we have to reverse the column widths for each type
+    &.promo--layout-right { /* stylelint-disable-line no-duplicate-selectors */
+      @for $i from 0 to length($type-first-col-widths-reverse) {
+        &.promo--type-#{$i + 1} {
+          .promo__col:first-child {
+            width: nth($type-first-col-widths-reverse, $i + 1);
+          }
+          .promo__col:last-child {
+            width: 100% - nth($type-first-col-widths-reverse, $i + 1);
+          }
+        }
+      }
+    }
+
+  }
+
+}
+
+.promo__col {
+  padding-left: $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+}
+
+.promo__col-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  .promo__col--text & {
+    padding-top: $grid-gutter-width;
+    padding-bottom: $grid-gutter-width;
+  }
+}
+
+.promo__img-wrapper {
+  &, img {
+    width: 100%; // Needed for child .frame elements
+  }
+}
+
+.promo__title {
+
+}
+
+.promo__text-wrapper {
+  @include media-breakpoint-up('lg') {
+    padding-left: $grid-gutter-width;
+    padding-right: $grid-gutter-width;
+  }
+}
+
+.promo__text {
+
+}

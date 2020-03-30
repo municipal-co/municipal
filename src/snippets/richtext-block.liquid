@@ -1,0 +1,46 @@
+{%- comment %}
+
+  Banner Panel
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'richtext-block' 
+              id: { string } - required
+              content_max_width: { number } - optional
+              content_alignment: { string } - optional - defaults to "left"
+              text_alignment: { string } - optional - defaults to "left"
+              content: { string }
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if content_alignment == blank %}
+  {% assign content_alignment = 'left' %}
+{% endif %}
+
+{% if text_alignment == blank %}
+  {% assign text_alignment = 'left' %}
+{% endif %}
+{% comment %} End Defaults {% endcomment %}
+
+<style type="text/css">
+  #rich-text-{{ id }} {
+    text-align: {{ text_alignment }};
+    {% if content_max_width %}
+    max-width: {{ content_max_width | append: 'px' }};
+    margin-left: auto;
+    margin-right: auto;
+    {% endif %}
+    {% if content_alignment == "left" %}
+      margin-left: 0;
+    {% elsif content_alignment == "right" %}
+      margin-right: 0;
+    {% endif %}
+  }
+</style>
+
+<div id="rich-text-{{ id }}">
+  {{ content }}
+</div>

@@ -1,0 +1,141 @@
+// -------------------------
+// Sidebar
+// -------------------------
+
+.sidebar {
+
+
+  .order-summary__small-text {
+
+  }
+
+  .payment-due-label__total {
+
+  }
+
+  .payment-due__currency {
+
+  }
+
+  .payment-due__price {
+
+  }
+
+  &:after {
+    box-shadow: none;
+  }
+}
+
+.sidebar__content {
+
+}
+
+.order-summary-toggle {
+
+}
+
+.order-summary-toggle__icon,
+.order-summary-toggle__dropdown {
+  fill: #f00;
+}
+
+.order-summary-toggle__text {
+
+}
+
+.order-summary-toggle__icon-wrapper {
+
+}
+
+.order-summary {
+
+  &.order-summary--is-expanded {
+
+  }
+}
+
+.order-summary__sections {
+
+}
+
+.order-summary__section {
+
+}
+
+.order-summary__section--product-list .product-table {
+
+}
+
+.order-summary__section--discount {
+  .anyflexbox & .field__input-btn {
+
+  }
+
+  .field__label.field__label--visible {
+
+  }
+}
+
+.product {
+  td {
+
+  }
+}
+
+.product-thumbnail {
+
+  // Hide the thumbnail frame
+  &:after {
+    display: none;
+  }
+}
+
+.product-thumbnail__quantity {
+
+}
+
+.product__description__name {
+
+  &, &.order-summary__emphasis {
+
+  }
+}
+
+.product__description__variant {
+
+}
+
+.product__price {
+  .order-summary__emphasis {
+
+  }
+}
+
+// Sidebar totals
+
+.total-line td {
+
+}
+
+.total-line-table__tbody + .total-line-table__footer .total-line td {
+
+
+  // Hide the top border
+  // &:before {
+  //   display: none;
+  // }
+}
+
+.total-line__name {
+
+}
+
+.total-line__price {
+  .order-summary__emphasis {
+
+  }
+}
+
+.order-summary__section--product-list {
+
+}

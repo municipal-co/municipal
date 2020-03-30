@@ -1,0 +1,79 @@
+// Quantity Adjuster
+//
+// Single component with number input and +/- buttons
+
+.quantity-adjuster {
+  display: inline-block;
+  height: $quantity-adjuster-height;
+  border: $quantity-adjuster-border-width solid $quantity-adjuster-border-color;
+  font-size: 0; // remove spacing between elements without using floats
+
+  button {
+    border: none;
+    background: none;
+    -webkit-appearance: none;
+    padding: 0;
+    height: $quantity-adjuster-inner-height;
+    width: 30px;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+
+    &[disabled] {
+      opacity: 0.25;
+      cursor: $cursor-disabled;
+    }
+  }
+
+  input[type="number"] {
+    width: 33px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    text-align: center;
+    font-size: $quantity-adjuster-font-size;
+    height: $quantity-adjuster-inner-height;
+    cursor: pointer;
+    -moz-appearance: textfield; // Remove the spinner - firefox + chrome
+
+    &[disabled] {
+      opacity: 0.25;
+      cursor: $cursor-disabled;
+    }
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  // Create the plus / minus buttons
+  .quantity-adjuster__increment,
+  .quantity-adjuster__decrement {
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      height: 2px;
+      width: 9px;
+      background-color: $quantity-adjuster-border-color;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+
+  .quantity-adjuster__decrement {
+    &:after {
+      display: none;
+    }
+  }
+
+}

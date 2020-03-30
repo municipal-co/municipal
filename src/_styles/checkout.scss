@@ -1,0 +1,106 @@
+/**
+ * CORE
+ * ---------------------------------------
+ * Pieces pulled from Bootstrap
+ *
+ */
+@import 'core/functions';
+@import 'core/variables';
+@import 'core/mixins';
+@import 'core/root';
+@import 'core/reboot';
+@import 'core/fonts';
+@import 'core/type';
+@import 'core/helpers';
+@import 'core/images';
+@import 'core/code';
+@import 'core/grid';
+@import 'core/layout';
+@import 'core/tables';
+@import 'core/forms';
+@import 'core/buttons';
+
+/**
+ * CHECKOUT
+ * ---------------------------------------
+ *
+ */
+$checkout-bp-sm-min: 750px;
+$checkout-bp-md-min: 1000px;
+$checkout-bp-sm-max: $checkout-bp-md-min - 1px;
+
+$checkout-grid-gutter-width: 30px;
+$checkout-bg: #fafafa;
+$checkout-border: #f00;
+$checkout-border-subtle: mix(#fff, #f00, 80%);
+
+$total-line-vertical-spacing: 17.5px;
+
+$header-height: 70px;
+$header-padding-v: 15px;
+$header-z-index: 100;
+
+@import 'checkout/layout';
+@import 'checkout/forms';
+@import 'checkout/breadcrumbs';
+@import 'checkout/steps';
+@import 'checkout/sidebar';
+
+.icon-svg--color-accent {
+  color: #f00;
+  vertical-align: inherit;
+}
+
+.notice {
+
+}
+
+.main {
+  h2 {
+
+  }
+}
+
+
+// Content Boxes
+
+.content-box {
+
+  .boxshadow & {
+    // -webkit-box-shadow: none;
+    //         box-shadow: none;
+  }
+}
+
+.content-box__row {
+
+}
+
+ul.policy-list {
+
+}
+
+// Desktop Design with min-width: 1000px
+@media (min-width: $checkout-bp-md-min) {
+
+  .anyflexbox .content .wrap {
+    @include flex-direction(row);
+  }
+}
+
+// Mobile Design with max-width: 749px
+@media (max-width: $checkout-bp-sm-max) {
+
+}
+
+html.js {
+
+  .content {
+    opacity: 0;
+    transition: opacity 450ms ease-out;
+  }
+
+  body.checkout-ready .content {
+    opacity: 1;
+  }
+}

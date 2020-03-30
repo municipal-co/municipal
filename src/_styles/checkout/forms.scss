@@ -1,0 +1,108 @@
+// -------------------------
+// Forms
+// -------------------------
+
+input[type="file"],
+input[type="radio"],
+input[type="checkbox"] {
+  &:focus {
+    outline: none;
+  }
+}
+
+.input-checkbox,
+.input-radio {
+
+  .main & {
+
+  }
+}
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.field {
+  width: 100% !important;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  + .field {
+    margin-top: 10px;
+  }
+}
+
+.field__input {
+  .boxshadow & {
+    box-shadow: none !important;
+  }
+}
+
+.field__input-wrapper {
+
+}
+
+.field__input--iframe-container {
+}
+
+.field__input-wrapper--select {
+  // Hide the down caret from checkout since we already have our own
+  &:before {
+    display: none;
+  }
+}
+
+.field__caret {
+  border-left-color: $input-border-color;
+  transform: translate(0, 0); // Undo transform translation
+
+  .field--active & {
+    border-left-color: $input-border-color;
+
+    .icon-svg--color-adaptive-lighter {
+      color: $input-border-color;
+    }
+  }
+}
+
+.element-toggler {
+  overflow: visible; // default cuts off checkbox / radio button shadows
+}
+
+.fieldset-description {
+  margin-top: 1.5em;
+}
+
+.floating-labels {
+
+  .field__label {
+    position: static;
+    padding-left: 0;
+    padding-right: 0;
+    opacity: 1;
+    font-weight: bold !important;
+    transform: translateY(0);
+  }
+
+  .main .field__label {
+
+  }
+
+  .field--show-floating-label {
+
+    .field__label--visible {
+    }
+    .field__input {
+
+    }
+  }
+}
+
+.checkbox__label,
+.radio__label {
+
+}
+
+.field__message--error {
+
+}

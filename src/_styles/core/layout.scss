@@ -1,0 +1,50 @@
+// -------------------------
+// Page Layout
+// -------------------------
+
+/* If supported, use flexbox to stick the footer to the bottom of the page */
+.flexbox {
+  .layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  /* stylelint-disable-next-line selector-max-id */
+  main#MainContent {
+    flex: 1 0 0; // All three need to be specified for IE11
+    flex-direction: column;
+  }
+}
+
+.layout-wrapper {
+
+  // If we have a fixed header, make enough room at the top of the page for it.
+  .site-fixed-header & {
+    position: relative;
+    padding-top: $header-height-small;
+
+    @include media-breakpoint-up(md) {
+      padding-top: $header-height-base;
+    }
+  }
+
+}
+
+.layout-main-content {
+  flex-direction: column;
+}
+
+// Use this as the only direct child of main#MainContent on pages where you don't want the content flush to the header and footer
+// Or use the modifier classes to get flush on top or bottom
+.layout-content-wrapper {
+  margin-top: $grid-gutter-width * 1.5;
+  margin-bottom: $grid-gutter-width * 1.5;
+
+  &.flush-top {
+    margin-top: 0;
+  }
+
+  &.flush-bottom {
+    margin-bottom: 0;
+  }
+}

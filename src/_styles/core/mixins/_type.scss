@@ -1,0 +1,80 @@
+// -------------------------
+// Mixin - Type
+// -------------------------
+//
+
+@mixin h1 {
+  font-size: $h1-font-size;
+  letter-spacing: $h1-letter-spacing;
+  line-height: $h1-line-height;
+}
+
+@mixin h2 {
+  font-size: $h2-font-size;
+  letter-spacing: $h2-letter-spacing;
+  line-height: $h2-line-height;
+}
+
+@mixin h3 {
+  font-size: $h3-font-size;
+  letter-spacing: $h3-letter-spacing;
+  line-height: $h3-line-height;
+}
+
+@mixin h4 {
+  font-size: $h4-font-size;
+  letter-spacing: $h4-letter-spacing;
+  line-height: $h4-line-height;
+}
+
+@mixin h5 {
+  font-size: $h5-font-size;
+  letter-spacing: $h5-letter-spacing;
+  line-height: $h5-line-height;
+}
+
+@mixin h6 {
+  font-size: $h6-font-size;
+  letter-spacing: $h6-letter-spacing;
+  line-height: $h6-line-height;
+}
+
+@mixin p1 {
+  font-size: $p1-font-size;
+  letter-spacing: $p1-letter-spacing;
+  line-height: $p1-line-height;
+  font-weight: $p1-font-weight;
+}
+
+@mixin p2 {
+  font-size: $p2-font-size;
+  letter-spacing: $p2-letter-spacing;
+  line-height: $p2-line-height;
+  font-weight: $p2-font-weight;
+}
+
+@mixin p3 {
+  font-size: $p3-font-size;
+  letter-spacing: $p3-letter-spacing;
+  line-height: $p3-line-height;
+  font-weight: $p3-font-weight;
+}
+
+// RTE styling for long form content
+@mixin article-content {
+  margin-bottom: $grid-gutter-width;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: $spacer*2.5 0 $spacer*2;
+  }
+
+  p + p {
+    margin-top: $spacer*2;
+  }
+
+  p {
+    > img:only-child {
+      margin: $spacer*2 0;
+    }
+  }
+}

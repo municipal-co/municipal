@@ -1,0 +1,170 @@
+<div data-section-id="{{ section.id }}" data-section-type="banner">
+  <div class="banner">
+
+    {% for block in section.blocks %}
+      {% if block.type == 'banner_panel' %}
+        {% include 'banner-panel',
+                    bp_id: block.id,
+                    bp_content_alignment: block.settings.content_alignment,
+                    bp_content_max_width: block.settings.content_max_width,
+                    bp_background_image: block.settings.background_base,
+                    bp_background_image_vertical_alignment: block.settings.background_image_vertical_alignment,
+                    bp_background_image_medium: block.settings.background_medium,
+                    bp_background_image_medium_vertical_alignment: block.settings.background_medium_vertical_alignment,
+                    bp_background_image_small: block.settings.background_small,
+                    bp_background_image_small_vertical_alignment: block.settings.background_small_vertical_alignment,
+                    bp_light_text: block.settings.light_text,
+                    bp_title: block.settings.title,
+                    bp_text: block.settings.text,
+                    bp_cta_url: block.settings.cta_url,
+                    bp_cta_text: block.settings.cta_text
+        %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Banner",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "banner_panel",
+        "name": "Panel",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "checkbox",
+            "id" : "light_text",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type": "header",
+            "content": "Background - Desktop",
+            "info": "Main image will always be used.  Tablet and mobile images will be displayed if they are set."
+          },
+          {
+            "type": "select",
+            "id": "background_image_vertical_alignment",
+            "label": "Vertical Alignment",
+            "options": [
+              { "value": "center", "label": "Center" },
+              { "value": "top", "label": "Top" },
+              { "value": "bottom", "label": "Bottom" }
+            ],
+            "default": "center"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_base",
+            "label": "Main Image"
+          },
+          {
+            "type": "header",
+            "content": "Background - Tablet"
+          },
+          {
+            "type": "select",
+            "id": "background_medium_vertical_alignment",
+            "label": "Vertical Alignment",
+            "options": [
+              { "value": "center", "label": "Center" },
+              { "value": "top", "label": "Top" },
+              { "value": "bottom", "label": "Bottom" }
+            ],
+            "default": "center"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_medium",
+            "label": "Main Image"
+          },
+          {
+            "type": "header",
+            "content": "Background - Mobile"
+          },
+          {
+            "type": "select",
+            "id": "background_small_vertical_alignment",
+            "label": "Vertical Alignment",
+            "options": [
+              { "value": "center", "label": "Center" },
+              { "value": "top", "label": "Top" },
+              { "value": "bottom", "label": "Bottom" }
+            ],
+            "default": "center"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_small",
+            "label": "Main Image"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Banner",
+      "category": "Media",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "banner_panel",
+          "settings": {
+            "title": "Banner Text Here",
+            "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+          }
+        }
+      ]
+    }]
+  }
+{% endschema %}

@@ -1,0 +1,86 @@
+{%- comment %}
+
+  Social Sharing
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'social-sharing',
+             classes: { string },
+             share_title: { string },
+             share_permalink: { string }
+             share_image: { image }
+             hide_facebook: { boolean } - optional - defaults to false
+             hide_twitter: { boolean } - optional - defaults to false
+             hide_pinterest: { boolean } - optional - defaults to false
+             hide_tumblr: { boolean } - optional - defaults to false
+             hide_email: { boolean } - optional - defaults to false
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% assign hide_facebook = hide_facebook | default: false %}
+{% assign hide_twitter = hide_twitter | default: false %}
+{% assign hide_pinterest = hide_pinterest | default: false %}
+{% assign hide_tumblr = hide_tumblr | default: false %}
+{% assign hide_email = hide_email | default: false %}
+
+<div class="social-sharing{% if classes != blank %} {{ classes }}{% endif %}" data-social-sharing>
+
+  {% if settings.share_facebook and hide_facebook == false %}
+    <a target="_blank"
+       class="social-sharing__link"
+       href="//www.facebook.com/sharer.php?u={{ shop.url | append: share_permalink }}"
+       title="{{ 'general.social.alt_text.share_on_facebook' | t }}">
+      {% include 'icon-facebook' %}
+      <span aria-hidden="true">{{ 'general.social.share_on_facebook' | t }}</span>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_facebook' | t }}</span>
+    </a>
+  {% endif %}
+
+  {% if settings.share_twitter and hide_twitter == false %}
+    <a target="_blank"
+       class="social-sharing__link"
+       href="//twitter.com/share?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: share_permalink }}"
+       title="{{ 'general.social.alt_text.share_on_twitter' | t }}">
+      {% include 'icon-twitter' %}
+      <span aria-hidden="true">{{ 'general.social.share_on_twitter' | t }}</span>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_twitter' | t }}</span>
+    </a>
+  {% endif %}
+
+  {% if settings.share_pinterest and hide_pinterest == false %}
+    <a target="_blank"
+       class="social-sharing__link"
+       href="//pinterest.com/pin/create/button/?url={{ shop.url | append: share_permalink }}&amp;media={{ share_image | img_url: '1024x1024' }}&amp;description={{ share_title | url_param_escape }}"
+       title="{{ 'general.social.alt_text.share_on_pinterest' | t }}">
+      {% include 'icon-pinterest' %}
+      <span aria-hidden="true">{{ 'general.social.share_on_pinterest' | t }}</span>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_pinterest' | t }}</span>
+    </a>
+  {% endif %}
+
+  {% if settings.share_tumblr and hide_tumblr == false %}
+    <a target="_blank"
+       class="social-sharing__link"
+       href="//www.tumblr.com/share/link?url={{ shop.url | append: share_permalink }}&amp;description={{ share_title | url_param_escape }}"
+       title="{{ 'general.social.alt_text.share_on_tumblr' | t }}">
+      {% include 'icon-tumblr' %}
+      <span aria-hidden="true">{{ 'general.social.share_on_tumblr' | t }}</span>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_tumblr' | t }}</span>
+    </a>
+  {% endif %}    
+
+  {% if settings.share_email and hide_email == false %}
+    <a target="_blank"
+       class="social-sharing__link"
+       href="mailto:?subject={{ shop.name | url_param_escape }}&amp;body={{ shop.url | append: share_permalink }}"
+       title="{{ 'general.social.alt_text.share_on_email' | t }}">
+      {% include 'icon-mail' %}
+      <span aria-hidden="true">{{ 'general.social.share_on_email' | t }}</span>
+      <span class="visually-hidden">{{ 'general.social.alt_text.share_on_email' | t }}</span>
+    </a>
+  {% endif %}  
+
+</div>

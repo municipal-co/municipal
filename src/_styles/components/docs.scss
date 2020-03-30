@@ -1,0 +1,157 @@
+// -------------------------
+// Styleguide + Components Guide
+// -------------------------
+
+.template-page-styles,
+.template-page-components,
+.template-page-how-to {
+  code {
+    font-size: $font-size-sm;
+    padding: 1px 5px;
+    background: darken($white, 3%);
+    border: 1px solid darken($white, 6%);
+    border-radius: 5px;
+    color: #ad084b;
+  }
+}
+
+.docs-title {
+  max-width: 450px;
+  margin: 80px 0 50px;
+  padding-top: 100px; // Make room for header when using in-page links to jump to the title
+  padding-bottom: 12px;
+  border-bottom: 1px solid $gray-light;
+}
+
+.docs-subtitle {
+  margin: 0 0 50px;
+  padding-top: 100px;
+}
+
+.docs-subsubtitle {
+  margin: 40px 0 25px;
+}
+
+.docs-well {
+  padding: $grid-gutter-width / 2;
+  margin: $spacer*2 (-1 * ($grid-gutter-width / 2));
+  border: 1px solid darken($body-bg, 15%);
+  border-radius: 3px;
+  box-shadow: -4px 6px 10px -8px transparentize(darken($body-bg, 20%), 0.2);
+
+  &--dark {
+    background-color: $black;
+    border-color: $black;
+    border-radius: 0;
+  }
+
+  &--accent {
+    background-color: darken($body-bg, 4%);
+    border-color: darken($body-bg, 4%);
+    border-radius: 0;
+  }
+
+  &--constrained {
+    max-width: 500px;
+  }
+}
+
+.docs-code-example {
+  padding: $grid-gutter-width/2;
+  background: darken($body-bg, 3%);
+  margin-bottom: $spacer*2;
+
+  pre {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: transparent;
+    border: 0;
+
+    code {
+      font-size: $font-size-sm;
+      color: $body-color;
+      background: none;
+      border: none;
+      padding: none;
+    }
+  }
+}
+
+.docs-text-list {
+  @include list-unstyled;
+  max-width: 400px;
+
+  li {
+    margin-bottom: 0;
+    padding: 10px;
+  }
+}
+
+.styleguide-icons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: inline-block;
+    margin: 0 18px 0 0;
+  }
+}
+
+/*
+ * Grid examples
+ *
+ * Highlight the grid columns within the docs so folks can see their padding,
+ * alignment, sizing, etc.
+ */
+
+.show-grid {
+  margin-bottom: 15px;
+}
+.show-grid [class^="col-"],
+.show-grid.content-grid .content-grid__item > * {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #eee;
+  background-color: transparentize(#ad084b, 0.85);
+  border: 1px solid #ddd;
+  border: 1px solid transparentize(#ad084b, 0.8);
+}
+
+.show-grid.content-grid .content-grid__item > * {
+  text-align: center;
+}
+
+.styleguide-color {
+  display: inline-block;
+  margin: 0 15px 15px 0;
+
+  code {
+    padding: 0;
+    background: none;
+    border: none;
+    color: $body-color;
+    font-size: $font-size-sm;
+  }
+}
+
+.styleguide-color__swatch {
+  height: 100px;
+  width: 100px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+
+  @each $color, $value in $colors {
+    &--#{$color} {
+      background-color: #{$value};
+      @if $color == 'white' {
+        border-color: darken($value, 5%);
+      }
+    }
+  }
+
+  &--primary {
+    background-color: map-get($theme-colors, 'primary');
+  }
+}

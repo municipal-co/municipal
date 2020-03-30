@@ -1,0 +1,34 @@
+// -------------------------
+// Pagination
+// -------------------------
+
+.pagination {
+
+  .page,
+  .next,
+  .prev {
+
+    &:first-child {
+
+    }
+    &:last-child {
+
+    }
+  }
+
+  .page {
+
+    &.current {
+
+    }
+  }
+
+  .prev,
+  .next {
+
+    a {
+
+    }
+  }
+
+}

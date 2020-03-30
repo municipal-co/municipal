@@ -1,0 +1,99 @@
+// -----------------------------------------------------------------------------
+// Video Player
+// -----------------------------------------------------------------------------
+
+@keyframes video-cover-icon-pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+.video-player-fs-wrapper {
+  width: 100%;
+  max-width: 2000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Responsive embed
+.video-player {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; // 16:9
+  height: 0;
+  overflow: hidden;
+
+  iframe,
+  object,
+  embed,
+  .video-player__embed,
+  .video-player__cover,
+  .video-player__cover-still {
+    @include stretch-within();
+    // These are needed for Vimeo embeds which use height and width attributes
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.video-player__embed {
+  height: 100%;
+  width: 100%;
+}
+
+.video-player__cover {
+  z-index: 2;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  background-color: $black;
+  cursor: pointer;
+  transition: opacity $transition-duration-slow $transition-timing-function-out;
+
+  .video-player--playing &,
+  .video-player--paused &,
+  .video-player--buffering & {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity $transition-duration-base $transition-timing-function-in;
+  }
+}
+
+.video-player__cover-still {
+  z-index: -1;
+  background: {
+    size: cover;
+    repeat: no-repeat;
+  }
+  opacity: 0.5;
+}
+
+.video-player__cover-play {
+  display: inline-block;
+  position: relative;
+  padding: 15px;
+  border-radius: 50%;
+  color: $white;
+  height: 50px;
+  width: 50px;
+  height: calc(50px + 3vw);
+  width: calc(50px + 3vw);
+  opacity: 0.75;
+  transition: opacity $transition-duration-fast $transition-timing-function-out;
+
+  .icon {
+    height: 100%;
+    width: 100%;
+  }
+
+  .video-player__cover:hover & {
+    opacity: 1;
+    transition: opacity $transition-duration-fast $transition-timing-function-in;
+  }
+
+  .video-player--buffering & .icon {
+    animation: video-cover-icon-pulse 1.7s infinite ease-in-out;
+  }
+}

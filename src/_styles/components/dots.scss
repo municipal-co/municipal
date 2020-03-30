@@ -1,0 +1,130 @@
+// -----------------------------------------------------------------------------
+// Dots
+// -----------------------------------------------------------------------------
+
+.dots {
+  margin: 0 -#{($dot-spacing / 2)} -#{$dot-bottom-margin}; // account for the 2px padding + 1px border on the dot
+  padding: 0;
+  overflow: hidden;
+
+  &--small {
+    margin: 0 -#{($dot-small-spacing / 2)} -#{$dot-small-bottom-margin}; // account for the 2px padding + 1px border on the dot
+  }
+}
+
+.dot {
+  display: inline-block;
+  position: relative;
+  margin-left: $dot-spacing / 2;
+  margin-right: $dot-spacing / 2;
+  margin-bottom: $dot-spacing;
+  padding: $dot-padding;
+  height: $dot-size;
+  width: $dot-size;
+  cursor: pointer;
+  vertical-align: top;
+  border: $dot-border-width solid $dot-border-color;
+  border-radius: $dot-border-radius;
+  overflow: hidden;
+
+  line-height: $dot-size - $dot-padding*2 - 2px;
+  font-size: $dot-small-font-size;
+  text-transform: uppercase;
+  text-align: center;
+
+  transition: border-color $transition-duration-fast $transition-timing-function-out;
+
+  &.is-active {
+    border-color: $dot-active-border-color;
+    transition: border-color $transition-duration-fast $transition-timing-function-in;
+  }
+
+  .dots--small & {
+    margin-left: $dot-small-spacing / 2;
+    margin-right: $dot-small-spacing / 2;
+    margin-bottom: $dot-small-spacing;
+    padding: $dot-small-padding;
+    height: $dot-small-size;
+    width: $dot-small-size;
+    border: $dot-small-border-width solid $dot-small-border-color;
+    border-radius: $dot-small-border-radius;
+    line-height: $dot-small-size - $dot-small-padding*2 - 3px;
+    font-size: $dot-small-font-size;
+
+    &.is-active {
+      border-color: $dot-small-active-border-color;
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+
+    .dot__inner {
+      opacity: 0.2;
+    }
+
+    // Add a strike through on disabled dots
+    &:before {
+      content: "";
+      position: absolute;
+      top: -20%; // 140% - 20%*2 = centers the strikethrough
+      left: 50%;
+      height: 140%;
+      width: 1px;
+      background-color: $dot-active-border-color;
+      border: none;
+      transform: rotate(45deg);
+    }
+  }
+
+  .dot__inner {
+    height: 100%;
+    border-radius: $dot-border-radius;
+    border: 1px solid transparent;
+    background: {
+      size: auto;
+      position: center;
+      repeat: no-repeat;
+    }
+  }
+
+  &.dots--small .dot__inner {
+    border-radius: $dot-small-border-radius;
+  }
+
+  // These dot modifier classes use !important to override inline background-color styles
+  // That way, the inline style functions as a fallback if the modifier class doesn't exist (we create and apply these classes programatically, not always guaranteed to exist)
+
+  @each $color, $value in $colors {
+    &.dot--#{$color} .dot__inner {
+      background-color: #{$value} !important;
+      @if $color == 'white' {
+        border-color: darken($value, 10%) !important;
+      }
+      @else {
+        border-color: #{$value} !important;
+      }
+    }
+  }
+}
+
+// Only used inside the theme editor
+.dots-preview .dots {
+  overflow: visible;
+}
+
+.dots-preview-item {
+  display: inline-block;
+  padding: 0 12px 12px;
+  border-bottom: 1px solid transparent;
+
+  &.is-active {
+    transform: scale(1.3);
+    border-bottom-color: darken($body-bg, 7%);
+  }
+}
+
+.dots-preview-item__title {
+  margin-top: 5px;
+  font-size: $font-size-sm;
+}

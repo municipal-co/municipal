@@ -1,0 +1,38 @@
+// -------------------------
+// Collection page
+// -------------------------
+
+.collection-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $grid-gutter-width;
+}
+
+.collection-filter-bar__grouping {
+  display: inline-block;
+}
+
+.collection-filter-bar__entry {
+  display: inline-block;
+  width: 180px;
+
+  &:not(:last-child) {
+    margin-right: $grid-gutter-width/2;
+  }
+
+  // Hide labels on small screens
+  label {
+    @include media-breakpoint-down('md') {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-down('xl') {
+    width: 220px;
+
+    &:not(:last-child) {
+      margin-right: $grid-gutter-width;
+    }
+  }
+}

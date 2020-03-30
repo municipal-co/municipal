@@ -1,0 +1,27 @@
+// -------------------------
+// Social Sharing
+// -------------------------
+
+.social-sharing {
+
+  .social-sharing__link {
+    margin: 0 5px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .icon {
+    height: 23px;
+    width: 23px;
+  }
+
+  span[aria-hidden="true"] {
+    display: none;
+  }
+}

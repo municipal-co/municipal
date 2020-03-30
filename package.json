@@ -1,0 +1,96 @@
+{
+  "name": "Z-Theme",
+  "description": "A shopify starter theme for Zehner",
+  "version": "0.1.0",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@shopify/slate-tools": "0.3.3",
+    "ansi-colors": "^3.2.4",
+    "autoprefixer": "^9.4.9",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-register": "^6.26.0",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
+    "browserify-shim": "^3.8.14",
+    "cssnano": "^4.1.10",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "fancy-log": "^1.3.3",
+    "gulp-babel": "^8.0.0",
+    "gulp-debug": "^4.0.0",
+    "gulp-eslint": "^5.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-size": "^3.0.0",
+    "gulp-stylelint": "^8.0.0",
+    "gulp-watch": "^5.0.1",
+    "merge-stream": "^1.0.1",
+    "path": "^0.12.7",
+    "prettier": "^1.18.2",
+    "pretty-hrtime": "^1.0.3",
+    "run-sequence": "^2.2.1",
+    "stylelint": "^9.10.1",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-config-twbs-bootstrap": "^0.3.0",
+    "uglifyify": "^4.0.4",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0",
+    "yargs": "^13.2.2"
+  },
+  "dependencies": {
+    "@vimeo/player": "^2.8.2",
+    "bootstrap": "^4.3.1",
+    "chosen-js": "^1.8.3",
+    "handlebars": "^4.1.0",
+    "imagesloaded": "^4.1.4",
+    "instafeed.js": "^1.4.1",
+    "jquery": "^3.2.1",
+    "jquery-unveil": "^1.3.2",
+    "jquery-zoom": "^1.7.20",
+    "js-cookie": "^2.2.0",
+    "swiper": "^4.5.0",
+    "throttle-debounce": "^2.1.0"
+  },
+  "scripts": {
+    "start": "npm i -g @shopify/slate && npm i",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "hooks": "cp gitHooks.sh ./.git/hooks/post-checkout && chmod +x ./.git/hooks/post-checkout",
+    "start-dev": "gulp start --watch --e development",
+    "build": "gulp build --e production"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.js"
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "jquery-zoom": {
+      "depends": [
+        "$"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zehnergroup/z-theme.git"
+  },
+  "keywords": [],
+  "author": "Zehner",
+  "bugs": {
+    "url": "https://github.com/zehnergroup/z-theme/issues"
+  },
+  "homepage": "https://github.com/zehnergroup/z-theme"
+}

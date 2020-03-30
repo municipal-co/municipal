@@ -1,0 +1,75 @@
+// -------------------------
+// Overlays
+// -------------------------
+
+// Kill the scroll on the body
+.overlay-open {
+  overflow: hidden;
+}
+
+// Container that the modal scrolls within
+.overlay {
+  display: block;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  background: $overlay-bg-color;
+  z-index: $zindex-overlay;
+  -webkit-overflow-scrolling: touch;
+  pointer-events: none;
+
+  // Prevent Chrome on Windows from adding a focus outline. For details, see
+  // https://github.com/twbs/bootstrap/pull/10951.
+  outline: 0;
+
+  transition: opacity $transition-duration-overlay $transition-timing-function-overlay-out;
+
+  .overlay-open & {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &.is-visible {
+    pointer-events: auto;
+    opacity: 1;
+    transition: opacity $transition-duration-overlay $transition-timing-function-overlay-in;
+  }
+}
+
+.overlay__content-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.overlay__content {
+  width: 100%;
+  @extend .container;
+  max-width: $largest-container-width;
+  margin: auto;
+  padding-top: $grid-gutter-width*3;
+  padding-bottom: $grid-gutter-width*3;
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: all $transition-duration-overlay $transition-timing-function-overlay-out $transition-duration-none;
+
+  .is-visible & {
+    opacity: 1;
+    transform: translateY(0%);
+    transition: opacity $transition-duration-overlay/2 cubic-bezier(0, 0, 0.23, 1.43) $transition-duration-overlay/2, transform $transition-duration-overlay $transition-timing-function-overlay-opacity-in $transition-duration-overlay/2;
+  }
+}
+
+.overlay__close {
+  .overlay > & {
+    position: fixed;
+    z-index: 1;
+    top: $grid-gutter-width/2;
+    right: $grid-gutter-width/2;
+  }
+}

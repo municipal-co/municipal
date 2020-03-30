@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "stylelint-config-twbs-bootstrap/scss"
+  ],
+  "rules": {
+    "order/properties-order": null,
+    "block-no-empty": null,
+    "declaration-no-important": null,
+    "no-missing-end-of-source-newline": null,
+    "selector-class-pattern": null,
+    "selector-list-comma-newline-after": null,
+    "selector-no-qualifying-type": null,
+    "scss/operator-no-unspaced": null,
+    "scss/dollar-variable-default": null,
+    "font-weight-notation": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "number-leading-zero": null,
+    "selector-pseudo-element-colon-notation": null,
+
+    "string-quotes": null,
+    "property-no-vendor-prefix": null,
+    "value-no-vendor-prefix": null,
+    "declaration-colon-space-after": null
+  }
+}

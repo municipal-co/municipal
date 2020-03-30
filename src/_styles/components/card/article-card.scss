@@ -1,0 +1,33 @@
+// -------------------------
+// Article Card
+// -------------------------
+
+.article-card {
+  height: 100%;
+}
+
+.article-card__image {
+  width: 100%;
+  margin-bottom: 11px;
+}
+
+.article-card__info {
+  padding-top: 13px;
+}
+
+.article-card__info-title {
+  margin-bottom: 8px;
+}
+
+.article-card__info-excerpt {
+  font-size: $font-size-sm;
+  margin-bottom: 8px;
+}
+
+.article-card__info-tags {
+  margin-bottom: 18px;
+}
+
+.article-card__info-meta {
+
+}

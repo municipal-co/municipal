@@ -1,0 +1,67 @@
+{% paginate search.results by 16 %}
+
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="search">
+  <div class="container">
+
+    {% capture title %}
+      {% if search.performed %}
+        {{ 'general.search.results_for_html' | t: terms: search.terms }}
+      {% else %}
+        {{ 'general.search.title' | t }}
+      {% endif %}
+    {% endcapture %}
+
+    {% capture subtitle %}
+      {% if search.results_count > 0 %}
+        {% if search.results_count == 1 %}
+          {{ 'general.search.results_count_singular' | t }}
+        {% else %}
+          {{ 'general.search.results_count_plural' | t: count: search.results_count }}
+        {% endif %}
+      {% endif %}
+    {% endcapture %}
+
+    {% include 'page-header',
+                ph_title: title,
+                ph_subtitle: subtitle
+    %}
+
+    {% if search.performed %}
+      {% if search.results.size > 0 %}
+        <div class="container">
+          <div class="content-grid">
+            {% for item in search.results %}
+              <div class="content-grid__item">
+                {% if item.object_type == 'product' %}
+                  {% include 'product-card', product: item, quick_view: true %}
+                {% elsif item.object_type == 'article' %}
+                  {% include 'article-card', article: item %}  
+                {% else %}
+                  <p>{{ item.content | strip_html | truncatewords: 50 }}</p>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {% if paginate.pages > 1 %}
+          {% include 'pagination' %}
+        {% endif %}
+
+      {% else %}    
+       <p class="p1 text-center">No search results found</p>
+      {% endif %}
+
+    {% endif %}
+
+  </div>
+</div>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Search",
+    "settings": []
+  }
+{% endschema %}

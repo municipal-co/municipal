@@ -1,0 +1,94 @@
+// -------------------------
+// Mixin - Flexbox
+// -------------------------
+
+/* stylelint-disable */
+
+@mixin display-flex {
+  display: flex;
+}
+
+@mixin inline-flex {
+  display: inline-flex;
+}
+
+@mixin flex-direction($value: row) {
+  flex-direction: $value;
+}
+
+@mixin justify-content($justify) {
+  justify-content: $justify;
+}
+
+@mixin align-items($align) {
+  align-items: $align;
+}
+
+@mixin align-self($align) {
+  align-self: $align;
+}
+
+@mixin flex-wrap($wrap) {
+  flex-wrap: $wrap;
+}
+
+@mixin flex-grow($grow) {
+  flex-grow: $grow;
+}
+
+@mixin flex-shrink($shrink) {
+  flex-shrink: $shrink;
+}
+
+@mixin flex-basis($width) {
+          flex-basis: $width;
+
+  // https://github.com/zehnergroup/z-theme/issues/229
+  @if $width == 0 {
+    -ms-flex-basis: 0;
+  }
+}
+
+@mixin flex($fg: 1, $fs: null, $fb: null) {
+
+  // Set a variable to be used by box-flex properties
+  $fg-boxflex: $fg;
+
+  // Box-Flex only supports a flex-grow value so let's grab the
+  // first item in the list and just return that.
+  @if type-of($fg) == 'list' {
+    $fg-boxflex: nth($fg, 1);
+  }
+
+  -webkit-box-flex: $fg-boxflex;
+  -webkit-flex: $fg $fs $fb;
+  -moz-box-flex: $fg-boxflex;
+  -moz-flex: $fg $fs $fb;
+  -ms-flex: $fg $fs $fb;
+  flex: $fg $fs $fb;
+}
+
+@mixin flex-pseudo-space {
+  content: '';
+  display: block;
+  @include flex(1);
+}
+
+/*================ Flex Fill Vertical ================*/
+
+// required in flexbox.scss so it can inherit the mixins
+@mixin flex-fill($orientation) {
+  @include display-flex;
+  @if $orientation == vertical {
+    @include flex-direction(column);
+  } @else if $orientation == horizontal {
+    @include flex-direction(row);
+  } @else if $orientation == row {
+    @include flex-direction(row);
+  } @else if $orientation == column {
+    @include flex-direction(column);
+  }
+  @include flex(1);
+}
+
+/* stylelint-enable */

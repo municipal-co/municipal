@@ -1,0 +1,160 @@
+{%- comment %}
+
+  Product Detail Galleries
+  ------------------------------------------------------------------------------
+
+  - In order to build multiple galleries for every color option, we need to loop through all the colors, then all the available product images to see if we have one or more image for each
+  - This snippet only to be used inside the product-detail snippet
+  - It's too bad that we have to duplicate the gallery code twice in the same file but liquid kind of sucks so this is the best we can do
+  - Normal and variant galleries share the same code structure
+    .product-galleries
+      .product-gallery
+        .product-gallery__slideshow.swiper-container
+          .swiper-wrapper
+            .swiper-slide
+              a <- Needed for zoom to work
+                img
+        .product-gallery__thumbnails
+          .product-gallery__thumbnails-slide
+            img
+
+  - The only difference between the two is that .product-gallery elements gets a `data-option-value` attribute matching the color value associated with it
+
+  Usage:
+
+  {% include 'product-detail-galleries',
+              product: { product } - required
+              current_variant: { current_variant }
+  %}  
+
+{% endcomment -%}
+
+{% assign photo_thumb_dimension = '200x200' %}
+{% assign photo_main_dimension  = '900x900' %}
+{% assign photo_zoom_dimension  = '1400x1400' %}
+{% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
+
+{% comment %} Defaults {% endcomment %}
+{% assign current_variant = current_variant | default: product.selected_or_first_available_variant %}
+
+{% comment %}
+  This block of logic loops through all product images and checks if we have at least 1 with valid alt text for *each* color option.
+{% endcomment %}
+{% assign variant_gallery_possible = false %}
+
+{% for option in product.options_with_values %}
+  {% assign option_name_downcase = option.name | downcase %}
+  {%- comment %} If the variant option name is "color" {% endcomment -%}
+  {% if option_name_downcase == "color" %}
+    {% assign colors_with_images = 0 %}
+    {% for color in option.values %}
+      {% assign color_downcase = color | downcase %}
+      {% for image in product.images %}
+        {% assign image_alt_downcase = image.alt | downcase %}
+        {% if image_alt_downcase contains color_downcase %}
+          {% unless image_alt_downcase contains alt_swatch_identifier %}
+            {% assign colors_with_images = colors_with_images | plus: 1 %}
+            {% break %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% if colors_with_images == option.values.size %}
+      {% assign variant_gallery_possible = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+
+<div class="product-galleries" data-product-detail-galleries>
+
+  {% if variant_gallery_possible %}
+
+    {% comment %} Make a gallery for each variant {% endcomment %}
+    {% for option in product.options_with_values %}
+      {% assign option_name_downcase = option.name | downcase %}
+      {% if option_name_downcase == "color" %}
+        {% for color in option.values %}
+          {% assign color_downcase = color | downcase %}
+          {% assign color_index = forloop.index %}
+
+          <div class="product-gallery{% if option.selected_value != color %} hide{% endif %}" data-product-gallery data-option-value="{{ color }}">
+            <div id="slideshow-{{ product.id }}-{{ forloop.index }}" class="product-gallery__slideshow swiper-container" data-product-gallery-slideshow>
+              <div class="swiper-wrapper">
+                {% for image in product.images %}
+                  {% assign image_alt_downcase = image.alt | downcase %}
+                  {% if image_alt_downcase contains color_downcase %}
+                    {% unless image_alt_downcase contains alt_swatch_identifier %}
+                      <div class="swiper-slide" data-image="{{ image.id }}" {% if image.id == current_variant.featured_image.id %} data-initial-slide{% endif %}>
+                        <a href="{{ image | img_url: photo_zoom_dimension }}">
+                          <img src="{{ image | img_url: photo_main_dimension }}" alt="{{ image.alt | escape }}">
+                        </a>
+                      </div>
+                    {% endunless %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <span class="swiper-arrow swiper-arrow--left">
+                <span class="arrow arrow--left"><span class="arrow__icon"></span></span>
+              </span>
+              <span class="swiper-arrow swiper-arrow--right">
+                <span class="arrow arrow--right"><span class="arrow__icon"></span></span>
+              </span>
+              <div class="swiper-pagination"></div>
+            </div>
+            <div id="slideshow-thumbs-{{ product.id }}-{{ forloop.index }}" class="product-gallery__thumbnails" data-product-gallery-thumbnails>
+              {% for image in product.images %}
+                {% assign image_alt_downcase = image.alt | downcase %}
+                {% if image_alt_downcase contains color_downcase %}
+                  {% unless image_alt_downcase contains alt_swatch_identifier %}
+                    <div class="product-gallery__thumbnails-slide" data-product-gallery-thumbnails-slide>
+                      <img src="{{ image.src | img_url: photo_thumb_dimension }}" alt="{{ image.alt | escape }}">
+                    </div>
+                  {% endunless %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+
+  {% else %}
+
+    {% comment %} Make one gallery for all the images {% endcomment %}
+    <div class="product-gallery" data-product-gallery>
+      <div id="slideshow-{{ product.id }}" class="product-gallery__slideshow swiper-container" data-product-gallery-slideshow>
+        <div class="swiper-wrapper">
+          {% for image in product.images %}
+            {% assign image_alt_downcase = image.alt | downcase %}
+            {% unless image_alt_downcase contains alt_swatch_identifier %}
+              <div class="swiper-slide" data-image="{{ image.id }}" {% if image.id == current_variant.featured_image.id %} data-initial-slide{% endif %}>
+                <a href="{{ image | img_url: photo_zoom_dimension }}">
+                  <img src="{{ image | img_url: photo_main_dimension }}" alt="{{ image.alt | escape }}" class="img-fluid">
+                </a>
+              </div>
+            {% endunless %}
+          {% endfor %}
+        </div>
+        <span class="swiper-arrow swiper-arrow--left">
+          <span class="arrow arrow--left"><span class="arrow__icon"></span></span>
+        </span>
+        <span class="swiper-arrow swiper-arrow--right">
+          <span class="arrow arrow--right"><span class="arrow__icon"></span></span>
+        </span>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div id="slideshow-thumbs-{{ product.id }}" class="product-gallery__thumbnails" data-product-gallery-thumbnails>
+        {% for image in product.images %}
+          {% assign image_alt_downcase = image.alt | downcase %}
+          {% unless image_alt_downcase contains alt_swatch_identifier %}
+            <div class="product-gallery__thumbnails-slide" data-product-gallery-thumbnails-slide>
+              <img src="{{ image.src | img_url: photo_thumb_dimension }}" alt="{{ image.alt | escape }}" class="img-fluid">
+            </div>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+</div>

@@ -1,0 +1,50 @@
+// -------------------------
+// Icons
+// -------------------------
+
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  fill: currentColor;
+
+  .no-svg & {
+    display: none;
+  }
+}
+
+svg,
+symbol {
+  &.icon:not(.icon--full-color) {
+    circle,
+    ellipse,
+    g,
+    line,
+    path,
+    polygon,
+    polyline,
+    rect {
+      fill: inherit;
+      stroke: inherit;
+    }
+  }
+
+}
+
+.icon-play {
+  fill: none;
+  stroke: currentColor;
+}
+
+/* ============================================================================
+  A generic way to visually hide content while
+  remaining accessible to screen readers (h5bp.com)
+============================================================================== */
+.icon-fallback-text {
+  @include visually-hidden();
+
+  .no-svg & {
+    @include visually-shown(static);
+  }
+}

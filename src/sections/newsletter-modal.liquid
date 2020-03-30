@@ -1,0 +1,140 @@
+{% comment %} Newsletter messaging {% endcomment %}
+{% assign message_already_subscribed = section.settings.subscribe_already_subscribed_text %}
+{% if message_already_subscribed == blank %}
+  {% assign message_already_subscribed = 'general.newsletter.already_subscribed' | t %}
+{% endif %}
+
+{% assign message_success = section.settings.subscribe_success_text %}
+{% if message_success == blank %}
+  {% assign message_success = 'general.newsletter.subscribe_success' | t %}
+{% endif %}            
+
+{% assign message_fail = 'general.newsletter.subscribe_fail' | t %}  
+
+<div data-section-id="{{ section.id }}"
+     data-section-type="newsletter-modal"
+     data-enabled="{{ section.settings.enabled }}"
+     data-delay="{{ section.settings.delay }}"
+     data-seen-expiration="{{ section.settings.seen_expiration }}">
+  
+  <div class="modal fade" id="newsletter-modal" tabindex="-1" role="dialog" aria-labelledby="newsletter-modal-title" data-newsletter-modal>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          {% if section.settings.header_text != blank %}
+            <h3 class="modal-title" id="newsletter-modal-title">{{ section.settings.header_text }}</h3>
+          {% endif %}
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            {% include 'icon-close' %}
+          </button>          
+        </div>
+        <div class="modal-body">
+          {% if settings.newsletter_form_action == blank %}
+            <div class="alert alert-danger small">A valid newsletter form action URL is required for this section.  Please go to <strong>General Settings -> Mailing List</strong> in the theme editor to add this information</div>
+          {% endif %}     
+
+          {% if section.settings.image %}
+            <img src="{{ section.settings.image | img_url: '600x' }}" class="img-fluid" alt="{{ section.settings.image.alt }}" />
+          {% endif %}
+
+          <form action="{{ settings.newsletter_form_action }}" method="post" data-newsletter-form>
+            <div class="newsletter-form-contents" data-form-contents>
+              <div class="newsletter-form-inputs">
+                {% if section.settings.body_text != blank %}
+                  <p>{{ section.settings.body_text }}</p>
+                {% endif %}
+                <div class="form-group">
+                  <input type="email" class="form-control" placeholder="{{ section.settings.placeholder_text }}" value="{% if customer %}{{ customer.email }}{% endif %}" required="required"/>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" name="submit" value="{{ section.settings.subscribe_button_text | default: 'Subscribe' }}" />
+              </div>
+              <div class="newsletter-form-message"
+                 data-form-message
+                 data-message-success="{{ message_success | strip | escape }}"
+                 data-message-already-subscribed="{{ message_already_subscribed | strip | escape }}"
+                 data-message-fail="{{ message_fail | strip | escape }}"></div>                 
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Newsletter Modal",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enabled",
+        "label": "Enabled?",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "delay",
+        "min":  0,
+        "max":  10,
+        "step": 1,
+        "unit": "s",
+        "label": "Seconds to wait before displaying",
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "seen_expiration",
+        "min":  0,
+        "max":  60,
+        "step": 1,
+        "unit": "d",
+        "label": "Days before showing again",
+        "default": 30,
+        "info": "If a user submits their email or closes the form, this is how long we wait before showing again.  Set to '0' to never show again."
+      },
+      {
+         "type": "header",
+         "content": "Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "header_text",
+        "label": "Header text"
+      },
+      {
+        "type": "textarea",
+        "id": "body_text",
+        "label": "Text"
+      },
+      {
+        "type": "text",
+        "id": "placeholder_text",
+        "label": "Placeholder Text",
+        "default": "Enter your email"
+      },
+      {
+        "type": "textarea",
+        "id": "subscribe_success_text",
+        "label": "Success Message",
+        "info": "Displays when someone signs up successfully.  Leave blank for a generic message."
+      },
+      {
+        "type": "textarea",
+        "id": "subscribe_already_subscribed_text",
+        "label": "Already Subscribed Message",
+        "info": "Displays if someone is already signed up to the mailing list.  Leave blank for a generic message."
+      },
+      {
+        "type": "text",
+        "id": "subscribe_button_text",
+        "label": "Button Text"
+      }
+    ]
+  }
+{% endschema %}

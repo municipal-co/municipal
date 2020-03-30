@@ -1,0 +1,81 @@
+{% capture sidebar_html %}
+  {% include 'account-sidebar' %}
+{% endcapture %}
+
+{% assign title = 'customer.addresses.title' | t %}
+
+{% paginate customer.addresses by 20 %}
+
+  <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-addresses">
+    <div class="container">
+
+      {% include 'page-header', ph_title: title %}
+
+      <div class="row">
+
+        {{ sidebar_html }}
+
+        <div class="account-content{% if sidebar_html != blank %} account-content--has-sidebar{% endif %}">
+
+          {% comment %} START - Hidden Address Forms! {% endcomment %}
+          <div id="AddressNewForm" class="hide" data-address-new-form>
+            {% include 'customer-new-address-form' %}
+          </div>
+
+          {% if customer.addresses.size > 0 %}
+            {% for address in customer.addresses %}
+              <div id="EditAddress_{{ address.id }}" class="hide" data-address-edit-form>
+                {% include 'customer-edit-address-form', address: address %}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% comment %} END - Hidden Address Forms! {% endcomment %}
+
+          <div data-address-main-content>
+
+          {% if customer.addresses.size > 0 %}
+
+            <div class="row">
+              {% for address in customer.addresses %}
+                <div class="col-lg-6 col-xl-4">
+
+                  {{ address | format_address | replace: '<p>', '<address>' | replace: '</p>', '</address>' }}
+
+                  {% if address == customer.default_address %}
+                    <p class="small text-gray-500"><em>Default Address</em></p>
+                  {% endif %}
+
+                  <p class="small">
+                    <a href="#" data-address-edit-toggle data-form-id="{{ address.id }}">
+                      {{ 'customer.addresses.edit' | t }}
+                    </a>
+                    &middot;
+                    <a href="#" data-address-delete data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                      {{ 'customer.addresses.delete' | t }}
+                    </a>
+                  </p>
+                </div>
+              {% endfor %}
+            </div>
+
+            <hr />
+            <button type="button" class="btn btn-primary" data-address-new-toggle>{{ 'customer.addresses.add_new' | t }}</button>           
+
+          {% else %}
+
+            <p>{{ 'customer.addresses.none' | t }}</p>
+            <a href="/account/addresses#new" class="btn btn-block" data-address-new-toggle>{{ 'customer.account.add_new_address' | t }}</a>        
+
+          {% endif %}
+
+         </div>
+
+      </div>
+    </div>
+  </div>        
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+
+{% endpaginate %}

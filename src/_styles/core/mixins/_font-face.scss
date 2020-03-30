@@ -1,0 +1,23 @@
+// Fool-proof @font-face built for Shopify and their asset_url filters
+//
+// Based on http://coding.smashingmagazine.com/2013/02/14/setting-weights-and-styles-at-font-face-declaration/
+
+@mixin font-face($font-family, $file-name, $font-weight: normal, $font-style: normal) {
+  @font-face {
+    font-family: $font-family;
+      src: url("{{ \'#{$file-name}.eot\' | asset_url }}?#iefix");
+      src: url("{{ \'#{$file-name}.eot\' | asset_url }}?#iefix") format('embedded-opentype'),
+           url("{{ \'#{$file-name}.woff\' | asset_url }}") format('woff'),
+           url("{{ \'#{$file-name}.ttf\' | asset_url }}") format('truetype'),
+           url("{{ \'#{$file-name}.svg\' | asset_url }}##{$file-name}") format('svg');
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
+  // Chrome for Windows rendering fix: http://www.adtrak.co.uk/blog/font-face-chrome-rendering/
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    @font-face {
+      font-family: $font-family;
+        src: url("{{ \'#{$file-name}.svg\' | asset_url }}##{$file-name}") format('svg');
+    }
+  }
+}

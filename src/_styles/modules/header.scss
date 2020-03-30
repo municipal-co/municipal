@@ -1,0 +1,261 @@
+// -------------------------
+// Header
+// -------------------------
+
+.header {
+  position: relative;
+  z-index: $zindex-header;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height-small;
+  background-color: $header-bg;
+  color: $header-text-color;
+  backface-visibility: hidden;
+
+  @media (min-width: $header-bp-min) {
+    height: $header-height-base;
+  }
+
+  // If the fixed header behavior is turned on...
+  .site-fixed-header & {
+    position: absolute;
+  }
+
+  &.is-fixed {
+    position: fixed;
+  }
+}
+
+// Make a special version of .container that is fluid w/ max width and vertical flex-alignment of child elements
+.header-container {
+  @extend .container-fluid-max;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+
+  // uncomment this line to make dropdowns only go as large as the grid container width
+  // position: relative;
+
+  // > .row {
+  //   @media (min-width: $header-bp-min) {
+  //     display: flex;
+  //     align-items: center;
+  //   }
+  // }
+
+  .header-dropdown > & {
+    .row {
+      width: 100%;
+      flex-grow: 1;
+      // @media (min-width: $header-bp-min) {
+      //   align-items: flex-start;
+      // }
+    }
+  }
+}
+
+.header-logo {
+  max-width: $header-logo-width;
+}
+
+.header-logo__image {
+  width: 100%;
+  transform: translateZ(0); // Prevent bluriness from scaling
+}
+
+// .header-container > .header-nav
+.header-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+
+  // Space out each nav
+  padding-left: $grid-gutter-width/2;
+  padding-right: $grid-gutter-width/2;
+
+  &.header-nav--left {
+    padding-left: 0;
+  }
+
+  &.header-nav--right {
+    padding-right: 0;
+    justify-content: flex-end;
+  }
+
+  &.header-nav--center {
+    @media (min-width: $header-bp-min) {
+      justify-content: center;
+    }
+  }
+
+
+  // For the logo block, it can either be &.header-nav--center, or .header-nav--left
+  // Default to showing it in the center on large screens, but allow it flush left if necessary
+  &.header-nav--logo {
+
+    // These flex properties cause the width of the logo container to be determined by the width itself instead of adding extra whitespace
+    // This gives us more room to use for menus. :)
+    // Move these rules into the `&:not(.header-nav--left)` selector below if you want a left aligned logo and center menu that is *actually* centered with the screen
+    flex-grow: inherit;
+    flex-basis: auto;
+
+    &:not(.header-nav--left) {
+
+      @media (max-width: $header-bp-min - 1px) {
+        padding-left: 0;
+      }
+
+    }
+  }
+
+  // Some menus don't need to be shown all the time
+  &.header-nav--hide-on-mobile {
+    @media (max-width: $header-bp-min - 1px) {
+      display: none;
+    }
+  }
+
+  &.header-nav--hide-on-desktop {
+    @media (min-width: $header-bp-min) {
+      display: none;
+    }
+  }
+}
+
+// List of menu items
+.header-nav__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-nav__menu-item {
+  display: inline-block;
+  margin: 0 6px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  > a {
+    padding: 27px 4px; // use vertical padding to match the height of the header
+  }
+}
+
+// Cart Icon + Quantity
+.header-cart__badge {
+  display: inline-block;
+  position: relative;
+
+  &.has-items {
+
+  }
+}
+
+.header-cart__badge-count {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+
+  .has-items & {
+    opacity: 1;
+  }
+}
+
+// Dropdown
+.header-dropdown {
+  position: absolute;
+  z-index: -1;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 20px 0;
+  background: $header-dropdown-bg;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: $header-dropdown-box-shadow;
+  transition: opacity $transition-duration-dropdown $transition-timing-function-dropdown-out;
+
+  // If the header has a transparent background, you'll need this :before element to make sure that things look good when the dropdown opens
+  // &:before {
+  //   content: "";
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   top: 0;
+  //   height: $header-height-small;
+  //   background: $white;
+  //   transform: translateY(-100%);
+
+  //   @media (min-width: $header-bp-min) {
+  //     height: $header-height-base;
+  //   }
+  // }
+
+  &.is-open,
+  &.is-forced-open {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity $transition-duration-dropdown $transition-timing-function-dropdown-in;
+  }
+}
+
+.header-dropdown__menu {
+  display: inline-block;
+  vertical-align: top;
+
+  & + & {
+    margin-left: $header-dropdown-menu-spacing;
+  }
+
+  ul {
+    @extend .list-unstyled;
+
+    // Style child menus
+    ul {
+      margin-top: 10px;
+      padding-left: 15px;
+    }
+
+    > li:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.header-dropdown__ctas {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-left: -#{($grid-gutter-width / 2)};
+  margin-right: -#{($grid-gutter-width / 2)};
+}
+
+.header-dropdown__cta {
+  // This allows the CTA blocks to adjust their sizing based on sibling count.
+  // But set a max-width to prevent them from growing too large
+  flex-grow: 1;
+  flex-basis: 25%;
+  max-width: percentage(1/3);
+  padding-left: $grid-gutter-width / 2;
+  padding-right: $grid-gutter-width / 2;
+}
+
+.header-dropdown__cta-image {
+  position: relative;
+  width: 100%;
+  padding-bottom: percentage(4/6); // Change this value if you want to change the shape of the CTA image
+  margin-bottom: $grid-gutter-width/2;
+  background: {
+    position: center;
+    size: cover;
+  }
+}

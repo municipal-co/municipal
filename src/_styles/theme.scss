@@ -1,0 +1,112 @@
+/**
+ * VENDOR
+ * ---------------------------------------
+ * Import these up here to allow overrides down below
+ *
+ */
+@import 'vendor/swiper.scss';
+@import 'vendor/chosen.scss';
+
+/**
+ * CORE
+ * ---------------------------------------
+ * Pieces pulled from Bootstrap
+ *
+ */
+@import 'core/functions';
+@import 'core/variables';
+@import 'core/mixins';
+@import 'core/root';
+@import 'core/reboot';
+@import 'core/fonts';
+@import 'core/type';
+@import 'core/helpers';
+@import 'core/images';
+@import 'core/code';
+@import 'core/grid';
+@import 'core/layout';
+@import 'core/tables';
+@import 'core/forms';
+@import 'core/buttons';
+@import 'core/transitions';
+@import 'core/button-group';
+@import 'core/custom-forms';
+@import 'core/card';
+@import 'core/alert';
+@import 'core/close';
+@import 'core/modal';
+@import 'core/utilities';
+
+/**
+ * COMPONENTS
+ * ---------------------------------------
+ * Components are small elements that may be re-used in multiple modules
+ *
+ */
+@import 'components/icon';
+@import 'components/tabs';
+@import 'components/drawer';
+@import 'components/breadcrumbs';
+@import 'components/panel';
+@import 'components/page';
+@import 'components/rte';
+@import 'components/pagination';
+@import 'components/social-sharing';
+@import 'components/chosen';
+@import 'components/content';
+@import 'components/card';
+@import 'components/quick-view';
+@import 'components/docs';
+@import 'components/banner';
+@import 'components/minimal-input';
+@import 'components/quantity-adjuster';
+@import 'components/dots';
+@import 'components/promo';
+@import 'components/frame';
+@import 'components/spacer';
+@import 'components/slideup';
+@import 'components/arrows';
+@import 'components/expandable-list';
+@import 'components/overlay';
+@import 'components/slideshow';
+@import 'components/video-player';
+@import 'components/yotpo';
+@import 'components/newsletter-form';
+
+/**
+ * MODULES
+ * ---------------------------------------
+ * Modules are larger pieces of functionality that consume components
+ * It is common for there to only be one instance of each on a page
+ *
+ */
+@import 'modules/header';
+@import 'modules/footer';
+@import 'modules/pencil-banner';
+@import 'modules/ajax-cart';
+@import 'modules/product-detail';
+@import 'modules/mobile-menu';
+
+/**
+ * Templates
+ * ---------------------------------------
+ * Styles *specific* to a shopify template
+ * Only use if there is no less specific / more logical place to put styles
+ * Try to use the body template class as a CSS hook
+ *
+ */
+@import 'templates/cart.scss';
+@import 'templates/collection.scss';
+@import 'templates/404.scss';
+@import 'templates/gift-card.scss';
+@import 'templates/customer.scss';
+@import 'templates/challenge.scss';
+@import 'templates/password.scss';
+
+.development-mode {
+  /* stylelint-disable-next-line selector-max-id */
+  #preview-bar-iframe,
+  .shopify-preview-bar {
+    display: none;
+  }
+}

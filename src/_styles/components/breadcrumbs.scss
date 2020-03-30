@@ -1,0 +1,28 @@
+// -----------------------------------------------------------------------------
+// Breadcrumbs
+// -----------------------------------------------------------------------------
+
+.breadcrumbs {
+  display: flex;
+
+  @include media-breakpoint-up('sm') {
+    display: block;
+  }
+}
+
+.breadcrumbs__crumb {
+  display: inline-block;
+
+  &:not(:last-child) {
+    &:after {
+      display: inline-block;
+      content: $breadcrumb-separator;
+      padding: 0 5px;
+    }
+  }
+
+  &:last-child:not(:only-child) {
+
+  }
+}
+

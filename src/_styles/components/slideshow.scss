@@ -1,0 +1,74 @@
+// -------------------------
+// Slideshow Module
+// -------------------------
+
+// Base styling for all swiper instances
+.swiper-container {
+
+}
+
+.swiper-arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &--left {
+    left: $grid-gutter-width/2;
+  }
+  &--right {
+    right: $grid-gutter-width/2;
+  }    
+}
+
+.swiper-pagination-bullet {
+  height: $slideshow-dot-size;
+  width: $slideshow-dot-size;  
+  background-color: $slideshow-dot-color;
+  transition: background-color $transition-duration-base $transition-timing-function-out;
+
+  &:hover,
+  &:focus,
+  &.swiper-pagination-bullet-active {
+    transition: background-color $transition-duration-base $transition-timing-function-in;  
+    background-color: $slideshow-dot-active-color;
+  }
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+  margin: 0 $slideshow-dot-size/2;
+}
+
+
+// Slideshow Slide styling
+.slideshow {
+
+}
+
+.slideshow-slide {
+
+}
+
+.slideshow-slide__inner {
+
+}
+
+.slideshow-slide__link {
+
+}
+
+.slideshow-slide__image {
+
+}
+
+.slideshow-slide__text-content {
+  margin: $spacer*2 0;
+}
+
+.slideshow-slide__title {
+
+}
+
+.slideshow-slide__subtitle {
+
+}

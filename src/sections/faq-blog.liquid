@@ -1,0 +1,80 @@
+{% assign faq_blog = blogs[section.settings.blog] %}
+
+{% assign has_articles = false %}
+{% if faq_blog != blank and faq_blog.articles_count > 0 %}
+  {% assign has_articles = true %}
+{% endif %}
+
+{% assign has_tags = false %}
+{% if faq_blog.all_tags.size > 0 %}
+  {% assign has_tags = true %}
+{% endif %}
+
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="faq">
+  <div class="container">
+
+    {% include 'page-header', ph_title: page.title %}
+
+    {{ page.content }}
+  
+    {% if has_articles %}
+
+      {% if has_tags %}
+
+        <div class="row">
+          <div class="col-md-3">
+            <ul>
+            {% for tag in faq_blog.all_tags %}
+              <li><a href="#" data-tag="{{ tag | handle }}">{{ tag }}</a></li>
+            {% endfor %}
+            </ul>
+          </div>
+
+          <div class="col-md-9">
+            {% for tag in faq_blog.all_tags %}
+              <p>FAQs tagged "{{ tag }}"</p>
+              {% for article in faq_blog.articles limit: 200 %}
+                {% if article.tags contains tag %}
+                  <h4>{{ article.title }}</h4>
+                  <div class="rte">
+                    {{ article.content }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+              {% unless forloop.last %}<br /><hr /><br />{% endunless %}
+            {% endfor %}
+          </div>
+        </div>
+
+      {% else %}
+
+        {% for article in faq_blog.articles limit: 200 %}
+          <h4>{{ article.title }}</h4>
+          <div class="rte">
+            {{ article.content }}
+          </div>
+        {% endfor %}
+
+      {% endif %}
+    {% endif %}
+
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "FAQ Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "FAQ",
+        "info": "This section is powered by a separate Shopify blog that you specify.  Posts from this blog will be displayed as FAQs with the post title as the question and post content as the answer."
+      },    
+      {
+        "type": "blog",
+        "id": "blog",
+        "label": "Blog"
+      }
+    ]  
+  }
+{% endschema %}

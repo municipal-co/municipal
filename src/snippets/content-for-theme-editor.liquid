@@ -1,0 +1,16 @@
+{%- comment %}
+
+  Content For Theme Editor
+  ------------------------------------------------------------------------------
+  
+  - Wraps passed in content with an if check that returns true if the site is being viewed inside the theme editor
+
+  Usage:
+
+  {% include 'content-for-theme-editor' with content_variable %}
+
+{% endcomment -%}
+
+{% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+  {{ content-for-theme-editor }}
+{% endif %}

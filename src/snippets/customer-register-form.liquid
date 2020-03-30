@@ -1,0 +1,92 @@
+{%- comment %}
+
+  Customer Register Form
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'customer-register-form',
+              marketing_checkbox_label: { string }
+              terms_checkbox_label: { string }
+  %}
+
+{% endcomment -%}
+
+{% form 'create_customer' %}
+  {{ form.errors | default_errors }}
+
+  <div class="form-group">
+    <label for="FirstName">
+      {{ 'customer.register.first_name' | t }}
+    </label>
+    <input type="text"
+      name="customer[first_name]"
+      id="FirstName"
+      class="form-control"
+      {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+      required>
+  </div>
+
+  <div class="form-group">
+    <label for="LastName">
+      {{ 'customer.register.last_name' | t }}
+    </label>
+    <input type="text"
+      name="customer[last_name]"
+      id="LastName"
+      class="form-control"
+      {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+  </div>
+
+  <div class="form-group">
+    <label for="Email">
+      {{ 'customer.register.email' | t }}
+    </label>
+    <input type="email"
+      name="customer[email]"
+      id="Email"
+      class="form-control {% if form.errors contains 'email' %}is-invalid{% endif %}""
+      value="{% if form.email %}{{ form.email }}{% endif %}"
+      spellcheck="false"
+      autocomplete="off"
+      autocapitalize="off">
+  </div>
+
+  <div class="form-group">
+    <label for="CreatePassword">
+      {{ 'customer.register.password' | t }}
+    </label>
+    <input type="password"
+      name="customer[password]"
+      id="CreatePassword"
+      class="form-control {% if form.errors contains 'password' %}is-invalid{% endif %}""
+      data-password-field>
+  </div>
+
+  <div class="form-group">
+    <div class="custom-control custom-checkbox">
+      <input class="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing">
+      <label class="custom-control-label" for="AcceptsMarketing">
+        {% if marketing_checkbox_label != blank %}
+          {{ marketing_checkbox_label }}
+        {% else %}
+          Subscribe to our Newsletter
+        {% endif %}
+      </label>
+    </div>   
+    <div class="custom-control custom-checkbox">
+      <input class="custom-control-input" type="checkbox" name="customer[accepts_terms]" value="true" id="AcceptsTerms" required>
+      <label class="custom-control-label" for="AcceptsTerms">
+        {% if terms_checkbox_label != blank %}
+          {{ terms_checkbox_label }}
+        {% else %}
+          I accept the Privacy Policy and agree to the Terms & Conditions
+        {% endif %}        
+      </label>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn-primary">
+  </div>
+{% endform %}  

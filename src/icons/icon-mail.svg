@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="12px" viewBox="0 0 17 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-113.000000, -1248.000000)">
+        <g id="Share" transform="translate(101.000000, 1006.000000)" fill="#FFFFFF">
+            <g id="Email" transform="translate(0.000000, 228.000000)">
+                <g id="mail" transform="translate(12.000000, 14.000000)">
+                    <path d="M0,12 L17,12 L17,0 L0,0 L0,12 Z M2,10 L15,10 L15,2 L2,2 L2,10 Z" id="Fill-1"></path>
+                    <path d="M1.9664917,2.00805664 L8.62996308,8.00701904 L15.0062256,2.00805664 L1.9664917,2.00805664 Z M4.64428711,1.96242246 L12.3755493,1.96242246 L8.50991821,5.5057373 L4.64428711,1.96242246 Z" id="Fill-2"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

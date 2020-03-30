@@ -1,0 +1,78 @@
+<div class="container">
+  
+  {% include 'content-header', ch_title: section.settings.title %}
+
+  {% assign collection_handle = section.settings.collection %}
+  {% assign collection = collections[collection_handle] %}
+  {% if collection_handle != blank and collection.products.size > 0 %}
+    <div class="content-grid content-grid--lg-{{ section.settings.products_per_row }}-col">
+      {% for product in collection.products limit: section.settings.limit %}
+        <div class="content-grid__item">
+          {% include 'product-card', product: product %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
+    <div class="content-footer">
+      <a href="{{ section.settings.cta_url }}" class="btn btn-primary">{{ section.settings.cta_text }}</a>
+    </div>
+  {% endif %}
+  
+</div>
+
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "limit",
+        "label": "Products to show",
+        "min": 2,
+        "max": 60,
+        "step": 1,
+        "default": 12
+      },      
+      {
+        "type": "range",
+        "id": "products_per_row",
+        "label": "Products per row",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "default": 3
+      },    
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      }   
+    ],
+    "presets": [
+      {
+        "category": "Product",
+        "name": "Collection",
+        "settings": {
+          "title": "Featured Collection"
+        }
+      }
+    ]    
+  }
+{% endschema %}

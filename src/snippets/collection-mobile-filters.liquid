@@ -1,0 +1,111 @@
+{%- comment %}
+
+  Collection Mobile Filters
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'collection-mobile-filters',
+              id: { string } - required
+              filter_types: { array } - ['color:Red, color:Dark Green, style:Polo']
+  %}
+
+  It looks through all the tags looking for certain tags that will become filters.
+
+  The tags used for filters are the ones that start with the filter_types passed in.
+
+  Tags are case-sensitive, so we will not do any transformation to them for filtering and transform them only for presentational purpose (capitalize).
+
+{% endcomment -%}
+
+{% if collection != empty and filter_types != blank %}
+
+  {% assign collection_url = collection.url %}
+  {% comment %} collection.url returns nothing for the 'all' collection {% endcomment %}
+  {% if collection.handle == 'all' %}
+    {% assign collection_url = '/collections/all' %}
+  {% endif %}
+
+  {%- capture filters_html %}
+
+    {% for filter_type in filter_types %}
+      
+      {% assign filter_type_options_count = 0 %}
+      {% assign filter_type_handle = filter_type | handle %}      
+      {% assign filter_type_id = 'collection-mobile-filters-type-' | append: filter_type_handle %}
+      {% assign filter_type_active = false %}
+
+      {% capture filter_type_body %}
+        <div class="expandable-list__body">
+          {%- for tag in collection.all_tags -%}
+            
+            {%- assign tag_type = tag | split: ':' | first -%} {% comment %} turns 'color:Dark Blue' into 'color' {% endcomment %}
+            {%- assign tag_display = tag | split: ':' | last -%} {% comment %} turns 'color:Dark Blue' into 'Dark Blue' {% endcomment %}
+            
+            {% if tag_type == filter_type %}
+              {% assign filter_type_options_count = filter_type_options_count | plus: 1 %}
+              {% if current_tags contains tag %}
+                {% assign filter_type_active = true %}
+              {% endif %}
+              
+              <div class="expandable-list__item {% if current_tags contains tag %}is-selected{% endif %}" data-mobile-filter-type="{{ filter_type_handle }}" data-mobile-filter-tag="{{ tag }}">
+                <a href="#" class="expandable-list__item-title">
+                  {{ tag_display }}
+                  <div class="expandable-list__item-status-icon">{% include 'icon-checkmark' %}</div>
+                </a>
+              </div>
+            {% endif %}
+
+          {% endfor %}
+        </div>
+      {% endcapture %}
+
+      {% comment %} Construct a list for the options if there's more than 1 {% endcomment %}
+      {% if filter_type_options_count > 1 %}
+        <div class="expandable-list" data-mobile-filter-group>
+          <div class="expandable-list__header">
+            <a href="#{{ filter_type_id }}"
+               class="expandable-list__header-title"
+               data-toggle="collapse" 
+               aria-expanded="{% if filter_type_active %}true{% else %}false{% endif %}"
+               aria-controls="{{ filter_type_id }}">
+              {{ filter_type | capitalize }} {% include 'icon-caret-down' %}
+            </a>
+          </div>
+
+          <div id="{{ filter_type_id }}" class="collapse {% if filter_type_active %}show{% endif %}">
+            {{ filter_type_body }}
+          </div>            
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  {% endcapture %}
+
+  {% comment %} If we have any select tags, output them here {% endcomment %}
+  {% if filters_html != blank %}
+    <div {% if id != blank %}id="{{ id }}"{% endif %} class="drawer">
+      <div class="drawer__inner">
+        <div class="drawer__header">
+          <a href="#" class="drawer__close" data-drawer-close>
+            {% include 'icon-close' %}
+          </a>        
+          <h5 class="drawer__header-title">Filter</h5>
+        </div>
+        <div class="drawer__body">
+          <div class="drawer__body-contents">
+            {{ filters_html }}
+          </div>
+        </div> 
+        <div class="drawer__footer">
+          <a href="#" class="btn btn-primary btn-block" data-mobile-filter-apply>Apply</a>
+          {% if current_tags %}        
+            <a href="{{ collection_url }}" class="btn btn-primary btn-block">Clear all filters</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>    
+  {% endif %}
+
+{% endif %}
+

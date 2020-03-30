@@ -1,0 +1,237 @@
+{%- comment %}
+  Combines customer login + register forms into one template
+{% endcomment -%}
+
+<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="customers-login">
+
+  {% assign page_hero_id = 'page-hero-' | append: section.id %}
+  {% capture page_hero_title %}
+    {% if section.settings.title != blank %}
+      {{ section.settings.title }}
+    {% else %}
+      {{ 'customer.login.title' | t }}
+    {% endif %}
+  {% endcapture %}
+  
+  {% include 'page-hero',
+              ph_id: page_hero_id,
+              ph_content_max_width: 800,
+              ph_light_text: section.settings.light_text,
+              ph_background_image: section.settings.background_image,
+              ph_title: page_hero_title,
+              ph_subtitle: section.settings.subtitle
+  %}
+
+  <div class="container">
+
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="form-success alert alert-success text-center hide" id="ResetSuccess">
+          {{ 'customer.recover_password.success' | t }}
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-xl-5">
+
+            <div id="CustomerLoginForm">
+              <h2 class="h4">{{ 'customer.login.title' | t }}</h2>
+              
+              <div style="margin-bottom: 25px;">
+                {% if section.settings.login_subtitle != blank %}
+                  {{ section.settings.login_subtitle }}
+                {% else %}
+                  <p>{{ 'customer.login.subtitle' | t }}</p>
+                {% endif %}
+              </div>
+
+              {% form 'customer_login' %}
+
+                {{ form.errors | default_errors }}
+
+                <div class="form-group">
+                  <label for="CustomerEmail">
+                    {{ 'customer.login.email' | t }}
+                  </label>
+
+                  <input type="email"
+                    name="customer[email]"
+                    id="CustomerEmail"
+                    class="form-control {% if form.errors contains 'email' %}is-invalid{% endif %}"
+                    spellcheck="false"
+                    autocomplete="off"
+                    autocapitalize="off">
+                </div>
+
+                {% if form.password_needed %}
+                  <div class="form-group">
+                    <label for="CustomerPassword">
+                      {{ 'customer.login.password' | t }}
+                    </label>
+
+                    <input type="password"
+                      name="customer[password]"
+                      id="CustomerPassword"
+                      class="form-control {% if form.errors contains 'password' %}is-invalid{% endif %}"">
+                  </div>
+
+                  <div class="form-group">
+                    <a href="#recover" id="RecoverPassword" class="form-text text-right">{{ 'customer.login.forgot_password' | t }}</a>
+                  </div>
+                {% endif %}
+
+                <div class="form-group">
+                  <input type="submit" class="btn btn-primary" value="{{ 'customer.login.sign_in' | t }}">
+                </div>
+              {% endform %}
+            </div>
+
+            <div id="RecoverPasswordForm" class="hide">
+              <h2 class="h4">{{ 'customer.recover_password.title' | t }}</h2>
+
+              <div style="margin-bottom: 25px;">
+                {% if section.settings.recover_subtitle != blank %}
+                  {{ section.settings.recover_subtitle }}
+                {% else %}
+                  <p>{{ 'customer.recover_password.subtext' | t }}</p>
+                {% endif %}
+              </div>  
+
+              {%- comment %} Recover Password Form {% endcomment -%}
+              {% form 'recover_customer_password' %}
+                {% if form.errors %}
+                  {% for field in form.errors %}
+                     {% unless form.errors.messages[field] contains 'login' %}
+                        {{ form.errors | default_errors }}
+                     {% endunless %}
+                  {% endfor %}
+                {% endif %}
+
+                {% if form.posted_successfully? %}
+                  <span class="hide reset-password-success"></span>
+                {% endif %}
+
+                <div class="form-group">
+                  <label for="RecoverEmail">
+                    {{ 'customer.recover_password.email' | t }}
+                  </label>
+                  <input type="email"
+                    name="email"
+                    id="RecoverEmail"
+                    class="form-control"
+                    spellcheck="false"
+                    autocomplete="off"
+                    autocapitalize="off">
+                </div>
+
+                <div class="form-group">
+                  <input type="submit" class="btn btn-primary" value="{{ 'customer.recover_password.submit' | t }}">
+                  <button type="button" class="btn btn-link" id="HideRecoverPasswordLink">
+                    {{ 'customer.recover_password.cancel' | t }}
+                  </button>
+                </div>
+              {% endform %}
+
+            </div>
+
+          </div>
+
+          <div class="col-md-6 col-xl-5 offset-xl-2">
+            <h2 class="h4">{{ 'customer.register.title' | t }}</h2>
+            <div style="margin-bottom: 25px;">
+              {% if section.settings.register_subtitle != blank %}
+                {{ section.settings.register_subtitle }}
+              {% else %}
+                <p>{{ 'customer.register.subtitle' | t }}</p>
+              {% endif %}
+            </div>
+
+            {% include 'customer-register-form',
+                        marketing_checkbox_label: section.settings.confirmation_marketing,
+                        terms_checkbox_label: section.settings.confirmation_terms
+            %}
+
+            {% if shop.checkout.guest_login %}
+              {% form 'guest_login' %}
+                <input type="submit" class="btn btn-block" value="{{ 'customer.login.guest_title' | t }}">
+              {% endform %}
+            {% endif %}              
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Customers - Login",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Page Hero"
+      },    
+      {
+        "type": "checkbox",
+        "id" : "light_text",
+        "label": "Light Text",
+        "default": false
+      },    
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title",
+        "info": "Leave blank for default title"
+      },
+      {
+        "id": "subtitle",
+        "type": "richtext",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Image"
+      },
+      {
+        "type": "header",
+        "content": "Messaging"
+      },
+      {
+        "id": "login_subtitle",
+        "type": "richtext",
+        "label": "Login Subtitle",
+        "info": "Leave blank for default message"
+      },
+      {
+        "id": "register_subtitle",
+        "type": "richtext",
+        "label": "Register Subtitle",
+        "info": "Leave blank for default message"
+      },
+      {
+        "id": "recover_subtitle",
+        "type": "richtext",
+        "label": "Recover Password Subtitle",
+        "info": "Leave blank for default message"
+      },
+      {
+        "type": "header",
+        "content": "Confirmation Labels"
+      },
+      {
+        "id": "confirmation_marketing",
+        "type": "richtext",
+        "label": "Accepts Marketing Label",
+        "info": "Leave blank for default message"
+      },
+      {
+        "id": "confirmation_terms",
+        "type": "richtext",
+        "label": "Accepts Terms and Conditions",
+        "info": "Leave blank for default message.  Be sure to add links to any relevant information pages"
+      }   
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,74 @@
+// -------------------------
+// Expandable List
+// -------------------------
+
+// .expandable-list(.is-open)
+//   .expandable-list__header
+//     a.expandable-list__header-title
+//   .collapse
+//     .expandable-list__body
+//       .expandable-list__item / .expandable-list__item.is-selected
+
+.expandable-list {
+
+  &:not(:last-of-type) {
+    margin-bottom: $spacer;
+  }
+}
+
+.expandable-list__header {
+  padding: 10px 0;
+}
+
+.expandable-list__header-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  svg.icon {
+    width: 15px;
+    transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
+  }
+
+  .expandable-list.is-open & svg.icon {
+    transform: rotate(180deg);
+  }
+}
+
+.expandable-list__body {
+
+}
+
+.expandable-list__item {
+  padding: $expandable-list-item-padding-vertical 0;
+
+  &:not(:last-of-type) {
+    border-bottom: $expandable-list-item-border;
+  }
+
+}
+
+.expandable-list__item-title {
+
+  display: block;
+
+  .is-selected & {
+    font-weight: bold;
+  }
+
+  .expandable-list__item-status-icon {
+    float: right;
+    opacity: 0;
+
+    transition: opacity $transition-duration-fast $transition-timing-function-in-out-ui;
+
+    .is-selected & {
+      opacity: 1;
+    }
+
+    svg {
+      height: 12px;
+      width: 12px;
+    }
+  }
+}

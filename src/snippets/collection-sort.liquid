@@ -1,0 +1,27 @@
+{% comment %}
+
+  Sort By snippet
+
+{% endcomment %}
+
+{% unless collection == empty %}
+
+  <div class="collection-filter-bar__entry">
+    
+    {% assign sort_options = 'created-descending|Newest,price-ascending|Price: $ - $$,price-descending|Price: $$ - $,best-selling|Best Selling' | split: ',' %}
+    {% assign sort_selected =  collection.sort_by | default: collection.default_sort_by %}
+    
+    <label>Sort By</label>
+    <select class="form-control" data-sort-select>
+      {% for sort_option in sort_options %}
+        {% assign sort_option_handle = sort_option | split: '|' | first %}
+        {% assign sort_option_title  = sort_option | split: '|' | last %}
+        <option value="{{ sort_option_handle }}" {% if sort_selected == sort_option_handle %}selected{% endif %}>
+          {{ sort_option_title }}
+        </option>
+      {% endfor %}
+    </select>
+    
+  </div>
+
+{% endunless %}

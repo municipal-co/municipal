@@ -1,0 +1,19 @@
+<div id="search-overlay" class="overlay" tabindex="-1">
+  <div class="overlay__content-wrapper">
+    <div class="overlay__content">
+      <div style="width: 500px; max-width: 100%; padding: 20px 35px; margin: 0 auto; position: relative;">
+        <a href="#" class="overlay__close" data-overlay-close style="position: absolute; top: 0; right: 0;" title="Close overlay">{% include 'icon-close' %}</a>
+        <form action="/search" method="get" role="search">
+          <input type="hidden" name="type" value="product,article" />
+          <div class="minimal-input-box minimal-input-box--large">
+            <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
+            <button type="submit" class="minimal-input-box__submit">
+              {% include 'icon-search' %}
+              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

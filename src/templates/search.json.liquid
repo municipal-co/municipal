@@ -1,0 +1,99 @@
+{% layout none %}
+
+{% comment %}
+  Returns JSON
+    - term - String
+    - results_count - Number
+    - collections - Array
+    - products - Array
+
+  It is recommended that everything that hits this endpoint is wrapped in asterisks for wildcard sake
+  i.e. Don't hit this end point with "t-shirt", hit it with "*t-shirt*"
+
+  Also, be sure when hitting this endpoint that you specify search type to be "product" only, otherwise Shopify will pull in articles and pages which we don't want.  An AJAX request for this would look like...
+
+  $.ajax({
+    url: "/search",
+    data: {
+      q: "*" + term + "*",
+      type: "product",
+      view: "json"
+    },
+    dataType: "json"
+  })  
+
+{% endcomment %}
+
+{% assign search_terms = search.terms | remove: '*' %}
+{% assign search_terms_size = search_terms | size %}
+{% assign search_terms_handle = search_terms | handle %}
+{% assign found_collection_handles = '' %}
+{% assign found_collection_count = 0 %}
+ {% if search_terms_size > 3 %}
+  {% for collection in collections %}
+    {% if collection.handle contains search_terms_handle or search_terms_handle contains collection.handle %}
+      {% if collection.products.size > 0 %}
+        {% assign found_collection_handles = found_collection_handles | append: collection.handle | append: '$$' %}
+        {% assign found_collection_count   = found_collection_count | plus: 1 %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+ {% assign found_collection_handles = found_collection_handles | split: '$$' %}
+ {% capture output %}
+  {
+    "term": {{ search_terms | json }},
+    "results_count": {{ search.results_count }},
+    "collections": [
+      {% if found_collection_count > 0 %}
+        {% for h in found_collection_handles %}
+          {% assign collection = collections[h] %}
+          {
+            "title": {{ collection.title | json }},
+            "url": {{ collection.url | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      {% endif %}
+    ],
+    "products": [
+      {% for result in search.results limit: 10 %}
+
+        {% comment %} Skip if it's not a product {% endcomment %}
+        {% if result.object_type != 'product' %}
+          {% continue %}
+        {% endif %}
+
+        {% comment %}
+          If you need, you can capture HTML and send it as an object property.
+          This makes sense as we do the majority of templating in liquid as opposed to JS.
+          If you do this, make sure to decode the markup that comes back as it is JSON escaped before output
+          There is a function to do this inside javascript utils called `decodeEntities`
+
+          This might look like...
+
+          {% capture product_card_html %}
+            {% include 'product-card', product: result %}
+          {% endcapture %}
+
+          {
+            "title": {{ result.title | json }},
+            "type": "product",
+            "url": {{ result.url | json }},
+            "thumb": {{ result.featured_image | product_img_url: 'thumb' | json }},
+            "id": {{ result.id }},
+            "card_html": {{ product_card_html | escape | json }}
+          }
+        {% endcomment %}
+
+        {
+          "title": {{ result.title | json }},
+          "url": {{ result.url | json }},
+          "thumb": {{ result.featured_image | product_img_url: 'thumb' | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  }
+{% endcapture %}
+
+ {% comment %} Output the json object {% endcomment %}
+{{ output | strip_newlines }}
