@@ -18,17 +18,17 @@ module.exports = {
       src: '/_scripts',
       dest: '../dist/assets',
       extensions: ['js'],
-      bundles: [{
-        entries: 'theme.js',
-        outputName: 'theme.js'
-      }]
       // bundles: [{
       //   entries: 'theme.js',
       //   outputName: 'theme.js'
-      // }, {
-      //   entries: 'vendor.js',
-      //   outputName: 'vendor.js'    
-      // }]      
+      // }]
+      bundles: [{
+        entries: 'theme.js',
+        outputName: 'theme.js'
+      }, {
+        entries: 'vendor.js',
+        outputName: 'vendor.js'
+      }]
       // bundles: [{
       //   entries: 'theme.js',
       //   outputName: 'theme.js'

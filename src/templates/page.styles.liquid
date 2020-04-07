@@ -4,9 +4,9 @@
 {% endcomment %}
 
 <div class="layout-content-wrapper">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-md-10">
+      <div class="col-md-22">
 
         {% include 'page-header',
                     ph_title: 'Styleguide',
@@ -39,34 +39,43 @@
               <li><a href="#docs-dots">Dots</a></li>
             </ul>
           </li>
-        </ul>        
+        </ul>
 
 
         <h2 id="docs-type" class="docs-title">Type</h2>
         <div class="font-weight-bold" style="font-size: 18px;">
-          <p>SYSTEM / HELVETICA NEUE BOLD</p>
-          <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-          <p>abcdefghijklmnopqrstuvwxyz</p>
-          <p>0123456789</p>
+          <p style="word-wrap: break-word;">Sequel Sans disp</p>
+          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+          <p style="word-wrap: break-word;">0123456789</p>
         </div>
         <br />
         <div style="font-size: 18px;">
-          <p>SYSTEM / HELVETICA NEUE</p>
-          <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-          <p>abcdefghijklmnopqrstuvwxyz</p>
-          <p>0123456789</p>    
+          <p style="word-wrap: break-word;">Sequel Sans Roman Body</p>
+          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+          <p style="word-wrap: break-word;">0123456789</p>
+        </div>
+        <br />
+        <div class="font-weight-bold" style="font-size: 18px;">
+          <p style="word-wrap: break-word;">Sequel Sans Bold Body</p>
+          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+          <p style="word-wrap: break-word;">0123456789</p>
+        </div>
+        <br />
+        <div class="p2" style="font-size: 18px;">
+          <p style="word-wrap: break-word;">Sequel Sans SemiBold Body</p>
+          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+          <p style="word-wrap: break-word;">0123456789</p>
         </div>
 
         <h2 id="docs-colors" class="docs-title">Colors</h2>
 
         {% assign gray_scale_colors = '' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'black:Black:#000:$black' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-darkest:Gray Darkest:#212529:$gray-darkest' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-darker:Gray Darker:#494949:$gray-darker' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-dark:Gray Dark:#666:$gray-dark' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'gray:Gray:#ccc:$gray' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-light:Gray Light:#e9ecef:$gray-light' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-lighter:Gray Lighter:#f8f9fa:$gray-lighter' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'black:Black:#121212:$black' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'gray:Gray:#424446:$gray' | append: '|' %}
         {% assign gray_scale_colors = gray_scale_colors | append: 'white:White:#fff:$color-white' | append: '|' %}
         {% assign gray_scale_colors = gray_scale_colors | split: '|' %}
 
@@ -77,13 +86,19 @@
             <div class="styleguide-color">
               <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
               <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
-            </div>            
-          {% endfor %}         
+            </div>
+          {% endfor %}
         </div>
 
         {% assign main_colors = '' %}
-        {% assign main_colors = main_colors | append: 'primary:Primary:#4e85e6:$primary' | append: '|' %}
-        
+        {% assign main_colors = main_colors | append: 'green:Green:#4a5d36:$green' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'blue:Blue:#2c6275:$blue' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'brown:Brown:#452b2b:$brown' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'tan:Tan:#c3baa8:$tan' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'red:Red:#ff2b00:$red' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'cyan:Cyan:#009dcc:$cyan' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'yellow:Yellow:#ccff00:$yellow' | append: '|' %}
+
         {% assign main_colors = main_colors | split: '|' %}
 
         <h4 class="docs-subtitle">Main</h4>
@@ -93,26 +108,25 @@
             <div class="styleguide-color">
               <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
               <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
-            </div>            
-          {% endfor %}         
+            </div>
+          {% endfor %}
         </div>
 
 
         <h2 id="docs-typography" class="docs-title">Typography</h2>
 
         <h4 class="docs-subtitle">Headings</h4>
-        <h1>H1 System / Helvetica Neue Bold</h1>
-        <h2>H2 System / Helvetica Neue Bold</h2>
-        <h3>H3 System / Helvetica Neue Bold</h3>
-        <h4>H4 System / Helvetica Neue Bold</h4>
-        <h5>H5 System / Helvetica Neue Bold</h5>
-        <h6>H6 System / Helvetica Neue Bold</h6>
+        <h1>H1 Sequel Sans Disp</h1>
+        <h2>H2 Sequel Sans Disp</h2>
+        <h3>H3 Sequel Sans Disp</h3>
+        <h4>H4 Sequel Sans Disp</h4>
+        <h5>H5 Sequel Sans Disp</h5>
+        <h6>H6 Sequel Sans Body</h6>
 
         <h4 class="docs-subtitle">Type variations</h4>
-        <p class="lead">Lead System / Helvetica Neue Regular</p>
-        <p class="p1">P1 System / Helvetica Neue Regular</p>
-        <p class="p2">P2 System / Helvetica Neue Regular</p>
-        <p class="p3">P3 System / Helvetica Neue Regular</p>
+        <p class="p1">P1 Sequel Sans Roman Body</p>
+        <p class="p1 font-weight-bold">P1 Bold / Sequel Sans Bold Body</p>
+        <p class="p2">P2 Sequel Sans Semi Bold Body</p>
 
         <h4 class="docs-subtitle">Paragraphs</h4>
         <p>
@@ -415,7 +429,7 @@
               <div>Grid item {{ i }}</div>
             </div>
           {% endfor %}
-        </div>        
+        </div>
 
         <h2 id="docs-tables" class="docs-title">Tables</h2>
         <h4 class="docs-subtitle">Responsive Tables</h4>
@@ -516,7 +530,7 @@
           <table class="table table-sm">
             {{ table_contents }}
           </table>
-        </div>        
+        </div>
 
         <h4 class="docs-subtitle">Border-less Tables</h4>
         <div class="table-responsive">
@@ -529,16 +543,56 @@
 
         <div class="docs-well">
           <p>
-            <a href="#" class="btn btn-primary">Primary button</a>
-            <a href="#" class="btn btn-secondary">Secondary button</a>
-            <a href="#" class="btn btn-outline-primary">Primary Outline button</a>
-            <a href="#" class="btn btn-outline-secondary">Secondary Outline button</a>          
+            <a href="#" class="btn btn-primary">
+              Primary button
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span>
+            </a>
+            <br>
+            <a href="#" class="btn btn-secondary">
+              Secondary button
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span>
+            </a>
+            <br>
+            <a href="#" class="btn btn-white">
+              Secondary button
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span>
+            </a>
+            <br>
+            <a href="#" class="btn btn-outline-primary">Primary Outline button
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span>
+            </a>
+            <br>
+            <a href="#" class="btn btn-outline-secondary">Secondary Outline button
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span>
+            </a>
           </p>
           <p>
-            <a href="#" class="btn btn-primary disabled">Primary button (Disabled)</a>
-            <a href="#" class="btn btn-secondary disabled">Secondary button (Disabled)</a>
-            <a href="#" class="btn btn-outline-primary disabled">Primary Outline button (Disabled)</a>
-            <a href="#" class="btn btn-outline-secondary disabled">Secondary Outline button (Disabled)</a>          
+            <a href="#" class="btn btn-primary disabled">Primary button (Disabled)
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span></a>
+            <a href="#" class="btn btn-secondary disabled">Secondary button (Disabled)
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span></a>
+            <a href="#" class="btn btn-outline-primary disabled">Primary Outline button (Disabled)
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span></a>
+            <a href="#" class="btn btn-outline-secondary disabled">Secondary Outline button (Disabled)
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span></a>
           </p>
         </div>
 
@@ -546,11 +600,16 @@
           <a href="#" class="btn btn-block btn-primary">Block Level Primary Button</a>
           <a href="#" class="btn btn-block btn-secondary">Block Level Secondary Button</a>
           <a href="#" class="btn btn-block btn-outline-primary">Primary Outline button</a>
-          <a href="#" class="btn btn-block btn-outline-secondary">Secondary Outline button</a>              
+          <a href="#" class="btn btn-block btn-outline-secondary">Secondary Outline button</a>
         </div>
 
         <div class="docs-well">
-          <a href="#" class="btn btn-link">Link Button</a>
+          <a href="#" class="btn btn-link">
+            Link Button
+            <span class="btn__ui">
+              {% include 'icon-arrow' %}
+            </span>
+          </a>
         </div>
 
         <div class="docs-well">
@@ -560,9 +619,9 @@
           </p>
           <p class="mb-0">
             <a href="#" class="btn btn-lg btn-primary">Large Primary Button</a>
-            <a href="#" class="btn btn-lg btn-secondary">Large Secondary Button</a>          
+            <a href="#" class="btn btn-lg btn-secondary">Large Secondary Button</a>
           </p>
-        </div>        
+        </div>
 
         <h2 id="docs-forms" class="docs-title">Forms</h2>
 
@@ -584,7 +643,7 @@
             <input type="text" id="textDefault3" class="form-control is-valid" value="Valid Entry">
             <div class="valid-feedback">
               Validation Feedback goes here
-            </div>            
+            </div>
           </div>
           <div class="form-group">
             <label for="textDefault4">Text Field (Error)</label>
@@ -761,12 +820,14 @@
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck2">
               <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
-            </div>            
+            </div>
           </div>
           <div class="form-group">
             <div class="custom-control custom-radio">
               <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-              <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+              <label class="custom-control-label" for="customRadio1">
+                Toggle this custom radio
+              </label>
             </div>
             <div class="custom-control custom-radio">
               <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
@@ -776,7 +837,7 @@
         </form>
 
         <h4 class="docs-subtitle">Note About Select Elements</h4>
-        <p>This theme is using the <a href="https://harvesthq.github.io/chosen/" target="_blank">Chosen</a> library to enhance native select tags.  By default, any <code>select.form-control</code> elements are targeted and initialized on page load.  If you want to avoid this, add the <code>data-no-chosen</code> attribute to your select tag and it will be left alone.</p>      
+        <p>This theme is using the <a href="https://harvesthq.github.io/chosen/" target="_blank">Chosen</a> library to enhance native select tags.  By default, any <code>select.form-control</code> elements are targeted and initialized on page load.  If you want to avoid this, add the <code>data-no-chosen</code> attribute to your select tag and it will be left alone.</p>
 
         <h2 id="docs-page-elements" class="docs-title">Page Elements</h2>
 
@@ -808,7 +869,7 @@
               </div>
             </div>
           {% endfor %}
-        </div>          
+        </div>
 
         <div class="content-footer">
           <a href="#" class="btn btn-primary">CTA Goes down here</a>
@@ -860,7 +921,7 @@
                 Featured
                 <span class="card-header__title-icon">{% include 'icon-rss' %}</span>
               </span>
-            </h3>            
+            </h3>
             <div class="card-body">
               <h5 class="card-title">Card title</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -870,7 +931,7 @@
               Card Footer
             </div>
           </div>
-        </div>    
+        </div>
 
         <p><span class="font-weight-bold">NOTE:</span> These elements have nothing in common with the more specific card snippets that we have created as Shopify theme components (<code>.article-card</code>, <code>.product-card</code>, etc..).  It is just an unfortunate naming clash as these elements were created before switching over to Bootstrap 4.</p>
 
@@ -903,7 +964,7 @@
           <li>{% include 'icon-pinterest' %}</li>
           <li>{% include 'icon-linkedin' %}</li>
           <li>{% include 'icon-reddit' %}</li>
-          <li>{% include 'icon-discourse' %}</li>          
+          <li>{% include 'icon-discourse' %}</li>
           <li>{% include 'icon-mail' %}</li>
           <li>{% include 'icon-tumblr' %}</li>
         </ul>
@@ -911,15 +972,27 @@
         <h4 class="docs-subtitle">General icons</h4>
         <ul class="styleguide-icons">
           <li>{% include 'icon-account' %}</li>
-          <li>{% include 'icon-caret-down' %}</li>
+          <li>{% include 'icon-caret' %}</li>
           <li>{% include 'icon-close' %}</li>
           <li>{% include 'icon-hamburger' %}</li>
-          <li>{% include 'icon-minus' %}</li>
-          <li>{% include 'icon-plus' %}</li>
+          <li>{% include 'icon-minus-full-color' %}</li>
+          <li>{% include 'icon-plus-full-color' %}</li>
           <li>{% include 'icon-rss' %}</li>
           <li>{% include 'icon-arrow-right' %}</li>
           <li>{% include 'icon-checkmark' %}</li>
-          <li>{% include 'icon-play' %}</li>
+          <li>{% include 'icon-play-full-color' %}</li>
+          <li>{% include 'icon-info' %}</li>
+          <li>{% include 'icon-filters' %}</li>
+          <li>{% include 'icon-arrow' %}</li>
+          <li>{% include 'icon-hamburger' %}</li>
+          <li>{% include 'icon-more-full-color' %}</li>
+          <li>{% include 'icon-arrow-circled-full-color'  %}</li>
+          <li>{% include 'icon-search' %}</li>
+        </ul>
+        <br><br>
+        <ul class="styleguide-icons">
+          <li>{% include 'icon-municipal-circle'  %}</li>
+          <li>{% include 'icon-gear' %}</li>
         </ul>
 
         <h2 id="docs-ui-elements" class="docs-title">UI Elements</h2>
@@ -977,7 +1050,7 @@
           <span class="deco">…</span>
           <span class="page"><a href="#" title="">10</a></span>
           <span class="next"><a href="#" title="">Next</a></span>
-        </div>        
+        </div>
 
         <h4 id="docs-social-sharing" class="docs-subtitle">Social Sharing</h4>
         {% include 'social-sharing' %}
@@ -986,9 +1059,12 @@
         <p>Normal</p>
         <div class="docs-well docs-well--accent">
           <div class="minimal-input-box">
+            <div class="icon-search-container">
+              {% include 'icon-search' %}
+            </div>
             <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
             <button type="submit" class="minimal-input-box__submit">
-              {% include 'icon-search' %}
+              {% include 'icon-arrow' %}
               <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
             </button>
           </div>
@@ -998,9 +1074,12 @@
         <p>Inverted</p>
         <div class="docs-well docs-well--dark">
           <div class="minimal-input-box minimal-input-box--inverted">
+            <div class="icon-search-container">
+              {% include 'icon-search' %}
+            </div>
             <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
             <button type="submit" class="minimal-input-box__submit">
-              {% include 'icon-search' %}
+              {% include 'icon-arrow' %}
               <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
             </button>
           </div>
@@ -1010,11 +1089,40 @@
         <p>Large</p>
         <div class="docs-well docs-well--accent">
           <div class="minimal-input-box minimal-input-box--large">
+            <div class="icon-search-container">
+              {% include 'icon-search' %}
+            </div>
             <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
             <button type="submit" class="minimal-input-box__submit">
-              {% include 'icon-search' %}
+              {% include 'icon-arrow' %}
               <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
             </button>
+          </div>
+        </div>
+
+        <p>Search Enabled (not working on this instance)</p>
+        <div class="docs-well docs-well--accent" style="padding-bottom: 320px;">
+          <div class="minimal-input-box">
+            <div class="icon-search-container">
+              {% include 'icon-search' %}
+            </div>
+            <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
+            <button type="submit" class="minimal-input-box__submit">
+              {% include 'icon-arrow' %}
+              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+            </button>
+            <div class="autocomplete-results-container">
+              <ul class="autocomplete-results">
+                <li class="autocomplete-item"><a href="#">item1</a></li>
+                <li class="autocomplete-item"><a href="#">item2</a></li>
+                <li class="autocomplete-item"><a href="#">item3</a></li>
+                <li class="autocomplete-item"><a href="#">item4</a></li>
+                <li class="autocomplete-item"><a href="#">item5</a></li>
+                <li class="autocomplete-item"><a href="#">item6</a></li>
+                <li class="autocomplete-item"><a href="#">item7</a></li>
+                <li class="autocomplete-item"><a href="#">item8</a></li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -1036,7 +1144,7 @@
           </div>
           <div class="dot is-disabled" title="Extra Large">
             <div class="dot__inner">OS</div>
-          </div>          
+          </div>
         </div>
 
         <br /><br />
@@ -1058,13 +1166,13 @@
           </div>
           <div class="dot is-disabled" title="Extra Large">
             <div class="dot__inner">OS</div>
-          </div>          
+          </div>
         </div>
 
         <br /><br />
 
         <p>Apply a background color or background image to the <code>.dot__inner</code> element to use them as swatches.</p>
-        <div class="dots">
+        <div class="dots dots--color">
           <div class="dot is-active" title="Navy">
             <div class="dot__inner" style="background-color:#081847;"></div>
           </div>
@@ -1082,17 +1190,19 @@
           </div>
           <div class="dot" title="Red Plaid">
             <div class="dot__inner" style="background-image: url({{ 'test-swatch-3.png' | asset_img_url: '50x50', crop: 'center' }})"></div>
-          </div>                              
+          </div>
         </div>
         <br /><br />
         <p>Or apply a modifier class to apply a background color as defined in the swatch palette.  The list of available color-modifier classes is below.</p>
-        
+
         {% assign colors = 'blue:indigo:purple:pink:red:orange:yellow:green:teal:cyan:khaki:brown:tan:white:gray:gray-dark:black' | split: ':' %}
 
-        <div class="dots">
+        <div class="dots dots--color">
           {% for c in colors %}
             <div class="dot dot--solid dot--{{ c }}">
-              <div class="dot__inner"></div>
+              <div class="dot__inner">
+                {% include 'icon-check' %}
+              </div>
             </div>
           {% endfor %}
         </div>

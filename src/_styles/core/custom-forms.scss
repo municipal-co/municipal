@@ -51,7 +51,6 @@
   &:not(:disabled):active ~ .custom-control-label::before {
     color: $custom-control-indicator-active-color;
     background-color: $custom-control-indicator-active-bg;
-    border-color: $custom-control-indicator-active-border-color;
     @include box-shadow($custom-control-indicator-active-box-shadow);
   }
 
@@ -145,14 +144,24 @@
 // Tweak just a few things for radios.
 
 .custom-radio {
-  .custom-control-label::before {
+  .custom-control-label::before,
+  .custom-control-label::after {
     // stylelint-disable-next-line property-blacklist
     border-radius: $custom-radio-indicator-border-radius;
+    border: 3px solid $black;
+    box-shadow: 0 0 0 0 $white inset;
+    transition: $transition-timing-function-out $transition-duration-base;
+    transition-property: background, box-shadow;
   }
 
   .custom-control-input:checked ~ .custom-control-label {
-    &::after {
-      background-image: $custom-radio-indicator-icon-checked;
+    &::after,
+    &::before {
+      border: 3px solid $black;
+      box-shadow: 0 0 0 3px $white inset;
+      background-color: $black;
+      border-radius: $custom-radio-indicator-border-radius;
+      transition: $transition-timing-function-in $transition-duration-base;
     }
   }
 

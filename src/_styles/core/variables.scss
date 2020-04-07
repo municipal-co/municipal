@@ -3,30 +3,34 @@
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
+// Grid system
+$grid-columns: 24;
+$grid-gutter-width: 0;
+
 // Color system
 
 $white:        #fff !default;
-$gray-lighter: #f8f9fa !default;
+$gray-lighter: #f1f1f1 !default;
 $gray-light:   #e9ecef !default;
-$gray:         #CCC !default;
+$gray:         #424446 !default; // Custom Color
 $gray-dark:    #666 !default;
 $gray-darker:  #494949 !default;
 $gray-darkest: #212529 !default;
-$black:        #000 !default;
+$black:        #121212 !default; // Custom Color
 
-$blue:    #4e85e6 !default;
+$red:     #ff2b00 !default; // Custom color
+$cyan:    #009dcc !default; // Custom Color
+$yellow:  #ccff00 !default; // custom Color
+$blue:    #2c6275 !default; // Custom Color
+$green:   #4a5d36 !default; // custom color
+$tan:     #c3baa8 !default; // Custom color
+$brown:   #452b2b !default; // custom color
 $indigo:  #6610f2 !default;
 $purple:  #8174cd !default;
 $pink:    #d885c1 !default;
-$red:     #dc3545 !default;
 $orange:  #f48d52 !default;
-$yellow:  #eee57a !default;
-$green:   #00a465 !default;
 $teal:    #20c997 !default;
-$cyan:    #17a2b8 !default;
 $khaki:   #c0b095 !default;
-$brown:   #816960 !default;
-$tan:     #d3b69f !default;
 
 
 $colors: () !default;
@@ -161,7 +165,7 @@ $sizes: map-merge(
 // Settings for the `<body>` element.
 
 $body-bg:                   $white !default;
-$body-color:                $gray-darker !default;
+$body-color:                $black !default;
 
 
 // Links
@@ -169,9 +173,9 @@ $body-color:                $gray-darker !default;
 // Style anchor elements.
 
 $link-color:                              $body-color !default;
-$link-decoration:                         none !default;
+$link-decoration:                         inherit !default;
 $link-hover-color:                        lighten($link-color, 10%) !default;
-$link-hover-decoration:                   none !default;
+$link-hover-decoration:                   inherit !default;
 // Darken percentage for links with `.text-*` class (e.g. `.text-success`)
 $emphasized-link-hover-darken-percentage: 15% !default;
 
@@ -273,7 +277,7 @@ $embed-responsive-aspect-ratios: join(
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif:      "Sequel Sans Body", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
@@ -287,6 +291,7 @@ $font-size-xs:                $font-size-base * 0.75 !default;
 $font-weight-lighter:         lighter !default;
 $font-weight-light:           300 !default;
 $font-weight-normal:          400 !default;
+$font-weight-semi-bold:       600 !default;
 $font-weight-bold:            700 !default;
 $font-weight-bolder:          bolder !default;
 
@@ -295,49 +300,79 @@ $line-height-base:            1.5 !default;
 $letter-spacing-base:         0.01em !default;
 
 // Headings
-$h1-font-size:                $font-size-base * 2.5 !default;
-$h2-font-size:                $font-size-base * 2 !default;
-$h3-font-size:                $font-size-base * 1.75 !default;
-$h4-font-size:                $font-size-base * 1.5 !default;
-$h5-font-size:                $font-size-base * 1.25 !default;
-$h6-font-size:                $font-size-base !default;
+$h1-font-size:                150px;
+$h2-font-size:                120px;
+$h3-font-size:                100px;
+$h4-font-size:                75px;
+$h5-font-size:                40px;
+$h6-font-size:                20px;
 
-$h1-letter-spacing:           0 !default;
+$h1-letter-spacing:           4px !default;
 $h2-letter-spacing:           0 !default;
 $h3-letter-spacing:           0 !default;
 $h4-letter-spacing:           0 !default;
-$h5-letter-spacing:           0 !default;
+$h5-letter-spacing:           2px!default;
 $h6-letter-spacing:           0 !default;
 
-$h1-line-height:              1.2 !default;
-$h2-line-height:              1.2 !default;
-$h3-line-height:              1.2 !default;
-$h4-line-height:              1.2 !default;
-$h5-line-height:              1.2 !default;
-$h6-line-height:              1.2 !default;
+$h1-line-height:              1em !default;
+$h2-line-height:              1.04em !default;
+$h3-line-height:              1.1em !default;
+$h4-line-height:              1.13em !default;
+$h5-line-height:              1.13em !default;
+$h6-line-height:              1.5em !default;
 
 $headings-margin-bottom:      $spacer !default;
-$headings-font-family:        null !default;
+$headings-font-family:        "Sequel Sans Disp", $font-family-sans-serif !default;
 $headings-font-weight:        $font-weight-bold !default;
 $headings-line-height:        1.2 !default;
 $headings-color:              null !default;
 
+// Mobile headings
+$h1-font-size-mobile:                50px;
+$h2-font-size-mobile:                45px;
+$h3-font-size-mobile:                40px;
+$h4-font-size-mobile:                35px;
+$h5-font-size-mobile:                25px;
+$h6-font-size-mobile:                10px;
+
+$h1-letter-spacing-mobile:           2px !default;
+$h2-letter-spacing-mobile:           2px !default;
+$h3-letter-spacing-mobile:           1.5px !default;
+$h4-letter-spacing-mobile:           1px !default;
+$h5-letter-spacing-mobile:           0.71px !default;
+$h6-letter-spacing-mobile:           0.5px !default;
+
+$h1-line-height-mobile:              1em !default;
+$h2-line-height-mobile:              1em !default;
+$h3-line-height-mobile:              1.13em !default;
+$h4-line-height-mobile:              1em !default;
+$h5-line-height-mobile:              1.2em !default;
+$h6-line-height-mobile:              1.2em !default;
+
+
 // p{1, 2, 3}
-$p1-font-size:                $font-size-lg;
-$p2-font-size:                $font-size-base;
+$p1-font-size:                30px;
+$p2-font-size:                35px;
 $p3-font-size:                $font-size-sm;
 
 $p1-font-weight:              $font-weight-normal;
-$p2-font-weight:              $font-weight-normal;
+$p2-font-weight:              $font-weight-semi-bold;
 $p3-font-weight:              $font-weight-normal;
 
 $p1-letter-spacing:           0 !default;
 $p2-letter-spacing:           0 !default;
 $p3-letter-spacing:           0 !default;
 
-$p1-line-height:              1.4 !default;
-$p2-line-height:              1.4 !default;
+$p1-line-height:              2 !default;
+$p2-line-height:              1.86 !default;
 $p3-line-height:              1.4 !default;
+
+// p{1, 2, 3} Mobile
+
+$p1-font-size-mobile:                20px;
+$p2-font-size-mobile:                20px;
+$p3-font-size-mobile:                $font-size-sm;
+
 
 // Display
 $display1-size:               6rem !default;
@@ -449,8 +484,8 @@ $input-btn-border-width:      $border-width !default;
 //
 // For each of Bootstrap's buttons, define text, background, and border color.
 
-$btn-padding-y:               $input-btn-padding-y !default;
-$btn-padding-x:               $input-btn-padding-x !default;
+$btn-padding-y:               25px !default;
+$btn-padding-x:               50px !default;
 $btn-font-family:             $input-btn-font-family !default;
 $btn-font-size:               $input-btn-font-size !default;
 $btn-line-height:             $input-btn-line-height !default;
@@ -467,7 +502,7 @@ $btn-line-height-lg:          $input-btn-line-height-lg !default;
 
 $btn-border-width:            $input-btn-border-width !default;
 
-$btn-font-weight:             $font-weight-normal !default;
+$btn-font-weight:             $font-weight-semi-bold !default;
 $btn-box-shadow:              inset 0 1px 0 rgba($white, .15), 0 1px 1px rgba($black, .075) !default;
 $btn-focus-width:             $input-btn-focus-width !default;
 $btn-focus-box-shadow:        $input-btn-focus-box-shadow !default;
@@ -479,9 +514,9 @@ $btn-link-disabled-color:     $gray-dark !default;
 $btn-block-spacing-y:         .5rem !default;
 
 // Allows for customizing button radius independently from global border radius
-$btn-border-radius:           $border-radius !default;
-$btn-border-radius-lg:        $border-radius-lg !default;
-$btn-border-radius-sm:        $border-radius-sm !default;
+$btn-border-radius:           50px !default;
+$btn-border-radius-lg:        50px !default;
+$btn-border-radius-sm:        50px !default;
 
 $btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 
@@ -584,8 +619,8 @@ $custom-control-indicator-checked-border-color: $custom-control-indicator-checke
 $custom-control-indicator-focus-box-shadow:     $input-focus-box-shadow !default;
 $custom-control-indicator-focus-border-color:   $input-focus-border-color !default;
 
-$custom-control-indicator-active-color:         $component-active-color !default;
-$custom-control-indicator-active-bg:            lighten($component-active-bg, 35%) !default;
+$custom-control-indicator-active-color:         $black !default;
+$custom-control-indicator-active-bg:            $white !default;
 $custom-control-indicator-active-box-shadow:    none !default;
 $custom-control-indicator-active-border-color:  $custom-control-indicator-active-bg !default;
 
@@ -1100,11 +1135,11 @@ $quick-view-background:                 $body-bg;
 
 // Dots
 
-$dot-border-width:                      1px;
+$dot-border-width:                      4px;
 $dot-border-radius:                     0;
-$dot-border-color:                      transparent;
+$dot-border-color:                      $black;
 $dot-active-border-color:               $black;
-$dot-size:                              30px;
+$dot-size:                              60px;
 $dot-spacing:                           6px;
 $dot-padding:                           2px;
 $dot-bottom-margin:                     $dot-spacing;
