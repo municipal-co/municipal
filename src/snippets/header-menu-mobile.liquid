@@ -21,15 +21,10 @@
     {% if shop.customer_accounts_enabled %}
       <div class="header-nav__menu-item">
         {% if customer %}
-          <a href="/account" title="Account">
-            {% include 'icon-account' %}
-            <span class="icon-fallback-text">{{ 'layout.customer.account' | t }}</span>
-          </a>
+
+          <a href="/account" title="Account">Account</a>
         {% else %}
-          <a href="/account/login" title="Login or register">
-            {% include 'icon-account' %}
-            <span class="icon-fallback-text">{{ 'layout.customer.account' | t }}</span>
-          </a>
+          <a href="/account/login" title="Login or register">Account</a>
         {% endif %}
       </div>
     {% endif %}
@@ -40,9 +35,7 @@
 
     <div class="header-nav__menu-item">
       <a href="/cart" data-ajax-cart-trigger>
-        <div class="header-cart__badge{% if cart.item_count > 0 %} has-items{% endif %}" data-cart-badge>
-          {% include 'icon-cart' %}
-          <span class="header-cart__badge-count" data-cart-badge-count>{{ cart.item_count }}</span>
+        <div class="header-cart__badge{% if cart.item_count > 0 %} has-items{% endif %}" data-cart-badge>Bag<span class="header-cart__badge-count" data-cart-badge-count>({{ cart.item_count }})</span>
         </div>
       </a>
     </div>

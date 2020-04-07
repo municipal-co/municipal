@@ -182,7 +182,7 @@ export default class AJAXCart {
    * @return this
    */
   updateCartCount(cart) {
-    this.$cartBadgeCount.html(cart.item_count);
+    this.$cartBadgeCount.html("("+cart.item_count+")");
 
     if (cart.item_count) {
       this.$cartBadge.addClass(classes.cartBadgeHasItems);

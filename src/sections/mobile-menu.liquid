@@ -1,102 +1,112 @@
-<div data-section-id="{{ section.id }}" data-section-type="mobile-menu">
+<div data-section-id="{{ section.id }}" data-section-type="mobile-menu" class="main-navigation"> 
 
-  <div class="drawer" data-mobile-menu>
+  <div class="drawer drawer--left" data-mobile-menu>
 
     <div class="drawer__inner">
       <div class="drawer__header">
         <a href="#" class="drawer__close" data-drawer-close>
           {% include 'icon-close' %}
         </a>        
-        <h5 class="drawer__header-title">Mobile Menu</h5>
+        <h5 class="drawer__header-title">Shop</h5>
       </div>
       <div class="drawer__body">
         <div class="drawer__body-contents">
           {% comment %} Menus {% endcomment %}
-            <div class="mobile-menu-block mobile-menu-block--primary">
-              {% if section.settings.primary_linklist and linklists[section.settings.primary_linklist].links.size > 0 %}
-                {% for link in linklists[section.settings.primary_linklist].links %}
-                  {% assign sublist_id = 'mobile-primary-menu-' | append: forloop.index %}
-                  <div class="panel">
-                    <div class="expandable-list">
-                      <div class="expandable-list__header">
-                        {% if link.links.size > 0 %}
-                          <a href="#{{ sublist_id }}" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="false" aria-controls="{{ sublist_id }}">
-                            {{ link.title }} {% include 'icon-caret-down' %}
-                          </a>
-                        {% else %}
-                          <a href="{{ link.url }}" class="expandable-list__header-title">{{ link.title }}</a>                      
-                        {% endif %}
-                      </div>
+          <div class="mobile-menu-block mobile-menu-block--primary">
+
+            {% if section.settings.search_enabled %}
+              <form action="/search" method="get" role="search">
+                <div class="minimal-input-box">
+
+                  <div class="search-icon">{% include 'icon-search' %}</div>
+                  <input type="hidden" name="type" value="product,article" />
+                  <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input"/>
+                  <button type="submit" class="minimal-input-box__submit">
+                    {% comment %}{% include 'icon-search' %}{% endcomment %}
+                    {% include 'icon-search-arrow' %}
+                    <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+                  </button>
+                </div>
+              </form>
+            {% endif %}
+
+            {% if section.settings.blue_linklist and linklists[section.settings.blue_linklist].links.size > 0 %}
+              {% for link in linklists[section.settings.blue_linklist].links %}
+                {% assign sublist_id = 'mobile-primary-menu-' | append: forloop.index %}
+                <div class="panel panel--featured">
+                  <div class="expandable-list">
+                    <div class="expandable-list__header">
                       {% if link.links.size > 0 %}
-                        <div id="{{ sublist_id }}" class="collapse">
-                          <div class="expandable-list__body">
-                            {% for sublink in link.links %}
-                              <div class="expandable-list__item">
-                                <a href="{{ sublink.url }}" class="expandable-list__item-title">{{ sublink.title }}</a>                          
-                              </div>
-                            {% endfor %}
-                          </div>
-                        </div>
+                        <a href="#{{ sublist_id }}" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="false" aria-controls="{{ sublist_id }}">
+                          {{ link.title }} {% include 'icon-caret-down' %}
+                        </a>
+                      {% else %}
+                        <a href="{{ link.url }}" class="expandable-list__header-title">{{ link.title }}</a>                      
                       {% endif %}
                     </div>
+                    {% if link.links.size > 0 %}
+                      <div id="{{ sublist_id }}" class="collapse">
+                        <div class="expandable-list__body">
+                          {% for sublink in link.links %}
+                            <div class="expandable-list__item">
+                              <a href="{{ sublink.url }}" class="expandable-list__item-title">{{ sublink.title }}</a>                          
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
                   </div>
-                {% endfor %}
-              {% endif %}
+                </div>
+              {% endfor %}
+            {% endif %}
 
-              {% if section.settings.search_enabled %}
-                <form action="/search" method="get" role="search">
-                  <div class="minimal-input-box">
-                    <label for="Search" class="sr-only">
-                      {{ 'general.search.placeholder' | t }}
-                    </label>
-                    <input type="hidden" name="type" value="product,article" />
-                    <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input"/>
-                    <button type="submit" class="minimal-input-box__submit">
-                      {% include 'icon-search' %}
-                      <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-                    </button>
+            {% if section.settings.primary_linklist and linklists[section.settings.primary_linklist].links.size > 0 %}
+              {% for link in linklists[section.settings.primary_linklist].links %}
+                {% assign sublist_id = 'mobile-primary-menu-' | append: forloop.index %}
+                <div class="panel">
+                  <div class="expandable-list">
+                    <div class="expandable-list__header">
+                      {% if link.links.size > 0 %}
+                        <a href="#{{ sublist_id }}" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="false" aria-controls="{{ sublist_id }}">
+                          {{ link.title }} {% include 'icon-caret-down' %}
+                        </a>
+                      {% else %}
+                        <a href="{{ link.url }}" class="expandable-list__header-title">{{ link.title }}</a>                      
+                      {% endif %}
+                    </div>
+                    {% if link.links.size > 0 %}
+                      <div id="{{ sublist_id }}" class="collapse">
+                        <div class="expandable-list__body">
+                          {% for sublink in link.links %}
+                            <div class="expandable-list__item">
+                              <a href="{{ sublink.url }}" class="expandable-list__item-title">{{ sublink.title }}</a>                          
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    {% endif %}
                   </div>
-                </form>
-              {% endif %}
-            </div>
-          
-
-          {% capture social_list_items %}
-            {%- assign social_accounts = 'Twitter, Facebook, Pinterest, Instagram, Snapchat, Tumblr, Youtube, Vimeo' | split: ', ' -%}
-            {% for social in social_accounts %}
-              {% assign social_handle = social | handleize %}
-              {% capture social_enabled_handle %}social_{{ social_handle }}_enabled{% endcapture %}
-              {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
-              {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
-              {% if settings[social_link] != blank and section.settings[social_enabled_handle] %}
-                  <li>
-                    <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}" target="_blank">
-                      {% include social_icon %}
-                      <span class="icon-fallback-text">{{ social }}</span>
-                    </a>
-                  </li>
-              {% endif %}
-            {% endfor %}
-          {% endcapture %}
-
-          {% if social_list_items %}
-            <div class="mobile-menu-block mobile-menu-block--social">
-              <ul class="mobile-menu-list">
-                {{ social_list_items }}
-              </ul>
-            </div>
-          {% endif %} 
+                </div>
+              {% endfor %}
+            {% endif %}
+          </div>
 
           <div class="mobile-menu-block mobile-menu-block--secondary">
             <ul class="mobile-menu-list">
+
               {% if shop.customer_accounts_enabled %}
                 {% if customer %}
-                  <li><a href="/account">My Account</a></li>
+                  <li><a href="/account">Account Login</a></li>
                   <li>{{ 'Log out' | customer_logout_link }}</li>
                 {% else %}
-                  <li><a href="/account/login">Login or Register</a></li>
+                  <li><a href="/account/login">Account Login</a></li>
                 {% endif %}
               {% endif %}
+
+
+
+
+
               {% for link in linklists[section.settings.secondary_linklist].links %}
                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {% endfor %}
@@ -111,67 +121,31 @@
 
 {% schema %}
   {
-    "name": "Mobile Menu",
+    "name": "Navigation Menu",
     "settings": [
       {
         "type": "checkbox",
         "id": "search_enabled",
         "label" : "Show search form",
         "default": true
-      },    
+      },   
+      {
+        "type": "link_list",
+        "id": "blue_linklist",
+        "label": "Featured Navigation Items",
+        "info": "This items will appear blue and at the top of the menun."
+      }, 
       {
         "type": "link_list",
         "id": "primary_linklist",
-        "label": "Primary Menu"
+        "label": "Main Navigation Items",
+        "info": "This items will appear under the blue items."
       },
       {
         "type": "link_list",
         "id": "secondary_linklist",
-        "label": "Secondary Menu"
-      },
-      {
-        "type": "header",
-        "content": "Social"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_twitter_enabled",
-        "label": "Twitter"
-      },      
-      {
-        "type": "checkbox",
-        "id": "social_facebook_enabled",
-        "label": "Facebook"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_pinterest_enabled",
-        "label": "Pinterest"
-      },      
-      {
-        "type": "checkbox",
-        "id": "social_instagram_enabled",
-        "label": "Instagram"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_snapchat_enabled",
-        "label": "Snapchat"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_tumblr_enabled",
-        "label": "Tumblr"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_youtube_enabled",
-        "label": "Youtube"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_vimeo_enabled",
-        "label": "Vimeo"
+        "label": "Small Navigation Items",
+        "info": "This items will appear under all the other items and will be smaller."
       }
     ]
   }

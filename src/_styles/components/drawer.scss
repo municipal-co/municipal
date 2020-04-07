@@ -1,11 +1,6 @@
 // -------------------------
 // Drawer
 // -------------------------
-
-body.drawer-open {
-  overflow: hidden;
-}
-
 .drawer {
   position: fixed;
   z-index: $zindex-drawer;
@@ -35,7 +30,8 @@ body.drawer-open {
   }
 
   // Ensure that the drawer is full width on screen sizes below this
-  @include media-breakpoint-up('sm') {
+  @include media-breakpoint-up('lg') {
+    width: 71%;
     max-width: $drawer-max-width;
   }
 
