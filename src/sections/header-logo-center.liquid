@@ -1,217 +1,48 @@
-{% assign left_menu_html     = '' %}
-{% assign right_menu_html    = '' %}
-{% assign dropdowns_html     = '' %}
-
-{% assign MAX_DROPDOWN_MENUS = 2 %}
-{% assign MAX_DROPDOWN_CTAS  = 4 %}
-
-{% for block in section.blocks %}
-  {% if block.type == "nav_item" %}
-
-    {% comment %} These variables get redefined / captured below {% endcomment %}
-    {% assign menu_item_html = '' %}
-    {% assign dropdown_html  = '' %}
-    {% assign dropdown_content_html = '' %}
-    {% assign dropdown_id = "dropdown-" | append: block.id %}  
-
-    {% assign cta_count = 0 %}
-
-    {% comment %} Generate the dropdown contents and then we can check if it's blank {% endcomment %}
-    {% capture dropdown_menus_html %}
-      {% if block.settings.linklist_1 != blank or block.settings.linklist_2 != blank %}
-        {% for i in (1..MAX_DROPDOWN_MENUS) %}
-          {% assign linklist_setting_handle = 'linklist_' | append: i %}
-          {% include 'header-dropdown-menu', ll_handle: block.settings[linklist_setting_handle] %}
-        {% endfor %}
-      {% endif %}
-    {% endcapture %}
-
-    {% capture dropdown_ctas_html %}
-      {% for i in (1..MAX_DROPDOWN_CTAS) %}
-        {% assign cta_link_setting_handle  = "cta_" | append: i | append: "_url" %}
-        {% assign cta_text_setting_handle  = "cta_" | append: i | append: "_text" %}
-        {% assign cta_image_setting_handle = "cta_" | append: i | append: "_image" %}
-        {% capture dropdown_cta_html %}
-          {% include 'header-dropdown-cta',
-                      cta_link: block.settings[cta_link_setting_handle],
-                      cta_image: block.settings[cta_image_setting_handle],
-                      cta_text: block.settings[cta_text_setting_handle]
-          %}
-        {% endcapture %}
-
-        {% comment %} If the settings are there to render a CTA, then output it here in this capture block {% endcomment %}
-        {% if dropdown_cta_html != blank %}
-          {{ dropdown_cta_html }}
-          {% assign cta_count = cta_count | plus: 1 %}
-        {% endif %}        
-      {% endfor %}
-    {% endcapture %}
-    {% comment %} END Generate the dropdown contents {% endcomment %}
-
-    {% capture dropdown_content_html %}
-      {% if dropdown_menus_html != blank or dropdown_ctas_html != blank %}
-        <div class="row">
-          <div class="col-md-4">
-            {% if dropdown_menus_html != blank %}
-              <div class="header-dropdown__menus">
-                {{ dropdown_menus_html }}
-              </div>
-            {% endif %}            
-          </div>
-          <div class="col-md-8">
-            {% if dropdown_ctas_html != blank %}
-              <div class="header-dropdown__ctas">
-                {{ dropdown_ctas_html }}
-              </div>
-            {% endif %}            
-          </div>
-        </div>
-      {% endif %}
-    {% endcapture %}
-
-    {% comment %} Put the dropdown content inside a dropdown {% endcomment %}
-    {% capture dropdown_html %}
-      {% include 'header-dropdown',
-                  dropdown_id: dropdown_id,
-                  dropdown_content: dropdown_content_html
-      %}
-    {% endcapture %}
-
-    {% comment %} Now that we have the dropdown {% endcomment %}
-
-    {% assign has_dropdown = false %}
-    {% if dropdown_html != blank %}
-      {% assign has_dropdown = true %}
-    {% endif %}
-
-    {% comment %} Create a menu item {% endcomment %}
-    {% capture menu_item_html %}
-
-      <li class="header-nav__menu-item" {{ block.shopify_attributes }}>
-        <a href="{{ block.settings.url }}" {% if has_dropdown %}data-block="{{ block.id }}" data-dropdown-trigger="#{{ dropdown_id }}"{% endif %}>
-          {{ block.settings.title }}          
-        </a>
-      </li>
-
-    {% endcapture %}
-
-    {% comment %} Append the menu item + dropdown to the correct variable to be outputted later {% endcomment %}
-    {% assign dropdowns_html = dropdowns_html | append: dropdown_html %}
-
-    {% if block.settings.position == "left" %}
-      {% assign left_menu_html = left_menu_html | append: menu_item_html %}
-    {% else %}
-      {% assign right_menu_html = right_menu_html | append: menu_item_html %}
-    {% endif %}
-
-  {% endif %}
-{% endfor %}
-
-
-
-
-
-
-{% if left_menu_html != blank %}
-  {% assign left_menu_html = left_menu_html | prepend: '<ul class="header-nav__menu">' %}
-  {% assign left_menu_html = left_menu_html | append: '</ul>' %}
-{% endif %}
-
-
-
-
-
-
-{% if right_menu_html != blank %}
-  {% assign right_menu_html = right_menu_html | prepend: '<ul class="header-nav__menu">' %}
-  {% assign right_menu_html = right_menu_html | append: '</ul>' %}
-{% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div data-section-id="{{ section.id }}" data-section-type="header">
 
   <header class="header" role="banner" data-header>
     <div class="header-container">
-
-      
+    
       <div class="header-nav">
         <div class="header-nav__menu">
           <div class="header-nav__menu-item">
             <a href="#" title="Toggle menu" data-mobile-menu-toggle>
               {% include 'icon-hamburger' %}
+              <span class="hide-on-mobile">Shop</span>
             </a>
           </div>
-
-
-
-
-
 
           <div class="header-nav header-nav--center header-nav--logo">
             {% include 'header-logo' %}
           </div>
 
-
-
-
           <div>
             {% if shop.customer_accounts_enabled %}
-              <div class="header-nav__menu-item">
+              <div class="header-nav__menu-item hide-on-mobile">
                 {% if customer %}
-                  <a href="/account" title="Account">
-                    {% include 'icon-account' %}
-                    <span class="icon-fallback-text">{{ 'layout.customer.account' | t }}</span>
-                  </a>
+                  <a href="/account" title="Account">Account</a>
                 {% else %}
-                  <a href="/account/login" title="Login or register">
-                    {% include 'icon-account' %}
-                    <span class="icon-fallback-text">{{ 'layout.customer.account' | t }}</span>
-                  </a>
+                  <a href="/account/login" title="Login or register">Account</a>
                 {% endif %}
               </div>
             {% endif %}
 
-
-
-
-
             <div class="header-nav__menu-item">
               <a href="/cart" data-ajax-cart-trigger>
                 <div class="header-cart__badge{% if cart.item_count > 0 %} has-items{% endif %}" data-cart-badge>
-                  {% include 'icon-cart' %}
-                  <span class="header-cart__badge-count" data-cart-badge-count>{{ cart.item_count }}</span>
+                  Bag
+                  
+                  {% if cart.item_count > 0 %}
+                    <span class="header-cart__badge-count" data-cart-badge-count></span>
+                  {% endif %}
                 </div>
               </a>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
-
-    {{ dropdowns_html }}
-
   </header>
-
 </div>
 
 
