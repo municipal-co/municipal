@@ -26,17 +26,46 @@
   border: $dot-border-width solid $dot-border-color;
   border-radius: $dot-border-radius;
   overflow: hidden;
+  background-color: $white;
 
-  line-height: $dot-size - $dot-padding*2 - 2px;
+  line-height: $dot-size - $dot-padding*2 - 10px;
   font-size: $dot-small-font-size;
   text-transform: uppercase;
   text-align: center;
 
-  transition: border-color $transition-duration-fast $transition-timing-function-out;
+  transition: background-color $transition-duration-fast $transition-timing-function-out;
+
+  .icon-check {
+    fill: $white;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &.dot--white .icon-check {
+    fill: $black;
+  }
 
   &.is-active {
     border-color: $dot-active-border-color;
-    transition: border-color $transition-duration-fast $transition-timing-function-in;
+    transition: background-color $transition-duration-fast $transition-timing-function-in;
+    background-color: $black;
+
+    .dot__inner {
+      color: $white;
+    }
+
+    .icon-check {
+      opacity: 1;
+    }
+  }
+
+  .dots--color &{
+    border: 2px solid $gray-lighter;
+
+    &.is-active {
+      background-color: transparent;
+      border: 2px solid $gray-lighter;
+    }
   }
 
   .dots--small & {
