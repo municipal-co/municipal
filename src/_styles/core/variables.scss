@@ -16,8 +16,8 @@ $gray:         #424446 !default; // Custom Color
 $gray-dark:    #666 !default;
 $gray-darker:  #494949 !default;
 $gray-darkest: #212529 !default;
-$black:        #121212 !default; // Custom Color
 
+$black:        #121212 !default; // Custom Color
 $red:     #ff2b00 !default; // Custom color
 $cyan:    #009dcc !default; // Custom Color
 $yellow:  #ccff00 !default; // custom Color
@@ -25,6 +25,8 @@ $blue:    #2c6275 !default; // Custom Color
 $green:   #4a5d36 !default; // custom color
 $tan:     #c3baa8 !default; // Custom color
 $brown:   #452b2b !default; // custom color
+$arrow-gray:   #b8b8b8 !default;
+
 $indigo:  #6610f2 !default;
 $purple:  #8174cd !default;
 $pink:    #d885c1 !default;
@@ -560,7 +562,7 @@ $input-focus-color:                     $input-color !default;
 $input-focus-width:                     $input-btn-focus-width !default;
 $input-focus-box-shadow:                $input-btn-focus-box-shadow !default;
 
-$input-placeholder-color:               $gray-dark !default;
+$input-placeholder-color:               $black !default;
 $input-plaintext-color:                 $body-color !default;
 
 $input-height-border:                   $input-border-width * 2 !default;
@@ -970,12 +972,12 @@ $pencil-banner-text-color:              $white;
 
 // Header
 
-$header-bp-min:                         map-get($grid-breakpoints, "md") !default; // Above this breakpoint, switch to the full desktop nav
-$header-height-small:                   65px !default;
-$header-height-base:                    75px !default;
-$header-bg:                             $white !default;
+$header-bp-min:                         map-get($grid-breakpoints, "lg") !default; // Above this breakpoint, switch to the full desktop nav
+$header-height-small:                   50px !default;
+$header-height-base:                    120px !default;
+$header-bg:                             $black !default;
 $header-text-color:                     $body-color !default;
-$header-logo-width:                     120px !default;
+$header-logo-width:                     490px !default;
 $header-dropdown-bg:                    $header-bg !default;
 $header-dropdown-box-shadow:            0 8px 15px -10px transparentize($black, 0.85) !default;
 $header-dropdown-menu-spacing:          25px !default; // Horizontal spacing between dropdown menus
@@ -983,7 +985,7 @@ $header-dropdown-menu-spacing:          25px !default; // Horizontal spacing bet
 
 // Footer
 
-$footer-bp-min:                         map-get($grid-breakpoints, "md") !default;
+$footer-bp-min:                         map-get($grid-breakpoints, "lg") !default;
 $footer-bg:                             $black;
 $footer-text-color:                     $white;
 $footer-padding-top:                    50px;
@@ -1035,7 +1037,7 @@ $minimal-input-height-large:            60px;
 
 // Drawer
 
-$drawer-max-width:                      400px;
+$drawer-max-width:                      1360px;
 $drawer-bg:                             $white;
 $drawer-border-color:                   darken($drawer-bg, 5%);
 $drawer-padding-vertical:               $grid-gutter-width;
