@@ -14,12 +14,21 @@
   user-select: none;
   background-color: transparent;
   border: $btn-border-width solid transparent;
-  @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
+  font-size: 18px;
+  padding: 19px 80px;
+  border-radius: 90px;
   @include transition($btn-transition);
-
   @include hover {
     color: $body-color;
     text-decoration: none;
+
+    .btn__ui {
+      margin-left: 30px;
+    }
+
+    .icon {
+      fill: $white;
+    }
   }
 
   &:focus,
@@ -41,6 +50,26 @@
 
     &:focus {
       @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+    }
+
+  }
+
+  .btn__ui {
+    @include transition(margin-left .15s ease-in-out);
+    margin-left: 20px;
+    .icon {
+      @include transition(fill .15s ease-in-out);
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  @include media-breakpoint-up('lg') {
+    padding: 25px 50px;
+    font-size: 28px;
+    .btn__ui .icon {
+      width: 50px;
+      height: 50px;
     }
   }
 }
@@ -75,15 +104,18 @@ fieldset:disabled a.btn {
 
 // Make a button look and behave like a link
 .btn-link {
-  font-weight: $font-weight-normal;
+  font-weight: $font-weight-bold;
   color: $link-color;
   text-decoration: $link-decoration;
   background: none;
   border: none;
 
   @include hover {
-    color: $link-hover-color;
-    text-decoration: $link-hover-decoration;
+    color: $cyan;
+    text-decoration: none;
+    .btn__ui .icon {
+      fill: $cyan;
+    }
   }
 
   &:focus,
@@ -122,10 +154,16 @@ fieldset:disabled a.btn {
 .btn-block {
   display: block;
   width: 100%;
+  padding: 18px 50px;
+
 
   // Vertically space out multiple block buttons
   + .btn-block {
     margin-top: $btn-block-spacing-y;
+  }
+
+  @include media-breakpoint-down('md') {
+    padding: 15.5px 20px;
   }
 }
 
@@ -135,5 +173,109 @@ input[type="reset"],
 input[type="button"] {
   &.btn-block {
     width: 100%;
+  }
+}
+
+.btn-primary {
+  background-color: $black;
+  border-color: $black;
+
+  &:hover {
+    background-color: $black;
+    border-color: $black;
+  }
+
+  &.disabled,
+  &:disabled {
+    background-color: $black;
+    border-color: $black;
+  }
+}
+
+.btn-outline-primary {
+  padding: 19px 44px;
+  background-color: $white;
+  border: 6px solid $black;
+  color: $black;
+
+  .icon {
+    fill: $black;
+  }
+
+  &:hover {
+    color: $black;
+    background-color: $white;
+    border-color: $black;
+
+    .icon {
+      fill: $black;
+    }
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $black;
+  }
+
+  @include media-breakpoint-down('md') {
+    border-width: 4.5px;
+    padding: 15.5px 75.5px;
+  }
+}
+
+.btn-secondary {
+  background-color: $red;
+  border-color: $red;
+  &:hover {
+    background-color: $red;
+    border-color: $red;
+  }
+
+  &.disabled,
+  &[disabled] {
+    background-color: $red;
+    border-color: $red;
+  }
+}
+
+.btn-outline-secondary {
+  padding: 19px 44px;
+  background-color: $white;
+  border: 6px solid $red;
+  color: $red;
+
+  .icon {
+    fill: $red;
+  }
+
+  &:hover {
+    color: $red;
+    background-color: $white;
+    border-color: $red;
+
+    .icon {
+      fill: $red;
+    }
+  }
+
+  &.disabled,
+  &[disabled] {
+    color: $red;
+  }
+
+  @include media-breakpoint-down('md') {
+    border-width: 4.5px;
+    padding: 15.5px 75.5px;
+  }
+}
+
+.btn-white {
+  background-color: $white;
+  color: $black;
+
+  &:hover {
+    .btn__ui .icon {
+      fill: $black;
+    }
   }
 }

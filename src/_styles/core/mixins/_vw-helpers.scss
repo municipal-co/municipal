@@ -1,0 +1,13 @@
+@function between($from, $to, $fromWidth, $toWidth) {
+  $slope: ($to - $from) / ($toWidth - $fromWidth);
+  $base: $from - $slope * $fromWidth;
+
+  @return calc(#{$base} + #{100vw * $slope});
+}
+
+@function large-vw($from, $to) {
+  $breakpointMin: breakpoint-min('lg', $grid-breakpoints);
+  $breakpointMax: 1920px;
+  @return between($from, $to, $breakpointMin, $breakpointMax);
+}
+

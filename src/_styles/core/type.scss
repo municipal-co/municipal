@@ -1,5 +1,10 @@
 // stylelint-disable declaration-no-important, selector-list-comma-newline-after
 
+// Defaults style for all the html fields, so they don't have to be re-styled afterwards.
+html {
+  @include p1;
+}
+
 //
 // Headings
 //
@@ -11,6 +16,12 @@ h1, h2, h3, h4, h5, h6,
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
   color: $headings-color;
+  text-transform: uppercase;
+  word-wrap: break-word;
+}
+
+h6, .h6 {
+  text-transform: none;
 }
 
 // h1, .h1 { @include font-size($h1-font-size); }

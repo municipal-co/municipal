@@ -11,5 +11,7 @@
 
 // If you have italic versions of the font, add them below
 // =======================================================
-// @include font-face('Font Family', 'font-family-italic', $font-weight-normal, italic);
-// @include font-face('Font Family', 'font-family-bold-italic', $font-weight-bold, italic);
+@include font-face('Sequel Sans Title', 'sequel-sans-bold-disp', $font-weight-normal, normal);
+@include font-face('Sequel Sans Body', 'sequel-sans-bold-body', $font-weight-bold, bold);
+@include font-face('Sequel Sans Body', 'sequel-sans-roman-body', $font-weight-normal, normal);
+@include font-face('Sequel Sans Body', 'sequel-sans-semi-bold-body', $font-weight-semi-bold, semi-bold);

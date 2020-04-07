@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+    <g fill="none" fill-rule="evenodd">
+        <text fill="#121212" font-family="SequelSans-SemiBoldDisp, Sequel Sans" font-size="12" font-weight="500">
+            <tspan x="6.728" y="14">i</tspan>
+        </text>
+        <rect width="14" height="14" x="1" y="1" stroke="#121212" stroke-width="2" rx="7"/>
+    </g>
+</svg>

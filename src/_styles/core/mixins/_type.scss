@@ -4,53 +4,89 @@
 //
 
 @mixin h1 {
-  font-size: $h1-font-size;
-  letter-spacing: $h1-letter-spacing;
-  line-height: $h1-line-height;
+  font-size: $h1-font-size-mobile;
+  letter-spacing: $h1-letter-spacing-mobile;
+  line-height: $h1-line-height-mobile;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($h1-font-size-mobile, $h1-font-size);
+    letter-spacing: large-vw($h1-letter-spacing-mobile, $h1-letter-spacing);
+    line-height: $h1-line-height;
+  }
 }
 
 @mixin h2 {
-  font-size: $h2-font-size;
-  letter-spacing: $h2-letter-spacing;
-  line-height: $h2-line-height;
+  font-size: $h2-font-size-mobile;
+  letter-spacing: $h2-letter-spacing-mobile;
+  line-height: $h2-line-height-mobile;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($h2-font-size-mobile, $h2-font-size);
+    letter-spacing: large-vw($h2-letter-spacing-mobile, $h2-letter-spacing);
+    line-height: $h2-line-height;
+  }
 }
 
 @mixin h3 {
-  font-size: $h3-font-size;
-  letter-spacing: $h3-letter-spacing;
-  line-height: $h3-line-height;
+  font-size: $h3-font-size-mobile;
+  letter-spacing: $h3-letter-spacing-mobile;
+  line-height: $h3-line-height-mobile;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($h3-font-size-mobile, $h3-font-size);
+    letter-spacing: large-vw($h3-letter-spacing-mobile, $h3-letter-spacing);
+    line-height: $h3-line-height;
+  }
 }
 
 @mixin h4 {
-  font-size: $h4-font-size;
-  letter-spacing: $h4-letter-spacing;
-  line-height: $h4-line-height;
+  font-size: $h4-font-size-mobile;
+  letter-spacing: $h4-letter-spacing-mobile;
+  line-height: $h4-line-height-mobile;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($h4-font-size-mobile, $h4-font-size);
+    letter-spacing: large-vw($h4-letter-spacing-mobile, $h4-letter-spacing);
+    line-height: $h4-line-height;
+  }
 }
 
 @mixin h5 {
-  font-size: $h5-font-size;
-  letter-spacing: $h5-letter-spacing;
-  line-height: $h5-line-height;
+  font-size: $h5-font-size-mobile;
+  letter-spacing: $h5-letter-spacing-mobile;
+  line-height: $h5-line-height-mobile;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($h5-font-size-mobile, $h5-font-size);
+    letter-spacing: large-vw($h5-letter-spacing-mobile, $h5-letter-spacing);
+    line-height: $h5-line-height;
+  }
 }
 
 @mixin h6 {
-  font-size: $h6-font-size;
-  letter-spacing: $h6-letter-spacing;
-  line-height: $h6-line-height;
+  font-size: $h6-font-size-mobile;
+  letter-spacing: $h6-letter-spacing-mobile;
+  line-height: $h6-line-height-mobile;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($h6-font-size-mobile, $h6-font-size);
+    letter-spacing: large-vw($h6-letter-spacing-mobile, $h6-letter-spacing);
+    line-height: $h6-line-height;
+  }
 }
 
 @mixin p1 {
-  font-size: $p1-font-size;
-  letter-spacing: $p1-letter-spacing;
+  font-size: $p1-font-size-mobile;
   line-height: $p1-line-height;
+  letter-spacing: $p1-letter-spacing;
   font-weight: $p1-font-weight;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($p1-font-size-mobile, $p1-font-size);
+  }
 }
 
 @mixin p2 {
-  font-size: $p2-font-size;
-  letter-spacing: $p2-letter-spacing;
+  font-size: $p2-font-size-mobile;
   line-height: $p2-line-height;
+  letter-spacing: $p2-letter-spacing;
   font-weight: $p2-font-weight;
+  @include media-breakpoint-up('lg'){
+    font-size: large-vw($p2-font-size-mobile, $p2-font-size);
+  }
 }
 
 @mixin p3 {
