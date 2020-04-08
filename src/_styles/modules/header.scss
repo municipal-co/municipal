@@ -398,9 +398,11 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 22px;
-
     left: large-vw(22px, 54px);
+
+    @include media-breakpoint-down('md') {
+      left: 22px;
+    }
 
     svg {
       width: large-vw(23px, 50px);
