@@ -49,8 +49,6 @@
     {% if settings[social_link] != blank and section.settings[social_enabled_handle] %}
       <li>
         <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}" target="_blank"> {{ social }}
-          {% comment %}{% include social_icon %}
-          <span class="icon-fallback-text">{{ social }}</span>{% endcomment %}
         </a>
       </li>
     {% endif %}
@@ -110,7 +108,7 @@
                   <div class="minimal-input-box minimal-input-box--inverted">
                     <input type="email" class="minimal-input-box__input" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ section.settings.placeholder_text }}" required="required"/>
                     <button type="submit" class="minimal-input-box__submit">
-                      {% include 'icon-search-arrow' %}
+                      {% include 'icon-arrow' %}
                       <span class="icon-fallback-text">Submit</span>
                     </button>
                   </div>
