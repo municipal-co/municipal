@@ -3,20 +3,30 @@
 // -------------------------
 
 .footer {
-  padding-top: large-vw(54px, $footer-padding-top);
+  padding-top: large-vw(60px, $footer-padding-top);
   padding-bottom: $footer-padding-bottom;
   background-color: $footer-bg;
+
+  @include media-breakpoint-down('md') { 
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
 
   &, a, h1, h2, h3, h4, h5, h6 {
     color: $footer-text-color;
   }
 
-  
+  .container {
+    @include media-breakpoint-down('xs') { 
+      padding: 0 35px;
+    }
+  }
+
   .footer-block--newsletter {
-    margin-bottom: large-vw(54px, 168px);
+    margin-bottom: large-vw(75px, 168px);
 
     @include media-breakpoint-down('md') { 
-
+      margin-bottom: 75px;
     }
 
     .minimal-input-box__input {
@@ -27,15 +37,40 @@
       @include media-breakpoint-down('md') { 
         height: 54px;
         font-size: 18px;
+        padding-left: 25px; 
+      }
+    }
+
+    .minimal-input-box__submit {
+      width: large-vw(30px, 70px);
+      right: large-vw(20px, 60px);
+
+      @include media-breakpoint-down('md') { 
+        width: 30px;
+        right: 20px;
+      }
+    }
+
+    .minimal-input-box__submit svg {
+      fill: inherit;
+      width: large-vw(30px, 70px);
+      height: large-vw(30px, 70px);
+
+      @include media-breakpoint-down('md') { 
+        width: 30px;
+        height: 30px;
       }
     }
 
     .newsletter-text {
       text-transform: none;
-      margin-bottom: large-vw(54px, 70px);
+      margin-bottom: large-vw(50px, 70px);
       
       @include media-breakpoint-down('md') { 
-        margin-bottom: 30px;
+        text-align: left;
+        margin-bottom: 50px;
+        font-size: 40px;
+        line-height: 45px;
       }
     }
 
@@ -50,37 +85,79 @@
 
   small {
     font-size: large-vw(20px, 35px);
+    font-weight: $font-weight-bold;
+
+    @include media-breakpoint-down('md') { 
+      font-size: 20px;
+    }
+  }
+
+  .payment-methods-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: large-vw(0px, 65px);
+
+    @include media-breakpoint-down('md') { 
+      margin-top: 0;
+    }
+  }
+
+  .payment-icon {
+    display: inline-block;
+    width: calc(25% - 4px);
+    margin-right: 5px;
+    margin-bottom: 5px;
+
+    @include media-breakpoint-down('md') { 
+      width: inherit;
+    }
+    
+    &:last-child,
+    &:nth-child(4) {
+      margin-right: 0;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
 .footer-block {
-  margin-bottom: $footer-block-spacing;
+  margin-bottom: large-vw(200px, $footer-block-spacing;);
   text-align: center;
 
-  @media (min-width: $footer-bp-min) {
-    margin-bottom: 0;
+  @include media-breakpoint-down('md') { 
+    margin-bottom: 200px;
     text-align: left;
   }
 }
 
 .footer-menu {
-  margin-bottom: large-vw(25px, $footer-block-spacing);
+  margin-bottom: large-vw(50px, $footer-block-spacing);
+
+  @include media-breakpoint-down('md') {
+    text-align: left; 
+    margin-bottom: 50px;
+  }
 
   @media (min-width: $footer-bp-min) {
     display: inline-block;
     vertical-align: top;
   }
 
+
   .footer-menu__title {
     text-transform: uppercase;
     font-size: large-vw(25px, 40px);
     line-height: large-vw(30px, 45px);
-    margin-bottom: large-vw(30px, 40px);
+    margin-bottom: large-vw(28px, 40px);
 
     @include media-breakpoint-down('md') { 
       font-size: 25px;
       line-height: 30px;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
   }
 
@@ -95,10 +172,15 @@
     li {
       margin-bottom: 0;
       line-height: 2;
+
+      @include media-breakpoint-down('md') { 
+        line-height: 2.25;
+      }
     }
 
     a {
       color: $footer-menu-text-color;
+      font-weight: $font-weight-bold;
     }
   }
 }

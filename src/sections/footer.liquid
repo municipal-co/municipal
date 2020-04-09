@@ -1,5 +1,4 @@
 {% assign footer_menu_html_desktop = '' %}
-{% assign footer_menu_html_mobile  = '' %}
 
 {% comment %} Newsletter messaging {% endcomment %}
 {% assign message_already_subscribed = section.settings.subscribe_already_subscribed_text %}
@@ -31,16 +30,6 @@
   {% assign linklist_handle = section.settings[menu_setting_handle] %}
   {% if linklist_handle and linklists[linklist_handle].links.size > 0 %}
 
-
-
-
-
-
-
-
-
-    
-    {% comment %}DESKTOPDESKTOPDESKTOPDESKTOPDESKTOPDESKTOPDESKTOP{% endcomment %}
     {% capture desktop_html %}
       <div class="footer-menu col-lg-4">
         <h6 class="footer-menu__title">{{ section.settings[menu_title_setting_handle] }}</h6>
@@ -54,55 +43,7 @@
       </div>
     {% endcapture %}
 
-
-
-
-
-
-
-
-
-
-  
-
-
-
-    {% comment %}MOBILEMOBILEMOBILEMOBILEMOBILEMOBILEMOBILEMOBILEMOBILEMOBILEMOBILEMOBILE{% endcomment %}
-    {% capture mobile_html %}
-      <div class="expandable-list">
-        <div class="expandable-list__header">
-          <a href="#{{ linklist_handle }}" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="false" aria-controls="{{ linklist_handle }}">
-            {{ section.settings[menu_title_setting_handle] }} 
-            {% include 'icon-caret-down' %}
-          </a>
-        </div>
-        <div id="{{ linklist_handle }}" class="collapse">
-          <div class="expandable-list__body">
-            {% for link in linklists[linklist_handle].links %}
-              <div class="expandable-list__item">
-                <a href="{{ link.url }}" class="expandable-list__item-title">{{ link.title }}</a>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    {% endcapture %}
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
     {% assign footer_menu_html_desktop = footer_menu_html_desktop | append: desktop_html %}
-    {% assign footer_menu_html_mobile  = footer_menu_html_mobile  | append: mobile_html %}
   {% endif %}
 {% endfor %}
 
@@ -151,10 +92,18 @@
   {% endif %}
 {% endcapture %}
 
+
 {% capture payment_menu %}
   <div class="footer-menu col-lg-5">
     <h6 class="footer-menu__title">Payment</h6>
 
+    <div class="payment-methods-container">
+      {% for type in shop.enabled_payment_types %}
+        <div class="payment-icon">
+          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+        </div>
+      {% endfor %}
+    </div>
   </div>
 {% endcapture %}
 
@@ -170,7 +119,9 @@
 <footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer">
   <div class="container">
     <div class="row">
+      
 
+      {% comment %} Footer Block - Contact {% endcomment %}
       <div class="col-lg-24">
         <div class="footer-block footer-block--newsletter">
           
@@ -214,29 +165,15 @@
       {% comment %} Footer Block - Menus {% endcomment %}
       <div class="col-lg-24">
         <div class="footer-block">
-          <div class="d-none d-lg-block">
-            {{ footer_menu_html_desktop }}
+          {{ footer_menu_html_desktop }}
 
-            {% if social_list_items %}
-              {{ social_menu }}
-            {% endif %}
+          {% if social_list_items %}
+            {{ social_menu }}
+          {% endif %}
 
-            {{ payment_menu }}
-          </div>
-
-          <div class="d-block d-lg-none">
-            {{ footer_menu_html_mobile }}
-            {{ payment_menu }}
-          </div>
+          {{ payment_menu }}
         </div>
       </div>
-
-
-
-
-
-
-      {% comment %} Footer Block - Contact {% endcomment %}
     </div>
 
     {% assign year = 'now' | date: "%Y" %}
