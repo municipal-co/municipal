@@ -13,16 +13,6 @@
 
 {% assign message_fail = 'general.newsletter.subscribe_fail' | t %}  
 
-
-
-
-
-
-
-
-
-
-
 {% comment %} MENU Capture {% endcomment %}
 {% for i in (1..3) %}
   {% assign menu_setting_handle = 'footer_linklist_' | append: i %}
@@ -48,17 +38,6 @@
 {% endfor %}
 
 
-
-
-
-
-
-
-
-
-
-
-
 {% comment %} SOCIAL Capture {% endcomment %}
 {% capture social_list_items %}
   {%- assign social_accounts = 'Instagram, Twitter, Facebook, Pinterest, Snapchat, Youtube' | split: ', ' -%}
@@ -77,6 +56,7 @@
     {% endif %}
   {% endfor %}
 {% endcapture %}
+
 
 {% capture social_menu %}
   {% if social_list_items != blank %}
@@ -107,20 +87,10 @@
   </div>
 {% endcapture %}
 
-
-
-
-
-
-
-
-
-
 <footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer">
   <div class="container">
     <div class="row">
       
-
       {% comment %} Footer Block - Contact {% endcomment %}
       <div class="col-lg-24">
         <div class="footer-block footer-block--newsletter">
@@ -140,10 +110,7 @@
                   <div class="minimal-input-box minimal-input-box--inverted">
                     <input type="email" class="minimal-input-box__input" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ section.settings.placeholder_text }}" required="required"/>
                     <button type="submit" class="minimal-input-box__submit">
-                      {% comment %}{% include 'icon-arrow-right' %}{% endcomment %}
                       {% include 'icon-search-arrow' %}
-
-
                       <span class="icon-fallback-text">Submit</span>
                     </button>
                   </div>
@@ -158,9 +125,6 @@
           </form>
         </div>
       </div>
-
-
-
 
       {% comment %} Footer Block - Menus {% endcomment %}
       <div class="col-lg-24">
@@ -182,25 +146,14 @@
         <small>{{ section.settings.copyright_text | replace: '$year$', year | replace: '$shop$', shop.name }}</small>
       </div>
     {% endif %}
-
   </div>
+
+  {% if section.settings.small_image != blank %}
+    <div class="small-image-container">
+      <img src="{{section.settings.small_image | image_url }}" alt="">
+    </div>
+  {% endif %}
 </footer>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 {% schema %}
@@ -280,6 +233,15 @@
         "id": "social_youtube_enabled",
         "label": "Youtube"
       },  
+      {
+        "type": "header",
+        "content": "Small Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "small_image",
+        "label": "Small Image"
+      },
       {
         "type": "header",
         "content": "Mailing List"
