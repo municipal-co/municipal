@@ -49,7 +49,7 @@ export default class VideoPlayer {
    * VideoPlayer constructor
    *
    * @param {HTMLElement | $} el - Element containing required markup.  All settings are passed as data attributes on this element
-   */   
+   */
   constructor(el) {
     this.name = 'videoPlayer';
     this.namespace = `.${this.name}`;
@@ -126,7 +126,10 @@ export default class VideoPlayer {
         playerVars: {
           rel: 0,
           autohide: 1,
-          controls: 2,
+          controls: this.background ? 0 : 1,
+          loop: this.background ? 1 : 0,
+          autoplay: this.background ? 1 : 0,
+          playlist: this.background ? this.id : false,
           playsinline: 1,
           modestbranding: 1,
           wmode: 'transparent',
@@ -134,6 +137,9 @@ export default class VideoPlayer {
         events: {
           onReady: (e) => {
             this.$cover.on('click', this.onCoverClick.bind(this));
+            if (this.background === true) {
+              this.player.mute();
+            }
           },
           onStateChange: (e) => {
             switch (e.data) {
@@ -174,7 +180,7 @@ export default class VideoPlayer {
   switchToState(state) {
     this.$el.removeClass(classes.state[this.state]);
     this.$el.addClass(classes.state[state]);
-    
+
     this.state = state;
   }
 

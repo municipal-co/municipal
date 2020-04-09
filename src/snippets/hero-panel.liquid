@@ -1,0 +1,42 @@
+<div class="row no-gutters justify-content-center" data-background-color="{{ h_background_color }}" data-section-type="hero" data-section-id="{{h_id}}">
+  <div class="col-md-24 col-lg-22">
+    <div class="hero__content">
+      <div class="hero__header">
+        <div class="hero__handscript-svg">
+
+        </div>
+        {%- if h_title != blank -%}
+          <h1 class="hero__title text-center text-{{h_title_color}}"> {{ h_title }} </h1>
+        {%- endif -%}
+      </div>
+      {% if h_cta_text != blank and h_cta_url != blank %}
+      <div class="hero__button-container">
+        <a href="{{h_cta_url}}" class="btn btn-white">
+          {{h_cta_text}}
+          <span class="btn__ui">
+            {% include 'icon-arrow' %}
+          </span>
+        </a>
+      </div>
+      {% endif %}
+      <div class="hero__media-container">
+        {%- if h_video != blank -%}
+          {%- assign yt_video_id = h_video.id -%}
+          <div class="hero__video">
+            <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="true" data-embed-color="#000000">
+              <div class="video-player__cover" data-video-player-cover>
+                <div class="video-player__cover-still lazyload" data-background="{{h_image | img_url: '1800x'}}"></div>
+              </div>
+              <div class="video-player__embed" data-video-player-embed></div>
+            </div>
+          </div>
+        {%- elsif h_image != blank -%}
+          <div class="hero__image">
+            {%- render 'image_tag'
+               image: h_image -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>

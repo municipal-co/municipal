@@ -3,6 +3,8 @@ import $ from 'jquery';
 import 'jquery-zoom';
 import 'chosen-js';
 import 'jquery-unveil';
+import 'objectFitPolyFill';
+import 'lazysizes';
 
 // Bootstrap JS
 import 'bootstrap/js/dist/collapse';
@@ -46,6 +48,7 @@ import CustomersAccountSection       from './sections/customersAccount';
 import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection     from './sections/customersAddresses';
 import CustomersOrderSection         from './sections/customersOrder';
+import HeroSection                   from './sections/heroSection';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -89,6 +92,7 @@ Breakpoints.initialize();
   sectionManager.register('customers-account-orders', CustomersAccountOrdersSection);
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
+  sectionManager.register('hero', HeroSection);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
@@ -146,6 +150,14 @@ Breakpoints.initialize();
   // Init any Product Cards on the page
   $('[data-product-card]').each((i, el) => {
     new ProductCard(el);
+  });
+
+  // Add lazyloading support for background images
+  document.addEventListener('lazybeforeunveil', function(e){
+    const bg = e.target.getAttribute('data-background');
+    if(bg){
+        e.target.style.backgroundImage = 'url(' + bg + ')';
+      }
   });
 
   // Quickview stuff
