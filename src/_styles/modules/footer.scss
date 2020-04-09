@@ -54,6 +54,7 @@
     .minimal-input-box__input {
       height: large-vw(54px, 124px);
       background-color: $white;
+      color: $black;
       font-size: large-vw(18px, 40px);
 
       @include media-breakpoint-down('md') { 
