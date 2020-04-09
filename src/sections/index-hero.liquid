@@ -1,0 +1,99 @@
+
+{% include 'hero-panel'
+  h_id: section.id,
+  h_background_color: section.settings.background_color,
+  h_title: section.settings.title,
+  h_title_color: section.settings.title_color,
+  h_image: section.settings.image,
+  h_video: section.settings.video_url,
+  h_cta_text: section.settings.cta_text,
+  h_cta_url: section.settings.cta_url
+ %}
+
+{% schema %}
+  {
+    "name": "hero",
+    "class": "hero container-fluid",
+    "settings":[
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "select",
+        "id": "background_color",
+        "label": "Background Color",
+        "options": [
+          {"label":"White", "value":"#ffffff"},
+          {"label":"Red", "value":"#ff2b00"},
+          {"label":"Cyan", "value":"#009dcc"},
+          {"label":"Black", "value":"#121212"},
+          {"label": "Brown", "value": "#452b2b"},
+          {"label": "Blue", "value": "#2c6275"},
+          {"label": "Tan", "value": "#c3baa8"},
+          {"label": "Gray", "value": "#424446"},
+          {"label": "Brownish-Red", "value": "#752c2e"}
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "select",
+        "id": "title_color",
+        "label": "Header Color",
+        "options": [
+          {"label":"White", "value":"white"},
+          {"label":"Red", "value":"red"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label":"Black", "value":"black"}
+        ]
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },
+      {
+        "type": "header",
+        "content": "Design"
+      },
+      {
+        "type": "header",
+        "content": "Image",
+        "info": "Main image will always be used."
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Main Image"
+      },
+      {
+        "type": "header",
+        "content": "Video"
+      },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "Video Url",
+        "accept": ["youtube"]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Hero",
+        "category": "Media",
+        "settings": {
+          "title": "Banner Text Here"
+        }
+      }
+    ]
+  }
+{% endschema %}

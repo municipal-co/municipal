@@ -25,8 +25,8 @@ $blue:    #2c6275 !default; // Custom Color
 $green:   #4a5d36 !default; // custom color
 $tan:     #c3baa8 !default; // Custom color
 $brown:   #452b2b !default; // custom color
-$arrow-gray:   #b8b8b8 !default;
-
+$arrow-gray:   #b8b8b8 !default; // custom color
+$brownish-red: #752c2e !default; //custom color
 $indigo:  #6610f2 !default;
 $purple:  #8174cd !default;
 $pink:    #d885c1 !default;
@@ -59,7 +59,8 @@ $colors: map-merge(
     "cyan":         $cyan,
     "khaki":        $khaki,
     "brown":        $brown,
-    "tan":          $tan
+    "tan":          $tan,
+    "brownish-red": $brownish-red
   ),
   $colors
 );

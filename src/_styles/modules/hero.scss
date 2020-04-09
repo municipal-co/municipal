@@ -1,0 +1,47 @@
+.hero {
+  padding: 80px 0;
+
+  @include media-breakpoint-down('md') {
+    padding: 0 0 70px 0;
+  }
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__header {
+
+  @include media-breakpoint-down('md') {
+    order: 2;
+  }
+}
+
+.hero__title {
+  margin-bottom: large-vw(35px, 50px);
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 35px;
+    padding: 0 20px;
+  }
+}
+
+.hero__media-container {
+  @include media-breakpoint-down('md') {
+    order: 1;
+    margin-bottom: 30px;
+  }
+}
+
+.hero__button-container {
+  text-align: center;
+  width: 100%;
+  margin-bottom: -50px;
+  z-index: 5;
+
+  @include media-breakpoint-down('md') {
+    order: 3;
+    padding: 0 34px;
+  }
+}
