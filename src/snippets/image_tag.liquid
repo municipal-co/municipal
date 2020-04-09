@@ -1,0 +1,49 @@
+{%- comment %}
+
+  Content Header
+  ------------------------------------------------------------------------------
+  Renders an image tag with lazyloading and responsive attributes, optional: backward compatibility of object fit with IE11
+
+
+  Usage:
+
+  {% render 'image_tag'
+              image: { image object / url } Required
+              object_fit: { string } - Optional - Receives object-fit property values
+              object_position: { string } - Optional - Receives object-position property values
+    %}
+
+{% endcomment -%}
+
+
+
+
+{% if object_fit != blank %}
+  {% assign object_fit_attribute = 'data-object-fit="' | append: object_fit | append: '"'  %}
+{% endif %}
+{% if object_position != blank %}
+  {% assign object_position_attribute = 'data-object-position="' | append: object_position | append: '"'  %}
+{% endif %}
+
+{% if image contains 'http' %}
+  <img alt="{{ image.alt }}"
+    data-src="{{ image }}"
+    class="lazyload"
+    {{  object_fit_attribute  }}
+    {{  object_position_attribute  }} >
+{% else %}
+  <img alt="{{ image.alt }}"
+    data-src="{{ image | img_url: '1800x' }}"
+    class="lazyload"
+    data-sizes="auto"
+    {{  object_fit_attribute  }}
+    {{  object_position_attribute  }}
+    data-srcset="
+      {{ image | img_url: '414x' }} 414w,
+      {{ image | img_url: '828x' }} 414w,
+      {{ image | img_url: '1024x' }} 1024w,
+      {{ image | img_url: '2048x' }} 1024w,
+      {{ image | img_url: '1920x' }} 1920w,
+      {{ image | img_url: '3480x' }} 1920w
+  ">
+{% endif %}
