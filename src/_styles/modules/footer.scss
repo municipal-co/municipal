@@ -3,12 +3,53 @@
 // -------------------------
 
 .footer {
-  padding-top: $footer-padding-top;
+  padding-top: large-vw(54px, $footer-padding-top);
   padding-bottom: $footer-padding-bottom;
   background-color: $footer-bg;
 
   &, a, h1, h2, h3, h4, h5, h6 {
     color: $footer-text-color;
+  }
+
+  
+  .footer-block--newsletter {
+    margin-bottom: large-vw(54px, 168px);
+
+    @include media-breakpoint-down('md') { 
+
+    }
+
+    .minimal-input-box__input {
+      height: large-vw(54px, 124px);
+      background-color: $white;
+      font-size: large-vw(18px, 40px);
+
+      @include media-breakpoint-down('md') { 
+        height: 54px;
+        font-size: 18px;
+      }
+    }
+
+    .newsletter-text {
+      text-transform: none;
+      margin-bottom: large-vw(54px, 70px);
+      
+      @include media-breakpoint-down('md') { 
+        margin-bottom: 30px;
+      }
+    }
+
+    .minimal-input-box__input::placeholder {
+      color: $black;
+    }
+  }
+
+  .copyright-container {
+    text-align: center;
+  }
+
+  small {
+    font-size: large-vw(20px, 35px);
   }
 }
 
@@ -23,37 +64,37 @@
 }
 
 .footer-menu {
-
-  &:not(:last-child) {
-    margin-bottom: $footer-block-spacing;
-  }
+  margin-bottom: large-vw(25px, $footer-block-spacing);
 
   @media (min-width: $footer-bp-min) {
     display: inline-block;
     vertical-align: top;
-
-    & + & {
-      margin-left: 30px;
-    }
   }
 
-  // Add extra horizontal spacing between menus on large screens
-  // @media (min-width: $screen-lg-min) {
-  //   & + & {
-  //     margin-left: 80px;
-  //   }
-  // }
-
   .footer-menu__title {
-    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-size: large-vw(25px, 40px);
+    line-height: large-vw(30px, 45px);
+    margin-bottom: large-vw(30px, 40px);
+
+    @include media-breakpoint-down('md') { 
+      font-size: 25px;
+      line-height: 30px;
+      margin-bottom: 30px;
+    }
   }
 
   .footer-menu__list {
     @extend .list-unstyled;
-    font-size: $footer-menu-font-size;
+    font-size: large-vw(20px, 30px);
 
-    li:not(:last-child) {
-      margin-bottom: 5px;
+    @include media-breakpoint-down('md') { 
+      font-size: 20px;
+    }
+
+    li {
+      margin-bottom: 0;
+      line-height: 2;
     }
 
     a {
@@ -68,7 +109,7 @@
   margin-left: -10px;
 
   li {
-    display: inline-block;
+    display: block;
     margin: 0 10px;
   }
 
