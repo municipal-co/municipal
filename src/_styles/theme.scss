@@ -86,6 +86,7 @@
 @import 'modules/ajax-cart';
 @import 'modules/product-detail';
 @import 'modules/mobile-menu';
+@import 'modules/hero';
 
 /**
  * Templates
@@ -102,6 +103,13 @@
 @import 'templates/customer.scss';
 @import 'templates/challenge.scss';
 @import 'templates/password.scss';
+
+
+// Background animation styles
+body {
+  will-change: background-color;
+  transition: background-color $transition-duration-medium $transition-timing-function-in-out-ui;
+}
 
 .development-mode {
   /* stylelint-disable-next-line selector-max-id */
