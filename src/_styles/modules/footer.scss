@@ -158,9 +158,9 @@
 
 .footer-menu {
   margin-bottom: large-vw(50px, $footer-block-spacing);
+  text-align: left; 
 
   @include media-breakpoint-down('md') {
-    text-align: left; 
     margin-bottom: 50px;
   }
 
