@@ -28,9 +28,8 @@
 }
 
 // Make a special version of .container that is fluid w/ max width and vertical flex-alignment of child elements
-.header-container {
+.container-fluid {
   @extend .container-fluid-max;
-  max-width: 1840px;
   display: flex;
   justify-content: space-between;
   height: 100%;
@@ -345,7 +344,7 @@
   }
 
   .minimal-input-box__input {
-    height: large-vw(54px, 120px);;
+    height: large-vw(54px, 120px);
     background: $white;
     border-radius: 60px;
     font-size: large-vw(18px, 50px);
