@@ -16,12 +16,6 @@
     color: $footer-text-color;
   }
 
-  .container {
-    @include media-breakpoint-down('xs') { 
-      padding: 0 35px;
-    }
-  }
-
   .small-image-container {
     position: absolute;
     width: 100%;
