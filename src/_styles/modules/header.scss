@@ -29,7 +29,6 @@
 
 // Make a special version of .container that is fluid w/ max width and vertical flex-alignment of child elements
 .container-fluid {
-  @extend .container-fluid-max;
   display: flex;
   justify-content: space-between;
   height: 100%;
