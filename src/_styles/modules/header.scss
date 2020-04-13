@@ -32,12 +32,7 @@
   display: flex;
   justify-content: space-between;
   height: 100%;
-  padding: 0 40px;
   
-  @include media-breakpoint-down('md') {
-    padding: 0 20px;
-  }
-
   // uncomment this line to make dropdowns only go as large as the grid container width
   // position: relative;
 
@@ -72,7 +67,15 @@
   transform: translateZ(0); // Prevent bluriness from scaling
 }
 
-// .header-container > .header-nav
+.header-container {
+  @extend .container-fluid;
+  padding: 0 40px;
+  
+  @include media-breakpoint-down('md') {
+    padding: 0 20px;
+  }
+}
+
 .header-nav {
   display: flex;
   align-items: center;
