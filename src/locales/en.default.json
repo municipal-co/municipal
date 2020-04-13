@@ -54,7 +54,7 @@
       "results_count_singular": "1 result",
       "results_count_plural": "{{ count }} results",
       "title": "Search for products on our site",
-      "placeholder": "Search products &amp; content",
+      "placeholder": "Search Anything",
       "submit": "Search"
     }
   },

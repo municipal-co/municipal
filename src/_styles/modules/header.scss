@@ -14,7 +14,7 @@
   backface-visibility: hidden;
 
   @media (min-width: $header-bp-min) {
-    height: $header-height-base;
+    height: large-vw($header-height-small, $header-height-base);
   }
 
   // If the fixed header behavior is turned on...
@@ -28,11 +28,15 @@
 }
 
 // Make a special version of .container that is fluid w/ max width and vertical flex-alignment of child elements
-.header-container {
-  @extend .container-fluid-max;
+.container-fluid {
   display: flex;
   justify-content: space-between;
   height: 100%;
+  padding: 0 40px;
+  
+  @include media-breakpoint-down('md') {
+    padding: 0 20px;
+  }
 
   // uncomment this line to make dropdowns only go as large as the grid container width
   // position: relative;
@@ -56,7 +60,11 @@
 }
 
 .header-logo {
-  max-width: $header-logo-width;
+  width: large-vw(200px, $header-logo-width);
+
+  @include media-breakpoint-down('md') {
+    width: 200px;
+  }
 }
 
 .header-logo__image {
@@ -94,31 +102,22 @@
   // For the logo block, it can either be &.header-nav--center, or .header-nav--left
   // Default to showing it in the center on large screens, but allow it flush left if necessary
   &.header-nav--logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    // These flex properties cause the width of the logo container to be determined by the width itself instead of adding extra whitespace
-    // This gives us more room to use for menus. :)
-    // Move these rules into the `&:not(.header-nav--left)` selector below if you want a left aligned logo and center menu that is *actually* centered with the screen
-    flex-grow: inherit;
-    flex-basis: auto;
 
     &:not(.header-nav--left) {
 
       @media (max-width: $header-bp-min - 1px) {
         padding-left: 0;
       }
-
     }
   }
 
-  // Some menus don't need to be shown all the time
-  &.header-nav--hide-on-mobile {
-    @media (max-width: $header-bp-min - 1px) {
-      display: none;
-    }
-  }
-
-  &.header-nav--hide-on-desktop {
-    @media (min-width: $header-bp-min) {
+  .hide-on-mobile {
+    @include media-breakpoint-down('md') {
       display: none;
     }
   }
@@ -129,11 +128,15 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .header-nav__menu-item {
   display: inline-block;
-  margin: 0 6px;
+  margin: 0 30px;
 
   &:first-child {
     margin-left: 0;
@@ -145,6 +148,27 @@
 
   > a {
     padding: 27px 4px; // use vertical padding to match the height of the header
+    font-size: large-vw(16px, 30px);
+    font-weight: bold;
+    color: $white;
+    
+    @include media-breakpoint-down('md') { 
+      font-size: 16px;
+      line-height: 3;
+    }
+  }
+
+  svg.icon {
+    height: large-vw(30px, 50px);
+    width: large-vw(30px, 50px);
+    margin-right: 15px;
+    
+
+
+
+    @include media-breakpoint-down('md') {
+      width: 30px;
+    }
   }
 }
 
@@ -159,14 +183,7 @@
 }
 
 .header-cart__badge-count {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-
-  .has-items & {
-    opacity: 1;
-  }
+  color: $yellow;
 }
 
 // Dropdown
@@ -257,5 +274,196 @@
   background: {
     position: center;
     size: cover;
+  }
+}
+
+.main-navigation {
+
+  .drawer{
+    height: 100%;
+    background-color: $black;
+    border: none;
+  }
+
+  .drawer__inner {
+    padding: 0;
+  }
+
+  .drawer__header {
+    padding: 0;
+    margin: 44px 40px;
+    border: none;
+    
+    padding: 0;
+    margin: 0 40px 0 80px;
+    border: none;
+    display: flex;
+    height: large-vw(50px, 120px);
+    align-items: center;
+
+    @include media-breakpoint-down('md') {
+      height: 50px;
+      margin: 0 20px;
+    }
+  }
+
+  .drawer__header-title {
+    font-size: large-vw(18px, 30px);
+    font-weight: bold;
+    color: $white;
+
+    @include media-breakpoint-down('md') {
+      font-size: 18px;
+    }
+  }
+
+  .drawer__body {
+    padding: 30px 80px;
+    @include media-breakpoint-down('md') {
+      padding: 30px 30px;
+    }
+  }
+
+  .drawer .drawer__close {
+    top: 50%;
+    transform: translateY(-50%);
+    svg {
+      height: large-vw(25px, 45px);
+      width: large-vw(25px, 45px);
+
+      @include media-breakpoint-down('md') {
+        height: 25px;
+        width: 25px;
+      }
+    }
+
+    svg path {
+      fill: $white;
+    }
+  }
+
+  .minimal-input-box__input {
+    height: large-vw(54px, 120px);
+    background: $white;
+    border-radius: 60px;
+    font-size: large-vw(18px, 50px);
+    font-weight: bold;
+    color: black;
+    font-weight: bold;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: large-vw(50px, 120px);
+    padding-right: large-vw(50px, 120px);
+    margin-bottom: large-vw(22px, 48px);
+    border: none;
+
+    @include media-breakpoint-down('md') {
+      height: 54px;
+      font-size: 18px;
+      padding: 0 50px;
+      margin-bottom: 22px;
+    }
+  }
+
+  .minimal-input-box__submit {
+    width: large-vw(50px, 70px);
+    right: large-vw(25px, 50px);
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+
+    @include media-breakpoint-down('md') {
+      width: 50px;
+      right: 25px;
+    }
+
+    svg {
+      width: large-vw(32px, 70px);
+      height: large-vw(40px, 70px);
+      
+      @include media-breakpoint-down('md') {
+        width: 32px;
+        height: 40px;
+      }
+    }
+
+    svg g {
+      fill: $arrow-gray;
+    }
+  }
+
+  .mobile-menu-block .search-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: large-vw(22px, 54px);
+
+    @include media-breakpoint-down('md') {
+      left: 22px;
+    }
+
+    svg {
+      width: large-vw(23px, 50px);
+      height: large-vw(23px, 50px);
+
+      @include media-breakpoint-down('md') {
+        width: 23px;
+        height: 23px;
+      }
+    }
+  }
+
+
+  .panel {
+    position: relative;
+
+    .expandable-list {
+      display: inline-block;
+    }
+    .expandable-list__header {
+      padding: 0;
+      margin-bottom: 0;
+      line-height: 1.25;
+    }
+
+    .expandable-list__header-title {
+      color: $white;
+      font-weight: bold;
+      line-height: large-vw(60px, 100px);
+      text-transform: uppercase;
+      font-size: large-vw(50px, 80px);
+
+      @include media-breakpoint-down('md') {
+        font-size: 50px;
+        line-height: 1.2;
+      }
+    }
+
+    &.panel--featured .expandable-list__header-title {
+      color: $cyan;
+    }
+    
+    @include media-breakpoint-up('lg') {
+      &.panel--featured:before {
+        background-image: url("hover-arrow--blue.svg");
+      }
+
+      &:before {
+        content: "";
+        padding-right: 0px;
+        height: 55px;
+        display: inline-block;
+        transition: all 150ms ease-in-out;
+        background-image: url("hover-arrow.svg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      &:hover:before {
+        padding-right: 95px;
+        margin-right: 20px;
+      }
+    }
   }
 }

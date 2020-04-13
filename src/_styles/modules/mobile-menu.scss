@@ -4,32 +4,14 @@
 
 .mobile-menu-block {
 
-  & + & {
-    margin-top: 30px;
-  }
-
-  &--primary {
-
-  }
-
   &--secondary {
-
-  }
-
-  &--social {
-
-    li {
-      display: inline-block;
-      margin: 0 6px;
-    }
-
-    a {
-      padding: 5px;
-    }
-
-    .icon {
-      height: 16px;
-      width: 16px;
+    margin-top: 70px;
+    padding-top: 60px;
+    padding-bottom: 50px;
+    border-top: solid 2px $white;
+    
+    @include media-breakpoint-down('md') {
+      padding-bottom: 0
     }
   }
 }
@@ -37,5 +19,23 @@
 .mobile-menu-list {
   @include list-unstyled;
   margin-bottom: 0;
-  text-align: center;
+  text-align: left;
+
+  li {
+    margin-bottom: large-vw(26px, 15px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 26px;
+    }
+  }
+
+  li a {
+    color: $white;
+    font-size: large-vw(25px, 40px);
+    font-weight: bold;
+
+    @include media-breakpoint-down('md') {
+      font-size: 25px;
+    }
+  }
 }
