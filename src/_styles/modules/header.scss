@@ -12,6 +12,7 @@
   background-color: $header-bg;
   color: $header-text-color;
   backface-visibility: hidden;
+  transition: height $transition-duration-dropdown $transition-timing-function-out;
 
   @media (min-width: $header-bp-min) {
     height: large-vw($header-height-small, $header-height-base);
@@ -25,6 +26,16 @@
   &.is-fixed {
     position: fixed;
   }
+
+  &.is-scrolling {
+    @include media-breakpoint-up('lg') {
+      height: large-vw(50px, 80px);
+
+      .header-logo {
+        width: large-vw(200px, 320px);
+      }
+    }
+  }
 }
 
 // Make a special version of .container that is fluid w/ max width and vertical flex-alignment of child elements
@@ -32,12 +43,7 @@
   display: flex;
   justify-content: space-between;
   height: 100%;
-  padding: 0 40px;
   
-  @include media-breakpoint-down('md') {
-    padding: 0 20px;
-  }
-
   // uncomment this line to make dropdowns only go as large as the grid container width
   // position: relative;
 
@@ -61,6 +67,7 @@
 
 .header-logo {
   width: large-vw(200px, $header-logo-width);
+  transition: width $transition-duration-dropdown $transition-timing-function-out;
 
   @include media-breakpoint-down('md') {
     width: 200px;
@@ -72,7 +79,15 @@
   transform: translateZ(0); // Prevent bluriness from scaling
 }
 
-// .header-container > .header-nav
+.header-container {
+  @extend .container-fluid;
+  padding: 0 40px;
+  
+  @include media-breakpoint-down('md') {
+    padding: 0 20px;
+  }
+}
+
 .header-nav {
   display: flex;
   align-items: center;
