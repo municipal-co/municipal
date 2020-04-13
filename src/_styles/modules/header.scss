@@ -39,10 +39,16 @@
 }
 
 // Make a special version of .container that is fluid w/ max width and vertical flex-alignment of child elements
-.container-fluid {
+.header-container{
+  @extend .container-fluid;
   display: flex;
   justify-content: space-between;
   height: 100%;
+  padding: 0 40px;
+  
+  @include media-breakpoint-down('md') {
+    padding: 0 20px;
+  }
   
   // uncomment this line to make dropdowns only go as large as the grid container width
   // position: relative;
@@ -77,15 +83,6 @@
 .header-logo__image {
   width: 100%;
   transform: translateZ(0); // Prevent bluriness from scaling
-}
-
-.header-container {
-  @extend .container-fluid;
-  padding: 0 40px;
-  
-  @include media-breakpoint-down('md') {
-    padding: 0 20px;
-  }
 }
 
 .header-nav {
