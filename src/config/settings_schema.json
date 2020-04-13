@@ -55,42 +55,42 @@
         "content": "Accounts"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_twitter_link",
         "label": "Twitter link"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_facebook_link",
         "label": "Facebook link"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_pinterest_link",
         "label": "Pinterest link"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_instagram_link",
         "label": "Instagram link"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_snapchat_link",
         "label": "Snapchat link"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_tumblr_link",
         "label": "Tumblr link"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_youtube_link",
         "label": "Youtube link"
       },
       {
-        "type": "text",
+        "type": "url",
         "id": "social_vimeo_link",
         "label": "Vimeo link"
       }

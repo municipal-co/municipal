@@ -216,7 +216,7 @@ $container-max-widths: (
   md: 720px,
   lg: 960px,
   xl: 1140px,
-  xxl: 1440px
+  xxl: 1760px
 ) !default;
 
 @include _assert-ascending($container-max-widths, "$container-max-widths");
@@ -989,9 +989,9 @@ $header-dropdown-menu-spacing:          25px !default; // Horizontal spacing bet
 $footer-bp-min:                         map-get($grid-breakpoints, "lg") !default;
 $footer-bg:                             $black;
 $footer-text-color:                     $white;
-$footer-padding-top:                    50px;
-$footer-padding-bottom:                 20px;
-$footer-block-spacing:                  45px; // Vertical spacing between footer blocks on mobile
+$footer-padding-top:                    120px;
+$footer-padding-bottom:                 30px;
+$footer-block-spacing:                  245px; // Vertical spacing between footer blocks on mobile
 $footer-menu-font-size:                 $font-size-sm;
 $footer-menu-text-color:                $white;
 $footer-social-icon-width:              20px;

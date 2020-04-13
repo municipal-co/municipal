@@ -1,7 +1,4 @@
-{% assign MAX_FOOTER_MENUS = 3 %}
-
 {% assign footer_menu_html_desktop = '' %}
-{% assign footer_menu_html_mobile  = '' %}
 
 {% comment %} Newsletter messaging {% endcomment %}
 {% assign message_already_subscribed = section.settings.subscribe_already_subscribed_text %}
@@ -17,14 +14,14 @@
 {% assign message_fail = 'general.newsletter.subscribe_fail' | t %}  
 
 {% comment %} MENU Capture {% endcomment %}
-{% for i in (1..MAX_FOOTER_MENUS) %}
+{% for i in (1..3) %}
   {% assign menu_setting_handle = 'footer_linklist_' | append: i %}
   {% assign menu_title_setting_handle = 'footer_linklist_title_' | append: i %}
   {% assign linklist_handle = section.settings[menu_setting_handle] %}
   {% if linklist_handle and linklists[linklist_handle].links.size > 0 %}
 
     {% capture desktop_html %}
-      <div class="footer-menu">
+      <div class="footer-menu col-lg-4">
         <h6 class="footer-menu__title">{{ section.settings[menu_title_setting_handle] }}</h6>
         {% if linklist_handle and linklists[linklist_handle].links.size > 0 %}
           <ul class="footer-menu__list">
@@ -36,86 +33,72 @@
       </div>
     {% endcapture %}
 
-    {% capture mobile_html %}
-      <div class="expandable-list">
-        <div class="expandable-list__header">
-          <a href="#{{ linklist_handle }}" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="false" aria-controls="{{ linklist_handle }}">
-            {{ section.settings[menu_title_setting_handle] }} 
-            {% include 'icon-caret-down' %}
-          </a>
-        </div>
-        <div id="{{ linklist_handle }}" class="collapse">
-          <div class="expandable-list__body">
-            {% for link in linklists[linklist_handle].links %}
-              <div class="expandable-list__item">
-                <a href="{{ link.url }}" class="expandable-list__item-title">{{ link.title }}</a>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    {% endcapture %}
-
     {% assign footer_menu_html_desktop = footer_menu_html_desktop | append: desktop_html %}
-    {% assign footer_menu_html_mobile  = footer_menu_html_mobile  | append: mobile_html %}
   {% endif %}
 {% endfor %}
 
+
 {% comment %} SOCIAL Capture {% endcomment %}
 {% capture social_list_items %}
-  {%- assign social_accounts = 'Facebook, Instagram, Twitter, Pinterest, Snapchat' | split: ', ' -%}
+  {%- assign social_accounts = 'Instagram, Twitter, Facebook, Pinterest, Snapchat, Youtube' | split: ', ' -%}
   {% for social in social_accounts %}
     {% assign social_handle = social | handleize %}
     {% capture social_enabled_handle %}social_{{ social_handle }}_enabled{% endcapture %}
     {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
     {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
     {% if settings[social_link] != blank and section.settings[social_enabled_handle] %}
-        <li>
-          <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}" target="_blank">
-            {% include social_icon %}
-            <span class="icon-fallback-text">{{ social }}</span>
-          </a>
-        </li>
+      <li>
+        <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}" target="_blank"> {{ social }}
+        </a>
+      </li>
     {% endif %}
   {% endfor %}
 {% endcapture %}
 
+
+{% capture social_menu %}
+  {% if social_list_items != blank %}
+    <div class="footer-menu col-lg-4">
+      {% if section.settings.social_menu_title != blank %}
+        <h6 class="footer-menu__title">{{ section.settings.social_menu_title }}</h6>
+      {% endif %}
+
+      <ul class="footer-menu__list footer-social-list">
+        {{ social_list_items }}
+      </ul>
+    </div>
+  {% endif %}
+{% endcapture %}
+
+
+{% capture payment_menu %}
+  <div class="footer-menu col-lg-5">
+    <h6 class="footer-menu__title">Payment</h6>
+
+    <div class="payment-methods-container">
+      {% for type in shop.enabled_payment_types %}
+        <div class="payment-icon">
+          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endcapture %}
+
 <footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer">
-  <div class="container">
-    <div class="row">
-
-      {% comment %} Footer Block - Info {% endcomment %}
-      <div class="col-lg-2">
-        <div class="footer-block">
-          Footer Info Block
-        </div>
-      </div>
-
-      {% comment %} Footer Block - Menus {% endcomment %}
-      <div class="col-lg-6">
-        <div class="footer-block">
-          <div class="d-none d-lg-block">
-            {{ footer_menu_html_desktop }}
-          </div>
-          <div class="d-block d-lg-none">
-            {{ footer_menu_html_mobile }}
-          </div>
-        </div>
-      </div>
-
+  <div class="container-fluid">
+    <div class="row no-gutters justify-content-center">
+      
       {% comment %} Footer Block - Contact {% endcomment %}
-      <div class="col-lg-4">
-        <div class="footer-block">
+      <div class="col-lg-22 col-20">
+        <div class="footer-block footer-block--newsletter">
           
           {% if settings.newsletter_form_action == blank %}
             <div class="alert alert-danger small">A valid newsletter form action URL is required for this section.  Please go to <strong>General Settings -> Mailing List</strong> in the theme editor to add this information</div>
           {% endif %}
 
-          {% if section.settings.subscribe_heading %}
-            <h4>{{ section.settings.subscribe_heading }}</h4>
-          {% endif %}
           {% if section.settings.subscribe_text %}
-            <p>{{ section.settings.subscribe_text }}</p>
+            <h4 class="newsletter-text">{{ section.settings.subscribe_text }}</h4>
           {% endif %}
 
           <form action="{{ settings.newsletter_form_action }}" method="post" data-newsletter-form>
@@ -125,7 +108,7 @@
                   <div class="minimal-input-box minimal-input-box--inverted">
                     <input type="email" class="minimal-input-box__input" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ section.settings.placeholder_text }}" required="required"/>
                     <button type="submit" class="minimal-input-box__submit">
-                      {% include 'icon-arrow-right' %}
+                      {% include 'icon-arrow' %}
                       <span class="icon-fallback-text">Submit</span>
                     </button>
                   </div>
@@ -138,59 +121,43 @@
                  data-message-fail="{{ message_fail | strip | escape }}"></div>
             </div>
           </form>
+        </div>
+      </div>
+
+      {% comment %} Footer Block - Menus {% endcomment %}
+      <div class="col-lg-22 col-20">
+        <div class="footer-block">
+          {{ footer_menu_html_desktop }}
 
           {% if social_list_items %}
-            <ul class="footer-social-list">
-              {{ social_list_items }}
-            </ul>
+            {{ social_menu }}
           {% endif %}
+
+          {{ payment_menu }}
         </div>
       </div>
     </div>
 
     {% assign year = 'now' | date: "%Y" %}
     {% if section.settings.copyright_text != blank %}
-      <div>
+      <div class="copyright-container">
         <small>{{ section.settings.copyright_text | replace: '$year$', year | replace: '$shop$', shop.name }}</small>
       </div>
     {% endif %}
-
   </div>
+
+  {% if section.settings.small_image != blank %}
+    <div class="small-image-container">
+      <img src="{{section.settings.small_image | image_url }}" alt="">
+    </div>
+  {% endif %}
 </footer>
+
 
 {% schema %}
   {
     "name": "Footer",
     "settings": [
-      {
-        "type": "header",
-        "content": "Social"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_facebook_enabled",
-        "label": "Facebook"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_instagram_enabled",
-        "label": "Instagram"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_twitter_enabled",
-        "label": "Twitter"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_pinterest_enabled",
-        "label": "Pinterest"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_snapchat_enabled",
-        "label": "Snapchat"
-      },
       {
         "type": "header",
         "content": "Menus"
@@ -224,19 +191,58 @@
         "type": "link_list",
         "id": "footer_linklist_3",
         "label": "Third Menu"
-      },
+      },   
       {
         "type": "header",
-        "content": "Copyright"
-      },      
-      {
-        "type": "header",
-        "content": "Mailing List"
+        "content": "Social Menu"
       },
       {
         "type": "text",
-        "id": "subscribe_heading",
-        "label": "Heading"
+        "id": "social_menu_title",
+        "label": "Social Menu Title"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_facebook_enabled",
+        "label": "Facebook"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_instagram_enabled",
+        "label": "Instagram"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_twitter_enabled",
+        "label": "Twitter"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_pinterest_enabled",
+        "label": "Pinterest"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_snapchat_enabled",
+        "label": "Snapchat"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_youtube_enabled",
+        "label": "Youtube"
+      },  
+      {
+        "type": "header",
+        "content": "Small Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "small_image",
+        "label": "Small Image"
+      },
+      {
+        "type": "header",
+        "content": "Mailing List"
       },
       {
         "type": "textarea",
