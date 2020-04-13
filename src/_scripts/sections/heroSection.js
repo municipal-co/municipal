@@ -6,7 +6,7 @@ const selectors = {
   videoPlayer: '[data-video-player]'
 };
 
-export default class FooterSection extends BaseSection {
+export default class HeroSection extends BaseSection {
   constructor(container) {
     super(container, 'hero');
 
