@@ -70,7 +70,9 @@
   {% endif %}
 {% endcapture %}
 
-<div id="promo-{{ p_id }}" class="{{- promo_classes -}} row no-gutters" data-section-type="promo" data-background-color="{{ p_background_color }}"> 
+<div id="promo-{{ p_id }}" class="{{- promo_classes -}} row no-gutters" data-section-type="promo" data-background-color="{{ p_background_color }}" style="
+    border-top: solid 1px;
+"> 
   <div class="promo__col promo__col--image col-20 col-lg-10 offset-lg-1">
     <div class="promo__col-inner">
       <div class="promo__img-wrapper">
@@ -84,9 +86,6 @@
         {% else %}
           {% if p_image != blank %}
             {% if p_image_small != blank %}
-              {% comment %}<img src="{{ p_image       | img_url: '1600x' }}" class="d-none d-md-block" alt="{{ p_image.alt }}" />
-              <img src="{{ p_image_small | img_url: '900x' }}"  class="d-block d-md-none" alt="{{ p_image_small.alt }}" />{% endcomment %}
-              <h1>assds</h1>
               <div class="d-none  d-md-block frame frame--3x4">
                 {%- render 'image_tag'
                  image: p_image,
@@ -98,9 +97,7 @@
                  image: p_image_small,
                  object_fit: 'cover'  -%}
               </div>
-
             {% else %}
-              {% comment %}<h1>testerino</h1>{% endcomment %}
               <div class="frame frame--3x4">
                 {%- render 'image_tag'
                  image: p_image,
@@ -109,6 +106,14 @@
             {% endif %}
           {% endif %}
         {% endif %}
+
+        {% if p_secondary_icon != blank %}
+          <div class="secondary-con">   
+            {%- render 'image_tag'
+                 image: p_secondary_icon,
+                 object_fit: 'contain'  -%}
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -116,7 +121,18 @@
     <div class="promo__col-inner">
       <div class="promo__text-wrapper {% if p_light == true %}light-text{% endif %}">
         {% if p_eyebrow != blank %}
-          <h4 class="promo__eyebrow">{{ p_eyebrow }}</h4>
+          <h4 class="promo__eyebrow">
+            {{ p_eyebrow }}
+
+            {% if p_eyebrow_icon != blank %}
+              <div class="eyebrow-icon">
+                {%- render 'image_tag'
+                     image: p_eyebrow_icon,
+                     object_fit: 'cover'  -%}
+              </div>
+            {% endif %}
+          </h4>
+
         {% endif %}
         {% if p_title != blank %}
           <h1 class="promo__title text-{{ p_title_color }}">{{ p_title }}</h1>

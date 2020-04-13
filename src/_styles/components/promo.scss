@@ -116,11 +116,56 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
   font-size: large-vw(26px, 50px);
   letter-spacing: -1px;
   text-transform: none;
-  margin-bottom: large-vw(22px, 560px);
+  margin-bottom: large-vw(22px, 56px);
+  display: inline-block;
+  position: relative;
 
   @include media-breakpoint-down('md') {
     font-size: 26px;
     margin-bottom: 22px;
+  }
+}
+
+.eyebrow-icon {
+  position: absolute;
+  width: large-vw(24px, 50px);
+  height: large-vw(24px, 50px);
+  top: -10px;
+  left: calc(100% + 15px);
+
+  @include media-breakpoint-down('md') {
+    width: 24px;
+    height: 24px;
+  }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.secondary-con {
+  position: absolute;
+  width: large-vw(60px, 150px);
+  height: large-vw(60px, 150px);
+  transform: translateX(-50%);
+  bottom: 10%;
+
+  @include media-breakpoint-down('md') {
+    right: 0;
+    top: 0;
+    bottom: initial;
+    height: 60px;
+    width: 60px;
+    transform: translateY(-50%);
+  }
+
+  img {
+    object-fit: contain;
   }
 }
 

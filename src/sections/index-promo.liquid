@@ -10,6 +10,8 @@
               p_background_color: section.settings.background_color,
               p_title_color: section.settings.title_color,
               p_light: section.settings.light_text,
+              p_eyebrow_icon: section.settings.eyebrow_icon,
+              p_secondary_icon: section.settings.secondary_icon,
               p_eyebrow: section.settings.eyebrow,
               p_title: section.settings.title,
               p_text: section.settings.text,
@@ -33,6 +35,11 @@
         "label": "Eyebrow"
       },
       {
+        "type": "image_picker",
+        "id": "eyebrow_icon",
+        "label": "Eyebrow Icon"
+      },
+      {
         "type": "text",
         "id": "title",
         "label": "Title"
@@ -51,7 +58,12 @@
         "type": "url",
         "id": "cta_url",
         "label": "CTA Link"
-      },      
+      },  
+      {
+        "type": "image_picker",
+        "id": "secondary_icon",
+        "label": "Secondary Icon"
+      },    
       {
         "type": "image_picker",
         "id": "image",
