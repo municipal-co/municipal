@@ -70,9 +70,7 @@
   {% endif %}
 {% endcapture %}
 
-<div id="promo-{{ p_id }}" class="{{- promo_classes -}} row no-gutters" data-section-type="promo" data-background-color="{{ p_background_color }}" style="
-    border-top: solid 1px;
-"> 
+<div id="promo-{{ p_id }}" class="{{- promo_classes -}} row no-gutters" data-section-type="promo" data-background-color="{{ p_background_color }}"> 
   <div class="promo__col promo__col--image col-20 col-lg-10 offset-lg-1">
     <div class="promo__col-inner">
       <div class="promo__img-wrapper">
@@ -132,7 +130,6 @@
               </div>
             {% endif %}
           </h4>
-
         {% endif %}
         {% if p_title != blank %}
           <h1 class="promo__title text-{{ p_title_color }}">{{ p_title }}</h1>
@@ -153,5 +150,3 @@
     </div>
   </div>
 </div>
-
-
