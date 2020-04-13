@@ -18,6 +18,9 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
   @include media-breakpoint-up('lg') {
     display: flex;
     align-items: stretch;
+    justify-content: flex-start;
+    padding-top: large-vw(70px, 160px);
+    padding-bottom: large-vw(80px, 160px);
 
     &--layout-right {
       flex-direction: row-reverse;
@@ -42,6 +45,8 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
 
     // If the layout is reversed, we have to reverse the column widths for each type
     &.promo--layout-right { /* stylelint-disable-line no-duplicate-selectors */
+      justify-content: flex-end;
+
       @for $i from 0 to length($type-first-col-widths-reverse) {
         &.promo--type-#{$i + 1} {
           .promo__col:first-child {
@@ -53,14 +58,24 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
         }
       }
     }
-
   }
 
+  @include media-breakpoint-down('md') {
+    padding-top: 70px;
+    padding-bottom: 80px;
+    justify-content: center;
+  }
 }
 
 .promo__col {
   padding-left: $grid-gutter-width / 2;
   padding-right: $grid-gutter-width / 2;
+}
+
+.promo__col--image {
+  @include media-breakpoint-down('md') {
+    margin-bottom: 30px;
+  }
 }
 
 .promo__col-inner {
@@ -78,10 +93,56 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
   &, img {
     width: 100%; // Needed for child .frame elements
   }
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .frame.frame--3x4:before {
+    padding-top: 125%;
+
+    @include media-breakpoint-down('md') {
+      padding-top: 112%;
+    }
+  }
+}
+
+.promo__eyebrow {
+  font-size: large-vw(26px, 50px);
+  letter-spacing: -1px;
+  text-transform: none;
+  margin-bottom: large-vw(22px, 560px);
+
+  @include media-breakpoint-down('md') {
+    font-size: 26px;
+    margin-bottom: 22px;
+  }
 }
 
 .promo__title {
+  font-family: Sequel Sans Title;
+  margin-bottom: large-vw(20px, 45px);
+  line-height: large-vw(50px, 150px);
 
+  @include media-breakpoint-down('md') {
+    margin-bottom: 20px;
+    line-height: 50px;
+  }
+}
+
+.promo__text {
+  line-height: large-vw(30px, 65px);
+  margin-bottom: large-vw(30px, 60px);
+  
+  @include media-breakpoint-down('md') {
+    line-height: 30px;
+    margin-bottom: 30px;
+  }
 }
 
 .promo__text-wrapper {
@@ -89,8 +150,12 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
     padding-left: $grid-gutter-width;
     padding-right: $grid-gutter-width;
   }
+
+  &.light-text {
+    .promo__eyebrow,
+    .promo__text{
+      color: $white;
+    }
+  }
 }
 
-.promo__text {
-
-}
