@@ -13,7 +13,8 @@ const selectors = {
 
 const classes = {
   headerFixed: 'is-fixed',
-  siteHasFixedHeader: 'site-fixed-header'
+  siteHasFixedHeader: 'site-fixed-header',
+  headerScroll: 'is-scrolling'
 };
 
 export default class HeaderSection extends BaseSection {
@@ -45,9 +46,11 @@ export default class HeaderSection extends BaseSection {
     requestAnimationFrame(() => {
       if (scrollTop < actualOffset) {
         this.$el.removeClass(classes.headerFixed);
+        this.$el.removeClass(classes.headerScroll);
       }
       else {
         this.$el.addClass(classes.headerFixed);
+        this.$el.addClass(classes.headerScroll);
       }
     });
   }

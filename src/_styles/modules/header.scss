@@ -12,6 +12,7 @@
   background-color: $header-bg;
   color: $header-text-color;
   backface-visibility: hidden;
+  transition: height $transition-duration-dropdown $transition-timing-function-out;
 
   @media (min-width: $header-bp-min) {
     height: large-vw($header-height-small, $header-height-base);
@@ -24,6 +25,16 @@
 
   &.is-fixed {
     position: fixed;
+  }
+
+  &.is-scrolling {
+    @include media-breakpoint-up('lg') {
+      height: large-vw(50px, 80px);
+
+      .header-logo {
+        width: large-vw(200px, 320px);
+      }
+    }
   }
 }
 
@@ -56,6 +67,7 @@
 
 .header-logo {
   width: large-vw(200px, $header-logo-width);
+  transition: width $transition-duration-dropdown $transition-timing-function-out;
 
   @include media-breakpoint-down('md') {
     width: 200px;
