@@ -49,7 +49,7 @@ export default class ProductOverview extends BaseSection {
     if (screenWidth > 991) {
       this.$videoCover.mousemove(function(event) {
         var offset = $(this).offset();
-        var buttonWidth = $(".video-player__cover-play", this).width();
+        var buttonWidth = $(selectors.videoPlay, this.$videoCover).width();
         var buttonOffset = buttonWidth / 2;
 
         x = event.pageX - offset.left - buttonOffset;
