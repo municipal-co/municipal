@@ -1,0 +1,52 @@
+{% assign eyebrow =  product.metafields.custom_fields["overview_eyebrow"] %}
+{% assign title = product.metafields.custom_fields["overview_title"] %}
+{% assign copy = product.metafields.custom_fields["overview_copy"] %}
+{% assign overview_image = product.metafields.custom_fields["overview_image"] %}
+{% assign video = product.metafields.custom_fields["overview_video"] %}
+{% assign details = product.metafields.custom_fields["overview_details"] %}
+{% assign small_text = product.metafields.custom_fields["overview_small_text"] %}
+
+{% if details != blank and overview_image != blank %}
+  <div class="product-overview" data-section-type="hero" data-background-color="#000000">
+    <div class="row no-gutters justify-content-center">
+      <div class="col-lg-22 col-20">
+            
+        <div class="overview-content">
+          {% if eyebrow != blank %}
+            <h5 class="overview-content__eyebrow">{{ eyebrow }}</h5>
+          {% endif %}
+          {% if title != blank %}
+            <h1 class="overview-content__title">{{ title }}</h1>
+          {% endif %}
+          {% if copy != blank %}
+            <p class="overview-content__copy p2">{{ copy }}</p>
+          {% endif %}
+        </div>
+
+        <div class="overview-details row no-gutters">
+          <div class="overview-details__image col-lg-12">
+            <div class="image-container frame frame--4x3">
+              {% render 'image_tag'
+                  image: overview_image,
+                  object_fit: 'cover' 
+              %}
+            </div>
+
+            {% if small_text != blank %}
+              <p class="overview-details__small-text d-none d-lg-block">{{ small_text }}</p>
+            {% endif %}
+          </div>
+          
+            <div class="overview-details__content col-lg-11 offset-lg-1">{{ details }}</div>
+            <p class="overview-details__small-text d-block d-lg-none">{{ small_text }}</p>
+        </div>
+        
+
+        <div>{{ video }}</div>
+        
+      </div>
+    </div>
+    
+  </div>  
+{% endif %}
+
