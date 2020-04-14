@@ -1,0 +1,63 @@
+{%- comment %}
+
+  Product Dots - size
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'product-dots-size',
+              product: { product } - required
+              selected_size: { string } - optional
+  %}
+
+  Swatches based on the product
+  =============================
+
+{%- endcomment -%}
+
+{% if product != blank %}
+
+  {% assign current_color = blank %}
+
+  {% for option in product.options_with_values %}
+  {% comment %}Get the first available color (it will be used to display the corresponding size variants) and can be placed 2nd on the variant lists {% endcomment %}
+    {% assign option_name_downcase = option.name | downcase %}
+    {% if option_name_downcase == "color" and current_color == blank %}
+      {% assign color_handle = 'option' | append: option.position %}
+      {% assign current_color = option.values[0] %}
+    {% endif %}
+  {% endfor %}
+
+  {% for option in product.options_with_values %}
+    {% assign option_name_downcase = option.name | downcase %}
+    {% assign size_handle = 'option' | append: option.position %}
+
+    {% if option_name_downcase == "size" and option.values.size > 0 %}
+
+
+      <div class="dots" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-list>
+        {% for size in option.values %}
+
+          {% for variant in product.variants %}
+            {% if variant[color_handle] == current_color and variant[size_handle] == size %}
+              {% assign current_variant = variant %}
+            {% endif %}
+          {% endfor %}
+
+          <div class="dot"
+               data-dot
+               {% if current_variant.available == false %}
+                 disabled
+               {% endif %}
+               data-variant-id="{{ current_variant.id }}">
+            <div class="dot__inner">
+              {{ size }}
+            </div>
+          </div>
+
+        {% endfor %}
+
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}

@@ -14,7 +14,7 @@ class CartAPI {
    * Formats the cart object to be consumed by the handlebars template
    *
    * @param {object} cart - JSON representation of the cart.  See https://help.shopify.com/themes/development/getting-started/using-ajax-api#get-cart
-   * @return {object} 
+   * @return {object}
    */
   formatCart(cart) {
     if (cart && cart.is_formatted) {
@@ -142,6 +142,36 @@ class CartAPI {
 
     return promise;
   }
+
+   /**
+   * AJAX submit an 'add to cart' form
+   *
+   * @param {jQuery} $form - jQuery instance of the form
+   * @return {Promise} - Resolve returns JSON cart | Reject returns an error message
+   */
+  addItemFromID(id) {
+    const promise = $.Deferred();
+
+    $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: '/cart/add.js',
+      data: { quantity: 1, id: id },
+      success: () => {
+        this.getCart().then((cart) => {
+          promise.resolve(cart);
+        });
+      },
+      error: () => {
+        promise.reject({
+          message: 'The quantity you entered is not available.'
+        });
+      }
+    });
+
+    return promise;
+  }
+
 
   /**
    * Retrieve a JSON respresentation of a specific product

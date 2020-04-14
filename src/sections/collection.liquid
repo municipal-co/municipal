@@ -14,74 +14,83 @@
 {% paginate collection.products by 6 %}
 
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection">
-  <div class="container">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-lg-22">
+        {% include 'page-header',
+                    ph_title: collection.title,
+                    ph_subtitle: collection.description
+        %}
 
-    {% include 'page-header',
-                ph_title: collection.title,
-                ph_subtitle: collection.description
-    %}
+        {% if collection.products.size > 0 %}
+          <div class="collection-filter-bar">
+            {% comment %}
+              Vertically align groupings.  Space them out horizontally, flush to the edges
+              Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
+              This will ensure that flex will always space them out appropriately
+            {% endcomment %}
+            <div class="collection-filter-bar__grouping">
+              {% if section.settings.enable_filters %}
 
-    {% if collection.products.size > 0 %}
-      <div class="collection-filter-bar">
-        {% comment %}
-          Vertically align groupings.  Space them out horizontally, flush to the edges
-          Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
-          This will ensure that flex will always space them out appropriately
-        {% endcomment %}
-        <div class="collection-filter-bar__grouping">
-          {% if section.settings.enable_filters %}
-            
-            {% assign mobile_filter_id = 'mobile-filters' %}
+                {% assign mobile_filter_id = 'mobile-filters' %}
 
-            {% include 'collection-mobile-filters', id: mobile_filter_id, filter_types: filter_types %}
+                {% include 'collection-mobile-filters', id: mobile_filter_id, filter_types: filter_types %}
 
-            <div class="d-md-none">
-              <a href="#" data-toggle="drawer" data-target="#{{ mobile_filter_id }}" data-backdrop="true">
-                <span style="margin-right: 6px;">{% include 'icon-filters' %}</span>
-                Filter By
-              </a>
+                <div class="d-md-none">
+                  <a href="#" data-toggle="drawer" data-target="#{{ mobile_filter_id }}" data-backdrop="true">
+                    <span style="margin-right: 6px;">{% include 'icon-filters' %}</span>
+                    Filter By
+                  </a>
+                </div>
+
+                <div class="d-none d-md-block">
+                  {% include 'collection-filters', filter_types: filter_types %}
+                </div>
+
+              {% endif %}
             </div>
-
-            <div class="d-none d-md-block">
-              {% include 'collection-filters', filter_types: filter_types %}
+            <div class="collection-filter-bar__grouping">
+              {% if section.settings.enable_sort %}
+                {% include 'collection-sort' %}
+              {% endif %}
             </div>
-
-          {% endif %}
-        </div>
-        <div class="collection-filter-bar__grouping">
-          {% if section.settings.enable_sort %}
-            {% include 'collection-sort' %}
-          {% endif %}
-        </div>
-      </div>
-
-      <p class="d-none d-md-block">
-        <small>Showing {{ collection.products.size }} {{ collection.products.size | pluralize: 'Item', 'Items' }}</small>
-      </p>      
-
-      <div class="content-grid">
-        {% for product in collection.products %}
-
-          {% comment %} Lazy load all product images below the fold.  Adjust the limit as needed {% endcomment %}
-          {% assign lazy_load = false %}
-          {% if forloop.index > 10 %}
-            {% assign lazy_load = true %}
-          {% endif %}
-
-          <div class="content-grid__item">
-            {% include 'product-card', product: product, quick_view: true, lazy_load: lazy_load %}
           </div>
-        {% endfor %}
+
+          <p class="d-none d-md-block">
+            <small>Showing {{ collection.products.size }} {{ collection.products.size | pluralize: 'Item', 'Items' }}</small>
+          </p>
+
+          <div class="content-grid">
+            {% for product in collection.products %}
+
+              {% comment %} Lazy load all product images below the fold.  Adjust the limit as needed {% endcomment %}
+              {% assign lazy_load = false %}
+              {% if forloop.index > 10 %}
+                {% assign lazy_load = true %}
+              {% endif %}
+
+              <div class="content-grid__item">
+                {% include 'product-card',
+                   product: product,
+                   lazy_load: lazy_load,
+                   show_sizes: true,
+                   show_colors: true,
+                   show_tag: true %}
+              </div>
+            {% endfor %}
+          </div>
+
+        {% else %}
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+
+        {% endif %}
+
+        {% if paginate.pages > 1 %}
+          {% include 'pagination' %}
+        {% endif %}
+
       </div>
-
-    {% else %}
-      <p>{{ 'collections.general.no_matches' | t }}</p>
-
-    {% endif %}
-
-    {% if paginate.pages > 1 %}
-      {% include 'pagination' %}
-    {% endif %}
+    </div>
   </div>
 
   {% comment %} This JSON is required for filtering and sorting {% endcomment %}
