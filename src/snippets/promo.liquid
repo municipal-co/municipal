@@ -18,6 +18,7 @@
               p_text: { string } - optional
               p_cta_url: { url }
               p_cta_text: { string }
+              p_light: { boolean } - optional 
   %}
 
 {% endcomment -%}
@@ -69,8 +70,8 @@
   {% endif %}
 {% endcapture %}
 
-<div id="promo-{{ p_id }}" class="{{- promo_classes -}}">
-  <div class="promo__col promo__col--image">
+<div id="promo-{{ p_id }}" class="{{- promo_classes -}} row no-gutters" data-section-type="promo" data-background-color="{{ p_background_color }}"> 
+  <div class="promo__col promo__col--image col-20 col-lg-10 offset-lg-1">
     <div class="promo__col-inner">
       <div class="promo__img-wrapper">
         {% if p_frame_ratio != blank %}
@@ -83,27 +84,67 @@
         {% else %}
           {% if p_image != blank %}
             {% if p_image_small != blank %}
-              <img src="{{ p_image       | img_url: '1600x' }}" class="d-none  d-md-block" alt="{{ p_image.alt }}" />
-              <img src="{{ p_image_small | img_url: '900x' }}"  class="d-block d-md-none" alt="{{ p_image_small.alt }}" />
+              <div class="d-none  d-md-block frame frame--3x4">
+                {%- render 'image_tag'
+                 image: p_image,
+                 object_fit: 'cover'  -%}
+              </div>
+
+              <div class="d-block d-md-none frame frame--3x4">
+                {%- render 'image_tag'
+                 image: p_image_small,
+                 object_fit: 'cover'  -%}
+              </div>
             {% else %}
-              <img src="{{ p_image | img_url: '1600x' }}" alt="{{ p_image.alt }}" />
+              <div class="frame frame--3x4">
+                {%- render 'image_tag'
+                 image: p_image,
+                 object_fit: 'cover'  -%}
+              </div>
             {% endif %}
           {% endif %}
+        {% endif %}
+
+        {% if p_secondary_icon != blank %}
+          <div class="secondary-con">   
+            {%- render 'image_tag'
+                 image: p_secondary_icon,
+                 object_fit: 'contain'  -%}
+          </div>
         {% endif %}
       </div>
     </div>
   </div>
-  <div class="promo__col promo__col--text">
+  <div class="promo__col promo__col--text col-20 col-lg-11 offset-lg-1">
     <div class="promo__col-inner">
-      <div class="promo__text-wrapper">
+      <div class="promo__text-wrapper {% if p_light == true %}light-text{% endif %}">
+        {% if p_eyebrow != blank %}
+          <h4 class="promo__eyebrow">
+            {{ p_eyebrow }}
+
+            {% if p_eyebrow_icon != blank %}
+              <div class="eyebrow-icon">
+                {%- render 'image_tag'
+                     image: p_eyebrow_icon,
+                     object_fit: 'contain'  -%}
+              </div>
+            {% endif %}
+          </h4>
+        {% endif %}
         {% if p_title != blank %}
-          <h2 class="promo__title">{{ p_title }}</h2>
+          <h1 class="promo__title text-{{ p_title_color }}">{{ p_title }}</h1>
         {% endif %}
         {% if p_text != blank %}
-          <div class="promo__text">{{ p_text }}</div>
+          <div class="promo__text p2">{{ p_text }}</div>
         {% endif %}
         {% if p_cta_url != blank and p_cta_text != blank %}
-          <a href="{{ p_cta_url }}" class="btn btn-primary">{{ p_cta_text }}</a>
+          <a href="{{ p_cta_url }}" class="btn {% if p_light == true %}btn-white{% else %}btn-primary{% endif %}">
+            {{ p_cta_text }}
+
+            <span class="btn__ui">
+              {% include 'icon-arrow' %}
+            </span>
+          </a>
         {% endif %}
       </div>
     </div>
