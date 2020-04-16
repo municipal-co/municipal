@@ -50,8 +50,6 @@ export default class ProductStyleTips extends BaseSection {
 
     this.videoPlayers = videoPlayers;
 
-    console.log(this.videoPlayers);
-
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
 
