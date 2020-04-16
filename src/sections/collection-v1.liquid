@@ -1,0 +1,141 @@
+{%- comment %}
+
+  Collection Section
+  ------------------------------------------------------------------------------
+
+  The tags using for filtering are the ones that starts with:
+    - `color:`
+    - `size:`
+
+{% endcomment -%}
+
+{% assign filter_types = 'color,size' | split: "," %}
+
+
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-lg-22 col-20">
+          
+        {% if collection.metafields.custom_fields["collection_section"] != blank %}
+          {% assign separator = "|###|" %}
+          {% assign collection_array = collection.metafields.custom_fields["collection"] | split: separator %}
+          {% assign collection_title_array = collection.metafields.custom_fields["collection_title"] | split: separator %}
+          {% assign collection_description_array = collection.metafields.custom_fields["collection_description"] | split: separator %}
+          {% assign show_promo_card_array = collection.metafields.custom_fields["show_promo_card"] | split: separator %}
+          {% assign promo_card_image_array = collection.metafields.custom_fields["promo_card_image"] | split: separator %}
+          {% assign promo_card_position_array = collection.metafields.custom_fields["promo_card_position"] | split: separator %}
+          {% assign fc_keys = collection.metafields.custom_fields["collection_section"] | split: "," %}
+
+          {% for i in fc_keys %}
+            {% assign index = i | plus: 0 %}
+            {% assign section_collection = collection_array[index] %}
+            {% assign collection_title = collection_title_array[index] %}
+            {% assign collection_description = collection_description_array[index] %}
+            {% assign show_promo_card = show_promo_card_array[index] %}
+            {% assign promo_card_image = promo_card_image_array[index] %}
+            {% assign promo_card_position = promo_card_position_array[index] | times: 1 %}
+            {% assign the_collection = collections[section_collection] %}
+
+            {% if show_promo_card == '1' %}
+              {% assign show_promo = true  %}
+            {% endif %}
+
+            {% if section_collection != blank and the_collection.products.size > 0%}
+
+              <div class="collection-section">
+                {% if collection_title != blank %}
+                  <h2 class="collection-section__title h2">{{ collection_title }}</h2>
+                {% endif %}
+
+                {% if collection_description != blank %}
+                  <div class="collection-section__description p2">{{ collection_description }}</div>
+                {% endif %}
+                
+                <div class="content-grid">
+                  {% for product in the_collection.products %}
+
+                    {% if show_promo == true and forloop.index == promo_card_position %}
+                      <div class="promo_card content-grid__item">
+                        <div class="promo-card-inner">
+                          <div class="promo_card__image frame frame--1x1">
+                            {% render 'image_tag'
+                                      image: promo_card_image,
+                                      object_fit: "contain"
+                            %}
+                          </div>
+                        </div>
+                      </div>
+                      {% assign show_promo = false  %}
+                    {% endif %}
+                      
+                    <div class="content-grid__item">
+                      {% include 'product-card',
+                         product: product,
+                         lazy_load: lazy_load,
+                         show_sizes: true,
+                         show_colors: true,
+                         show_tag: true %}
+                    </div>
+                  {% endfor %}
+                  
+                  {% if show_promo == true %}
+                    <div class="promo_card content-grid__item">
+                      <div class="promo-card-inner">
+                        <div class="promo_card__image frame frame--1x1">
+                          {% render 'image_tag'
+                                    image: promo_card_image,
+                                    object_fit: "contain"
+                          %}
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% comment %} This JSON is required for filtering and sorting {% endcomment %}
+  {% capture collection_url %}
+    {% if collection.handle == "all" %}
+      /collections/all
+    {% else %}
+      {{ collection.url }}
+    {% endif %}
+  {% endcapture %}
+
+  <script type="application/json" data-collection-json>
+    {
+      "url": {{ collection_url | strip | json }},
+      "sortDefault": {{ collection.default_sort_by | json }},
+      "sortApplied": {{ collection.sort_by | json }}
+    }
+  </script>
+</div>  
+
+
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "id": "enable_filters",
+        "type": "checkbox",
+        "label": "Enable Filters",
+        "default": true,
+        "info": "Filtering is based on product tags."
+      },
+      {
+        "id": "enable_sort",
+        "type": "checkbox",
+        "label": "Enable Sort",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
