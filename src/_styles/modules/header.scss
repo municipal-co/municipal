@@ -2,6 +2,13 @@
 // Header
 // -------------------------
 
+// Fix sticky behavior so it only considers the sticky bar
+#shopify-section-header-logo-center {
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+
 .header {
   position: relative;
   z-index: $zindex-header;
@@ -45,11 +52,11 @@
   justify-content: space-between;
   height: 100%;
   padding: 0 40px;
-  
+
   @include media-breakpoint-down('md') {
     padding: 0 20px;
   }
-  
+
   // uncomment this line to make dropdowns only go as large as the grid container width
   // position: relative;
 
@@ -163,8 +170,8 @@
     font-size: large-vw(16px, 30px);
     font-weight: bold;
     color: $white;
-    
-    @include media-breakpoint-down('md') { 
+
+    @include media-breakpoint-down('md') {
       font-size: 16px;
       line-height: 3;
     }
@@ -174,7 +181,7 @@
     height: large-vw(30px, 50px);
     width: large-vw(30px, 50px);
     margin-right: 15px;
-    
+
 
 
 
@@ -305,7 +312,7 @@
     padding: 0;
     margin: 44px 40px;
     border: none;
-    
+
     padding: 0;
     margin: 0 40px 0 80px;
     border: none;
@@ -392,7 +399,7 @@
     svg {
       width: large-vw(32px, 70px);
       height: large-vw(40px, 70px);
-      
+
       @include media-breakpoint-down('md') {
         width: 32px;
         height: 40px;
@@ -454,7 +461,7 @@
     &.panel--featured .expandable-list__header-title {
       color: $cyan;
     }
-    
+
     @include media-breakpoint-up('lg') {
       &.panel--featured:before {
         background-image: url("hover-arrow--blue.svg");
