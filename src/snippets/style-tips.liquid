@@ -89,10 +89,7 @@
           {% endif %}
         </div>
       </div>
-
-
-
-    
+ 
       {% for i in fc_keys %}
         {% assign index = i | plus: 0 %}
         {% assign slide_video = style_video_array[index] %}
@@ -123,34 +120,3 @@
   </div>
 {% endif %}
 
-
-
-
-
-{% comment %}<div class="modal-video-player" data-section-id="{{v_id}}" data-section-type="modal-video-player">
-  {% render 'image_tag'
-            image: slide_image,
-            object_fit: 'cover'
-  %}
-  
-  <a href="#" class="modal-video-player__play-button" data-play-button></a>
-
-  <div class="modal modal--video fade" data-video-modal>
-
-
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          {% include 'icon-close' %}
-        </button>
-
-      </div>
-
-      <div class="modal-body">
-        <div id="product-video-player" class="product-video-player frame frame--16x9" data-video-player data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
-          <div class="video-player__embed" data-video-player-embed></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>{% endcomment %}
