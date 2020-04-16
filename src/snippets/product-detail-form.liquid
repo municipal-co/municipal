@@ -55,14 +55,15 @@
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
 
-            {% assign option_name_downcase = option.name | downcase %}
+            {% assign base_option_name_downcase = option.name | downcase %}
 
             {% capture option_alt_ui %}
-              {% if option_name_downcase == "color" %}
+
+              {% if base_option_name_downcase == "color" %}
                 {% include 'product-dots-color', product: product, selected_color: option.selected_value %}
               {% endif %}
 
-              {% if option_name_downcase == "size" %}
+              {% if base_option_name_downcase == "size" %}
                 {% include 'product-dots-sizes', product: product, selected_size: option.selected_value %}
 
                 {% if product.metafields.custom_fields["show_fit_guide"] == 1 %}
