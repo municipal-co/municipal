@@ -19,7 +19,7 @@
 
     {% if section.settings.size_guide_page %}
       {% assign has_size = false %}
-      {% for option in product.options %}  
+      {% for option in product.options %}
         {% assign downcased_option = option | downcase %}
         {% if has_size == false and downcased_option == "size" %}
           {% assign has_size = true %}

@@ -16,7 +16,8 @@ const selectors = {
   variantOptionValueList: '[data-variant-option-value-list][data-option-position]',
   variantOptionValue: '[data-variant-option-value]',
   quantitySelect: '[data-product-quantity-select]',
-  fullDetailsLink: '[data-full-details-link]'
+  fullDetailsLink: '[data-full-details-link]',
+  selectedOption: '[data-selected-option]'
 };
 
 const classes = {
@@ -42,7 +43,7 @@ export default class ProductDetailForm {
       RESIZE: `resize${this.namespace}`,
       CLICK:  `click${this.namespace}`
     };
-    
+
     const defaults = {
       $container: null,
       onVariantChange: $.noop,
@@ -215,11 +216,14 @@ export default class ProductDetailForm {
     const value     = $option.data('variant-option-value');
     const position  = $option.parents(selectors.variantOptionValueList).data('option-position');
     const $selector = this.$singleOptionSelectors.filter(`[data-index="option${position}"]`);
+    const $optionLabel = $(`[data-selected-option-${position}]`);
 
     $selector.val(value);
     $selector.trigger('change');
 
     $option.addClass(classes.variantOptionValueActive);
     $option.siblings().removeClass(classes.variantOptionValueActive);
+    $optionLabel.text(value);
+
   }
 }

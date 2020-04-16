@@ -35,7 +35,7 @@
     {% if option_name_downcase == "size" and option.values.size > 0 %}
 
 
-      <div class="dots" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-list>
+      <div class="dots" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for size in option.values %}
 
           {% for variant in product.variants %}
@@ -44,8 +44,11 @@
             {% endif %}
           {% endfor %}
 
-          <div class="dot"
+          <div class="dot {% if selected_size == size %} is-active{% endif %}"
                data-dot
+               title="{{ size }}"
+               data-variant-url="{{ swatch_variant.url }}"
+               data-variant-option-value="{{ size }}"
                {% if current_variant.available == false %}
                  disabled
                {% endif %}
