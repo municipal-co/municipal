@@ -8,6 +8,17 @@
     "theme_support_url": "https://github.com/zehnergroup/z-theme"
   },
   {
+    "name": "products",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "shipping_cta_title",
+        "label": "Shipping CTA title",
+        "default": "Free Shipping & Returns | 24/7 Support"
+      }
+    ]
+  },
+  {
     "name": "collections",
     "settings": [
       {

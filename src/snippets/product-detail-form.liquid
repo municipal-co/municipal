@@ -12,6 +12,7 @@
 
 {% endcomment -%}
 
+
 {% if template.name == 'product' and template.suffix == 'quick-view' %}
   {% assign is_quick_view = true %}
 {% endif %}
@@ -20,11 +21,29 @@
   {% assign current_variant = product.selected_or_first_available_variant %}
 {% endif %}
 
-<div data-product-detail-form>
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.vendor }}</p>
+{% capture tag_html %}
+  {% if product != blank %}
+    {% for tag in product.tags %}
+      {% if tag contains 'Badge:' %}
+        <span class="badge">{{ tag | remove: 'Badge:'}}</span>
+        {% break %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endcapture %}
 
-  {% include 'product-detail-price', product: product, current_variant: current_variant %}
+<div class="product__form" data-product-detail-form>
+
+  {% if tag_html != blank %}
+    <div class="product__badge-row">
+      {{ tag_html }}
+    </div>
+  {% endif %}
+
+  <h1 class="h5 product__title">{{ product.title }}</h1>
+  <div class="product__price">
+    {% include 'product-detail-price', product: product, current_variant: current_variant %}
+  </div>
 
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <meta itemprop="priceCurrency" content="{{ shop.currency }}">
@@ -35,19 +54,27 @@
       <form action="/cart/add" method="post" enctype="multipart/form-data" data-add-to-cart-form>
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
-            
+
             {% assign option_name_downcase = option.name | downcase %}
 
             {% capture option_alt_ui %}
               {% if option_name_downcase == "color" %}
                 {% include 'product-dots-color', product: product, selected_color: option.selected_value %}
               {% endif %}
+
+              {% if option_name_downcase == "size" %}
+                {% include 'product-dots-sizes', product: product, selected_size: option.selected_value %}
+
+                {% if product.metafields.custom_fields["show_fit_guide"] == 1 %}
+                  <button class="btn-link product__fit-guide-toggler">FIT Guide +</button>
+                {% endif %}
+              {% endif %}
             {% endcapture %}
 
             <div class="selector-wrapper form-group js">
 
-              <label for="SingleOptionSelector-{{ forloop.index0 }}">
-                {{ option.name }}
+              <label class="product__selector-header" for="SingleOptionSelector-{{ forloop.index0 }}">
+                Select {{ option.name }}: <span class="product__selector-option" data-selected-option-{{option.position}}> {{option.selected_value}} </span>
               </label>
 
 
@@ -68,7 +95,6 @@
 
               {% comment %} Output alternative option UI here {% endcomment %}
               {{ option_alt_ui }}
-
             </div>
 
             {% comment %}
@@ -111,7 +137,7 @@
           {% endfor %}
         </select>
 
-        <div class="selector-wrapper form-group" style="min-width: 0;">
+        <div class="selector-wrapper form-group" style="display: none;">
           <label for="Quantity">{{ 'products.product.quantity' | t }}:</label>
           <div style="max-width: 80px;">
             <select id="Quantity" name="quantity" class="form-control" {% if current_variant.available == false %}disabled="true"{% endif %} data-product-quantity-select>
@@ -125,7 +151,7 @@
         <button
           type="submit"
           name="add"
-          class="btn btn-primary"
+          class="btn btn-primary btn-block"
           data-add-to-cart
           {% unless current_variant.available %}disabled="disabled"{% endunless %}>
             <span data-add-to-cart-text>
@@ -137,13 +163,17 @@
             </span>
         </button>
       </form>
+
+      {% if settings.shipping_cta_title != blank %}
+        <button class="btn-link product__shipping-toggler">{{ settings.shipping_cta_title }}</button>
+      {% endif %}
     </div>
-
   </div>
 
-  <div class="rte">
+  {% comment %}Leaving RTE Here because the designs doesn't show it but it might be required.{% endcomment %}
+ {% comment %} <div class="rte">
     {{ product.description }}
-  </div>
+  </div>{% endcomment %}
 
   {% if is_quick_view %}
     {% comment %} This link will get updated on variant change.  See productDetailForm.js {% endcomment %}
