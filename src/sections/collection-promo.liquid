@@ -1,0 +1,53 @@
+<div data-section-id="{{ section.id }}">
+  {% if collection.metafields.custom_fields["promo_light_text"] == 1 %}
+    {% assign promo_light = true %}
+  {% else %}
+    {% assign promo_light = false %}
+  {% endif %}
+
+  {% if collection.metafields.custom_fields["promo_background_color"] == "White" %}
+    {% assign promo_background = '#ffffff' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Red" %}
+    {% assign promo_background = '#ff2b00' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Cyan" %}
+    {% assign promo_background = '#009dcc' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Black" %}
+    {% assign promo_background = '#121212' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Brown" %}
+    {% assign promo_background = '#452b2b' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Blue" %}
+    {% assign promo_background = '#2c6275' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Tan" %}
+    {% assign promo_background = '#c3baa8' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Gray" %}
+    {% assign promo_background = '#424446' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == "Brownish-Red" %}
+    {% assign promo_background = '#752c2e' %}
+  {% elsif collection.metafields.custom_fields["promo_background_color"] == blank %}
+    {% assign promo_background = '#752c2e' %}
+  {% endif %}
+
+  {% if collection.metafields.custom_fields["promo_image_layout"] == blank %}
+    {% assign promo_layout = 'right' %}
+  {% else %}
+    {% assign promo_layout = collection.metafields.custom_fields["promo_image_layout"] %}
+  {% endif %}
+
+  {% include 'promo',
+              p_id: section.id,
+              p_layout: promo_layout,
+              p_type: 3,
+              p_image: collection.metafields.custom_fields["promo_image"],
+              p_image_small: collection.metafields.custom_fields["promo_image_mobile"],
+              p_background_color: promo_background,
+              p_title_color: collection.metafields.custom_fields["promo_title_color"],
+              p_light: promo_light,
+              p_eyebrow_icon: collection.metafields.custom_fields["eyebrow_icon"],
+              p_secondary_icon: collection.metafields.custom_fields["promo_secondary_icon"],
+              p_eyebrow: collection.metafields.custom_fields["promo_eyebrow"],
+              p_title: collection.metafields.custom_fields["promo_title"],
+              p_text: collection.metafields.custom_fields["promo_text"],
+              p_cta_url: collection.metafields.custom_fields["promo_cta_url"],
+              p_cta_text: collection.metafields.custom_fields["promo_cta_text"]
+  %}
+</div>
