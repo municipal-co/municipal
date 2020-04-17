@@ -18,16 +18,16 @@
 {% comment %} End Defaults {% endcomment %}
 
 <div data-price-wrapper>
+  {% if product.compare_at_price_max > product.price %}
+    <s class="product__compare-at-price {% unless current_variant.compare_at_price > current_variant.price %}hide{% endunless %}" data-compare-price>
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        {{- current_variant.compare_at_price | money -}}
+      {%- endif -%}
+    </s>
+    <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+  {% endif %}
+
   <span data-product-price>
     {{ current_variant.price | money }}
   </span>
-
-  {% if product.compare_at_price_max > product.price %}
-    <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
-    <s data-compare-price>
-      {% if current_variant.compare_at_price > current_variant.price %}
-        {{ current_variant.compare_at_price | money }}
-      {% endif %}
-    </s>
-  {% endif %}
-</div>    
+</div>

@@ -19,22 +19,21 @@
 {% comment %} End Defaults {% endcomment %}
 
 <div data-product-detail>
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-6 col-lg-7">
+  <div class="container-fluid">
+    <div class="row no-gutters">
+      <div class="col-xs-24 col-lg-17">
         {% include 'product-detail-galleries',
                     product: product,
                     current_variant: current_variant
-        %}         
+        %}
       </div>
-      <div class="col-md-6 col-lg-5">
+      <div class="col-xs-22 offset-xs-1 col-lg-5 offset-lg-1">
         {% include 'product-detail-form',
                     product: product,
                     current_variant: current_variant
-        %}  
+        %}
       </div>
-    </div> 
+    </div>
 
   </div>
 </div>
