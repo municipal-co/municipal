@@ -11,7 +11,6 @@ const selectors = {
   slide: '.swiper-slide'
 };
 
-
 export default class ProductStyleTips extends BaseSection {
   constructor(container) {
     super(container, 'style-tips');
@@ -49,7 +48,6 @@ export default class ProductStyleTips extends BaseSection {
     }
 
     this.videoPlayers = videoPlayers;
-
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
 

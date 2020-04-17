@@ -67,7 +67,9 @@
                       %}
                       
                       {% if slide_video != blank %}
-                        <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}"></button>
+                        <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}">
+                          {% include 'icon-play-full-color' %}
+                        </button>
 
                         {% assign video_index = video_index | plus: 1 %}
                       {% endif %}
@@ -101,8 +103,6 @@
         {% if slide_video != blank %}
           {% assign yt_video_id = slide_video | remove: "https://www.youtube.com/watch?v=" %}
 
-
-        
           <div class="modal modal--video fade" id="product-video-modal-{{ product.id }}-{{ modal_index }}" data-video-modal="{{ modal_index }}">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               {% include 'icon-close' %}
@@ -111,8 +111,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-body">
-                  <h5>this is {{ i }}</h5>
-                  <div id="product-video-player" class="product-video-player frame frame--16x9" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
+                  <div id="video-player-{{ yt_video_id }}" class="product-video-player frame frame--16x9" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
                     <div class="video-player__embed" data-video-player-embed></div>
                   </div>
                 </div>

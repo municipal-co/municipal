@@ -195,31 +195,29 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    background: red;
-    background-color: $yellow;
+    transform: translateY(-50%);
     width: large-vw(80px, 280px);
     height: large-vw(80px, 280px);
     border-radius: 50%;
     opacity: 1;
+    padding: 0;
+    border: 0;
 
     @include media-breakpoint-down('md') {
       width: 80px;
       height: 80px;
+      left: 20px;
+      bottom: 20px;
+      transform: none;
     }
-    
-    &:before {
-      font-size: large-vw(15px, 55px);
-      content: "PLAY";
-      font-weight: $font-weight-bold;
-      position: absolute;
-      color: $black;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
 
-      @include media-breakpoint-down('md') {
-        font-size: 15px;
-      }
+    &:focus {
+      outline: none;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -236,12 +234,28 @@
 
   .modal-dialog {
     max-width: 75%;
+    
+    @include media-breakpoint-down('md') {
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+
+  .modal-body {
+    @include media-breakpoint-down('md') {
+      padding: 0;
+    }
   }
 
   .modal--video {
     .modal-content {
       background-color: transparent;
       border: 0;
+
+      @include media-breakpoint-down('md') {
+        position: fixed;
+        top: 50px;
+      }
     }
 
     button.close {
@@ -256,9 +270,22 @@
       width: large-vw(30px, 80px);
       height: large-vw(30px, 80px);
 
+      @include media-breakpoint-down('md') {
+        width: 25px;
+        height: 25px;
+        top: 15px;
+        right: 25px;
+      }
+
       path {
         fill: $white;
       }
     }
+  }
+}
+
+.modal-backdrop.fade.show {
+  @include media-breakpoint-down('md') {
+    opacity: 1;
   }
 }
