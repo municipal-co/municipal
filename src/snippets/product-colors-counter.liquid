@@ -1,0 +1,18 @@
+{% if product.meta_fields.custom_fields['color_descriptor'] != blank %}
+  {{ product.meta_fields.custom_fields['color_descriptor'] }}
+{% else %}
+  {% if product != blank %}
+    {% for option in product.options_with_values %}
+      {% assign option_name_downcase = option.name | downcase %}
+
+      {% if option_name_downcase == 'color' %}
+        {% assign values_quantity = option.values | size %}
+        {% if values_quantity > 1 %}
+          {{ values_quantity }} Colors
+        {% else %}
+          {{ option.values[0] }}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endif %}

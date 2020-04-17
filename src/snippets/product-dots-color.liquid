@@ -50,7 +50,7 @@
 
       {% assign option_handle = 'option' | append: option.position %}
 
-      <div class="dots" data-option-position="{{ option.position }}" data-variant-option-value-list>
+      <div class="dots dots--color" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for color in option.values %}
 
           {% assign color_downcase = color | downcase %}
@@ -95,9 +95,11 @@
                data-variant-url="{{ swatch_variant.url }}"
                data-variant-img="{{ swatch_variant.image | img_url: product_thumb_size, crop: product_thumb_crop }}"
                {% endif %}>
-            <div class="dot__inner" 
+            <div class="dot__inner"
                  style="background-color:{{ color_css }};
-  {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}"></div>
+  {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}">
+                {% include 'icon-check' %}
+            </div>
           </div>
 
         {% endfor %}

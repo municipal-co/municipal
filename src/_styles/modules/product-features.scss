@@ -1,0 +1,144 @@
+.product-features {
+  
+  .product-features-inner-container {
+    margin-top: large-vw(70px, 150px);
+    margin-bottom: large-vw(40px, 180px);
+
+    @include media-breakpoint-down('md') {
+      margin-top: 70px;
+      margin-bottom: 40px;
+    }
+  }
+
+  .features-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .swiper-pagination {
+    position: initial;
+    width: auto;
+    font-size: large-vw(12px, 30px);
+    font-weight: $font-weight-bold;
+    
+    @include media-breakpoint-down('md') {
+      font-size: 12px;
+      margin-top: 10px;
+    }
+  }
+
+  .features-section-title {
+    margin-bottom: large-vw(35px, 70px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 35px;
+    }
+  }
+
+  .feature-slide {
+    text-align: center;
+  }
+
+  .feature-slide__title {
+    margin-bottom: 5px;
+    line-height: large-vw(35px, 85px);
+
+    @include media-breakpoint-down('md') {
+      line-height: 35px;
+      margin-bottom: 25px;
+    }
+  }
+
+  .feature-slide__copy {
+    @include media-breakpoint-down('md') {
+      line-height: 30px;
+    }
+  }
+
+  .feature-slide__image {
+    margin-bottom: large-vw(45px, 80px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 45px;
+    }
+
+    img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+    }
+  }
+
+  .swiper-button {
+    width: large-vw(65px, 120px);
+    height: large-vw(65px, 120px);
+    background-color: $black;
+    border-radius: 50%;
+    opacity: 0;
+    top: 50%;
+    pointer-events: none;
+    transition: opacity $transition-duration-base $transition-timing-function-out;
+    background-image: none;
+
+    @include media-breakpoint-down('md') {
+      display: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    &.swiper-button-prev {
+      transform: translate(-50%, -50%);
+    }
+
+    &.swiper-button-next {
+      transform: translate(50%, -50%);
+      svg {
+        transform: translateY(-50%) scaleX(-1);
+      }
+    }
+
+    svg {
+      width: 100%;
+      height: large-vw(40px, 80px);
+      top: 50%;
+      position: absolute;
+      transform: translateY(-50%);
+
+      path {
+        fill: $white;
+      }
+    }
+  }
+
+  .swiper-container {
+    @include media-breakpoint-down('md') {
+      margin-bottom: 30px;
+    }
+  }
+
+  .swiper-scrollbar{
+    height: 4px;
+    width: 100%;
+    position: absolute;
+    border-radius: 0;
+
+    @include media-breakpoint-up('lg') {
+      display: none;
+    }
+
+    .swiper-scrollbar-drag {
+      border-radius: 0;
+      background-color: $black;
+    }
+  }
+}

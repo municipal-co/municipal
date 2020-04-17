@@ -23,8 +23,8 @@
     position: relative;
     padding-top: $header-height-small;
 
-    @include media-breakpoint-up(md) {
-      padding-top: $header-height-base;
+    @include media-breakpoint-up('lg') {
+      padding-top: large-vw(50px, 120px);
     }
   }
 

@@ -28,22 +28,40 @@
   {% assign show_swatches = true %}
 {% endif %}
 
+{% if show_sizes == blank %}
+  {% assign show_sizes = false %}
+{% endif %}
+
 {% if show_reviews == blank %}
   {% assign show_reviews = false %}
+{% endif %}
+
+{% if reverse_card == true %}
+  {% assign card_classes = "card--reverse" %}
 {% endif %}
 {% comment %} End Defaults {% endcomment %}
 
 {% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
 
 {% if product %}
-  
+
   {% assign product_image_dimension = '600x' %}
   {% assign product_url = product.url %}
   {% if collection %}
     {% assign product_url = product.url | within: collection %}
   {% endif %}
 
-  <div id="product-card-{{ product.id }}" class="product-card" data-product-card>
+  <div id="product-card-{{ product.id }}" class="product-card {{ card_classes }}" data-product-card
+  data-product-options= '{
+    {%- for option in product.options_with_values -%}
+      "{{- option.name -}}": [
+      {%- for value in option.values -%} {{ value | json }}{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+      ]
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  }'
+  >
     <div class="product-card__contents" data-product-card-contents>
       {% if product.featured_image %}
         <div class="product-card__gallery">
@@ -55,7 +73,7 @@
               </div>
             {% else %}
               <div class="product-card__gallery-image" data-product-card-gallery>
-                <img src="{{ product.featured_image.src | img_url: product_image_dimension }}" alt="{{ product.featured_image.alt | escape }}">
+                <img src="{{ product.featured_image.src | img_url: product_image_dimension }}" alt="{{ product.featured_image.alt | escape }}" data-object-fit="cover" data-object-position="center">
               </div>
             {% endif %}
             {% if product.images.size > 1 %}
@@ -71,7 +89,7 @@
               {% if alternate_image %}
                 {% comment %} Alt product image always gets lazy loaded {% endcomment %}
                 <div class="product-card__gallery-image product-card__gallery-image--alt">
-                  <img data-src="{{ alternate_image.src | img_url: product_image_dimension }}" alt="{{ alternate_image.alt | escape }}" data-product-card-alt-lazy />
+                  <img data-src="{{ alternate_image.src | img_url: product_image_dimension }}" alt="{{ alternate_image.alt | escape }}" data-product-card-alt-lazy data-object-fit="cover" data-object-position="center"/>
                 </div>
               {% endif %}
             {% endif %}
@@ -81,34 +99,67 @@
               <a href="{{ product_url }}?view=quick-view" class="btn btn-primary" data-quick-view-trigger>Quick View</a>
             </div>
           {% endif %}
+
+          {% if show_sizes %}
+            {%- capture sizes_html -%}
+              {% include 'product-dots-sizes' %}
+            {%- endcapture -%}
+
+            {% if sizes_html != blank %}
+              <div class="product-card__sizes-container">
+                <div class="variant-message" data-variant-message>
+                  Quick Add to Cart
+                </div>
+                {{ sizes_html }}
+              </div>
+            {% endif %}
+          {% endif %}
         </div>
       {% endif %}
 
       <div class="product-card__info">
 
-        {% if show_swatches %}
-        
-          {% capture swatches_html %}
-            {% include 'product-dots-color' %}
+        {% if show_tag %}
+          {% capture tag_html %}
+            {% if product != blank %}
+              {% for tag in product.tags %}
+                {% if tag contains 'Badge:' %}
+                  <span class="badge">{{ tag | remove: 'Badge:'}}</span>
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
           {% endcapture %}
 
-          {% if swatches_html != blank %}
-            <div class="product-card__info-swatches">
-              {{ swatches_html }}
+          {% if tag_html != blank %}
+            <div class="product-card__badge-row">
+              {{ tag_html }}
             </div>
           {% endif %}
-
         {% endif %}
 
         <h3 class="product-card__info-title">
           <a href="{{ product_url }}">{{ product.title }}</a>
         </h3>
 
+        {% if show_colors %}
+
+          {% capture color_html %}
+            {% include 'product-colors-counter', product: product %}
+          {% endcapture %}
+
+          {% if color_html != blank %}
+            <div class="product-card__info-color">
+              {{ color_html }}
+            </div>
+          {% endif %}
+        {% endif %}
+
         <div class="product-card__info-price">
 
           {% if product.compare_at_price > product.price %}
-            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
             <s>{{ product.compare_at_price | money }}</s>
+            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
           {% endif %}
 
           {% if product.price_varies %}
@@ -123,34 +174,16 @@
           {% endunless %}
         </div>
 
-        {% comment %} Check the product inventory. Display a low stock message if we're below the threshold set via theme settings {% endcomment %}
-        {% if settings.low_inventory_notice %}
-          {% assign product_has_inventory = false %}
-          {% assign product_inventory_qty = 0 %}
-          {% for variant in product.variants %}
-            {% if variant.inventory_management == "shopify" %}
-              {% assign product_has_inventory = true %}
-              {% capture i %}
-                {{ product_inventory_qty | plus:variant.inventory_quantity }}
-              {% endcapture %}
-              {% assign product_inventory_qty = i | times: 1 %} {% comment %} Coerce to a number {% endcomment %}
-            {% endif %}
-          {% endfor %}
-
-          {% if product.available
-                and product_has_inventory
-                and product_inventory_qty < settings.low_inventory_notice_qty
-                and settings.low_inventory_notice_message != blank %}
-            <p class="p3">{{ settings.low_inventory_notice_message }}</p>
-          {% endif %}
-        {% endif %}
-
         {% if show_reviews %}
           {% comment %} Add your review provider markup here {% endcomment %}
-        {% endif %}          
+        {% endif %}
 
       </div>
     </div>
+
+    <script type="application/json" data-product-json>
+      {% include 'product-json' %}
+    </script>
 
     {% comment %} Quick view gets appended to here {% endcomment %}
 

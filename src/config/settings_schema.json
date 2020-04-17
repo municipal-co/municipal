@@ -8,6 +8,29 @@
     "theme_support_url": "https://github.com/zehnergroup/z-theme"
   },
   {
+    "name": "products",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "shipping_cta_title",
+        "label": "Shipping CTA title",
+        "default": "Free Shipping & Returns | 24/7 Support"
+      }
+    ]
+  },
+  {
+    "name": "collections",
+    "settings": [
+      {
+        "type": "number",
+        "id": "low_inventory_threshold",
+        "label": "Low Inventory Threshold",
+        "info": "Defines the value where product cards are going to display the message 'Only X Left'",
+        "default": 6
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {
@@ -49,7 +72,7 @@
         "id": "share_email",
         "label": "Share via Email",
         "default": true
-      },      
+      },
       {
         "type": "header",
         "content": "Accounts"
@@ -133,7 +156,7 @@
         "id": "yotpo_client_id",
         "label": "App Key",
         "info": "See: https://support.yotpo.com/en/article/finding-your-app-key-and-your-secret-key"
-      }    
+      }
     ]
   },
   {
@@ -146,7 +169,7 @@
         "info": "Should be at least 180px x 180px"
       }
     ]
-  }, 
+  },
   {
     "name": "Mailing List",
     "settings": [

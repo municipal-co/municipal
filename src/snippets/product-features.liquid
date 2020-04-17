@@ -1,0 +1,63 @@
+{% if product.metafields.custom_fields["features_section"] != blank %}
+  {% assign separator = "|###|" %}
+  {% assign feature_title_array = product.metafields.custom_fields["feature_title"] | split: separator %}
+  {% assign feature_copy_array = product.metafields.custom_fields["feature_copy"] | split: separator %}
+  {% assign feature_image_array = product.metafields.custom_fields["feature_image"] | split: separator %}
+  {% assign fc_keys = product.metafields.custom_fields["features_section"] | split: "," %}
+  {% assign slides_counter = 0 %}
+
+  <div class="product-features" data-section-type="product-features" data-background-color="#ffffff">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-lg-22 col-20 product-features-inner-container">
+          <div class="swiper-container">
+
+            <div class="features-title-wrapper">
+              <h5 class="features-section-title">Features</h5>
+              <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="swiper-wrapper">
+              {% for i in fc_keys %}
+                {% assign index = i | plus: 0 %}
+
+                {% assign title = feature_title_array[index] %}
+                {% assign copy = feature_copy_array[index] %}
+                {% assign image = feature_image_array[index] %}
+                
+                {% if title != blank and image != blank %}
+                  {% assign slides_counter = slides_counter | plus: 1 %}
+
+                  <div class="feature-slide swiper-slide">
+                    <div class="feature-slide__image frame frame--16x9">
+                      {% render 'image_tag'
+                                image: image,
+                                object_fit: 'cover'
+                      %}
+                    </div>
+
+                    <h4 class="feature-slide__title">{{ title }}</h4>
+
+                    {% if copy != blank %}
+                      <div class="feature-slide__copy p2">{{ copy}}</div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if slides_counter > 1 %}
+            <div class="swiper-button-prev swiper-button">
+              {% include 'icon-swiper-arrow' %}
+            </div>
+            <div class="swiper-button-next swiper-button">
+              {% include 'icon-swiper-arrow' %}
+            </div>
+            <div class="swiper-scrollbar"></div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

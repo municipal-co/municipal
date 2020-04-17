@@ -40,11 +40,11 @@ export default class HeaderSection extends BaseSection {
   scrollCheck() {
     // Do measurements outside of rAF.
     const scrollTop = $window.scrollTop();
-    const actualOffset = this.$container.offset().top - this.$el.outerHeight();
+    const actualOffset = this.$container.offset().top;
 
     // Do DOM updates inside.
     requestAnimationFrame(() => {
-      if (scrollTop < actualOffset) {
+      if (scrollTop <= actualOffset) {
         this.$el.removeClass(classes.headerFixed);
         this.$el.removeClass(classes.headerScroll);
       }

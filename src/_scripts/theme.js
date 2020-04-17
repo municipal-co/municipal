@@ -50,6 +50,8 @@ import CustomersAddressesSection     from './sections/customersAddresses';
 import CustomersOrderSection         from './sections/customersOrder';
 import HeroSection                   from './sections/heroSection';
 import ProductOverview               from './sections/productOverview';
+import ProductFeatures               from './sections/productFeatures';
+import PromoSection                  from './sections/promoSection';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -95,6 +97,8 @@ Breakpoints.initialize();
   sectionManager.register('customers-order', CustomersOrderSection);
   sectionManager.register('hero', HeroSection);
   sectionManager.register('product-overview', ProductOverview);
+  sectionManager.register('product-features', ProductFeatures);
+  sectionManager.register('promo', PromoSection);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
