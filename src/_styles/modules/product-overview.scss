@@ -13,7 +13,7 @@
   .overview-content__eyebrow,
   .overview-content__title,
   .overview-details__small-text {
-    font-family: Sequel Sans Title;
+    font-family: "Sequel Sans Title", sans-serif;
   }
 
   .overview-details__small-text,
@@ -100,28 +100,13 @@
     
     .video-player__cover-play {
       display: block;
-      background-color: $yellow;
       width: large-vw(80px, 180px);
       height: large-vw(80px, 180px);
       position: absolute;
       bottom: 20px;
       left: 20px;
       opacity: 1;
-
-      &:before {
-        font-size: large-vw(15px, 35px);
-        content: "PLAY";
-        font-weight: $font-weight-bold;
-        position: absolute;
-        color: $black;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        @include media-breakpoint-down('md') {
-          font-size: 15px;
-        }
-      }
+      padding: 0;
     }
   }
 
