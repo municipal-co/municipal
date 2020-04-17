@@ -9,6 +9,8 @@
   {% assign style_subcopy_array = product.metafields.custom_fields["style_subcopy"] | split: separator %}
   {% assign fc_keys = product.metafields.custom_fields["style_tips_section"] | split: "," %}
   {% assign slides_counter = 0 %}
+  {% assign video_index = 0 %}
+  {% assign modal_index = 0 %}
 
   <div class="style-tips" data-section-type="style-tips" data-background-color="#424446">
     <div class="container-fluid">
@@ -65,7 +67,9 @@
                       %}
                       
                       {% if slide_video != blank %}
-                        <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ i }}"></button>
+                        <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}"></button>
+
+                        {% assign video_index = video_index | plus: 1 %}
                       {% endif %}
                     </div>
 
@@ -97,8 +101,9 @@
         {% if slide_video != blank %}
           {% assign yt_video_id = slide_video | remove: "https://www.youtube.com/watch?v=" %}
 
+
         
-          <div class="modal modal--video fade" id="product-video-modal-{{ product.id }}-{{ i }}" data-video-modal="{{ i }}">
+          <div class="modal modal--video fade" id="product-video-modal-{{ product.id }}-{{ modal_index }}" data-video-modal="{{ modal_index }}">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               {% include 'icon-close' %}
             </button>
@@ -114,6 +119,8 @@
               </div>
             </div>
           </div>
+
+          {% assign modal_index = modal_index | plus: 1 %}
         {% endif %}
       {% endfor %}
     </div>
