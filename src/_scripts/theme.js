@@ -49,6 +49,7 @@ import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection     from './sections/customersAddresses';
 import CustomersOrderSection         from './sections/customersOrder';
 import HeroSection                   from './sections/heroSection';
+import ProductOverview               from './sections/productOverview';
 import ProductFeatures               from './sections/productFeatures';
 import PromoSection                  from './sections/promoSection';
 import ProductStyleTips              from './sections/productStyleTips';
@@ -96,8 +97,9 @@ Breakpoints.initialize();
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
   sectionManager.register('hero', HeroSection);
-  sectionManager.register('style-tips', ProductStyleTips);
+  sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);
+  sectionManager.register('style-tips', ProductStyleTips);
   sectionManager.register('promo', PromoSection);
 
   $('.in-page-link').on('click', (evt) => {

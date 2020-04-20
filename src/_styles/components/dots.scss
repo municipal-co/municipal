@@ -60,11 +60,11 @@
   }
 
   .dots--color &{
-    border: 2px solid $gray-lighter;
+    border: 0;
 
     &.is-active {
       background-color: transparent;
-      border: 2px solid $gray-lighter;
+      border: 0;
     }
   }
 
