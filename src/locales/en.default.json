@@ -31,7 +31,7 @@
       "share_on_facebook": "Share",
       "share_on_twitter": "Tweet",
       "share_on_pinterest": "Pin it",
-      "share_on_tumblr": "Tumblr",      
+      "share_on_tumblr": "Tumblr",
       "share_on_email": "Email",
       "alt_text": {
         "share_on_facebook": "Share on Facebook",
@@ -193,7 +193,7 @@
       "fulfillment": "Fulfillment",
       "fulfillment_status": "Fulfillment Status",
       "tracking_status": "Order Status",
-      "tracking_pending": "Tracking: Pending",      
+      "tracking_pending": "Tracking: Pending",
       "total": "Total",
       "none": "You haven't placed any orders yet.",
       "amount": "Amount",
@@ -211,7 +211,7 @@
       "shipping_address": "Shipping Address",
       "fulfillment_status": "Fulfillment Status",
       "line_items_title": "Items",
-      "line_item_quantity": "Qty",      
+      "line_item_quantity": "Qty",
       "discount": "Discount",
       "shipping": "Shipping",
       "tax": "Tax",
@@ -292,7 +292,7 @@
       "on_sale_from_html": "On Sale from {{ price }}",
       "from_text_html": "From {{ price }}",
       "quantity": "Quantity",
-      "add_to_cart": "Add to Cart",
+      "add_to_cart": "Add to Bag",
       "adding": "Adding..."
     }
   },
