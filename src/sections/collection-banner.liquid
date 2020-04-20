@@ -1,0 +1,64 @@
+{% assign banner_icon  = collection.metafields.custom_fields["banner_icon"] %}
+{% assign banner_copy = collection.metafields.custom_fields["banner_copy"] %}
+{% assign banner_video_bg = collection.metafields.custom_fields["banner_video_background"] %}
+{% assign banner_video_url = collection.metafields.custom_fields["banner_video_url"] %}
+{% assign banner_light_bg = collection.metafields.custom_fields["banner_light_background"] %}
+{% assign collection_classes = '' %}
+
+{% if collection.metafields.custom_fields["banner_title"] != blank %}
+  {% assign banner_title = collection.metafields.custom_fields["banner_title"] %}
+{% else %}
+  {% assign banner_title = collection.title %}
+{% endif %}
+
+{% if banner_video_url == blank and banner_light_bg == blank %}
+  {% assign collection_classes = collection_classes | append:  'no-video'%}
+{% endif %}
+
+{% if template == 'collection.v1' %}
+  {% assign collection_classes = collection_classes | append:  'no-video'%}
+{% endif %}
+
+<div class="collection-banner layout-content-wrapper {% if banner_light_bg == '1' %}light{% endif %} {{ collection_classes }}" data-section-id="{{ section.id }}" data-section-type="collection-banner">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-lg-22 col-20 collection-banner-inner-wrapper">
+        
+        <div>
+          {% comment %}handwritten svg placeholder{% endcomment %}
+          <div class="collection-banner_icon">
+            {% render 'image_tag'
+                        image: banner_icon,
+                        object_fit: "contain"
+            %}
+          </div>
+
+          <h2 class="collection-banner__title h1">{{ banner_title }}</h2>
+          {% if banner_copy != blank %}
+            <div class="collection-banner__content p2">{{ banner_copy }}</div>
+          {% endif %}
+        </div>
+
+        {% comment %}Prevent the video from appearing on incorrect collection template{% endcomment %}
+        {% if template != 'collection.v1' %}
+          {% if banner_video_url != blank and banner_video_bg != blank %}
+            {% assign yt_video_id = banner_video_url | remove: "https://www.youtube.com/watch?v=" %}
+
+            <div class="collection-banner__video">
+              <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="#000000">
+                <div class="video-player__cover" data-video-player-cover>
+                  <div class="video-player__cover-still lazyload" data-background="{{ banner_video_bg }}"></div>
+                  <span class="video-player__cover-play" data-video-play>
+                    {% include "icon-play-full-color" %}
+                  </span>
+                </div>
+                <div class="video-player__embed" data-video-player-embed></div>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
