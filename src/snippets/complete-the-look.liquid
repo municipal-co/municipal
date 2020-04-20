@@ -9,38 +9,46 @@
   <div class="complete-the-look" data-section-type="complete-the-look" data-background-color="#ffffff">
     <div class="container-fluid">
       <div class="row justify-content-center">
+
+        {% if eyebrow != blank %}
+          <span class="ctl__eyebrow h5 col-lg-22 col-20">{{ eyebrow }}</span>
+        {% endif %}
+
+        {% if title != blank %}
+          <div class="ctl-title-wrapper col-24">
+            <div class="inner-container">
+              <h2 class="ctl__title h1">{{ title }}</h2>
+              <h2 class="ctl__title h1">{{ title }}</h2>
+            </div>
+          </div>
+        {% endif %}
+
         <div class="col-lg-22 col-20">
-          {% if eyebrow != blank %}
-            <span class="ctl__eyebrow h5">{{ eyebrow }}</span>
-          {% endif %}
+          <div class="swiper-container">
+            <div class="content-grid swiper-wrapper">
+              {% for i in fc_keys %}
+                {% assign index = i | plus: 0 %}
+                {% assign product_id = product_array[index] %}
+                {% assign card_product = all_products[product_id] %}
+                
+                {% if product != blank %}
+                  <div class="content-grid__item swiper-slide">
+                    {% include 'product-card',
+                       product: card_product,
+                       show_sizes: true,
+                       show_colors: true,
+                       show_tag: true 
+                    %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
 
-          {% if title != blank %}
-            <h2 class="ctl__title">{{ title }}</h2>
-          {% endif %}
-
-
-          <div class="content-grid">
-            {% for i in fc_keys %}
-              {% assign index = i | plus: 0 %}
-              {% assign product_id = product_array[index] %}
-              {% assign card_product = all_products[product_id] %}
-              
-              {% if product != blank %}
-                <div class="content-grid__item">
-                  {% include 'product-card',
-                     product: card_product,
-                     show_sizes: true,
-                     show_colors: true,
-                     show_tag: true 
-                  %}
-                </div>
-              {% endif %}
-            {% endfor %}
+            <div class="swiper-scrollbar"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 {% endif %}
-
 
