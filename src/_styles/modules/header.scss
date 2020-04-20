@@ -475,12 +475,12 @@
       &:before {
         content: "";
         padding-right: 0px;
-        height: large-vw(30px, 52px);
+        height: large-vw(50px, 90px);
         display: inline-block;
         transition: all 150ms ease-in-out;
         background-image: url("hover-arrow.svg");
-        background-size: auto;
-        background-position: center;
+        background-size: contain;
+        background-position: left;
         background-repeat: no-repeat;
 
         @include media-breakpoint-down('md') {
@@ -489,8 +489,8 @@
       }
 
       &:hover:before {
-        padding-right: 95px;
-        margin-right: 20px;
+        padding-right: large-vw(80px, 95px);
+        margin-right: large-vw(0, 45px);
       }
     }
   }
