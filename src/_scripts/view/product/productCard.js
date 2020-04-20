@@ -9,7 +9,7 @@ const selectors = {
   productJson: '[data-product-json]',
   variantMessage: '[data-variant-message]',
   dot: '[data-dot]',
-  variantOptionList: '[data-variant-option-list]'
+  variantOptionList: '[data-variant-option-value-list]'
 };
 
 const classes = {
