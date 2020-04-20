@@ -4,7 +4,7 @@ import ProductDetailGalleries from './productDetailGalleries';
 
 const selectors = {
   productDetailForm: '[data-product-detail-form]',
-  productDetailGalleries: '[data-product-detail-galleries]'
+  productDetailGalleries: '[data-product-detail-galleries]',
 };
 
 export default class ProductDetail {
@@ -28,7 +28,7 @@ export default class ProductDetail {
 
     this.$pdg = $(selectors.productDetailGalleries, this.$el);
     this.$pdf = $(selectors.productDetailForm, this.$el);
-    
+
     this.galleries = new ProductDetailGalleries({
       $container: this.$pdg
     });

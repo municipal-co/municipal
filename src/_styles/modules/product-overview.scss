@@ -2,9 +2,6 @@
   padding-top: large-vw(60px, 160px);
   padding-bottom: large-vw(60px, 110px);
 
-  border-bottom: solid 1px;
-  border-top: solid 1px;
-
   @include media-breakpoint-down('md') {
     padding-top: 60px;
     padding-bottom: 60px;
@@ -32,26 +29,26 @@
 
     @include media-breakpoint-down('md') {
       margin-bottom: 25px;
-    }   
+    }
   }
 
   .overview-content__title {
     margin-bottom: large-vw(30px, 45px);
-    
+
     @include media-breakpoint-down('md') {
       margin-bottom: 30px;
-    }    
+    }
   }
 
   .overview-content__copy {
-    margin-bottom: large-vw(35px, 130px); 
+    margin-bottom: large-vw(35px, 130px);
 
     @include media-breakpoint-down('md') {
       margin-bottom: 35px;
       line-height: 30px;
     }
   }
-  
+
   .overview-details__image {
     .image-container {
       margin-bottom: large-vw(35px, 70px);
@@ -97,7 +94,7 @@
         cursor: none;
       }
     }
-    
+
     .video-player__cover-play {
       display: block;
       width: large-vw(80px, 180px);

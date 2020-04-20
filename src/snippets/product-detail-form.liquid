@@ -67,7 +67,7 @@
                 {% include 'product-dots-sizes', product: product, selected_size: option.selected_value %}
 
                 {% if product.metafields.custom_fields["show_fit_guide"] == 1 %}
-                  <button class="btn-link product__fit-guide-toggler">FIT Guide +</button>
+                  <button class="btn-link product__fit-guide-toggler" type="button">FIT Guide +</button>
                 {% endif %}
               {% endif %}
             {% endcapture %}
