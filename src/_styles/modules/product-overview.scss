@@ -2,9 +2,6 @@
   padding-top: large-vw(60px, 160px);
   padding-bottom: large-vw(60px, 110px);
 
-  border-bottom: solid 1px;
-  border-top: solid 1px;
-
   @include media-breakpoint-down('md') {
     padding-top: 60px;
     padding-bottom: 60px;
