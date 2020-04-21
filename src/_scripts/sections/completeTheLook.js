@@ -1,6 +1,7 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import Swiper from 'swiper';
 import { throttle } from 'throttle-debounce';
+import * as Breakpoints from '../core/breakpoints';
 import BaseSection from './base';
 
 const $window = $(window);
@@ -49,12 +50,14 @@ export default class CompleteTheLook extends BaseSection {
   }
 
   onResize() {
-    var screenWidth = $(window).width();
+    const screenWidth = $(window).width();
+    const breakpointMinWidth = Breakpoints.getBreakpointMinWidth('md');
 
-    if (screenWidth < 992) {
+    if (screenWidth <= breakpointMinWidth) {
       this.swiper = new Swiper(this.$slideshow, this.swiperOptions);
-    } else if ( screenWidth >= 992 && this.$slideshow.hasClass('swiper-container-initialized')){
+    } else if ( screenWidth >= breakpointMinWidth && this.$slideshow.hasClass('swiper-container-initialized')){
+      $('.swiper-wrapper', this.$slideshow).css("transform","none");
       this.swiper.destroy();
-    }
+    } 
   }
 }
