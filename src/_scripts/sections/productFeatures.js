@@ -45,8 +45,8 @@ export default class ProductFeatures extends BaseSection {
 
     if (this.$slides.length > 1) {
       this.swiper = new Swiper(this.$slideshow, swiperOptions);
-      $('.product-features-inner-container', this.$container).on("mouseenter", this.onSlideshowEnter.bind(this));
-      $('.product-features-inner-container', this.$container).on("mouseleave", this.onSlideshowLeave.bind(this));
+      $('.product-features-inner-container', this.$container).on('mouseenter', this.onSlideshowEnter.bind(this));
+      $('.product-features-inner-container', this.$container).on('mouseleave', this.onSlideshowLeave.bind(this));
     }
 
     $window.on('resize', throttle(100, this.onResize.bind(this)));
@@ -57,6 +57,9 @@ export default class ProductFeatures extends BaseSection {
     entries.forEach((entry) => {
       if (entry.intersectionRatio > 0.4 && this.background !== '') {
         $('body').css('background-color', this.background);
+        const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
+
+        $('body').trigger(event);
       }
     })
   }
@@ -68,15 +71,15 @@ export default class ProductFeatures extends BaseSection {
 
   onSlideshowLeave(e) {
     e.preventDefault();
-    $('.swiper-button', this.$container).removeClass('visible'); 
+    $('.swiper-button', this.$container).removeClass('visible');
   }
 
   onResize() {
-    var scrollbarPosition = $(".features-title-wrapper").height() + $('.feature-slide__image').height() + 16;
-    var screenWidth = $(window).width();
-    
+    const scrollbarPosition = $('.features-title-wrapper').height() + $('.feature-slide__image').height() + 16;
+    const screenWidth = $(window).width();
+
     if (screenWidth < 992) {
-      $(".swiper-scrollbar", this.$container).css("top", scrollbarPosition);
+      $('.swiper-scrollbar', this.$container).css('top', scrollbarPosition);
     }
   }
 }

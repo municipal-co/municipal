@@ -1,10 +1,13 @@
+{% assign show_banner = section.settings.banner_enabled %}
+{% assign background_color = section.settings.background_color %}
+{% assign banner_content = section.settings.banner_content %}
+{% assign light_text = section.settings.light_text %}
+
 <div data-section-id="{{ section.id }}" data-section-type="pencil-banner">
-  {% if section.settings.banner_enabled %}
-    <div class="pencil-banner">
+  {% if show_banner == true %}
+    <div class="pencil-banner {% if light_text == true %}pencil-banner--light{% endif %}" style="background-color: {{ background_color }};">
       <div class="container">
-        <div class="d-none d-md-block">{{ section.settings.banner_content }}</div>
-        <div class="d-block d-md-none">{{ section.settings.banner_mobile_content | default: section.settings.banner_content }}</div>
-        {% comment %}<a href="#" class="pencil-banner__close" data-pencil-banner-close>&times;</a>{% endcomment %}
+        <div class="banner-content p2">{{ banner_content }}</div>
       </div>
     </div>
   {% endif %}
@@ -21,16 +24,26 @@
         "default": true
       },
       {
-        "id": "banner_content",
-        "type": "richtext", 
-        "label": "Content",
-        "default": "<p>Default Banner Text</p>"
+        "id": "light_text",
+        "type": "checkbox",
+        "label": "Light Text",
+        "default": true
       },
       {
-        "id": "banner_mobile_content",
+        "id": "banner_content",
         "type": "richtext", 
-        "label": "Mobile Content",
-        "info": "Alternate text for small screens, will fall back to regular content if left blank"
+        "label": "Content"
+      },
+      {
+        "type": "select",
+        "id": "background_color",
+        "label": "Background Color",
+        "options": [
+          { "value": "#f3f3f3", "label": "Gray" },
+          { "value": "#121212 ", "label": "Black" },
+          { "value": "#ccff00", "label": "Yellow" }
+        ],
+        "default": "#121212 "
       }
     ]
   }
