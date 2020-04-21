@@ -17,14 +17,19 @@ export default class CollectionSection extends BaseSection {
       console.warn(`[${this.name}] - Element matching ${selectors.collectionJson} required.`);
       return;
     }
+    this.collectionSections = $('.collection-section', this.$container);
     this.background = this.$container.data('background-color');
     this.observerProperties = {
       root: null,
-      threshold: 0.4
+      threshold: 0.1
     }
 
-    this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
-    this.IntersectionObserver.observe(this.$container.get(0));
+    self = this;
+
+    this.collectionSections.each(function() {
+      self.IntersectionObserver = new IntersectionObserver(self.observerCallback.bind(self), self.observerProperties);
+      self.IntersectionObserver.observe(this);
+    });
 
     this.collectionData = JSON.parse($(selectors.collectionJson, this.$container).html());
     this.promoCard = $(selectors.promoCard, this.$container);
@@ -39,13 +44,12 @@ export default class CollectionSection extends BaseSection {
 
   onWindowScroll(e) {
     var rotate = $(window).scrollTop() / 10;
-
     $('.promo_card__image', this.promoCard).css({ transform: 'rotate(-' + rotate + 'deg)' });
   }
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.4 && this.background !== '') {
+      if (entry.intersectionRatio > 0.1 && this.background !== '') {
         $('body').css('background-color', this.background);
       }
     })
