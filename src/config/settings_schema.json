@@ -11,6 +11,20 @@
     "name": "products",
     "settings": [
       {
+        "type": "header",
+        "content": "Reviews"
+      },
+      {
+        "type": "checkbox",
+        "id": "display_reviews",
+        "label": "Display Reviews Modules",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Shipping information"
+      },
+      {
         "type": "textarea",
         "id": "shipping_cta_title",
         "label": "Shipping CTA title",

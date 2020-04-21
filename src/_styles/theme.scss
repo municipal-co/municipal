@@ -90,7 +90,8 @@
 @import 'modules/product-overview';
 @import 'modules/product-features';
 @import 'modules/complete-the-look';
-
+@import 'modules/product-sticky-bar';
+@import 'modules/collection-drawer';
 
 /**
  * Templates
@@ -113,7 +114,13 @@
 body {
   will-change: background-color;
   transition: background-color $transition-duration-medium $transition-timing-function-in-out-ui;
+
+  // Prevents window scroll on drawer open
+  &.drawer-open {
+    overflow: hidden;
+  }
 }
+
 
 .development-mode {
   /* stylelint-disable-next-line selector-max-id */

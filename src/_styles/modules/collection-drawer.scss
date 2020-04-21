@@ -1,0 +1,32 @@
+.collection-drawer {
+  border: 0;
+  height: 100%;
+
+  .drawer__header {
+    color: $white;
+    padding: large-vw(30px, 45px) large-vw(20px, 30px);
+    border: none;
+  }
+
+  .drawer__header-title {
+    text-transform: none;
+  }
+
+  .drawer__close {
+    margin-right: 30px;
+    margin-top: 40px;
+    color: white;
+    .icon {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .drawer__body {
+    padding: large-vw(50px, 80px);
+  }
+
+  .product-card__gallery-image {
+    padding-bottom: 100%;
+  }
+}

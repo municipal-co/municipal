@@ -23,6 +23,14 @@
     transform: translateX(-100%);
   }
 
+  &--bottom {
+    transform: translateY(100%);
+
+    &.is-visible {
+      transform: translateY(0);
+    }
+  }
+
   &.is-visible {
     pointer-events: auto;
     transform: translateX(0%);

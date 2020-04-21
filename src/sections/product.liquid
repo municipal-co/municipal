@@ -10,6 +10,8 @@
     <meta itemprop="image" content="{{ featured_image | img_url: '600x600' }}">
     <meta itemprop="description" content="{{ product.description | strip_html | escape }}">
 
+    {% include 'product-sticky-bar' %}
+
     {%- comment %} images, title, price, etc. {% endcomment -%}
     {% include 'product-detail',
                 product: product,
@@ -37,7 +39,7 @@
     {% include 'product-overview' %}
     {% include 'product-features' %}
     {% include 'complete-the-look' %}
-    
+
   </div>
 </div>
 

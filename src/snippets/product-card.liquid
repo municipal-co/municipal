@@ -67,7 +67,7 @@
         <div class="product-card__gallery">
           <a href="{{ product_url }}">
             {% if lazy_load %}
-              <div class="product-card__gallery-image" style="height: 0; padding-bottom: {{ product.featured_image.height | times: 100 | divided_by: product.featured_image.width | append: '%' }}" data-product-card-gallery>
+              <div class="product-card__gallery-image" data-product-card-gallery>
                 <img data-src="{{ product.featured_image.src | img_url: product_image_dimension }}" alt="{{ product.featured_image.alt | escape }}" data-product-card-main-lazy>
                 <div class="product-card__gallery-placeholder"></div>
               </div>

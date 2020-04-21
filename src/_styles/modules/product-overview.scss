@@ -29,26 +29,26 @@
 
     @include media-breakpoint-down('md') {
       margin-bottom: 25px;
-    }   
+    }
   }
 
   .overview-content__title {
     margin-bottom: large-vw(30px, 45px);
-    
+
     @include media-breakpoint-down('md') {
       margin-bottom: 30px;
-    }    
+    }
   }
 
   .overview-content__copy {
-    margin-bottom: large-vw(35px, 130px); 
+    margin-bottom: large-vw(35px, 130px);
 
     @include media-breakpoint-down('md') {
       margin-bottom: 35px;
       line-height: 30px;
     }
   }
-  
+
   .overview-details__image {
     .image-container {
       margin-bottom: large-vw(35px, 70px);
@@ -94,7 +94,7 @@
         cursor: none;
       }
     }
-    
+
     .video-player__cover-play {
       display: block;
       width: large-vw(80px, 180px);
