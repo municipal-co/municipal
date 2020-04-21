@@ -10,12 +10,12 @@
 {% endcomment -%}
 
 {% assign filter_types = 'color,size' | split: "," %}
-
+{% assign promo_position = collection.metafields.custom_fields["promo_position"] | times: 1 %}
 
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection" data-background-color="#ffffff">
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-lg-22 col-20">
+      
           
         {% if collection.metafields.custom_fields["collection_section"] != blank %}
           {% assign separator = "|###|" %}
@@ -26,6 +26,7 @@
           {% assign promo_card_image_array = collection.metafields.custom_fields["promo_card_image"] | split: separator %}
           {% assign promo_card_position_array = collection.metafields.custom_fields["promo_card_position"] | split: separator %}
           {% assign fc_keys = collection.metafields.custom_fields["collection_section"] | split: "," %}
+          {% assign section_index = 0 %}
 
           {% for i in fc_keys %}
             {% assign index = i | plus: 0 %}
@@ -42,8 +43,9 @@
             {% endif %}
 
             {% if section_collection != blank and the_collection.products.size > 0%}
+              {% assign section_index = section_index | plus: 1 %}
 
-              <div class="collection-section">
+              <div class="collection-section col-lg-22 col-20">
                 {% if collection_title != blank %}
                   <h2 class="collection-section__title h2">{{ collection_title }}</h2>
                 {% endif %}
@@ -94,9 +96,15 @@
                 </div>
               </div>
             {% endif %}
+
+            {% if promo_position == section_index %}
+              {% include 'collection-promo' %}
+            {% elsif forloop.last and promo_position > forloop.length %}   
+              {% include 'collection-promo' %}
+            {% endif %}
           {% endfor %}
         {% endif %}
-      </div>
+      
     </div>
   </div>
 
