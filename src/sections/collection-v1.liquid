@@ -58,7 +58,7 @@
                   {% for product in the_collection.products %}
 
                     {% if show_promo == true and forloop.index == promo_card_position %}
-                      <div class="promo_card content-grid__item">
+                      <div class="promo_card content-grid__item frame">
                         <div class="promo-card-inner">
                           <div class="promo_card__image frame frame--1x1">
                             {% render 'image_tag'
@@ -82,7 +82,7 @@
                   {% endfor %}
                   
                   {% if show_promo == true %}
-                    <div class="promo_card content-grid__item">
+                    <div class="promo_card content-grid__item frame">
                       <div class="promo-card-inner">
                         <div class="promo_card__image frame frame--1x1">
                           {% render 'image_tag'

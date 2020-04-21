@@ -39,6 +39,11 @@
   .promo_card {
     position: relative;
 
+    &:before {
+      content: "";
+      padding-bottom: percentage(743/560);
+    }
+
     @keyframes rotating {
       from {
         -ms-transform: rotate(0deg);
