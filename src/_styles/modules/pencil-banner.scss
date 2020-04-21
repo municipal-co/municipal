@@ -17,7 +17,8 @@
   }
 
   a {
-    color: inherit;
+    color: $cyan;
+    text-decoration: underline;
   }
 
   &.pencil-banner--light {
