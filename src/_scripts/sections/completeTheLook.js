@@ -1,6 +1,7 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import Swiper from 'swiper';
 import { throttle } from 'throttle-debounce';
+import * as Breakpoints from '../core/breakpoints';
 import BaseSection from './base';
 
 const $window = $(window);
@@ -10,9 +11,9 @@ const selectors = {
   slide: '.swiper-slide'
 };
 
-export default class ProductFeatures extends BaseSection {
+export default class CompleteTheLook extends BaseSection {
   constructor(container) {
-    super(container, 'product-features');
+    super(container, 'complete-the-look');
 
     this.$container = $(container);
     this.background = this.$container.data('background-color');
@@ -24,30 +25,17 @@ export default class ProductFeatures extends BaseSection {
       threshold: 0.4
     }
 
-    const swiperOptions = {
+    this.swiperOptions = {
       loop: false,
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'fraction',
-      },
+      slidesPerView: 2,
       scrollbar: {
         el: $('.swiper-scrollbar', this.$container),
         draggable: true,
-      },
-      navigation: {
-        nextEl: $('.swiper-button-next', this.$container),
-        prevEl: $('.swiper-button-prev', this.$container),
       }
     };
 
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
-
-    if (this.$slides.length > 1) {
-      this.swiper = new Swiper(this.$slideshow, swiperOptions);
-      $('.product-features-inner-container', this.$container).on('mouseenter', this.onSlideshowEnter.bind(this));
-      $('.product-features-inner-container', this.$container).on('mouseleave', this.onSlideshowLeave.bind(this));
-    }
 
     $window.on('resize', throttle(100, this.onResize.bind(this)));
     this.onResize();
@@ -57,29 +45,19 @@ export default class ProductFeatures extends BaseSection {
     entries.forEach((entry) => {
       if (entry.intersectionRatio > 0.4 && this.background !== '') {
         $('body').css('background-color', this.background);
-        const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
-
-        $('body').trigger(event);
       }
     })
   }
 
-  onSlideshowEnter(e) {
-    e.preventDefault();
-    $('.swiper-button', this.$container).addClass('visible');
-  }
-
-  onSlideshowLeave(e) {
-    e.preventDefault();
-    $('.swiper-button', this.$container).removeClass('visible');
-  }
-
   onResize() {
-    const scrollbarPosition = $('.features-title-wrapper').height() + $('.feature-slide__image').height() + 16;
     const screenWidth = $(window).width();
+    const breakpointMinWidth = Breakpoints.getBreakpointMinWidth('md');
 
-    if (screenWidth < 992) {
-      $('.swiper-scrollbar', this.$container).css('top', scrollbarPosition);
-    }
+    if (screenWidth <= breakpointMinWidth) {
+      this.swiper = new Swiper(this.$slideshow, this.swiperOptions);
+    } else if ( screenWidth >= breakpointMinWidth && this.$slideshow.hasClass('swiper-container-initialized')){
+      $('.swiper-wrapper', this.$slideshow).css("transform","none");
+      this.swiper.destroy();
+    } 
   }
 }

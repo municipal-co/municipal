@@ -1,0 +1,99 @@
+{% comment %} Define validations to display the info {% endcomment %}
+
+{% comment %}Overview module{% endcomment %}
+{% assign overview_details = product.metafields.custom_fields["overview_details"] %}
+{% assign overview_image = product.metafields.custom_fields["overview_image"] %}
+{% comment %}Product Features{% endcomment %}
+{% assign product_features = product.metafields.custom_fields["features_section"] %}
+
+
+<div class="product__sticky-bar" data-product-sticky-bar>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-sm-7 d-none d-lg-block d-xl-block">
+        {% if collection != blank %}
+          <div class="sticky-bar__submenu">
+            <a href="#" data-toggle-collection-grid>
+              {{ product.title }}
+              {% include 'icon-caret-down' %}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-sm-10 d-none d-lg-block d-xl-block">
+        <div class="sticky-bar__inner-navigation">
+          {% if overview_details != blank and overview_image != blank %}
+          <a href="#product-overview" id="product_overview" data-scroll-to-section="overview">
+            Overview
+          </a>
+          {% endif %}
+          {% if product_features != blank %}
+          <a href="#product-features" data-scroll-to-section="feature">
+            Features
+          </a>
+          {% endif %}
+          {% if settings.display_reviews == true %}
+          <a href="#product-reviews" data-scroll-to-section="reviews">
+            Reviews
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-xs-22 offset-xs-1 offset-lg-3 col-lg-4">
+        <div class="sticky-bar__buy-button-container">
+          <div class="btn btn-sm btn-primary btn-block" data-desktop-buy-now>
+            Buy -
+            <span data-variant-price> {{ product.selected_or_first_available_variant.price | money }} </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="drawer drawer--left bg-black collection-drawer" data-collection-drawer>
+
+    <div class="drawer__inner">
+      <div class="drawer__header">
+        <a href="#" class="drawer__close" data-drawer-close>
+          {% include 'icon-close' %}
+          <span class="sr-only">Close</span>
+        </a>
+        <h5 class="drawer__header-title">{{ product.title }}</h5>
+      </div>
+      <div class="drawer__body">
+        <div class="drawer__body-contents">
+          <div class="content-grid">
+            {% for rel_product in collection.products %}
+              {% unless rel_product.handle == product.handle %}
+                <div class="content-grid__item">
+                  {% include 'product-card',
+                  product: rel_product,
+                  show_tag: true,
+                  lazy_load: true,
+                  show_sizes: false,
+                  reverse_card: true %}
+                </div>
+              {% endunless %}
+
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="drawer drawer--bottom mobile-add-to-cart" data-add-to-cart-drawer>
+  <div class="drawer_inner">
+    <div class="drawer__header">
+      <a href="#" class="drawer__close" data-drawer-close>
+        {% include 'icon-close' %}
+        <span class="sr-only">Close</span>
+      </a>
+    </div>
+    <div class="drawer__body" data-mobile-product-form-container>
+
+    </div>
+  </div>
+</div>

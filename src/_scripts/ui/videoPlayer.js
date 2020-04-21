@@ -113,7 +113,9 @@ export default class VideoPlayer {
   }
 
   bindYouTubePlayer() {
+
     function createPlayer() {
+
       const uniqID = `${this.$el.attr('id')}-player`;
       this.$embed.attr({
         sandbox: 'allow-same-origin allow-scripts allow-presentation',
@@ -162,17 +164,25 @@ export default class VideoPlayer {
     }
 
     const _createPlayer = createPlayer.bind(this);
-
+  
     if (window.YT === undefined) {
-      window.onYouTubeIframeAPIReady = _createPlayer;
 
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-    else {
+      if (window.YT_PLAYERS_TO_LOAD) {
+        window.YT_PLAYERS_TO_LOAD.push(_createPlayer);
+      } else {
+        window.YT_PLAYERS_TO_LOAD = [_createPlayer];
+        // Once the YT API is ready, we can load each of the players in the queue.
+        window.onYouTubeIframeAPIReady = function() {
+          window.YT_PLAYERS_TO_LOAD.forEach(function(createPlayerInstance) {
+            createPlayerInstance();
+          });
+        };
+        var tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      }
+    } else {
       _createPlayer();
     }
   }

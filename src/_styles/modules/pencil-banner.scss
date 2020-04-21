@@ -6,20 +6,22 @@
 .pencil-banner {
   position: relative;
   z-index: $zindex-pencil-banner;
-  padding: $pencil-banner-padding-vertical 0;
-  background-color: $pencil-banner-bg;
-  font-size: $font-size-sm;
+  padding: $pencil-banner-padding-vertical 20px;
+  font-family: $font-family-sans-serif;
+  font-weight: $font-weight-bold;
   text-align: center;
+  color: $black;
 
-  &, a {
-    color: $pencil-banner-text-color;
-  }
-
-  p:last-child {
+  p{
     margin-bottom: 0;
   }
-}
 
-.pencil-banner__close {
+  a {
+    color: $cyan;
+    text-decoration: underline;
+  }
 
+  &.pencil-banner--light {
+    color: $white;
+  }
 }

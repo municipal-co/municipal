@@ -325,7 +325,7 @@ $h5-line-height:              1.13em !default;
 $h6-line-height:              1.5em !default;
 
 $headings-margin-bottom:      $spacer !default;
-$headings-font-family:        "Sequel Sans Disp", $font-family-sans-serif !default;
+$headings-font-family:        "Sequel Sans Title", $font-family-sans-serif !default;
 $headings-font-weight:        $font-weight-bold !default;
 $headings-line-height:        1.2 !default;
 $headings-color:              null !default;
@@ -966,7 +966,7 @@ $print-body-min-width:              map-get($grid-breakpoints, "lg") !default;
 // Variables to adjust site-wide components that are *not* part of bootstrap
 
 // Pencil Banner
-$pencil-banner-padding-vertical:        8px;
+$pencil-banner-padding-vertical:        5px;
 $pencil-banner-bg:                      $black;
 $pencil-banner-text-color:              $white;
 

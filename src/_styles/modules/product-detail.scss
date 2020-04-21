@@ -63,9 +63,13 @@
     content: "";
     position: absolute;
     width: 100%;
-    border: large-vw(1px, 3px) solid $red;
+    border: large-vw(2px, 3px) solid $red;
     top: 50%;
     transform: translateY(-50%);
+
+    @include media-breakpoint-down('md') {
+      border-width: 2px;
+    }
   }
 
   &:not(.hide) ~ span {
@@ -97,6 +101,30 @@
 
   @include media-breakpoint-down('md') {
     font-size: 12px;
+  }
+}
+
+.mobile-add-to-cart {
+  bottom: 0;
+  top: auto;
+
+  .drawer__header {
+    border-bottom: 0;
+    margin-bottom: -50px;
+
+    .drawer__close {
+      top: 20px;
+      right: 20px;
+    }
+
+    .icon-close {
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  .badge {
+    padding: 5px 10px;
   }
 }
 

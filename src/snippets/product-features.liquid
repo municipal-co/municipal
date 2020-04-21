@@ -6,7 +6,7 @@
   {% assign fc_keys = product.metafields.custom_fields["features_section"] | split: "," %}
   {% assign slides_counter = 0 %}
 
-  <div class="product-features" data-section-type="product-features" data-background-color="#ffffff">
+  <div id="product-features" class="product-features" data-section-type="product-features" data-background-color="#ffffff">
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-lg-22 col-20 product-features-inner-container">
@@ -24,7 +24,7 @@
                 {% assign title = feature_title_array[index] %}
                 {% assign copy = feature_copy_array[index] %}
                 {% assign image = feature_image_array[index] %}
-                
+
                 {% if title != blank and image != blank %}
                   {% assign slides_counter = slides_counter | plus: 1 %}
 

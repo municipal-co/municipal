@@ -37,25 +37,28 @@ export default class ProductOverview extends BaseSection {
     entries.forEach((entry) => {
       if (entry.intersectionRatio > 0.4 && this.background !== '') {
         $('body').css('background-color', this.background);
+        const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
+
+        $('body').trigger(event);
       }
     })
   }
 
   onVideoEnter(e) {
     e.preventDefault();
-    var screenWidth = $(window).width();
-    var x,y;
+    const screenWidth = $(window).width();
+    let x, y;
 
     if (screenWidth > 991) {
       this.$videoCover.mousemove(function(event) {
-        var offset = $(this).offset();
-        var buttonWidth = $(selectors.videoPlay, this.$videoCover).width();
-        var buttonOffset = buttonWidth / 2;
+        const offset = $(this).offset();
+        const buttonWidth = $(selectors.videoPlay, this.$videoCover).width();
+        const buttonOffset = buttonWidth / 2;
 
         x = event.pageX - offset.left - buttonOffset;
         y = event.pageY - offset.top - buttonOffset;
 
-        $(selectors.videoPlay, this.$videoCover).css({left:x, top:y});
+        $(selectors.videoPlay, this.$videoCover).css({left: x, top: y});
       });
     }
   }

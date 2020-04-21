@@ -2,22 +2,24 @@ import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import Swiper from 'swiper';
 import { throttle } from 'throttle-debounce';
 import BaseSection from './base';
-
-const $window = $(window);
+import VideoPlayer from '../ui/videoPlayer';
 
 const selectors = {
+  videoPlayer: '[data-video-player]',
+  videoModal: '[data-video-modal]',
   slideshow: '.swiper-container',
   slide: '.swiper-slide'
 };
 
-export default class ProductFeatures extends BaseSection {
+export default class ProductStyleTips extends BaseSection {
   constructor(container) {
-    super(container, 'product-features');
+    super(container, 'style-tips');
 
     this.$container = $(container);
     this.background = this.$container.data('background-color');
     this.$slideshow = $(selectors.slideshow, this.$container);
     this.$slides = $(selectors.slide, this.$container);
+    this.$videoPlayer = $(selectors.videoPlayer, this.$container);
 
     this.observerProperties = {
       root: null,
@@ -26,10 +28,7 @@ export default class ProductFeatures extends BaseSection {
 
     const swiperOptions = {
       loop: false,
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'fraction',
-      },
+      spaceBetween: 10,
       scrollbar: {
         el: $('.swiper-scrollbar', this.$container),
         draggable: true,
@@ -40,26 +39,32 @@ export default class ProductFeatures extends BaseSection {
       }
     };
 
+    let videoPlayers = [];
+    if (this.$videoPlayer.length) {
+      this.$videoPlayer.each(function( index ) {
+        var player = new VideoPlayer(this);
+        var newPlayer = videoPlayers.push(player);
+      });
+    }
+
+    this.videoPlayers = videoPlayers;
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
 
     if (this.$slides.length > 1) {
       this.swiper = new Swiper(this.$slideshow, swiperOptions);
-      $('.product-features-inner-container', this.$container).on('mouseenter', this.onSlideshowEnter.bind(this));
-      $('.product-features-inner-container', this.$container).on('mouseleave', this.onSlideshowLeave.bind(this));
+      $('.style-tips-inner-container', this.$container).on("mouseenter", this.onSlideshowEnter.bind(this));
+      $('.style-tips-inner-container', this.$container).on("mouseleave", this.onSlideshowLeave.bind(this));
     }
 
-    $window.on('resize', throttle(100, this.onResize.bind(this)));
-    this.onResize();
+    $(selectors.videoModal, this.$container).on('show.bs.modal', this.playVideo.bind(this));
+    $(selectors.videoModal, this.$container).on('hide.bs.modal', this.stopVideo.bind(this));
   }
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
       if (entry.intersectionRatio > 0.4 && this.background !== '') {
         $('body').css('background-color', this.background);
-        const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
-
-        $('body').trigger(event);
       }
     })
   }
@@ -71,15 +76,16 @@ export default class ProductFeatures extends BaseSection {
 
   onSlideshowLeave(e) {
     e.preventDefault();
-    $('.swiper-button', this.$container).removeClass('visible');
+    $('.swiper-button', this.$container).removeClass('visible'); 
   }
 
-  onResize() {
-    const scrollbarPosition = $('.features-title-wrapper').height() + $('.feature-slide__image').height() + 16;
-    const screenWidth = $(window).width();
+  playVideo(e) {
+    var videoIndex = $(e.currentTarget).data('video-modal');
+    this.videoPlayers[videoIndex].play(); 
+  }
 
-    if (screenWidth < 992) {
-      $('.swiper-scrollbar', this.$container).css('top', scrollbarPosition);
-    }
+  stopVideo(e) {
+    var videoIndex = $(e.currentTarget).data('video-modal');
+    this.videoPlayers[videoIndex].pause();
   }
 }

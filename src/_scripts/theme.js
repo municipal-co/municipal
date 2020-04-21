@@ -53,6 +53,8 @@ import ProductOverview               from './sections/productOverview';
 import ProductFeatures               from './sections/productFeatures';
 import PromoSection                  from './sections/promoSection';
 import CollectionBanner              from './sections/collectionBanner';
+import ProductStyleTips              from './sections/productStyleTips';
+import CompleteTheLook               from './sections/completeTheLook';
 
 
 // Managers
@@ -100,8 +102,10 @@ Breakpoints.initialize();
   sectionManager.register('hero', HeroSection);
   sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);
+  sectionManager.register('style-tips', ProductStyleTips);
   sectionManager.register('promo', PromoSection);
   sectionManager.register('collection-banner', CollectionBanner);
+  sectionManager.register('complete-the-look', CompleteTheLook);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

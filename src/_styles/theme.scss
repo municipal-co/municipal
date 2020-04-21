@@ -91,6 +91,11 @@
 @import 'modules/product-features';
 @import 'modules/collection-section';
 @import 'modules/collection-banner';
+@import 'modules/style-tips';
+@import 'modules/complete-the-look';
+@import 'modules/product-sticky-bar';
+@import 'modules/collection-drawer';
+@import 'modules/product-shipping-modal';
 
 
 /**
@@ -114,7 +119,13 @@
 body {
   will-change: background-color;
   transition: background-color $transition-duration-medium $transition-timing-function-in-out-ui;
+
+  // Prevents window scroll on drawer open
+  &.drawer-open {
+    overflow: hidden;
+  }
 }
+
 
 .development-mode {
   /* stylelint-disable-next-line selector-max-id */
