@@ -29,6 +29,51 @@
         "id": "shipping_cta_title",
         "label": "Shipping CTA title",
         "default": "Free Shipping & Returns | 24/7 Support"
+      },
+      {
+        "type": "text",
+        "id": "shipping_eyebrow_1",
+        "label": "Shipping Eyebrow - Block 1"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title_1",
+        "label": "Shpping title - Block 1"
+      },
+      {
+        "type": "richtext",
+        "id": "shipping_body_1",
+        "label": "Shipping body - Block 1"
+      },
+      {
+        "type": "text",
+        "id": "shipping_eyebrow_2",
+        "label": "Shipping Eyebrow - Block 2"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title_2",
+        "label": "Shpping title - Block 2"
+      },
+      {
+        "type": "richtext",
+        "id": "shipping_body_2",
+        "label": "Shipping body - Block 2"
+      },
+      {
+        "type": "text",
+        "id": "shipping_eyebrow_3",
+        "label": "Shipping Eyebrow - Block 3"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title_3",
+        "label": "Shpping title - Block 3"
+      },
+      {
+        "type": "richtext",
+        "id": "shipping_body_3",
+        "label": "Shipping body - Block 3"
       }
     ]
   },

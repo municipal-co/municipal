@@ -12,6 +12,9 @@
 
 {% endcomment -%}
 
+{%- capture shipping_modal_html -%}
+  {% include 'shipping-modal' %}
+{%- endcapture -%}
 
 {% if template.name == 'product' and template.suffix == 'quick-view' %}
   {% assign is_quick_view = true %}
@@ -165,8 +168,8 @@
         </button>
       </form>
 
-      {% if settings.shipping_cta_title != blank %}
-        <button class="btn-link product__shipping-toggler">{{ settings.shipping_cta_title }}</button>
+      {% if settings.shipping_cta_title != blank and shipping_modal_html != blank%}
+        <button class="btn-link product__shipping-toggler" data-shipping-modal-trigger>{{ settings.shipping_cta_title }}</button>
       {% endif %}
     </div>
   </div>
@@ -175,6 +178,10 @@
  {% comment %} <div class="rte">
     {{ product.description }}
   </div>{% endcomment %}
+
+  {% unless is_quick_view or shipping_modal_html == blank %}
+    {{ shipping_modal_html }}
+  {% endunless %}
 
   {% if is_quick_view %}
     {% comment %} This link will get updated on variant change.  See productDetailForm.js {% endcomment %}

@@ -1,0 +1,105 @@
+.product-shipping-modal {
+
+  .modal-dialog {
+    @include media-breakpoint-down('md') {
+      margin: 0;
+      max-width: unset;
+    }
+  }
+
+  .modal-content {
+    background-color: unset;
+    border: 0;
+  }
+
+  .modal-header {
+    border-bottom: none;
+    border-radius: 0;
+    box-shadow: unset;
+
+    @include media-breakpoint-down('md') {
+      background: $black;
+    }
+  }
+
+  .modal-title {
+    color: $white;
+    font-size: 17px;
+    text-transform: none;
+  }
+
+  .close {
+    color: $white;
+    margin-left: 103%;
+    opacity: 1;
+    line-height: 0;
+
+    @include media-breakpoint-down('md') {
+      margin-left: auto;
+    }
+
+    svg {
+      width: large-vw(24px, 80px);
+      height: large-vw(24px, 80px);
+
+      @include media-breakpoint-down('md') {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .modal-body {
+    background-color: $white;
+    border-radius:0;
+    padding: large-vw(40px, 80px);
+
+    @include media-breakpoint-down('md') {
+      padding: 110px 35px 35px;
+    }
+  }
+
+  .shipping-modal__block {
+    padding: large-vw(30px, 76px) 0;
+
+    @include media-breakpoint-down('md') {
+      padding: 30px 0;
+    }
+
+    @at-root .shipping-modal__block + .shipping-modal__block {
+      border-top: 4px solid $black;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+
+  .shipping-modal__eyebrow {
+    color: $cyan;
+    margin-bottom: large-vw(20px, 40px);
+    display: block;
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 21px;
+    }
+  }
+
+  .shipping-modal__title {
+    margin-bottom: large-vw(20px, 45px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 20px;
+    }
+  }
+
+  .shipping-modal__body {
+    p {
+      @extend .p2;
+      font-weight: $font-weight-bold;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
