@@ -52,8 +52,8 @@ import HeroSection                   from './sections/heroSection';
 import ProductOverview               from './sections/productOverview';
 import ProductFeatures               from './sections/productFeatures';
 import PromoSection                  from './sections/promoSection';
+import ProductStyleTips              from './sections/productStyleTips';
 import CompleteTheLook               from './sections/completeTheLook';
-
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -100,6 +100,7 @@ Breakpoints.initialize();
   sectionManager.register('hero', HeroSection);
   sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);
+  sectionManager.register('style-tips', ProductStyleTips);
   sectionManager.register('promo', PromoSection);
   sectionManager.register('complete-the-look', CompleteTheLook);
 
