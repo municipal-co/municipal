@@ -1,6 +1,14 @@
 {% assign eyebrow = product.metafields.custom_fields["ctl_eyebrow"] %}
 {% assign title = product.metafields.custom_fields["ctl_title"] %}
 
+{% if product.metafields.custom_fields["ctl_duration"] == blank %}
+  {% assign animation = 20 | append: 's'%}
+{% else %}
+  {% assign animation = product.metafields.custom_fields["ctl_duration"] | append: 's'%}
+{% endif %}
+
+{% assign animation_delay = product.metafields.custom_fields["ctl_duration"] | divided_by: 2 | append: 's' | prepend: '-' %}
+
 {% if product.metafields.custom_fields["complete_the_look"] != blank %}
   {% assign separator = "|###|" %}
   {% assign product_array = product.metafields.custom_fields["product"] | split: separator %}
@@ -14,14 +22,22 @@
           <span class="ctl__eyebrow h5 col-lg-22 col-20">{{ eyebrow }}</span>
         {% endif %}
 
-        {% if title != blank %}
+        {% if title != blank %}            
           <div class="ctl-title-wrapper col-24">
-            <div class="inner-container">
-              <h2 class="ctl__title h1">{{ title }}</h2>
-              <h2 class="ctl__title h1">{{ title }}</h2>
-            </div>
+            <h2 class="ctl__title h1">
+              <span style="animation-duration: {{ animation }};">{{ title }} &nbsp;</span>
+            </h2>
+            <h2 class="ctl__title ctl__title--copy h1">
+              <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title }} &nbsp;</span>
+            </h2>
           </div>
         {% endif %}
+
+
+
+
+
+
 
         <div class="col-lg-22 col-20">
           <div class="swiper-container">
