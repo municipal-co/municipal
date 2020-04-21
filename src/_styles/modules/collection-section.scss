@@ -10,6 +10,14 @@
     padding-top: large-vw(40px ,60px);    
   }
 
+  &:first-child {
+    padding-top: large-vw(60px, 110px);
+    
+    @include media-breakpoint-down('md') {
+      padding-top: 60px;
+    }
+  }
+
   &:last-child{
     border-bottom: 0;
   }
@@ -78,4 +86,8 @@
       }
     }
   }
+}
+
+.collection-promo + .collection-section { 
+  border-top: solid 4px $black;
 }
