@@ -52,6 +52,7 @@ import HeroSection                   from './sections/heroSection';
 import ProductOverview               from './sections/productOverview';
 import ProductFeatures               from './sections/productFeatures';
 import PromoSection                  from './sections/promoSection';
+import TwoUpInstagram                from './sections/twoUpInstagram';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -99,6 +100,7 @@ Breakpoints.initialize();
   sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);
   sectionManager.register('promo', PromoSection);
+  sectionManager.register('two-up-instagram', TwoUpInstagram);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
