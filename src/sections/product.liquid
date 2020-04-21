@@ -19,23 +19,6 @@
                 show_share_buttons: section.settings.show_share_buttons
     %}
 
-    {% if section.settings.size_guide_page %}
-      {% assign has_size = false %}
-      {% for option in product.options %}
-        {% assign downcased_option = option | downcase %}
-        {% if has_size == false and downcased_option == "size" %}
-          {% assign has_size = true %}
-        {% endif %}
-      {% endfor %}
-
-      {% if has_size %}
-        <div class="container">
-          <h3>Size Guide</h3>
-          {{ pages[section.settings.size_guide_page].content }}
-        </div>
-      {% endif %}
-    {% endif %}
-
     {% include 'product-overview' %}
     {% include 'product-features' %}
 
