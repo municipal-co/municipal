@@ -3,6 +3,7 @@ import BaseSection from './base';
 import CartAPI from '../core/cartAPI';
 import AJAXFormManager from '../managers/ajaxForm';
 import AJAXCartUI from '../ui/ajaxCart';
+import * as Utils from '../core/utils';
 
 const $window = $(window);
 const $body = $(document.body);
@@ -44,7 +45,13 @@ export default class AJAXCartSection extends BaseSection {
     // Make sure we get the latest cart data when this initializes
     CartAPI.getCart().then((cart) => {
       this.ajaxCartUI.render(cart);
+      const queryParams = Utils.getQueryParams();
+      if (queryParams && queryParams['open-mini-cart']) {
+        this.ajaxCartUI.open();
+      }
     });
+
+    
   }
 
   onSelect() {
