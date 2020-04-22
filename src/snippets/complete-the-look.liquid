@@ -25,10 +25,10 @@
         {% if title != blank %}            
           <div class="ctl-title-wrapper col-24">
             <h2 class="ctl__title h1">
-              <span style="animation-duration: {{ animation }};">{{ title }} &nbsp;</span>
+              <span style="animation-duration: {{ animation }};">{{ title | strip_html }} &nbsp;</span>
             </h2>
             <h2 class="ctl__title ctl__title--copy h1">
-              <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title }} &nbsp;</span>
+              <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title | strip_html }} &nbsp;</span>
             </h2>
           </div>
         {% endif %}
