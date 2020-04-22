@@ -5,6 +5,13 @@
 
 .complete-the-look {
 
+  .row {
+    justify-content: center;
+    @include media-breakpoint-down('md') {
+      justify-content: flex-end;
+    }
+  }
+
   .ctl__eyebrow {
     margin-bottom: large-vw(30px, 50px);
   }
@@ -64,6 +71,31 @@
       border-radius: 0;
       background-color: $black;
     }
+  }
+
+  .product-card__gallery-image{
+    @include media-breakpoint-down('md') {
+      padding-bottom: percentage(215/164);
+    }
+  }
+
+  .content-grid__item {
+    @include media-breakpoint-down('md') {
+      margin-bottom: 38px;
+    }
+  }
+  
+  .product-card__info-title {
+    text-transform: none;
+    font-weight: $font-weight-light;
+  }
+
+  .product-card__badge-row {
+    margin-top: -8px;
+  }
+
+  .product-card__badge-row .badge {
+    padding: 2px 8px;
   }
 }
 
