@@ -1,10 +1,15 @@
-<div data-section-id="{{ section.id }}" data-section-type="ajax-cart" data-footer-text="{{ section.settings.footer_text }}">
+<div data-section-id="{{ section.id }}" data-section-type="ajax-cart">
   <div class="ajax-cart-container" data-ajax-cart-container>
       <form action="/cart" method="post" class="ajax-cart-form" novalidate>
         <div class="ajax-cart__header">
+          <h4 class="p">{{ 'cart.general.title' | t }}</h4>
           <a href="#" class="ajax-cart__close" data-ajax-cart-close>{% include 'icon-close' %}</a>
-          <h4>{{ 'cart.general.title' | t }}</h4>
         </div>
+        {% if section.settings.promo_text != "" %}
+          <div class="ajax-cart__promo">
+            {{ section.settings.promo_text }}
+          </div>
+        {% endif %}
         <div class="ajax-cart__body" data-ajax-cart-body>
           {% comment %} Filled in via JS {% endcomment %}
         </div>
@@ -14,7 +19,7 @@
           </div>
           <div class="ajax-cart__footer-bottom">
             <div class="ajax-cart__footer-row">
-              <button type="submit" name="checkout" class="btn btn-block btn-primary">{{ 'cart.general.checkout' | t }}</button>
+              <button type="submit" name="checkout" class="btn btn-block btn-secondary">{{ 'cart.general.checkout' | t }}</button>
             </div>
             {% comment %} Hide additional checkout buttons in theme editor {% endcomment %}
             {% if additional_checkout_buttons %}
@@ -24,8 +29,14 @@
                 </div>
               {% endunless %}
             {% endif %}
-            <div class="ajax-cart__footer-row text-center">
-              <a href="/cart">{{ 'cart.general.view' | t }}</a>
+            <div class="ajax-cart__footer-row ajax-cart__footer-row--btn">
+              <a href="/collections/all" class="btn btn-white ajax-cart__footer-btn">
+                Keep<br class="d-none d-md-block">
+                Shopping
+                <span class="btn__ui">
+                  {% include 'icon-arrow' %}
+                </span>
+              </a>
             </div>
           </div>
         </div>
@@ -34,13 +45,22 @@
   </div>
 </div>
 
+{% capture icon_close %}
+  {% include 'icon-close' %}
+{% endcapture %}
+
 {% raw %}
   <script type="text/x-handlebars-template" data-ajax-cart-body-template>
     {{#if items}}
       <ul class="ajax-cart__list">
       {{#each items}}
         <li class="ajax-cart__item" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
-          <img src="{{ image }}" class="ajax-cart__item-image">
+          <div class="ajax-cart__item-image-wrapper">
+            <img src="{{ image }}" class="ajax-cart__item-image">
+          </div>
+          <a href="#" class="ajax-cart__item-remove" data-ajax-cart-item-remove>
+            <img width="15" height="15" src="data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzODYuNjY3IDM4Ni42NjciIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgMzg2LjY2NyAzODYuNjY3IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im0zODYuNjY3IDQ1LjU2NC00NS41NjQtNDUuNTY0LTE0Ny43NyAxNDcuNzY5LTE0Ny43NjktMTQ3Ljc2OS00NS41NjQgNDUuNTY0IDE0Ny43NjkgMTQ3Ljc2OS0xNDcuNzY5IDE0Ny43NyA0NS41NjQgNDUuNTY0IDE0Ny43NjktMTQ3Ljc2OSAxNDcuNzY5IDE0Ny43NjkgNDUuNTY0LTQ1LjU2NC0xNDcuNzY4LTE0Ny43N3oiLz48L3N2Zz4=" alt="">
+          </a>
           <div class="ajax-cart__item-info">
             <a href="{{ url }}" class="ajax-cart__item-header">
               <div class="ajax-cart__item-title">{{ product_title }}</div>
@@ -59,21 +79,19 @@
                   {{/if}}
                 {{/if}}
               {{/unless}}
-              <li>Price: {{ price }}</li>
+              <li class="ajax-cart__item-price">{{ price }}</li>
               <li>
                 {{#if variant_quantity_limit}}
                   <div class="quantity-adjuster" data-quantity-adjuster>
                     <button class="quantity-adjuster__decrement" data-decrement>-</button>
-                    <input type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
+                    <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
+                    <span class="quantity-adjuster__label">Qty: {{ quantity }} </span>
                     <button class="quantity-adjuster__increment" data-increment>+</button>
                   </div>
                 {{else}}
                   Quantity: {{ quantity }}
                 {{/if}}
               </li>
-              <li>
-                <a href="#" class="ajax-cart__item-remove" data-ajax-cart-item-remove>Remove</a>
-              </li>            
             </ul>
           </div>
         </li>
@@ -94,10 +112,7 @@
 
   <script type="text/x-handlebars-template" data-ajax-cart-footer-top-template>
     <div class="ajax-cart__footer-row">
-      <p class="clearfix u-fw-bold">Subtotal <span style="float: right">{{ total_price }}</span></p>  
-    </div>
-    <div class="ajax-cart__footer-row">
-      {{{ footer_text }}}
+      <p class="clearfix text-center u-fw-bold">Estimated Total:<br> {{ total_price }}</p>  
     </div>
   </script>
 {% endraw %}
@@ -114,9 +129,9 @@
         "default": "<p>Your bag is empty</p>"
       },
       {
-        "id": "footer_text",
+        "id": "promo_text",
         "type": "richtext",
-        "label": "Footer Text",
+        "label": "Promo Text",
         "default": "<p>Promotional Message Here</p>"
       }
     ]
