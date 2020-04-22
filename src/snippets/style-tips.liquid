@@ -1,0 +1,128 @@
+{% if product.metafields.custom_fields["style_tips_section"] != blank %}
+  {% assign separator = "|###|" %}
+  {% assign style_quote_array = product.metafields.custom_fields["style_quote"] | split: separator %}
+  {% assign style_image_array = product.metafields.custom_fields["style_image"] | split: separator %}
+  {% assign style_name_array = product.metafields.custom_fields["style_name"] | split: separator %}
+  {% assign style_handle_array = product.metafields.custom_fields["style_handle"] | split: separator %}
+  {% assign style_slide_image_array = product.metafields.custom_fields["style_slide_image"] | split: separator %}
+  {% assign style_video_array = product.metafields.custom_fields["style_video"] | split: separator %}
+  {% assign style_subcopy_array = product.metafields.custom_fields["style_subcopy"] | split: separator %}
+  {% assign fc_keys = product.metafields.custom_fields["style_tips_section"] | split: "," %}
+  {% assign slides_counter = 0 %}
+  {% assign video_index = 0 %}
+  {% assign modal_index = 0 %}
+
+  <div class="style-tips" data-section-type="style-tips" data-background-color="#424446">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-lg-22 col-20 style-tips-inner-container">
+          <div class="swiper-container">
+            <h5 class="style-tips-section-title">Style Tips</h5>
+
+            <div class="swiper-wrapper">              
+              {% for i in fc_keys %}
+                {% assign index = i | plus: 0 %}
+
+                {% assign slide_quote = style_quote_array[index] %}
+                {% assign stylist_image = style_image_array[index] %}
+                {% assign stylist_name = style_name_array[index] %}
+                {% assign stylist_handle = style_handle_array[index] %}
+                {% assign slide_image = style_slide_image_array[index] %}
+                {% assign slide_video = style_video_array[index] %}
+                {% assign slide_subcopy = style_subcopy_array[index] %}
+
+                {% if slide_quote != blank and slide_image != blank %}
+                  {% assign slides_counter = slides_counter | plus: 1 %}
+
+                  <div class="style-slide swiper-slide">
+
+                    <div class="style-slide__header">
+                      <h1 class="style-quote">{{ slide_quote }}</h1>
+
+                      {% if stylist_image != blank %}
+                        <div class="stylist-image frame frame--1x1">
+                          {% render 'image_tag'
+                                  image: stylist_image,
+                                  object_fit: 'cover',
+                                  object-position: 'center'
+                          %}
+                        </div>
+                      {% endif %}
+
+                      {% if stylist_name != blank %}
+                        <div class="stylist-name">
+                          {{ stylist_name }}
+
+                          {% if stylist_handle != blank %}
+                            <span>{{ stylist_handle }}</span>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+
+                    <div class="style-slide__image frame frame--16x9">
+                      {% render 'image_tag'
+                                image: slide_image,
+                                object_fit: 'cover'
+                      %}
+                      
+                      {% if slide_video != blank %}
+                        <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}">
+                          {% include 'icon-play-full-color' %}
+                        </button>
+
+                        {% assign video_index = video_index | plus: 1 %}
+                      {% endif %}
+                    </div>
+
+                    {% if slide_subcopy != blank %}
+                      <div class="style-slide__subcopy p2">{{ slide_subcopy}}</div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          {% if slides_counter > 1 %}
+            <div class="swiper-button-prev swiper-button">
+              {% include 'icon-swiper-arrow' %}
+            </div>
+            <div class="swiper-button-next swiper-button">
+              {% include 'icon-swiper-arrow' %}
+            </div>
+            <div class="swiper-scrollbar"></div>
+          {% endif %}
+        </div>
+      </div>
+ 
+      {% for i in fc_keys %}
+        {% assign index = i | plus: 0 %}
+        {% assign slide_video = style_video_array[index] %}
+
+        {% if slide_video != blank %}
+          {% assign yt_video_id = slide_video | remove: "https://www.youtube.com/watch?v=" %}
+
+          <div class="modal modal--video fade" id="product-video-modal-{{ product.id }}-{{ modal_index }}" data-video-modal="{{ modal_index }}">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              {% include 'icon-close' %}
+            </button>
+
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div id="video-player-{{ yt_video_id }}" class="product-video-player frame frame--16x9" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
+                    <div class="video-player__embed" data-video-player-embed></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% assign modal_index = modal_index | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
