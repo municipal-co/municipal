@@ -7,7 +7,7 @@
   {% assign animation = product.metafields.custom_fields["ctl_duration"] | append: 's'%}
 {% endif %}
 
-{% assign animation_delay = product.metafields.custom_fields["ctl_duration"] | divided_by: 2 | append: 's' | prepend: '-' %}
+{% assign animation_delay = product.metafields.custom_fields["ctl_duration"] | divided_by: 2.0 | append: 's' | prepend: '-' %}
 
 {% if product.metafields.custom_fields["complete_the_look"] != blank %}
   {% assign separator = "|###|" %}
