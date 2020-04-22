@@ -54,6 +54,7 @@ import ProductFeatures               from './sections/productFeatures';
 import PromoSection                  from './sections/promoSection';
 import ProductStyleTips              from './sections/productStyleTips';
 import CompleteTheLook               from './sections/completeTheLook';
+import CollectionGridSection         from './sections/collectionGridSection';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -103,6 +104,7 @@ Breakpoints.initialize();
   sectionManager.register('style-tips', ProductStyleTips);
   sectionManager.register('promo', PromoSection);
   sectionManager.register('complete-the-look', CompleteTheLook);
+  sectionManager.register('collection-grid', CollectionGridSection);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
