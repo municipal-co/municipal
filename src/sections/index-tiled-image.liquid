@@ -1,0 +1,106 @@
+{% include 'tiled-image'
+            ti_id: section.id,
+            ti_background_color: section.settings.background_color,
+            ti_light_text: section.settings.light_text,
+            ti_title_color: section.settings.title_color,
+            ti_eyebrow: section.settings.eyebrow,
+            ti_title: section.settings.title,
+            ti_text: section.settings.text,
+            ti_cta_text: section.settings.cta_text,
+            ti_cta_url: section.settings.cta_url,
+            ti_left_image: section.settings.left_image,
+            ti_right_image: section.settings.right_image
+%}
+
+{% schema %}
+  {
+    "name": "tiled-image",
+    "class": "tiled-image container-fluid",
+    "settings":[
+      {
+        "type": "header",
+        "content": "Design"
+      },
+      {
+        "type": "select",
+        "id": "background_color",
+        "label": "Background Color",
+        "options": [
+          {"label":"White", "value": "#ffffff"},
+          {"label":"Black", "value": "#121212"},
+          {"label": "Brown", "value": "#452b2b"},
+          {"label": "Blue", "value": "#2c6275"},
+          {"label": "Tan", "value": "#c3baa8"},
+          {"label": "Gray", "value": "#424446"},
+          {"label": "Brownish-Red", "value": "#752c2e"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "light_text",
+        "label": "Light Text",
+        "info": "Light text affects the eyebrow, copy and CTA."
+      },
+      {
+        "type": "select",
+        "id": "title_color",
+        "label": "Header Color",
+        "options": [
+          {"label":"White", "value":"white"},
+          {"label":"Red", "value":"red"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label":"Black", "value":"black"}
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },
+      {
+        "type": "header",
+        "content": "Images"
+      },
+      {
+        "type": "image_picker",
+        "id": "left_image",
+        "label": "Left Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "right_image",
+        "label": "Right Image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Tiled Image",
+        "category": "Media"
+      }
+    ]
+  }
+{% endschema %}
