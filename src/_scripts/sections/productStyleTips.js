@@ -1,6 +1,5 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import Swiper from 'swiper';
-import { throttle } from 'throttle-debounce';
 import BaseSection from './base';
 import VideoPlayer from '../ui/videoPlayer';
 
@@ -39,11 +38,11 @@ export default class ProductStyleTips extends BaseSection {
       }
     };
 
-    let videoPlayers = [];
+    const videoPlayers = [];
     if (this.$videoPlayer.length) {
       this.$videoPlayer.each(function( index ) {
-        var player = new VideoPlayer(this);
-        var newPlayer = videoPlayers.push(player);
+        const player = new VideoPlayer(this);
+        const newPlayer = videoPlayers.push(player);
       });
     }
 
@@ -53,8 +52,8 @@ export default class ProductStyleTips extends BaseSection {
 
     if (this.$slides.length > 1) {
       this.swiper = new Swiper(this.$slideshow, swiperOptions);
-      $('.style-tips-inner-container', this.$container).on("mouseenter", this.onSlideshowEnter.bind(this));
-      $('.style-tips-inner-container', this.$container).on("mouseleave", this.onSlideshowLeave.bind(this));
+      $('.style-tips-inner-container', this.$container).on('mouseenter', this.onSlideshowEnter.bind(this));
+      $('.style-tips-inner-container', this.$container).on('mouseleave', this.onSlideshowLeave.bind(this));
     }
 
     $(selectors.videoModal, this.$container).on('show.bs.modal', this.playVideo.bind(this));
@@ -76,16 +75,16 @@ export default class ProductStyleTips extends BaseSection {
 
   onSlideshowLeave(e) {
     e.preventDefault();
-    $('.swiper-button', this.$container).removeClass('visible'); 
+    $('.swiper-button', this.$container).removeClass('visible');
   }
 
   playVideo(e) {
-    var videoIndex = $(e.currentTarget).data('video-modal');
-    this.videoPlayers[videoIndex].play(); 
+    const videoIndex = $(e.currentTarget).data('video-modal');
+    this.videoPlayers[videoIndex].play();
   }
 
   stopVideo(e) {
-    var videoIndex = $(e.currentTarget).data('video-modal');
+    const videoIndex = $(e.currentTarget).data('video-modal');
     this.videoPlayers[videoIndex].pause();
   }
 }

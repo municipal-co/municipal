@@ -41,7 +41,7 @@ export default class ProductCard {
 
     this.$el = $(el);
     this.$dot = $(selectors.dot, this.$el);
-    this.productData = JSON.parse($(selectors.productJson).html());
+    this.productData = JSON.parse($(selectors.productJson, this.$el).html());
     this.$variantMessage = $(selectors.variantMessage, this.$el);
     this.lowInventoryThreshold = $(selectors.variantOptionList).data('low-inventory-threshold');
 
@@ -73,7 +73,6 @@ export default class ProductCard {
   onDotClick(e) {
     const $el = $(e.currentTarget);
     const variantId = $el.data('variant-id');
-    console.log('dot click');
     if (!$el.is('[disabled]')) {
       CartAPI.addItemFromID(variantId)
       .then((data) => {

@@ -1,41 +1,73 @@
-{% paginate search.results by 16 %}
+{% paginate search.results by 1 %}
 
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="search">
-  <div class="container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-22 offset-1">
+        <form action="/search" method="get" role="search" data-search-form>
+          <div class="minimal-input-box">
 
-    {% capture title %}
-      {% if search.performed %}
-        {{ 'general.search.results_for_html' | t: terms: search.terms }}
-      {% else %}
-        {{ 'general.search.title' | t }}
-      {% endif %}
-    {% endcapture %}
+            <div class="search-icon">{% include 'icon-search' %}</div>
+            <input type="hidden" name="type" value="product" />
+            <input type="text" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input minimal-input-box__input--search" autocomplete="off" value="{{ search.terms }}" data-search-input>
 
-    {% capture subtitle %}
-      {% if search.results_count > 0 %}
-        {% if search.results_count == 1 %}
-          {{ 'general.search.results_count_singular' | t }}
-        {% else %}
-          {{ 'general.search.results_count_plural' | t: count: search.results_count }}
-        {% endif %}
-      {% endif %}
-    {% endcapture %}
+            <div class="search-autocomplete-container" style="display: none;" data-autocomplete-container>
+              <ul>
+                <li class="autocomplete-item loader"></li>
+                <li class="autocomplete-item loader"></li>
+                <li class="autocomplete-item loader"></li>
+              </ul>
+            </div>
 
-    {% include 'page-header',
-                ph_title: title,
-                ph_subtitle: subtitle
-    %}
+            <button type="submit" class="minimal-input-box__submit">
+              {% include 'icon-arrow' %}
+              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% if search.performed %}
+      <div class="search__results-header">
+        <div class="row align-items-end">
+          <div class="col-20 offset-2 col-lg-9 offset-lg-0 order-lg-2">
+            <div class="search__count">
+              {% if search.results_count > 0 %}
+                {% if search.results_count == 1 %}
+                  {{ 'general.search.results_for_singular_html' | t: terms: search.terms }}
+                {% else %}
+                  {{ 'general.search.results_for_html' | t: count: search.results_count, terms: search.terms }}
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+
+          {% if search.results.size > 0 %}
+            <div class="col-20 offset-2 col-lg-13 offset-lg-1 order-lg-1 ">
+              <div class="h2 search__title">
+                Results:
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+    {% endif %}
 
     {% if search.performed %}
       {% if search.results.size > 0 %}
-        <div class="container">
-          <div class="content-grid">
+        <div class="col-20 offset-2 col-lg-22 offset-lg-1">
+          <div class="content-grid" data-content-grid>
             {% for item in search.results %}
-              <div class="content-grid__item">
+              <div class="content-grid__item" data-grid-item>
                 {% if item.object_type == 'product' %}
-                  {% include 'product-card', product: item, quick_view: true %}
-                {% elsif item.object_type == 'article' %}
-                  {% include 'article-card', article: item %}  
+                  {% include 'product-card',
+                  product: item,
+                  quick_view: false,
+                  show_sizes: true,
+                  show_swatches: false
+                  %}
                 {% else %}
                   <p>{{ item.content | strip_html | truncatewords: 50 }}</p>
                 {% endif %}
@@ -43,12 +75,14 @@
             {% endfor %}
           </div>
         </div>
-
         {% if paginate.pages > 1 %}
-          {% include 'pagination' %}
+          {% include 'load-more'
+          card_selector: '[data-grid-item]',
+          grid_container: '[data-content-grid]'
+          %}
         {% endif %}
 
-      {% else %}    
+      {% else %}
        <p class="p1 text-center">No search results found</p>
       {% endif %}
 
