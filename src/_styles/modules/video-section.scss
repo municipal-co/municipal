@@ -121,6 +121,10 @@
   }
 
   .modal--video {
+    &.show {
+       background-color: rgba(18, 18, 18, 0.9);
+     }
+     
     .modal-content {
       background-color: transparent;
       border: 0;
