@@ -17,6 +17,7 @@
               ti_cta_url: { url }
               ti_left_image: { image }
               ti_right_image: { image }
+              ti_eyebrow_icon: { image }
   %}
 
 {% endcomment -%}
@@ -46,6 +47,12 @@
 
         </div>
         <div class="col-md-12">
+          {%- if ti_eyebrow_icon != blank -%}
+            <div class="tiled-image__eyebrow-icon">
+              {%- render 'image_tag'
+                image: ti_eyebrow_icon -%}
+            </div>
+          {%- endif -%}
           {%- if ti_right_image != blank -%}
             <div class="tiled-image__right-image text-right">
               {%- render 'image_tag'
