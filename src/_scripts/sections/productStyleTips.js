@@ -23,7 +23,7 @@ export default class ProductStyleTips extends BaseSection {
 
     this.observerProperties = {
       root: null,
-      threshold: 0.4
+      threshold: 0.2
     }
 
     const swiperOptions = {
@@ -63,7 +63,7 @@ export default class ProductStyleTips extends BaseSection {
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.4 && this.background !== '') {
+      if (entry.intersectionRatio > 0.2 && this.background !== '') {
         $('body').css('background-color', this.background);
       }
     })
