@@ -328,8 +328,9 @@
 
   .drawer__header-title {
     font-size: large-vw(18px, 30px);
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     color: $white;
+    text-transform: none;
 
     @include media-breakpoint-down('md') {
       font-size: 18px;
