@@ -58,6 +58,7 @@
     margin-bottom: large-vw(35px, 55px);
     
     @include media-breakpoint-down('md') {
+      max-width: 100%;
       line-height: 50px;
       margin-bottom: 35px;
     }
