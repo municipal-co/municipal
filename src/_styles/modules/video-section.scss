@@ -108,7 +108,7 @@
   }
 
   .modal-dialog {
-    max-width: 75%;
+    max-width: 65%;
     
     @include media-breakpoint-down('md') {
       max-width: 100%;
@@ -117,9 +117,7 @@
   }
 
   .modal-body {
-    @include media-breakpoint-down('md') {
-      padding: 0;
-    }
+    padding: 0;
   }
 
   .modal--video {
@@ -160,6 +158,10 @@
 
   .product-link {
     color: $white;
+
+    &:hover {
+      color: $cyan;
+    }
     
     @include media-breakpoint-up('lg') {
       position: absolute;
