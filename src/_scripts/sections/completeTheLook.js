@@ -27,7 +27,7 @@ export default class CompleteTheLook extends BaseSection {
 
     this.swiperOptions = {
       loop: false,
-      slidesPerView: 2,
+      slidesPerView: 2.3,
       scrollbar: {
         el: $('.swiper-scrollbar', this.$container),
         draggable: true,
