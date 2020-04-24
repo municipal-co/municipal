@@ -24,7 +24,7 @@ export default class CollectionSection extends BaseSection {
       threshold: 0.1
     }
 
-    self = this;
+    const self = this;
 
     this.collectionSections.each(function() {
       self.IntersectionObserver = new IntersectionObserver(self.observerCallback.bind(self), self.observerProperties);

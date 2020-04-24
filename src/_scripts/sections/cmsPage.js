@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import BaseSection from './base';
 import VideoPlayer from '../ui/videoPlayer';
 
@@ -26,7 +27,7 @@ export default class CMSPageSection extends BaseSection {
       this.videoPlayers.push(new VideoPlayer(el));
     });
 
-    self = this;
+    const self = this;
 
     this.cmsBlocks.each(function() {
       self.IntersectionObserver = new IntersectionObserver(self.observerCallback.bind(self), self.observerProperties);
@@ -36,8 +37,8 @@ export default class CMSPageSection extends BaseSection {
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
-      var entryBackground = $(entry.target).data('background-color');
-      
+      const entryBackground = $(entry.target).data('background-color');
+
       if (entry.intersectionRatio > 0.5 && entryBackground !== '') {
         $('body').css('background-color', entryBackground);
       }
