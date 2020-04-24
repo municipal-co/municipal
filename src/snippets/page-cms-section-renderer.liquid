@@ -188,6 +188,48 @@
               <div class="video-player__embed" data-video-player-embed></div>
             </div>
           </div>
+        {% elsif block.type == "image_plus_caption" %}
+          <div class="section-image-plus-caption" data-cms-block data-background-color="#00ff00">
+            {% assign aspect_ratio = block.settings.aspect_ratio %}
+            {% assign counter = 0 %}
+
+            {% for i in (1..2) %}
+              {% assign index_image = 'image_' | append: i %}
+              {% assign index_caption = 'caption_' | append: i %}
+
+              {% assign tile_image = block.settings[index_image] %}
+              {% assign caption = block.settings[index_caption] %}
+
+              {% if tile_image != blank and caption != blank %}
+                {% assign counter = counter | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+            
+            <div class="row justify-content-center">
+              <div class="image-tiles-wrapper {% if counter == 1 and aspect_ratio == '1x1'%}col-lg-14 col-20{% else %}col-lg-22 col-20{% endif %}">
+                {% for i in (1..2) %}
+                  {% assign index_image = 'image_' | append: i %}
+                  {% assign index_caption = 'caption_' | append: i %}
+
+                  {% assign tile_image = block.settings[index_image] %}
+                  {% assign caption = block.settings[index_caption] %}
+
+                  {% if tile_image != blank and caption != blank %}
+                    <div class="image-tile {% if counter > 1%}image-tile--half{% endif %}">
+
+                      <div class="image-title__image frame {% if counter == 1%}frame--{{ aspect_ratio }}{% else %}frame--1x1{% endif %}">
+                        {% render 'image_tag'
+                                  image: tile_image
+                                  object_fit: "cover"
+                        %}
+                      </div>
+                      <p class="image-tile__caption p1">{{ caption }}</p>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div> 
+            </div>
+          </div>
         {% endif %}
       </div>
     {% endfor %}
