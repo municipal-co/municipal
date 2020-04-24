@@ -49,8 +49,8 @@
     },
     "search": {
       "no_results_html": "Nothing was found for '{{ terms }}'",
-      "results_for_html": "Search results for '{{ terms }}'",
-      "results_for_singular_html": "Search result for '{{ terms }}'",
+      "results_for_html": "Showing {{count}} results for '{{ terms }}'",
+      "results_for_singular_html": "Showing result for '{{ terms }}'",
       "results_count_singular": "1 result",
       "results_count_plural": "{{ count }} results",
       "title": "Search for products on our site",

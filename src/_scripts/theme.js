@@ -64,8 +64,8 @@ import PromoSection                  from './sections/promoSection';
 import CollectionBanner              from './sections/collectionBanner';
 import ProductStyleTips              from './sections/productStyleTips';
 import CompleteTheLook               from './sections/completeTheLook';
+import SearchResults                 from './sections/search';
 import CollectionGridSection         from './sections/collectionGridSection';
-
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -116,6 +116,7 @@ Breakpoints.initialize();
   sectionManager.register('promo', PromoSection);
   sectionManager.register('collection-banner', CollectionBanner);
   sectionManager.register('complete-the-look', CompleteTheLook);
+  sectionManager.register('search', SearchResults)
   sectionManager.register('tiled-image', TiledImageSection);
   sectionManager.register('collection-grid', CollectionGridSection);
 
