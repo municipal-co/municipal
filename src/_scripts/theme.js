@@ -64,6 +64,7 @@ import PromoSection                  from './sections/promoSection';
 import CollectionBanner              from './sections/collectionBanner';
 import ProductStyleTips              from './sections/productStyleTips';
 import CompleteTheLook               from './sections/completeTheLook';
+import CollectionGridSection         from './sections/collectionGridSection';
 import SearchResults                 from './sections/search';
 import CollectionGridSection         from './sections/collectionGridSection';
 
