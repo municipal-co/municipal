@@ -111,8 +111,6 @@ export default class ProductSection extends BaseSection {
   }
 
   updateScrollerLinks(target) {
-    const $scrollLinks = $(selectors.sectionScroller);
-
     $(selectors.sectionScroller).each((index, el) => {
       if ($(el).attr('href') === target) {
         $(el).addClass(classes.active).siblings().removeClass(classes.active);

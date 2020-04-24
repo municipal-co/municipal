@@ -1,9 +1,9 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import BaseSection from './base';
 
-export default class PromoSection extends BaseSection {
+export default class TiledImageSection extends BaseSection {
   constructor(container) {
-    super(container, 'promo');
+    super(container, 'tiled-image');
 
     this.$container = $(container);
 

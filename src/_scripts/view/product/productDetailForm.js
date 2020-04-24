@@ -239,7 +239,6 @@ export default class ProductDetailForm {
    */
 
   openShippingModal(evt) {
-    console.log('trigger modal');
     evt.preventDefault();
     this.$shippingModal.modal('show');
   }

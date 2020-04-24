@@ -1,0 +1,94 @@
+{%- comment %}
+
+  Tiled Image
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'tiled-image',
+              ti_id: { string } - required
+              ti_background_color: { string }
+              ti_light_text: { boolean } - defaults to false
+              ti_title_color: { string }
+              ti_eyebrow: { string }
+              ti_title: { string }
+              ti_text: { string }
+              ti_cta_text: { string }
+              ti_cta_url: { url }
+              ti_left_image: { image }
+              ti_right_image: { image }
+              ti_eyebrow_icon: { image }
+  %}
+
+{% endcomment -%}
+{% assign ti_eyebrow_color = "black" %}
+{% assign button_design = "primary" %}
+
+{% if ti_light_text %}
+  {%- assign ti_eyebrow_color = "white" -%}
+  {% assign button_design = "white" %}
+{% endif %}
+
+<div class="row no-gutters justify-content-center" data-background-color="{{ ti_background_color }}" data-section-type="tiled-image" data-section-id="{{ ti_id }}">
+  <div class="col-20 col-lg-22">
+    <div class="tiled-image__content">
+      <div class="row">
+        <div class="col-md-12">
+          
+          <div class="tiled-image__header">
+            {%- if ti_eyebrow != blank -%}
+              <h5 class="tiled-image__eyebrow text-{{ ti_eyebrow_color }}">{{ ti_eyebrow }}</h5>
+            {%- endif -%}
+            
+            {%- if ti_title != blank -%}
+              <h2 class="tiled-image__title h1 text-{{ ti_title_color }}"> {{ ti_title }} </h2>
+            {%- endif -%}
+          </div>
+
+        </div>
+        <div class="col-md-12">
+          {%- if ti_eyebrow_icon != blank -%}
+            <div class="tiled-image__eyebrow-icon">
+              {%- render 'image_tag'
+                image: ti_eyebrow_icon -%}
+            </div>
+          {%- endif -%}
+          {%- if ti_right_image != blank -%}
+            <div class="tiled-image__right-image text-right">
+              {%- render 'image_tag'
+                image: ti_right_image -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-13 col-lg-14">
+          {%- if ti_left_image != blank -%}
+            <div class="tiled-image__left-image">
+              {%- render 'image_tag'
+                image: ti_left_image -%}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="col-md-11 col-lg-10">
+          <div class="tiled-image__row-content">
+            {% if ti_text != blank %}
+              <div class="tiled-image__text">{{ ti_text }}</div>
+            {% endif %}
+            {% if ti_cta_text != blank and ti_cta_url != blank %}
+              <div class="tiled-image__button-container">
+                <a href="{{ ti_cta_url }}" class="btn btn-{{ button_design }}">
+                  {{ ti_cta_text }}
+                  <span class="btn__ui">
+                    {% include 'icon-arrow' %}
+                  </span>
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

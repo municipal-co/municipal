@@ -1,0 +1,15 @@
+<div class="load-more"
+     data-pagination
+     data-card-selector ="{{card_selector}}"
+     data-grid-container="{{grid_container}}"
+     data-url-next="{{ paginate.next.url }}"
+     {% unless paginate.next.is_link %}
+      style="display:none";
+     {% endunless %}
+     >
+    <a href="{{ paginate.next.url }}"
+    data-load-more-button
+    class="load-more">
+    {% include 'icon-more-full-color' %}
+  </a>
+</div>

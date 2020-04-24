@@ -1,0 +1,373 @@
+{% include 'page-cms-section-renderer', section: section %}
+
+{% schema %}
+  {
+    "name": "Page - About Us",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Page Hero - Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Page Title"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle",
+        "default": "Page Subtitle"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Design"
+      },
+      {
+        "type": "checkbox",
+        "id" : "content_light_text",
+        "label": "Light Text",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id":   "content_max_width",
+        "min":  300,
+        "max":  850,
+        "step": 25,
+        "unit": "px",
+        "label": "Max Content Width",
+        "default": 450
+      },      
+      {
+        "type":      "select",
+        "id":        "content_alignment",
+        "label":     "Content Alignment",
+        "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "right", "label": "Right" }
+        ],
+        "default":   "center"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image_small",
+        "label": "Background Image - Small Screens"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "spacer",
+        "name": "Spacer",
+        "settings": [
+          {
+            "type":      "select",
+            "id":        "height_name",
+            "label":     "Height",
+            "options": [
+              { "value": "small", "label": "Small" },
+              { "value": "medium", "label": "Medium" },
+              { "value": "large", "label": "Large" },
+              { "value": "xlarge", "label": "Extra Large" },
+              { "value": "huge", "label": "Huge" }
+            ],
+            "default":   "medium"
+          }
+        ]
+      },
+      {
+        "type": "article_grid",
+        "name": "Article Grid",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+             "type": "article",
+             "id": "article_1",
+             "label": "Article 1"
+          },
+          {
+             "type": "article",
+             "id": "article_2",
+             "label": "Article 2"
+          },
+          {
+             "type": "article",
+             "id": "article_3",
+             "label": "Article 3"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          }
+        ]
+      },   
+      {
+        "type": "product_grid",
+        "name": "Product Grid",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },        
+          {
+            "type": "product",
+            "id": "product_1",
+            "label": "Product 1"
+          },
+          {
+            "type": "product",
+            "id": "product_2",
+            "label": "Product 2"
+          },
+          {
+            "type": "product",
+            "id": "product_3",
+            "label": "Product 3"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          }
+        ]
+      },
+      {
+        "type": "banner",
+        "name": "Banner",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type": "checkbox",
+            "id" : "light_text",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type":      "select",
+            "id":        "text_alignment",
+            "label":     "Text Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "image_picker",
+            "id": "background",
+            "label": "Background Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_image_small",
+            "label": "Background Image - Mobile"
+          }
+        ]
+      },
+      {
+        "type": "promo",
+        "name": "Promo",
+        "settings": [
+          {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+              { "value": "left", "label": "Image Left" },
+              { "value": "right", "label": "Image Right" }
+            ],
+            "default": "left"
+          },
+          {
+            "type": "select",
+            "id": "type",
+            "label": "Content Split",
+            "options": [
+              { "value": "1", "label": "4/8" },
+              { "value": "2", "label": "5/7" },
+              { "value": "3", "label": "6/6" },
+              { "value": "4", "label": "7/5" },
+              { "value": "5", "label": "8/4" }
+            ],
+            "default": "3"
+          },      
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },     
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_small",
+            "label": "Image - Mobile"
+          }  
+        ]  
+      },
+      {
+        "type": "richtext",
+        "name": "Richtext",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "video",
+        "name": "Video",
+        "settings": [
+          {
+             "id": "video_url",
+             "type": "video_url",
+             "label": "Video URL",
+             "accept": ["vimeo", "youtube"],
+             "info": "Both Vimeo and YouTube videos are supported",
+             "default": "https://vimeo.com/72223143"
+          },
+          {
+            "type": "image_picker",
+            "id": "cover_image",
+            "label": "Cover Image"
+          },
+          {
+            "type": "header",
+            "content": "Vimeo Embed Options",
+            "info": "The options below only apply to Vimeo videos"
+          },
+          {
+            "type": "color",
+            "id": "embed_color",
+            "label": "Embed Color",
+            "default": "#000"
+          },          
+          {
+            "type": "checkbox",
+            "id" : "background",
+            "label": "Background Video",
+            "info": "Enabling this will remove video controls, cover image and autoplay the video.  [See Vimeo Help Page for info](https://help.vimeo.com/hc/en-us/articles/115011183028-Embedding-background-videos)",
+            "default": false
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
