@@ -1,0 +1,14 @@
+.load-more {
+  width: 100%;
+  text-align: center;
+
+  .icon-more-full-color {
+    width: large-vw(80px, 180px);
+    height: large-vw(80px, 180px);
+
+    @include media-breakpoint-down('md') {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}

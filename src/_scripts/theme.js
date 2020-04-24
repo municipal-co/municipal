@@ -11,10 +11,10 @@ import 'bootstrap/js/dist/collapse';
 import 'bootstrap/js/dist/modal';
 
 // Core
-import * as Utils       from './core/utils';
-import * as RTE         from './core/rte';
-import * as A11Y        from './core/a11y';
-import * as Animations  from './core/animations';
+import * as Utils from './core/utils';
+import * as RTE from './core/rte';
+import * as A11Y from './core/a11y';
+import * as Animations from './core/animations';
 import * as Breakpoints from './core/breakpoints';
 
 // UI - Import all to enable data API
@@ -25,34 +25,40 @@ import './ui/tabs';
 import './ui/quantityAdjuster';
 
 // Sections
-import SectionManager                from './sections/sectionManager';
-import HeaderSection                 from './sections/header';
-import FooterSection                 from './sections/footer';
-import MobileMenuSection             from './sections/mobileMenu';
-import ProductSection                from './sections/product';
-import CartSection                   from './sections/cart';
-import AJAXCartSection               from './sections/ajaxCart';
-import PencilBannerSection           from './sections/pencilBanner';
-import CollectionSection             from './sections/collection';
-import BlogSection                   from './sections/blog';
-import ArticleSection                from './sections/article';
-import InstagramFeedSection          from './sections/instagramFeed';
-import NewsletterModalSection        from './sections/newsletterModal';
-import NewsletterSlideupSection      from './sections/newsletterSlideup';
-import SlideshowSection              from './sections/slideshow';
-import SwatchesSection               from './sections/swatches';
-import VideoSection                  from './sections/video';
-import CMSPageSection                from './sections/cmsPage';
-import CustomersLoginSection         from './sections/customersLogin';
-import CustomersAccountSection       from './sections/customersAccount';
+import SectionManager from './sections/sectionManager';
+import HeaderSection from './sections/header';
+import FooterSection from './sections/footer';
+import MobileMenuSection from './sections/mobileMenu';
+import ProductSection from './sections/product';
+import CartSection from './sections/cart';
+import AJAXCartSection from './sections/ajaxCart';
+import PencilBannerSection from './sections/pencilBanner';
+import CollectionSection from './sections/collection';
+import BlogSection from './sections/blog';
+import ArticleSection from './sections/article';
+import InstagramFeedSection from './sections/instagramFeed';
+import NewsletterModalSection from './sections/newsletterModal';
+import NewsletterSlideupSection from './sections/newsletterSlideup';
+import SlideshowSection from './sections/slideshow';
+import SwatchesSection from './sections/swatches';
+import VideoSection from './sections/video';
+import CMSPageSection from './sections/cmsPage';
+import CustomersLoginSection from './sections/customersLogin';
+import CustomersAccountSection from './sections/customersAccount';
 import CustomersAccountOrdersSection from './sections/customersAccountOrders';
-import CustomersAddressesSection     from './sections/customersAddresses';
-import CustomersOrderSection         from './sections/customersOrder';
-import HeroSection                   from './sections/heroSection';
-import ProductOverview               from './sections/productOverview';
-import ProductFeatures               from './sections/productFeatures';
-import PromoSection                  from './sections/promoSection';
-import TwoUpInstagram                from './sections/twoUpInstagram';
+import TwoUpInstagram from './sections/twoUpInstagram';
+import CustomersAddressesSection from './sections/customersAddresses';
+import CustomersOrderSection from './sections/customersOrder';
+import HeroSection from './sections/heroSection';
+import ProductOverview from './sections/productOverview';
+import ProductFeatures from './sections/productFeatures';
+import PromoSection from './sections/promoSection';
+import ProductStyleTips from './sections/productStyleTips';
+import CompleteTheLook from './sections/completeTheLook';
+import TiledImageSection from './sections/tiledImageSection';
+import CollectionBanner from './sections/collectionBanner';
+import SearchResults from './sections/search';
+import CollectionGridSection from './sections/collectionGridSection';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -99,8 +105,17 @@ Breakpoints.initialize();
   sectionManager.register('hero', HeroSection);
   sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);
+  sectionManager.register('style-tips', ProductStyleTips);
   sectionManager.register('promo', PromoSection);
+<<<<<<< HEAD
   sectionManager.register('two-up-instagram', TwoUpInstagram);
+=======
+  sectionManager.register('collection-banner', CollectionBanner);
+  sectionManager.register('complete-the-look', CompleteTheLook);
+  sectionManager.register('search', SearchResults)
+  sectionManager.register('tiled-image', TiledImageSection);
+  sectionManager.register('collection-grid', CollectionGridSection);
+>>>>>>> bac3124804594fec9d9607036f3e1ec7d3f2adb4
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
@@ -128,7 +143,10 @@ Breakpoints.initialize();
 
   // Apply a specific class to the html element for browser support of cookies.
   if (Utils.cookiesEnabled()) {
-    document.documentElement.className = document.documentElement.className.replace('supports-no-cookies', 'supports-cookies');
+    document.documentElement.className = document.documentElement.className.replace(
+      'supports-no-cookies',
+      'supports-cookies'
+    );
   }
 
   // Chosen JS plugin for select boxes
@@ -143,15 +161,21 @@ Breakpoints.initialize();
   const isOpenClass = 'is-open';
 
   $document.on('show.bs.collapse', '.collapse', (e) => {
-    $(e.currentTarget).parents('.expandable-list').addClass(isOpenClass);
+    $(e.currentTarget)
+      .parents('.expandable-list')
+      .addClass(isOpenClass);
   });
 
   $document.on('hide.bs.collapse', '.collapse', (e) => {
-    $(e.currentTarget).parents('.expandable-list').removeClass(isOpenClass);
+    $(e.currentTarget)
+      .parents('.expandable-list')
+      .removeClass(isOpenClass);
   });
 
   $('.collapse.show').each(function() {
-    $(this).parents('.expandable-list').addClass(isOpenClass);
+    $(this)
+      .parents('.expandable-list')
+      .addClass(isOpenClass);
   });
   // END - Global handler for collapse plugin to add state class for open expandable lists
 
@@ -161,11 +185,11 @@ Breakpoints.initialize();
   });
 
   // Add lazyloading support for background images
-  document.addEventListener('lazybeforeunveil', function(e){
+  document.addEventListener('lazybeforeunveil', function(e) {
     const bg = e.target.getAttribute('data-background');
-    if(bg){
-        e.target.style.backgroundImage = 'url(' + bg + ')';
-      }
+    if (bg) {
+      e.target.style.backgroundImage = 'url(' + bg + ')';
+    }
   });
 
   // Quickview stuff

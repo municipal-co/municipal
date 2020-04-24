@@ -1,0 +1,98 @@
+{%- assign eyebrow_1 = settings.shipping_eyebrow_1 -%}
+{%- assign title_1 = settings.shipping_title_1 -%}
+{%- assign body_1 = settings.shipping_body_1 -%}
+{%- assign eyebrow_2 = settings.shipping_eyebrow_2 -%}
+{%- assign title_2 = settings.shipping_title_2 -%}
+{%- assign body_2 = settings.shipping_body_2 -%}
+{%- assign eyebrow_3 = settings.shipping_eyebrow_3 -%}
+{%- assign title_3 = settings.shipping_title_3 -%}
+{%- assign body_3 = settings.shipping_body_3 -%}
+
+
+{%- capture block_1 -%}
+  {%- if title_1 != blank or body_1 != blank -%}
+    <div class="shipping-modal__block">
+      {%- if eyebrow_1 != blank-%}
+        <span class="h5 shipping-modal__eyebrow">
+          {{ eyebrow_1 }}
+        </span>
+      {%- endif -%}
+      {%- if title_1 != blank -%}
+        <h3 class="h3 shipping-modal__title">
+          {{ title_1 }}
+        </h3>
+      {%- endif -%}
+      {%- if body_1 != blank -%}
+        <div class="shipping-modal__body">
+          {{body_1}}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture block_2 -%}
+  {%- if title_2 != blank or body_2 != blank -%}
+    <div class="shipping-modal__block">
+      {%- if eyebrow_2 != blank-%}
+        <span class="h5 shipping-modal__eyebrow">
+          {{ eyebrow_2 }}
+        </span>
+      {%- endif -%}
+      {%- if title_2 != blank -%}
+        <h3 class="h3 shipping-modal__title">
+          {{ title_2 }}
+        </h3>
+      {%- endif -%}
+      {%- if body_2 != blank -%}
+        <div class="shipping-modal__body">
+          {{body_2}}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture block_3 -%}
+  {%- if title_3 != blank or body_1 != blank -%}
+    <div class="shipping-modal__block">
+      {%- if eyebrow_3 != blank-%}
+        <span class="h5 shipping-modal__eyebrow">
+          {{ eyebrow_3 }}
+        </span>
+      {%- endif -%}
+      {%- if title_3 != blank -%}
+        <h3 class="h3 shipping-modal__title">
+          {{ title_3 }}
+        </h3>
+      {%- endif -%}
+      {%- if body_3 != blank -%}
+        <div class="shipping-modal__body">
+          {{body_3}}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if block_1 != blank or block_2 != blank or block_3 != blank -%}
+  <div class="modal fade product-shipping-modal" id="shipping-modal" tabindex="-1" role="dialog" aria-label="Shipping details modal" data-shipping-modal>
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title d-lg-none d-xl-none">
+            Info
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            {%- include 'icon-close' -%}
+          </button>
+        </div>
+        <div class="modal-body">
+          {{block_1}}
+          {{block_2}}
+          {{block_3}}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

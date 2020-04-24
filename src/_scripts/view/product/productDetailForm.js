@@ -17,7 +17,9 @@ const selectors = {
   variantOptionValue: '[data-variant-option-value]',
   quantitySelect: '[data-product-quantity-select]',
   fullDetailsLink: '[data-full-details-link]',
-  selectedOption: '[data-selected-option]'
+  selectedOption: '[data-selected-option]',
+  shippingModal: '[data-shipping-modal]',
+  shippingModalTrigger: '[data-shipping-modal-trigger]'
 };
 
 const classes = {
@@ -70,6 +72,8 @@ export default class ProductDetailForm {
     this.$compareEls             = this.$comparePrice.add($(selectors.comparePriceText, this.$container));
     this.$singleOptionSelectors  = $(selectors.singleOptionSelector, this.$container); // Dropdowns for each variant option containing all values for that option
     this.$variantOptionValueList = $(selectors.variantOptionValueList, this.$container); // Alternate UI that takes the place of a single option selector (could be swatches, dots, buttons, whatever..)
+    this.$shippingModalTrigger   = $(selectors.shippingModalTrigger, this.$container);
+    this.$shippingModal          = $(selectors.shippingModal, this.$container);
     /* eslint-enable */
 
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());
@@ -84,6 +88,7 @@ export default class ProductDetailForm {
 
     this.$container.on('variantChange', this.onVariantChange.bind(this));
     this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
+    this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
 
     Utils.chosenSelects(this.$container);
   }
@@ -225,5 +230,16 @@ export default class ProductDetailForm {
     $option.siblings().removeClass(classes.variantOptionValueActive);
     $optionLabel.text(value);
 
+  }
+
+  /**
+   * Opens shipping information modal
+   *
+   * @param {event} evt
+   */
+
+  openShippingModal(evt) {
+    evt.preventDefault();
+    this.$shippingModal.modal('show');
   }
 }

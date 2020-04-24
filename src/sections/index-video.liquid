@@ -1,15 +1,86 @@
-<div data-section-id="{{ section.id }}" data-section-type="video">
-  <div class="container">
-    <div id="video-player-{{ section.id }}" class="video-player" data-video-player data-video-id="{{ section.settings.video_url.id }}" data-video-type="{{ section.settings.video_url.type }}" data-background="{% if section.settings.background %}true{% else %}false{% endif %}" data-embed-color="{{ section.settings.embed_color | remove: '#' }}">
-      {% if section.settings.cover_image and section.settings.background == false %}
-        <div class="video-player__cover" data-video-player-cover>
-          <div class="video-player__cover-still" style="background-image: url({{ section.settings.cover_image | img_url: '2000x' }});"></div>
-          <span class="video-player__cover-play">
-            {% include 'icon-play' %}
-          </span>
+{% assign title_color = section.settings.title_color %}
+{% assign background_color = section.settings.background_color %}
+
+{% assign eyebrow_icon = section.settings.eyebrow_icon %}
+{% assign eyebrow = section.settings.eyebrow %}
+{% assign title = section.settings.title %}
+
+{% assign video_cover = section.settings.video_cover %}
+{% assign video_url = section.settings.video_url %}
+{% assign video_id = video_url | remove: "https://www.youtube.com/watch?v=" %}
+
+{% assign this_product = section.settings.product_link %}
+{% assign product_link =  all_products[this_product].url%}
+
+<div data-section-id="{{ section.id }}" class="video-section" data-section-type="video" data-background-color="{{ background_color }}">
+  <div class="container-fluid">
+
+    <div class="row justify-content-center">
+      {% if eyebrow_icon != blank %}
+        <div class="video-section__eyebrow-icon frame frame--4x3">
+          {% render 'image_tag'
+                    image: eyebrow_icon,
+                    object_fit: "cover"
+          %}
         </div>
       {% endif %}
-      <div class="video-player__embed" data-video-player-embed></div>
+
+      <div class="col-lg-22 col-20">
+        {% if eyebrow != blank %}
+          <span class="video-section__eyebrow h5">{{ eyebrow }}</span>
+        {% endif %}
+
+        {% if title != blank %}
+          <div class="video-section__title h1 text-{{ title_color }}">{{ title }}</div>
+        {% endif %}
+
+        {% if video_url != blank %}
+          <div class="video-section__video-cover frame frame--16x9">
+            {% render 'image_tag'
+                      image: video_cover,
+                      object_fit: 'cover'
+            %}
+
+            <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#video-modal-{{ section.id }}">
+              {% include 'icon-play-full-color' %}
+            </button>
+          </div>
+          
+          <div class="modal modal--video fade" id="video-modal-{{ section.id }}" data-video-modal>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              {% include 'icon-close' %}
+            </button>
+              
+            {% if this_product != blank %}
+              <a class="btn btn-link product-link d-lg-block d-none"href="{{ product_link }}">
+                Shop {{ all_products[this_product].title }}
+                <span class="btn__ui">
+                  {% include 'icon-arrow' %}
+                </span>
+              </a>
+            {% endif %}
+
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div id="video-player-{{ video_id }}" class="index-video-player frame frame--16x9" data-video-player data-video-id="{{ video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
+                    <div class="video-player__embed" data-video-player-embed></div>
+                  </div>
+
+                  {% if this_product != blank %}
+                    <a class="btn btn-link product-link d-block d-lg-none"href="{{ product_link }}">
+                      Shop {{ all_products[this_product].title }}
+                      <span class="btn__ui">
+                        {% include 'icon-arrow' %}
+                      </span>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
@@ -19,42 +90,84 @@
     "name": "Video",
     "settings": [
       {
-         "id": "video_url",
-         "type": "video_url",
-         "label": "Video URL",
-         "accept": ["vimeo", "youtube"],
-         "info": "Both Vimeo and YouTube videos are supported"
+        "type": "header",
+        "content": "Section Content"
+      },   
+      {
+        "type": "image_picker",
+        "id": "eyebrow_icon",
+        "label": "Eyebrow Icon",
+        "info": "Icon appear on top-left hand side of the section."
+      },
+      {
+        "type": "text",
+        "id": "eyebrow",
+        "label": "Eyebrow"
+      },
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Title"
       },
       {
         "type": "image_picker",
-        "id": "cover_image",
-        "label": "Cover Image"
+        "id": "video_cover",
+        "label": "Video Image"
+      },
+      {
+         "id": "video_url",
+         "type": "video_url",
+         "label": "Video URL",
+         "accept": ["youtube"]
+      },
+      {
+        "type": "product",
+        "id": "product_link",
+        "label": "Product Link"
       },
       {
         "type": "header",
-        "content": "Vimeo Embed Options",
-        "info": "The options below only apply to Vimeo videos"
+        "content": "Section Settings"
       },
       {
-        "type": "color",
-        "id": "embed_color",
-        "label": "Embed Color",
-        "default": "#000"
-      },          
+        "type": "select",
+        "id": "title_color",
+        "label": "Title Color",
+        "options": [
+          {"label":"White", "value":"white"},
+          {"label":"Red", "value":"red"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label":"Black", "value":"black"}
+        ],
+        "default": "white"
+      },
       {
-        "type": "checkbox",
-        "id" : "background",
-        "label": "Background Video",
-        "info": "Enabling this will remove video controls, cover image and autoplay the video.  [See Vimeo Help Page for info](https://help.vimeo.com/hc/en-us/articles/115011183028-Embedding-background-videos)",
-        "default": false
+        "type": "select",
+        "id": "background_color",
+        "label": "Background Color",
+        "options": [
+          {"label": "White", "value":"#ffffff"},
+          {"label": "Red", "value":"#ff2b00"},
+          {"label": "Cyan", "value":"#009dcc"},
+          {"label": "Black", "value":"#121212"},
+          {"label": "Brown", "value": "#452b2b"},
+          {"label": "Blue", "value": "#2c6275"},
+          {"label": "Tan", "value": "#c3baa8"},
+          {"label": "Gray", "value": "#424446"},
+          {"label": "Brownish-Red", "value": "#752c2e"}
+        ],
+        "default": "#424446"
       }
     ],
     "presets": [{
       "name": "Video",
       "category": "Media",
-      "settings": {
-        "video_url": "https://vimeo.com/72223143"
-      }
+      "settings": {}
     }]
   }
 {% endschema %}
+
+
+
+
+      
