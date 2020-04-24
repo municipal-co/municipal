@@ -55,18 +55,9 @@ import PromoSection from './sections/promoSection';
 import ProductStyleTips from './sections/productStyleTips';
 import CompleteTheLook from './sections/completeTheLook';
 import TiledImageSection from './sections/tiledImageSection';
-import CustomersAddressesSection     from './sections/customersAddresses';
-import CustomersOrderSection         from './sections/customersOrder';
-import HeroSection                   from './sections/heroSection';
-import ProductOverview               from './sections/productOverview';
-import ProductFeatures               from './sections/productFeatures';
-import PromoSection                  from './sections/promoSection';
-import CollectionBanner              from './sections/collectionBanner';
-import ProductStyleTips              from './sections/productStyleTips';
-import CompleteTheLook               from './sections/completeTheLook';
-import CollectionGridSection         from './sections/collectionGridSection';
-import SearchResults                 from './sections/search';
-import CollectionGridSection         from './sections/collectionGridSection';
+import CollectionBanner from './sections/collectionBanner';
+import SearchResults from './sections/search';
+import CollectionGridSection from './sections/collectionGridSection';
 
 // Managers
 import QuickViewManager from './managers/quickView';
