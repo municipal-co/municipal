@@ -159,19 +159,23 @@
           <!-- END Banner -->
 
         {% elsif block.type == "richtext" %}
+          <div class="section-rich-text" data-cms-block data-background-color="#ff0000">
+            <div class="container-fluid">
+              <div class="row justify-content-center">
+                <div class="col-20">
+                  {% include 'content-header', ch_title: block.settings.title %}
 
-          <div class="container">
-
-            {% include 'content-header', ch_title: block.settings.title %}
-
-            {% include 'richtext-block'
-                        id: block.id,
-                        content_max_width: block.settings.content_max_width,
-                        content_alignment: block.settings.content_alignment,
-                        text_alignment: block.settings.text_alignment,
-                        content: block.settings.content
-            %}
-
+                </div> 
+                <div class="col-lg-14 col-20">
+                  {% include 'richtext-block'
+                              id: block.id,
+                              content_alignment: 'center',
+                              text_alignment: 'left',
+                              content: block.settings.content
+                  %}
+                </div>             
+              </div>
+            </div>
           </div>
 
         {% elsif block.type == "video" %}
