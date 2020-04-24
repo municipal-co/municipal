@@ -164,7 +164,7 @@ export default class VideoPlayer {
     }
 
     const _createPlayer = createPlayer.bind(this);
-  
+
     if (window.YT === undefined) {
 
       if (window.YT_PLAYERS_TO_LOAD) {
@@ -177,9 +177,9 @@ export default class VideoPlayer {
             createPlayerInstance();
           });
         };
-        var tag = document.createElement("script");
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName("script")[0];
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       }
     } else {

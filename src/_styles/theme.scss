@@ -72,6 +72,7 @@
 @import 'components/video-player';
 @import 'components/yotpo';
 @import 'components/newsletter-form';
+@import 'components/load-more';
 
 /**
  * MODULES
@@ -99,7 +100,9 @@
 @import 'modules/product-shipping-modal';
 @import 'modules/collection-grid';
 @import 'modules/richtext-section';
-
+@import 'modules/tiled-image';
+@import 'modules/video-section';
+@import 'modules/collection-grid';
 
 /**
  * Templates
@@ -116,19 +119,19 @@
 @import 'templates/customer.scss';
 @import 'templates/challenge.scss';
 @import 'templates/password.scss';
-
+@import 'templates/search.scss';
 
 // Background animation styles
 body {
   will-change: background-color;
-  transition: background-color $transition-duration-medium $transition-timing-function-in-out-ui;
+  transition: background-color $transition-duration-medium
+    $transition-timing-function-in-out-ui;
 
   // Prevents window scroll on drawer open
   &.drawer-open {
     overflow: hidden;
   }
 }
-
 
 .development-mode {
   /* stylelint-disable-next-line selector-max-id */

@@ -1,0 +1,115 @@
+.tiled-image__content {
+  padding-top: large-vw(60px, 153px);
+  padding-bottom: large-vw(75px, 160px);
+
+  @include media-breakpoint-down('md') {
+    padding-top: 60px;
+    padding-bottom: 75px;
+  }
+}
+
+.tiled-image__header {
+  max-width: large-vw(351px, 880px);
+
+  @include media-breakpoint-down('md') {
+    max-width: 351px;
+  }
+}
+
+.tiled-image__right-image {
+  img {
+    width: large-vw(241px, 800px);
+    width: 100%;
+    max-width: 800px;
+
+    @include media-breakpoint-down('sm') {
+      max-width: 241px;
+    }
+  }
+}
+
+.tiled-image__eyebrow-icon {
+  position: absolute;
+  top: large-vw(-70px, -175px);
+  right: 45px;
+  -webkit-animation: rotating 30s linear infinite;
+  -moz-animation: rotating 30s linear infinite;
+  -ms-animation: rotating 30s linear infinite;
+  -o-animation: rotating 30s linear infinite;
+  animation: rotating 30s linear infinite;
+  img {
+    max-width: large-vw(96px, 350px);
+
+    @include media-breakpoint-down('md') {
+      max-width: 96px;
+    }
+  }
+
+  @include media-breakpoint-down('sm') {
+    top: 80px;
+    right: 230px;
+  }
+}
+
+.tiled-image__left-image {
+  margin-top: large-vw(-30px, -277px);
+
+  @include media-breakpoint-down('md') {
+    margin-top: -30px;
+  }
+  img {
+    width: large-vw(276px, 1040px);
+    width: 100%;
+    max-width: 1040px;
+
+    @include media-breakpoint-down('sm') {
+      max-width: 276px;
+    }
+  }
+}
+
+.tiled-image__row-content  {
+  padding-left: large-vw(0px, 80px);
+  padding-top: 58px;
+
+  @include media-breakpoint-between('md', 'lg') {
+    padding-left: 20px;
+  }
+
+  @include media-breakpoint-down('md') {
+    padding-top: 25px;
+  }
+}
+
+.tiled-image__text {
+  font-size: large-vw(20px, 35px);
+  font-weight: $font-weight-bold;
+
+  @include media-breakpoint-down('md') {
+    font-size: 20px;
+  }
+  p {
+    margin-bottom: large-vw(24px, 40px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
