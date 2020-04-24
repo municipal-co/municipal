@@ -310,11 +310,8 @@
 
   .drawer__header {
     padding: 0;
-    margin: 44px 40px;
-    border: none;
-
-    padding: 0;
     margin: 0 40px 0 80px;
+    margin-bottom: large-vw(0px, 60px);
     border: none;
     display: flex;
     height: large-vw(50px, 120px);
@@ -328,8 +325,9 @@
 
   .drawer__header-title {
     font-size: large-vw(18px, 30px);
-    font-weight: bold;
+    font-weight: $font-weight-bold;
     color: $white;
+    text-transform: none;
 
     @include media-breakpoint-down('md') {
       font-size: 18px;
@@ -365,7 +363,7 @@
     height: large-vw(54px, 120px);
     background: $white;
     border-radius: 60px;
-    font-size: large-vw(18px, 50px);
+    font-size: large-vw(18px, 40px);
     font-weight: bold;
     color: black;
     font-weight: bold;

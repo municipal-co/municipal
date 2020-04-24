@@ -58,6 +58,7 @@
     margin-bottom: large-vw(35px, 55px);
     
     @include media-breakpoint-down('md') {
+      max-width: 100%;
       line-height: 50px;
       margin-bottom: 35px;
     }
@@ -249,6 +250,11 @@
   }
 
   .modal--video {
+
+    &.show {
+      background-color: rgba(18, 18, 18, 0.9);
+    }
+
     .modal-content {
       background-color: transparent;
       border: 0;

@@ -55,6 +55,17 @@ import PromoSection from './sections/promoSection';
 import ProductStyleTips from './sections/productStyleTips';
 import CompleteTheLook from './sections/completeTheLook';
 import TiledImageSection from './sections/tiledImageSection';
+import CustomersAddressesSection     from './sections/customersAddresses';
+import CustomersOrderSection         from './sections/customersOrder';
+import HeroSection                   from './sections/heroSection';
+import ProductOverview               from './sections/productOverview';
+import ProductFeatures               from './sections/productFeatures';
+import PromoSection                  from './sections/promoSection';
+import CollectionBanner              from './sections/collectionBanner';
+import ProductStyleTips              from './sections/productStyleTips';
+import CompleteTheLook               from './sections/completeTheLook';
+import CollectionGridSection         from './sections/collectionGridSection';
+
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -95,10 +106,7 @@ Breakpoints.initialize();
   sectionManager.register('cms-page', CMSPageSection);
   sectionManager.register('customers-login', CustomersLoginSection);
   sectionManager.register('customers-account', CustomersAccountSection);
-  sectionManager.register(
-    'customers-account-orders',
-    CustomersAccountOrdersSection
-  );
+  sectionManager.register('customers-account-orders', CustomersAccountOrdersSection);
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
   sectionManager.register('hero', HeroSection);
@@ -106,8 +114,10 @@ Breakpoints.initialize();
   sectionManager.register('product-features', ProductFeatures);
   sectionManager.register('style-tips', ProductStyleTips);
   sectionManager.register('promo', PromoSection);
+  sectionManager.register('collection-banner', CollectionBanner);
   sectionManager.register('complete-the-look', CompleteTheLook);
   sectionManager.register('tiled-image', TiledImageSection);
+  sectionManager.register('collection-grid', CollectionGridSection);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
@@ -123,8 +133,7 @@ Breakpoints.initialize();
   });
 
   // Target iframes to make them responsive
-  const iframeSelectors =
-    '.rte iframe[src*="youtube.com/embed"], .rte iframe[src*="player.vimeo"]';
+  const iframeSelectors = '.rte iframe[src*="youtube.com/embed"], .rte iframe[src*="player.vimeo"]';
 
   RTE.wrapIframe({
     $iframes: $(iframeSelectors),
