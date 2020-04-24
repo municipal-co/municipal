@@ -11,13 +11,14 @@
   font-weight: $font-weight-bold;
   text-align: center;
   color: $black;
+  font-size: 20px;
 
   p{
     margin-bottom: 0;
   }
 
   a {
-    color: $cyan;
+    color: inherit;
     text-decoration: underline;
   }
 
