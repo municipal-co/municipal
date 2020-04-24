@@ -107,15 +107,12 @@ Breakpoints.initialize();
   sectionManager.register('product-features', ProductFeatures);
   sectionManager.register('style-tips', ProductStyleTips);
   sectionManager.register('promo', PromoSection);
-<<<<<<< HEAD
   sectionManager.register('two-up-instagram', TwoUpInstagram);
-=======
   sectionManager.register('collection-banner', CollectionBanner);
   sectionManager.register('complete-the-look', CompleteTheLook);
   sectionManager.register('search', SearchResults)
   sectionManager.register('tiled-image', TiledImageSection);
   sectionManager.register('collection-grid', CollectionGridSection);
->>>>>>> bac3124804594fec9d9607036f3e1ec7d3f2adb4
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
