@@ -56,6 +56,7 @@ import CollectionBanner              from './sections/collectionBanner';
 import ProductStyleTips              from './sections/productStyleTips';
 import CompleteTheLook               from './sections/completeTheLook';
 
+
 // Managers
 import QuickViewManager from './managers/quickView';
 
