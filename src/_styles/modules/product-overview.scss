@@ -104,6 +104,11 @@
       left: 20px;
       opacity: 1;
       padding: 0;
+
+      @include media-breakpoint-down('md') {
+        width: 80px;
+        height: 80px;
+      }
     }
   }
 
