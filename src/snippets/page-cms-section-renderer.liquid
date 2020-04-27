@@ -195,6 +195,7 @@
 
         {% elsif block.type == "text_plus_signature" %}
           {% assign text = block.settings.text %}
+          {% assign floating_icon = block.settings.floating_image %}
           {% assign counter = 0 %}
 
           {% if text != blank %}
@@ -203,6 +204,17 @@
                 <div class="row">
                   <div class="col-lg-19 col-20 offset-lg-2">
                     <div class="text-container h2">{{ text }}</div>
+
+                    {% if floating_icon != blank %}
+                      <div class="icon-container">
+                        <div class="floating-icon frame frame--16x9">
+                          {% render 'image_tag'
+                                      image: floating_icon,
+                                      object_fit: "contain"
+                            %}
+                        </div>
+                      </div>
+                    {% endif %}                      
                   </div>
                 </div>
 
