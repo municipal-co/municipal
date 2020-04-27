@@ -1,42 +1,50 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import BaseSection from './base';
-import NewsletterForm from '../ui/newsletterForm';
+import AJAXKlaviyoForm from '../lib/ajaxKlaviyoForm';
 
 const selectors = {
   newsletterForm: '[data-newsletter-form]',
-  videoPlayer: '[data-video-player]',
-  formInput: '.minimal-input-box__input',
-  formSubmit: '.minimal-input-box__submit'
+  newsletterFormMessage: '.newsletter-form-message',
+  newsletterInput: '.minimal-input-box__input'
 };
 
 export default class FooterSection extends BaseSection {
   constructor(container) {
     super(container, 'footer');
+    this.newsletterForm = $(selectors.newsletterForm, this.$container);
 
-    this.$container = $(container);
-    this.newsletterForm = new NewsletterForm($(selectors.newsletterForm, this.$container));
+    const $form = this.newsletterForm;
+    const listId = $form.data('list-id');
 
-    this.background = this.$container.data('background-color');
-    this.observerProperties = {
-      root: null,
-      threshold: 0.2
-    } 
+    const options = {
+      onSubscribeSuccess() {
+        const successMessage = $(selectors.newsletterFormMessage, $form).data('message-success');
+        $(selectors.newsletterInput, $form).val(successMessage);
 
-    this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
-    this.IntersectionObserver.observe(this.$container.get(0));
+        setTimeout(function(){
+          $(selectors.newsletterInput, $form).val("");
+        }, 3000);
+      },
+      onSubscribeFail() {
+        const successFail = $(selectors.newsletterFormMessage, $form).data('message-fail');
+        $(selectors.newsletterInput, $form).val(successFail);
 
-    $(selectors.formSubmit, this.$container).on('click', this.onValidationCheck.bind(this));
-  }
+        setTimeout(function(){
+          $(selectors.newsletterInput, $form).val("");
+        }, 3000);
+      },
+      onSubmitFail() {
+        const successFail = $(selectors.newsletterFormMessage, $form).data('message-fail');
+        $(selectors.newsletterInput, $form).val(successFail);
 
-  observerCallback(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.2 && this.background !== '') {
-        $('body').css('background-color', this.background);
+        setTimeout(function(){
+          $(selectors.newsletterInput, $form).val("");
+        }, 3000);
       }
-    })
-  }
+    };
 
-  onValidationCheck(e) {
-    e.preventDefault();
+    options.listId = listId;
+
+    this.ajaxKlaviyoForm = new AJAXKlaviyoForm($form, options);
   }
 }

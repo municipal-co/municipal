@@ -26,7 +26,7 @@ export default class CMSPageSection extends BaseSection {
     this.$container.find(selectors.videoPlayer).each((i, el) => {
       this.videoPlayers.push(new VideoPlayer(el));
     });
-
+    
     const self = this;
 
     this.cmsBlocks.each(function() {
@@ -38,7 +38,7 @@ export default class CMSPageSection extends BaseSection {
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
       const entryBackground = $(entry.target).data('background-color');
-
+  
       if (entry.intersectionRatio > 0.5 && entryBackground !== '') {
         $('body').css('background-color', entryBackground);
       }
