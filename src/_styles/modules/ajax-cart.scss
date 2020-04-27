@@ -60,7 +60,8 @@ body.ajax-cart-open {
 
 .ajax-cart__header,
 .ajax-cart__footer {
-  padding: $ajax-cart-padding-vertical $ajax-cart-padding-horizontal;
+  padding: large-vw($ajax-cart-padding-vertical-mobile, $ajax-cart-padding-vertical) large-vw($ajax-cart-padding-horizontal-mobile, $ajax-cart-padding-horizontal);
+
   @include media-breakpoint-down('sm') {
     padding: $ajax-cart-padding-vertical-mobile $ajax-cart-padding-horizontal-mobile;
   }
@@ -218,13 +219,14 @@ body.ajax-cart-open {
 
 
 .ajax-cart__item-title {
-  margin-bottom: 0;
+  margin-bottom: 6px;
   font-size: 22px;
+  line-height: 24px;
 }
 
 .ajax-cart__item-price {
   font-size: 20px;
-  margin-top: 22px;
+  margin: 18px 0 15px;
   @include media-breakpoint-down('sm') {
     margin-bottom: 22px;
   }
