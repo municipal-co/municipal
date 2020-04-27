@@ -1,0 +1,745 @@
+{% include 'page-cms-section-renderer', section: section %}
+
+{% schema %}
+  {
+    "name": "Page - CMS 4",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "select",
+        "id": "background_color",
+        "label": "Background Color",
+        "options": [
+          {"label":"White", "value":"#ffffff"},
+          {"label":"Red", "value":"#ff2b00"},
+          {"label":"Cyan", "value":"#009dcc"},
+          {"label":"Black", "value":"#121212"},
+          {"label": "Brown", "value": "#452b2b"},
+          {"label": "Blue", "value": "#2c6275"},
+          {"label": "Tan", "value": "#c3baa8"},
+          {"label": "Gray", "value": "#424446"},
+          {"label": "Brownish-Red", "value": "#752c2e"}
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "select",
+        "id": "title_color",
+        "label": "Header Color",
+        "options": [
+          {"label":"White", "value":"white"},
+          {"label":"Red", "value":"red"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label":"Black", "value":"black"}
+        ]
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },
+      {
+        "type": "header",
+        "content": "Design"
+      },
+      {
+        "type": "header",
+        "content": "Image",
+        "info": "Main image will always be used."
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Main Image"
+      },
+      {
+        "type": "header",
+        "content": "Video"
+      },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "Video Url",
+        "accept": ["youtube"]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "spacer",
+        "name": "Spacer",
+        "settings": [
+          {
+            "type":      "select",
+            "id":        "height_name",
+            "label":     "Height",
+            "options": [
+              { "value": "small", "label": "Small" },
+              { "value": "medium", "label": "Medium" },
+              { "value": "large", "label": "Large" },
+              { "value": "xlarge", "label": "Extra Large" },
+              { "value": "huge", "label": "Huge" }
+            ],
+            "default":   "medium"
+          }
+        ]
+      },  
+      {
+        "type": "promo",
+        "name": "Promo Module",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },   
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },  
+          {
+            "type": "image_picker",
+            "id": "secondary_icon",
+            "label": "Secondary Icon"
+          },    
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_small",
+            "label": "Image - Mobile"
+          },
+          {
+            "type": "header",
+            "content": "Content - Options"
+          },
+          {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+              { "value": "left", "label": "Image Left" },
+              { "value": "right", "label": "Image Right" }
+            ],
+            "default": "left"
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Light Text",
+            "info": "Light text affects the eyebrow, copy and CTA."
+          },
+          {
+            "type": "select",
+            "id": "title_color",
+            "label": "Title Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "white"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label":"White", "value":"#ffffff"},
+              {"label":"Red", "value":"#ff2b00"},
+              {"label":"Cyan", "value":"#009dcc"},
+              {"label":"Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#ffffff"
+          } 
+        ]  
+      },
+      {
+        "type": "richtext",
+        "name": "Richtext",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type":      "select",
+            "id":        "text_alignment",
+            "label":     "Text Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          }
+        ]
+      },
+      {
+        "type": "video",
+        "name": "Video Module",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Section Content"
+          },   
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon",
+            "info": "Icon appear on top-left hand side of the section."
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "video_cover",
+            "label": "Video Image"
+          },
+          {
+             "id": "video_url",
+             "type": "video_url",
+             "label": "Video URL",
+             "accept": ["youtube"]
+          },
+          {
+            "type": "product",
+            "id": "product_link",
+            "label": "Product Link"
+          },
+          {
+            "type": "header",
+            "content": "Section Settings"
+          },
+          {
+            "type": "select",
+            "id": "title_color",
+            "label": "Title Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "white"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label": "White", "value":"#ffffff"},
+              {"label": "Red", "value":"#ff2b00"},
+              {"label": "Cyan", "value":"#009dcc"},
+              {"label": "Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#424446"
+          }
+        ]
+      },
+      {
+        "type": "scrolling_text",
+        "name": "Scrolling Text",
+        "settings": [
+          {
+             "id": "text",
+             "type": "textarea",
+             "label": "Text"
+          },
+          {
+            "type": "range",
+            "id":   "animation_durartion",
+            "min":  10,
+            "max":  100,
+            "step": 10,
+            "unit": "s",
+            "label": "Scrolling text duration.",
+            "default": 20
+          }
+        ]
+       },
+       {   
+        "type": "text_plus_signature",
+        "name": "Text + Signature",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "info": "Bold text turns green."
+          },
+          {
+            "type": "image_picker",
+            "id": "floating_image",
+            "label": "Floating Icon",
+            "info": "Recommended 190x110."
+          },
+          {
+            "type": "header",
+            "content": "Signature - 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "signature_icon_1",
+            "label": "Signature - 1",
+            "info": "Recommended 400x130."
+          },
+          {
+            "type": "text",
+            "id": "signature_text_1",
+            "label": "Siganture Text - 1"
+          },
+          {
+            "type": "header",
+            "content": "Signature - 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "signature_icon_2",
+            "label": "Signature - 2",
+            "info": "Recommended 400x130."
+          },
+          {
+            "type": "text",
+            "id": "signature_text_2",
+            "label": "Siganture Text - 2"
+          },
+          {
+            "type": "header",
+            "content": "Signature - 3"
+          },
+          {
+            "type": "image_picker",
+            "id": "signature_icon_3",
+            "label": "Signature - 3",
+            "info": "Recommended 400x130."
+          },
+          {
+            "type": "text",
+            "id": "signature_text_3",
+            "label": "Siganture Text - 3"
+          }
+        ]
+      },
+      {
+        "type": "image_plus_caption",
+        "name": "Image + Caption",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Image & Caption - 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Cover Image"
+          },
+          {
+            "type": "text",
+            "id": "caption_1",
+            "label": "Caption - 1"
+          },
+          {
+            "type": "header",
+            "content": "Image & Caption - 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Cover Image"
+          },
+          {
+            "type": "text",
+            "id": "caption_2",
+            "label": "Caption - 2"
+          },
+          {
+            "type": "header",
+            "content": "Image aspect ratio",
+            "info": "This option applies only when there is a single image."
+          },
+          {
+            "type":      "select",
+            "id":        "aspect_ratio",
+            "label":     "Aspect Ratio",
+            "options": [
+              { "value": "1x1", "label": "Square" },
+              { "value": "16x9", "label": "Full-width" }
+            ],
+            "default":   "16x9"
+          }
+        ]
+      },
+      {
+        "type": "collection_grid",
+        "name": "Collection Grid",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Section Content"
+          },   
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "header",
+            "content": "Collection Tile - 1"
+          },
+          {
+            "type": "text",
+            "id": "collection_title_1",
+            "label": "Collection Title"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_1",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_1",
+            "label": "CTA Link"
+          }, 
+          {
+            "type": "image_picker",
+            "id": "collection_image_1",
+            "label": "Collection Background"
+          },
+          {
+            "type": "header",
+            "content": "Collection Tile - 2"
+          },
+          {
+            "type": "text",
+            "id": "collection_title_2",
+            "label": "Collection Title"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_2",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_2",
+            "label": "CTA Link"
+          }, 
+          {
+            "type": "image_picker",
+            "id": "collection_image_2",
+            "label": "Collection Background"
+          },
+          {
+            "type": "header",
+            "content": "Section Settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Ligh Text",
+            "info": "Light text affects the eyebrow and CTAs."
+          },
+          {
+            "type": "select",
+            "id": "title_color",
+            "label": "Title Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "white"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label": "White", "value":"#ffffff"},
+              {"label": "Red", "value":"#ff2b00"},
+              {"label": "Cyan", "value":"#009dcc"},
+              {"label": "Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#2c6275"
+          }
+        ]   
+      },
+      {
+        "type": "tiled_image",
+        "name": "Tiled Image",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label":"White", "value": "#ffffff"},
+              {"label":"Black", "value": "#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Light Text",
+            "info": "Light text affects the eyebrow, copy and CTA."
+          },
+          {
+            "type": "select",
+            "id": "title_color",
+            "label": "Header Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "header",
+            "content": "Images"
+          },
+          {
+            "type": "image_picker",
+            "id": "left_image",
+            "label": "Left Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "right_image",
+            "label": "Right Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon"
+          }
+        ]
+      },
+      {
+        "type": "instagram",
+        "name": "2 UP - Instagram",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "accent_text",
+            "label": "Accent Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image - 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image - 2"
+          },
+          {
+            "type": "header",
+            "content": "Content - Options"
+          },
+          {
+            "type": "select",
+            "id": "text_color",
+            "label": "Text Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "white"
+          },
+          {
+            "type": "select",
+            "id": "accent_text_color",
+            "label": "Accent Text Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "red"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label":"White", "value":"#ffffff"},
+              {"label":"Red", "value":"#ff2b00"},
+              {"label":"Cyan", "value":"#009dcc"},
+              {"label":"Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#ffffff"
+          },
+          {
+            "type": "range",
+            "id":   "scroll_animation",
+            "min":  10,
+            "max":  100,
+            "step": 5,
+            "unit": "s",
+            "label": "Scrolling Text Duration",
+            "default": 20
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
