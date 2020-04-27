@@ -8,8 +8,8 @@
       "page": "Page {{ page }}"
     },
     "404": {
-      "title": "404 Page Not Found",
-      "subtext_html": "The page you requested does not exist. Click <a href=\"/collections/all\">here</a> to continue shopping."
+      "title": "Oops!",
+      "subtext_html": "I think you're lost buddy. Let's take you <a href=\"/\">back home</a>."
     },
     "password_page": {
       "opening_soon": "Opening Soon",
