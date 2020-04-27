@@ -47,7 +47,8 @@ export default class ProductOverview extends BaseSection {
   onVideoEnter(e) {
     e.preventDefault();
     const screenWidth = $(window).width();
-    let x, y;
+    let x;
+    let y;
 
     if (screenWidth > 991) {
       this.$videoCover.mousemove(function(event) {
@@ -65,6 +66,6 @@ export default class ProductOverview extends BaseSection {
 
   onVideoLeave(e) {
     e.preventDefault();
-    $(selectors.videoPlay, this.$videoCover).removeAttr("style");
+    $(selectors.videoPlay, this.$videoCover).removeAttr('style');
   }
 }

@@ -37,8 +37,8 @@ class ProductDetailGallery {
     this.optionValue = this.$el.data('option-value');
     this.$zoomItem = $(selectors.zoomItem);
 
-    // Look for element with the initialSlide selector.
-    const initialSlide = this.$slideshow.find(selectors.initialSlide).length ? this.$slideshow.find(selectors.initialSlide).index() : 0;
+    // Look for element with the initialSlide selector. Commented due to removal of the feature, uncomment if needed.
+    // const initialSlide = this.$slideshow.find(selectors.initialSlide).length ? this.$slideshow.find(selectors.initialSlide).index() : 0;
 
     this.thumbnailsSwiper = new Swiper(this.$thumbnails.get(0), {
       init: false,

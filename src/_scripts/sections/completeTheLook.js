@@ -56,8 +56,8 @@ export default class CompleteTheLook extends BaseSection {
     if (screenWidth <= breakpointMinWidth) {
       this.swiper = new Swiper(this.$slideshow, this.swiperOptions);
     } else if ( screenWidth >= breakpointMinWidth && this.$slideshow.hasClass('swiper-container-initialized')){
-      $('.swiper-wrapper', this.$slideshow).css("transform","none");
+      $('.swiper-wrapper', this.$slideshow).css('transform', 'none');
       this.swiper.destroy();
-    } 
+    }
   }
 }
