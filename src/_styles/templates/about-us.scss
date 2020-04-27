@@ -1,0 +1,25 @@
+.about-us {
+  .hero {
+    padding-bottom: large-vw(30px, 135px);
+
+    @include media-breakpoint-down('md') {
+      padding-bottom: 30px;
+      padding-top: 40px;
+    }
+
+    .hero__content {
+      @include media-breakpoint-down('md') {
+        flex-direction: column-reverse;
+        max-width: calc((100%/24)*20);
+        margin: 0 auto;
+      }
+    }
+
+    .hero__title {
+      @include media-breakpoint-down('md') {
+        font-weight: $font-weight-normal;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}

@@ -23,20 +23,19 @@
 {% endcomment -%}
 
 <div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="cms-page">
-
-    {% include 'page-hero',
-                ph_id: section.id,
-                ph_background_image: section.settings.background_image,
-                ph_background_image_small: section.settings.background_image_small,
-                ph_content_max_width: section.settings.content_max_width,
-                ph_content_alignment: section.settings.content_alignment,
-                ph_light_text: section.settings.content_light_text,
-                ph_height: section.settings.hero_height,
-                ph_title: section.settings.title,
-                ph_subtitle: section.settings.subtitle,
-                ph_cta_url: section.settings.cta_url,
-                ph_cta_text: section.settings.cta_text
-    %}
+  
+    <div class="hero">
+      {% include 'hero-panel'
+                  h_id: section.id,
+                  h_background_color: section.settings.background_color,
+                  h_title: section.settings.title,
+                  h_title_color: section.settings.title_color,
+                  h_image: section.settings.image,
+                  h_video: section.settings.video_url,
+                  h_cta_text: section.settings.cta_text,
+                  h_cta_url: section.settings.cta_url
+      %}
+    </div>
 
     {% for block in section.blocks %}  
       <div class="cms-page-block" {{ block.shopify_attributes }}>
@@ -192,6 +191,28 @@
               <div class="video-player__embed" data-video-player-embed></div>
             </div>
           </div>
+        {% elsif block.type == "scrolling_text" %}
+          {% if block.settings.animation_durartion == blank %}
+            {% assign animation = 20 | append: 's'%}
+          {% else %}
+            {% assign animation = block.settings.animation_durartion | append: 's'%}
+          {% endif %}
+
+          {% assign animation_delay = block.settings.animation_durartion | divided_by: 2.0 | append: 's' | prepend: '-' %}
+          {% assign title = block.settings.text %}
+          
+          {% if title != blank %}  
+            <div class="scrolling-text" data-cms-block data-background-color="#ffffff">
+              <div class="text-wrapper col-24">
+                <h2 class="text h1">
+                  <span style="animation-duration: {{ animation }};">{{ title | strip_html }} &nbsp;</span>
+                </h2>
+                <h2 class="text text--copy h1">
+                  <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title | strip_html }} &nbsp;</span>
+                </h2>
+              </div>
+            </div>          
+          {% endif %}
 
         {% elsif block.type == "text_plus_signature" %}
           {% assign text = block.settings.text %}
@@ -306,5 +327,4 @@
         {% endif %}
       </div>
     {% endfor %}
-
 </div>
