@@ -23,7 +23,7 @@
       </div>
 
       <div class="row">
-        {% if title != blank %}            
+        {% if title != blank %}
           <div class="ctl-title-wrapper col-24">
             <h2 class="ctl__title h1">
               <span style="animation-duration: {{ animation }};">{{ title | strip_html }} &nbsp;</span>
@@ -41,14 +41,15 @@
                 {% assign index = i | plus: 0 %}
                 {% assign product_id = product_array[index] %}
                 {% assign card_product = all_products[product_id] %}
-                
+
                 {% if product != blank %}
                   <div class="content-grid__item swiper-slide">
                     {% include 'product-card',
                        product: card_product,
                        show_sizes: true,
                        show_colors: true,
-                       show_tag: true 
+                       show_tag: true,
+                       reverse_card: false
                     %}
                   </div>
                 {% endif %}

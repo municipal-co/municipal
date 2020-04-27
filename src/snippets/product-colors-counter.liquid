@@ -1,4 +1,14 @@
-{% if product.meta_fields.custom_fields['color_descriptor'] != blank %}
+{% capture collection_color_count %}
+  {% assign p_title_handle = product.title | handleize %}
+  {% assign style_collection = collections[p_title_handle] %}
+  {% if style_collection.products.size > 1 %}
+    {{ style_collection.products.size }} Colors
+  {% endif %}
+{% endcapture %}
+
+{% if show_collection_colors == true and collection_color_count != blank %}
+  {{ collection_color_count }}
+{% elsif product.meta_fields.custom_fields['color_descriptor'] != blank %}
   {{ product.meta_fields.custom_fields['color_descriptor'] }}
 {% else %}
   {% if product != blank %}
@@ -16,3 +26,4 @@
     {% endfor %}
   {% endif %}
 {% endif %}
+

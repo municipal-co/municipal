@@ -16,6 +16,9 @@
 {% endcomment -%}
 
 {% comment %} Defaults {% endcomment %}
+
+{% assign card_classes = blank %}
+
 {% if quick_view == blank %}
   {% assign quick_view = false %}
 {% endif %}
@@ -145,7 +148,7 @@
         {% if show_colors %}
 
           {% capture color_html %}
-            {% include 'product-colors-counter', product: product %}
+            {% include 'product-colors-counter', product: product, show_collection_colors: show_collection_colors %}
           {% endcapture %}
 
           {% if color_html != blank %}
