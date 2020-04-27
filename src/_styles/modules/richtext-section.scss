@@ -1,0 +1,23 @@
+.section-rich-text {
+  margin-bottom: large-vw(50px, 110px);
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 50px;
+  }
+
+  .content-header__title {
+    text-align: left;
+    font-weight: $font-weight-normal;
+    margin-bottom: large-vw(15px, 65px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 15px;
+    }
+  }  
+
+  .rich-text-content {
+    @include media-breakpoint-down('md') {
+      line-height: 30px;
+    }
+  }
+}

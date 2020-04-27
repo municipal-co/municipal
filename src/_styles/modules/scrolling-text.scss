@@ -1,0 +1,38 @@
+@keyframes text-scroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
+
+.scrolling-text {
+  padding-top: large-vw(65px, 300px);
+  padding-bottom: large-vw(85px, 300px);
+
+  @include media-breakpoint-down('md') {
+    padding-top: 65px;
+    padding-bottom: 85px;
+  }
+
+  .text-wrapper {
+    overflow: hidden;
+    position: relative;
+    height: large-vw(50px, 150px);
+
+    @include media-breakpoint-down('md') {
+      height: 50px;
+    }
+  }
+
+  .text {
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    font-weight: $font-weight-normal;
+  }
+
+  .text span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: text-scroll linear infinite;
+  }
+}

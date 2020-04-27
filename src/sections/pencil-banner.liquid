@@ -7,7 +7,7 @@
   {% if show_banner == true %}
     <div class="pencil-banner {% if light_text == true %}pencil-banner--light{% endif %}" style="background-color: {{ background_color }};">
       <div class="container">
-        <div class="banner-content p2">{{ banner_content }}</div>
+        <div class="banner-content">{{ banner_content }}</div>
       </div>
     </div>
   {% endif %}
@@ -31,7 +31,7 @@
       },
       {
         "id": "banner_content",
-        "type": "richtext", 
+        "type": "richtext",
         "label": "Content"
       },
       {

@@ -204,7 +204,7 @@
     ]
   },
   {
-    "name": "Yotpo",
+    "name": " Klaviyo",
     "settings": [
       {
         "type": "header",
@@ -212,9 +212,8 @@
       },
       {
         "type": "text",
-        "id": "yotpo_client_id",
-        "label": "App Key",
-        "info": "See: https://support.yotpo.com/en/article/finding-your-app-key-and-your-secret-key"
+        "id": "klaviyo_list_id",
+        "label": "List ID"
       }
     ]
   },
