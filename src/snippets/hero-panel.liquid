@@ -31,9 +31,11 @@
             </div>
           </div>
         {%- elsif h_image != blank -%}
-          <div class="hero__image">
+          <div class="hero__image frame frame--16x9">
             {%- render 'image_tag'
-               image: h_image -%}
+                image: h_image,
+                object_fit: 'cover'
+                -%}
           </div>
         {%- endif -%}
       </div>

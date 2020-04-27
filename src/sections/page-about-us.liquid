@@ -3,22 +3,43 @@
 {% schema %}
   {
     "name": "Page - About Us",
+    "class": "about-us",
     "settings": [
       {
         "type": "header",
-        "content": "Page Hero - Content"
+        "content": "Content"
+      },
+      {
+        "type": "select",
+        "id": "background_color",
+        "label": "Background Color",
+        "options": [
+          {"label":"White", "value":"#ffffff"},
+          {"label":"Red", "value":"#ff2b00"},
+          {"label":"Cyan", "value":"#009dcc"},
+          {"label":"Black", "value":"#121212"},
+          {"label": "Brown", "value": "#452b2b"},
+          {"label": "Blue", "value": "#2c6275"},
+          {"label": "Tan", "value": "#c3baa8"},
+          {"label": "Gray", "value": "#424446"},
+          {"label": "Brownish-Red", "value": "#752c2e"}
+        ]
       },
       {
         "type": "text",
         "id": "title",
-        "label": "Title",
-        "default": "Page Title"
+        "label": "Title"
       },
       {
-        "type": "text",
-        "id": "subtitle",
-        "label": "Subtitle",
-        "default": "Page Subtitle"
+        "type": "select",
+        "id": "title_color",
+        "label": "Header Color",
+        "options": [
+          {"label":"White", "value":"white"},
+          {"label":"Red", "value":"red"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label":"Black", "value":"black"}
+        ]
       },
       {
         "type": "text",
@@ -32,44 +53,27 @@
       },
       {
         "type": "header",
-        "content": "Page Hero - Design"
+        "content": "Design"
       },
       {
-        "type": "checkbox",
-        "id" : "content_light_text",
-        "label": "Light Text",
-        "default": false
-      },
-      {
-        "type": "range",
-        "id":   "content_max_width",
-        "min":  300,
-        "max":  850,
-        "step": 25,
-        "unit": "px",
-        "label": "Max Content Width",
-        "default": 450
-      },      
-      {
-        "type":      "select",
-        "id":        "content_alignment",
-        "label":     "Content Alignment",
-        "options": [
-          { "value": "left", "label": "Left" },
-          { "value": "center", "label": "Center" },
-          { "value": "right", "label": "Right" }
-        ],
-        "default":   "center"
+        "type": "header",
+        "content": "Image",
+        "info": "Main image will always be used."
       },
       {
         "type": "image_picker",
-        "id": "background_image",
-        "label": "Background Image"
+        "id": "image",
+        "label": "Main Image"
       },
       {
-        "type": "image_picker",
-        "id": "background_image_small",
-        "label": "Background Image - Small Screens"
+        "type": "header",
+        "content": "Video"
+      },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "label": "Video Url",
+        "accept": ["youtube"]
       }
     ],
     "blocks": [
@@ -365,6 +369,27 @@
             "label": "Background Video",
             "info": "Enabling this will remove video controls, cover image and autoplay the video.  [See Vimeo Help Page for info](https://help.vimeo.com/hc/en-us/articles/115011183028-Embedding-background-videos)",
             "default": false
+          }
+        ]
+      },
+      {
+        "type": "scrolling_text",
+        "name": "Scrolling Text",
+        "settings": [
+          {
+             "id": "text",
+             "type": "textarea",
+             "label": "Text"
+          },
+          {
+            "type": "range",
+            "id":   "animation_durartion",
+            "min":  10,
+            "max":  100,
+            "step": 10,
+            "unit": "s",
+            "label": "Scrolling text duration.",
+            "default": 20
           }
         ]
       }
