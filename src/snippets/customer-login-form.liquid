@@ -1,0 +1,56 @@
+{%- comment %}
+
+  Customer Register Form
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'customer-login-form',
+              is_drawer: { boolean }
+  %}
+
+{% endcomment -%}
+
+{% form 'customer_login' %}
+
+  {{ form.errors | default_errors }}
+
+  <div class="form-group">
+
+    <input type="email"
+      name="customer[email]"
+      id="CustomerEmail"
+      class="form-control account-form__field {% if form.errors contains 'email' %}is-invalid{% endif %}"
+      spellcheck="false"
+      autocomplete="off"
+      autocapitalize="off"
+      placeholder="{{ 'customer.login.email' | t }}"
+      >
+  </div>
+
+  {% if form.password_needed %}
+    <div class="form-group">
+
+      <input type="password"
+        name="customer[password]"
+        id="CustomerPassword"
+        placeholder="{{ 'customer.login.password' | t }}"
+        class="form-control account-form__field{% if form.errors contains 'password' %} is-invalid{% endif %}"">
+    </div>
+
+  {% endif %}
+
+  <div class="form-group form-group__button">
+    <input type="submit" class="btn btn-primary" value="{{ 'customer.login.sign_in' | t }}">
+  </div>
+
+  {% if form.password_needed %}
+    <div class="form-group text-center">
+      <a href="#recover" {% if is_drawer %}data-recover-password{% endif %} id="RecoverPassword" class="form-text h6 text-center">{{ 'customer.login.forgot_password' | t }}</a>
+      {% if is_drawer %}
+        <a href="/account/register" data-register-form class="form-button__inline-underlined h6">{{ 'customer.login.create_account' | t }}</a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+{% endform %}

@@ -23,6 +23,7 @@ import './ui/overlay';
 import './ui/slideup';
 import './ui/tabs';
 import './ui/quantityAdjuster';
+import './ui/passwordValidation';
 
 // Sections
 import SectionManager from './sections/sectionManager';
@@ -48,6 +49,7 @@ import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import TwoUpInstagram from './sections/twoUpInstagram';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
+import CustomersDrawerSection from './sections/customersDrawer';
 import HeroSection from './sections/heroSection';
 import ProductOverview from './sections/productOverview';
 import ProductFeatures from './sections/productFeatures';
@@ -97,9 +99,13 @@ Breakpoints.initialize();
   sectionManager.register('cms-page', CMSPageSection);
   sectionManager.register('customers-login', CustomersLoginSection);
   sectionManager.register('customers-account', CustomersAccountSection);
-  sectionManager.register('customers-account-orders', CustomersAccountOrdersSection);
+  sectionManager.register(
+    'customers-account-orders',
+    CustomersAccountOrdersSection
+  );
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
+  sectionManager.register('customers-drawer', CustomersDrawerSection);
   sectionManager.register('hero', HeroSection);
   sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);
@@ -108,7 +114,7 @@ Breakpoints.initialize();
   sectionManager.register('two-up-instagram', TwoUpInstagram);
   sectionManager.register('collection-banner', CollectionBanner);
   sectionManager.register('complete-the-look', CompleteTheLook);
-  sectionManager.register('search', SearchResults)
+  sectionManager.register('search', SearchResults);
   sectionManager.register('tiled-image', TiledImageSection);
   sectionManager.register('collection-grid', CollectionGridSection);
 
@@ -126,7 +132,8 @@ Breakpoints.initialize();
   });
 
   // Target iframes to make them responsive
-  const iframeSelectors = '.rte iframe[src*="youtube.com/embed"], .rte iframe[src*="player.vimeo"]';
+  const iframeSelectors =
+    '.rte iframe[src*="youtube.com/embed"], .rte iframe[src*="player.vimeo"]';
 
   RTE.wrapIframe({
     $iframes: $(iframeSelectors),
