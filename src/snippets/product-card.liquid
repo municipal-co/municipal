@@ -131,11 +131,13 @@
             {% endif %}
           {% endcapture %}
 
-          {% if tag_html != blank %}
-            <div class="product-card__badge-row">
+          <div class="product-card__badge-row">
+            {% if tag_html != blank %}
               {{ tag_html }}
-            </div>
-          {% endif %}
+              {% else %}
+              <span class="badge" aria-hidden style="visibility: hidden;">-</span>
+            {% endif %}
+          </div>
         {% endif %}
 
         <h3 class="product-card__info-title">
