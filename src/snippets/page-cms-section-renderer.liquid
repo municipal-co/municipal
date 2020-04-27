@@ -178,7 +178,6 @@
             </div>
           </div>
 
-
         {% elsif block.type == "scrolling_text" %}
           {% if block.settings.animation_durartion == blank %}
             {% assign animation = 20 | append: 's'%}
@@ -312,6 +311,7 @@
               </div> 
             </div>
           </div>
+
         {% elsif block.type == "collection_grid" %}
           {% assign light_text = block.settings.light_text %}
           {% assign title_color = block.settings.title_color %}
@@ -387,6 +387,80 @@
                     {% endfor %}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        {% elsif block.type == "tiled_image" %}
+          <div class="tiled-image container-fluid" data-cms-block>
+            {% include 'tiled-image'
+                        ti_id: block.id,
+                        ti_background_color: block.settings.background_color,
+                        ti_light_text: block.settings.light_text,
+                        ti_title_color: block.settings.title_color,
+                        ti_eyebrow: block.settings.eyebrow,
+                        ti_title: block.settings.title,
+                        ti_text: block.settings.text,
+                        ti_cta_text: block.settings.cta_text,
+                        ti_cta_url: block.settings.cta_url,
+                        ti_left_image: block.settings.left_image,
+                        ti_right_image: block.settings.right_image,
+                        ti_eyebrow_icon: block.settings.eyebrow_icon
+            %}
+          </div> 
+        {% elsif block.type == "instagram" %}
+          {% assign image_1 = block.settings.image_1 %}
+          {% assign image_2 = block.settings.image_2 %}
+
+          {% assign text = block.settings.text %}
+          {% assign accent_text =  block.settings.accent_text %}
+          {% assign text_color = block.settings.text_color %}
+          {% assign accent_color = block.settings.accent_text_color %}
+          {% assign background_color = block.settings.background_color %}
+
+          {% assign animation = block.settings.scroll_animation | append: 's' %}
+          {% assign animation_delay = animation | divided_by: 2 | append: 's' | prepend: '-' %}
+           
+          <div data-section-id="{{ block.id }}" data-section-type="two-up-instagram" data-background-color="{{ background_color }}">
+            <div class="two-up-instagram">
+              
+              <div class="container-fluid">
+                <div class="row justify-content-center">
+
+                  {% if text != blank %}            
+                    <div class="two-up-title-wrapper col-24">
+                      <h2 class="two-up__title h1">
+                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                        <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                      </h2>
+
+
+                      <h2 class="two-up__title h1">
+                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                        <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                      </h2>
+                    </div>
+                  {% endif %}
+
+                  <div class="col-lg-22 col-20">
+                    <div class="two-up-images-container">
+                      <div class="two-up__image frame frame--1x1">
+                        {% render 'image_tag'
+                                    image: image_1,
+                                    object_fit: "cover"
+                          %}
+                      </div>
+
+                      <div class="two-up__image frame frame--1x1">
+                        {% render 'image_tag'
+                                    image: image_2,
+                                    object_fit: "cover"
+                          %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+
               </div>
             </div>
           </div>
