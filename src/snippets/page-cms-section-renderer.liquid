@@ -213,6 +213,75 @@
               </div>
             </div>          
           {% endif %}
+
+        {% elsif block.type == "text_plus_signature" %}
+          {% assign text = block.settings.text %}
+          {% assign floating_icon = block.settings.floating_image %}
+          {% assign counter = 0 %}
+
+          {% if text != blank %}
+            <div class="section-text-signature" data-cms-block data-background-color="#121212">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-19 col-20 offset-lg-2">
+                    <div class="text-container h2">{{ text }}</div>
+
+                    {% if floating_icon != blank %}
+                      <div class="icon-container">
+                        <div class="floating-icon frame frame--16x9">
+                          {% render 'image_tag'
+                                      image: floating_icon,
+                                      object_fit: "contain"
+                            %}
+                        </div>
+                      </div>
+                    {% endif %}                      
+                  </div>
+                </div>
+
+                {% for i in (1..3) %}
+                  {% assign index_icon = 'signature_icon_' | append: i %}
+                  {% assign index_text = 'signature_text_' | append: i %}
+                  {% assign signature_icon = block.settings[index_icon] %}
+                  {% assign signature_text = block.settings[index_text] %}
+
+                  {% if signature_icon != blank and signature_text != blank %}
+                    {% assign counter = counter | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if counter > 0 %}
+                  <div class="row justify-content-center">
+                    <div class="col-lg-18 col-20">
+                      <div class="signature-wrapper">
+                        {% for i in (1..3) %}
+                          {% assign index_icon = 'signature_icon_' | append: i %}
+                          {% assign index_text = 'signature_text_' | append: i %}
+
+                          {% assign signature_icon = block.settings[index_icon] %}
+                          {% assign signature_text = block.settings[index_text] %}
+
+                          {% if signature_icon != blank and signature_text != blank %}
+                            <div class="signature-block">
+                              <div class="signature-block__image frame frame--16x9">
+                                {% render 'image_tag'
+                                          image: signature_icon,
+                                          object_fit: 'contain'
+                                %}
+                              </div>
+
+                              <p class="signature-block__text">{{ signature_text }}</p>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
         {% elsif block.type == "image_plus_caption" %}
           <div class="section-image-plus-caption" data-cms-block data-background-color="#ffffff">
             {% assign aspect_ratio = block.settings.aspect_ratio %}
@@ -258,5 +327,4 @@
         {% endif %}
       </div>
     {% endfor %}
-
 </div>
