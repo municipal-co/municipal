@@ -1,7 +1,7 @@
 {% include 'page-cms-section-renderer', section: section %}
 
 {% schema %}
-  {
+  { 
     "name": "Page - About Us",
     "class": "about-us",
     "settings": [
@@ -95,86 +95,24 @@
             "default":   "medium"
           }
         ]
-      },
+      },  
       {
-        "type": "article_grid",
-        "name": "Article Grid",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Title"
-          },
-          {
-             "type": "article",
-             "id": "article_1",
-             "label": "Article 1"
-          },
-          {
-             "type": "article",
-             "id": "article_2",
-             "label": "Article 2"
-          },
-          {
-             "type": "article",
-             "id": "article_3",
-             "label": "Article 3"
-          },
-          {
-            "type": "text",
-            "id": "cta_text",
-            "label": "CTA Text"
-          },
-          {
-            "type": "url",
-            "id": "cta_url",
-            "label": "CTA Link"
-          }
-        ]
-      },   
-      {
-        "type": "product_grid",
-        "name": "Product Grid",
-        "settings": [
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Title"
-          },        
-          {
-            "type": "product",
-            "id": "product_1",
-            "label": "Product 1"
-          },
-          {
-            "type": "product",
-            "id": "product_2",
-            "label": "Product 2"
-          },
-          {
-            "type": "product",
-            "id": "product_3",
-            "label": "Product 3"
-          },
-          {
-            "type": "text",
-            "id": "cta_text",
-            "label": "CTA Text"
-          },
-          {
-            "type": "url",
-            "id": "cta_url",
-            "label": "CTA Link"
-          }
-        ]
-      },
-      {
-        "type": "banner",
-        "name": "Banner",
+        "type": "promo",
+        "name": "Promo Module",
         "settings": [
           {
             "type": "header",
             "content": "Content"
+          },   
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon"
           },
           {
             "type": "text",
@@ -195,65 +133,26 @@
             "type": "url",
             "id": "cta_url",
             "label": "CTA Link"
+          },  
+          {
+            "type": "image_picker",
+            "id": "secondary_icon",
+            "label": "Secondary Icon"
+          },    
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_small",
+            "label": "Image - Mobile"
           },
           {
             "type": "header",
-            "content": "Design"
+            "content": "Content - Options"
           },
-          {
-            "type": "range",
-            "id":   "content_max_width",
-            "min":  300,
-            "max":  850,
-            "step": 25,
-            "unit": "px",
-            "label": "Max Content Width",
-            "default": 450
-          },
-          {
-            "type": "checkbox",
-            "id" : "light_text",
-            "label": "Light Text",
-            "default": false
-          },
-          {
-            "type":      "select",
-            "id":        "content_alignment",
-            "label":     "Content Alignment",
-            "options": [
-              { "value": "left", "label": "Left" },
-              { "value": "center", "label": "Center" },
-              { "value": "right", "label": "Right" }
-            ],
-            "default":   "center"
-          },
-          {
-            "type":      "select",
-            "id":        "text_alignment",
-            "label":     "Text Alignment",
-            "options": [
-              { "value": "left", "label": "Left" },
-              { "value": "center", "label": "Center" },
-              { "value": "right", "label": "Right" }
-            ],
-            "default":   "center"
-          },
-          {
-            "type": "image_picker",
-            "id": "background",
-            "label": "Background Image"
-          },
-          {
-            "type": "image_picker",
-            "id": "background_image_small",
-            "label": "Background Image - Mobile"
-          }
-        ]
-      },
-      {
-        "type": "promo",
-        "name": "Promo",
-        "settings": [
           {
             "type": "select",
             "id": "layout",
@@ -265,58 +164,40 @@
             "default": "left"
           },
           {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Light Text",
+            "info": "Light text affects the eyebrow, copy and CTA."
+          },
+          {
             "type": "select",
-            "id": "type",
-            "label": "Content Split",
+            "id": "title_color",
+            "label": "Title Color",
             "options": [
-              { "value": "1", "label": "4/8" },
-              { "value": "2", "label": "5/7" },
-              { "value": "3", "label": "6/6" },
-              { "value": "4", "label": "7/5" },
-              { "value": "5", "label": "8/4" }
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
             ],
-            "default": "3"
-          },      
-          {
-            "type": "text",
-            "id": "title",
-            "label": "Title"
+            "default": "white"
           },
           {
-            "type": "richtext",
-            "id": "text",
-            "label": "Text"
-          },
-          {
-            "type": "range",
-            "id":   "content_max_width",
-            "min":  300,
-            "max":  850,
-            "step": 25,
-            "unit": "px",
-            "label": "Max Content Width",
-            "default": 450
-          },
-          {
-            "type": "text",
-            "id": "cta_text",
-            "label": "CTA Text"
-          },
-          {
-            "type": "url",
-            "id": "cta_url",
-            "label": "CTA Link"
-          },     
-          {
-            "type": "image_picker",
-            "id": "image",
-            "label": "Image"
-          },
-          {
-            "type": "image_picker",
-            "id": "image_small",
-            "label": "Image - Mobile"
-          }  
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label":"White", "value":"#ffffff"},
+              {"label":"Red", "value":"#ff2b00"},
+              {"label":"Cyan", "value":"#009dcc"},
+              {"label":"Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#ffffff"
+          } 
         ]  
       },
       {
@@ -369,38 +250,76 @@
       },
       {
         "type": "video",
-        "name": "Video",
+        "name": "Video Module",
         "settings": [
+          {
+            "type": "header",
+            "content": "Section Content"
+          },   
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon",
+            "info": "Icon appear on top-left hand side of the section."
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "video_cover",
+            "label": "Video Image"
+          },
           {
              "id": "video_url",
              "type": "video_url",
              "label": "Video URL",
-             "accept": ["vimeo", "youtube"],
-             "info": "Both Vimeo and YouTube videos are supported",
-             "default": "https://vimeo.com/72223143"
+             "accept": ["youtube"]
           },
           {
-            "type": "image_picker",
-            "id": "cover_image",
-            "label": "Cover Image"
+            "type": "product",
+            "id": "product_link",
+            "label": "Product Link"
           },
           {
             "type": "header",
-            "content": "Vimeo Embed Options",
-            "info": "The options below only apply to Vimeo videos"
+            "content": "Section Settings"
           },
           {
-            "type": "color",
-            "id": "embed_color",
-            "label": "Embed Color",
-            "default": "#000"
-          },          
+            "type": "select",
+            "id": "title_color",
+            "label": "Title Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "white"
+          },
           {
-            "type": "checkbox",
-            "id" : "background",
-            "label": "Background Video",
-            "info": "Enabling this will remove video controls, cover image and autoplay the video.  [See Vimeo Help Page for info](https://help.vimeo.com/hc/en-us/articles/115011183028-Embedding-background-videos)",
-            "default": false
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label": "White", "value":"#ffffff"},
+              {"label": "Red", "value":"#ff2b00"},
+              {"label": "Cyan", "value":"#009dcc"},
+              {"label": "Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#424446"
           }
         ]
       },
@@ -538,6 +457,287 @@
               { "value": "16x9", "label": "Full-width" }
             ],
             "default":   "16x9"
+          }
+        ]
+      },
+      {
+        "type": "collection_grid",
+        "name": "Collection Grid",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Section Content"
+          },   
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon"
+          },
+          {
+            "type": "richtext",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "header",
+            "content": "Collection Tile - 1"
+          },
+          {
+            "type": "text",
+            "id": "collection_title_1",
+            "label": "Collection Title"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_1",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_1",
+            "label": "CTA Link"
+          }, 
+          {
+            "type": "image_picker",
+            "id": "collection_image_1",
+            "label": "Collection Background"
+          },
+          {
+            "type": "header",
+            "content": "Collection Tile - 2"
+          },
+          {
+            "type": "text",
+            "id": "collection_title_2",
+            "label": "Collection Title"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_2",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_2",
+            "label": "CTA Link"
+          }, 
+          {
+            "type": "image_picker",
+            "id": "collection_image_2",
+            "label": "Collection Background"
+          },
+          {
+            "type": "header",
+            "content": "Section Settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Ligh Text",
+            "info": "Light text affects the eyebrow and CTAs."
+          },
+          {
+            "type": "select",
+            "id": "title_color",
+            "label": "Title Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "white"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label": "White", "value":"#ffffff"},
+              {"label": "Red", "value":"#ff2b00"},
+              {"label": "Cyan", "value":"#009dcc"},
+              {"label": "Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#2c6275"
+          }
+        ]   
+      },
+      {
+        "type": "tiled_image",
+        "name": "Tiled Image",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label":"White", "value": "#ffffff"},
+              {"label":"Black", "value": "#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Light Text",
+            "info": "Light text affects the eyebrow, copy and CTA."
+          },
+          {
+            "type": "select",
+            "id": "title_color",
+            "label": "Header Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "header",
+            "content": "Images"
+          },
+          {
+            "type": "image_picker",
+            "id": "left_image",
+            "label": "Left Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "right_image",
+            "label": "Right Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "eyebrow_icon",
+            "label": "Eyebrow Icon"
+          }
+        ]
+      },
+      {
+        "type": "instagram",
+        "name": "2 UP - Instagram",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "accent_text",
+            "label": "Accent Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image - 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image - 2"
+          },
+          {
+            "type": "header",
+            "content": "Content - Options"
+          },
+          {
+            "type": "select",
+            "id": "text_color",
+            "label": "Text Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "white"
+          },
+          {
+            "type": "select",
+            "id": "accent_text_color",
+            "label": "Accent Text Color",
+            "options": [
+              {"label":"White", "value":"white"},
+              {"label":"Red", "value":"red"},
+              {"label":"Cyan", "value":"cyan"},
+              {"label":"Black", "value":"black"}
+            ],
+            "default": "red"
+          },
+          {
+            "type": "select",
+            "id": "background_color",
+            "label": "Background Color",
+            "options": [
+              {"label":"White", "value":"#ffffff"},
+              {"label":"Red", "value":"#ff2b00"},
+              {"label":"Cyan", "value":"#009dcc"},
+              {"label":"Black", "value":"#121212"},
+              {"label": "Brown", "value": "#452b2b"},
+              {"label": "Blue", "value": "#2c6275"},
+              {"label": "Tan", "value": "#c3baa8"},
+              {"label": "Gray", "value": "#424446"},
+              {"label": "Brownish-Red", "value": "#752c2e"}
+            ],
+            "default": "#ffffff"
+          },
+          {
+            "type": "range",
+            "id":   "scroll_animation",
+            "min":  10,
+            "max":  100,
+            "step": 5,
+            "unit": "s",
+            "label": "Scrolling Text Duration",
+            "default": 20
           }
         ]
       }
