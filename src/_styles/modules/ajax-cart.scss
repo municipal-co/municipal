@@ -84,17 +84,19 @@ body.ajax-cart-open {
 
 .ajax-cart__header {
   background-color: $black;
-  padding: 35px 40px;
+  padding: large-vw(9px, 35px) large-vw(20px, 40px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   @include media-breakpoint-down('sm') {
     padding: 9px 20px;
   }
+
   h4 {
     margin-bottom: 0;
     color: $white;
-    font-size: 30px;
+    font-size: large-vw(16px, 30px);
     text-transform: none;
     @include media-breakpoint-down('sm') {
       font-size: 16px;
@@ -136,8 +138,9 @@ body.ajax-cart-open {
     color: $white;
   }
   .icon-close {
-    width: 50px;
-    height: 50px;
+    width: large-vw(28px, 50px);
+    height: large-vw(28px, 50px);
+
     @include media-breakpoint-down('sm') {
       width: 28px;
       height: 28px;
