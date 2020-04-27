@@ -6,15 +6,14 @@
 .page-text-only {
   margin-top: large-vw(40px,105px);
   margin-bottom: large-vw(90px,185px);
-  @media (max-width: 768px) {
+  @include media-breakpoint-down('sm') {
     margin-top: 40px;
     margin-bottom: 90px;
   }
 }
 
 .page-text-only__content {
-  padding: 0 calc(100% / 24);
-  @media (max-width: 768px) {
+  @include media-breakpoint-down('sm') {
     padding: 0;
   }
 }
@@ -25,72 +24,44 @@
 
 .page-text-only__content p, .page-text-only__header p {
 
-  font-weight: $p2-font-weight;
-  letter-spacing: $p2-letter-spacing;
-  line-height: $p2-line-height;
+  @extend .p2;
   margin-bottom: 2rem;
-  @media (max-width: 768px) {
-    font-size: $p2-font-size-mobile;
+  @include media-breakpoint-down('sm') {
     line-height: $line-height-base;
   }
-}
-
-.page-text-only__header h5 {
-  color: $cyan;
 }
 
 .page-text-only__header {
   border-bottom: 8px solid $black;
   margin-bottom: large-vw(45px,130px);
   text-align: center;
-  padding: 0 calc(100% / 24);
-  @media (max-width: 768px) {
+  @include media-breakpoint-down('sm') {
     margin-bottom: 45px;
     padding: 0;
+  }
+  & .h5 {
+    color: $cyan;
+    display: block;
+    margin-bottom: 1rem;
   }
 }
 
 .page-text-only ul {
     margin-bottom: 2rem;
     list-style-type: none;
-    @media (max-width: 768px) {
-      padding-inline-start: 55px;
-    }
 }
 
 .page-text-only ul > li {
-    text-indent: -22px;
-    font-weight: $p2-font-weight;
-    letter-spacing: $p2-letter-spacing;
-    line-height: $p2-line-height;
-    @media (max-width: 768px) {
-      font-size: $p2-font-size-mobile;
+    @extend .p2;
+    @include media-breakpoint-down('sm') {
       line-height: $line-height-base;
     }
 }
 .page-text-only ul > li:before {
     content: "--";
-    text-indent: -5px;
     letter-spacing: -4px;
     padding-right: 10px;
 }
-
-/*.page-text-only ul {
-  list-style: none;
-  counter-reset: my-awesome-counter;
-}
-.page-text-only ul li {
-  text-indent: -5px;
-  counter-increment: my-awesome-counter;
-}
-
-.page-text-only ul li::before {
-  content: counter(my-awesome-counter) ". ";
-  color: red;
-  font-weight: bold;
-}*/
-
-
 
 // Page Header
 .page-header {
