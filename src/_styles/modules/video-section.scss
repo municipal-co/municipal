@@ -186,4 +186,13 @@
       display: block;
     }
   }
+
+  .video-eyebrow {
+    position: absolute;
+    left: 20px;
+    top: 13px;
+    color: $white;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+  }
 }
