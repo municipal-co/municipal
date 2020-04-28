@@ -35,13 +35,13 @@
         {% endif %}
 
         {% if video_url != blank %}
-          <div class="video-section__video-cover frame frame--16x9">
+          <div class="video-section__video-cover frame frame--16x9" data-video-player-cover>
             {% render 'image_tag'
                       image: video_cover,
                       object_fit: 'cover'
             %}
 
-            <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#video-modal-{{ section.id }}">
+            <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#video-modal-{{ section.id }}" data-video-play>
               {% include 'icon-play-full-color' %}
             </button>
           </div>

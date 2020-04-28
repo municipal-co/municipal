@@ -56,6 +56,10 @@
       margin: 0;
     }
   }
+  
+  .video-section__video-cover {
+    overflow: hidden;
+  }
 
   .video-section__video-cover img {
     position: absolute;
@@ -77,6 +81,10 @@
     opacity: 1;
     padding: 0;
     border: 0;
+
+    @include media-breakpoint-up('lg') {
+      cursor: none;
+    }
 
     @include media-breakpoint-down('md') {
       width: 80px;
