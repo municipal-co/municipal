@@ -1,7 +1,7 @@
 .four04__content {
   margin-top: large-vw(240px, 240px);
   margin-bottom: large-vw(260px, 260px);
-  @media (max-width: 768px) {
+  @include media-breakpoint-down('sm') {
     margin-top: 240px;
     margin-bottom: 260px;
   }
@@ -19,10 +19,9 @@
 .four04__subtitle a {
   color: $white;
   text-decoration: underline;
-}
-
-.four04__subtitle a:hover {
-  color: $white;
+  & a:hover {
+    color: $white;
+  }
 }
 
 .four04:before {
