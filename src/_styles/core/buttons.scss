@@ -55,10 +55,14 @@
   }
 
   .btn__ui {
-    @include transition(margin-left 0.15s ease-in-out);
+    @include transition(
+      margin-left $transition-duration-fast $transition-timing-function-base
+    );
     margin-left: 20px;
     .icon {
-      @include transition(fill 0.15s ease-in-out);
+      @include transition(
+        fill $transition-duration-fast $transition-timing-function-base
+      );
       width: 30px;
       height: 30px;
     }
