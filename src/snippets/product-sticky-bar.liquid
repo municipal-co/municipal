@@ -65,15 +65,18 @@
       <div class="drawer__body">
         <div class="drawer__body-contents">
           <div class="content-grid">
-            {% for rel_product in collection.products %}
-              {% unless rel_product.handle == product.handle %}
+            {% assign sticky_collection = collection.title | append: '-sticky' | handleize %}
+            {% for rel_product in collections[sticky_collection].products %}
+              {% unless rel_product.title == product.title %}
                 <div class="content-grid__item">
                   {% include 'product-card',
                   product: rel_product,
                   show_tag: true,
                   lazy_load: true,
                   show_sizes: false,
-                  reverse_card: true %}
+                  reverse_card: true,
+                  show_colors: true,
+                  show_collection_colors: true %}
                 </div>
               {% endunless %}
 

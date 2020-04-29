@@ -63,12 +63,12 @@
     content: "";
     position: absolute;
     width: 100%;
-    border: large-vw(2px, 3px) solid $red;
+    border-bottom: large-vw(3px, 6px) solid $red;
     top: 50%;
     transform: translateY(-50%);
 
     @include media-breakpoint-down('md') {
-      border-width: 2px;
+      border-bottom-width: 3px;
     }
   }
 
