@@ -1,7 +1,7 @@
 .contact {
     margin-top: large-vw(25px,80px);
     margin-bottom: large-vw(120px,205px);
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
         margin-top: 25px;
         margin-bottom: 120px;
     }
@@ -14,7 +14,7 @@
 .contact__titles-container {
     margin-top: large-vw(30px,75px);
     margin-bottom: large-vw(30px,120px);
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
         margin: 30px 0;
     }
     text-align: center;
@@ -28,7 +28,7 @@
 //FORM
 .contact__form-container {
     padding-left: calc(100% / 24);
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
         padding-left: 0;
     }
 }
@@ -37,11 +37,12 @@
     margin-bottom: 50px;
     & select {
         padding-bottom: 10px;
+        border-radius: 0;
     }
 }
 
 .contact__form-message-container {
-    @include media-breakpoint-up('md') {
+    @include media-breakpoint-up('lg') {
         margin-bottom: 0;
     }
 }
@@ -70,8 +71,8 @@
 
 .contact__form-submit-container-desktop {
     display: flex;
-    justify-content: start;
-    @include media-breakpoint-down('sm') {
+    justify-content: center;
+    @include media-breakpoint-down('md') {
         display: none;
     }
 }
@@ -79,7 +80,7 @@
 .contact__form-submit-container-mobile {
     
     display: none;
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
         display: flex;
         justify-content: center;
     }
@@ -88,17 +89,35 @@
 .contact__form-submit {
     padding: 20px 80px;
     margin-top: 80px;
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
         width: 100%;
         margin-top: 0;
     }
+}
+
+//ARROW SELECT
+.dropdown {
+    position: relative;
+}
+
+.dropdown:after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 13px;
+    border: solid #000;
+    border-width: 0px 4px 4px 0;
+    display: inline-block;
+    padding: 6px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 //LINK LIST
 .contact__links-container {
     padding-right: calc(100% / 24);
     border-right: 8px solid $black;
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
         order: 1;
         padding-right: 0;
         border-right: 0;

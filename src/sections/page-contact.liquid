@@ -13,14 +13,15 @@
   <div class="contact">
     <div class="container-fluid">
       <div class="row justify-content-center">
-        <div class="col-xl-22 col-lg-22 col-md-22 col-sm-20 col-20">
+        <div class="col-xl-22 col-lg-22 col-md-20 col-sm-20 col-20">
           <div class="contact__banner-container">
             {% if section.settings.contact__banner-image %}
-              <img src="{{ section.settings.contact__banner-image | img_url: "1080x1080" }}" alt="contact__banner-image">
+              <!--<img src="{{ section.settings.contact__banner-image | img_url: "1080x1080" }}" alt="contact__banner-image">-->
+              {% include 'image_tag', image: section.settings.contact__banner-image %}
             {% endif %}
           </div>
           <div class="row justify-content-center">
-            <div class="contact__titles-container col-xl-20 col-lg-20 col-md-20 col-sm-24 col-24">
+            <div class="contact__titles-container col-xl-20 col-lg-20 col-md-24 col-sm-24 col-24">
               <span class="h5"> {{ page.title }} </span>
               <h1> {{ section.settings.title }} </h1>
               <p class="p2"> {{ section.settings.subtitle }} </p>
@@ -29,7 +30,7 @@
           <div class="contact__content">
             <div class="row justify-content-center">
               {% if contact_link_check == true %}
-                <div class="contact__links-container col-xl-7 col-lg-7 col-md-7 col-sm-24 col-24">
+                <div class="contact__links-container col-xl-7 col-lg-7 col-md-24 col-sm-24 col-24">
                   <ul class="contact__link-list">
 
                     {% if section.settings.contact__instagram-check %}
@@ -87,7 +88,7 @@
                   </ul>
                 </div> 
               {% endif %}
-              <div class="contact__form-container {%if contact_link_check %}col-xl-17 col-lg-17 col-md-17 col-sm-24 col-24{%else%}col-xl-20 col-lg-20 col-md-20 col-sm-24 col-24{%endif%}">
+              <div class="contact__form-container {%if contact_link_check %}col-xl-17 col-lg-17 col-md-24 col-sm-24 col-24{%else%}col-xl-20 col-lg-20 col-md-24 col-sm-24 col-24{%endif%}">
               
                     {% form 'contact' %}
               
@@ -134,11 +135,13 @@
               
                       <div class="contact__form-input-container">
                         <label class="h5 contact__form-label" for="contact__form-subject-select">{{ 'contact.form.subject' | t }}*</label>
-                        <select class="contact__form-input" id="contact__form-subject-select" form="contact">
-                            <option value="billing">Billing</option>
-                            <option value="shipping">Shipping</option>
-                            <option value="question">Question</option>
-                        </select>
+                        <div class="dropdown">
+                          <select class="contact__form-input" id="contact__form-subject-select" form="contact">
+                              <option value="billing">Billing</option>
+                              <option value="shipping">Shipping</option>
+                              <option value="question">Question</option>
+                          </select>
+                        </div>
                       </div>
               
                       <div class="contact__form-input-container contact__form-message-container">
@@ -165,9 +168,13 @@
           </div>
         </div>
         
-        <div class="row justify-content-start">
-          <div class="contact__form-submit-container-desktop offset-xl-13 offset-lg-13 offset-md-13 col-xl-11 col-lg-11 col-md-11 col-sm-24 col-24">
-            <input type="submit" class="btn btn-primary contact__form-submit" form="contact_form" value="{{ 'contact.form.send' | t }}">
+        <div class="row justify-content-center">
+          <div class="col-xl-22 col-lg-22">
+            <div class="row justify-content-center">
+              <div class="contact__form-submit-container-desktop offset-xl-8 offset-lg-8 col-xl-16 col-lg-16">
+                <input type="submit" class="btn btn-primary contact__form-submit" form="contact_form" value="{{ 'contact.form.send' | t }}">
+              </div>
+            </div>    
           </div>
         </div>
             
