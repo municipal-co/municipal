@@ -1,11 +1,25 @@
 <div class="layout-content-wrapper">
-  <div class="container">
+  <div class="container-fluid">
+    <div class="page-text-only">
+      
+      <div class="row justify-content-center">
+        <div class="col-xl-22 col-lg-22 col-md-22 col-sm-20 col-20">
+          <div class="page-text-only__header">
+            <span class="h5">{{ page.metafields.custom_fields["page_subheader"] }}</span>
+            <h1>{{ page.title }}</h1>
+            <p class="p2">{{ page.metafields.custom_fields["page_subtitle"] }}</p>
+          </div>
+        </div>  
+      </div>
+             
+      <div class="row justify-content-center">
+        <div class="col-xl-20 col-lg-20 col-md-20 col-sm-20 col-20">
+          <div class="page-text-only__content">
+            {{ page.content }}
+          </div>
+        </div>
+      </div>
 
-    {% include 'page-header', ph_title: page.title %}
-
-    <div class="rte mx-auto" style="max-width: 60em;">
-      {{ page.content }}
     </div>
-
   </div>
 </div>
