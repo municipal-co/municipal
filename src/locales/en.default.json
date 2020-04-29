@@ -173,11 +173,13 @@
       "none": "You haven't saved any addresses."
     },
     "login": {
-      "title": "Login or Create an Account",
-      "subtitle": "Sign in for access to convenient features and quick checkout.",
-      "email": "Email",
+      "main_title": "Login or Create an Account",
+      "title": "Sign in",
+      "subtitle": "For quick checkout and account history.",
+      "email": "Email address",
       "password": "Password",
-      "forgot_password": "Forgot your password?",
+      "forgot_password": "Forgot password?",
+      "create_account": "Create account",
       "sign_in": "Sign In",
       "cancel": "Return to Store",
       "guest_title": "Continue as a guest",
@@ -247,13 +249,17 @@
     },
     "register": {
       "title": "Create Account",
-      "subtitle": "Register for quick checkout, order status, purchase history, wishlists, and more.",
+      "subtitle": "Sign up for quick checkout order history, account status and more.",
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email",
       "password": "Password",
-      "submit": "Create",
-      "cancel": "Return to Store"
+      "password_condition": "must be at least 6 characters with 1 symbol",
+      "password_confirm": "Confirm Password",
+      "news_checkbox": "Receive updates and special offers in my inbox.",
+      "terms_checkbox": "I accept the Privacy Policy and agree to the Terms & Conditions",
+      "submit": "Sing Up",
+      "cancel": "Cancel"
     }
   },
   "homepage": {
@@ -311,7 +317,7 @@
       "initial_value": "Gift card value: {{ value }}"
     }
   },
-  "date_formats":{
+  "date_formats": {
     "month_day_year": "%B %d, %Y",
     "month_day_year_short": "%b %e %Y",
     "month_day_year_time": "%B %d, %Y %I:%M%p",
