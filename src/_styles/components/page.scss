@@ -2,6 +2,66 @@
 // Page
 // -------------------------
 
+//Page Only Text
+.page-text-only {
+  margin-top: large-vw(40px,105px);
+  margin-bottom: large-vw(90px,185px);
+  @include media-breakpoint-down('sm') {
+    margin-top: 40px;
+    margin-bottom: 90px;
+  }
+}
+
+.page-text-only__content {
+  @include media-breakpoint-down('sm') {
+    padding: 0;
+  }
+}
+
+.page-text-only__content p:first-child {
+  margin-bottom: 0;
+}
+
+.page-text-only__content p, .page-text-only__header p {
+
+  @extend .p2;
+  margin-bottom: 2rem;
+  @include media-breakpoint-down('sm') {
+    line-height: $line-height-base;
+  }
+}
+
+.page-text-only__header {
+  border-bottom: 8px solid $black;
+  margin-bottom: large-vw(45px,130px);
+  text-align: center;
+  @include media-breakpoint-down('sm') {
+    margin-bottom: 45px;
+    padding: 0;
+  }
+  & .h5 {
+    color: $cyan;
+    display: block;
+    margin-bottom: 1rem;
+  }
+}
+
+.page-text-only ul {
+    margin-bottom: 2rem;
+    list-style-type: none;
+}
+
+.page-text-only ul > li {
+    @extend .p2;
+    @include media-breakpoint-down('sm') {
+      line-height: $line-height-base;
+    }
+}
+.page-text-only ul > li:before {
+    content: "--";
+    letter-spacing: -4px;
+    padding-right: 10px;
+}
 
 // Page Header
 .page-header {

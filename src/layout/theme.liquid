@@ -104,6 +104,10 @@
     {% section 'ajax-cart' %}
   {% endunless %}
 
+  {% if shop.customer_accounts_enabled %}
+    {% section 'customers-drawer' %}
+  {% endif %}
+
   {% include 'slideup-template' %}
   {% include 'third-party-scripts-foot' %}
 

@@ -63,7 +63,16 @@
             {% capture option_alt_ui %}
 
               {% if base_option_name_downcase == "color" %}
-                {% include 'product-dots-color', product: product, selected_color: option.selected_value %}
+                {% capture collection_product_html %}
+                  {% include 'collection-color-dots', product: product %}
+                {% endcapture %}
+
+                {% if collection_product_html != blank %}
+                  {{ collection_product_html }}
+                {% else %}
+                  {% include 'product-dots-color', product: product, selected_color: option.selected_value %}
+                {% endif %}
+
               {% endif %}
 
               {% if base_option_name_downcase == "size" %}

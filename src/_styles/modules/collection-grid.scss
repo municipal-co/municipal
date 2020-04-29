@@ -42,6 +42,7 @@
   .collection-grid__title {
     text-align: right;
     margin-bottom: large-vw(30px, 75px);
+    font-weight: $font-weight-normal;
 
     @include media-breakpoint-down('md') {
       padding-bottom: 30px;
