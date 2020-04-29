@@ -97,8 +97,7 @@
       "cookies_required": "Enable cookies to use the shopping cart",
       "continue_browsing_html": "Continue browsing <a href=\"/collections/all\">here</a>.",
       "item_quantity": "Item quantity",
-      "savings": "You're saving",
-      "subtotal": "Subtotal"
+      "savings": "You're saving"
     },
     "label": {
       "product": "Product",
@@ -119,10 +118,21 @@
     "form": {
       "name": "Name",
       "email": "Email",
-      "phone": "Phone Number",
+      "subject": "Subject",
       "message": "Message",
-      "send": "Send",
+      "send": "Send Message",
       "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
+    },
+    "default": {
+      "subheader": "Contact us",
+      "twitter_label": "Twitter",
+      "email_label": "Email",
+      "instagram_label": "Instagram",
+      "address_label": "H.Q.",
+      "twitter_default": "@tw_example",
+      "email_default": "example@gmail.com",
+      "address_default": "Main Street 123, New York",
+      "instagram_default": "@ins_example"
     }
   },
   "customer": {
