@@ -1051,11 +1051,13 @@ $drawer-header-border-color:            $black;
 
 // AJAX Cart
 
-$ajax-cart-width:                       400px;
+$ajax-cart-width:                       560px;
 $ajax-cart-bg:                          $white;
 $ajax-cart-border-color:                darken($ajax-cart-bg, 5%);
-$ajax-cart-padding-vertical:            $grid-gutter-width;
-$ajax-cart-padding-horizontal:          $grid-gutter-width;
+$ajax-cart-padding-vertical:            40px;
+$ajax-cart-padding-horizontal:          80px;
+$ajax-cart-padding-vertical-mobile:     15px;
+$ajax-cart-padding-horizontal-mobile:   15px;
 $ajax-cart-backdrop-color:              $drawer-backdrop-color;
 $ajax-cart-backdrop-opacity:            $drawer-backdrop-opacity;
 
@@ -1161,8 +1163,8 @@ $dot-small-font-size:                   $font-size-xs;
 $quantity-adjuster-height:             40px;
 $quantity-adjuster-font-size:          $font-size-base;
 $quantity-adjuster-border-width:       1px;
-$quantity-adjuster-border-color:       $gray;
-$quantity-adjuster-inner-height:       $quantity-adjuster-height - (2*$quantity-adjuster-border-width);
+$quantity-adjuster-border-color:       $white;
+$quantity-adjuster-inner-height:       16px;
 
 
 // Yotpo

@@ -1,1 +1,7 @@
-{% section 'cart' %}
+<script>
+  window.location.replace("{{shop.url}}?open-mini-cart");
+</script>
+
+<noscript>
+  {% section 'cart' %}
+</noscript>
