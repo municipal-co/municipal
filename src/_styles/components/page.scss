@@ -6,14 +6,14 @@
 .page-text-only {
   margin-top: large-vw(40px,105px);
   margin-bottom: large-vw(90px,185px);
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     margin-top: 40px;
     margin-bottom: 90px;
   }
 }
 
 .page-text-only__content {
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     padding: 0;
   }
 }
@@ -26,7 +26,7 @@
 
   @extend .p2;
   margin-bottom: 2rem;
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     line-height: $line-height-base;
   }
 }
@@ -35,7 +35,7 @@
   border-bottom: 8px solid $black;
   margin-bottom: large-vw(45px,130px);
   text-align: center;
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     margin-bottom: 45px;
     padding: 0;
   }
@@ -53,7 +53,7 @@
 
 .page-text-only ul > li {
     @extend .p2;
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
       line-height: $line-height-base;
     }
 }
