@@ -423,7 +423,7 @@ $breadcrumb-separator: '\007c';
 //
 // Customizes the `.table` component with basic values, each used across all table variations.
 
-$table-cell-padding: 0.75rem !default;
+$table-cell-padding: 0.4rem !default;
 $table-cell-padding-sm: 0.3rem !default;
 
 $table-color: $body-color !default;
@@ -1096,6 +1096,8 @@ $ajax-cart-padding-vertical: $grid-gutter-width;
 $ajax-cart-padding-horizontal: $grid-gutter-width;
 $ajax-cart-backdrop-color: $drawer-backdrop-color;
 $ajax-cart-backdrop-opacity: $drawer-backdrop-opacity;
+$ajax-cart-padding-vertical-mobile: 15px;
+$ajax-cart-padding-horizontal-mobile: 15px;
 
 // Page Hero
 
