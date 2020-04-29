@@ -1,7 +1,7 @@
 .four04__content {
   margin-top: large-vw(240px, 240px);
   margin-bottom: large-vw(260px, 260px);
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     margin-top: 240px;
     margin-bottom: 260px;
   }
