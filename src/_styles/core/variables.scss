@@ -1088,16 +1088,15 @@ $drawer-header-font-size: $h5-font-size;
 $drawer-header-border-color: $black;
 
 // AJAX Cart
-
-$ajax-cart-width: 400px;
-$ajax-cart-bg: $white;
-$ajax-cart-border-color: darken($ajax-cart-bg, 5%);
-$ajax-cart-padding-vertical: $grid-gutter-width;
-$ajax-cart-padding-horizontal: $grid-gutter-width;
-$ajax-cart-backdrop-color: $drawer-backdrop-color;
-$ajax-cart-backdrop-opacity: $drawer-backdrop-opacity;
-$ajax-cart-padding-vertical-mobile: 15px;
-$ajax-cart-padding-horizontal-mobile: 15px;
+$ajax-cart-width:                       560px;
+$ajax-cart-bg:                          $white;
+$ajax-cart-border-color:                darken($ajax-cart-bg, 5%);
+$ajax-cart-padding-vertical:            40px;
+$ajax-cart-padding-horizontal:          80px;
+$ajax-cart-padding-vertical-mobile:     15px;
+$ajax-cart-padding-horizontal-mobile:   15px;
+$ajax-cart-backdrop-color:              $drawer-backdrop-color;
+$ajax-cart-backdrop-opacity:            $drawer-backdrop-opacity;
 
 // Page Hero
 
