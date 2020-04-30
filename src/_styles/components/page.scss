@@ -16,6 +16,9 @@
   @include media-breakpoint-down('md') {
     padding: 0;
   }
+  & h4 {
+    font-weight: $font-weight-normal;
+  }
 }
 
 .page-text-only__content p:first-child {
@@ -43,6 +46,10 @@
     color: $cyan;
     display: block;
     margin-bottom: 1rem;
+    font-weight: $font-weight-normal;
+  }
+  & h1 {
+    font-weight: $font-weight-normal;
   }
 }
 
