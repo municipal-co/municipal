@@ -60,6 +60,7 @@ import TiledImageSection from './sections/tiledImageSection';
 import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
 import CollectionGridSection from './sections/collectionGridSection';
+import YotpoReviews from './sections/yotpoReviews';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -117,6 +118,7 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('tiled-image', TiledImageSection);
   sectionManager.register('collection-grid', CollectionGridSection);
+  sectionManager.register('yotpo-reviews', YotpoReviews);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
