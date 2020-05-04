@@ -423,7 +423,7 @@ $breadcrumb-separator: '\007c';
 //
 // Customizes the `.table` component with basic values, each used across all table variations.
 
-$table-cell-padding: 0.75rem !default;
+$table-cell-padding: 0.4rem !default;
 $table-cell-padding-sm: 0.3rem !default;
 
 $table-color: $body-color !default;
@@ -1088,7 +1088,6 @@ $drawer-header-font-size: $h5-font-size;
 $drawer-header-border-color: $black;
 
 // AJAX Cart
-
 $ajax-cart-width:                       560px;
 $ajax-cart-bg:                          $white;
 $ajax-cart-border-color:                darken($ajax-cart-bg, 5%);

@@ -1,147 +1,188 @@
+{{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+
 {% form 'customer_address', customer.new_address %}
-
-  <h5>{{ 'customer.addresses.add_new' | t }}</h5>
-
   <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
+  
+    <div class="col-md-11">
+      <div class="form-group form-group__account-address">
         <label for="AddressFirstNameNew">
-          {{ 'customer.addresses.first_name' | t }}
+          {{ 'customer.addresses.first_name' | t }}*
         </label>
 
         <input type="text"
           name="address[first_name]"
           id="AddressFirstNameNew"
-          class="form-control"
+          class="form-control account-form__field"
           value="{{ form.first_name }}"
+          required
           autocapitalize="words">
       </div>                      
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
+
+    <div class="col-md-11 offset-md-2">
+      <div class="form-group form-group__account-address">
         <label for="AddressLastNameNew">
-          {{ 'customer.addresses.last_name' | t }}
+          {{ 'customer.addresses.last_name' | t }}*
         </label>
 
         <input type="text"
           name="address[last_name]"
           id="AddressLastNameNew"
-          class="form-control"
+          class="form-control account-form__field"
           value="{{ form.last_name }}"
+          required
           autocapitalize="words">
       </div>                      
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6 col-lg-8">
-      <div class="form-group">
-        <label for="AddressAddress1New">
-          {{ 'customer.addresses.address1' | t }}
-        </label>
+  <div class="form-group form-group__account-address">
+    <label for="AddressCompanyNew">
+      {{ 'customer.addresses.company' | t }}
+    </label>
 
-        <input type="text"
-          name="address[address1]"
-          id="AddressAddress1New"
-          class="form-control"
-          value="{{ form.address1 }}"
-          autocapitalize="words">
-      </div>
-    </div>
-    <div class="col-md-6 col-lg-4">
-      <div class="form-group">
-        <label for="AddressAddress2New">
-          {{ 'customer.addresses.address2' | t }}
-        </label>
-        <input type="text"
-          name="address[address2]"
-          id="AddressAddress2New"
-          class="form-control"
-          value="{{ form.address2 }}"
-          autocapitalize="words">
-      </div>      
-    </div>
+    <input type="text"
+      name="address[company]"
+      id="AddressCompanyNew"
+      class="form-control account-form__field"
+      value="{{ form.company }}"
+      autocapitalize="words">
   </div>
 
-  <div class="form-group">
+  <div class="form-group form-group__account-address">
+    <label for="AddressAddress1New">
+      {{ 'customer.addresses.address1' | t }}*
+    </label>
+
+    <input type="text"
+      name="address[address1]"
+      id="AddressAddress1New"
+      class="form-control account-form__field"
+      value="{{ form.address1 }}"
+      required
+      autocapitalize="words">
+  </div>
+
+  <div class="form-group form-group__account-address">
+    <label for="AddressAddress2New">
+      {{ 'customer.addresses.address2' | t }}
+    </label>
+    <input type="text"
+      name="address[address2]"
+      id="AddressAddress2New"
+      class="form-control account-form__field"
+      value="{{ form.address2 }}"
+      autocapitalize="words">
+  </div>      
+
+  <div class="form-group form-group__account-address">
     <label for="AddressCityNew">
-      {{ 'customer.addresses.city' | t }}
+      {{ 'customer.addresses.city' | t }}*
     </label>
     <input type="text"
       name="address[city]"
       id="AddressCityNew"
-      class="form-control"
+      class="form-control account-form__field"
       value="{{ form.city }}"
+      required
       autocapitalize="words">
   </div>
 
   <div class="row">
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="AddressProvinceNew">
-          {{ 'customer.addresses.state' | t }}
-        </label>
-        <input type="text"
-          name="address[province]"
-          id="AddressProvinceNew"
-          class="form-control">
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
+    <div class="col-md-7">
+      <div class="form-group form-group__account-address">
         <label for="AddressCountryNew">
-          {{ 'customer.addresses.country' | t }}
+          {{ 'customer.addresses.country' | t }}*
         </label>
         <select
           name="address[country]"
           id="AddressCountryNew"
-          class="form-control"
+          class="form-control account-form__field"
+          required
           data-default="{{ form.country }}">
-          {{ country_option_tags }}
+          {{ country_option_tags | replace: '---', 'Select Country' }}
         </select>
+        {% include 'icon-caret-down' %}
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="form-group">
+
+    <div class="col-md-7 offset-md-1">
+      <div class="form-group form-group__account-address">
+        <label for="AddressProvinceNew">
+          {{ 'customer.addresses.state' | t }}*
+        </label>
+        <span id="AddressProvinceContainerNew">
+          <select
+            name="address[province]"
+            id="AddressProvinceNew"
+            class="form-control account-form__field"
+            required
+            data-default="{{ form.province }}">
+          </select>
+          {% include 'icon-caret-down' %}
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-7 offset-md-1">
+      <div class="form-group form-group__account-address">
         <label for="AddressZipNew">
-          {{ 'customer.addresses.zip' | t }}
+          {{ 'customer.addresses.zip' | t }}*
         </label>
         <input type="text"
           name="address[zip]"
           id="AddressZipNew"
-          class="form-control"
+          class="form-control account-form__field"
           value="{{ form.zip }}"
+          required
           autocapitalize="characters">
       </div>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group form-group__account-address">
     <label for="AddressPhoneNew">
-      {{ 'customer.addresses.phone' | t }}
+      {{ 'customer.addresses.phone' | t }}*
     </label>
     <input type="tel"
       name="address[phone]"
       id="AddressPhoneNew"
-      class="form-control"
+      class="form-control account-form__field"
       value="{{ form.phone }}"
+      required
       pattern="[0-9\-]*">
   </div>
 
-  <div class="form-group">
+  <div class="form-group form-group__checkboxes">
     <div class="custom-control custom-checkbox">
       {% comment %}{{ form.set_as_default_checkbox }}{% endcomment %}
       <input type="checkbox" name="address[default]" value="1" class="custom-control-input" id="address_default_address_new" />
-      <label class="custom-control-label" for="address_default_address_new">
+      <label class="custom-control-label h6" for="address_default_address_new">
         {{ 'customer.addresses.set_default' | t }}
       </label>
     </div>
   </div>
 
   <div class="form-group">
-    <input type="submit" class="btn btn-primary" value="{{ 'customer.addresses.save' | t }}">
-    <button type="button" class="btn btn-link" data-address-new-toggle>
-      {{ 'customer.addresses.cancel' | t }}
-    </button>
+    <div class="row">
+      <div class="col-md-12">
+        <input type="submit" class="btn btn-block btn-primary" value="{{ 'customer.addresses.save' | t }}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-block btn-link" data-address-new-toggle>
+          {{ 'customer.addresses.cancel' | t }}
+        </button>
+      </div>
+    </div>
   </div>
+
+  <script>
+    // Initialize observers on address selectors
+    new Shopify.CountryProvinceSelector('AddressCountryNew', 'AddressProvinceNew', {
+      hideElement: 'AddressProvinceContainerNew'
+    });
+  </script>
+
 {% endform %}
