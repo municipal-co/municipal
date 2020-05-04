@@ -1,26 +1,41 @@
-.four04 {
-  display: flex;
-  align-items: center;
-}
-
-.four04__content-wrapper {
-  width: 85%;
-  @extend .mx-auto;
+.four04__content {
+  margin-top: large-vw(240px, 240px);
+  margin-bottom: large-vw(260px, 260px);
+  @include media-breakpoint-down('md') {
+    margin-top: 240px;
+    margin-bottom: 260px;
+  }
   text-align: center;
 }
 
-.four04__heading {
-  margin-bottom: 45px;
+.four04__title {
+  color: $yellow;
 }
 
-.four04__content {
+.four04__subtitle {
+  color: $white;
+}
 
-  p {
-    margin-bottom: $paragraph-margin-bottom*2;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+.four04__subtitle a {
+  color: $white;
+  text-decoration: underline;
+  & a:hover {
+    color: $white;
   }
+}
+
+.four04:before {
+	content:'';
+	position: absolute;
+  top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.7);
+}
+
+.four04__input-seach {
+  margin-top: 40px;
+  margin-bottom: 0;
 }
 

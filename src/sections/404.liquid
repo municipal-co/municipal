@@ -1,20 +1,60 @@
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="fourofour">
-  <div class="container">
-    <div class="four04__content-wrapper">
-      <h1 class="h3 four04__heading">
-        {% if section.settings.title != blank %}
-          {{ section.settings.title }}
-        {% else %}
-          {{ 'general.404.title' | t }}
-        {% endif %}
-      </h1>
+  <div class="four04">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="four04__content col-xl-14 col-lg-14 col-md-20 col-sm-20 col-20">
 
-      {% unless section.settings.content == blank %}
-        <div class="p1 four04__content">{{ section.settings.content }}</div>
-      {% endunless %}
+          <h1 class="four04__title">
+            {% if section.settings.title != blank %}
+              {{ section.settings.title }}
+            {% else %}
+              {{ 'general.404.title' | t }}
+            {% endif %}
+          </h1>
+    
+          {% if section.settings.content != blank %}
+              <p class="p2 four04__subtitle">{{ section.settings.content }}</p>
+            {% else %}
+              <p class="p2 four04__subtitle">{{ 'general.404.subtext_html' | t }}</p>
+          {% endif %}
+
+          <div class="four04__seach-section">
+            <form action="/search" method="get" role="search" data-search-form>
+              <div class="minimal-input-box">
+
+                <div class="search-icon">{% include 'icon-search' %}</div>
+                <input type="hidden" name="type" value="product" />
+                <input type="text" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="four04__input-seach minimal-input-box__input minimal-input-box__input--search" autocomplete="off" data-search-input />
+
+                <div class="search-autocomplete-container" style="display: none;" data-autocomplete-container>
+                  <ul>
+                    <li class="autocomplete-item loader"></li>
+                    <li class="autocomplete-item loader"></li>
+                    <li class="autocomplete-item loader"></li>
+                  </ul>
+                </div>
+
+                <button type="submit" class="minimal-input-box__submit">
+                  {% include 'icon-arrow' %}
+                  <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<style>
+.four04 {
+  background-image: url('{{ section.settings.background-image | img_url: "1080x1080" }}');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
 
 {% schema %}
   {
@@ -23,13 +63,17 @@
       {
         "id": "title",
         "type": "text",
-        "label": "Title"
+        "label": "404 page title"
       },
       {
         "id": "content",
         "type": "richtext",
-        "label": "Content",
-        "default": "<p>Need help finding your way?  Let us take you <a href=\"/\">home</a>.</p>"
+        "label": "Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "background-image",
+        "label": "Background image"
       }
     ]
   }
