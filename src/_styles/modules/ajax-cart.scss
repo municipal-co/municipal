@@ -98,6 +98,7 @@ body.ajax-cart-open {
     color: $white;
     font-size: large-vw(16px, 30px);
     text-transform: none;
+    font-weight: $font-weight-normal;
     @include media-breakpoint-down('sm') {
       font-size: 16px;
     }
@@ -270,6 +271,10 @@ body.ajax-cart-open {
 
   p:last-child {
     margin-bottom: 0;
+  }
+
+  & button {
+    font-weight: $font-weight-normal;
   }
 }
 
