@@ -40,12 +40,9 @@
           {% assign yt_video_id = banner_video_url | remove: "https://www.youtube.com/watch?v=" %}
 
           <div class="collection-banner__video">
-            <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="#000000">
+            <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="true" data-embed-color="#000000">
               <div class="video-player__cover" data-video-player-cover>
                 <div class="video-player__cover-still lazyload" data-background="{{ banner_video_bg }}"></div>
-                <span class="video-player__cover-play" data-video-play>
-                  {% include "icon-play-full-color" %}
-                </span>
               </div>
               <div class="video-player__embed" data-video-player-embed></div>
             </div>

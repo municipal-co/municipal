@@ -57,7 +57,8 @@
     border: none;
     border-bottom: 4px solid $black;
     padding: 15px 0;
-    font-weight: bold;
+    font-weight: $font-weight-bold;
+    color: $black;
     &:focus {
       box-shadow: none;
     }
@@ -180,19 +181,23 @@ textarea.form-control {
 
 .form-group {
   margin-bottom: $form-group-margin-bottom;
+
   &.form-group__button {
     margin-top: 60px;
     input {
       width: 100%;
     }
   }
+
   &.form-group__checkboxes {
     margin-top: 60px;
   }
+
   .form-button__inline {
     display: inline-block;
     margin-top: 30px;
   }
+
   .form-button__inline-underlined {
     position: relative;
     display: inline-block;
@@ -207,6 +212,7 @@ textarea.form-control {
       background-color: $black;
     }
   }
+
   .form-password__condition  {
     display: block;
     font-size: $font-size-base * 0.5;
@@ -214,6 +220,7 @@ textarea.form-control {
     font-weight: $font-weight-semi-bold;
     margin-bottom: -25px;
   }
+
   .form-password__error-message {
     color: $red;
     font-size: $font-size-xs;
@@ -222,6 +229,43 @@ textarea.form-control {
     &.show {
       opacity: 1;
       transition: opacity 0.3s ease;
+    }
+  }
+
+  &.form-group__account-address {
+    position: relative;
+    margin-bottom: large-vw(40px, 80px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 40px;
+    }
+    label {
+      @extend .h5;
+      font-weight: $font-weight-normal;
+    }
+    svg {
+      position: absolute;
+      pointer-events: none;
+      right: 8px;
+      bottom: 20px;
+      width: 30px;
+    }
+    select {
+      padding-right: 30px;
+    }
+  }
+
+  .chosen-single {
+    border: none;
+    border-radius: 0;
+    border-bottom: 4px solid $black;
+    padding: 15px 0;
+    font-weight: $font-weight-bold;
+    div b {
+      display: none;
+    }
+    span {
+      margin-right: 40px;
     }
   }
 }

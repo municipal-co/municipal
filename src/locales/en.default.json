@@ -8,8 +8,8 @@
       "page": "Page {{ page }}"
     },
     "404": {
-      "title": "404 Page Not Found",
-      "subtext_html": "The page you requested does not exist. Click <a href=\"/collections/all\">here</a> to continue shopping."
+      "title": "Oops!",
+      "subtext_html": "I think you're lost buddy. Let's take you <a href=\"/\">back home</a>."
     },
     "password_page": {
       "opening_soon": "Opening Soon",
@@ -97,8 +97,7 @@
       "cookies_required": "Enable cookies to use the shopping cart",
       "continue_browsing_html": "Continue browsing <a href=\"/collections/all\">here</a>.",
       "item_quantity": "Item quantity",
-      "savings": "You're saving",
-      "subtotal": "Subtotal"
+      "savings": "You're saving"
     },
     "label": {
       "product": "Product",
@@ -119,10 +118,21 @@
     "form": {
       "name": "Name",
       "email": "Email",
-      "phone": "Phone Number",
+      "subject": "Subject",
       "message": "Message",
-      "send": "Send",
+      "send": "Send Message",
       "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
+    },
+    "default": {
+      "subheader": "Contact us",
+      "twitter_label": "Twitter",
+      "email_label": "Email",
+      "instagram_label": "Instagram",
+      "address_label": "H.Q.",
+      "twitter_default": "@tw_example",
+      "email_default": "example@gmail.com",
+      "address_default": "Main Street 123, New York",
+      "instagram_default": "@ins_example"
     }
   },
   "customer": {
@@ -130,7 +140,7 @@
       "title": "My Account",
       "details": "Account Details",
       "view_addresses": "View Addresses",
-      "addresses": "Addresses",
+      "addresses": "Billing & Shipping",
       "return": "Return to Account Details",
       "account_details": "Account Details",
       "add_new_address": "Add New Address",
@@ -146,21 +156,21 @@
       "cancel": "Decline Invitation"
     },
     "addresses": {
-      "title": "Your Addresses",
+      "title": "Billing & Shipping Information",
       "default": "Default",
-      "default_address": "Default Address",
-      "add_new": "Add a New Address",
-      "edit_address": "Edit address",
+      "default_address": "Billing & Shipping Information",
+      "add_new": "Add Billing \n Address",
+      "edit_address": "Edit Billing \n address",
       "first_name": "First Name",
       "last_name": "Last Name",
       "company": "Company",
       "address1": "Address",
-      "address2": "Apt, suite, etc (optional)",
+      "address2": "Apt, suite, etc",
       "city": "City",
       "country": "Country",
       "province": "Province",
       "state": "State",
-      "zip": "Postal/Zip Code",
+      "zip": "Zip Code",
       "phone": "Phone",
       "set_default": "Set as default address",
       "add": "Add Address",
@@ -186,7 +196,7 @@
       "guest_continue": "Continue"
     },
     "orders": {
-      "title": "Order History",
+      "title": "Purchase History",
       "order_number": "Order #",
       "date": "Date",
       "paid_status": "Paid Status",

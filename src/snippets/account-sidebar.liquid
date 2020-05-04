@@ -2,7 +2,7 @@
   {% capture page_sidebar_html %}
 
     {% comment %} Customer Account sidebar menu {% endcomment %}
-    <h5 class="account-sidebar__title">{{ 'customer.account.title' | t }}</h5>
+    <h4 class="account-sidebar__title">{{ customer.first_name }} {{ customer.last_name }}</h4>
     <div class="d-block d-lg-none">
       <div class="form-group">
         <select class="form-control">
@@ -15,16 +15,16 @@
     </div>    
     <div class="d-none d-lg-block">
       <ul class="account-sidebar__menu">
-          <li {% if template.name == 'account' and template.suffix == blank %}class="is-active"{% endif %}>
+          <li class="h5{% if template.name == 'account' and template.suffix == blank %} is-active{% endif %}">
             <a href="/account">{{ 'customer.account.account_details' | t }}</a>
           </li>
-          <li {% if template.name == 'account' and template.suffix == 'orders' %}class="is-active"{% endif %}>
+          <li class="h5{% if template.name == 'account' and template.suffix == 'orders' %} is-active{% endif %}">
             <a href="/account?view=orders">{{ 'customer.orders.title' | t }}</a>
           </li>
-          <li {% if template.name == 'addresses' %}class="is-active"{% endif %}>
+          <li class="h5{% if template.name == 'addresses' %} is-active{% endif %}">
             <a href="/account/addresses">{{ 'customer.account.addresses' | t }}</a>
           </li>
-          <li>{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
+          <li class="h5">{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
       </ul>
     </div>
   {% endcapture %}
@@ -33,7 +33,7 @@
 
 {% assign page_sidebar_html = page_sidebar_html | strip %}
 {% if page_sidebar_html != blank %}
-  <div class="account-sidebar" data-account-sidebar>
+  <div class="account-sidebar col-md-9" data-account-sidebar>
     <div class="account-sidebar__content">
       {{ page_sidebar_html }}
     </div>
