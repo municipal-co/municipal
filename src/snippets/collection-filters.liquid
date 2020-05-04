@@ -17,63 +17,61 @@
 
 {% endcomment -%}
 
-{% unless collection == empty and filter_types != blank %}
+{% unless collection == empty %}
 
-  {% assign collection_url = collection.url %}
-  {% comment %} collection.url returns nothing for the 'all' collection {% endcomment %}
-  {% if collection.handle == 'all' %}
-    {% assign collection_url = '/collections/all' %}
-  {% endif %}
-
-  {%- capture filters_html %}
-
-    {% for filter_type in filter_types %}
-      
-      {% assign filter_type_options_count = 0 %}
-      
-      {% comment %} Create the list of <option> tags {% endcomment %}
-      {%- capture filter_type_select_content -%}
-
-        {% comment %} Create an empty option to select all / clear the filters {% endcomment %}
-        <option value="">All</option>
-
-        {%- for tag in collection.all_tags -%}
-
-          {%- assign tag_type = tag | split: ':' | first -%} {% comment %} turns 'color:Dark Blue' into 'color' {% endcomment %}
-          {%- assign tag_display = tag | split: ':' | last -%} {% comment %} turns 'color:Dark Blue' into 'Dark Blue' {% endcomment %}
-          
-          {% if tag_type == filter_type %}
-            {% assign filter_type_options_count = filter_type_options_count | plus: 1 %}
-            <option value="{{ tag }}" {% if current_tags contains tag %}selected{% endif %}>
-              {{ tag_display }}
-            </option>
-          {% endif %}
-
-        {% endfor %}
-      {% endcapture %}
-
-      {% comment %} Construct a select tag for it if we have more than 1 option to display {% endcomment %}
-      {% if filter_type_options_count > 1 %}
-        <div class="collection-filter-bar__entry">
-          <label>{{ filter_type | capitalize }}</label>
-          <select class="form-control" data-filters-type="{{ filter_type }}" data-filters-type-select>
-            {{ filter_type_select_content }}
-          </select>
-        </div>
+  {% assign all_tags =  collections['all'].all_tags %}
+  {% comment %} Capture the tags matchign with the color filter{% endcomment %}
+  {% for tag in all_tags %}
+    {% if tag contains 'color' %}
+      {% if color_list != blank %}
+        {% assign color_list = color_list | append: ', ' | append: tag %}
+      {% else %}
+        {% assign color_list = tag %}
       {% endif %}
+    {% endif %}
+  {% endfor %}
 
-    {% endfor %}
-  {% endcapture %}
+  {% assign color_array = color_list | split: ', ' %}
 
   {% comment %} If we have any select tags, output them here {% endcomment %}
-  {% if filters_html != blank %}
-    
-    {{ filters_html }}
-
-    {% if current_tags %}
-      <a href="{{ collection_url }}">Clear all filters</a>
-    {% endif %}
+  {% if size_filters != blank %}
+    <div class="collection-filter__group">
+      <span class="collection-filter__group-header h5">Size:</span>
+      <div class="dots">
+        {% assign size_array = size_filters | split: ',' %}
+        {% for filter in size_array %}
+          {% assign filter_structure = 'size:' | append: filter | remove: ' ' %}
+          <div class="dot {% if current_tags contains filter_structure %} is-active{% endif %}" title="Size {{ filter | upcase }}" data-value="{{filter_structure}}">
+            <div class="dot__inner">
+              {{filter}}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
   {% endif %}
 
+  {% if color_array != blank %}
+    <div class="collection-filter__group">
+      <span class="collection-filter__group-header h5">Color:</span>
+      <div class="dots dots--color">
+        {% for color in color_array %}
+          {% assign color_parts = color | split: ':' %}
+          {% assign color_title = color_parts[1] %}
+          {% if current_tags contains color %}
+            {% assign chosen_color = color %}
+          {% endif %}
+          <div class="dot dot--{{ color_title | handleize }} {% if chosen_color == color %} is-active{% endif %}" title="{{ color_title | replace: '-', ' ' | capitalize | strip }}" data-value="{{ color | handleize }}">
+            <div class="dot__inner">
+              {% include 'icon-check' %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="small" {% if chosen_color == blank %}style="display:none;" {% endif %}>
+        <b>Chosen color: </b>
+        <span data-chosen-color>{{ chosen_color | remove: 'color:' | capitalize }}</span>
+      </div>
+    </div>
+  {% endif %}
 {% endunless %}
-

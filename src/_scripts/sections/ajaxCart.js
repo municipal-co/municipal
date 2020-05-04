@@ -3,7 +3,6 @@ import BaseSection from './base';
 import CartAPI from '../core/cartAPI';
 import AJAXFormManager from '../managers/ajaxForm';
 import AJAXCartUI from '../ui/ajaxCart';
-import getUrlWithRemovedQueryStringParameter from '../core/utils';
 import * as Utils from '../core/utils';
 
 const $window = $(window);
@@ -55,7 +54,7 @@ export default class AJAXCartSection extends BaseSection {
       }
     });
 
-    
+
   }
 
   onSelect() {

@@ -14,12 +14,13 @@ export default class LoadMore {
     this.name = 'loadMore';
     this.nameSpace = '.' + this.name;
     this.$el = $(el);
-    // this is inside the module so cant be scoped within this.$el
+    // this is outside the module so cant be scoped within this.$el
     this.$gridContainer = $(this.$el.data('grid-container'));
+    this.shouldUpdateUrl = this.$el.data('update-url') === false ? false : true;
 
     if (this.$gridContainer) {
-      this.cardSelector = $(el).data('card-selector');
-      this.$button = $(selectors.loadMoreButton, this.$container);
+      this.cardSelector = this.$el.data('card-selector');
+      this.$button = $(selectors.loadMoreButton, this.$el);
       this.$button.on('click', this.loadMoreItems.bind(this));
     }
 
@@ -38,7 +39,7 @@ export default class LoadMore {
     .done(function(data) {
       self.updateContentGrid(data);
       self.updateLoadMoreButton(data);
-      self.updateUrl(link);
+      self.updateUrl.call(self, link);
     });
   }
 
@@ -56,7 +57,7 @@ export default class LoadMore {
   }
 
   updateLoadMoreButton(data) {
-    const link = $(data).find(selectors.pagination).data('next-url');
+    const link = $(data).find(selectors.pagination).data('url-next');
     if ($.trim(link) !== '') {
       this.$el.data('url-next', link);
       this.$button.attr('href', link);
@@ -66,7 +67,9 @@ export default class LoadMore {
   }
 
   updateUrl(link) {
-    window.history.replaceState('', '', link);
+    if (this.shouldUpdateUrl) {
+      window.history.replaceState('', '', link);
+    }
   }
 
   checkPageIndex() {

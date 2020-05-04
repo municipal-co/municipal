@@ -16,46 +16,43 @@
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection">
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-lg-22">
-        {% if collection.products.size > 0 %}
-          <div class="collection-filter-bar">
-            {% comment %}
-              Vertically align groupings.  Space them out horizontally, flush to the edges
-              Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
-              This will ensure that flex will always space them out appropriately
-            {% endcomment %}
-            <div class="collection-filter-bar__grouping">
-              {% if section.settings.enable_filters %}
-
-                {% assign mobile_filter_id = 'mobile-filters' %}
-
-                {% include 'collection-mobile-filters', id: mobile_filter_id, filter_types: filter_types %}
-
-                <div class="d-md-none">
-                  <a href="#" data-toggle="drawer" data-target="#{{ mobile_filter_id }}" data-backdrop="true">
-                    <span style="margin-right: 6px;">{% include 'icon-filters' %}</span>
-                    Filter By
+      <div class="col-24">
+        <div class="collection-filter-bar" data-filter-bar>
+          {% comment %}
+            Vertically align groupings.  Space them out horizontally, flush to the edges
+            Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
+            This will ensure that flex will always space them out appropriately
+          {% endcomment %}
+          <div class="collection-filter-bar__grouping collection-filter-bar__grouping--breadcrumb">
+            <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+              {% if collection.metafields.custom_fields["parent_category"] != blank %}
+                <div class="breadcrumbs__crumb">
+                  {% assign parent_collection = collections[collection.metafields.custom_fields["parent_category"]] %}
+                  <a href="{{ parent_collection.url }}">
+                    {{ parent_collection.title }}
                   </a>
                 </div>
-
-                <div class="d-none d-md-block">
-                  {% include 'collection-filters', filter_types: filter_types %}
-                </div>
-
               {% endif %}
-            </div>
-            <div class="collection-filter-bar__grouping">
-              {% if section.settings.enable_sort %}
-                {% include 'collection-sort' %}
-              {% endif %}
-            </div>
+              <div class="breadcrumbs__crumb">
+                <span class="breadcrumbs__crumb">
+                  {{ collection.title }}
+                </span>
+              </div>
+            </nav>
+
           </div>
+          <div class="collection-filter-bar__grouping collection-filter-bar__grouping--filters">
+            <button class="btn btn-cta btn-sm collection-filter-bar__filter-toggler" data-filters-toggler>
+              {% include 'icon-filters' %}
+              Filter
+            </button>
 
-          <p class="d-none d-md-block">
-            <small>Showing {{ collection.products.size }} {{ collection.products.size | pluralize: 'Item', 'Items' }}</small>
-          </p>
-
-          <div class="content-grid">
+          </div>
+        </div>
+      </div>
+      <div class="collection-section col-22">
+        {% if collection.products.size > 0 %}
+          <div class="content-grid" data-collection-grid="{{ collection.handle }}">
             {% for product in collection.products %}
 
               {% comment %} Lazy load all product images below the fold.  Adjust the limit as needed {% endcomment %}
@@ -64,7 +61,7 @@
                 {% assign lazy_load = true %}
               {% endif %}
 
-              <div class="content-grid__item">
+              <div class="content-grid__item" data-grid-item>
                 {% include 'product-card',
                    product: product,
                    lazy_load: lazy_load,
@@ -74,16 +71,44 @@
               </div>
             {% endfor %}
           </div>
-
         {% else %}
           <p>{{ 'collections.general.no_matches' | t }}</p>
-
         {% endif %}
 
         {% if paginate.pages > 1 %}
-          {% include 'pagination' %}
+        {% assign grid_container = '[data-collection-grid=' | append: collection.handle | append: ']' %}
+          {% include 'load-more'
+          card_selector: '[data-grid-item]',
+          grid_container: grid_container
+          %}
         {% endif %}
+      </div>
+    </div>
+  </div>
 
+  <div class="filters-drawer drawer drawer--right" data-filters-drawer>
+    <div class="drawer__inner">
+      <div class="drawer__header">
+        <a href="#" class="drawer__close" data-drawer-close>
+          {% include 'icon-close' %}
+          <span class="sr-only"></span>
+        </a>
+        <h5 class="drawer__header-title">Filter</h5>
+      </div>
+      <div class="drawer__body">
+        <div class="drawer__body-contents">
+          {% include 'collection-sort' %}
+          {% include 'collection-filters'
+            size_filters: section.settings.size_filters
+          %}
+
+          <button class="btn btn-block btn-primary" data-filter-enable data-local-filtering="true">
+            View Results
+          </button>
+          <a href="{{ collection.url }}" class="btn btn-cta btn-block btn-sm collection-filter__reset" data-filter-clear>
+            {% include 'icon-close' %} Clear All
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -96,12 +121,22 @@
       {{ collection.url }}
     {% endif %}
   {% endcapture %}
+  {% comment %}Create filter url if the collection is already filtered{% endcomment %}
+  {% if current_tags != blank %}
+    {% assign handleized_tags = current_tags | join: '+' %}
+    {% capture filter_url %}
+      {{ collection_url | append: '/' | append: handleized_tags }}
+    {% endcapture %}
+  {% endif %}
 
   <script type="application/json" data-collection-json>
     {
       "url": {{ collection_url | strip | json }},
       "sortDefault": {{ collection.default_sort_by | json }},
       "sortApplied": {{ collection.sort_by | json }}
+      {%- if filter_url != blank -%}
+        ,"filterUrl": {{ filter_url | json }}
+      {%- endif -%}
     }
   </script>
 </div>
@@ -109,22 +144,16 @@
 {% endpaginate %}
 
 {% schema %}
-  {
-    "name": "Collection",
-    "settings": [
-      {
-        "id": "enable_filters",
-        "type": "checkbox",
-        "label": "Enable Filters",
-        "default": true,
-        "info": "Filtering is based on product tags."
-      },
-      {
-        "id": "enable_sort",
-        "type": "checkbox",
-        "label": "Enable Sort",
-        "default": true
-      }
-    ]
-  }
+{
+  "name": "collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "size_filters",
+      "label": "Size filters",
+      "default": "s, m, l, xl, 2xl",
+      "info": "Define the order of the size filters, separate each value with a comma"
+    }
+  ]
+}
 {% endschema %}
