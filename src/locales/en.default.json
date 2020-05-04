@@ -243,7 +243,7 @@
       "see_order_status": "See Order Status"
     },
     "recover_password": {
-      "title": "Reset your password",
+      "title": "Reset your \n password",
       "email": "Email",
       "submit": "Submit",
       "cancel": "Cancel",
@@ -255,10 +255,11 @@
       "subtext": "Enter a new password for {{ email }}",
       "password": "Password",
       "password_confirm": "Confirm Password",
+      "password_condition": "must be at least 6 characters with 1 symbol",
       "submit": "Reset Password"
     },
     "register": {
-      "title": "Create Account",
+      "title": "Create \n Account",
       "subtitle": "Sign up for quick checkout order history, account status and more.",
       "first_name": "First Name",
       "last_name": "Last Name",
@@ -268,7 +269,7 @@
       "password_confirm": "Confirm Password",
       "news_checkbox": "Receive updates and special offers in my inbox.",
       "terms_checkbox": "I accept the Privacy Policy and agree to the Terms & Conditions",
-      "submit": "Sing Up",
+      "submit": "Sign Up",
       "cancel": "Cancel"
     }
   },
