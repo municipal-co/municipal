@@ -41,6 +41,7 @@ export default class LoadMore {
       self.updateLoadMoreButton(data);
       self.updateUrl.call(self, link);
     });
+
   }
 
   updateContentGrid(data, prepend = false) {
@@ -59,6 +60,7 @@ export default class LoadMore {
   updateLoadMoreButton(data) {
     const link = $(data).find(selectors.pagination).data('url-next');
     if ($.trim(link) !== '') {
+      this.$el.attr('data-url-next', link);
       this.$el.data('url-next', link);
       this.$button.attr('href', link);
     } else {

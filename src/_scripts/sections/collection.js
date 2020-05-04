@@ -222,32 +222,28 @@ export default class CollectionSection extends BaseSection {
   updateLoadMoreStatus(data, $grid) {
     const $newLoadMore = $(data).find(selectors.loadMore);
     let newUrl;
+    let $loadMore;
+    let $loadMoreButton;
+
     if ($newLoadMore.length) {
       newUrl = $newLoadMore.data('url-next');
     }
 
     if (typeof $grid !== 'undefined') {
-      const $loadMore = $grid.siblings(selectors.loadMore);
-      const $loadMoreButton = $(selectors.loadMoreButton, $loadMore);
-
-      if (typeof newUrl !== 'undefined') {
-        $loadMore.attr('data-url-next', newUrl);
-        $loadMoreButton.attr('href', newUrl);
-        $loadMore.show();
-      } else {
-        $loadMore.hide();
-      }
+      $loadMore = $grid.siblings(selectors.loadMore);
+      $loadMoreButton = $(selectors.loadMoreButton, $loadMore);
     } else {
-      const $loadMore = $(selectors.loadMore);
-      const $loadMoreButton = $(selectors.loadMoreButton);
+      $loadMore = $(selectors.loadMore);
+      $loadMoreButton = $(selectors.loadMoreButton);
+    }
 
-      if (newUrl) {
-        $loadMore.attr('data-url-next', newUrl);
-        $loadMoreButton.attr('href', newUrl);
-        $loadMore.show();
-      } else {
-        $loadMore.hide();
-      }
+    if (typeof newUrl !== 'undefined') {
+      $loadMore.attr('data-url-next', newUrl);
+      $loadMore.data('url-next', newUrl);
+      $loadMoreButton.attr('href', newUrl);
+      $loadMore.show();
+    } else {
+      $loadMore.hide();
     }
   }
 
