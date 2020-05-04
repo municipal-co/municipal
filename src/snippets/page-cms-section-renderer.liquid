@@ -280,7 +280,7 @@
               {% assign tile_image = block.settings[index_image] %}
               {% assign caption = block.settings[index_caption] %}
 
-              {% if tile_image != blank and caption != blank %}
+              {% if tile_image != blank %}
                 {% assign counter = counter | plus: 1 %}
               {% endif %}
             {% endfor %}
@@ -294,7 +294,7 @@
                   {% assign tile_image = block.settings[index_image] %}
                   {% assign caption = block.settings[index_caption] %}
 
-                  {% if tile_image != blank and caption != blank %}
+                  {% if tile_image != blank %}
                     <div class="image-tile {% if counter > 1%}image-tile--half{% endif %}">
 
                       <div class="image-title__image frame {% if counter == 1%}frame--{{ aspect_ratio }}{% else %}frame--1x1{% endif %}">
@@ -303,7 +303,9 @@
                                   object_fit: "cover"
                         %}
                       </div>
-                      <p class="image-tile__caption p1">{{ caption }}</p>
+                      {% if caption != blank %}
+                        <p class="image-tile__caption p1">{{ caption }}</p>                        
+                      {% endif %}
                     </div>
                   {% endif %}
                 {% endfor %}
