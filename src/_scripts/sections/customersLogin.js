@@ -18,7 +18,7 @@ export default class CustomersLoginSection extends BaseSection {
 
     const $formState = $('.reset-password-success');
 
-    new PasswordValidation($container);
+    new PasswordValidation(this.$container);
 
     // check if reset password form was successfully submited.
     if ($formState.length) {
