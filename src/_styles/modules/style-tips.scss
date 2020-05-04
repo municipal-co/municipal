@@ -130,12 +130,11 @@
   .swiper-button {
     width: large-vw(65px, 120px);
     height: large-vw(65px, 120px);
-    background-color: $white;
     border-radius: 50%;
     opacity: 0;
     top: 50%;
     pointer-events: none;
-    transition: opacity $transition-duration-base $transition-timing-function-out;
+    transition: all $transition-duration-base $transition-timing-function-out;
     background-image: none;
 
     @include media-breakpoint-down('md') {
@@ -149,7 +148,8 @@
     &.visible {
       opacity: 1;
       pointer-events: all;
-      transition: opacity $transition-duration-base $transition-timing-function-in;
+      background-color: $white;
+      transition: all $transition-duration-base $transition-timing-function-in;
     }
 
     &.swiper-button-prev {
@@ -294,5 +294,14 @@
 .modal-backdrop.fade.show {
   @include media-breakpoint-down('md') {
     opacity: 1;
+  }
+}
+
+.swiper-button.swiper-button-disabled.visible {
+  opacity: 1 !important;
+  background: $gray-light;
+
+  svg path {
+    fill: $gray-dark;
   }
 }

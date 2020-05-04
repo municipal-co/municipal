@@ -322,7 +322,7 @@ export default class AJAXCart {
 
   /**
    * Triggered when someone changes the value of the quantity input through the quantity adjuster
-   * We tap into the quantityAdjuster instastance through the data attribute to retrieve the normalized max / min 
+   * We tap into the quantityAdjuster instance through the data attribute to retrieve the normalized max / min 
    * (in case they don't exist as html attributes) and adjust the interaction timeout accordingly
    *
    * @param {event} e - Change event

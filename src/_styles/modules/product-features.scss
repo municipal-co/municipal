@@ -75,12 +75,11 @@
   .swiper-button {
     width: large-vw(65px, 120px);
     height: large-vw(65px, 120px);
-    background-color: $black;
     border-radius: 50%;
     opacity: 0;
     top: 50%;
     pointer-events: none;
-    transition: opacity $transition-duration-base $transition-timing-function-out;
+    transition: all $transition-duration-base $transition-timing-function-out;
     background-image: none;
 
     @include media-breakpoint-down('md') {
@@ -94,6 +93,8 @@
     &.visible {
       opacity: 1;
       pointer-events: all;
+      background-color: $black;
+      transition: all $transition-duration-base $transition-timing-function-in;
     }
     
     &.swiper-button-prev {

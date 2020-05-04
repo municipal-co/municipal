@@ -1,0 +1,136 @@
+<div class="drawer drawer--right customers-drawer" data-customers-drawer data-section-id="{{ section.id }}" data-section-type="customers-drawer">
+  <div class="drawer__inner">
+    <div class="drawer__header">
+      <a href="#" class="drawer__close" data-drawer-close>
+        {% include 'icon-close' %}
+        <span class="sr-only">Close</span>
+      </a>
+      <h5 class="drawer__header-title">{{ section.settings.header }}</h5>
+    </div>
+    <div class="drawer__body">
+      <div class="drawer__body-contents">
+        <div class="row">
+          <div class="col-20 col-lg-18 offset-2 offset-lg-3">
+            <div id="CustomerLoginForm">
+              {% if section.settings.title != blank %}
+                <div class="h5">{{ section.settings.title }}</div>
+              {% else %}
+                <h5>{{ 'customer.login.title' | t }}</h5>
+              {% endif %}
+              
+              {% if section.settings.subtitle != blank %}
+                <div class="h6">{{ section.settings.subtitle }}</div>
+              {% else %}
+                <h6>{{ 'customer.login.subtitle' | t }}</h6>
+              {% endif %}
+
+              {% include 'customer-login-form',
+                          is_drawer: true
+              %}
+            </div>
+
+            <div id="RecoverPasswordForm" class="hide">
+              {% if section.settings.title != blank %}
+                <div class="h5">{{ section.settings.recover_title }}</div>
+              {% else %}
+                <h5>{{ 'customer.recover_password.title' | t }}</h5>
+              {% endif %}
+
+              {% if section.settings.recover_subtitle != blank %}
+                <div class="h6">{{ section.settings.recover_subtitle }}</div>
+              {% else %}
+                <h6>{{ 'customer.recover_password.subtext' | t }}</h6>
+              {% endif %}
+
+              {% include 'customer-recover-password-form' %}
+            </div>
+
+            <div id="CustomerRegisterForm" class="hide">
+              <h5>{{ 'customer.register.title' | t }}</h5>
+
+              {% if section.settings.register_subtitle != blank %}
+                <div class="h6">{{ section.settings.register_subtitle }}</div>
+              {% else %}
+                <h6>{{ 'customer.register.subtitle' | t }}</h6>
+              {% endif %}
+
+              {% include 'customer-register-form',
+                          marketing_checkbox_label: section.settings.confirmation_marketing,
+                          terms_checkbox_label: section.settings.confirmation_terms,
+                          show_cancel_button: true
+              %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Customers Drawer",
+    "settings": [
+      {
+        "type": "text",
+        "id": "header",
+        "label": "Header",
+        "default": "Account"
+      },
+      {
+        "type": "header",
+        "content": "Log In Form"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "subtitle",
+        "label": "Sub Title"
+      },
+      {
+        "type": "header",
+        "content": "Register Form"
+      },
+      {
+        "type": "text",
+        "id": "sign_up_title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "sign_up_subtitle",
+        "label": "Sub Title"
+      },
+      {
+        "id": "confirmation_marketing",
+        "type": "richtext",
+        "label": "Accepts Marketing Label",
+        "info": "Leave blank for default message"
+      },
+      {
+        "id": "confirmation_terms",
+        "type": "richtext",
+        "label": "Accepts Terms and Conditions",
+        "info": "Leave blank for default message. Be sure to add links to any relevant information pages"
+      },
+      {
+        "type": "header",
+        "content": "Recover Password Form"
+      },
+      {
+        "type": "text",
+        "id": "recover_title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "recover_subtitle",
+        "label": "Sub Title"
+      }
+    ]
+  }
+{% endschema %}

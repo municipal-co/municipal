@@ -43,119 +43,27 @@
         
           {% include 'spacer', id: block.id, height_name: block.settings.height_name %}
 
-        {% elsif block.type == "promo" %}
-        
-          <div class="container">
+        {% elsif block.type == "promo" %}  
+          <div data-section-id="{{ block.id }}" data-cms-block data-background-color="{{ block.settings.background_color }}">
             {% include 'promo',
                         p_id: block.id,
                         p_layout: block.settings.layout,
-                        p_type: block.settings.type,
-                        p_content_max_width: block.settings.content_max_width,
+                        p_type: 3,
+                        p_bg_color: block.settings.background_color
                         p_image: block.settings.image,
+                        p_image_small: block.settings.image_small,
+                        p_background_color: block.settings.background_color,
+                        p_title_color: block.settings.title_color,
+                        p_light: block.settings.light_text,
+                        p_eyebrow_icon: block.settings.eyebrow_icon,
+                        p_secondary_icon: block.settings.secondary_icon,
+                        p_eyebrow: block.settings.eyebrow,
                         p_title: block.settings.title,
                         p_text: block.settings.text,
                         p_cta_url: block.settings.cta_url,
                         p_cta_text: block.settings.cta_text
             %}
           </div>
-        
-        {% elsif block.type == "article_grid" %}
-          <!-- Article Grid -->
-          {% assign article_count = 0 %}
-          {% capture article_grid_html %}
-            {% for i in (1..3) %}
-              {% capture article_settings_handle %}article_{{ i }}{% endcapture %}
-              {% assign article = articles[block.settings[article_settings_handle]] %}
-              {% if article != blank %}
-                <div class="content-grid__item">
-                  {% include 'article-card', article: article %}
-                </div>
-                {% assign article_count = article_count | plus: 1 %}
-              {% endif %}
-            {% endfor %}
-          {% endcapture %}
-
-          <div class="container">
-
-            {% include 'content-header', ch_title: block.settings.title %}
-
-            <div class="content-grid content-grid--centered content-grid--lg-{{ article_count }}-col">
-              {{ article_grid_html }}
-            </div>
-
-            {% if block.settings.cta_text != blank and block.settings.cta_url != blank %}
-              <div class="content-footer">
-                <a href="{{ block.settings.cta_url }}" class="btn btn-primary">
-                  {{ block.settings.cta_text }}                 
-                </a>
-              </div>
-            {% endif %}
-
-          </div>
-          <!-- END Article Grid -->
-        {% elsif block.type == "product_grid" %}
-
-          {% assign product_count = 0 %}
-          {% capture product_grid_html %}
-            {% for i in (1..3) %}
-              {% capture product_setting_handle %}product_{{ i }}{% endcapture %}
-              {% assign product_handle = block.settings[product_setting_handle] %}
-              {% assign product = all_products[product_handle] %}
-              {% if product_handle != blank %}
-                <div class="content-grid__item">
-                  {% include 'product-card', product: product %}
-                </div>
-                {% assign product_count = product_count | plus: 1 %}
-              {% endif %}
-            {% endfor %}   
-          {% endcapture %}
-
-          <!-- Product Grid -->
-          <div class="container">
-
-            {% include 'content-header', ch_title: block.settings.title %}
-
-            {% if product_grid_html != blank %}
-              <div class="content-grid content-grid--centered">
-                {{ product_grid_html }}
-              </div>
-            {% endif %}
-
-            {% if block.settings.cta_text != blank and block.settings.cta_url != blank %}
-              <div class="content-footer">
-                <a href="{{ block.settings.cta_url }}" class="btn btn-primary">
-                  {{ block.settings.cta_text }}        
-                </a>
-              </div>          
-            {% endif %}
-
-          </div>
-
-        {% elsif block.type == "banner" %}
-
-          <!-- Banner -->
-          {% capture banner_panel_html %}
-              {% include 'banner-panel',
-                      bp_id: block.id,
-                      bp_content_alignment: block.settings.content_alignment,
-                      bp_content_max_width: block.settings.content_max_width,
-                      bp_background_image: block.settings.background,
-                      bp_background_image_small: block.settings.background_image_small,
-                      bp_light_text: block.settings.light_text,
-                      bp_title: block.settings.title,
-                      bp_text: block.settings.text,
-                      bp_text_alignment: block.settings.text_alignment,
-                      bp_cta_url: block.settings.cta_url,
-                      bp_cta_text: block.settings.cta_text
-              %}
-          {% endcapture %}
-
-          {% if banner_panel_html != blank %}
-            <div class="banner">
-              {{ banner_panel_html }}
-            </div>
-          {% endif %}
-          <!-- END Banner -->
 
         {% elsif block.type == "richtext" %}
           <div class="section-rich-text" data-cms-block data-background-color="#ffffff">
@@ -178,19 +86,99 @@
           </div>
 
         {% elsif block.type == "video" %}
-          <div class="container">
-            <div id="video-player-{{ block.id }}" class="video-player" data-video-player data-video-id="{{ block.settings.video_url.id }}" data-video-type="{{ block.settings.video_url.type }}" data-background="{% if block.settings.background %}true{% else %}false{% endif %}" data-embed-color="{{ block.settings.embed_color | remove: '#' }}">
-              {% if block.settings.cover_image and block.settings.background == false %}
-                <div class="video-player__cover" data-video-player-cover>
-                  <div class="video-player__cover-still" style="background-image: url({{ block.settings.cover_image | img_url: '2000x' }});"></div>
-                  <span class="video-player__cover-play">
-                    {% include 'icon-play' %}
-                  </span>
+          {% assign title_color = block.settings.title_color %}
+          {% assign background_color = block.settings.background_color %}
+
+          {% assign eyebrow_icon = block.settings.eyebrow_icon %}
+          {% assign eyebrow = block.settings.eyebrow %}
+          {% assign title = block.settings.title %}
+
+          {% assign video_cover = block.settings.video_cover %}
+          {% assign video_url = block.settings.video_url %}
+          {% assign video_id = video_url | remove: "https://www.youtube.com/watch?v=" %}
+
+          {% assign this_product = block.settings.product_link %}
+          {% assign product_link =  all_products[this_product].url%}
+
+          <div  data-section-id="{{ block.id }}" 
+                class="video-section" 
+                data-section-type="video" 
+                data-background-color="{{ background_color }}"
+                data-cms-block
+          >
+            <div class="container-fluid">
+
+              <div class="row justify-content-center">
+                {% if eyebrow_icon != blank %}
+                  <div class="video-section__eyebrow-icon frame frame--4x3">
+                    {% render 'image_tag'
+                              image: eyebrow_icon,
+                              object_fit: "cover"
+                    %}
+                  </div>
+                {% endif %}
+
+                <div class="col-lg-22 col-20">
+                  {% if eyebrow != blank %}
+                    <span class="video-section__eyebrow h5">{{ eyebrow }}</span>
+                  {% endif %}
+
+                  {% if title != blank %}
+                    <div class="video-section__title h1 text-{{ title_color }}">{{ title }}</div>
+                  {% endif %}
+
+                  {% if video_url != blank %}
+                    <div class="video-section__video-cover frame frame--16x9" data-video-player-cover>
+                      {% render 'image_tag'
+                                image: video_cover,
+                                object_fit: 'cover'
+                      %}
+
+                      <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#video-modal-{{ block.id }}" data-video-play>
+                        {% include 'icon-play-full-color' %}
+                      </button>
+                    </div>
+                    
+                    <div class="modal modal--video fade" id="video-modal-{{ block.id }}" data-video-modal>
+                      <span class="video-eyebrow d-lg-none d-block">Video</span>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        {% include 'icon-close' %}
+                      </button>
+                        
+                      {% if this_product != blank %}
+                        <a class="btn btn-link product-link d-lg-block d-none"href="{{ product_link }}">
+                          Shop {{ all_products[this_product].title }}
+                          <span class="btn__ui">
+                            {% include 'icon-arrow' %}
+                          </span>
+                        </a>
+                      {% endif %}
+
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <div id="video-player-{{ video_id }}" class="index-video-player frame frame--16x9" data-video-player data-video-id="{{ video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
+                              <div class="video-player__embed" data-video-player-embed></div>
+                            </div>
+
+                            {% if this_product != blank %}
+                              <a class="btn btn-link product-link d-block d-lg-none"href="{{ product_link }}">
+                                Shop {{ all_products[this_product].title }}
+                                <span class="btn__ui">
+                                  {% include 'icon-arrow' %}
+                                </span>
+                              </a>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
                 </div>
-              {% endif %}
-              <div class="video-player__embed" data-video-player-embed></div>
+              </div>
             </div>
           </div>
+
         {% elsif block.type == "scrolling_text" %}
           {% if block.settings.animation_durartion == blank %}
             {% assign animation = 20 | append: 's'%}
@@ -324,6 +312,160 @@
               </div> 
             </div>
           </div>
+
+        {% elsif block.type == "collection_grid" %}
+          {% assign light_text = block.settings.light_text %}
+          {% assign title_color = block.settings.title_color %}
+          {% assign background_color = block.settings.background_color %}
+
+          {% assign eyebrow_icon = block.settings.eyebrow_icon %}
+          {% assign title = block.settings.title %}
+
+          <div  class="collection-grid {% if light_text == true%}light{% endif %}"
+                data-section-id="{{ block.id }}" 
+                data-section-type="collection-grid"  
+                data-background-color="{{ background_color }}"
+                data-cms-block
+          >
+            <div class="container-fluid">
+              <div class="row justify-content-center">
+                
+                {% if eyebrow_icon != blank %}
+                  <div class="collection-grid__eyebrow">
+                    {% render 'image_tag'
+                              image: eyebrow_icon,
+                              object_fit: "cover"
+                    %}
+                  </div>
+                {% endif %}
+
+                <div class="col-lg-22 col-20">
+                  {% if title != blank %}
+                    <div class="collection-grid__title h1 text-{{ title_color }}">{{ title}}</div>
+                  {% endif %}
+
+                  <div class="collection-grid-container">
+                    {% for i in (1..2) %}
+                      {% assign index_title = 'collection_title_' | append: i %}
+                      {% assign index_cta_text = 'cta_text_' | append: i %}
+                      {% assign index_cta_url =  'cta_url_' | append: i %}
+                      {% assign index_image =  'collection_image_' | append: i %}
+
+                      {% assign collection_title = block.settings[index_title] %}
+                      {% assign cta_text = block.settings[index_cta_text] %}
+                      {% assign cta_url = block.settings[index_cta_url] %}
+                      {% assign collection_image = block.settings[index_image] %}
+                      
+                      {% if collection_image != blank and collection_title != blank %}
+                        <div class="collection-tile">
+                          {% if cta_url != blank%}
+                            <a href="{{ cta_url }}">
+                          {% endif %}
+
+                            <div class="collection-tile__image frame frame--1x1">
+                              {% render 'image_tag'
+                                        image: collection_image,
+                                        object_fit: "cover"
+                              %}
+                            </div>
+
+                          {% if cta_url != blank %}
+                            </a>
+                          {% endif %}
+                          
+                          <h3 class="collection-tile__title">{{ collection_title}}</h3>
+
+                          {% if cta_url != blank and cta_text != blank %}
+                            <a class="collection-tile__cta btn btn-link" href="{{ cta_url }}">
+                            {{ cta_text }}
+                            <span class="btn__ui">
+                              {% include 'icon-arrow' %}
+                            </span>
+                          </a>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% elsif block.type == "tiled_image" %}
+          <div class="tiled-image container-fluid" data-cms-block>
+            {% include 'tiled-image'
+                        ti_id: block.id,
+                        ti_background_color: block.settings.background_color,
+                        ti_light_text: block.settings.light_text,
+                        ti_title_color: block.settings.title_color,
+                        ti_eyebrow: block.settings.eyebrow,
+                        ti_title: block.settings.title,
+                        ti_text: block.settings.text,
+                        ti_cta_text: block.settings.cta_text,
+                        ti_cta_url: block.settings.cta_url,
+                        ti_left_image: block.settings.left_image,
+                        ti_right_image: block.settings.right_image,
+                        ti_eyebrow_icon: block.settings.eyebrow_icon
+            %}
+          </div> 
+        {% elsif block.type == "instagram" %}
+          {% assign image_1 = block.settings.image_1 %}
+          {% assign image_2 = block.settings.image_2 %}
+
+          {% assign text = block.settings.text %}
+          {% assign accent_text =  block.settings.accent_text %}
+          {% assign text_color = block.settings.text_color %}
+          {% assign accent_color = block.settings.accent_text_color %}
+          {% assign background_color = block.settings.background_color %}
+
+          {% assign animation = block.settings.scroll_animation | append: 's' %}
+          {% assign animation_delay = animation | divided_by: 2 | append: 's' | prepend: '-' %}
+           
+          <div data-section-id="{{ block.id }}" data-section-type="two-up-instagram" data-background-color="{{ background_color }}">
+            <div class="two-up-instagram">
+              
+              <div class="container-fluid">
+                <div class="row justify-content-center">
+
+                  {% if text != blank %}            
+                    <div class="two-up-title-wrapper col-24">
+                      <h2 class="two-up__title h1">
+                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                        <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                      </h2>
+
+
+                      <h2 class="two-up__title h1">
+                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                        <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                      </h2>
+                    </div>
+                  {% endif %}
+
+                  <div class="col-lg-22 col-20">
+                    <div class="two-up-images-container">
+                      <div class="two-up__image frame frame--1x1">
+                        {% render 'image_tag'
+                                    image: image_1,
+                                    object_fit: "cover"
+                          %}
+                      </div>
+
+                      <div class="two-up__image frame frame--1x1">
+                        {% render 'image_tag'
+                                    image: image_2,
+                                    object_fit: "cover"
+                          %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+
+              </div>
+            </div>
+          </div>
+
         {% endif %}
       </div>
     {% endfor %}
