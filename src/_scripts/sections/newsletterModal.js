@@ -78,17 +78,17 @@ export default class NewsletterModalSection extends BaseSection {
   shouldShow() {
     // Checks should be done in this order!
 
-    // if (Utils.isThemeEditor() || !this.settings.enabled) {
-    //   return false;
-    // }
+    if (Utils.isThemeEditor() || !this.settings.enabled) {
+      return false;
+    }
 
-    // if (this.newsletterForm.emailCollected()) {
-    //   return false;
-    // }
+    if (this.newsletterForm.emailCollected()) {
+      return false;
+    }
 
-    // if (User.hasCookie(this.cookies.seen.name) && User.getCookieValue(this.cookies.seen.name) === this.cookies.seen.value) {
-    //   return false;
-    // }
+    if (User.hasCookie(this.cookies.seen.name) && User.getCookieValue(this.cookies.seen.name) === this.cookies.seen.value) {
+      return false;
+    }
 
     return true;
   }
