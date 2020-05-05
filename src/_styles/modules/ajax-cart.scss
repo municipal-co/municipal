@@ -49,7 +49,7 @@ body.ajax-cart-open {
 
 .ajax-cart {
   overflow: scroll;
-  -webkit-overflow-scrolling: touch;  
+  -webkit-overflow-scrolling: touch;
   background: $ajax-cart-bg;
 }
 
@@ -123,7 +123,7 @@ body.ajax-cart-open {
     opacity: 1;
     pointer-events: auto;
     cursor: $cursor-disabled;
-  }    
+  }
 }
 
 .ajax-cart__footer {
@@ -131,11 +131,12 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__close {
-  &,
-  &:focus,
-  &:active,
-  &:hover {
-    color: $white;
+  color: $white;
+
+  &:focus .icon,
+  &:active .icon,
+  &:hover  .icon{
+    fill: white;
   }
   .icon-close {
     width: large-vw(28px, 50px);
@@ -206,7 +207,7 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__item-image {
-  object-fit: cover; 
+  object-fit: cover;
   object-position: center;
   height: 100%;
   width: 100%;
