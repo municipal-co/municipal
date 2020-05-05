@@ -221,11 +221,16 @@ body.ajax-cart-open {
   }
 }
 
+.ajax-cart__title-container {
+  display: flex;
+  justify-content: space-between;
+}
 
 .ajax-cart__item-title {
   margin-bottom: 6px;
   font-size: 22px;
   line-height: 24px;
+  padding-left: 15px;
 }
 
 .ajax-cart__item-price {
@@ -247,9 +252,7 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__item-remove {
-  position: absolute;
-  right: 15px;
-  top: $ajax-cart-padding-vertical - 5px;
+  line-height: 20px;
 }
 
 .ajax-cart__footer {
