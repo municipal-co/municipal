@@ -13,75 +13,84 @@
 {% assign promo_position = collection.metafields.custom_fields["promo_position"] | times: 1 %}
 
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection" data-background-color="#ffffff">
+
   <div class="container-fluid">
     <div class="row justify-content-center">
-      
-          
-        {% if collection.metafields.custom_fields["collection_section"] != blank %}
-          {% assign separator = "|###|" %}
-          {% assign collection_array = collection.metafields.custom_fields["collection"] | split: separator %}
-          {% assign collection_title_array = collection.metafields.custom_fields["collection_title"] | split: separator %}
-          {% assign collection_description_array = collection.metafields.custom_fields["collection_description"] | split: separator %}
-          {% assign show_promo_card_array = collection.metafields.custom_fields["show_promo_card"] | split: separator %}
-          {% assign promo_card_image_array = collection.metafields.custom_fields["promo_card_image"] | split: separator %}
-          {% assign promo_card_position_array = collection.metafields.custom_fields["promo_card_position"] | split: separator %}
-          {% assign fc_keys = collection.metafields.custom_fields["collection_section"] | split: "," %}
-          {% assign section_index = 0 %}
+      <div class="col-24">
+        <div class="collection-filter-bar" data-filter-bar>
+          {% comment %}
+            Vertically align groupings.  Space them out horizontally, flush to the edges
+            Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
+            This will ensure that flex will always space them out appropriately
+          {% endcomment %}
+          <div class="collection-filter-bar__grouping collection-filter-bar__grouping--breadcrumb">
+            <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+              {% if collection.metafields.custom_fields["parent_category"] != blank %}
+                <div class="breadcrumbs__crumb">
+                  {% assign parent_collection = collections[collection.metafields.custom_fields["parent_category"]] %}
+                  <a href="{{ parent_collection.url }}">
+                    {{ parent_collection.title }}
+                  </a>
+                </div>
+              {% endif %}
+              <div class="breadcrumbs__crumb">
+                <span class="breadcrumbs__crumb">
+                  {{ collection.title }}
+                </span>
+              </div>
+            </nav>
 
-          {% for i in fc_keys %}
-            {% assign index = i | plus: 0 %}
-            {% assign section_collection = collection_array[index] %}
-            {% assign collection_title = collection_title_array[index] %}
-            {% assign collection_description = collection_description_array[index] %}
-            {% assign show_promo_card = show_promo_card_array[index] %}
-            {% assign promo_card_image = promo_card_image_array[index] %}
-            {% assign promo_card_position = promo_card_position_array[index] | times: 1 %}
-            {% assign the_collection = collections[section_collection] %}
+          </div>
+          <div class="collection-filter-bar__grouping collection-filter-bar__grouping--filters">
+            <button class="btn btn-cta btn-sm collection-filter-bar__filter-toggler" data-filters-toggler>
+              {% include 'icon-filters' %}
+              Filter
+            </button>
 
-            {% if show_promo_card == '1' %}
-              {% assign show_promo = true  %}
-            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% if collection.metafields.custom_fields["collection_section"] != blank %}
+        {% assign separator = "|###|" %}
+        {% assign collection_array = collection.metafields.custom_fields["collection"] | split: separator %}
+        {% assign collection_title_array = collection.metafields.custom_fields["collection_title"] | split: separator %}
+        {% assign collection_description_array = collection.metafields.custom_fields["collection_description"] | split: separator %}
+        {% assign show_promo_card_array = collection.metafields.custom_fields["show_promo_card"] | split: separator %}
+        {% assign promo_card_image_array = collection.metafields.custom_fields["promo_card_image"] | split: separator %}
+        {% assign promo_card_position_array = collection.metafields.custom_fields["promo_card_position"] | split: separator %}
+        {% assign fc_keys = collection.metafields.custom_fields["collection_section"] | split: "," %}
+        {% assign section_index = 0 %}
 
-            {% if section_collection != blank and the_collection.products.size > 0%}
-              {% assign section_index = section_index | plus: 1 %}
+        {% for i in fc_keys %}
+          {% assign index = i | plus: 0 %}
+          {% assign section_collection = collection_array[index] %}
+          {% assign collection_title = collection_title_array[index] %}
+          {% assign collection_description = collection_description_array[index] %}
+          {% assign show_promo_card = show_promo_card_array[index] %}
+          {% assign promo_card_image = promo_card_image_array[index] %}
+          {% assign promo_card_position = promo_card_position_array[index] | times: 1 %}
+          {% assign the_collection = collections[section_collection] %}
 
-              <div class="collection-section col-lg-22 col-20">
-                {% if collection_title != blank %}
-                  <h2 class="collection-section__title h2">{{ collection_title }}</h2>
-                {% endif %}
+          {% if show_promo_card == '1' %}
+            {% assign show_promo = true  %}
+          {% endif %}
 
-                {% if collection_description != blank %}
-                  <div class="collection-section__description p2">{{ collection_description }}</div>
-                {% endif %}
-                
-                <div class="content-grid">
-                  {% for product in the_collection.products %}
+          {% if section_collection != blank and the_collection.products.size > 0%}
+            {% assign section_index = section_index | plus: 1 %}
 
-                    {% if show_promo == true and forloop.index == promo_card_position %}
-                      <div class="promo_card content-grid__item frame">
-                        <div class="promo-card-inner">
-                          <div class="promo_card__image frame frame--1x1">
-                            {% render 'image_tag'
-                                      image: promo_card_image,
-                                      object_fit: "contain"
-                            %}
-                          </div>
-                        </div>
-                      </div>
-                      {% assign show_promo = false  %}
-                    {% endif %}
-                      
-                    <div class="content-grid__item">
-                      {% include 'product-card',
-                         product: product,
-                         lazy_load: lazy_load,
-                         show_sizes: true,
-                         show_colors: true,
-                         show_tag: true %}
-                    </div>
-                  {% endfor %}
-                  
-                  {% if show_promo == true %}
+            <div class="collection-section col-lg-22 col-20">
+              {% if collection_title != blank %}
+                <h2 class="collection-section__title h2">{{ collection_title }}</h2>
+              {% endif %}
+
+              {% if collection_description != blank %}
+                <div class="collection-section__description p2">{{ collection_description }}</div>
+              {% endif %}
+
+              <div class="content-grid" data-collection-grid="{{the_collection.handle}}" data-collection-url="{{the_collection.url}}">
+                {% for product in the_collection.products limit: 6 %}
+
+                  {% if show_promo == true and forloop.index == promo_card_position %}
                     <div class="promo_card content-grid__item frame">
                       <div class="promo-card-inner">
                         <div class="promo_card__image frame frame--1x1">
@@ -92,19 +101,79 @@
                         </div>
                       </div>
                     </div>
+                    {% assign show_promo = false  %}
                   {% endif %}
-                </div>
-              </div>
-            {% endif %}
 
-            {% if promo_position == section_index %}
-              {% include 'collection-promo' %}
-            {% elsif forloop.last and promo_position > forloop.length %}   
-              {% include 'collection-promo' %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      
+                  <div class="content-grid__item" data-grid-item>
+                    {% include 'product-card',
+                       product: product,
+                       lazy_load: lazy_load,
+                       show_sizes: true,
+                       show_colors: true,
+                       show_tag: true %}
+                  </div>
+                {% endfor %}
+
+                {% if show_promo == true %}
+                  <div class="promo_card content-grid__item frame">
+                    <div class="promo-card-inner">
+                      <div class="promo_card__image frame frame--1x1">
+                        {% render 'image_tag'
+                                  image: promo_card_image,
+                                  object_fit: "contain"
+                        %}
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+              {% assign grid_container = '[data-collection-grid=' | append: the_collection.handle | append: ']' %}
+              {% assign tags_filters = current_tags | join: '+' %}
+              {% if the_collection.products.size > 6 %}
+                {% assign collection_next_page = the_collection.url | append: '?page=2' %}
+              {% endif %}
+                {% include 'load-more'
+                   card_selector: '[data-grid-item]',
+                   grid_container: grid_container,
+                   next_page_url: collection_next_page,
+                   update_url: "false" %}
+            </div>
+          {% endif %}
+
+          {% if promo_position == section_index %}
+            {% include 'collection-promo' %}
+          {% elsif forloop.last and promo_position > forloop.length %}
+            {% include 'collection-promo' %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="filters-drawer drawer drawer--right" data-filters-drawer>
+    <div class="drawer__inner">
+      <div class="drawer__header">
+        <a href="#" class="drawer__close" data-drawer-close>
+          {% include 'icon-close' %}
+          <span class="sr-only"></span>
+        </a>
+        <h5 class="drawer__header-title">Filter</h5>
+      </div>
+      <div class="drawer__body">
+        <div class="drawer__body-contents">
+          {% include 'collection-sort' %}
+          {% include 'collection-filters'
+            size_filters: section.settings.size_filters
+          %}
+
+          <button class="btn btn-block btn-primary" data-filter-enable data-local-filtering="false">
+            View Results
+          </button>
+          <a href="{{ collection.url }}" class="btn btn-cta btn-block btn-sm collection-filter__reset" data-filter-clear>
+            {% include 'icon-close' %} Clear All
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -124,26 +193,20 @@
       "sortApplied": {{ collection.sort_by | json }}
     }
   </script>
-</div>  
+</div>
 
 
 {% schema %}
-  {
-    "name": "Collection",
-    "settings": [
-      {
-        "id": "enable_filters",
-        "type": "checkbox",
-        "label": "Enable Filters",
-        "default": true,
-        "info": "Filtering is based on product tags."
-      },
-      {
-        "id": "enable_sort",
-        "type": "checkbox",
-        "label": "Enable Sort",
-        "default": true
-      }
-    ]
-  }
+{
+  "name": "collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "size_filters",
+      "label": "Size filters",
+      "default": "s, m, l, xl, 2xl",
+      "info": "Define the order of the size filters, separate each value with a comma"
+    }
+  ]
+}
 {% endschema %}

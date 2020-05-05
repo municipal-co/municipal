@@ -1,103 +1,186 @@
+{% if section.settings.contact__instagram-check or
+      section.settings.contact__twitter-check or
+      section.settings.contact__email-check or
+      section.settings.contact__address-check 
+%}
+
+{% assign contact_link_check = true %}
+{% else %}
+{% assign contact_link_check = false %}
+{% endif %}
+
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="page-contact">
-  <div class="container">
-
-    {% include 'page-header', ph_title: section.settings.title %}
-
-    <div class="mx-auto" style="max-width: 800px;">
-
-      {% if section.settings.sub_title != blank %}
-        <h5 class="text-center">{{ section.settings.sub_title }}</h5>
-      {% endif %}
-
-      {% if section.settings.content != blank %}
-        <div class="rte text-center">
-          {{ section.settings.content }}
-        </div>
-      {% endif %}
-
-      <br /><br />
-
-      {% form 'contact' %}
-
-        {% if form.posted_successfully? %}
-          <div class="alert alert-success">
-            {% if section.settings.success_message != blank %}
-              {{ section.settings.success_message }}
-            {% else %}
-              {{ 'contact.form.post_success' | t }}
+  <div class="contact">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-xl-22 col-lg-22 col-md-20 col-sm-20 col-20">
+          <div class="contact__banner-container">
+            {% if section.settings.contact__banner-image %}
+              <!--<img src="{{ section.settings.contact__banner-image | img_url: "1080x1080" }}" alt="contact__banner-image">-->
+              {% include 'image_tag', image: section.settings.contact__banner-image %}
             {% endif %}
           </div>
-        {% endif %}
-
-        {% if form.errors %}
-          <div class="alert alert-danger">
-            {{ form.errors | default_errors }}
+          <div class="row justify-content-center">
+            <div class="contact__titles-container col-xl-20 col-lg-20 col-md-24 col-sm-24 col-24">
+              <span class="h5"> {{ page.title }} </span>
+              <h1> {{ section.settings.title }} </h1>
+              <p class="p2"> {{ section.settings.subtitle }} </p>
+            </div>
           </div>
-        {% endif %}
+          <div class="contact__content">
+            <div class="row justify-content-center">
+              {% if contact_link_check == true %}
+                <div class="contact__links-container col-xl-7 col-lg-7 col-md-24 col-sm-24 col-24">
+                  <ul class="contact__link-list">
 
-        <div class="form-group row">
-          <label for="ContactFormName" class="col-sm-2 col-form-label">{{ 'contact.form.name' | t }}</label>
-          <div class="col-sm-10">
-            <input type="text"
-              name="contact[name]"
-              id="ContactFormName"
-              class="form-control"
-              placeholder="{{ 'contact.form.name' | t }}"
-              value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                    {% if section.settings.contact__instagram-check %}
+                      <li class="contact__link-item">
+                        <span class="h6">{{ 'contact.default.instagram_label' | t }}</span>
+                        <a class="p2" href="{{ section.settings.contact__instagram-link }}">
+                          {% if section.settings.contact__instagram-id %}
+                            {{ section.settings.contact__instagram-id }}
+                          {% else %}
+                            {{ 'contact.default.instagram_default' | t }}
+                          {% endif %}
+                        </a>
+                      </li>  
+                    {% endif %}
+
+                    {% if section.settings.contact__twitter-check %}
+                    <li class="contact__link-item">
+                      <span class="h6">{{ 'contact.default.twitter_label' | t }}</span>
+                      <a class="p2" href="{{ section.settings.contact__twitter-link }}">
+                        {% if section.settings.contact__twitter-id %}
+                          {{ section.settings.contact__twitter-id }}
+                        {% else %}
+                          {{ 'contact.default.twitter_default' | t }}
+                        {% endif %}
+                      </a>
+                    </li>
+                    {% endif %}
+
+                    {% if section.settings.contact__email-check %}
+                    <li class="contact__link-item">
+                      <span class="h6">{{ 'contact.default.email_label' | t }}</span>
+                      <p2 class="p2">
+                          {% if section.settings.contact__email-id %}
+                            {{ section.settings.contact__email-id }}
+                          {% else %}
+                            {{ 'contact.default.email_default' | t }}
+                          {% endif %}
+                      </p2>
+                    </li>
+                    {% endif %}
+
+                    {% if section.settings.contact__address-check %}
+                    <li class="contact__link-item">
+                      <span class="h6">{{ 'contact.default.address_label' | t }}</span>
+                      <p2 class="p2">
+                          {% if section.settings.contact__address-id %}
+                            {{ section.settings.contact__address-id }}
+                          {% else %}
+                            {{ 'contact.default.address_default' | t }}
+                          {% endif %}
+                      </p2>
+                    </li>
+                    {% endif %}
+
+                  </ul>
+                </div> 
+              {% endif %}
+              <div class="contact__form-container {%if contact_link_check %}col-xl-17 col-lg-17 col-md-24 col-sm-24 col-24{%else%}col-xl-20 col-lg-20 col-md-24 col-sm-24 col-24{%endif%}">
+              
+                    {% form 'contact' %}
+              
+                      {% if form.posted_successfully? %}
+                        <div class="alert alert-success">
+                          {% if section.settings.success_message != blank %}
+                            {{ section.settings.success_message }}
+                          {% else %}
+                            {{ 'contact.form.post_success' | t }}
+                          {% endif %}
+                        </div>
+                      {% endif %}
+              
+                      {% if form.errors %}
+                        <div class="alert alert-danger">
+                          {{ form.errors | default_errors }}
+                        </div>
+                      {% endif %}
+              
+                      <div class="contact__form-input-container">
+                        <label class="h5 contact__form-label" for="contact__form-name">{{ 'contact.form.name' | t }}*</label>
+                        <input 
+                          class="contact__form-input"
+                          type="text"
+                          name="contact[name]"
+                          id="contact__form-name"
+                          placeholder="{{ 'contact.form.name' | t }}"
+                          value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                      </div>
+              
+                      <div class="contact__form-input-container">
+                        <label class="h5 contact__form-label" for="contact__form-email">{{ 'contact.form.email' | t }}*</label>
+                        <input 
+                          class="contact__form-input"
+                          type="email"
+                          name="contact[email]"
+                          id="contact__form-email"
+                          placeholder="{{ 'contact.form.email' | t }}"
+                          value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                          spellcheck="false"
+                          autocomplete="off"
+                          autocapitalize="off">
+                      </div>
+              
+                      <div class="contact__form-input-container">
+                        <label class="h5 contact__form-label" for="contact__form-subject-select">{{ 'contact.form.subject' | t }}*</label>
+                        <div class="dropdown">
+                          <select class="contact__form-input" id="contact__form-subject-select" form="contact">
+                              <option value="billing">Billing</option>
+                              <option value="shipping">Shipping</option>
+                              <option value="question">Question</option>
+                          </select>
+                        </div>
+                      </div>
+              
+                      <div class="contact__form-input-container contact__form-message-container">
+                        <label class="h5 contact__form-label" for="contact__form-message">{{ 'contact.form.message' | t }}*</label>
+                          <textarea rows="10"
+                            name="contact[body]"
+                            id="contact__form-message"
+                            class="contact__form-input contact__form-input--message"
+                            placeholder="{{ 'contact.form.message' | t }}">
+                            {%- if form.body -%}
+                              {{ form.body }}
+                            {%- endif -%}
+                          </textarea>
+                      </div>
+              
+                      <div class="contact__form-submit-container-mobile">
+                          <input type="submit" class="btn btn-primary contact__form-submit" form="contact_form" value="{{ 'contact.form.send' | t }}">
+                      </div>
+                      
+                      {% endform %}
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="form-group row">
-          <label for="ContactFormEmail" class="col-sm-2 col-form-label">{{ 'contact.form.email' | t }}</label>
-          <div class="col-sm-10">
-            <input type="email"
-              name="contact[email]"
-              id="ContactFormEmail"
-              class="form-control"
-              placeholder="{{ 'contact.form.email' | t }}"
-              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
-              spellcheck="false"
-              autocomplete="off"
-              autocapitalize="off">
+        
+        <div class="row justify-content-center">
+          <div class="col-xl-22 col-lg-22">
+            <div class="row justify-content-center">
+              <div class="contact__form-submit-container-desktop offset-xl-8 offset-lg-8 col-xl-16 col-lg-16">
+                <input type="submit" class="btn btn-primary contact__form-submit" form="contact_form" value="{{ 'contact.form.send' | t }}">
+              </div>
+            </div>    
           </div>
         </div>
-
-        <div class="form-group row">
-          <label for="ContactFormPhone" class="col-sm-2 col-form-label">{{ 'contact.form.phone' | t }}</label>
-          <div class="col-sm-10">
-            <input type="tel"
-              name="contact[phone]"
-              id="ContactFormPhone"
-              class="form-control"
-              placeholder="{{ 'contact.form.phone' | t }}"
-              value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}"
-              pattern="[0-9\-]*">
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="ContactFormMessage" class="col-sm-2 col-form-label">{{ 'contact.form.message' | t }}</label>
-          <div class="col-sm-10">
-            <textarea rows="10"
-              name="contact[body]"
-              id="ContactFormMessage"
-              class="form-control"
-              placeholder="{{ 'contact.form.message' | t }}">
-              {%- if form.body -%}
-                {{ form.body }}
-              {%- endif -%}
-            </textarea>
-          </div>
-        </div>
-
-        <div class="text-right">
-          <input type="submit" class="btn btn-primary" value="{{ 'contact.form.send' | t }}">
-        </div>
-
-      {% endform %}
+            
     </div>
-
   </div>
+
 </div>
 
 {% schema %}
@@ -108,24 +191,72 @@
         "id": "title",
         "type": "text",
         "label": "Title",
-        "default": "Contact Us"
+        "default": "Default title"
       },
       {
-        "id": "sub_title",
-        "type": "text",
+        "id": "subtitle",
+        "type": "textarea",
         "label": "Subtitle",
-        "default": "Need online order support?"
+        "default": "Default subtitle"
       },
       {
-        "id": "content",
-        "type": "richtext",
-        "label": "Content"
+        "type": "image_picker",
+        "id": "contact__banner-image",
+        "label": "Banner Image"
       },
       {
-        "id": "success_message",
+        "type": "checkbox",
+        "id": "contact__instagram-check",
+        "label": "Include Instagram reference",
+        "default": false
+      },
+      {
+        "id": "contact__instagram-id",
         "type": "text",
-        "label": "Success Message",
-        "info": "Displays when someone submits the form successfully"
+        "label": "Instagram Id"
+      },
+      {
+        "id": "contact__instagram-link",
+        "type": "url",
+        "label": "Instagram link"
+      },
+      {
+        "type": "checkbox",
+        "id": "contact__twitter-check",
+        "label": "Include Twitter reference",
+        "default": false
+      },
+      {
+        "id": "contact__twitter-id",
+        "type": "text",
+        "label": "Twitter Id"
+      },
+      {
+        "id": "contact__twitter-link",
+        "type": "url",
+        "label": "Twitter link"
+      },
+      {
+        "type": "checkbox",
+        "id": "contact__email-check",
+        "label": "Include email reference",
+        "default": false
+      },
+      {
+        "id": "contact__email-id",
+        "type": "text",
+        "label": "Email"
+      },
+      {
+        "type": "checkbox",
+        "id": "contact__address-check",
+        "label": "Include address reference",
+        "default": false
+      },
+      {
+        "id": "contact__address-id",
+        "type": "text",
+        "label": "Address"
       }
     ]
   }

@@ -3,6 +3,7 @@ import BaseSection from './base';
 import CartAPI from '../core/cartAPI';
 import AJAXFormManager from '../managers/ajaxForm';
 import AJAXCartUI from '../ui/ajaxCart';
+import * as Utils from '../core/utils';
 
 const $window = $(window);
 const $body = $(document.body);
@@ -25,7 +26,7 @@ export default class AJAXCartSection extends BaseSection {
     // Create a new instance of the cart UI.
     // Pass in any variables used by the Handlebars template that aren't part of the cart object
     this.ajaxCartUI = new AJAXCartUI({
-      footer_text: this.$container.data('footer-text')
+      // promo_text: this.$container.data('promo-text')
     });
 
     // Store callbacks so we can remove them later
@@ -44,7 +45,16 @@ export default class AJAXCartSection extends BaseSection {
     // Make sure we get the latest cart data when this initializes
     CartAPI.getCart().then((cart) => {
       this.ajaxCartUI.render(cart);
+      const queryParams = Utils.getQueryParams();
+      const newUrl = Utils.getUrlWithRemovedQueryStringParameter('open-mini-cart');
+
+      if (queryParams && queryParams['open-mini-cart']) {
+        this.ajaxCartUI.open();
+        history.pushState({}, null, newUrl);
+      }
     });
+
+
   }
 
   onSelect() {

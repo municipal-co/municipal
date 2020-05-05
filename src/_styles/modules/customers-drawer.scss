@@ -1,0 +1,50 @@
+.customers-drawer {
+  width: 30%;
+  max-width: 561px;
+  border: none;
+  bottom: 0;
+
+  @include media-breakpoint-down('lg') {
+    width: 40%;
+  }
+
+  @include media-breakpoint-down('md') {
+    width: 90%;
+  }
+
+  .drawer__header {
+    background-color: $black;
+    padding: large-vw(25px, 42.5px) large-vw(20px, 40px);
+    margin-bottom: large-vw(30px, 60px);
+
+    @include media-breakpoint-down('md') {
+      padding: 25px 20px;
+      margin-bottom: 30px;
+    }
+
+    .drawer__close {
+      color: $white;
+      top: 50%;
+      transform: translateY(-50%);
+      right: large-vw(20px, 40px);
+      svg {
+        width: large-vw(20px, 50px);
+        height: large-vw(20px, 50px);
+
+        @include media-breakpoint-down('md') {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      @include media-breakpoint-down('md') {
+        right: 20px;
+      }
+    }
+  }
+  .drawer__header-title {
+    color: $white;
+    font-size: 30px;
+    text-transform: none;
+  }
+}

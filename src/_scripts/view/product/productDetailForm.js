@@ -19,7 +19,10 @@ const selectors = {
   fullDetailsLink: '[data-full-details-link]',
   selectedOption: '[data-selected-option]',
   shippingModal: '[data-shipping-modal]',
-  shippingModalTrigger: '[data-shipping-modal-trigger]'
+  shippingModalTrigger: '[data-shipping-modal-trigger]',
+  dotsColorContainer: '.dots--color',
+  dotsContainer: '.dots',
+  dot: '.dot'
 };
 
 const classes = {
@@ -91,6 +94,12 @@ export default class ProductDetailForm {
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
 
     Utils.chosenSelects(this.$container);
+
+    const queryParams = Utils.getQueryParams();
+
+    if (typeof queryParams.size !== 'undefined') {
+      this.updateSizeVariant(queryParams.size);
+    }
   }
 
   onVariantChange(evt) {
@@ -101,10 +110,37 @@ export default class ProductDetailForm {
     this.updateQuantitySelect(variant);
     this.updateVariantOptionValues(variant);
     this.updateFullDetailsLink(variant);
+    this.updateColorsLink();
 
     this.$singleOptionSelectors.trigger('chosen:updated');
 
     this.settings.onVariantChange(variant);
+  }
+
+  /**
+   * Updates the selected size variant depending on a get parameter size.
+   *
+   * @param {string} size - Shopify size option name
+   */
+
+  updateSizeVariant(size) {
+    $(`.dot[title="${size}"]`).trigger('click');
+  }
+
+  /**
+   * Updates the URL of the color dots on PDP that contains collection colors
+   *
+   */
+
+  updateColorsLink() {
+    const $sizeDotsContainer = $(selectors.dotsContainer).not(selectors.dotsColorContainer);
+    const variantName = $('.dot.is-active', $sizeDotsContainer).attr('title');
+
+    $('a', selectors.dotsColorContainer).each((index, el) => {
+      const currentUrl = $(el).attr('href');
+      const newUrl = Utils.getUrlWithUpdatedQueryStringParameter('size', variantName, currentUrl);
+      $(el).attr('href', newUrl);
+    })
   }
 
   /**

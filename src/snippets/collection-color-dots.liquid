@@ -1,0 +1,170 @@
+{%- comment %}
+
+  Product Collection Dots
+  ------------------------------------------------------------------------------
+
+  {% include 'product-collection-dots',
+              product: { product } - required,
+              is_quick_view: { boolean } - optional - defaults to false
+  %}
+
+  Need to check a few things here before we enable this advanced PDP for products split into different parents according to flavor...
+  - Are we on the product template? (*not* quickview)
+  - Is there a collection with the same handle as the (handle-ized version of the) title of the product we're looking at?
+  - Does that collection have multiple products, and is the current product one of them?
+  - Does each product in the collection have only *one* value for the "color" option?
+
+  If all that checks out, then we generate 2 things
+    - A select tag with each product url as an option value.  We use this so when the user changes this select tag, we navigate them to the correct PDP.  See `productDetailForm.js`
+    - A list of dots (swatches), the current product gets a normal dot and the other dots get a link to their associated PDP
+
+{% endcomment -%}
+
+{% if is_quick_view == blank %}
+  {% assign is_quick_view = false %}
+{% endif %}
+
+{% assign product_swatch_size = '50x50' %}
+{% assign alt_swatch_identifier = 'swatch' %}
+{% assign product_thumb_size = product_thumb_size | default: '480x480' %}
+
+{% capture html %}
+  {% if product != blank %}
+    {% assign has_product_collection_color_dots = false %}
+    {% assign is_member_of_product_collection = false %}
+    {% assign all_product_collection_products_have_single_color = true %}
+    {% assign product_title_handle = product.title | handleize %}
+    {% assign product_collection = collections[product_title_handle] %}
+
+    {% if is_quick_view == false and product_collection != blank and product_collection.products.size > 1 %}
+      {% for p in product_collection.products %}
+        {% if p.id == product.id %}
+          {% assign is_member_of_product_collection = true %}
+        {% endif %}
+
+        {% for option in p.options_with_values %}
+          {% assign option_name_downcase = option.name | downcase %}
+
+          {% if option_name_downcase == option_name and option.values.size > 1 %}
+            {% assign all_product_collection_products_have_single_color = false %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    {% endif %}
+
+    {% if is_member_of_product_collection and all_product_collection_products_have_single_color %}
+      {% assign has_product_collection_color_dots = true %}
+    {% endif %}
+
+    {% if has_product_collection_color_dots %}
+      <select class="form-control" data-product-collection-product-select style="display: none" data-no-chosen>
+        {% for p in product_collection.products %}
+          {% for option in p.options_with_values %}
+            {% assign option_name_downcase = option.name | downcase %}
+            {% assign product_type_downcase = product.type | handleize %}
+            {% assign product_type_handle = product_type_downcase | handleize %}
+
+            {% if option_name_downcase == 'color' and option.values.size > 0 %}
+              {% assign option_handle = 'option' | append: option.position %}
+              {% for color in option.values %}
+                <option value="{{ p.url }}"{% if p.id == product.id %} selected="selected"{% endif %}>{{ color }}</option>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </select>
+
+      <div class="dots dots--color">
+        {% for p in product_collection.products %}
+          {% for option in p.options_with_values %}
+            {% assign option_name_downcase = option.name | downcase %}
+
+            {% if option_name_downcase == 'color' and option.values.size > 0 %}
+              {% assign option_handle = 'option' | append: option.position %}
+
+              {% for color in option.values %}
+                {% assign color_downcase = color | downcase %}
+                {% assign color_slug = color | handleize %}
+                {% assign color_slug_parts = color_slug | split: '-' %}
+                {% capture color_display %}{% for part in color_slug_parts %}{{ part | capitalize | append: ' ' }}{% endfor %}{% endcapture %}
+                {% assign color_display = color_display | strip %}
+                {% assign color_css = color_display | replace: ' ', '' %}
+
+                {% assign swatch_image   = false %}
+                {% assign swatch_variant = false %}
+
+                {% comment %}
+                  Loop through all product images and see if any swatches match the current color
+                {% endcomment %}
+                {% for image in p.images %}
+                  {% assign image_alt_downcase = image.alt | downcase %}
+                  {% if image_alt_downcase contains alt_swatch_identifier and image_alt_downcase contains color_downcase %}
+                    {% assign swatch_image = image %}
+                  {% endif %}
+                {% endfor %}
+
+                {% comment %} Get linked product variants {% endcomment %}
+                {% assign p_variants = p.variants %}
+
+                {% comment %} Loop through all variants and pull the first one matching the color to use for main image / url. {% endcomment %}
+                {% for variant in product.variants %}
+                  {% assign variant_color = variant[option_handle] %}
+                  {% if variant_color == color %}
+
+                    {% if swatch_variant == false %}
+                      {% assign swatch_variant = variant %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+
+                {% comment %}
+                  if its the current product, make the dot active
+                  otherwise make the dot clickable to other "linked variant" products
+                {% endcomment %}
+                {% if p.id == product.id %}
+                  {% comment %}
+                    background-color property must be set by capitalizing the color and removing spaces.
+                    We're looking for valid CSS color names - see: https://www.w3schools.com/cssref/css_colors.asp
+                  {% endcomment %}
+                  <div class="dot dot--{{ color_slug }} is-active"
+                       title="{{ color }}"
+                       {% if swatch_variant %}
+                       data-variant-url="{{ swatch_variant.url }}"
+                       data-variant-img="{{ swatch_variant.image | img_url: product_thumb_size, crop: product_thumb_crop }}"
+                       {% endif %}>
+                    <div class="dot__inner"
+                         style="background-color:{{ color_css }};
+                         {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}">
+                      {% include 'icon-check' %}
+                    </div>
+                  </div>
+                {% else %}
+                  {% comment %} Add size and availability data-attributes for JS state updates {% endcomment %}
+                  {% comment %} Adding collection to product url - 18 Sep '19 {% endcomment %}
+                  <a href="{% if collection %}{{ p.url | within: collection }}{% else %}{{ p.url | within: product.collections.first }}{% endif %}" class="dot dot--{{ color_slug }}"
+                     title="{{ color }}"
+                     data-color-dots
+                     {% for p_variant in p_variants %}
+                      data-{{ p_variant.option2 }}="{{ p_variant.available }}"
+                     {% endfor %}
+                     {% if swatch_variant %}
+                     data-variant-url="{{ swatch_variant.url }}"
+                     data-variant-img="{{ swatch_variant.image | img_url: product_thumb_size, crop: product_thumb_crop }}"
+                     {% endif %}>
+                    <div class="dot__inner"
+                         style="background-color:{{ color_css }};
+                         {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}">
+                      {% include 'icon-check' %}
+                    </div>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+    </div>
+    {% endif %}
+  {% endif %}
+{% endcapture %}
+
+{{ html | strip }}

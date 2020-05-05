@@ -17,6 +17,7 @@
   font-size: 18px;
   padding: 19px 70px;
   border-radius: 90px;
+  position: relative;
   @include transition($btn-transition);
   @include hover {
     color: $body-color;
@@ -51,16 +52,48 @@
     &:focus {
       @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
     }
-
   }
 
   .btn__ui {
-    @include transition(margin-left .15s ease-in-out);
+    @include transition(
+      margin-left $transition-duration-fast $transition-timing-function-base
+    );
     margin-left: 20px;
     .icon {
-      @include transition(fill .15s ease-in-out);
+      @include transition(
+        fill $transition-duration-fast $transition-timing-function-base
+      );
       width: 30px;
       height: 30px;
+    }
+  }
+
+  &.btn--small {
+    font-size: large-vw($h6-font-size-mobile, $h6-font-size);
+
+    @include media-breakpoint-down('md') {
+      font-size: $h6-font-size-mobile;
+    }
+  }
+
+  &.btn--smallest {
+    font-size: 16px;
+  }
+
+  &.btn--underlined {
+    font-weight: $font-weight-semi-bold;
+    padding: 0 0 5px;
+    &:focus {
+      box-shadow: none;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      height: 4px;
+      width: 100%;
+      background-color: $black;
     }
   }
 
@@ -80,7 +113,6 @@ fieldset:disabled a.btn {
   pointer-events: none;
 }
 
-
 //
 // Alternate buttons
 //
@@ -96,7 +128,6 @@ fieldset:disabled a.btn {
     @include button-outline-variant($value);
   }
 }
-
 
 //
 // Link buttons
@@ -133,19 +164,29 @@ fieldset:disabled a.btn {
   // No need for an active state here
 }
 
-
 //
 // Button Sizes
 //
 
 .btn-lg {
-  @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-line-height-lg, $btn-border-radius-lg);
+  @include button-size(
+    $btn-padding-y-lg,
+    $btn-padding-x-lg,
+    $btn-font-size-lg,
+    $btn-line-height-lg,
+    $btn-border-radius-lg
+  );
 }
 
 .btn-sm {
-  @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-line-height-sm, $btn-border-radius-sm);
+  @include button-size(
+    $btn-padding-y-sm,
+    $btn-padding-x-sm,
+    $btn-font-size-sm,
+    $btn-line-height-sm,
+    $btn-border-radius-sm
+  );
 }
-
 
 //
 // Block button
@@ -155,7 +196,6 @@ fieldset:disabled a.btn {
   display: block;
   width: 100%;
   padding: 18px 50px;
-
 
   // Vertically space out multiple block buttons
   + .btn-block {
@@ -168,9 +208,9 @@ fieldset:disabled a.btn {
 }
 
 // Specificity overrides
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
   &.btn-block {
     width: 100%;
   }
@@ -198,7 +238,7 @@ input[type="button"] {
   border: 6px solid $black;
   color: $black;
 
-  .icon {
+  .icon {
     fill: $black;
   }
 
@@ -217,7 +257,7 @@ input[type="button"] {
     color: $black;
   }
 
-  @include media-breakpoint-down('md') {
+  @include media-breakpoint-down('md') {
     border-width: 4.5px;
     padding: 15.5px 75.5px;
   }
@@ -244,7 +284,7 @@ input[type="button"] {
   border: 6px solid $red;
   color: $red;
 
-  .icon {
+  .icon {
     fill: $red;
   }
 
@@ -263,7 +303,7 @@ input[type="button"] {
     color: $red;
   }
 
-  @include media-breakpoint-down('md') {
+  @include media-breakpoint-down('md') {
     border-width: 4.5px;
     padding: 15.5px 75.5px;
   }
