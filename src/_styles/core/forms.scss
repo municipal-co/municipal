@@ -251,7 +251,8 @@ textarea.form-control {
       width: 30px;
     }
     select {
-      padding-right: 30px;
+      padding: 0 40px 0 0;
+      -webkit-appearance: none;
     }
   }
 

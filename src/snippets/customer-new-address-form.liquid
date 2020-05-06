@@ -99,6 +99,7 @@
           id="AddressCountryNew"
           class="form-control account-form__field"
           required
+          data-no-chosen
           data-default="{{ form.country }}">
           {{ country_option_tags | replace: '---', 'Select Country' }}
         </select>
@@ -117,6 +118,7 @@
             id="AddressProvinceNew"
             class="form-control account-form__field"
             required
+            data-no-chosen
             data-default="{{ form.province }}">
           </select>
           {% include 'icon-caret-down' %}

@@ -38,8 +38,12 @@ table.order-detail-totals {
 
 .account-sidebar__title {
   text-transform: capitalize;
-  margin-bottom: 2.5rem;
+  margin-bottom: large-vw(20px, 28px);
   font-weight: $font-weight-normal;
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 20px;
+  }
 }
 
 .account-sidebar__menu {
@@ -47,11 +51,10 @@ table.order-detail-totals {
 
   li {
     text-transform: none;
-    font-weight: $font-weight-semi-bold;
-    min-height: 52px;
-    &:not(:last-child) {
-      margin-bottom: 25px;
-    }
+    font-weight: $font-weight-normal;
+    line-height: large-vw(40px, 70px);
+    margin-bottom: 0;
+    
     a {
       vertical-align: middle;
     }
