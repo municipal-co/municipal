@@ -44,6 +44,9 @@
   {% endif %}
 
   <h1 class="h5 product__title">{{ product.title }}</h1>
+
+  {% include 'rating-stars' %}
+  
   <div class="product__price">
     {% include 'product-detail-price', product: product, current_variant: current_variant %}
   </div>
