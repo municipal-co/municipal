@@ -11,12 +11,13 @@
 
 {% endcomment -%}
 
-{% form 'customer_address', address %}
-  <h4>{{ 'customer.addresses.edit_address' | t }}</h4>
+{{ 'shopify_common.js' | shopify_asset_url | script_tag }}
 
+{% form 'customer_address', address %}
   <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
+
+    <div class="col-md-11">
+      <div class="form-group form-group__account-address">
         <label for="AddressFirstName_{{ form.id }}">
           {{ 'customer.addresses.first_name' | t }}
         </label>
@@ -24,13 +25,14 @@
           name="address[first_name]"
           id="AddressFirstName_{{ form.id }}"
           placeholder="{{ 'customer.addresses.first_name' | t }}"
-          class="form-control"
+          class="form-control account-form__field"
           value="{{ form.first_name }}"
           autocapitalize="words">
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
+
+    <div class="col-md-11 offset-md-2">
+      <div class="form-group form-group__account-address">
         <label for="AddressLastName_{{ form.id }}">
           {{ 'customer.addresses.last_name' | t }}
         </label>
@@ -38,7 +40,7 @@
         <input type="text"
           name="address[last_name]"
           id="AddressLastName_{{ form.id }}"
-          class="form-control"
+          class="form-control account-form__field"
           placeholder="{{ 'customer.addresses.last_name' | t }}"
           value="{{ form.last_name }}"
           autocapitalize="words">
@@ -46,39 +48,47 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-6 col-lg-8">
-      <div class="form-group">
-        <label for="AddressAddress1_{{ form.id }}">
-          {{ 'customer.addresses.address1' | t }}
-        </label>
+  <div class="form-group form-group__account-address">
+    <label for="AddressCompany_{{ form.id }}">
+      {{ 'customer.addresses.company' | t }}
+    </label>
 
-        <input type="text"
-          name="address[address1]"
-          id="AddressAddress1_{{ form.id }}"
-          class="form-control"
-          value="{{ form.address1 }}"
-          autocapitalize="words">
-      </div>
-    </div>
-    <div class="col-md-6 col-lg-4">
-
-      <div class="form-group">
-        <label for="AddressAddress2_{{ form.id }}">
-          {{ 'customer.addresses.address2' | t }}
-        </label>
-        
-        <input type="text"
-          name="address[address2]"
-          id="AddressAddress2_{{ form.id }}"
-          class="form-control"
-          value="{{ form.address2 }}"
-          autocapitalize="words">
-      </div>
-    </div>
+    <input type="text"
+      name="address[company]"
+      id="AddressCompany_{{ form.id }}"
+      class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.company' | t }}"
+      value="{{ form.company }}"
+      autocapitalize="words">
   </div>
 
-  <div class="form-group">
+  <div class="form-group form-group__account-address">
+    <label for="AddressAddress1_{{ form.id }}">
+      {{ 'customer.addresses.address1' | t }}
+    </label>
+
+    <input type="text"
+      name="address[address1]"
+      id="AddressAddress1_{{ form.id }}"
+      class="form-control account-form__field"
+      value="{{ form.address1 }}"
+      autocapitalize="words">
+  </div>
+
+  <div class="form-group form-group__account-address">
+    <label for="AddressAddress2_{{ form.id }}">
+      {{ 'customer.addresses.address2' | t }}
+    </label>
+    
+    <input type="text"
+      name="address[address2]"
+      id="AddressAddress2_{{ form.id }}"
+      class="form-control account-form__field"
+      value="{{ form.address2 }}"
+      autocapitalize="words">
+  </div>
+
+  <div class="form-group form-group__account-address">
     <label for="AddressCity_{{ form.id }}">
       {{ 'customer.addresses.city' | t }}
     </label>
@@ -88,13 +98,31 @@
       id="AddressCity_{{ form.id }}"
       placeholder="{{ 'customer.addresses.city' | t }}"
       value="{{ form.city }}"
-      class="form-control"
+      class="form-control account-form__field"
       autocapitalize="words">
   </div>
 
   <div class="row">
-    <div class="col-md-4">
-      <div class="form-group">
+    <div class="col-md-7">
+      <div class="form-group form-group__account-address">
+        <label for="AddressCountry_{{ form.id }}">
+          {{ 'customer.addresses.country' | t }}
+        </label>
+
+        <select
+          name="address[country]"
+          id="AddressCountry_{{ form.id }}"
+          class="form-control account-form__field"
+          data-form-id="{{ form.id }}"
+          data-default="{{ form.country }}">
+          {{ country_option_tags | replace: '---', 'Select Country' }}
+        </select>
+        {% include 'icon-caret-down' %}
+      </div>
+    </div>
+
+    <div class="col-md-7 offset-md-1">
+      <div class="form-group form-group__account-address">
 
         {% assign form_country_handle = form.country | handle %}
         {% assign state_label = 'customer.addresses.province' | t %}
@@ -106,35 +134,22 @@
           {{ state_label }}
         </label>
 
-        <input type="text"
-          name="address[province]"
-          id="AddressProvince_{{ form.id }}"
-          class="form-control"
-          placeholder="{{ state_label }}"
-          value="{{ form.province }}">
+        <span id="AddressProvinceContainer_{{ form.id }}">
+          <select
+            name="address[province]"
+            id="AddressProvince_{{ form.id }}"
+            class="form-control account-form__field"
+            required
+            data-default="{{ form.province }}">
+          </select>
+          {% include 'icon-caret-down' %}
+        </span>
       </div>
-    </div>
+    </div> 
 
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="AddressCountry_{{ form.id }}">
-          {{ 'customer.addresses.country' | t }}
-        </label>
+    <div class="col-md-7 offset-md-1">
 
-        <select
-          name="address[country]"
-          id="AddressCountry_{{ form.id }}"
-          class="form-control"
-          data-form-id="{{ form.id }}"
-          data-default="{{ form.country }}">
-          {{ country_option_tags }}
-        </select>
-      </div>
-    </div>    
-
-    <div class="col-md-4">
-
-      <div class="form-group">
+      <div class="form-group form-group__account-address">
         <label for="AddressZip_{{ form.id }}">
           {{ 'customer.addresses.zip' | t }}
         </label>
@@ -142,7 +157,7 @@
         <input type="text"
           name="address[zip]"
           id="AddressZip_{{ form.id }}"
-          class="form-control"
+          class="form-control account-form__field"
           placeholder="{{ 'customer.addresses.zip' | t }}"
           value="{{ form.zip }}"
           autocapitalize="characters">
@@ -150,7 +165,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group form-group__account-address">
     <label for="AddressPhone_{{ form.id }}">
       {{ 'customer.addresses.phone' | t }}
     </label>
@@ -158,17 +173,17 @@
     <input type="tel"
       name="address[phone]"
       id="AddressPhone_{{ form.id }}"
-      class="form-control"
+      class="form-control account-form__field"
       placeholder="{{ 'customer.addresses.phone' | t }}"
       value="{{ form.phone }}"
       pattern="[0-9\-]*">
   </div>
 
-  <div class="form-group">
+  <div class="form-group form-group__checkboxes">
     <div class="custom-control custom-checkbox">
       {% comment %}{{ form.set_as_default_checkbox }}{% endcomment %}
       <input type="checkbox" name="address[default]" value="1" class="custom-control-input" id="address_default_address_{{ form.id }}" />
-      <label class="custom-control-label" for="address_default_address_{{ form.id }}">
+      <label class="custom-control-label h6" for="address_default_address_{{ form.id }}">
         {{ 'customer.addresses.set_default' | t }}
       </label>
     </div>
@@ -181,4 +196,10 @@
     </button>
   </div>  
 
+  <script>
+    // Initialize observers on address selectors
+    new Shopify.CountryProvinceSelector('AddressCountry_{{ form.id }}', 'AddressProvince_{{ form.id }}', {
+      hideElement: 'AddressProvinceContainer_{{ form.id }}'
+    });
+  </script>
 {% endform %}

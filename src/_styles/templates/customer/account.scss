@@ -10,68 +10,110 @@
   address {
     margin-bottom: $spacer;
   }
-}
 
-.account-block__title {
-
-}
-
-.account-block__content {
-  
+  .account__order-row & {
+    font-size: 16px;
+  }
 }
 
 table.order-detail-totals {
   @include media-breakpoint-up('lg') {
-    max-width: 450px;
+    max-width: 550px;
     margin-left: auto;
   }
 }
 
-.account-content {
-
-}
-
 .account-sidebar {
-  @extend .col-lg-3;
-  @extend .col-xxl-2;
-  @extend .offset-xxl-1;
+  background-color: $gray-lighter;
+  padding: large-vw(60px, 140px) large-vw(40px, 80px);
 
   @include media-breakpoint-down('md') {
-    margin-bottom: 45px;
-  }  
-}
-
-.account-content--has-sidebar {
-  @extend .col-lg-9;
-  @extend .col-xxl-8;
-}
-
-.account-sidebar__content {
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid $gray;
-
-  @include media-breakpoint-up('xl') {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
+    padding: 60px 40px;
   }
 }
 
+.account-sidebar__content {
+  height: 100%;
+}
+
 .account-sidebar__title {
+  text-transform: capitalize;
   margin-bottom: 2.5rem;
+  font-weight: $font-weight-normal;
 }
 
 .account-sidebar__menu {
   @include list-unstyled;
 
   li {
+    text-transform: none;
+    font-weight: $font-weight-semi-bold;
+    min-height: 52px;
     &:not(:last-child) {
-      margin-bottom: 15px;
+      margin-bottom: 25px;
+    }
+    a {
+      vertical-align: middle;
     }
 
-    &.is-active {
-      font-weight: $font-weight-bold;
+    @include media-breakpoint-up('lg') {
+      &::before {
+        content: '';
+        padding-right: 0px;
+        width: auto;
+        height: large-vw(30px, 50px);
+        transition: all 150ms ease-in-out;
+        background-image: url('hover-arrow--black.svg');
+        background-size: contain;
+        background-position: left;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+
+        @include media-breakpoint-down('md') {
+          height: 30px;
+        }
+      }
+
+      &.is-active,
+      &:hover {
+        &::before {
+          padding-right: large-vw(30px, 50px);
+          margin-right: large-vw(0, 45px);
+
+          @include media-breakpoint-down('md') {
+            padding-right: 30px;
+          }
+        }
+      }
     }
   }
+}
+
+.account-content {
+  padding: large-vw(60px, 140px) large-vw(40px, 80px);
+
+  @include media-breakpoint-down('md') {
+    padding: 60px 40px;
+  }
+}
+
+.account__title {
+  border-bottom: 8px solid $black;
+  font-weight: $font-weight-normal;
+  padding-bottom: 15px;
+  &.account__title--addresses {
+    margin-bottom: large-vw(50px, 100px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 50px;
+    }
+  }
+}
+
+.account__addresses-column {
+  margin-bottom: 30px;
+}
+
+.account__customer-address {
+  font-weight: $font-weight-semi-bold;
 }

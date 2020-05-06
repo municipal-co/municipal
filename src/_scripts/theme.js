@@ -50,6 +50,7 @@ import TwoUpInstagram from './sections/twoUpInstagram';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
 import CustomersDrawerSection from './sections/customersDrawer';
+import CustomersResetPasswordSection from './sections/customersResetPassword';
 import HeroSection from './sections/heroSection';
 import ProductOverview from './sections/productOverview';
 import ProductFeatures from './sections/productFeatures';
@@ -107,6 +108,10 @@ Breakpoints.initialize();
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
   sectionManager.register('customers-drawer', CustomersDrawerSection);
+  sectionManager.register(
+    'customers-reset-password',
+    CustomersResetPasswordSection
+  );
   sectionManager.register('hero', HeroSection);
   sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);

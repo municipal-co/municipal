@@ -13,9 +13,9 @@
           <div class="col-20 col-lg-18 offset-2 offset-lg-3">
             <div id="CustomerLoginForm">
               {% if section.settings.title != blank %}
-                <div class="h5">{{ section.settings.title }}</div>
+                <div class="h5">{{ section.settings.title }}:</div>
               {% else %}
-                <h5>{{ 'customer.login.title' | t }}</h5>
+                <h5>{{ 'customer.login.title' | t | newline_to_br }}:</h5>
               {% endif %}
               
               {% if section.settings.subtitle != blank %}
@@ -31,9 +31,9 @@
 
             <div id="RecoverPasswordForm" class="hide">
               {% if section.settings.title != blank %}
-                <div class="h5">{{ section.settings.recover_title }}</div>
+                <div class="h5">{{ section.settings.recover_title }}:</div>
               {% else %}
-                <h5>{{ 'customer.recover_password.title' | t }}</h5>
+                <h5>{{ 'customer.recover_password.title' | t | newline_to_br }}:</h5>
               {% endif %}
 
               {% if section.settings.recover_subtitle != blank %}
@@ -46,7 +46,7 @@
             </div>
 
             <div id="CustomerRegisterForm" class="hide">
-              <h5>{{ 'customer.register.title' | t }}</h5>
+              <h5>{{ 'customer.register.title' | t | newline_to_br }}:</h5>
 
               {% if section.settings.register_subtitle != blank %}
                 <div class="h6">{{ section.settings.register_subtitle }}</div>
