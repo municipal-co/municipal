@@ -14,7 +14,6 @@ export default class ProductOverview extends BaseSection {
 
     this.$container = $(container);
     this.$videoCover = $(selectors.videoCover, this.$container);
-    this.background = this.$container.data('background-color');
 
     if ($(selectors.videoPlayer).length) {
       this.player = new VideoPlayer($(selectors.videoPlayer, this.$container));
@@ -35,8 +34,7 @@ export default class ProductOverview extends BaseSection {
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.4 && this.background !== '') {
-        $('body').css('background-color', this.background);
+      if (entry.intersectionRatio > 0.4) {
         const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
 
         $('body').trigger(event);
