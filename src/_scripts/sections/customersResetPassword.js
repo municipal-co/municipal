@@ -1,9 +1,9 @@
 import BaseSection from './base';
 import PasswordValidation from '../ui/passwordValidation';
 
-export default class CustomersRegisterSection extends BaseSection {
+export default class CustomersResetPasswordSection extends BaseSection {
   constructor(container) {
-    super(container, 'customersRegister');
+    super(container, 'customersResetPassword');
 
     new PasswordValidation(this.$container);
   }

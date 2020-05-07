@@ -6,22 +6,22 @@
 
 {% unless collection == empty %}
 
-  <div class="collection-filter-bar__entry">
-    
-    {% assign sort_options = 'created-descending|Newest,price-ascending|Price: $ - $$,price-descending|Price: $$ - $,best-selling|Best Selling' | split: ',' %}
+  <div class="collection-filter__group">
+    {% assign sort_options = 'best-selling|Best selling,price-ascending|Price: Low to high,price-descending|Price: high to low, manual|Recommended' | split: ',' %}
     {% assign sort_selected =  collection.sort_by | default: collection.default_sort_by %}
-    
-    <label>Sort By</label>
-    <select class="form-control" data-sort-select>
+
+    <label class="collection-filter__group-header h5">Sort By</label>
+    <div class="form-group">
       {% for sort_option in sort_options %}
         {% assign sort_option_handle = sort_option | split: '|' | first %}
         {% assign sort_option_title  = sort_option | split: '|' | last %}
-        <option value="{{ sort_option_handle }}" {% if sort_selected == sort_option_handle %}selected{% endif %}>
-          {{ sort_option_title }}
-        </option>
+        <div class="custom-control custom-radio">
+          <input type="radio" name="sort-option" value="{{ sort_option_handle }}" {% if sort_selected == sort_option_handle %} checked{% endif %} class="custom-control-input" id="{{ sort_option_handle }}">
+          <label class="custom-control-label" for="{{ sort_option_handle }}">
+            {{sort_option_title}}
+          </label>
+        </div>
       {% endfor %}
-    </select>
-    
+    </div>
   </div>
-
 {% endunless %}

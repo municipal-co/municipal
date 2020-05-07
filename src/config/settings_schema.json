@@ -74,6 +74,51 @@
         "type": "richtext",
         "id": "shipping_body_3",
         "label": "Shipping body - Block 3"
+      },
+      {
+        "type": "text",
+        "id": "shipping_eyebrow_4",
+        "label": "Shipping Eyebrow - Block 4"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title_4",
+        "label": "Shpping title - Block 4"
+      },
+      {
+        "type": "richtext",
+        "id": "shipping_body_4",
+        "label": "Shipping body - Block 4"
+      },
+      {
+        "type": "text",
+        "id": "shipping_eyebrow_5",
+        "label": "Shipping Eyebrow - Block 5"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title_5",
+        "label": "Shpping title - Block 5"
+      },
+      {
+        "type": "richtext",
+        "id": "shipping_body_5",
+        "label": "Shipping body - Block 5"
+      },
+      {
+        "type": "text",
+        "id": "shipping_eyebrow_6",
+        "label": "Shipping Eyebrow - Block 6"
+      },
+      {
+        "type": "text",
+        "id": "shipping_title_6",
+        "label": "Shpping title - Block 6"
+      },
+      {
+        "type": "richtext",
+        "id": "shipping_body_6",
+        "label": "Shipping body - Block 6"
       }
     ]
   },

@@ -21,7 +21,7 @@
     bottom: 0;
     
     @include media-breakpoint-down('md') {
-      height: 110px;
+      height: 15%;
     }
   }
 
@@ -29,7 +29,7 @@
     overflow: hidden;
     position: relative;
     height: large-vw(50px, 150px);
-    margin-bottom: large-vw(50px, 65px);
+    margin-bottom: large-vw(50px, 200px);
 
     @include media-breakpoint-down('md') {
       margin-bottom: 30px;

@@ -328,7 +328,7 @@ $h6-line-height: 1.5em !default;
 
 $headings-margin-bottom: $spacer !default;
 $headings-font-family: 'Sequel Sans Title', $font-family-sans-serif !default;
-$headings-font-weight: $font-weight-bold !default;
+$headings-font-weight: $font-weight-normal !default;
 $headings-line-height: 1.2 !default;
 $headings-color: null !default;
 
@@ -417,7 +417,7 @@ $mark-bg: #fcf8e3 !default;
 
 $hr-margin-y: $spacer !default;
 
-$breadcrumb-separator: '\007c';
+$breadcrumb-separator: '\002F';
 
 // Tables
 //
@@ -1088,15 +1088,17 @@ $drawer-header-font-size: $h5-font-size;
 $drawer-header-border-color: $black;
 
 // AJAX Cart
-$ajax-cart-width:                       560px;
-$ajax-cart-bg:                          $white;
-$ajax-cart-border-color:                darken($ajax-cart-bg, 5%);
-$ajax-cart-padding-vertical:            40px;
-$ajax-cart-padding-horizontal:          80px;
-$ajax-cart-padding-vertical-mobile:     15px;
-$ajax-cart-padding-horizontal-mobile:   15px;
-$ajax-cart-backdrop-color:              $drawer-backdrop-color;
-$ajax-cart-backdrop-opacity:            $drawer-backdrop-opacity;
+
+$ajax-cart-width: 560px;
+$ajax-cart-bg: $white;
+$ajax-cart-border-color: darken($ajax-cart-bg, 5%);
+$ajax-cart-padding-vertical: 40px;
+$ajax-cart-padding-horizontal: 80px;
+$ajax-cart-padding-vertical-mobile: 15px;
+$ajax-cart-padding-horizontal-mobile: 15px;
+$ajax-cart-backdrop-color: $drawer-backdrop-color;
+$ajax-cart-backdrop-opacity: $drawer-backdrop-opacity;
+
 
 // Page Hero
 
