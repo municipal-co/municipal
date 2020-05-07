@@ -89,6 +89,14 @@
   }
 }
 
+.tiled-image__eyebrow {
+  margin-bottom: large-vw(18px, 45px);
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 18px;
+  }
+}
+
 .tiled-image__text {
   font-size: large-vw(20px, 35px);
   font-weight: $font-weight-bold;
