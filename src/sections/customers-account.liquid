@@ -26,7 +26,7 @@
             <h4 class="account__title">{{ 'customer.account.details' | t }}</h4>
 
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-lg-11">
                 {% if customer.default_address %}
                   <div class="account-block">
                     <h5 class="account-block__title">{{ 'customer.addresses.default_address' | t }}</h5>
@@ -45,7 +45,7 @@
                 {% endif %}
                 <a href="/account/addresses#new" class="btn btn-primary btn-block">{{ 'customer.account.add_new_address' | t }}</a>            
               </div> 
-              <div class="col-md-12">
+              <div class="col-lg-11 offset-lg-1">
                 <div class="account-block">
                   <h5 class="account-block__title">{{ 'customer.account.email' | t }}</h5>
                   <div class="account-block__content">{{ customer.email }}</div>

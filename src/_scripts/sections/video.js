@@ -14,15 +14,6 @@ export default class VideoSection extends BaseSection {
     super(container, 'video');
     this.$container = $(container);
     this.$videoCover = $(selectors.videoCover, this.$container);
-    this.background = this.$container.data('background-color');
-    this.observerProperties = {
-      root: null,
-      threshold: 0.4
-    }
-
-    this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
-
-    this.IntersectionObserver.observe(this.$container.get(0));
 
     if ($(selectors.videoPlayer).length) {
       this.player = new VideoPlayer($(selectors.videoPlayer, this.$container));
@@ -35,16 +26,8 @@ export default class VideoSection extends BaseSection {
     this.$videoCover.on('mouseleave', this.onVideoLeave.bind(this));
   }
 
-  observerCallback(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.4 && this.background !== '') {
-        $('body').css('background-color', this.background);
-      }
-    })
-  }
-
   playVideo(e) {
-    this.player.play(); 
+    this.player.play();
   }
 
   stopVideo(e) {

@@ -15,46 +15,58 @@
      data-section-type="newsletter-modal"
      data-enabled="{{ section.settings.enabled }}"
      data-delay="{{ section.settings.delay }}"
-     data-seen-expiration="{{ section.settings.seen_expiration }}">
+     data-seen-expiration="{{ section.settings.seen_expiration }}"
+     class="newsletter-popup">
   
   <div class="modal fade" id="newsletter-modal" tabindex="-1" role="dialog" aria-labelledby="newsletter-modal-title" data-newsletter-modal>
+    <span class="popup-eyebrow d-lg-none d-block">SUBSCRIBE</span>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      {% include 'icon-close' %}
+    </button>   
+
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          {% if section.settings.header_text != blank %}
-            <h3 class="modal-title" id="newsletter-modal-title">{{ section.settings.header_text }}</h3>
-          {% endif %}
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            {% include 'icon-close' %}
-          </button>          
-        </div>
         <div class="modal-body">
-          {% if settings.newsletter_form_action == blank %}
+          {% if settings.klaviyo_list_id == blank %}
             <div class="alert alert-danger small">A valid newsletter form action URL is required for this section.  Please go to <strong>General Settings -> Mailing List</strong> in the theme editor to add this information</div>
           {% endif %}     
 
           {% if section.settings.image %}
-            <img src="{{ section.settings.image | img_url: '600x' }}" class="img-fluid" alt="{{ section.settings.image.alt }}" />
-          {% endif %}
+            <div class="modal-image frame frame--9x16">
+              {% render 'image_tag'
+                        image: section.settings.image,
+                        object_fit: "cover"
+              %}
 
-          <form action="{{ settings.newsletter_form_action }}" method="post" data-newsletter-form>
-            <div class="newsletter-form-contents" data-form-contents>
-              <div class="newsletter-form-inputs">
-                {% if section.settings.body_text != blank %}
-                  <p>{{ section.settings.body_text }}</p>
-                {% endif %}
-                <div class="form-group">
-                  <input type="email" class="form-control" placeholder="{{ section.settings.placeholder_text }}" value="{% if customer %}{{ customer.email }}{% endif %}" required="required"/>
+              <div class="modal-icon-container d-block d-lg-none">
+                <div class="modal-icon frame frame--16x9">
+                  {% render 'image_tag'
+                              image: section.settings.popup_icon,
+                              object_fit: "contain"
+                    %}
                 </div>
-                <input type="submit" class="btn btn-primary btn-block" name="submit" value="{{ section.settings.subscribe_button_text | default: 'Subscribe' }}" />
               </div>
-              <div class="newsletter-form-message"
-                 data-form-message
-                 data-message-success="{{ message_success | strip | escape }}"
-                 data-message-already-subscribed="{{ message_already_subscribed | strip | escape }}"
-                 data-message-fail="{{ message_fail | strip | escape }}"></div>                 
             </div>
-          </form>
+          {% endif %}
+          
+          <div class="modal-inner-container">
+            {% if section.settings.header_text != blank %}
+              <h4 class="modal-title h4" id="newsletter-modal-title">{{ section.settings.header_text }}</h4>
+            {% endif %}
+
+            <div class="klaviyo-form-wrapper">
+              <div class="klaviyo-form-WCdEBr"></div>
+            </div>
+            
+            <div class="modal-icon-container d-lg-block d-none">
+              <div class="modal-icon frame frame--16x9">
+                {% render 'image_tag'
+                            image: section.settings.popup_icon,
+                            object_fit: "contain"
+                  %}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -103,37 +115,14 @@
         "label": "Image"
       },
       {
-        "type": "text",
+        "type": "textarea",
         "id": "header_text",
         "label": "Header text"
       },
       {
-        "type": "textarea",
-        "id": "body_text",
-        "label": "Text"
-      },
-      {
-        "type": "text",
-        "id": "placeholder_text",
-        "label": "Placeholder Text",
-        "default": "Enter your email"
-      },
-      {
-        "type": "textarea",
-        "id": "subscribe_success_text",
-        "label": "Success Message",
-        "info": "Displays when someone signs up successfully.  Leave blank for a generic message."
-      },
-      {
-        "type": "textarea",
-        "id": "subscribe_already_subscribed_text",
-        "label": "Already Subscribed Message",
-        "info": "Displays if someone is already signed up to the mailing list.  Leave blank for a generic message."
-      },
-      {
-        "type": "text",
-        "id": "subscribe_button_text",
-        "label": "Button Text"
+        "type": "image_picker",
+        "id": "popup_icon",
+        "label": "Icon"
       }
     ]
   }

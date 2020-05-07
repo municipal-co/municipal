@@ -60,7 +60,6 @@ export default class ProductSection extends BaseSection {
       }
 
       if (entry.intersectionRatio > 0.4) {
-        $('body').css('background-color', '#ffffff');
         this.$stickyBar.removeClass(classes.visible);
         this.attachAddToCartForm();
       }

@@ -8,7 +8,7 @@
   {% if section.blocks.size > 0 %}
     {% for block in section.blocks %}
 
-      {% assign dot_handle = block.settings.title | handle %}    
+      {% assign dot_handle = block.settings.title | handle %}
       {% assign block_colors = block_colors | append: dot_handle %}
 
       {% if block.settings.color != blank %}
@@ -29,7 +29,7 @@
             {% endif %}
             {% if block.settings.image %}
               background: none;
-              background-color: transparent !important;            
+              background-color: transparent !important;
               background-image:url({{ block.settings.image | img_url: '50x50', crop: 'center' }}) !important;
               border: none !important;
             {% endif %}
@@ -38,7 +38,7 @@
               .dot.dot--{{ dot_handle }} .dot__inner:before {
                 display: none;
               }
-            {% endif %}            
+            {% endif %}
           }
         {% endcapture %}
       {% endif %}
@@ -88,7 +88,7 @@
     </div>
   {% endcapture %}
 
-  {% include 'content-for-theme-editor' with preview_html %}  
+  {% include 'content-for-theme-editor' with preview_html %}
 </div>
 
 {% schema %}

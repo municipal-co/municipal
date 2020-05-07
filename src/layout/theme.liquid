@@ -100,10 +100,6 @@
 
   </div>
 
-  {% comment %} Select the appropriate 'newsletter-*' section for the theme you are building and remove the associated files for the other {% endcomment %}
-  {% section 'newsletter-modal' %}
-  {% comment %}{% section 'newsletter-slideup' %}{% endcomment %}
-
   {% unless template == 'cart' %}
     {% section 'ajax-cart' %}
   {% endunless %}
@@ -115,5 +111,9 @@
   {% include 'slideup-template' %}
   {% include 'third-party-scripts-foot' %}
 
+  {% comment %} Select the appropriate 'newsletter-*' section for the theme you are building and remove the associated files for the other {% endcomment %}
+  {% section 'newsletter-modal' %}
+  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=P5FsAy"></script>
+  {% comment %}{% section 'newsletter-slideup' %}{% endcomment %}
 </body>
 </html>

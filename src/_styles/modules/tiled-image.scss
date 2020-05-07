@@ -31,7 +31,7 @@
     max-width: 800px;
 
     @include media-breakpoint-down('sm') {
-      max-width: 241px;
+      max-width: 58%;
     }
   }
 }
@@ -40,11 +40,8 @@
   position: absolute;
   top: large-vw(-70px, -175px);
   right: 45px;
-  -webkit-animation: rotating 30s linear infinite;
-  -moz-animation: rotating 30s linear infinite;
-  -ms-animation: rotating 30s linear infinite;
-  -o-animation: rotating 30s linear infinite;
   animation: rotating 30s linear infinite;
+
   img {
     max-width: large-vw(96px, 350px);
 
@@ -55,7 +52,7 @@
 
   @include media-breakpoint-down('sm') {
     top: 80px;
-    right: 230px;
+    right: 63%;
   }
 }
 
@@ -71,7 +68,7 @@
     max-width: 1040px;
 
     @include media-breakpoint-down('sm') {
-      max-width: 276px;
+      max-width: 66%;
     }
   }
 }

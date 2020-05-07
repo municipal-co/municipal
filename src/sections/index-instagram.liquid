@@ -7,49 +7,86 @@
 {% assign accent_color = section.settings.accent_text_color %}
 {% assign background_color = section.settings.background_color %}
 
+{% assign instagram_link = section.settings.instagram_link %}
+
 {% assign animation = section.settings.scroll_animation | append: 's' %}
 {% assign animation_delay = animation | divided_by: 2 | append: 's' | prepend: '-' %}
- 
-<div data-section-id="{{ section.id }}" data-section-type="two-up-instagram" data-background-color="{{ background_color }}">
+
+<div data-section-id="{{ section.id }}" data-section-type="two-up-instagram" data-animated-background="{{ background_color }}">
   <div class="two-up-instagram">
-    
+
     <div class="container-fluid">
       <div class="row justify-content-center">
 
-        {% if text != blank %}            
+        {% if text != blank %}
           <div class="two-up-title-wrapper col-24">
-            <h2 class="two-up__title h1">
-              <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
-              <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-            </h2>
-
-
-            <h2 class="two-up__title h1">
-              <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
-              <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-            </h2>
+            {% if instagram_link != blank %}
+              <a href="{{ instagram_link }}">
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+    
+    
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+              </a>
+            {% else %}  
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+      
+      
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+            {% endif %}
           </div>
         {% endif %}
 
         <div class="col-lg-22 col-20">
           <div class="two-up-images-container">
             <div class="two-up__image frame frame--1x1">
-              {% render 'image_tag'
-                          image: image_1,
-                          object_fit: "cover"
-                %}
+              {% if instagram_link != blank %}
+                <a href="{{ instagram_link }}">
+
+                  {% render 'image_tag'
+                              image: image_1,
+                              object_fit: "cover"
+                  %}
+                </a>
+              {% else %}
+                  {% render 'image_tag'
+                              image: image_1,
+                              object_fit: "cover"
+                  %}
+              {% endif %}
             </div>
 
             <div class="two-up__image frame frame--1x1">
-              {% render 'image_tag'
-                          image: image_2,
-                          object_fit: "cover"
-                %}
+              {% if instagram_link != blank %}
+                <a href="{{ instagram_link }}">
+
+                  {% render 'image_tag'
+                              image: image_2,
+                              object_fit: "cover"
+                  %}
+                </a>
+              {% else %}
+                  {% render 'image_tag'
+                              image: image_2,
+                              object_fit: "cover"
+                  %}
+              {% endif %}
             </div>
           </div>
         </div>
       </div>
-    
+
 
     </div>
   </div>
@@ -71,6 +108,11 @@
         "type": "text",
         "id": "accent_text",
         "label": "Accent Text"
+      },
+      {
+        "type": "url",
+        "id": "instagram_link",
+        "label": "Instagram Link"
       },
       {
         "type": "image_picker",

@@ -23,7 +23,7 @@
 {% endcomment -%}
 
 <div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="cms-page">
-  
+
     <div class="hero">
       {% include 'hero-panel'
                   h_id: section.id,
@@ -37,14 +37,14 @@
       %}
     </div>
 
-    {% for block in section.blocks %}  
+    {% for block in section.blocks %}
       <div class="cms-page-block" {{ block.shopify_attributes }}>
         {% if block.type == "spacer" %}
-        
+
           {% include 'spacer', id: block.id, height_name: block.settings.height_name %}
 
-        {% elsif block.type == "promo" %}  
-          <div data-section-id="{{ block.id }}" data-cms-block data-background-color="{{ block.settings.background_color }}">
+        {% elsif block.type == "promo" %}
+          <div data-section-id="{{ block.id }}" data-cms-block data-animated-background="{{ block.settings.background_color }}">
             {% include 'promo',
                         p_id: block.id,
                         p_layout: block.settings.layout,
@@ -66,19 +66,19 @@
           </div>
 
         {% elsif block.type == "richtext" %}
-          <div class="section-rich-text" data-cms-block data-background-color="#ffffff">
+          <div class="section-rich-text" data-cms-block data-animated-background="#ffffff">
             <div class="container-fluid">
               <div class="row justify-content-center">
                 <div class="col-20">
                   {% include 'content-header', ch_title: block.settings.title %}
 
-                </div> 
+                </div>
                 <div class="col-lg-14 col-20">
                   {% include 'richtext-block'
                               id: block.id,
                               content: block.settings.content
                   %}
-                </div>             
+                </div>
               </div>
             </div>
           </div>
@@ -98,10 +98,10 @@
           {% assign this_product = block.settings.product_link %}
           {% assign product_link =  all_products[this_product].url%}
 
-          <div  data-section-id="{{ block.id }}" 
-                class="video-section" 
-                data-section-type="video" 
-                data-background-color="{{ background_color }}"
+          <div  data-section-id="{{ block.id }}"
+                class="video-section"
+                data-section-type="video"
+                data-animated-background="{{ background_color }}"
                 data-cms-block
           >
             <div class="container-fluid">
@@ -136,13 +136,13 @@
                         {% include 'icon-play-full-color' %}
                       </button>
                     </div>
-                    
+
                     <div class="modal modal--video fade" id="video-modal-{{ block.id }}" data-video-modal>
                       <span class="video-eyebrow d-lg-none d-block">Video</span>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         {% include 'icon-close' %}
                       </button>
-                        
+
                       {% if this_product != blank %}
                         <a class="btn btn-link product-link d-lg-block d-none"href="{{ product_link }}">
                           Shop {{ all_products[this_product].title }}
@@ -186,9 +186,9 @@
 
           {% assign animation_delay = block.settings.animation_durartion | divided_by: 2.0 | append: 's' | prepend: '-' %}
           {% assign title = block.settings.text %}
-          
-          {% if title != blank %}  
-            <div class="scrolling-text" data-cms-block data-background-color="#ffffff">
+
+          {% if title != blank %}
+            <div class="scrolling-text" data-cms-block data-animated-background="#ffffff">
               <div class="text-wrapper col-24">
                 <h2 class="text h1">
                   <span style="animation-duration: {{ animation }};">{{ title | strip_html }} &nbsp;</span>
@@ -197,7 +197,7 @@
                   <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title | strip_html }} &nbsp;</span>
                 </h2>
               </div>
-            </div>          
+            </div>
           {% endif %}
 
         {% elsif block.type == "text_plus_signature" %}
@@ -206,7 +206,7 @@
           {% assign counter = 0 %}
 
           {% if text != blank %}
-            <div class="section-text-signature" data-cms-block data-background-color="#121212">
+            <div class="section-text-signature" data-cms-block data-animated-background="#121212">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-lg-19 col-20 offset-lg-2">
@@ -221,7 +221,7 @@
                             %}
                         </div>
                       </div>
-                    {% endif %}                      
+                    {% endif %}
                   </div>
                 </div>
 
@@ -269,7 +269,7 @@
           {% endif %}
 
         {% elsif block.type == "image_plus_caption" %}
-          <div class="section-image-plus-caption" data-cms-block data-background-color="#ffffff">
+          <div class="section-image-plus-caption" data-cms-block data-animated-background="#ffffff">
             {% assign aspect_ratio = block.settings.aspect_ratio %}
             {% assign counter = 0 %}
 
@@ -284,7 +284,7 @@
                 {% assign counter = counter | plus: 1 %}
               {% endif %}
             {% endfor %}
-            
+
             <div class="row justify-content-center">
               <div class="image-tiles-wrapper {% if counter == 1 and aspect_ratio == '1x1'%}col-lg-14 col-20{% else %}col-lg-22 col-20{% endif %}">
                 {% for i in (1..2) %}
@@ -304,12 +304,12 @@
                         %}
                       </div>
                       {% if caption != blank %}
-                        <p class="image-tile__caption p1">{{ caption }}</p>                        
+                        <p class="image-tile__caption p1">{{ caption }}</p>
                       {% endif %}
                     </div>
                   {% endif %}
                 {% endfor %}
-              </div> 
+              </div>
             </div>
           </div>
 
@@ -322,14 +322,14 @@
           {% assign title = block.settings.title %}
 
           <div  class="collection-grid {% if light_text == true%}light{% endif %}"
-                data-section-id="{{ block.id }}" 
-                data-section-type="collection-grid"  
-                data-background-color="{{ background_color }}"
+                data-section-id="{{ block.id }}"
+                data-section-type="collection-grid"
+                data-animated-background="{{ background_color }}"
                 data-cms-block
           >
             <div class="container-fluid">
               <div class="row justify-content-center">
-                
+
                 {% if eyebrow_icon != blank %}
                   <div class="collection-grid__eyebrow">
                     {% render 'image_tag'
@@ -355,7 +355,7 @@
                       {% assign cta_text = block.settings[index_cta_text] %}
                       {% assign cta_url = block.settings[index_cta_url] %}
                       {% assign collection_image = block.settings[index_image] %}
-                      
+
                       {% if collection_image != blank and collection_title != blank %}
                         <div class="collection-tile">
                           {% if cta_url != blank%}
@@ -372,7 +372,7 @@
                           {% if cta_url != blank %}
                             </a>
                           {% endif %}
-                          
+
                           <h3 class="collection-tile__title">{{ collection_title}}</h3>
 
                           {% if cta_url != blank and cta_text != blank %}
@@ -407,7 +407,7 @@
                         ti_right_image: block.settings.right_image,
                         ti_eyebrow_icon: block.settings.eyebrow_icon
             %}
-          </div> 
+          </div>
         {% elsif block.type == "instagram" %}
           {% assign image_1 = block.settings.image_1 %}
           {% assign image_2 = block.settings.image_2 %}
@@ -420,23 +420,23 @@
 
           {% assign animation = block.settings.scroll_animation | append: 's' %}
           {% assign animation_delay = animation | divided_by: 2 | append: 's' | prepend: '-' %}
-           
-          <div data-section-id="{{ block.id }}" data-section-type="two-up-instagram" data-background-color="{{ background_color }}">
+
+          <div data-section-id="{{ block.id }}" data-section-type="two-up-instagram" data-animated-background="{{ background_color }}">
             <div class="two-up-instagram">
-              
+
               <div class="container-fluid">
                 <div class="row justify-content-center">
 
-                  {% if text != blank %}            
+                  {% if text != blank %}
                     <div class="two-up-title-wrapper col-24">
                       <h2 class="two-up__title h1">
-                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }}
                         <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                       </h2>
 
 
                       <h2 class="two-up__title h1">
-                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                        <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }}
                         <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                       </h2>
                     </div>
@@ -460,7 +460,7 @@
                     </div>
                   </div>
                 </div>
-              
+
 
               </div>
             </div>

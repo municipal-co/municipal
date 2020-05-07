@@ -29,17 +29,17 @@
   {% assign button_design = "white" %}
 {% endif %}
 
-<div class="row no-gutters justify-content-center" data-background-color="{{ ti_background_color }}" data-section-type="tiled-image" data-section-id="{{ ti_id }}">
+<div class="row no-gutters justify-content-center" data-animated-background="{{ ti_background_color }}" data-section-type="tiled-image" data-section-id="{{ ti_id }}">
   <div class="col-20 col-lg-22">
     <div class="tiled-image__content">
       <div class="row">
         <div class="col-md-12">
-          
+
           <div class="tiled-image__header">
             {%- if ti_eyebrow != blank -%}
               <h5 class="tiled-image__eyebrow text-{{ ti_eyebrow_color }}">{{ ti_eyebrow }}</h5>
             {%- endif -%}
-            
+
             {%- if ti_title != blank -%}
               <h2 class="tiled-image__title h1 text-{{ ti_title_color }}"> {{ ti_title }} </h2>
             {%- endif -%}

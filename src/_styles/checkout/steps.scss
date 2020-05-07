@@ -1,16 +1,99 @@
 // -------------------------
 // Steps
 // -------------------------
-
-.step__footer__previous-link {
-
-  svg {
-
+.container--checkout { 
+  
+  h2.section__title {
+    @extend .h5;
+    color: $black;
   }
 
-  &:hover {
-    svg {
+  .order-summary__section .field__input-btn.btn,
+  .step__footer__continue-btn.btn {
+    @extend .btn-primary;
+  }
 
+  .order-summary__section .field__input-btn-wrapper {
+    flex-direction: column;
+  }
+
+  .order-summary__section .field__input-btn.btn {
+    padding: large-vw(10px, 25px) 50px;
+    margin: 0;
+
+    @media (max-width: 999px) {
+      padding: 10px 30px;
+
+      span.btn__content.visually-hidden-on-mobile {
+        display: block;
+        width: auto;
+        height: auto;
+        position: initial;
+      }
+
+      svg {
+        display: none;
+      }
     }
+  }
+
+  .step__footer__previous-link {
+    @extend .btn-link;
+
+    svg {
+      display: none;
+    }
+
+    &:hover {
+      color: $cyan;
+    }
+  }
+
+  span.payment-due__price {
+    font-size: 30px;
+    font-weight: $font-weight-semi-bold;
+  }
+
+  span.payment-due__currency {
+    color: $black;
+    margin: 0;
+    font-weight: $font-weight-bold;
+  }
+
+  .main__content .step__sections {
+    .content-box {
+      border: 0;
+    }
+
+    .content-box .content-box__row {
+      padding: 0;
+      @media (max-width: 999px) {
+        display: block;
+      }
+    }
+
+    .review-block__label {
+      padding: 0;
+      color: $black;
+      font-weight: $font-weight-bold;
+    }
+
+    .review-block__link a {
+      @extend .btn-link;
+    }
+  }
+
+  .sidebar .order-summary__emphasis {
+    color: $black;
+  }
+
+  span.product-thumbnail__quantity {
+    background-color: $black;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    padding: 0;
+    min-width: initial;
+    line-height: 30px;
   }
 }
