@@ -30,9 +30,7 @@
                 {% assign slide_image = style_slide_image_array[index] %}
                 {% assign slide_video = style_video_array[index] %}
                 {% assign slide_subcopy = style_subcopy_array[index] %}
-
-                {% if slide_quote != blank and slide_image != blank %}
-                  {% assign slides_counter = slides_counter | plus: 1 %}
+                {% assign slides_counter = slides_counter | plus: 1 %}
 
                   <div class="style-slide swiper-slide">
 
@@ -60,26 +58,25 @@
                       {% endif %}
                     </div>
 
-                    <div class="style-slide__image frame frame--16x9">
-                      {% render 'image_tag'
-                                image: slide_image,
-                                object_fit: 'cover'
-                      %}
+                  <div class="style-slide__image frame frame--16x9">
+                    {% render 'image_tag'
+                              image: slide_image,
+                              object_fit: 'cover'
+                    %}
 
-                      {% if slide_video != blank %}
-                        <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}">
-                          {% include 'icon-play-full-color' %}
-                        </button>
+                    {% if slide_video != blank %}
+                      <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}">
+                        {% include 'icon-play-full-color' %}
+                      </button>
 
-                        {% assign video_index = video_index | plus: 1 %}
-                      {% endif %}
-                    </div>
-
-                    {% if slide_subcopy != blank %}
-                      <div class="style-slide__subcopy p2">{{ slide_subcopy}}</div>
+                      {% assign video_index = video_index | plus: 1 %}
                     {% endif %}
                   </div>
-                {% endif %}
+
+                  {% if slide_subcopy != blank %}
+                    <div class="style-slide__subcopy p2">{{ slide_subcopy}}</div>
+                  {% endif %}
+                </div>
               {% endfor %}
             </div>
           </div>

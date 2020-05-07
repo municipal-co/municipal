@@ -112,14 +112,13 @@
           {{ 'customer.addresses.state' | t }}*
         </label>
         <span id="AddressProvinceContainerNew">
-          <select
+          <input type="text"
             name="address[province]"
             id="AddressProvinceNew"
             class="form-control account-form__field"
             required
-            data-default="{{ form.province }}">
-          </select>
-          {% include 'icon-caret-down' %}
+            data-default="{{ form.province }}"
+          >
         </span>
       </div>
     </div>

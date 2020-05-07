@@ -151,6 +151,10 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  &:hover .icon {
+    fill: currentColor;
+  }
 }
 
 .header-nav__menu-item {
