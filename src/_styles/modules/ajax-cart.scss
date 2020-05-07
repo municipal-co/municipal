@@ -98,6 +98,7 @@ body.ajax-cart-open {
     color: $white;
     font-size: large-vw(16px, 30px);
     text-transform: none;
+    font-weight: $font-weight-normal;
     @include media-breakpoint-down('sm') {
       font-size: 16px;
     }
@@ -220,11 +221,16 @@ body.ajax-cart-open {
   }
 }
 
+.ajax-cart__title-container {
+  display: flex;
+  justify-content: space-between;
+}
 
 .ajax-cart__item-title {
   margin-bottom: 6px;
   font-size: 22px;
   line-height: 24px;
+  padding-left: 15px;
 }
 
 .ajax-cart__item-price {
@@ -246,9 +252,7 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__item-remove {
-  position: absolute;
-  right: 15px;
-  top: $ajax-cart-padding-vertical - 5px;
+  line-height: 20px;
 }
 
 .ajax-cart__footer {
@@ -270,6 +274,10 @@ body.ajax-cart-open {
 
   p:last-child {
     margin-bottom: 0;
+  }
+
+  & button {
+    font-weight: $font-weight-normal;
   }
 }
 
