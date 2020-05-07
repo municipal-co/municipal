@@ -1,0 +1,25 @@
+<div class="yotpo bottomLine yotpo-rating-stars"
+     data-appkey="nkXgNfrvS9ZB0PoIBwRguaG3DPD7UP5NlNecWS58"
+     data-domain="{{shop.permanent_domain | escape }}"
+     data-product-id="{{ product.id }}"
+     data-product-models="{{ product.id }}"
+     data-name="{{ product.title | escape }}"
+     data-url="{{ shop.url }}{{ product.url }}"
+     data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}"
+     data-description="{{ product.description | escape }}"
+     data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+  {%- assign yotpo_offload_content = shop.metafields.yotpo.yotpo_offload_content %}
+  {%- assign time_now = 'now' | date: '%s' %}
+  {%- assign yotpo_live_time = shop.metafields.yotpo.yotpo_live | date: '%s' %}
+  {%- assign diff_seconds_from_live = time_now | minus: yotpo_live_time %}
+  {%- assign yotpo_bottomline_last_updated = product.metafields.yotpo.bottomline_update_time | date: '%s' %}
+  {%- assign diff_seconds_from_last_bottomline_update = time_now | minus: yotpo_bottomline_last_updated %}
+  {%- if yotpo_live_time and diff_seconds_from_live < 86400 or yotpo_bottomline_last_updated and diff_seconds_from_last_bottomline_update < 86400 -%}
+    {%- assign yotpo_bottomline_obsolete = false %}
+  {%- else %}
+    {%- assign yotpo_bottomline_obsolete = true %}
+  {%- endif %}
+  {%- if yotpo_offload_content == 'yes' and yotpo_bottomline_obsolete != true -%}
+    {{ product.metafields.yotpo.bottomline }}
+  {%- endif %}
+</div>

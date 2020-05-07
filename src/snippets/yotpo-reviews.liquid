@@ -1,0 +1,15 @@
+{% if settings.display_reviews == true %}
+  <div class="yotpo-reviews-container" data-section-type="yotpo-reviews" data-animated-background="#ffffff">
+    <div class="container-fluid">
+      <div class="row">
+        <div  class="yotpo yotpo-main-widget col-lg-22 col-20 offset-lg-1 offset-2" 
+              data-product-id="{{ product.id }}" 
+              data-name="{{ product.title | escape }}" 
+              data-url="{{ shop.url }}{{ product.url }}" 
+              data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+              data-description="{{ product.description | escape }}">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
