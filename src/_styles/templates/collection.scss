@@ -168,5 +168,10 @@
       fill: $black;
     }
   }
+}
 
+.template-collection {
+  .product-card__info-title {
+    text-transform: none;
+  }
 }

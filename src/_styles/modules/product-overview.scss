@@ -7,7 +7,6 @@
     padding-bottom: 60px;
   }
 
-  .overview-content__eyebrow,
   .overview-content__title,
   .overview-details__small-text {
     font-family: $font-family-sans-serif;
@@ -26,6 +25,7 @@
 
   .overview-content__eyebrow{
     margin-bottom: large-vw(25px, 50px);
+    display: block;
 
     @include media-breakpoint-down('md') {
       margin-bottom: 25px;
@@ -34,6 +34,7 @@
 
   .overview-content__title {
     margin-bottom: large-vw(30px, 45px);
+    font-weight: $font-weight-bold;
 
     @include media-breakpoint-down('md') {
       margin-bottom: 30px;
