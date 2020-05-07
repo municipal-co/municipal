@@ -20,41 +20,68 @@
 
         {% if text != blank %}            
           <div class="two-up-title-wrapper col-24">
-            <a href="{% if instagram_link %}{{ instagram_link }}{% else %}#{% endif %}">
-              <h2 class="two-up__title h1">
-                <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
-                <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-              </h2>
-  
-  
-              <h2 class="two-up__title h1">
-                <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
-                <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-              </h2>
-            </a>
+            {% if instagram_link != blank %}
+              <a href="{{ instagram_link }}">
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+    
+    
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+              </a>
+            {% else %}  
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+      
+      
+                <h2 class="two-up__title h1">
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                  <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                </h2>
+            {% endif %}
           </div>
         {% endif %}
 
         <div class="col-lg-22 col-20">
           <div class="two-up-images-container">
             <div class="two-up__image frame frame--1x1">
-              <a href="{% if instagram_link %}{{ instagram_link }}{% else %}#{% endif %}">
+              {% if instagram_link != blank %}
+                <a href="{{ instagram_link }}">
 
-                {% render 'image_tag'
-                            image: image_1,
-                            object_fit: "cover"
-                %}
-              </a>
+                  {% render 'image_tag'
+                              image: image_1,
+                              object_fit: "cover"
+                  %}
+                </a>
+              {% else %}
+                  {% render 'image_tag'
+                              image: image_1,
+                              object_fit: "cover"
+                  %}
+              {% endif %}
             </div>
 
             <div class="two-up__image frame frame--1x1">
-              <a href="{% if instagram_link %}{{ instagram_link }}{% else %}#{% endif %}">
+              {% if instagram_link != blank %}
+                <a href="{{ instagram_link }}">
 
-                {% render 'image_tag'
-                            image: image_2,
-                            object_fit: "cover"
-                %}
-              </a>
+                  {% render 'image_tag'
+                              image: image_2,
+                              object_fit: "cover"
+                  %}
+                </a>
+              {% else %}
+                  {% render 'image_tag'
+                              image: image_2,
+                              object_fit: "cover"
+                  %}
+              {% endif %}
             </div>
           </div>
         </div>
@@ -85,7 +112,7 @@
       {
         "type": "url",
         "id": "instagram_link",
-        "label": "Instragram Link"
+        "label": "Instagram Link"
       },
       {
         "type": "image_picker",
