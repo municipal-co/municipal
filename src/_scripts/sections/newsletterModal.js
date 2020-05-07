@@ -2,11 +2,9 @@ import $ from 'jquery';
 import BaseSection from './base';
 import * as User from '../core/user';
 import * as Utils from '../core/utils';
-import NewsletterForm from '../ui/newsletterForm';
 
 const selectors = {
   modal: '[data-newsletter-modal]',
-  newsletterForm: '[data-newsletter-form]'
 };
 
 /**
@@ -39,8 +37,7 @@ export default class NewsletterModalSection extends BaseSection {
     // DOM elements we'll need
     this.$modal          = $(selectors.modal, this.$container);
 
-    this.newsletterForm = new NewsletterForm($(selectors.newsletterForm, this.$container));
-    
+
     /**
      * These are the cookies that we'll use to keep track of how much the user has seen / interacted with the popup
      */
@@ -79,10 +76,6 @@ export default class NewsletterModalSection extends BaseSection {
     // Checks should be done in this order!
 
     if (Utils.isThemeEditor() || !this.settings.enabled) {
-      return false;
-    }
-
-    if (this.newsletterForm.emailCollected()) {
       return false;
     }
 

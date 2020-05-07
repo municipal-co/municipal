@@ -26,6 +26,7 @@ input[type="checkbox"] {
   width: 100% !important;
   padding-top: 0;
   padding-bottom: 0;
+  background-color: $white;
 
   + .field {
     margin-top: 10px;
@@ -36,10 +37,6 @@ input[type="checkbox"] {
   .boxshadow & {
     box-shadow: none !important;
   }
-}
-
-.field__input-wrapper {
-
 }
 
 .field__input--iframe-container {
@@ -113,4 +110,149 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
   display: none !important; 
+}
+
+
+.container--checkout {
+  .field__input-wrapper {
+    margin-bottom: large-vw(30px, 55px);
+
+    @media (max-width: 999px) {
+      margin-bottom: 30px;
+    }
+
+    label.field__label {
+      font-size: large-vw(25px, 40px);
+      font-family: $font-family-sans-serif;
+      text-transform: uppercase;
+      color: $black !important; 
+      display: block;
+      opacity: 1 !important;
+      position: initial !important;
+      padding: 0; 
+      margin: 0 0 large-vw(22px, 45px);
+
+      @media (max-width: 999px) {
+        font-size: 25px;
+        line-height: 30px;
+        margin: 0 0 22px;
+      }
+    }
+  
+
+    .field__input.field__input--iframe-container,
+    input{
+      background-image: none !important;
+      border: none;
+      border-bottom: solid 4px $black;
+      border-radius: 0;
+      color: $black;
+      font-weight: $font-weight-bold;
+      font-size: large-vw(18px, 30px);
+      padding: 0 0 15px !important;
+      line-height: large-vw(17px, 35px);
+      box-shadow: none;
+
+      @media (max-width: 999px) {
+        border-bottom: solid 2px $black;
+        font-size: 18px;
+        line-height: 17px;
+      }
+    }
+
+    input::placeholder {
+      opacity: 0;
+    }
+
+    select.field__input.field__input--select {
+      background-image: none !important;
+      border: none;
+      border-bottom: solid 4px $black;
+      border-radius: 0;
+      color: $black;
+      font-weight: $font-weight-bold;
+      font-size: large-vw(18px, 30px);
+      padding: 0 0 15px !important;
+      line-height: large-vw(17px, 35px);
+      box-shadow: none;
+
+      @media (max-width: 999px) {
+        font-size: 18px;
+        line-height: 24px;
+        border-bottom: solid 2px $black;
+      }
+    }
+
+    .field__caret {
+      border: none;
+      background-image: url('icon-caret.svg');
+      background-position: center right;
+      background-repeat: no-repeat;
+      background-size: 20px;
+
+      svg {
+        display: none;
+      }
+    }
+
+    .field__input.field__input--iframe-container {
+      height: 30px;
+      padding: 0 !important;
+    }
+  }
+
+  tr.total-line th {
+    font-family: $headings-font-family;
+    color: $black;
+  }
+
+  span.content-box__emphasis,
+  span.radio__label__primary {
+    color: $black; 
+  }
+
+  .content-box .small-text {
+    color: $black;
+    margin: 10px 0;
+    display: block;
+  }
+
+  .content-box .input-checkbox, .content-box .input-radio {
+    border-width: 3px;
+  }
+
+  .input-checkbox:checked, .input-radio:checked {
+    box-shadow: 0 0 0 10px $black inset;
+  }
+  
+  .content-box .input-checkbox, .content-box .input-radio,
+  .content-box .input-checkbox:hover, .content-box .input-radio:hover {
+    border-color: $black !important;
+  }
+
+  div[data-subfields-for-gateway] {
+    margin: 30px 0 0;
+
+    .fieldset {
+      background-color: $white;
+    }
+  }
+
+  .radio-wrapper.content-box__row {
+    border: 0;
+  }
+
+  #section--billing-address__different {
+    margin: 30px 0 0;
+    background: $white;
+  }
+
+  .field--error .field__message--error {
+    font-size: 17px;
+    margin-bottom: 15px;
+  }
+
+  a[data-trekkie-id="have_an_account_login_link"] {
+    text-decoration: underline;
+  }
 }

@@ -13,7 +13,7 @@
     background: none;
     -webkit-appearance: none;
     padding: 0;
-    height: $quantity-adjuster-inner-height;
+    height: 16px;
     width: 16px;
     text-align: center;
     vertical-align: top;
@@ -62,7 +62,7 @@
       position: absolute;
       height: 2px;
       width: 9px;
-      background-color: $quantity-adjuster-border-color;
+      background-color: $white;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);

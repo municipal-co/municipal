@@ -15,7 +15,6 @@ export default class ProductFeatures extends BaseSection {
     super(container, 'product-features');
 
     this.$container = $(container);
-    this.background = this.$container.data('background-color');
     this.$slideshow = $(selectors.slideshow, this.$container);
     this.$slides = $(selectors.slide, this.$container);
 
@@ -55,8 +54,7 @@ export default class ProductFeatures extends BaseSection {
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.4 && this.background !== '') {
-        $('body').css('background-color', this.background);
+      if (entry.intersectionRatio > 0.4) {
         const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
 
         $('body').trigger(event);
