@@ -60,7 +60,6 @@ import ProductStyleTips from './sections/productStyleTips';
 import CompleteTheLook from './sections/completeTheLook';
 import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
-import CollectionGridSection from './sections/collectionGridSection';
 import YotpoReviews from './sections/yotpoReviews';
 
 // Managers
@@ -119,8 +118,6 @@ Breakpoints.initialize();
   sectionManager.register('collection-banner', CollectionBanner);
   sectionManager.register('complete-the-look', CompleteTheLook);
   sectionManager.register('search', SearchResults);
-  sectionManager.register('tiled-image', TiledImageSection);
-  sectionManager.register('collection-grid', CollectionGridSection);
   sectionManager.register('yotpo-reviews', YotpoReviews);
 
   $('.in-page-link').on('click', (evt) => {

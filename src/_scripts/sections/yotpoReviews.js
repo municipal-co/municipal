@@ -14,14 +14,14 @@ export default class YotpoReviews extends BaseSection {
 
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
-
-    console.log("asdasdasd");
   }
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.1 && this.background !== '') {
-        $('body').css('background-color', this.background);
+      if (entry.intersectionRatio > 0.4) {
+        const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
+
+        $('body').trigger(event);
       }
     })
   }
