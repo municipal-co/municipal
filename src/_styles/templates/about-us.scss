@@ -15,8 +15,15 @@
       }
     }
 
+    .hero__image:before {
+      @include media-breakpoint-down('md') {
+        padding-top: 63%;
+      }
+    }
+
     .hero__title {
       @include media-breakpoint-down('md') {
+        @include h3;  
         font-weight: $font-weight-normal;
         margin-bottom: 30px;
       }
