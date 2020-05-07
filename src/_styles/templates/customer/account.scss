@@ -98,6 +98,10 @@ table.order-detail-totals {
   @include media-breakpoint-down('md') {
     padding: 60px 40px;
   }
+
+  .btn.btn-primary {
+    font-size: large-vw(18px, 28px);
+  }
 }
 
 .account__title {
