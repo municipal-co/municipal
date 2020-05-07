@@ -15,15 +15,9 @@ export default class ProductStyleTips extends BaseSection {
     super(container, 'style-tips');
 
     this.$container = $(container);
-    this.background = this.$container.data('background-color');
     this.$slideshow = $(selectors.slideshow, this.$container);
     this.$slides = $(selectors.slide, this.$container);
     this.$videoPlayer = $(selectors.videoPlayer, this.$container);
-
-    this.observerProperties = {
-      root: null,
-      threshold: 0.2
-    }
 
     const swiperOptions = {
       loop: false,
@@ -47,8 +41,6 @@ export default class ProductStyleTips extends BaseSection {
     }
 
     this.videoPlayers = videoPlayers;
-    this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
-    this.IntersectionObserver.observe(this.$container.get(0));
 
     if (this.$slides.length > 1) {
       this.swiper = new Swiper(this.$slideshow, swiperOptions);
@@ -58,14 +50,6 @@ export default class ProductStyleTips extends BaseSection {
 
     $(selectors.videoModal, this.$container).on('show.bs.modal', this.playVideo.bind(this));
     $(selectors.videoModal, this.$container).on('hide.bs.modal', this.stopVideo.bind(this));
-  }
-
-  observerCallback(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.2 && this.background !== '') {
-        $('body').css('background-color', this.background);
-      }
-    })
   }
 
   onSlideshowEnter(e) {

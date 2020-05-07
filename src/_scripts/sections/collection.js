@@ -47,17 +47,6 @@ export default class CollectionSection extends BaseSection {
     this.$filtersEnabler = $(selectors.filterEnabler);
     this.localFiltering = this.$filtersEnabler.data('local-filtering');
     this.$loadMore = $(selectors.loadMore, this.$container);
-
-    this.observerProperties = {
-      root: null,
-      threshold: 0.1
-    }
-
-    this.collectionSections.each(function() {
-      self.IntersectionObserver = new IntersectionObserver(self.observerCallback.bind(self), self.observerProperties);
-      self.IntersectionObserver.observe(this);
-    });
-
     this.$promoCard = $(selectors.promoCard, this.$container);
     this.drawer =  new Drawer(this.$drawer);
 
@@ -100,14 +89,6 @@ export default class CollectionSection extends BaseSection {
       this.$filterBar.removeClass(classes.fixed);
       this.$filterBar.parent().css('height', 'auto');
     }
-  }
-
-  observerCallback(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.1 && this.background !== '') {
-        $('body').css('background-color', this.background);
-      }
-    })
   }
 
   enableFilters() {

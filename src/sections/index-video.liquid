@@ -12,7 +12,7 @@
 {% assign this_product = section.settings.product_link %}
 {% assign product_link =  all_products[this_product].url%}
 
-<div data-section-id="{{ section.id }}" class="video-section" data-section-type="video" data-background-color="{{ background_color }}">
+<div data-section-id="{{ section.id }}" class="video-section" data-section-type="video" data-animated-background="{{ background_color }}">
   <div class="container-fluid">
 
     <div class="row justify-content-center">
@@ -45,13 +45,13 @@
               {% include 'icon-play-full-color' %}
             </button>
           </div>
-          
+
           <div class="modal modal--video fade" id="video-modal-{{ section.id }}" data-video-modal>
             <span class="video-eyebrow d-lg-none d-block">Video</span>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               {% include 'icon-close' %}
             </button>
-              
+
             {% if this_product != blank %}
               <a class="btn btn-link product-link d-lg-block d-none"href="{{ product_link }}">
                 Shop {{ all_products[this_product].title }}
@@ -93,7 +93,7 @@
       {
         "type": "header",
         "content": "Section Content"
-      },   
+      },
       {
         "type": "image_picker",
         "id": "eyebrow_icon",
@@ -171,4 +171,4 @@
 
 
 
-      
+

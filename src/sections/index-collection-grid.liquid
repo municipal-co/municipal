@@ -6,10 +6,10 @@
 {% assign title = section.settings.title %}
 
 
-<div data-section-id="{{ section.id }}" class="collection-grid {% if light_text == true%}light{% endif %}" data-section-type="collection-grid" data-background-color="{{ background_color }}">
+<div data-section-id="{{ section.id }}" class="collection-grid {% if light_text == true%}light{% endif %}" data-section-type="collection-grid" data-animated-background="{{ background_color }}">
   <div class="container-fluid">
     <div class="row justify-content-center">
-      
+
       {% if eyebrow_icon != blank %}
         <div class="collection-grid__eyebrow">
           {% render 'image_tag'
@@ -35,7 +35,7 @@
             {% assign cta_text = section.settings[index_cta_text] %}
             {% assign cta_url = section.settings[index_cta_url] %}
             {% assign collection_image = section.settings[index_image] %}
-            
+
             {% if collection_image != blank and collection_title != blank %}
               <div class="collection-tile">
                 {% if cta_url != blank%}
@@ -52,7 +52,7 @@
                 {% if cta_url != blank %}
                   </a>
                 {% endif %}
-                
+
                 <h3 class="collection-tile__title">{{ collection_title}}</h3>
 
                 {% if cta_url != blank and cta_text != blank %}
@@ -78,7 +78,7 @@
       {
         "type": "header",
         "content": "Section Content"
-      },   
+      },
       {
         "type": "image_picker",
         "id": "eyebrow_icon",
@@ -107,7 +107,7 @@
         "type": "url",
         "id": "cta_url_1",
         "label": "CTA Link"
-      }, 
+      },
       {
         "type": "image_picker",
         "id": "collection_image_1",
@@ -131,7 +131,7 @@
         "type": "url",
         "id": "cta_url_2",
         "label": "CTA Link"
-      }, 
+      },
       {
         "type": "image_picker",
         "id": "collection_image_2",
@@ -183,6 +183,6 @@
         "category": "Product",
         "settings": {}
       }
-    ]    
+    ]
   }
 {% endschema %}

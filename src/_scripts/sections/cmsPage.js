@@ -14,11 +14,6 @@ export default class CMSPageSection extends BaseSection {
     this.$container = $(container);
     this.cmsBlocks = $(selectors.cmsBlock, this.$container);
 
-    this.observerProperties = {
-      root: null,
-      threshold: 0.5
-    }
-
     // Props
     this.videoPlayers = [];
 
@@ -26,22 +21,5 @@ export default class CMSPageSection extends BaseSection {
     this.$container.find(selectors.videoPlayer).each((i, el) => {
       this.videoPlayers.push(new VideoPlayer(el));
     });
-    
-    const self = this;
-
-    this.cmsBlocks.each(function() {
-      self.IntersectionObserver = new IntersectionObserver(self.observerCallback.bind(self), self.observerProperties);
-      self.IntersectionObserver.observe(this);
-    });
-  }
-
-  observerCallback(entries, observer) {
-    entries.forEach((entry) => {
-      const entryBackground = $(entry.target).data('background-color');
-  
-      if (entry.intersectionRatio > 0.5 && entryBackground !== '') {
-        $('body').css('background-color', entryBackground);
-      }
-    })
   }
 }

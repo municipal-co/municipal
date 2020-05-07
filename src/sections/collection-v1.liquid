@@ -12,7 +12,7 @@
 {% assign filter_types = 'color,size' | split: "," %}
 {% assign promo_position = collection.metafields.custom_fields["promo_position"] | times: 1 %}
 
-<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection" data-background-color="#ffffff">
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection">
 
   <div class="container-fluid">
     <div class="row justify-content-center">
@@ -78,7 +78,7 @@
           {% if section_collection != blank and the_collection.products.size > 0%}
             {% assign section_index = section_index | plus: 1 %}
 
-            <div class="collection-section col-lg-22 col-20">
+            <div class="collection-section col-lg-22 col-20" data-animated-background="#ffffff">
               {% if collection_title != blank %}
                 <h2 class="collection-section__title h2">{{ collection_title }}</h2>
               {% endif %}

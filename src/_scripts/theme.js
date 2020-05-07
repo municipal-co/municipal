@@ -17,6 +17,9 @@ import * as A11Y from './core/a11y';
 import * as Animations from './core/animations';
 import * as Breakpoints from './core/breakpoints';
 
+// Managers
+import BackgroundAnimationManager from './managers/backgroundAnimationManager';
+
 // UI - Import all to enable data API
 import './ui/drawer';
 import './ui/overlay';
@@ -46,7 +49,6 @@ import CMSPageSection from './sections/cmsPage';
 import CustomersLoginSection from './sections/customersLogin';
 import CustomersAccountSection from './sections/customersAccount';
 import CustomersAccountOrdersSection from './sections/customersAccountOrders';
-import TwoUpInstagram from './sections/twoUpInstagram';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
 import CustomersDrawerSection from './sections/customersDrawer';
@@ -54,13 +56,10 @@ import CustomersResetPasswordSection from './sections/customersResetPassword';
 import HeroSection from './sections/heroSection';
 import ProductOverview from './sections/productOverview';
 import ProductFeatures from './sections/productFeatures';
-import PromoSection from './sections/promoSection';
 import ProductStyleTips from './sections/productStyleTips';
 import CompleteTheLook from './sections/completeTheLook';
-import TiledImageSection from './sections/tiledImageSection';
 import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
-import CollectionGridSection from './sections/collectionGridSection';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -115,13 +114,9 @@ Breakpoints.initialize();
   sectionManager.register('product-overview', ProductOverview);
   sectionManager.register('product-features', ProductFeatures);
   sectionManager.register('style-tips', ProductStyleTips);
-  sectionManager.register('promo', PromoSection);
-  sectionManager.register('two-up-instagram', TwoUpInstagram);
   sectionManager.register('collection-banner', CollectionBanner);
   sectionManager.register('complete-the-look', CompleteTheLook);
   sectionManager.register('search', SearchResults);
-  sectionManager.register('tiled-image', TiledImageSection);
-  sectionManager.register('collection-grid', CollectionGridSection);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
@@ -155,6 +150,10 @@ Breakpoints.initialize();
       'supports-cookies'
     );
   }
+
+  // Initializes background color watcher.
+  const $animatedBackgrounds = $('[data-animated-background]');
+  new BackgroundAnimationManager($animatedBackgrounds);
 
   // Chosen JS plugin for select boxes
   Utils.chosenSelects();
