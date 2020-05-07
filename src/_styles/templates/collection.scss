@@ -50,8 +50,8 @@
 
     .icon-filters {
       fill: $black;
-      width: 50px;
-      height: 50px;
+      width: large-vw(30px, 50px);
+      height: large-vw(30px, 50px);
 
       @include media-breakpoint-down('md') {
         width: 30px;
@@ -78,9 +78,13 @@
   .drawer__header {
     position: relative;
     background-color: $black;
-    padding: 45px 40px;
+    padding: large-vw(17px, 45px) large-vw(20px, 40px);
     color: $white;
     margin-bottom: 0;
+
+    @include media-breakpoint-down('md') {
+      padding: 17px 20px;
+    }
 
     .drawer__close {
       position: absolute;
@@ -91,8 +95,13 @@
     }
 
     .icon-close {
-      width: 50px;
-      height: 50px;
+      width: large-vw(30px, 50px);
+      height: large-vw(30px, 50px);
+
+      @include media-breakpoint-down('md') {
+        width: 30px;
+        height: 30px;
+      }
     }
 
     .drawer__header-title {
