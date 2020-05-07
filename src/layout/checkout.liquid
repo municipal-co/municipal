@@ -25,38 +25,49 @@
 
     {{ skip_to_content_link }}
 
-    <div class="banner" data-header>
+    {% comment %}<div class="banner" data-header>
       <div class="wrap">
         {{ content_for_logo }}
       </div>
-    </div>
+    </div>{% endcomment %}
 
-    {{ order_summary_toggle }}
+  
+    <div class="container-fluid container--checkout" data-content>
 
-    <div class="content" data-content>
-      <div class="wrap">
-        <div class="main" role="main">
-          <div class="main__header">
-            {{ content_for_logo }}
-            {{ breadcrumb }}
-            {{ alternative_payment_methods }}
-          </div>
-          <div class="main__content">
-            {{ content_for_layout }}
-          </div>
-          <div class="main__footer">
-            {{ content_for_footer }}
-          </div>
-        </div>
-        <div class="sidebar" role="complementary">
-          <div class="sidebar__header">
-            {{ content_for_logo }}
-          </div>
-          <div class="sidebar__content">
-            {{ content_for_order_summary }}
-          </div>
+      <div class="logo-container">
+        {{ content_for_logo }}
+      </div>
+        
+      <div class="row">
+        <div class="col-lg-22 col-20 offset-lg-1 offset-2">
+          {{ order_summary_toggle }}
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-22 col-20 offset-lg-1 offset-2 checkout-inner-container">
+          <div class="main col-lg-13" role="main">
+            <div class="main__header">
+              {{ breadcrumb }}
+              {{ alternative_payment_methods }}
+            </div>
+            <div class="main__content">
+              {{ content_for_layout }}
+            </div>
+          </div>
+          <div class="sidebar col-lg-10" role="complementary">
+            <div class="sidebar__header">
+              {{ content_for_logo }}
+            </div>
+            <div class="sidebar__content">
+              {{ content_for_order_summary }}
+            </div>
+          </div>
+        </div>
+        <div class="main__footer col-lg-22 col-20 offset-lg-1 offset-2">
+          {{ content_for_footer }}
+        </div>
+      </div>      
     </div>
 
     {{ tracking_code }}
