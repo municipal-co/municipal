@@ -10,12 +10,11 @@
   }
 
   .minimal-input-box__input--search {
-    border: large-vw(4px, 8px) solid $black;
     margin-bottom: large-vw(59px ,145px);
-
+    border: large-vw(4px, 8px) solid $black;
     @include media-breakpoint-down('md') {
-      border: 4px solid $black;
       margin-bottom: 59px;
+      border: 4px solid $black;
     }
   }
 
