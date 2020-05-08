@@ -28,13 +28,15 @@
 {% if image contains 'http' %}
   <img alt="{{ image.alt }}"
     data-src="{{ image }}"
-    class="lazyload"
+    data-animate-image-in
+    class="lazyload animate"
     {{  object_fit_attribute  }}
     {{  object_position_attribute  }} >
 {% else %}
   <img alt="{{ image.alt }}"
     data-src="{{ image | img_url: '1800x' }}"
-    class="lazyload"
+    class="lazyload animate"
+    data-animate-image-in
     data-sizes="auto"
     {{  object_fit_attribute  }}
     {{  object_position_attribute  }}

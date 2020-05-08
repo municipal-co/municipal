@@ -6,6 +6,7 @@ import 'jquery-unveil';
 import 'objectFitPolyFill';
 import 'lazysizes';
 
+
 // Bootstrap JS
 import 'bootstrap/js/dist/collapse';
 import 'bootstrap/js/dist/modal';
@@ -19,6 +20,7 @@ import * as Breakpoints from './core/breakpoints';
 
 // Managers
 import BackgroundAnimationManager from './managers/backgroundAnimationManager';
+import IntersectionManager from './managers/intersectionManager';
 
 // UI - Import all to enable data API
 import './ui/drawer';
@@ -156,6 +158,40 @@ Breakpoints.initialize();
   // Initializes background color watcher.
   const $animatedBackgrounds = $('[data-animated-background]');
   new BackgroundAnimationManager($animatedBackgrounds);
+
+  // Initializes Images Animation Watcher
+  const $images = $('[data-animate-image-in]');
+  const imagesAnimationCallback = function(entries, observer) {
+    const self = this;
+
+    entries.forEach((entry) => {
+      if (entry.intersectionRatio > 0.1) {
+        const $image = $(entry.target);
+        $image.addClass('in');
+        self.intersectionObserver.unobserve(entry.target);
+      }
+    });
+  };
+  window.imagesAnimationManager = new IntersectionManager($images, imagesAnimationCallback);
+
+  // Initializes Titles Animation Watcher
+  const $textItems = $('h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6');
+  const textIntersectionSettings = {
+    root: null,
+    threshold: 0.1,
+    rootMargin: '-10% 0% -20%'
+  }
+  const textAnimationCallback = function(entries, observer) {
+    const self = this;
+    entries.forEach((entry) => {
+      if (entry.intersectionRatio > 0.1) {
+        const $title = $(entry.target);
+        $title.addClass('in');
+        self.intersectionObserver.unobserve(entry.target);
+      }
+    })
+  }
+  window.titlesAnimationManager = new IntersectionManager($textItems, textAnimationCallback, textIntersectionSettings);
 
   // Chosen JS plugin for select boxes
   Utils.chosenSelects();
