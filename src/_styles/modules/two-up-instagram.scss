@@ -28,12 +28,12 @@
   .two-up-title-wrapper {
     overflow: hidden;
     position: relative;
-    height: large-vw(50px, 150px);
-    margin-bottom: large-vw(50px, 200px);
+    height: large-vw(60px, 170px);
+    margin-bottom: large-vw(50px, 185px);
 
     @include media-breakpoint-down('md') {
-      margin-bottom: 30px;
-      height: 50px;
+      margin-bottom: 25px;
+      height: 55px;
     }
   }
 
@@ -42,6 +42,10 @@
     white-space: nowrap;
     overflow: hidden;
     position: absolute;
+    
+    &,span {
+      height: 100%;
+    }
   }
 
   .two-up__title .title-inner-wrapper {
