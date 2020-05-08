@@ -4,28 +4,24 @@
       <div class="row justify-content-center">
         <div class="four04__content col-xl-14 col-lg-14 col-md-20 col-sm-20 col-20">
 
-          <h1 class="four04__title">
-            {% if section.settings.title != blank %}
+          {% if section.settings.title != blank %}
+            <h1 class="four04__title">
               {{ section.settings.title }}
-            {% else %}
-              {{ 'general.404.title' | t }}
-            {% endif %}
-          </h1>
+            </h1>
+          {% endif %}
     
           {% if section.settings.content != blank %}
-              <p class="p2 four04__subtitle">{{ section.settings.content }}</p>
-            {% else %}
-              <p class="p2 four04__subtitle">{{ 'general.404.subtext_html' | t }}</p>
+              <div class="four04__admin-subtitle">{{ section.settings.content }}</div>
           {% endif %}
 
           <div class="four04__seach-section">
             <form action="/search" method="get" role="search" data-search-form>
               <div class="minimal-input-box">
-
+    
                 <div class="search-icon">{% include 'icon-search' %}</div>
                 <input type="hidden" name="type" value="product" />
-                <input type="text" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="four04__input-seach minimal-input-box__input minimal-input-box__input--search" autocomplete="off" data-search-input />
-
+                <input type="text" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input minimal-input-box__input--search" autocomplete="off" value="{{ search.terms }}" data-search-input>
+    
                 <div class="search-autocomplete-container" style="display: none;" data-autocomplete-container>
                   <ul>
                     <li class="autocomplete-item loader"></li>
@@ -33,7 +29,7 @@
                     <li class="autocomplete-item loader"></li>
                   </ul>
                 </div>
-
+    
                 <button type="submit" class="minimal-input-box__submit">
                   {% include 'icon-arrow' %}
                   <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
@@ -41,6 +37,7 @@
               </div>
             </form>
           </div>
+
         </div>
       </div>
     </div>

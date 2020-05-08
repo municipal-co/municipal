@@ -12,13 +12,13 @@
   color: $yellow;
 }
 
-.four04__subtitle {
+.four04__admin-subtitle p {
+  @extend .p2;
   color: $white;
-}
-
-.four04__subtitle a {
-  color: $white;
-  text-decoration: underline;
+  & a {
+    color: $white;
+    text-decoration: underline;
+  }
   & a:hover {
     color: $white;
   }
