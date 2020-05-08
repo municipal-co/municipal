@@ -10,6 +10,7 @@
       font-weight: $font-weight-bold;
       top: 18px;
       left: 20px;
+      position: absolute;
     }
 
     .modal-header {
@@ -110,6 +111,7 @@
       width: 47%;
       left: -3%;
       bottom: 0;
+      z-index: 0;
       
       @include media-breakpoint-down('md') {
         width: 28%;
@@ -170,6 +172,9 @@
   }
 
   .klaviyo-form-wrapper {
+    position: relative;
+    z-index: 1;
+
     form {
       padding: 0 !important;
     }
