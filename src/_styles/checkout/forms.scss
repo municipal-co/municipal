@@ -183,6 +183,10 @@ input[type="search"]::-webkit-search-results-decoration {
       }
     }
 
+    select#checkout_shipping_address_id {
+      padding-right: 25px !important;
+    }
+
     .field__caret {
       border: none;
       background-image: url('icon-caret.svg');

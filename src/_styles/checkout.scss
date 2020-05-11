@@ -144,10 +144,16 @@ html.js {
       margin-top: 0;
       border-bottom: solid;
       margin-bottom: 40px;
+      max-width: 100%;
     }
   }
 
   .main {
+    @media (max-width: 999px) {
+      max-width: 100%;
+      margin-top: 0;
+    }
+
     @media (min-width: 1000px) {
       border-right: solid 8px $black;
       padding-right: 4%;
@@ -200,6 +206,32 @@ html.js {
   .copyright-text {
     color: $black;
     font-weight: $font-weight-bold;
+  }
+
+  .order-summary__scroll-indicator {
+    pointer-events: none;
+  }
+
+  .logged-in-customer-information {
+    .logged-in-customer-information__avatar-wrapper {
+      display: none;
+    }
+    .logged-in-customer-information__paragraph {
+      display: flex;
+      justify-content: space-between;
+
+      @media (max-width: 999px) {
+        flex-direction: column;
+      }
+    }
+
+    .logged-in-customer-information__paragraph .page-main__emphasis {
+      font-weight: $font-weight-bold;
+    }
+
+    .logged-in-customer-information__paragraph a {
+      @extend .btn-link;
+    }
   }
 }
 
