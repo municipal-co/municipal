@@ -3,6 +3,7 @@
 // -------------------------
 .container--checkout { 
   
+  [data-step="thank-you"] .content-box__row h2,
   h2.section__title {
     @extend .h5;
     color: $black;
@@ -11,6 +12,7 @@
   .order-summary__section .field__input-btn.btn,
   .step__footer__continue-btn.btn {
     @extend .btn-primary;
+    line-height: 28px;
   }
 
   .order-summary__section .field__input-btn-wrapper {
@@ -95,5 +97,32 @@
     padding: 0;
     min-width: initial;
     line-height: 30px;
+  }
+
+  .order-summary__section.order-summary__section--product-list {
+    min-height: 400px;
+  }
+
+  [data-step="thank-you"] {
+    svg.icon-svg {
+      display: none;
+    }
+
+    .os-order-number {
+      font-weight: $font-weight-bold;
+    }
+
+    .section__content {
+      color: $black;
+
+      .text-container .heading-3 {
+        font-weight: $font-weight-bold;
+        color: $black;
+      }
+    }
+
+    .step__footer {
+      justify-content: flex-end;
+    }    
   }
 }
