@@ -7,4 +7,9 @@
   .layout-main-content form {
     margin-bottom: $spacer * 3;
   }
+
+  .custom-control-label, h5, h6, #RecoverPassword {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

@@ -7,7 +7,7 @@
   padding-bottom: $footer-padding-bottom;
   background-color: $footer-bg;
 
-  @include media-breakpoint-down('md') { 
+  @include media-breakpoint-down('md') {
     padding-top: 60px;
     padding-bottom: 40px;
   }
@@ -22,7 +22,7 @@
     height: large-vw(100px, 200px);
     left: 0;
     bottom: 75px;
-  
+
     @include media-breakpoint-down('md') {
       height: 100px;
       bottom: 145px;
@@ -41,7 +41,7 @@
   .footer-block--newsletter {
     margin-bottom: large-vw(75px, 168px);
 
-    @include media-breakpoint-down('md') { 
+    @include media-breakpoint-down('md') {
       margin-bottom: 75px;
     }
 
@@ -51,7 +51,7 @@
       color: $black;
       font-size: large-vw(18px, 40px);
 
-      @include media-breakpoint-down('md') { 
+      @include media-breakpoint-down('md') {
         height: 54px;
         font-size: 18px;
         padding: 8px 50px 10px 25px;
@@ -62,7 +62,7 @@
       width: large-vw(30px, 70px);
       right: large-vw(20px, 60px);
 
-      @include media-breakpoint-down('md') { 
+      @include media-breakpoint-down('md') {
         width: 30px;
         right: 20px;
       }
@@ -73,7 +73,7 @@
       width: large-vw(30px, 70px);
       height: large-vw(30px, 70px);
 
-      @include media-breakpoint-down('md') { 
+      @include media-breakpoint-down('md') {
         width: 30px;
         height: 30px;
       }
@@ -82,8 +82,8 @@
     .newsletter-text {
       text-transform: none;
       margin-bottom: large-vw(50px, 70px);
-      
-      @include media-breakpoint-down('md') { 
+
+      @include media-breakpoint-down('md') {
         text-align: left;
         margin-bottom: 50px;
         font-size: 40px;
@@ -104,7 +104,7 @@
     font-size: large-vw(20px, 35px);
     font-weight: $font-weight-bold;
 
-    @include media-breakpoint-down('md') { 
+    @include media-breakpoint-down('md') {
       font-size: 20px;
     }
   }
@@ -114,7 +114,7 @@
     flex-wrap: wrap;
     margin-top: large-vw(0px, 65px);
 
-    @include media-breakpoint-down('md') { 
+    @include media-breakpoint-down('md') {
       margin-top: 0;
     }
   }
@@ -125,10 +125,10 @@
     margin-right: 5px;
     margin-bottom: 5px;
 
-    @include media-breakpoint-down('md') { 
+    @include media-breakpoint-down('md') {
       width: inherit;
     }
-    
+
     &:last-child,
     &:nth-child(4) {
       margin-right: 0;
@@ -144,7 +144,7 @@
 .footer-block {
   margin-bottom: 0;
 
-  @include media-breakpoint-down('md') { 
+  @include media-breakpoint-down('md') {
     margin-bottom: 200px;
     text-align: left;
   }
@@ -152,7 +152,7 @@
 
 .footer-menu {
   margin-bottom: large-vw(50px, $footer-block-spacing);
-  text-align: left; 
+  text-align: left;
 
   @include media-breakpoint-down('md') {
     margin-bottom: 50px;
@@ -169,8 +169,10 @@
     font-size: large-vw(25px, 40px);
     line-height: large-vw(30px, 45px);
     margin-bottom: large-vw(28px, 40px);
+    opacity: 1;
+    transform: translateX(0);
 
-    @include media-breakpoint-down('md') { 
+    @include media-breakpoint-down('md') {
       font-size: 25px;
       line-height: 30px;
       margin-bottom: 28px;
@@ -181,7 +183,7 @@
     @extend .list-unstyled;
     font-size: large-vw(20px, 35px);
 
-    @include media-breakpoint-down('md') { 
+    @include media-breakpoint-down('md') {
       font-size: 20px;
     }
 
@@ -189,7 +191,7 @@
       margin-bottom: 0;
       line-height: 2;
 
-      @include media-breakpoint-down('md') { 
+      @include media-breakpoint-down('md') {
         line-height: 2.25;
       }
     }
