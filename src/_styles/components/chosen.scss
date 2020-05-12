@@ -30,9 +30,10 @@
       padding: $spacer / 2;
       line-height: inherit;
       transition: all $transition-duration-fastest $transition-timing-function-base;
+      color: $black;
 
       &.result-selected {
-        color: $input-color;
+        color: $black;
         background-color: $gray-light;
       }
 
@@ -41,6 +42,9 @@
         background-color: $gray-lighter;
         background-image: none;
       }
+      &:hover {
+        color: $black;
+      }
     }
   }
 }
@@ -48,6 +52,7 @@
 .chosen-container-single {
   .chosen-single {
     @extend .form-control;
+    padding: 10px 0;
     box-shadow: none;
     background-image: none; // Remove default gradient background image
 
@@ -67,6 +72,7 @@
   }
 
   .chosen-drop {
+    border: 0;
     border-radius: $input-border-radius;
   }
 }
@@ -78,6 +84,7 @@
   }
 
   &.chosen-with-drop .chosen-single {
+    border: 0;
     border-color: $input-focus-border-color;
     background-color: $input-bg;
     background-image: none;

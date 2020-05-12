@@ -41,6 +41,13 @@
     }
 }
 
+/*.contact__form-input-container .dropdown .chosen-container {
+    & .chosen-single, .chosen-drop {
+        border: 0;
+        color: black;
+    }
+}*/   
+
 .contact__form-message-container {
     @include media-breakpoint-up('lg') {
         margin-bottom: 0;
@@ -68,6 +75,7 @@
         padding: 25px;
     }
 }
+
 
 .contact__form-submit-container-desktop {
     display: flex;
@@ -104,7 +112,7 @@
     content: "";
     position: absolute;
     right: 10px;
-    top: 13px;
+    top: 35%;
     border: solid #000;
     border-width: 0px 4px 4px 0;
     display: inline-block;
@@ -129,6 +137,10 @@
 
 .contact__link-item {
     margin-bottom: 35px;
+}
+
+.contact__link-label {
+    text-transform: uppercase;
 }
 
 .contact__link-list {
