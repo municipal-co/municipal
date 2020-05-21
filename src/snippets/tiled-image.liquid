@@ -21,6 +21,15 @@
   %}
 
 {% endcomment -%}
+
+<style>
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    [data-section-id="{{ti_id}}"] {
+      background-color: {{ti_background_color}};
+    }
+  {% endif %}
+</style>
+
 {% assign ti_eyebrow_color = "black" %}
 {% assign button_design = "primary" %}
 

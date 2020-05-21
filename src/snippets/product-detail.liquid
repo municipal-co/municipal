@@ -18,6 +18,15 @@
 {% endif %}
 {% comment %} End Defaults {% endcomment %}
 
+{% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    <style>
+      [data-product-detail] {
+        background-color: #ffffff;
+      }
+    </style>
+  {% endif %}
+
+
 <div data-product-detail data-animated-background="#ffffff">
   <div class="container-fluid">
     <div class="row no-gutters">

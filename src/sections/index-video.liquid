@@ -12,6 +12,14 @@
 {% assign this_product = section.settings.product_link %}
 {% assign product_link =  all_products[this_product].url%}
 
+<style>
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    [data-section-id="{{section.id}}"] {
+      background-color: {{background_color}};
+    }
+  {% endif %}
+</style>
+
 <div data-section-id="{{ section.id }}" class="video-section" data-section-type="video" data-animated-background="{{ background_color }}">
   <div class="container-fluid">
 

@@ -155,10 +155,12 @@ img.animate {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  opacity: 0;
-  transform: translateX(10%);
-  transition: $transition-duration-slow $transition-timing-function-in-out-ui;
-  transition-property: opacity, transform;
+  &.text-animate {
+    opacity: 0;
+    transform: translateX(10%);
+    transition: $transition-duration-slow $transition-timing-function-in-out-ui;
+    transition-property: opacity, transform;
+  }
 
   &.in {
     opacity: 1;

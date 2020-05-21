@@ -12,6 +12,14 @@
 {% assign animation = section.settings.scroll_animation | append: 's' %}
 {% assign animation_delay = animation | divided_by: 2 | append: 's' | prepend: '-' %}
 
+<style>
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    [data-section-id="{{section.id}}"] {
+      background-color: {{background_color}};
+    }
+  {% endif %}
+</style>
+
 <div data-section-id="{{ section.id }}" data-section-type="two-up-instagram" data-animated-background="{{ background_color }}">
   <div class="two-up-instagram">
 
@@ -23,25 +31,25 @@
             {% if instagram_link != blank %}
               <a href="{{ instagram_link }}">
                 <h2 class="two-up__title h1">
-                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }}
                   <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                 </h2>
-    
-    
+
+
                 <h2 class="two-up__title h1">
-                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }}
                   <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                 </h2>
               </a>
-            {% else %}  
+            {% else %}
                 <h2 class="two-up__title h1">
-                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }} 
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }}
                   <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                 </h2>
-      
-      
+
+
                 <h2 class="two-up__title h1">
-                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }} 
+                  <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }}
                   <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                 </h2>
             {% endif %}

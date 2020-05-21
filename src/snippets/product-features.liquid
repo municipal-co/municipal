@@ -6,6 +6,14 @@
   {% assign fc_keys = product.metafields.custom_fields["features_section"] | split: "," %}
   {% assign slides_counter = 0 %}
 
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    <style>
+      #product-features {
+        background-color: #ffffff;
+      }
+    </style>
+  {% endif %}
+
   <div id="product-features" class="product-features" data-section-type="product-features" data-animated-background="#ffffff">
     <div class="container-fluid">
       <div class="row justify-content-center">

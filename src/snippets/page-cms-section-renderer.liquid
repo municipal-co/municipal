@@ -22,6 +22,29 @@
 
 {% endcomment -%}
 
+{% comment %}Set background colors for the modules on customizer{% endcomment %}
+
+{% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+  <style>
+    .section-rich-text {
+      background-color: #ffffff;
+    }
+
+    .section-scrolling-text {
+      background-color: #ffffff;
+    }
+
+    .section-image-plus-caption {
+      background-color: #ffffff;
+    }
+
+    .section-text-signature {
+      background-color: #121212;
+    }
+
+  </style>
+{% endif %}
+
 <div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="cms-page">
 
     <div class="hero">
@@ -97,6 +120,14 @@
 
           {% assign this_product = block.settings.product_link %}
           {% assign product_link =  all_products[this_product].url%}
+
+          {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+            <style>
+              [data-section-id="{{block.id}}"] {
+                background-color: {{background_color}};
+              }
+            </style>
+          {% endif %}
 
           <div  data-section-id="{{ block.id }}"
                 class="video-section"
@@ -321,6 +352,14 @@
           {% assign eyebrow_icon = block.settings.eyebrow_icon %}
           {% assign title = block.settings.title %}
 
+          {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+            <style>
+              [data-section-id="{{block.id}}"] {
+                background-color: {{background_color}};
+              }
+            </style>
+          {% endif %}
+
           <div  class="collection-grid {% if light_text == true%}light{% endif %}"
                 data-section-id="{{ block.id }}"
                 data-section-type="collection-grid"
@@ -420,6 +459,14 @@
 
           {% assign animation = block.settings.scroll_animation | append: 's' %}
           {% assign animation_delay = animation | divided_by: 2 | append: 's' | prepend: '-' %}
+
+          {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+            <style>
+              [data-section-id="{{block.id}}"] {
+                background-color: {{background_color}};
+              }
+            </style>
+          {% endif %}
 
           <div data-section-id="{{ block.id }}" data-section-type="two-up-instagram" data-animated-background="{{ background_color }}">
             <div class="two-up-instagram">

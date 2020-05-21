@@ -181,6 +181,11 @@ Breakpoints.initialize();
     threshold: 0.1,
     rootMargin: '-10% 0% -20%'
   }
+
+  $textItems.each((index, el) => {
+    $(el).addClass('text-animate');
+  });
+
   const textAnimationCallback = function(entries, observer) {
     const self = this;
     entries.forEach((entry) => {
