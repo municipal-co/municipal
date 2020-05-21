@@ -6,6 +6,14 @@
 {% assign details = product.metafields.custom_fields["overview_details"] %}
 {% assign small_text = product.metafields.custom_fields["overview_small_text"] %}
 
+{% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+  <style>
+    #product-overview {
+      background-color: #000000;
+    }
+  </style>
+{% endif %}
+
 {% if details != blank and overview_image != blank %}
   <div id="product-overview" class="product-overview" data-section-type="product-overview" data-animated-background="#000000">
     <div class="row no-gutters justify-content-center">

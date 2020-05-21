@@ -5,6 +5,13 @@
 {% assign eyebrow_icon = section.settings.eyebrow_icon %}
 {% assign title = section.settings.title %}
 
+<style>
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    [data-section-id="{{section.id}}"] {
+      background-color: {{background_color}};
+    }
+  {% endif %}
+</style>
 
 <div data-section-id="{{ section.id }}" class="collection-grid {% if light_text == true%}light{% endif %}" data-section-type="collection-grid" data-animated-background="{{ background_color }}">
   <div class="container-fluid">

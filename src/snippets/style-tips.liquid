@@ -12,6 +12,15 @@
   {% assign video_index = 0 %}
   {% assign modal_index = 0 %}
 
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    <style>
+      .style-tips {
+        background-color: #424446;
+      }
+    </style>
+  {% endif %}
+
+
   <div class="style-tips" data-section-type="style-tips" data-animated-background="#424446">
     <div class="container-fluid">
       <div class="row justify-content-center">

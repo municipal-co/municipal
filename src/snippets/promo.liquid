@@ -61,6 +61,13 @@
       }
     {% endif %}
   }
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    #promo-{{p_id}} {
+      background-color: {{p_background_color}};
+    }
+  {% endif %}
+
+
 </style>
 
 {% capture promo_classes %}
@@ -69,6 +76,8 @@
     promo--type-{{ promo_type }}
   {% endif %}
 {% endcapture %}
+
+
 
 <div id="promo-{{ p_id }}" class="{{- promo_classes -}} row no-gutters" data-section-type="promo" data-animated-background="{{ p_background_color }}">
   <div class="promo__col promo__col--image col-20 col-lg-10 offset-lg-1">
