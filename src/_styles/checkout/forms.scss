@@ -66,6 +66,24 @@ input[type="checkbox"] {
   overflow: visible; // default cuts off checkbox / radio button shadows
 }
 
+.fieldset--inline {
+  flex-wrap: wrap;
+
+  .field {
+    flex-basis: 100%;
+  }
+
+  .btn {
+    @extend .btn-primary;
+    width: 100% !important;
+    padding: large-vw(21px, 26px) 30px !important;
+
+    @include media-breakpoint-down('md') {
+      padding: 26px 30px !important;
+    }
+  }
+}
+
 .fieldset-description {
   margin-top: 1.5em;
 }
@@ -109,7 +127,7 @@ input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
-  display: none !important; 
+  display: none !important;
 }
 
 
@@ -125,11 +143,11 @@ input[type="search"]::-webkit-search-results-decoration {
       font-size: large-vw(25px, 40px);
       font-family: $font-family-sans-serif;
       text-transform: uppercase;
-      color: $black !important; 
+      color: $black !important;
       display: block;
       opacity: 1 !important;
       position: initial !important;
-      padding: 0; 
+      padding: 0;
       margin: 0 0 large-vw(22px, 45px);
 
       @media (max-width: 999px) {
@@ -138,7 +156,7 @@ input[type="search"]::-webkit-search-results-decoration {
         margin: 0 0 22px;
       }
     }
-  
+
 
     .field__input.field__input--iframe-container,
     input{
@@ -212,7 +230,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
   span.content-box__emphasis,
   span.radio__label__primary {
-    color: $black; 
+    color: $black;
   }
 
   .content-box .small-text {
@@ -228,7 +246,7 @@ input[type="search"]::-webkit-search-results-decoration {
   .input-checkbox:checked, .input-radio:checked {
     box-shadow: 0 0 0 10px $black inset;
   }
-  
+
   .content-box .input-checkbox, .content-box .input-radio,
   .content-box .input-checkbox:hover, .content-box .input-radio:hover {
     border-color: $black !important;
@@ -258,5 +276,11 @@ input[type="search"]::-webkit-search-results-decoration {
 
   a[data-trekkie-id="have_an_account_login_link"] {
     text-decoration: underline;
+  }
+}
+
+.os-step__description {
+  button {
+    @extend .btn-primary;
   }
 }
