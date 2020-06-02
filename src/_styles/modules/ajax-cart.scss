@@ -312,7 +312,7 @@ body.ajax-cart-open {
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 20px;
-  line-height: 1;
+
   .btn__ui {
     position: absolute;
     right: 0;
@@ -328,9 +328,6 @@ body.ajax-cart-open {
 
 
 .ajax-cart__footer-row--btn {
-  text-align: center;
-  @include media-breakpoint-down('md') {
-    text-align: right;
-  }
+  text-align: right;
 }
 
