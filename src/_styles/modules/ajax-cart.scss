@@ -35,7 +35,7 @@ body.ajax-cart-open {
   }
 
   // Ensure that the cart is full width on screen sizes below this
-  @include media-breakpoint-up('sm') {
+  @include media-breakpoint-up('md') {
     max-width: $ajax-cart-width;
   }
 }
@@ -62,21 +62,22 @@ body.ajax-cart-open {
 .ajax-cart__footer {
   padding: large-vw($ajax-cart-padding-vertical-mobile, $ajax-cart-padding-vertical) large-vw($ajax-cart-padding-horizontal-mobile, $ajax-cart-padding-horizontal);
 
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     padding: $ajax-cart-padding-vertical-mobile $ajax-cart-padding-horizontal-mobile;
+    min-height: 50px;
   }
 }
 
 .ajax-cart__promo {
   padding: 35px $ajax-cart-padding-horizontal 5px;
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     padding: 30px $ajax-cart-padding-horizontal-mobile 0;
     text-align: center;
   }
   p {
     margin-bottom: 0;
     font-size: 20px;
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
       font-size: 10px;
     }
   }
@@ -89,17 +90,19 @@ body.ajax-cart-open {
   align-items: center;
   justify-content: space-between;
 
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     padding: 9px 20px;
   }
 
-  h4 {
+  .ajax-cart__title {
+    @extend .h4;
+    opacity: 1;
     margin-bottom: 0;
     color: $white;
     font-size: large-vw(16px, 30px);
     text-transform: none;
     font-weight: $font-weight-normal;
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
       font-size: 16px;
     }
   }
@@ -143,7 +146,7 @@ body.ajax-cart-open {
     width: large-vw(28px, 50px);
     height: large-vw(28px, 50px);
 
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
       width: 28px;
       height: 28px;
     }
@@ -174,7 +177,7 @@ body.ajax-cart-open {
   padding-right: $ajax-cart-padding-horizontal;
   margin-bottom: 0;
   position: relative;
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     padding-top: 34px;
     padding-bottom: 34px;
     padding-left: $ajax-cart-padding-horizontal-mobile;
@@ -202,7 +205,7 @@ body.ajax-cart-open {
     width: 100%;
     padding-bottom: calc(183 / 138 * 100%);
   }
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     width: 100px;
   }
 }
@@ -217,7 +220,7 @@ body.ajax-cart-open {
 
 .ajax-cart__item-info {
   padding-left: 144px + 15px; // Make room for the image floated left
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     padding-left: 100px + 15px; // Make room for the image floated left
   }
 }
@@ -237,7 +240,7 @@ body.ajax-cart-open {
 .ajax-cart__item-price {
   font-size: 20px;
   margin: 18px 0 15px;
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     margin-bottom: 22px;
   }
 }
@@ -265,7 +268,7 @@ body.ajax-cart-open {
 .ajax-cart__footer-row {
   padding-top: 35px;
 
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     padding-top: 15px;
   }
 
@@ -326,7 +329,7 @@ body.ajax-cart-open {
 
 .ajax-cart__footer-row--btn {
   text-align: center;
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     text-align: right;
   }
 }
