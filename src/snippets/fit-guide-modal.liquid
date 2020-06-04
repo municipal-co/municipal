@@ -1,0 +1,201 @@
+{% assign page_handle = product.metafields.custom_fields['fit_guide_reference'] %}
+{% assign metafields = pages[page_handle].metafields.custom_fields %}
+
+{% assign product_options = product.options_with_values %}
+{% for option in product_options %}
+{% assign option_downcase = option.name | downcase %}
+  {% if option_downcase == 'size' %}
+    {% for value in option.values %}
+      {% if value == option.selected_value %}
+        {% assign current_size = value | downcase %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+
+{% if metafields.fit_guide_size != blank %}
+  {% assign separator = "|###|" %}
+  {% assign size_name_array = metafields["size_name"] | split: separator %}
+  {% assign model_height_array = metafields["model_height"] | split: separator %}
+  {% assign model_weight_array = metafields["model_weight"] | split: separator %}
+  {% assign model_waist_array = metafields["model_waist"] | split: separator %}
+  {% assign product_chest_array = metafields["product_chest"] | split: separator %}
+  {% assign product_neck_array = metafields["product_neck"] | split: separator %}
+  {% assign product_waist_array = metafields["product_waist"] | split: separator %}
+  {% assign product_arm_length_array = metafields["product_arm_length"] | split: separator %}
+  {% assign image_1_array = metafields["image_1"] | split: separator %}
+  {% assign image_2_array = metafields["image_2"] | split: separator %}
+  {% assign image_3_array = metafields["image_3"] | split: separator %}
+  {% assign fc_keys = metafields["fit_guide_size"] | split: "," %}
+
+  <div class="modal fade" id="fit-guide" tabindex="-1" role="dialog" aria-label="Shipping details modal" data-fit-guide-modal>
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title d-lg-none d-xl-none">
+            Fit guide
+          </h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close modal">
+            {%- include 'icon-close' -%}
+          </button>
+        </div>
+        <div class="modal-body">
+          <span class="fit-guide__eyebrow h5">
+            Find your fit
+          </span>
+          <span class="h2 fit-guide__title">
+            {{ product.title }}
+          </span>
+          <div class="fit-guide__tabs-buttons">
+            {% for tab_index in fc_keys %}
+            {% assign index = tab_index | plus: 0 %}
+            {% assign size_downcase = size_name_array[index] | downcase %}
+            {% if current_size == size_downcase %}
+              {% assign active_class = ' is-active' %}
+            {% else %}
+              {% assign active_class = '' %}
+            {% endif %}
+              <div class="fit-guide__tab-button {{-active_class-}}" data-fit-guide-toggle-tab="{{ size_name_array[index] }}">
+                {{ size_name_array[index] }}
+              </div>
+            {% endfor %}
+          </div>
+          <div class="fit-guide__tabs-container">
+            {% for tab_index in fc_keys %}
+              {% assign index = tab_index | plus: 0 %}
+              {% assign size_downcase = size_name_array[index] | downcase %}
+              {% if current_size == size_downcase %}
+                {% assign is_active = true %}
+              {% else %}
+                {% assign is_active = false %}
+              {% endif %}
+              <div class="fit-guide__tab" data-fit-guide-tab="{{ size_name_array[index] }}" {% unless is_active == true %} style="display:none;"{% endunless %}>
+                <div class="fit-guide__model-info">
+                  <div class="fit-guide__info-block">
+                    <div class="fit-guide__data-title">
+                      Model Measurements:
+                    </div>
+                    <div class="fit-guide__data-group fit-guide__data-group--model">
+                      <div class="fit-guide__model-item">
+                        <div class="fit-guide__model-item-value">
+                          {{ model_height_array[index] }}
+                        </div>
+                        <div class="fit-guide__model-item-descriptor">
+                          Height
+                        </div>
+                      </div>
+                      <div class="fit-guide__model-item">
+                        <div class="fit-guide__model-item-value">
+                          {{ model_weight_array[index] }}
+                        </div>
+                        <div class="fit-guide__model-item-descriptor">
+                          Weight
+                        </div>
+                      </div>
+                      <div class="fit-guide__model-item">
+                        <div class="fit-guide__model-item-value">
+                          {{ model_waist_array[index] }}
+                        </div>
+                        <div class="fit-guide__model-item-descriptor">
+                          Waist
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="fit-guide__info-block">
+                    <div class="fit-guide__data-title">
+                      Product Measurements:
+                    </div>
+                    <div class="fit-guide__data-group fit-guide__data-group--product">
+                      {% if product_chest_array[index] != blank %}
+                        <div class="fit-guide__product-item-descriptor">
+                          Chest:
+                        </div>
+                        <div class="fit-guide__product-item-value">
+                          {{ product_chest_array[index] }}
+                        </div>
+                      {% endif %}
+                      {% if product_neck_array[index] != blank %}
+                        <div class="fit-guide__product-item-descriptor">
+                          Neck:
+                        </div>
+                        <div class="fit-guide__product-item-value">
+                          {{ product_neck_array[index] }}
+                        </div>
+                      {% endif %}
+                      {% if product_waist_array[index] != blank %}
+                        <div class="fit-guide__product-item-descriptor">
+                          Waist:
+                        </div>
+                        <div class="fit-guide__product-item-value">
+                          {{ product_waist_array[index] }}
+                        </div>
+                      {% endif %}
+                      {% if product_arm_length_array[index] != blank %}
+                        <div class="fit-guide__product-item-descriptor">
+                          Arm Lenght:
+                        </div>
+                        <div class="fit-guide__product-item-value">
+                          {{ product_arm_length_array[index] }}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="fit-guide__gallery-slider">
+                  <div class="swiper-container" data-fit-guide-gallery>
+                    <div class="swiper-wrapper">
+                      {% assign slide_count = 0 %}
+                      {% if image_1_array[index] != blank %}
+                        <div class="swiper-slide" data-swiper-slide>
+                          <img data-src="{{ image_1_array[index] }}" class="swiper-lazy">
+                          <div class="swiper-lazy-preloader"></div>
+                        </div>
+                        {% assign slide_count = slide_count | plus: 1 %}
+                      {% endif %}
+                      {% if image_2_array[index] != blank %}
+                        <div class="swiper-slide" data-swiper-slide>
+                          <img data-src="{{ image_2_array[index] }}" class="swiper-lazy">
+                          <div class="swiper-lazy-preloader"></div>
+                        </div>
+                        {% assign slide_count = slide_count | plus: 1 %}
+                      {% endif %}
+                      {% if image_3_array[index] != blank %}
+                        <div class="swiper-slide" data-swiper-slide>
+                          <img data-src="{{ image_3_array[index] }}" class="swiper-lazy">
+                          <div class="swiper-lazy-preloader"></div>
+                        </div>
+                        {% assign slide_count = slide_count | plus: 1 %}
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% if slide_count > 1 %}
+                    <div class="swiper-button-prev swiper-button">
+                      {% include 'icon-swiper-arrow' %}
+                    </div>
+                    <div class="swiper-button-next swiper-button">
+                      {% include 'icon-swiper-arrow' %}
+                    </div>
+                    <div class="swiper-scrollbar"></div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          {% if metafields.footer_text != blank %}
+            <div class="fit-guide__footer">
+              <p class="fit-guide__footer-text">
+                {{ metafields.footer_text }}
+              </p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

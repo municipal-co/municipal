@@ -223,6 +223,8 @@ export default class ProductDetailForm {
 
         $variantOptionValueUI.addClass(classes.variantOptionValueActive);
         $variantOptionValueUI.siblings().removeClass(classes.variantOptionValueActive);
+        const variantChangeEvent = $.Event('updateFitGuideVariant', {variantSelected: variantOptionValue} );
+        $('body').trigger(variantChangeEvent);
       }
     }
   }

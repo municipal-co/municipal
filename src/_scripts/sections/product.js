@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import Swiper from 'swiper';
 import BaseSection from './base';
 import ProductDetail from '../view/product/productDetail';
 import Drawer from '../ui/drawer';
@@ -14,8 +15,12 @@ const selectors = {
   productForm: '[data-product-detail-form]',
   productFormContainer: '[data-product-form-container]',
   mobileProductFormContainer: '[data-mobile-product-form-container]',
-  addToCartFormDrawer: '[data-add-to-cart-drawer]'
-
+  addToCartFormDrawer: '[data-add-to-cart-drawer]',
+  fitGuideToggleButton: '[data-fit-guide-toggler]',
+  fitGuideModal: '[data-fit-guide-modal]',
+  fitGuideGallery: '[data-fit-guide-gallery]',
+  fitGuideTabsDots: '[data-fit-guide-toggle-tab]',
+  fitGuideTabContent: '[data-fit-guide-tab]',
 };
 
 const classes = {
@@ -35,7 +40,8 @@ export default class ProductSection extends BaseSection {
 
     // drawers
     this.productsDrawer = new Drawer($(selectors.collectionDrawer));
-    this.addToCartFormDrawer = new Drawer($(selectors.addToCartFormDrawer))
+    this.addToCartFormDrawer = new Drawer($(selectors.addToCartFormDrawer));
+    this.galleries = [];
 
     this.observerProperties = {
       root: null,
@@ -46,10 +52,74 @@ export default class ProductSection extends BaseSection {
     $(selectors.sectionScroller, this.container).on('click', this.sectionScrollerClick.bind(this));
     $('body').on('updateCurrentModule', this.onUpdateCurrentModule.bind(this));
     $(selectors.drawerToggler).on('click', this.toggleCollectionDrawer.bind(this));
+    $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
+    $(selectors.fitGuideTabsDots).on('click', this.toggleFitGuideTab.bind(this));
+    $('body').on('updateFitGuideVariant', this.onToggleVariant.bind(this));
+
+    this.initFitGuideGalleries();
 
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
-
     this.IntersectionObserver.observe($(selectors.productDetail).get(0));
+  }
+
+  toggleFitGuideModal() {
+    $(selectors.fitGuideModal).modal('show');
+  }
+
+  initFitGuideGalleries() {
+    $(selectors.fitGuideGallery).each((index, el) => {
+
+      const galleryOptions = {
+        watchOverflow: true,
+        preloadImages: false,
+        arrows: true,
+        observer: true,
+        observeParents: true,
+
+        navigation: {
+          nextEl: $('.swiper-button-next', $(el).parent()),
+          prevEl: $('.swiper-button-prev', $(el).parent()),
+        },
+        scrollbar: {
+          el: $('.swiper-scrollbar', $(el).parent()),
+          dragabble: true,
+        },
+        lazy: true
+      }
+
+      const swiperGallery = new Swiper($(el), galleryOptions);
+
+      this.galleries.push(swiperGallery);
+    });
+  }
+
+  toggleFitGuideTab(e) {
+    const $this = $(e.currentTarget);
+    const $container= $this.parent();
+
+    if (!$this.hasClass(classes.active)) {
+      const tabTarget = $this.data('fit-guide-toggle-tab');
+      $(selectors.fitGuideTabsDots, $container).removeClass(classes.active);
+      $this.addClass(classes.active);
+      $(`${selectors.fitGuideTabContent}`).hide();
+      $(`[data-fit-guide-tab="${tabTarget}"]`).show();
+    }
+  }
+
+  onToggleVariant(e) {
+    const variant = e.variantSelected;
+    console.log(variant);
+
+    const $optionToEnable = $(`[data-fit-guide-toggle-tab="${variant}"]`);
+
+    if ($optionToEnable.length > 0 && !$optionToEnable.hasClass(classes.active)) {
+      $(selectors.fitGuideTabsDots, $optionToEnable.parent()).removeClass(classes.active);
+      $optionToEnable.addClass(classes.active);
+
+      $(`${selectors.fitGuideTabContent}`).hide();
+      $(`[data-fit-guide-tab="${variant}"]`).show();
+      console.log($(`[data-fit-guide-tab="${variant}"]`));
+    }
   }
 
   observerCallback(entries, observer) {
