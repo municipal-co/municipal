@@ -1,10 +1,23 @@
 {% comment %}
 
   Add any 3rd party scripts here that need to be included before the closing <head> tag
-  
+
 {% endcomment %}
 
 {% comment %}Yotpo Reviews{% endcomment %}
 {% if settings.display_reviews == true %}
   <script type="text/javascript">(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/nkXgNfrvS9ZB0PoIBwRguaG3DPD7UP5NlNecWS58/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script>
 {% endif %}
+
+<!-- Hotjar Tracking Code for www.municipal.com -->
+
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1838929,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
