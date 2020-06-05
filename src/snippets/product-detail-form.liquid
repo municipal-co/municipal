@@ -44,11 +44,11 @@
   {% endif %}
 
   <h1 class="h5 product__title">{{ product.title }}</h1>
-  
+
   {% if settings.display_reviews == true %}
     {% include 'rating-stars' %}
   {% endif %}
-  
+
   <div class="product__price">
     {% include 'product-detail-price', product: product, current_variant: current_variant %}
   </div>
@@ -83,10 +83,11 @@
               {% if base_option_name_downcase == "size" %}
                 {% include 'product-dots-sizes', product: product, selected_size: option.selected_value %}
 
-                {% if product.metafields.custom_fields["show_fit_guide"] == 1 %}
-                  <button class="btn-link product__fit-guide-toggler" type="button">FIT Guide +</button>
+                {% if product.metafields.custom_fields["show_fit_guide"] == 1 and product.metafields.custom_fields['fit_guide_reference'] != blank %}
+                  <button class="btn-link product__fit-guide-toggler" type="button" data-fit-guide-toggler>FIT Guide +</button>
                 {% endif %}
               {% endif %}
+
             {% endcapture %}
 
             <div class="selector-wrapper form-group js">
@@ -208,3 +209,7 @@
     </script>
   {% endunless %}
 </div>
+
+{% if product.metafields.custom_fields["show_fit_guide"] == 1 and product.metafields.custom_fields['fit_guide_reference'] != blank %}
+  {% include 'fit-guide-modal' %}
+{% endif %}
