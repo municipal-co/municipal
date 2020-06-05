@@ -8,8 +8,8 @@
       "page": "Page {{ page }}"
     },
     "404": {
-      "title": "Oops!",
-      "subtext_html": "I think you're lost buddy. Let's take you <a href=\"/\">back home</a>."
+      "title": "Default title",
+      "subtext_html": "Default subtitle. <a href=\"/\">back home</a>."
     },
     "password_page": {
       "opening_soon": "Opening Soon",
