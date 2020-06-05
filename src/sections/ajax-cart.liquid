@@ -2,7 +2,7 @@
   <div class="ajax-cart-container" data-ajax-cart-container>
       <form action="/cart" method="post" class="ajax-cart-form" novalidate>
         <div class="ajax-cart__header">
-          <h4 class="p">{{ 'cart.general.title' | t }}</h4>
+          <span class="ajax-cart__title">{{ 'cart.general.title' | t }}</span>
           <a href="#" class="ajax-cart__close" data-ajax-cart-close>{% include 'icon-close' %}</a>
         </div>
         {% if section.settings.promo_text != "" %}
@@ -31,8 +31,7 @@
             {% endif %}
             <div class="ajax-cart__footer-row ajax-cart__footer-row--btn">
               <a href="/collections/all" class="btn btn-white ajax-cart__footer-btn">
-                Keep<br class="d-none d-md-block">
-                Shopping
+                Keep Shopping
                 <span class="btn__ui">
                   {% include 'icon-arrow' %}
                 </span>
@@ -61,9 +60,6 @@
           <div class="ajax-cart__title-container">
               <a href="{{ url }}" class="ajax-cart__item-header">
                 <div class="ajax-cart__item-title">{{ product_title }}</div>
-              </a>    
-              <a href="#" class="ajax-cart__item-remove" data-ajax-cart-item-remove>
-                <img width="15" height="15" src="data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzODYuNjY3IDM4Ni42NjciIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgMzg2LjY2NyAzODYuNjY3IiB3aWR0aD0iNTEyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Im0zODYuNjY3IDQ1LjU2NC00NS41NjQtNDUuNTY0LTE0Ny43NyAxNDcuNzY5LTE0Ny43NjktMTQ3Ljc2OS00NS41NjQgNDUuNTY0IDE0Ny43NjkgMTQ3Ljc2OS0xNDcuNzY5IDE0Ny43NyA0NS41NjQgNDUuNTY0IDE0Ny43NjktMTQ3Ljc2OSAxNDcuNzY5IDE0Ny43NjkgNDUuNTY0LTQ1LjU2NC0xNDcuNzY4LTE0Ny43N3oiLz48L3N2Zz4=" alt="">
               </a>
           </div>
           <div class="ajax-cart__item-info">
@@ -114,7 +110,7 @@
 
   <script type="text/x-handlebars-template" data-ajax-cart-footer-top-template>
     <div class="ajax-cart__footer-row">
-      <p class="clearfix text-center u-fw-bold">Estimated Total:<br> {{ total_price }}</p>  
+      <p class="clearfix text-center u-fw-bold">Estimated Total:<br> {{ total_price }}</p>
     </div>
   </script>
 {% endraw %}

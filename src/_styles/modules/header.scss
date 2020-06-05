@@ -207,6 +207,11 @@
 
 .header-cart__badge-count {
   color: $yellow;
+  display: none;
+
+  .has-items & {
+    display: inline;
+  }
 }
 
 // Dropdown
