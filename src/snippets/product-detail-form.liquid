@@ -44,14 +44,23 @@
   {% endif %}
 
   <h1 class="h5 product__title">{{ product.title }}</h1>
-  
+
   {% if settings.display_reviews == true %}
     {% include 'rating-stars' %}
   {% endif %}
-  
+
   <div class="product__price">
     {% include 'product-detail-price', product: product, current_variant: current_variant %}
   </div>
+  {% if section.settings.enable_klarna == true %}
+    <!-- Placement v2 -->
+    <klarna-placement
+      class="klarna-messaging"
+      data-key="credit-promotion-small"
+      data-locale="en-US"
+    ></klarna-placement>
+    <!-- end Placement -->
+  {% endif %}
 
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <meta itemprop="priceCurrency" content="{{ shop.currency }}">
