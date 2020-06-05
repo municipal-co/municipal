@@ -108,6 +108,8 @@
       font-size: large-vw(16px, 30px);
       text-transform: none;
       font-weight: $font-weight-normal;
+      opacity: 1 !important;
+      transform: unset !important;
 
       @include media-breakpoint-down('md') {
         font-size: 16px;
