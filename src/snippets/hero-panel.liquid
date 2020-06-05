@@ -10,9 +10,13 @@
   <div class="col-md-24 col-lg-22">
     <div class="hero__content">
       <div class="hero__header">
-        <div class="hero__handscript-svg">
-
-        </div>
+        {% if h_handwritten_text_image != blank %}
+          <div class="hero__handscript-svg">
+            {% include 'image_tag'
+              image: h_handwritten_text_image
+            %}
+          </div>
+        {% endif %}
         {%- if h_title != blank -%}
           <h1 class="hero__title text-center text-{{h_title_color}}"> {{ h_title }} </h1>
         {%- endif -%}

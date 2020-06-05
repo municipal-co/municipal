@@ -2,6 +2,7 @@
 {% include 'hero-panel'
   h_id: section.id,
   h_background_color: section.settings.background_color,
+  h_handwritten_text_image: section.settings.handwritten_text_image,
   h_title: section.settings.title,
   h_title_color: section.settings.title_color,
   h_image: section.settings.image,
@@ -34,6 +35,11 @@
           {"label": "Gray", "value": "#424446"},
           {"label": "Brownish-Red", "value": "#752c2e"}
         ]
+      },
+      {
+        "type": "image_picker",
+        "id": "handwritten_text_image",
+        "label": "Handwritten text image"
       },
       {
         "type": "text",

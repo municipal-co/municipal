@@ -17,6 +17,19 @@
   }
 }
 
+.hero__handscript-svg {
+  max-width: large-vw(200px, 650px);
+  margin: auto;
+
+  img {
+    width: 100%;
+  }
+
+  @include media-breakpoint-down('md') {
+    max-width: 200px;
+  }
+}
+
 .hero__content {
   display: flex;
   flex-direction: column;

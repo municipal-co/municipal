@@ -20,15 +20,17 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-lg-22 col-20 collection-banner-inner-wrapper">
-        
+
         <div>
           {% comment %}handwritten svg placeholder{% endcomment %}
-          <div class="collection-banner_icon">
-            {% render 'image_tag'
-                        image: banner_icon,
-                        object_fit: "contain"
-            %}
+          {% if banner_icon != blank %}
+            <div class="collection-banner_icon">
+              {% render 'image_tag'
+                          image: banner_icon,
+                          object_fit: "contain"
+              %}
           </div>
+          {% endif %}
 
           <h2 class="collection-banner__title h1">{{ banner_title }}</h2>
           {% if banner_copy != blank %}
