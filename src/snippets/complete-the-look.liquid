@@ -16,23 +16,23 @@
 
   <div class="complete-the-look" data-section-type="complete-the-look" data-animated-background="#ffffff">
     <div class="container-fluid">
-      <div class="row row--eyebrow justify-content-center">
+      <div class="row row--eyebrow justify-content-center row-adjusted">
         {% if eyebrow != blank %}
           <span class="ctl__eyebrow h5 col-lg-22 col-20 offset-2 offset-lg-1">{{ eyebrow }}</span>
         {% endif %}
       </div>
 
-      <div class="row">
-        {% if title != blank %}
-          <div class="ctl-title-wrapper col-24">
-            <h2 class="ctl__title h1">
-              <span style="animation-duration: {{ animation }};">{{ title | strip_html }} &nbsp;</span>
-            </h2>
-            <h2 class="ctl__title ctl__title--copy h1">
-              <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title | strip_html }} &nbsp;</span>
-            </h2>
-          </div>
-        {% endif %}
+      {% if title != blank %}
+        <div class="ctl-title-wrapper col-24">
+          <h2 class="ctl__title h1">
+            <span style="animation-duration: {{ animation }};">{{ title | strip_html }} &nbsp;</span>
+          </h2>
+          <h2 class="ctl__title ctl__title--copy h1">
+            <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title | strip_html }} &nbsp;</span>
+          </h2>
+        </div>
+      {% endif %}
+      <div class="row row-adjusted">
 
         <div class="col-22">
           <div class="swiper-container">
