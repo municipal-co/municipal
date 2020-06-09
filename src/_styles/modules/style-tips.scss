@@ -4,9 +4,9 @@
   @include media-breakpoint-down('md') {
     padding-top: 60px;
   }
-  
+
   .style-tips-section-title {
-    color: $yellow;
+    color: $cyan;
     font-family: $headings-font-family;
     margin-bottom: large-vw(25px, 50px);
 
@@ -17,11 +17,11 @@
 
   .style-quote,
   .stylist-name,
-  .style-slide__subcopy{
-    color: $white;
+  .style-slide__subcopy {
+    color: $black;
   }
 
-  .style-slide__subcopy{
+  .style-slide__subcopy {
     text-align: center;
     max-width: 81%;
     margin: 0 auto;
@@ -44,7 +44,7 @@
   }
 
   .style-slide {
-    margin-bottom: large-vw(70px, 145px); 
+    margin-bottom: large-vw(70px, 145px);
 
     @include media-breakpoint-down('md') {
       margin-bottom: 70px;
@@ -56,7 +56,7 @@
     font-family: $headings-font-family;
     line-height: large-vw(50px, 150px);
     margin-bottom: large-vw(35px, 55px);
-    
+
     @include media-breakpoint-down('md') {
       max-width: 100%;
       line-height: 50px;
@@ -89,7 +89,7 @@
     font-weight: $font-weight-bold;
     font-size: large-vw(20px, 35px);
     margin-bottom: large-vw(50px, 70px);
-    
+
     @include media-breakpoint-down('md') {
       font-size: 20px;
       width: 70%;
@@ -97,13 +97,13 @@
     }
 
     span {
-      color: $yellow;
+      color: $cyan;
     }
   }
 
   .style-slide__image {
     margin-bottom: large-vw(55px, 60px);
-    
+
     @include media-breakpoint-down('md') {
       margin-bottom: 55px;
     }
@@ -236,7 +236,7 @@
 
   .modal-dialog {
     max-width: 75%;
-    
+
     @include media-breakpoint-down('md') {
       max-width: 100%;
       margin: 0;
@@ -250,7 +250,7 @@
   }
 
   .modal--video {
-
+    
     &.show {
       background-color: rgba(18, 18, 18, 0.9);
     }
