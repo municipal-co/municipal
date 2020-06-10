@@ -11,7 +11,7 @@
 
 {% assign filter_types = 'color,size' | split: "," %}
 
-{% paginate collection.products by 6 %}
+{% paginate collection.products by 50 %}
 
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection">
   <div class="container-fluid">
@@ -56,19 +56,11 @@
             {% for product in collection.products %}
 
               {% comment %} Lazy load all product images below the fold.  Adjust the limit as needed {% endcomment %}
-              {% assign lazy_load = false %}
-              {% if forloop.index > 10 %}
-                {% assign lazy_load = true %}
-              {% endif %}
-
-              <div class="content-grid__item" data-grid-item>
-                {% include 'product-card',
-                   product: product,
-                   lazy_load: lazy_load,
-                   show_sizes: true,
-                   show_colors: true,
-                   show_tag: true %}
-              </div>
+              {% include 'product-card-split',
+                 product: product,
+                 show_sizes: true,
+                 show_colors: true,
+                 show_tag: true %}
             {% endfor %}
           </div>
         {% else %}

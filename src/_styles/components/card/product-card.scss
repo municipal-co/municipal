@@ -26,7 +26,7 @@
 }
 
 .product-card__gallery-image {
-  padding-bottom: percentage(743/560);
+  padding-bottom: 100%;
   width: 100%;
 
   img {
@@ -89,7 +89,7 @@
   }
 
   .variant-message {
-    font-size: 20px;
+    font-size: large-vw(15px, 20px);
     font-weight: $font-weight-bold;
     text-align: center;
     margin-bottom: 16px;

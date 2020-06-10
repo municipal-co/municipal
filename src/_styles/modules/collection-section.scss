@@ -1,18 +1,18 @@
 .collection-section {
   padding-bottom: large-vw(100px ,150px);
   border-bottom: solid 4px $black;
-  
+
   @include media-breakpoint-down('md') {
     padding-bottom: 35px;
   }
 
   & + & {
-    padding-top: large-vw(40px ,60px);    
+    padding-top: large-vw(40px ,60px);
   }
 
   &:first-child {
     padding-top: large-vw(60px, 110px);
-    
+
     @include media-breakpoint-down('md') {
       padding-top: 60px;
     }
@@ -29,19 +29,19 @@
   .collection-section__description {
     margin-bottom: large-vw(28px, 145px);
     line-height: large-vw(30px, 65px);
-    
+
     @include media-breakpoint-down('md') {
       line-height: 30px;
       margin-bottom: 28px
     }
   }
-  
+
   .promo_card {
     position: relative;
 
     &:before {
       content: "";
-      padding-bottom: percentage(743/560);
+      padding-bottom: 100%;
     }
 
     @keyframes rotating {
@@ -93,6 +93,6 @@
   }
 }
 
-.collection-promo + .collection-section { 
+.collection-promo + .collection-section {
   border-top: solid 4px $black;
 }
