@@ -1,29 +1,18 @@
-{% capture collection_color_count %}
-  {% assign p_title_handle = product.title | handleize %}
-  {% assign style_collection = collections[p_title_handle] %}
-  {% if style_collection.products.size > 1 %}
-    {{ style_collection.products.size }} Colors
-  {% endif %}
-{% endcapture %}
-
-{% if show_collection_colors == true and collection_color_count != blank %}
-  {{ collection_color_count }}
-{% elsif product.meta_fields.custom_fields['color_descriptor'] != blank %}
-  {{ product.meta_fields.custom_fields['color_descriptor'] }}
-{% else %}
-  {% if product != blank %}
-    {% for option in product.options_with_values %}
-      {% assign option_name_downcase = option.name | downcase %}
-
-      {% if option_name_downcase == 'color' %}
-        {% assign values_quantity = option.values | size %}
-        {% if values_quantity > 1 %}
-          {{ values_quantity }} Colors
-        {% else %}
-          {{ option.values[0] }}
+{% unless show_collection_colors == false %}
+  {% if product.meta_fields.custom_fields['color_descriptor'] != blank %}
+    {{ product.meta_fields.custom_fields['color_descriptor'] }}
+  {% elsif current_color != blank %}
+    {{ current_color }}
+  {% else %}
+    {% if product != blank %}
+      {% for option in product.options_with_values %}
+        {% assign option_name_downcase = option.name | downcase %}
+        {% if option_name_downcase == 'color' %}
+          {% assign values_quantity = option.values | size %}
+            {{ values_quantity }} Colors
         {% endif %}
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
   {% endif %}
-{% endif %}
+{% endunless %}
 

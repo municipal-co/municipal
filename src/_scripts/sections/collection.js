@@ -24,7 +24,8 @@ const selectors = {
 
 const classes = {
   fixed: 'is-fixed',
-  active: 'is-active'
+  active: 'is-active',
+  empty: 'is-empty'
 };
 
 export default class CollectionSection extends BaseSection {
@@ -77,11 +78,6 @@ export default class CollectionSection extends BaseSection {
   }
 
   onWindowScroll() {
-    if (this.$promoCard.length) {
-      const rotate = $(window).scrollTop() / 10;
-      $('.promo_card__image', this.$promoCard).css({ transform: 'rotate(-' + rotate + 'deg)' });
-    }
-
     if ($(window).scrollTop() >= this.filterBarPosition && !this.$filterBar.hasClass(classes.fixed)) {
       this.$filterBar.addClass(classes.fixed);
       this.$filterBar.parent().css('height', this.$filterBar.outerHeight(true));
@@ -188,7 +184,13 @@ export default class CollectionSection extends BaseSection {
     if (typeof $grid === 'undefined') {
       $(selectors.collectionGrid, this.$container).empty().append(gridItems);
     } else {
-      $grid.empty().append(gridItems);
+      if (gridItems.length > 0) {
+        $grid.removeClass(classes.empty);
+        $grid.empty().append(gridItems);
+      } else {
+        $grid.addClass(classes.empty);
+        $grid.empty().append('<p class="p1">The filters you selected thrown no results for this collection</p>')
+      }
     }
 
     $(selectors.productCard).each((index, el) => {

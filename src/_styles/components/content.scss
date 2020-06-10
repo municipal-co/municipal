@@ -34,6 +34,10 @@ $content-grid-item-vertical-spacing-loose: $grid-gutter-width * 2;
   &--loose {
     margin-bottom: -#{$content-grid-item-vertical-spacing-loose};
   }
+
+  &.is-empty {
+    justify-content: center;
+  }
 }
 
 .content-grid__item {

@@ -7,6 +7,7 @@
 
   {% include 'product-dots-size',
               product: { product } - required
+              current_color: { string } - optional
               selected_size: { string } - optional
   %}
 
@@ -17,14 +18,14 @@
 
 {% if product != blank %}
 
-  {% assign current_color = blank %}
-
   {% for option in product.options_with_values %}
   {% comment %}Get the first available color (it will be used to display the corresponding size variants) and can be placed 2nd on the variant lists {% endcomment %}
     {% assign option_name_downcase = option.name | downcase %}
-    {% if option_name_downcase == "color" and current_color == blank %}
+    {% if option_name_downcase == "color" %}
       {% assign color_handle = 'option' | append: option.position %}
-      {% assign current_color = option.values[0] %}
+      {% if current_color == blank %}
+        {% assign current_color = option.values[0] %}
+      {% endif %}
     {% endif %}
   {% endfor %}
 
@@ -34,20 +35,19 @@
 
     {% if option_name_downcase == "size" and option.values.size > 0 %}
 
-
       <div class="dots" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for size in option.values %}
-
           {% for variant in product.variants %}
             {% if variant[color_handle] == current_color and variant[size_handle] == size %}
               {% assign current_variant = variant %}
+              {% break %}
             {% endif %}
           {% endfor %}
 
           <div class="dot {% if selected_size == size %} is-active{% endif %}"
                data-dot
                title="{{ size }}"
-               data-variant-url="{{ swatch_variant.url }}"
+               data-variant-url="{{ current_variant.url }}"
                data-variant-option-value="{{ size }}"
                {% if current_variant.available == false %}
                  disabled

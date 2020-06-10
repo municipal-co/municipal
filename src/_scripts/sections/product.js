@@ -108,7 +108,6 @@ export default class ProductSection extends BaseSection {
 
   onToggleVariant(e) {
     const variant = e.variantSelected;
-    console.log(variant);
 
     const $optionToEnable = $(`[data-fit-guide-toggle-tab="${variant}"]`);
 
@@ -118,7 +117,6 @@ export default class ProductSection extends BaseSection {
 
       $(`${selectors.fitGuideTabContent}`).hide();
       $(`[data-fit-guide-tab="${variant}"]`).show();
-      console.log($(`[data-fit-guide-tab="${variant}"]`));
     }
   }
 

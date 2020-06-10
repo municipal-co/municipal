@@ -88,7 +88,7 @@
               {% endif %}
 
               <div class="content-grid" data-collection-grid="{{the_collection.handle}}" data-collection-url="{{the_collection.url}}">
-                {% for product in the_collection.products limit: 6 %}
+                {% for product in the_collection.products %}
 
                   {% if show_promo == true and forloop.index == promo_card_position %}
                     <div class="promo_card content-grid__item frame">
@@ -104,14 +104,12 @@
                     {% assign show_promo = false  %}
                   {% endif %}
 
-                  <div class="content-grid__item" data-grid-item>
-                    {% include 'product-card',
-                       product: product,
-                       lazy_load: lazy_load,
-                       show_sizes: true,
-                       show_colors: true,
-                       show_tag: true %}
-                  </div>
+                  {% include 'product-card-split',
+                     product: product,
+                     lazy_load: true,
+                     show_sizes: true,
+                     show_colors: true,
+                     show_tag: true %}
                 {% endfor %}
 
                 {% if show_promo == true %}
@@ -129,7 +127,7 @@
               </div>
               {% assign grid_container = '[data-collection-grid=' | append: the_collection.handle | append: ']' %}
               {% assign tags_filters = current_tags | join: '+' %}
-              {% if the_collection.products.size > 6 %}
+              {% if the_collection.products.size > 50 %}
                 {% assign collection_next_page = the_collection.url | append: '?page=2' %}
               {% endif %}
                 {% include 'load-more'

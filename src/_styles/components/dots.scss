@@ -19,21 +19,28 @@
   margin-right: $dot-spacing / 2;
   margin-bottom: $dot-spacing;
   padding: $dot-padding;
-  height: $dot-size;
-  width: $dot-size;
+  height: large-vw($dot-small-size, $dot-size);
+  width: large-vw($dot-small-size, $dot-size);
   cursor: pointer;
   vertical-align: top;
-  border: $dot-border-width solid $dot-border-color;
+  border: large-vw(2px, $dot-border-width) solid $dot-border-color;
   border-radius: $dot-border-radius;
   overflow: hidden;
   background-color: $white;
 
-  line-height: $dot-size - $dot-padding*2 - 10px;
+  line-height: large-vw(($dot-small-size - 10px) ,($dot-size - 14px));
   font-size: $dot-small-font-size;
   text-transform: uppercase;
   text-align: center;
 
   transition: background-color $transition-duration-fast $transition-timing-function-out;
+
+  @include media-breakpoint-down('md') {
+    height: $dot-small-size;
+    width: $dot-small-size;
+    border: 2px solid $dot-border-color;
+    line-height: ($dot-small-size - 10px);
+  }
 
   .icon-check {
     fill: $white;
