@@ -15,62 +15,50 @@
     
     {{ checkout_scripts }}
 
+    {%- comment -%}
     <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
     <!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
 
     <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'checkout.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
     <!--[if lt IE 9]><script src="{{ 'checkout.js' | asset_url }}"></script><![endif]-->    
+    {%- endcomment -%}
+
   </head>
   <body>
-
     {{ skip_to_content_link }}
 
-    {% comment %}<div class="banner" data-header>
+    <header class="banner" data-header role="banner">
       <div class="wrap">
         {{ content_for_logo }}
       </div>
-    </div>{% endcomment %}
+    </header>
 
-  
-    <div class="container-fluid container--checkout" data-content>
-
-      <div class="logo-container">
-        {{ content_for_logo }}
-      </div>
-        
-      <div class="row">
-        <div class="col-lg-22 col-20 offset-lg-1 offset-2">
-          {{ order_summary_toggle }}
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+          </main>
+          <footer class="main__footer" role="contentinfo">
+            {{ content_for_footer }}
+          </footer>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-22 col-20 offset-lg-1 offset-2 checkout-inner-container">
-          <div class="main col-lg-13" role="main">
-            <div class="main__header">
-              {{ breadcrumb }}
-              {{ alternative_payment_methods }}
-            </div>
-            <div class="main__content">
-              {{ content_for_layout }}
-            </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
           </div>
-          <div class="sidebar col-lg-10" role="complementary">
-            <div class="sidebar__header">
-              {{ content_for_logo }}
-            </div>
-            <div class="sidebar__content">
-              {{ content_for_order_summary }}
-            </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
           </div>
-        </div>
-        <div class="main__footer col-lg-22 col-20 offset-lg-1 offset-2">
-          {{ content_for_footer }}
-        </div>
-      </div>      
+        </aside>
+      </div>
     </div>
-
-    {{ tracking_code }}
 
   </body>
 </html>
