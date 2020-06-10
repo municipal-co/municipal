@@ -9,7 +9,7 @@
         {% assign option_name_downcase = option.name | downcase %}
         {% if option_name_downcase == 'color' %}
           {% assign values_quantity = option.values | size %}
-            {{ values_quantity }} Colors
+            {{ values_quantity }} {{ values_quantity | pluralize: 'Color', 'Colors' }}
         {% endif %}
       {% endfor %}
     {% endif %}

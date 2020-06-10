@@ -54,13 +54,44 @@
         {% if collection.products.size > 0 %}
           <div class="content-grid" data-collection-grid="{{ collection.handle }}">
             {% for product in collection.products %}
+              {% for option in product.options_with_values %}
+                {% if option.name == 'Color' %}
+                  {% assign product_colors = option.values %}
 
-              {% comment %} Lazy load all product images below the fold.  Adjust the limit as needed {% endcomment %}
-              {% include 'product-card-split',
-                 product: product,
-                 show_sizes: true,
-                 show_colors: true,
-                 show_tag: true %}
+                  {% for color in product_colors %}
+                    {% assign default_variant = blank %}
+                    {% for variant in product.variants %}
+                      {% if variant.title contains color %}
+                        {% assign default_variant = variant %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% comment %}Checks for color filtering{% endcomment %}
+                    {% assign hide_card = false %}
+                    {% assign color_downcase = color | downcase %}
+                    {% if current_tags != blank %}
+                      {% for current_tag in current_tags %}
+                      {% assign current_tag_downcase = current_tag | downcase  %}
+                        {% if current_tag_downcase contains 'color' and current_tag_downcase contains color_downcase %}
+                          {% assign hide_card = false %}
+                          {% break %}
+                        {% else %}
+                          {% assign hide_card = true %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    <div class="content-grid__item {% if hide_card %} hide{% endif %}" data-grid-item>
+                      {% include 'product-card',
+                         product: product,
+                         variant: default_variant,
+                         show_sizes: true,
+                         show_colors: true,
+                         show_tag: true,
+                         color: color %}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
             {% endfor %}
           </div>
         {% else %}
