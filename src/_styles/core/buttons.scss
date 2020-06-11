@@ -264,17 +264,17 @@ input[type='button'] {
 }
 
 .btn-secondary {
-  background-color: $red;
-  border-color: $red;
+  background-color: $cyan;
+  border-color: $cyan;
   &:hover {
-    background-color: $red;
-    border-color: $red;
+    background-color: $cyan;
+    border-color: $cyan;
   }
 
   &.disabled,
   &[disabled] {
-    background-color: $red;
-    border-color: $red;
+    background-color: $cyan;
+    border-color: $cyan;
   }
 }
 
