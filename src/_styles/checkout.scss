@@ -10,8 +10,6 @@
 @import 'core/fonts';
 
 body {
-  color: $white;
-  background-color: $black;
   font-family: $font-family-base;
 }
 
@@ -24,10 +22,11 @@ h5, .heading-5 {
   font-family: $font-family-base;
 }
 
-a {
-  color: $white;
-}
-
 .input-checkbox:checked, .input-radio:checked {
   box-shadow: 0 0 0 10px $black inset;
+}
+
+.main .field__input,
+.sidebar .field__input {
+  border-radius: 0;
 }
