@@ -267,7 +267,13 @@
         }
 
         .yotpo-product-related-fields-bars {
-          margin: 5% 0;
+          display: flex;
+          align-items: center;
+          height: large-vw(30.5px, 43px) !important;
+
+          @include media-breakpoint-down('md') {
+            height: 30.5px !important;
+          }
         }
 
     // Single Review
@@ -411,139 +417,172 @@
     }
 
     // Review Form
-      div.write-review.yotpo-regular-box {
-        margin: 0;
+    div.write-review.yotpo-regular-box {
+      margin: 0;
 
 
-        .yotpo-header {
-          margin-bottom: 30px;
-
-          @include media-breakpoint-down('md') {
-            margin-bottom: 50px;
-          }
-
-          .yotpo-icon-default-star,
-          .yotpo-icon-star,
-          .yotpo-icon-default-half-star,
-          .yotpo-icon-half-star,
-          .yotpo-icon-default-empty-star,
-          .yotpo-icon-empty-star {
-            width: large-vw(30px, 70px) !important;
-            height: large-vw(30px, 70px) !important;
-
-            @include media-breakpoint-down('md') {
-              width: 30px !important;
-              height: 30px !important;
-            }
-          }
-        }
-
-        .yotpo-header h2.y-label.yotpo-header-title {
-          font-size: 50px;
-          padding: 0;
-          text-align: center;
-          color: $black;
-
-          @include media-breakpoint-down('md') {
-            font-size: 50px;
-          }
-        }
-
-        .form-element {
-          @include media-breakpoint-down('md') {
-            margin-bottom: 38px;
-          }
-        }
-
-        .yotpo-header span.y-label,
-        .form-element label{
-          font-weight: $font-weight-bold;
-          text-transform: uppercase;
-          padding: 0;
-          font-size: large-vw(25px, 40px);
-          margin-bottom: large-vw(12px, 25px);
-
-          @include media-breakpoint-down('md') {
-            font-size: 25px !important;
-            margin-bottom: 12px;
-          }
-        }
-
-        .form-element span.yotpo-mandatory-mark,
-        .yotpo-header .yotpo-mandatory-mark,
-        .form-element input,
-        .form-element textarea {
-          font-family: $font-family-sans-serif;
-          font-weight: $font-weight-bold;
-          border: none;
-          border-bottom: solid 4px $black;
-          color: $black;
-          font-size: large-vw(17px, 30px);
-          height: large-vw(45px, 75px);
-          margin: 0 0 75px;
-
-          @include media-breakpoint-down('md') {
-            border-bottom: solid 2px $black;
-            padding: 0px 0 10px;
-            font-size: 17px;
-            height: 45px;
-            margin-bottom: 0;
-          }
-
-          &:focus {
-            outline: none !important;
-          }
-        }
-
-        .form-element textarea {
-          border: solid;
-          min-height: 300px;
-          padding: 18px 30px;
-        }
-
-        .yotpo-header .yotpo-mandatory-mark,
-        .form-element span.yotpo-mandatory-mark {
-          border: none;
-          margin: 0;
-          padding: 0;
-        }
-
-        .form-element.submit-button {
-          width: 100%;
-          display: flex;
-          justify-content: center;
-
-          @include media-breakpoint-down('md') {
-          }
-        }
-
-        input.yotpo-default-button.primary-color-btn.yotpo-submit {
-          font-weight: $font-weight-bold !important;
-          color: $white !important;
-          background: $black !important;
-          padding: 20px 100px !important;
-          border-radius: 40px;
-          height: 80px;
-
-          @include media-breakpoint-down('md') {
-            margin: 10px 0 10px !important;
-            padding: 10px 100px !important;
-            height: 60px;
-          }
-        }
-
-        .yotpo-footer .connect-wrapper {
-          padding: 0 !important;
-        }
-      }
-
-
-      .yotpo-pager {
-        margin: large-vw(80px, 130px) 0 !important;
+      .yotpo-header {
+        margin-bottom: 30px;
 
         @include media-breakpoint-down('md') {
-          margin: 60px 0 0 !important;
+          margin-bottom: 50px;
+        }
+
+        .yotpo-icon-default-star,
+        .yotpo-icon-star,
+        .yotpo-icon-default-half-star,
+        .yotpo-icon-half-star,
+        .yotpo-icon-default-empty-star,
+        .yotpo-icon-empty-star {
+          width: large-vw(30px, 70px) !important;
+          height: large-vw(30px, 70px) !important;
+
+          @include media-breakpoint-down('md') {
+            width: 30px !important;
+            height: 30px !important;
+          }
         }
       }
+
+      .yotpo-header h2.y-label.yotpo-header-title {
+        font-size: 50px;
+        padding: 0;
+        text-align: center;
+        color: $black;
+
+        @include media-breakpoint-down('md') {
+          font-size: 50px;
+        }
+      }
+
+      .form-element {
+        @include media-breakpoint-down('md') {
+          margin-bottom: 38px;
+        }
+      }
+
+      .form-group {
+        display: unset;
+      }
+
+      .yotpo-header span.y-label,
+      .form-element label{
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+        padding: 0;
+        font-size: large-vw(25px, 40px);
+        margin-bottom: large-vw(12px, 25px);
+
+        @include media-breakpoint-down('md') {
+          font-size: 20px !important;
+          margin-bottom: 12px;
+        }
+      }
+
+      .form-element span.yotpo-mandatory-mark,
+      .yotpo-header .yotpo-mandatory-mark,
+      .form-element input,
+      .form-element textarea {
+        font-family: $font-family-sans-serif;
+        font-weight: $font-weight-bold;
+        border: none;
+        border-bottom: solid 4px $black;
+        color: $black;
+        font-size: large-vw(17px, 30px);
+        height: large-vw(45px, 75px);
+        margin: 0 0 75px;
+
+        @include media-breakpoint-down('md') {
+          border-bottom: solid 2px $black;
+          padding: 0px 0 10px;
+          font-size: 17px;
+          height: 45px;
+          margin-bottom: 0;
+        }
+
+        &:focus {
+          outline: none !important;
+        }
+      }
+
+      .form-element textarea {
+        border: solid;
+        min-height: 300px;
+        padding: 18px 30px;
+      }
+
+      .yotpo-header .yotpo-mandatory-mark,
+      .form-element span.yotpo-mandatory-mark {
+        border: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .form-element.submit-button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        @include media-breakpoint-down('md') {
+        }
+      }
+
+      .yotpo-size-field-buttons {
+        .yotpo-radio-wrapper {
+          height: large-vw(30.5px, 43px) !important;
+          display: flex;
+          align-items: center;
+
+          @include media-breakpoint-down('md') {
+            height: 30.5px !important;
+          }
+        }
+      }
+
+      .yotpo-size-field-bars {
+        .yotpo-field-bars-container {
+          .yotpo-size-bars {
+            display: flex;
+            align-items: center;
+            height: large-vw(30.5px, 43px);
+
+            @include media-breakpoint-down('md') {
+              height: 30.5px;
+            }
+          }
+          .yotpo-product-related-field-score-bar {
+            margin-top: 0 !important;
+          }
+        }
+      }
+
+      input.yotpo-default-button.primary-color-btn.yotpo-submit {
+        font-weight: $font-weight-bold !important;
+        color: $white !important;
+        background: $black !important;
+        padding: 20px 100px !important;
+        border-radius: 40px;
+        height: 80px;
+
+        @include media-breakpoint-down('md') {
+          margin: 10px 0 10px !important;
+          padding: 10px 100px !important;
+          height: 60px;
+        }
+      }
+
+      .yotpo-footer .connect-wrapper {
+        padding: 0 !important;
+      }
+    }
+
+
+    .yotpo-pager {
+      margin: large-vw(80px, 130px) 0 !important;
+
+      @include media-breakpoint-down('md') {
+        margin: 60px 0 0 !important;
+      }
+    }
   }
 }
