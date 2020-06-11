@@ -1,15 +1,21 @@
 .collection-drawer {
   border: 0;
   height: 100%;
+  overflow-x: none;
+  overflow-y: auto;
 
   .drawer__header {
     color: $white;
     padding: large-vw(30px, 45px) large-vw(20px, 30px);
     border: none;
+    margin-bottom: 0;
   }
 
   .drawer__header-title {
     text-transform: none;
+    opacity: 1;
+    transform: translateX(0);
+    color: $white;
   }
 
   .drawer__close {

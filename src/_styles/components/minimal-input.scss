@@ -101,6 +101,10 @@
 
   &:hover {
     transform: translateY(-50%) scale(1.2);
+  
+  &:focus,
+  &.focus {
+    outline: none;
   }
 
   @include media-breakpoint-down('md') {

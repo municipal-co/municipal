@@ -16,6 +16,12 @@
   }
 }
 
+.tiled-image__title {
+  @include media-breakpoint-up('xl') {
+    font-size: large-vw($h1-font-size-mobile, 130px);
+  }
+}
+
 .tiled-image__second-column {
   margin-top: large-vw(30px, 75px);
 
@@ -41,6 +47,7 @@
   top: large-vw(-70px, -175px);
   right: 45px;
   animation: rotating 30s linear infinite;
+  z-index: 10;
 
   img {
     max-width: large-vw(96px, 350px);

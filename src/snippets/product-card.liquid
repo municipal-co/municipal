@@ -8,7 +8,6 @@
   {% include 'product-card',
               product: { product } - required
               quick_view: { boolean } - optional, defaults to false
-              lazy_load: { boolean } - optional, defaults to false,
               show_swatches: { boolean } - optional, defaults to true
               show_reviews: { boolean } - optional, defaults to false
   %}
@@ -21,10 +20,6 @@
 
 {% if quick_view == blank %}
   {% assign quick_view = false %}
-{% endif %}
-
-{% if lazy_load == blank %}
-  {% assign lazy_load = false %}
 {% endif %}
 
 {% if show_swatches == blank %}
@@ -46,66 +41,33 @@
 
 {% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
 
+{% assign featured_image = product.featured_image %}
+{% if variant != blank %}
+  {% assign featured_image = variant.featured_image %}
+{% endif %}
+
 {% if product %}
 
   {% assign product_image_dimension = '600x' %}
-  {% assign product_url = product.url %}
-  {% if collection %}
-    {% assign product_url = product.url | within: collection %}
-  {% endif %}
+  {% assign product_url = variant.url | default: product.url | within: collection %}
 
   <div id="product-card-{{ product.id }}" class="product-card {{ card_classes }}" data-product-card
-  data-product-options= '{
-    {%- for option in product.options_with_values -%}
-      "{{- option.name -}}": [
-      {%- for value in option.values -%} {{ value | json }}{%- unless forloop.last -%},{%- endunless -%}
-      {%- endfor -%}
-      ]
-      {%- unless forloop.last -%},{%- endunless -%}
-    {%- endfor -%}
-  }'
+  {% unless auto_update_image == false and variant == blank %}
+    data-product-merged
+  {% endunless %}
   >
     <div class="product-card__contents" data-product-card-contents>
-      {% if product.featured_image %}
-        <div class="product-card__gallery">
-          <a href="{{ product_url }}">
-            {% if lazy_load %}
-              <div class="product-card__gallery-image" data-product-card-gallery>
-                <img data-src="{{ product.featured_image.src | img_url: product_image_dimension }}" alt="{{ product.featured_image.alt | escape }}" data-product-card-main-lazy>
-                <div class="product-card__gallery-placeholder"></div>
-              </div>
-            {% else %}
-              <div class="product-card__gallery-image" data-product-card-gallery>
-                <img src="{{ product.featured_image.src | img_url: product_image_dimension }}" alt="{{ product.featured_image.alt | escape }}" data-object-fit="cover" data-object-position="center">
-              </div>
-            {% endif %}
-            {% if product.images.size > 1 %}
-              {% assign alternate_image = false %}
-              {% for i in (1..product.images.size) %}
-                {% assign img = product.images[i] %}
-                {% assign img_alt_downcase = img.alt | downcase %}
-                {% unless img_alt_downcase contains alt_swatch_identifier %}
-                  {% assign alternate_image = img %}
-                  {% break %}
-                {% endunless %}
-              {% endfor %}
-              {% if alternate_image %}
-                {% comment %} Alt product image always gets lazy loaded {% endcomment %}
-                <div class="product-card__gallery-image product-card__gallery-image--alt">
-                  <img data-src="{{ alternate_image.src | img_url: product_image_dimension }}" alt="{{ alternate_image.alt | escape }}" data-product-card-alt-lazy data-object-fit="cover" data-object-position="center"/>
-                </div>
-              {% endif %}
-            {% endif %}
-          </a>
-          {% if quick_view %}
-            <div class="product-card__qv-trigger-wrap">
-              <a href="{{ product_url }}?view=quick-view" class="btn btn-primary" data-quick-view-trigger>Quick View</a>
-            </div>
-          {% endif %}
+      <div class="product-card__gallery">
+        <a href="{{ product_url }}">
+          <div class="product-card__gallery-image" data-product-card-gallery>
+            <img data-src="{{ featured_image.src | img_url: product_image_dimension }}" alt="{{ product.featured_image.alt | escape }}" data-product-card-main-lazy>
+            <div class="product-card__gallery-placeholder"></div>
+          </div>
 
           {% if show_sizes %}
             {%- capture sizes_html -%}
-              {% include 'product-dots-sizes' %}
+            {% include 'product-dots-sizes'
+                        current_color: color %}
             {%- endcapture -%}
 
             {% if sizes_html != blank %}
@@ -117,9 +79,8 @@
               </div>
             {% endif %}
           {% endif %}
-        </div>
-      {% endif %}
-
+        </a>
+      </div>
       <div class="product-card__info">
 
         {% if show_tag %}
@@ -150,7 +111,7 @@
         {% if show_colors %}
 
           {% capture color_html %}
-            {% include 'product-colors-counter', product: product, show_collection_colors: show_collection_colors %}
+            {% include 'product-colors-counter', product: product, current_color: color %}
           {% endcapture %}
 
           {% if color_html != blank %}
@@ -189,8 +150,6 @@
     <script type="application/json" data-product-json>
       {% include 'product-json' %}
     </script>
-
-    {% comment %} Quick view gets appended to here {% endcomment %}
 
   </div>
 

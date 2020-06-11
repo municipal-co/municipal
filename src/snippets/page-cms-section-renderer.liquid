@@ -137,7 +137,7 @@
           >
             <div class="container-fluid">
 
-              <div class="row justify-content-center">
+              <div class="row justify-content-center row-adjusted">
                 {% if eyebrow_icon != blank %}
                   <div class="video-section__eyebrow-icon frame frame--4x3">
                     {% render 'image_tag'
@@ -316,7 +316,7 @@
               {% endif %}
             {% endfor %}
 
-            <div class="row justify-content-center">
+            <div class="row justify-content-center row-adjusted">
               <div class="image-tiles-wrapper {% if counter == 1 and aspect_ratio == '1x1'%}col-lg-14 col-20{% else %}col-lg-22 col-20{% endif %}">
                 {% for i in (1..2) %}
                   {% assign index_image = 'image_' | append: i %}

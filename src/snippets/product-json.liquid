@@ -12,7 +12,7 @@
 {% endcomment %}
 
 {% if product %}
-  
+
   {% capture product_json %}
 
     {
@@ -23,6 +23,7 @@
       "content": {{ product.content | json }},
       "vendor": {{ product.vendor | json }},
       "type": {{ product.type | json }},
+      "url": {{ product.url | within: collection | json }},
       "tags": [
         {% for tag in product.tags %}
           {{ tag | json }}
@@ -68,10 +69,8 @@
             "taxable": {{ variant.taxable | json }},
             "title": {{ variant.title | json }},
             "weight": {{ variant.weight }},
-            "metafields": {
-
-            }            
-          }      
+            "url": {{ variant.url | within: collection | json }}
+          }
           {% unless forloop.last %},{% endunless %}
         {% endfor %}
       ],

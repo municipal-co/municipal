@@ -41,6 +41,13 @@
     @include make-row();
   }
 
+  .row-adjusted {
+    @include media-breakpoint-up('xl') {
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+  }
+
   // Remove the negative margin from default .row, then the horizontal padding
   // from all immediate children columns (to prevent runaway style inheritance).
   .no-gutters {
