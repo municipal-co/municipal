@@ -4,6 +4,7 @@
 }
 
 .complete-the-look {
+  padding-top: large-vw(60px, 155px);
 
   .row:not(.row--eyebrow) {
     justify-content: center;
@@ -13,6 +14,7 @@
   }
 
   .ctl__eyebrow {
+    color: $cyan;
     margin-bottom: large-vw(30px, 50px);
   }
 

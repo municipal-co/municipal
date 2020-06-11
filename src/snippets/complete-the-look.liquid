@@ -14,7 +14,15 @@
   {% assign product_array = product.metafields.custom_fields["product"] | split: separator %}
   {% assign fc_keys = product.metafields.custom_fields["complete_the_look"] | split: "," %}
 
-  <div class="complete-the-look" data-section-type="complete-the-look" data-animated-background="#ffffff">
+  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
+    <style>
+      .complete-the-look {
+        background-color: #F1F1F1;
+      }
+    </style>
+  {% endif %}
+
+  <div class="complete-the-look" data-section-type="complete-the-look" data-animated-background="#F1F1F1">
     <div class="container-fluid">
       <div class="row row--eyebrow justify-content-center">
         {% if eyebrow != blank %}
