@@ -65,9 +65,39 @@ export default class ProductCard {
       this.$el.one(this.events.MOUSEENTER, this.onMouseenter.bind(this));
     }
 
+    $('body').on('updateVariant', this.onVariantUpdate.bind(this));
     this.$dot.on(this.events.MOUSEENTER, this.onDotMouseenter.bind(this));
     this.$dot.on(this.events.MOUSELEAVE, this.onDotMouseleave.bind(this));
     this.$dot.on(this.events.CLICK, this.onDotClick.bind(this));
+  }
+
+  onVariantUpdate(e) {
+    const currentOption = e.variantSelected;
+    const colorIndex = this.productData.options.indexOf('Color') + 1;
+
+    if (this.$el.is('[data-product-merged]')) {
+      let imageUpdated = false;
+      console.log(this.$el);
+      this.productData.variants.forEach((el) => {
+        const lowcaseColor = el[`option${colorIndex}`].toLowerCase();
+        const lowcaseVariant = currentOption.toLowerCase();
+        if (lowcaseColor === lowcaseVariant && !imageUpdated) {
+          const featuredImage = el.featured_image.src;
+          const variantUrl = el.url;
+          $(selectors.mainLazyImg, this.$el).attr('src', featuredImage);
+          $('a', this.$el).attr('href', variantUrl);
+          imageUpdated = true;
+        }
+      });
+
+      if (!imageUpdated) {
+        const defaultImage = this.productData.featured_image;
+        const defaultUrl = this.productData.url;
+
+        $(selectors.mainLazyImg, this.$el).attr('src', defaultImage);
+        $('a', this.$el).attr('href', defaultUrl);
+      }
+    }
   }
 
   onDotClick(e) {
