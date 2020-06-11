@@ -14,11 +14,11 @@
   &:after {
     content: "";
     height: large-vw(110px, 240px);
-    background: black;
+    background: $black;
     width: 100%;
     position: absolute;
     z-index: -1;
-    bottom: 0;
+    bottom: -1px;
     
     @include media-breakpoint-down('md') {
       height: 15%;
