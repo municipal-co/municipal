@@ -227,13 +227,18 @@
   top: 50%;
   left: 50%;
   z-index: 999;
-  width: 20px;
-  height: 20px;
   pointer-events: none;
   opacity: 0;
 
   .product-gallery__slideshow:hover ~ & {
     opacity: 1;
+  }
+  
+  &,
+  .icon-zoom-in-full-color,
+  .icon-zoom-out-full-color {
+    width: large-vw(50px, 90px);
+    height: large-vw(50px, 90px);
   }
 
   @include media-breakpoint-down('md') {
