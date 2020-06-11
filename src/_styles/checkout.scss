@@ -7,232 +7,27 @@
 @import 'core/functions';
 @import 'core/variables';
 @import 'core/mixins';
-@import 'core/root';
-@import 'core/reboot';
 @import 'core/fonts';
-@import 'core/type';
-@import 'core/helpers';
-@import 'core/images';
-@import 'core/code';
-@import 'core/grid';
-@import 'core/layout';
-@import 'core/tables';
-@import 'core/forms';
-@import 'core/buttons';
 
-/**
- * CHECKOUT
- * ---------------------------------------
- *
- */
-$checkout-bp-sm-min: 750px;
-$checkout-bp-md-min: 1000px;
-$checkout-bp-sm-max: $checkout-bp-md-min - 1px;
-
-$checkout-grid-gutter-width: 30px;
-$checkout-bg: #fafafa;
-$checkout-border: #f00;
-$checkout-border-subtle: mix(#fff, #f00, 80%);
-
-$total-line-vertical-spacing: 17.5px;
-
-$header-height: 70px;
-$header-padding-v: 15px;
-$header-z-index: 100;
-
-@import 'checkout/layout';
-@import 'checkout/forms';
-@import 'checkout/breadcrumbs';
-@import 'checkout/steps';
-@import 'checkout/sidebar';
-
-.icon-svg--color-accent {
-  color: #f00;
-  vertical-align: inherit;
-}
-
-.notice {
-
-}
-
-.main {
-  h2 {
-
-  }
+body {
+  color: $white;
+  background-color: $black;
+  font-family: $font-family-base;
 }
 
 
-// Content Boxes
-
-.content-box {
-
-  .boxshadow & {
-    // -webkit-box-shadow: none;
-    //         box-shadow: none;
-  }
+h1, .heading-1,
+h2, .heading-2,
+h3, .heading-3,
+h4, .heading-4,
+h5, .heading-5 {
+  font-family: $font-family-base;
 }
 
-.content-box__row {
-
+a {
+  color: $white;
 }
 
-ul.policy-list {
-
+.input-checkbox:checked, .input-radio:checked {
+  box-shadow: 0 0 0 10px $black inset;
 }
-
-// Desktop Design with min-width: 1000px
-@media (min-width: $checkout-bp-md-min) {
-
-  .anyflexbox .content .wrap {
-    @include flex-direction(row);
-  }
-}
-
-// Mobile Design with max-width: 749px
-@media (max-width: $checkout-bp-sm-max) {
-
-}
-
-html.js {
-
-  .content {
-    opacity: 0;
-    transition: opacity 450ms ease-out;
-  }
-
-  body.checkout-ready .content {
-    opacity: 1;
-  }
-}
-
-.container--checkout {
-  background-color: $white;
-  
-  .logo-container {
-    background-color: $black;
-  }
-
-  .breadcrumb.breadcrumb--center {
-    justify-content: flex-start;
-
-    @media (max-width: 999px) {
-      display: none;
-    }
-    
-    li.breadcrumb__item {
-      color: $black;
-      font-family: $font-family-sans-serif;
-      font-size: 30px;
-      font-weight: $font-weight-bold;
-
-      &:not(:last-child):after {
-        content: "/";
-        color: black;
-        padding: 0 10px;
-      }
-    }
-  }
-
-  .main, 
-  .sidebar {
-    padding-top: 0;
-    margin-top: large-vw(60px, 120px);
-  }
-
-  .sidebar {
-    @media (max-width: 999px) {
-      margin-top: 0;
-      border-bottom: solid;
-      margin-bottom: 40px;
-      max-width: 100%;
-    }
-  }
-
-  .main {
-    @media (max-width: 999px) {
-      max-width: 100%;
-      margin-top: 0;
-    }
-
-    @media (min-width: 1000px) {
-      border-right: solid 8px $black;
-      padding-right: 4%;
-    }
-  }
-
-  .main__footer {
-    border: 0;
-  }
-
-  .checkout-inner-container {
-    @media (max-width: 999px) {
-      display: flex;
-      flex-direction: column-reverse;
-    }
-  }
-
-  .section.section--reductions.hidden-on-desktop {
-    display: none;
-  }
-
-  .order-summary-toggle.shown-if-js {
-    background-color: $white;
-    border: none;
-    outline: none;
-
-    .wrap {
-      padding: 0;
-    }
-
-    .order-summary-toggle__icon-wrapper {
-      display: none;
-    }
-
-    span.order-summary-toggle__text {
-      color: $black !important;
-      font-weight: $font-weight-bold;
-
-      svg {
-        fill: black;
-      }
-    }
-
-    span.total-recap__final-price {
-      font-size: 22px;
-      font-weight: $font-weight-bold;
-    }
-  }
-
-  .copyright-text {
-    color: $black;
-    font-weight: $font-weight-bold;
-  }
-
-  .order-summary__scroll-indicator {
-    pointer-events: none;
-  }
-
-  .logged-in-customer-information {
-    .logged-in-customer-information__avatar-wrapper {
-      display: none;
-    }
-    .logged-in-customer-information__paragraph {
-      display: flex;
-      justify-content: space-between;
-
-      @media (max-width: 999px) {
-        flex-direction: column;
-      }
-    }
-
-    .logged-in-customer-information__paragraph .page-main__emphasis {
-      font-weight: $font-weight-bold;
-    }
-
-    .logged-in-customer-information__paragraph a {
-      @extend .btn-link;
-    }
-  }
-}
-
-
