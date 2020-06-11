@@ -1,7 +1,7 @@
 {% include 'page-cms-section-renderer', section: section %}
 
 {% schema %}
-  { 
+  {
     "name": "Page - About Us",
     "class": "about-us",
     "settings": [
@@ -26,6 +26,11 @@
           {"label": "Sport-Green", "value": "#CCFF00"},
           {"label": "Sport-Blue", "value":"#009dcc"}
         ]
+      },
+      {
+        "type": "image_picker",
+        "id": "handwritten_text_image",
+        "label": "Handwritten text image"
       },
       {
         "type": "text",
@@ -98,7 +103,7 @@
             "default":   "medium"
           }
         ]
-      },  
+      },
       {
         "type": "promo",
         "name": "Promo Module",
@@ -106,7 +111,7 @@
           {
             "type": "header",
             "content": "Content"
-          },   
+          },
           {
             "type": "text",
             "id": "eyebrow",
@@ -136,12 +141,12 @@
             "type": "url",
             "id": "cta_url",
             "label": "CTA Link"
-          },  
+          },
           {
             "type": "image_picker",
             "id": "secondary_icon",
             "label": "Secondary Icon"
-          },    
+          },
           {
             "type": "image_picker",
             "id": "image",
@@ -203,8 +208,8 @@
               {"label": "Sport-Blue", "value":"#009dcc"}
             ],
             "default": "#ffffff"
-          } 
-        ]  
+          }
+        ]
       },
       {
         "type": "richtext",
@@ -229,7 +234,7 @@
           {
             "type": "header",
             "content": "Section Content"
-          },   
+          },
           {
             "type": "image_picker",
             "id": "eyebrow_icon",
@@ -321,7 +326,7 @@
           }
         ]
        },
-       {   
+       {
         "type": "text_plus_signature",
         "name": "Text + Signature",
         "settings": [
@@ -444,7 +449,7 @@
           {
             "type": "header",
             "content": "Section Content"
-          },   
+          },
           {
             "type": "image_picker",
             "id": "eyebrow_icon",
@@ -473,7 +478,7 @@
             "type": "url",
             "id": "cta_url_1",
             "label": "CTA Link"
-          }, 
+          },
           {
             "type": "image_picker",
             "id": "collection_image_1",
@@ -497,7 +502,7 @@
             "type": "url",
             "id": "cta_url_2",
             "label": "CTA Link"
-          }, 
+          },
           {
             "type": "image_picker",
             "id": "collection_image_2",
@@ -545,7 +550,7 @@
             ],
             "default": "#2c6275"
           }
-        ]   
+        ]
       },
       {
         "type": "tiled_image",
