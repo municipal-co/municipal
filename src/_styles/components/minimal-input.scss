@@ -22,6 +22,10 @@
     color: $black;
   }
 
+  &:focus ~ .minimal-input-box__submit {
+    fill: $cyan;
+  }
+
   &::placeholder {
     font-family: $font-family-base;
     color: $black;
@@ -93,6 +97,10 @@
   height: 100%;
   background: transparent;
   opacity: 1;
+  transition: fill 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-50%) scale(1.2);
   
   &:focus,
   &.focus {
