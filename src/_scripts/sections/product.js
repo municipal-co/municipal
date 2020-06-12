@@ -50,7 +50,7 @@ export default class ProductSection extends BaseSection {
 
     $(selectors.desktopBuyNow, this.container).on('click', this.onBuyNowClick.bind(this));
     $(selectors.sectionScroller, this.container).on('click', this.sectionScrollerClick.bind(this));
-    $('body').on('updateCurrentModule', this.onUpdateCurrentModule.bind(this));
+    $('body').on('moduleInView', this.onModuleInView.bind(this));
     $(selectors.drawerToggler).on('click', this.toggleCollectionDrawer.bind(this));
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
     $(selectors.fitGuideTabsDots).on('click', this.toggleFitGuideTab.bind(this));
@@ -166,15 +166,12 @@ export default class ProductSection extends BaseSection {
     const targetOffset = $(target).offset().top;
     const stickyBarOffset = this.$stickyBar.outerHeight();
 
-    
     $('html, body').animate({
       scrollTop: targetOffset - stickyBarOffset
     }, 300);
-    
-    this.updateScrollerLinks(target);
   }
 
-  onUpdateCurrentModule(event) {
+  onModuleInView(event) {
     this.updateScrollerLinks(event.selector);
   }
 
