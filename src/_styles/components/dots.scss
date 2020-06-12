@@ -10,7 +10,12 @@
   &--small {
     margin: 0 -#{($dot-small-spacing / 2)} -#{$dot-small-bottom-margin}; // account for the 2px padding + 1px border on the dot
   }
+  
+  &:not(.dots--color) .dot:hover {
+    background-color: $black;
+  }
 }
+
 
 .dot {
   display: inline-block;
@@ -66,6 +71,14 @@
     }
   }
 
+  &:hover {
+    border-color: $dot-active-border-color;
+    transition: background-color $transition-duration-fast $transition-timing-function-in;
+    .dot__inner {
+      color: $white;
+    }
+  }
+
   .dots--color &{
     border: 0;
 
@@ -117,6 +130,7 @@
     height: 100%;
     border-radius: $dot-border-radius;
     border: 1px solid transparent;
+    transition: color $transition-duration-fast $transition-timing-function-out;
     background: {
       size: auto;
       position: center;
