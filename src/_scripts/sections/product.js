@@ -166,11 +166,12 @@ export default class ProductSection extends BaseSection {
     const targetOffset = $(target).offset().top;
     const stickyBarOffset = this.$stickyBar.outerHeight();
 
-    this.updateScrollerLinks(target);
-
+    
     $('html, body').animate({
       scrollTop: targetOffset - stickyBarOffset
     }, 300);
+    
+    this.updateScrollerLinks(target);
   }
 
   onUpdateCurrentModule(event) {
