@@ -169,7 +169,7 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
 }
 
 .promo__title {
-  font-family: Sequel Sans Title;
+  font-family: $headings-font-family;
   margin-bottom: large-vw(20px, 45px);
   line-height: large-vw(50px, 150px);
 
