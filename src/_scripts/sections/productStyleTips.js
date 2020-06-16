@@ -36,7 +36,7 @@ export default class ProductStyleTips extends BaseSection {
     if (this.$videoPlayer.length) {
       this.$videoPlayer.each(function( index ) {
         const player = new VideoPlayer(this);
-        const newPlayer = videoPlayers.push(player);
+        const newPlayer = videoPlayers.push(player); // eslint-disable-line no-unused-vars
       });
     }
 

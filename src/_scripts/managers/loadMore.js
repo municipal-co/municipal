@@ -16,7 +16,7 @@ export default class LoadMore {
     this.$el = $(el);
     // this is outside the module so cant be scoped within this.$el
     this.$gridContainer = $(this.$el.data('grid-container'));
-    this.shouldUpdateUrl = this.$el.data('update-url') === false ? false : true;
+    this.shouldUpdateUrl = this.$el.data('update-url') === false ? false : true; // eslint-disable-line no-unneeded-ternary
 
     if (this.$gridContainer) {
       this.cardSelector = this.$el.data('card-selector');

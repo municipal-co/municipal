@@ -38,7 +38,6 @@ export default class CollectionSection extends BaseSection {
       return;
     }
 
-    const self = this;
     this.$drawer = $(selectors.filtersDrawers, this.$container);
     this.$filterBar = $(selectors.filterBar, this.$container);
     this.filterBarPosition = this.$filterBar.offset().top;

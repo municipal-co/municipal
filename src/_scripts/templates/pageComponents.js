@@ -5,8 +5,8 @@ import Tabs from '../ui/tabs';
 import NewsletterForm from '../ui/newsletterForm';
 import VideoPlayer from '../ui/videoPlayer';
 
-const $body = $(document.body);
-  
+const $body = $(document.body); // eslint-disable-line no-unused-vars
+
 const selectors = {
   slideupAlertForm: '[data-slideup-alert-form]',
   tabContainer: '[data-tab-container]',
