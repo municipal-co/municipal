@@ -77,7 +77,6 @@ export default class ProductCard {
 
     if (this.$el.is('[data-product-merged]')) {
       let imageUpdated = false;
-      console.log(this.$el);
       this.productData.variants.forEach((el) => {
         const lowcaseColor = el[`option${colorIndex}`].toLowerCase();
         const lowcaseVariant = currentOption.toLowerCase();

@@ -51,7 +51,7 @@ export default class AJAXCartSection extends BaseSection {
 
       if (queryParams && queryParams['open-mini-cart']) {
         this.ajaxCartUI.open();
-        history.pushState({}, null, newUrl);
+        window.history.pushState({}, null, newUrl);
       }
     });
 
