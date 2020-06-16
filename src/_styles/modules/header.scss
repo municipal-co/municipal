@@ -43,6 +43,16 @@
       }
     }
   }
+
+  &.hide-on-scroll {
+    transform: translateY(-110%);
+    transition: all $transition-duration-dropdown $transition-timing-function-in;
+  }
+
+  &.show-on-scroll {
+    transform: translateY(0);
+    transition: all $transition-duration-dropdown $transition-timing-function-out;
+  }
 }
 
 // Make a special version of .container that is fluid w/ max width and vertical flex-alignment of child elements

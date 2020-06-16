@@ -14,7 +14,9 @@ const selectors = {
 const classes = {
   headerFixed: 'is-fixed',
   siteHasFixedHeader: 'site-fixed-header',
-  headerScroll: 'is-scrolling'
+  headerScroll: 'is-scrolling',
+  showOnScroll: 'show-on-scroll',
+  hideOnScroll: 'hide-on-scroll'
 };
 
 export default class HeaderSection extends BaseSection {
@@ -24,6 +26,7 @@ export default class HeaderSection extends BaseSection {
     this.$el = $(selectors.header, this.$container);
 
     this.$container.on(this.events.MOUSELEAVE, this.onMouseLeave.bind(this));
+    this.initialPosition = 0;
 
     // Register each dropdown trigger
     $(selectors.dropdownTrigger, this.$container).each((i, trigger) => {
@@ -34,6 +37,11 @@ export default class HeaderSection extends BaseSection {
     if ($body.hasClass(classes.siteHasFixedHeader)) {
       $window.on(this.events.SCROLL, throttle(20, this.onScroll.bind(this)));
       this.onScroll(); // hit this one time on init to make sure everything is good
+    }
+
+
+    if ($body.hasClass("testerino")) {
+      $window.on(this.events.SCROLL, throttle(20, this.onScroll.bind(this)));
     }
   }
 
@@ -47,6 +55,8 @@ export default class HeaderSection extends BaseSection {
       if (scrollTop <= actualOffset) {
         this.$el.removeClass(classes.headerFixed);
         this.$el.removeClass(classes.headerScroll);
+        this.$el.removeClass(classes.showOnScroll);
+        this.$el.removeClass(classes.hideOnScroll);
       }
       else {
         this.$el.addClass(classes.headerFixed);
@@ -55,8 +65,34 @@ export default class HeaderSection extends BaseSection {
     });
   }
 
+  positionCheck() {
+   const scrollTop = $window.scrollTop();
+   const actualOffset = this.$container.offset().top;
+   let lastInitialPosition = this.initialPosition;
+
+   // Do DOM updates inside.
+    if (this.$el.hasClass(classes.headerScroll)) {
+      requestAnimationFrame(() => {
+        if (scrollTop >= lastInitialPosition) {
+          this.$el.removeClass(classes.showOnScroll);
+          this.$el.addClass(classes.hideOnScroll);
+          this.initialPosition = scrollTop;
+        }
+        else {
+          this.$el.addClass(classes.showOnScroll);
+          this.$el.removeClass(classes.hideOnScroll);
+          this.initialPosition = scrollTop;
+        }
+      });
+    }
+  }
+
   onScroll() {
     this.scrollCheck();
+
+    if ($body.hasClass("testerino")) {
+      this.positionCheck();    
+    }  
   }
 
   onMouseLeave() {
