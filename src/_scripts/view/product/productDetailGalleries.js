@@ -60,7 +60,11 @@ class ProductDetailGallery {
       init: false,
       loop: false,
       slidesPerView: 1,
-      speed: 500,
+      speed: 100,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
       lazy: {
         loadPrevNext: true,
         loadPrevNextAmount: 1
