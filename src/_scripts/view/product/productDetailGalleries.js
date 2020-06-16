@@ -98,12 +98,12 @@ class ProductDetailGallery {
   }
 
   locateZoomIcon(event) {
-    const iconSize = 180;
+    const $icon = $(selectors.zoomInIcon);
+    const iconSize = $icon.width();
     const slideshowArea = {
       right: this.$slideshow.offset().left + this.$slideshow.width() - iconSize,
       bottom: this.$slideshow.offset().top + this.$slideshow.height() - iconSize
     }
-    const $icon = $(selectors.zoomInIcon);
 
     $icon.offset(
       {
@@ -114,12 +114,12 @@ class ProductDetailGallery {
   }
 
   locateZoomOutIcon(event) {
-    const iconSize = 180;
+    const $icon = $(selectors.zoomOutIcon);
+    const iconSize = $icon.width();
     const zoomArea = {
       right: this.$zoomItem.offset().left + this.$zoomItem.width() - iconSize,
       bottom: this.$zoomItem.offset().top + this.$zoomItem.height() - iconSize
     }
-    const $icon = $(selectors.zoomOutIcon);
 
     $icon.offset(
       {

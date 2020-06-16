@@ -240,13 +240,6 @@
     opacity: 1;
   }
 
-  &,
-  .icon-zoom-in-full-color,
-  .icon-zoom-out-full-color {
-    width: large-vw(50px, 90px);
-    height: large-vw(50px, 90px);
-  }
-
   @include media-breakpoint-down('md') {
     display: none;
   }
@@ -296,7 +289,6 @@
   height: 100vh;
   pointer-events: none;
   z-index: 9999999;
-  will-change: opacity;
   transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
   cursor: none;
 
@@ -328,6 +320,6 @@
 
 .icon-zoom-in-full-color,
 .icon-zoom-out-full-color {
-  width: 180px;
-  height: 180px;
+  width: large-vw(50px, 90px);
+  height: large-vw(50px, 90px);
 }
