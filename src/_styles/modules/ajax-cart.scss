@@ -208,6 +208,7 @@ body.ajax-cart-open {
   }
   @include media-breakpoint-down('md') {
     width: 100px;
+    height: 100px;
   }
 }
 
@@ -232,6 +233,9 @@ body.ajax-cart-open {
   display: flex;
   justify-content: space-between;
   padding-left: 25px;
+  @include media-breakpoint-down('md') {
+    padding-left: 0;
+  }
 }
 
 .ajax-cart__item-title {
