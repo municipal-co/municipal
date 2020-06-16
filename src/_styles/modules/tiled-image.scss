@@ -48,19 +48,20 @@
   right: 45px;
   animation: rotating 30s linear infinite;
   z-index: 10;
-
-  img {
-    max-width: large-vw(96px, 350px);
-
-    @include media-breakpoint-down('md') {
-      max-width: 96px;
-    }
+  width: large-vw(96px, 350px);
+  @include media-breakpoint-down('md') {
+    width: 20%;
   }
-
   @include media-breakpoint-down('sm') {
     top: 80px;
-    right: 63%;
+    right: 55%;
   }
+
+  img {
+    display: block;
+    width: 100%;
+  }
+
 }
 
 .tiled-image__left-image {
