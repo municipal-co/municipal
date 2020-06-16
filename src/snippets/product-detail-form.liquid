@@ -203,9 +203,6 @@
     {{ product.description }}
   </div>{% endcomment %}
 
-  {% unless is_quick_view or shipping_modal_html == blank %}
-    {{ shipping_modal_html }}
-  {% endunless %}
 
   {% if is_quick_view %}
     {% comment %} This link will get updated on variant change.  See productDetailForm.js {% endcomment %}
@@ -222,3 +219,7 @@
 {% if product.metafields.custom_fields["show_fit_guide"] == 1 and product.metafields.custom_fields['fit_guide_reference'] != blank %}
   {% include 'fit-guide-modal' %}
 {% endif %}
+
+{% unless is_quick_view or shipping_modal_html == blank %}
+  {{ shipping_modal_html }}
+{% endunless %}

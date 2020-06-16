@@ -31,6 +31,8 @@
     color: $white;
     font-size: 17px;
     text-transform: none;
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .close {
@@ -60,7 +62,7 @@
     padding: large-vw(40px, 80px);
 
     @include media-breakpoint-down('md') {
-      padding: 110px 35px 35px;
+      padding: 60px 35px 45px;
     }
   }
 
