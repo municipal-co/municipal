@@ -436,6 +436,7 @@
         .yotpo-icon-empty-star {
           width: large-vw(30px, 70px) !important;
           height: large-vw(30px, 70px) !important;
+          background-size: 0;
 
           @include media-breakpoint-down('md') {
             width: 30px !important;
