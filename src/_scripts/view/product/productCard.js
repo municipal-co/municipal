@@ -69,6 +69,33 @@ export default class ProductCard {
     this.$dot.on(this.events.MOUSEENTER, this.onDotMouseenter.bind(this));
     this.$dot.on(this.events.MOUSELEAVE, this.onDotMouseleave.bind(this));
     this.$dot.on(this.events.CLICK, this.onDotClick.bind(this));
+    this.$variantMessage.on(this.events.CLICK, this.onTitleClick.bind(this));
+
+    this.updateTitleVariant.call(this);
+  }
+
+  onTitleClick(e) {
+    e.preventDefault();
+    const $el = $(e.currentTarget);
+    const currentVariant = $el.data('variant-id');
+    if (currentVariant !== '') {
+      CartAPI.addItemFromID(currentVariant)
+      .then((data) => {
+        const event = $.Event( this.events.UPDATE_AND_OPEN, { cart: data });
+        $window.trigger(event);
+      })
+      .fail((data) => {
+        alert(data.message);
+      })
+    }
+  }
+
+  updateTitleVariant(currentVariant = null) {
+    if (currentVariant === null) {
+      currentVariant = this.$dot.not('[disabled]').eq(0).data('variant-id');
+    }
+
+    this.$variantMessage.data('variant-id', currentVariant);
   }
 
   onVariantUpdate(e) {
@@ -100,6 +127,7 @@ export default class ProductCard {
   }
 
   onDotClick(e) {
+    e.preventDefault()
     const $el = $(e.currentTarget);
     const variantId = $el.data('variant-id');
     if (!$el.is('[disabled]')) {
@@ -125,9 +153,10 @@ export default class ProductCard {
       if (variant.id === variantId) {
         const availability = variant.available;
         const inventoryQuantity = variant.inventory_quantity;
-
+        self.updateTitleVariant(variantId);
         if (availability === false) {
           self.$variantMessage.text('Out of Stock');
+          self.updateTitleVariant('');
         } else if (inventoryQuantity <= self.lowInventoryThreshold) {
           self.$variantMessage.text(`Only ${inventoryQuantity} Left`);
         } else {

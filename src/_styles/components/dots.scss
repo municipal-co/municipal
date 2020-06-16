@@ -80,6 +80,16 @@
     }
   }
 
+  &[disabled] {
+    opacity: 0.2;
+    &:hover {
+      background-color: $white !important;
+      .dot__inner {
+        color: $black;
+      }
+    }
+  }
+
   .dots--color &{
     border-color: $color-dots-border;
     padding: 0;
