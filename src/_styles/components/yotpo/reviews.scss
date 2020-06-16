@@ -222,9 +222,14 @@
           justify-content: center;
 
           .yotpo-icon {
+            width: large-vw(24px ,75px) !important;
+            height: large-vw(24px ,75px) !important;
+            background: none !important;
             margin-bottom: large-vw(28px, 55px);
 
             @include media-breakpoint-down('md') {
+              width: 24px !important;
+              height: 24px !important;
               margin-bottom: 28px;
             }
           }

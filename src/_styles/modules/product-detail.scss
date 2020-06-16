@@ -46,11 +46,12 @@
 }
 
 .product__price {
-  margin-top: large-vw(30px, 35px);
+  margin-top: large-vw(25px, 30px);
   font-weight: bold;
   margin-bottom: 9px;
 
   @include media-breakpoint-down('md') {
+    font-size: 25px;
     margin-top: 30px;
   }
 }
@@ -83,8 +84,11 @@
 }
 
 .product__selector-header {
-  font-size: 20px;
+  font-size: large-vw(15px, 20px);
   font-weight: $font-weight-bold;
+  @include media-breakpoint-down('md'){
+    font-size: 20px;
+  }
 }
 
 .product__selector-option {
@@ -93,8 +97,10 @@
   padding: 0;
 }
 
-@include media-breakpoint-down('md') {
-  .product__fit-guide-toggler {
+.product__fit-guide-toggler {
+  font-size: large-vw(20px, 30px);
+  @include media-breakpoint-down('md') {
+    font-size: 20px;
     margin-top: 30px;
   }
 }
@@ -233,7 +239,7 @@
   .product-gallery__slideshow:hover ~ & {
     opacity: 1;
   }
-  
+
   &,
   .icon-zoom-in-full-color,
   .icon-zoom-out-full-color {

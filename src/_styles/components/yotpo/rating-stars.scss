@@ -1,5 +1,5 @@
 
-.yotpo.yotpo-rating-stars {
+#yotpo-star-reviews.yotpo.yotpo-rating-stars {
   margin: 15px 0 0;
   min-height: 20px; // initial height
   // opacity: 0;
@@ -42,8 +42,8 @@
   @if $yotpo-icon-star {
     .yotpo-icon-default-star,
     .yotpo-icon-star {
-      width: 18px !important;
-      height: 18px !important;
+      width: large-vw(20px, 24px) !important;
+      height: large-vw(20px, 24px) !important;
       border: 1px solid transparent;
       margin: 1px;
       display: block;
@@ -53,6 +53,11 @@
       // &:last-child {
       //   margin-right: 0;
       // }
+
+      @include media-breakpoint-down('md') {
+        width: 20px !important;
+        height: 20px !important;
+      }
 
       &:hover:before {
         content: "" !important;
@@ -80,8 +85,8 @@
   @if $yotpo-icon-star-half {
     .yotpo-icon-default-half-star,
     .yotpo-icon-half-star {
-      width: 18px !important;
-      height: 18px !important;
+      width: large-vw(20px, 24px) !important;
+      height: large-vw(20px, 24px) !important;
       border: 1px solid transparent;
       margin: 1px;
       display: block;
@@ -91,6 +96,11 @@
       // &:last-child {
       //   margin-right: 0;
       // }
+
+      @include media-breakpoint-down('md') {
+        width: 20px !important;
+        height: 20px !important;
+      }
 
       &:hover:before {
         content: "" !important;
@@ -118,8 +128,8 @@
   @if $yotpo-icon-star-empty {
     .yotpo-icon-default-empty-star,
     .yotpo-icon-empty-star {
-      width: 18px !important;
-      height: 18px !important;
+      width: large-vw(20px, 24px) !important;
+      height: large-vw(20px, 24px) !important;
       border: 1px solid transparent;
       margin: 1px;
       display: block;
@@ -129,6 +139,11 @@
       // &:last-child {
       //   margin-right: 0;
       // }
+
+      @include media-breakpoint-down('md') {
+        width: 20px !important;
+        height: 20px !important;
+      }
 
       &:hover:before {
         content: "" !important;
