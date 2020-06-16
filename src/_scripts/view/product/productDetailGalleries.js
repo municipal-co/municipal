@@ -134,7 +134,7 @@ class ProductDetailGallery {
       target: '.zoom-container',
       touch: false,
       escToClose: true,
-      magnify: 1.2,
+      magnify: 1,
       duration: 300,
       callback: () => {
         $zoomTarget.addClass(classes.zoomReady);
