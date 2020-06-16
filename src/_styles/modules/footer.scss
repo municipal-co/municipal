@@ -47,35 +47,12 @@
 
     .minimal-input-box__input {
       height: large-vw(54px, 124px);
-      background-color: $white;
-      color: $black;
       font-size: large-vw(18px, 40px);
 
       @include media-breakpoint-down('md') {
         height: 54px;
         font-size: 18px;
         padding: 8px 50px 10px 25px;
-      }
-    }
-
-    .minimal-input-box__submit {
-      width: large-vw(30px, 70px);
-      right: large-vw(20px, 60px);
-
-      @include media-breakpoint-down('md') {
-        width: 30px;
-        right: 20px;
-      }
-    }
-
-    .minimal-input-box__submit svg {
-      fill: inherit;
-      width: large-vw(30px, 70px);
-      height: large-vw(30px, 70px);
-
-      @include media-breakpoint-down('md') {
-        width: 30px;
-        height: 30px;
       }
     }
 
