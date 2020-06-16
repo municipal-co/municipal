@@ -179,17 +179,15 @@ export default class CollectionSection extends BaseSection {
   }
 
   updateCollection(data, $grid) {
-      const gridItems = $(data).find(selectors.gridItem);
+    const gridItems = $(data).find(selectors.gridItem);
     if (typeof $grid === 'undefined') {
       $(selectors.collectionGrid, this.$container).empty().append(gridItems);
+    } else if (gridItems.length > 0) {
+      $grid.removeClass(classes.empty);
+      $grid.empty().append(gridItems);
     } else {
-      if (gridItems.length > 0) {
-        $grid.removeClass(classes.empty);
-        $grid.empty().append(gridItems);
-      } else {
-        $grid.addClass(classes.empty);
-        $grid.empty().append('<p class="p1">The filters you selected thrown no results for this collection</p>')
-      }
+      $grid.addClass(classes.empty);
+      $grid.empty().append('<p class="p1">The filters you selected thrown no results for this collection</p>')
     }
 
     $(selectors.productCard).each((index, el) => {

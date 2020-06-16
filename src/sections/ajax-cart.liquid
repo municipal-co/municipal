@@ -54,7 +54,7 @@
       <ul class="ajax-cart__list">
       {{#each items}}
         <li class="ajax-cart__item" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
-          <div class="ajax-cart__item-image-wrapper">
+          <div class="ajax-cart__item-image-wrapper frame frame--1x1">
             <img src="{{ image }}" class="ajax-cart__item-image" data-object-fit="cover" data-object-position="center">
           </div>
           <div class="ajax-cart__title-container">
@@ -77,7 +77,6 @@
                   {{/if}}
                 {{/if}}
               {{/unless}}
-              <li class="ajax-cart__item-price">{{ price }}</li>
               <li>
                 {{#if variant_quantity_limit}}
                   <div class="quantity-adjuster" data-quantity-adjuster>
@@ -90,6 +89,7 @@
                   Quantity: {{ quantity }}
                 {{/if}}
               </li>
+              <li class="ajax-cart__item-price">{{ price }}</li>
             </ul>
           </div>
         </li>

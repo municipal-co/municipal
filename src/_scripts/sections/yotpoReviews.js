@@ -9,8 +9,9 @@ export default class YotpoReviews extends BaseSection {
     this.background = this.$container.data('background-color');
     this.observerProperties = {
       root: null,
+      rootMargin: '0% 0% -20% 0%',
       threshold: 0.1
-    }
+    };
 
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
@@ -18,8 +19,9 @@ export default class YotpoReviews extends BaseSection {
 
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
-      if (entry.intersectionRatio > 0.4) {
-        const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
+      if (entry.intersectionRatio > 0.1) {
+        
+        const event = $.Event('moduleInView', { selector: '#' + this.$container.attr('id') });
 
         $('body').trigger(event);
       }
