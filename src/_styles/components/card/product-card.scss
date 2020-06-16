@@ -183,10 +183,10 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      border: large-vw(1px, 3px) solid $red;
+      border-bottom: large-vw(3px, 6px) solid $red;
       width: 100%;
       @include media-breakpoint-down('md') {
-        border-width: 1px;
+        border-bottom: 3px solid $red;
       }
     }
 
