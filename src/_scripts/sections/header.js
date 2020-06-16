@@ -74,11 +74,13 @@ export default class HeaderSection extends BaseSection {
     if (this.$el.hasClass(classes.headerScroll)) {
       requestAnimationFrame(() => {
         if (scrollTop >= lastInitialPosition) {
+          $body.removeClass('showing-header');
           this.$el.removeClass(classes.showOnScroll);
           this.$el.addClass(classes.hideOnScroll);
           this.initialPosition = scrollTop;
         }
         else {
+          $body.addClass('showing-header');
           this.$el.addClass(classes.showOnScroll);
           this.$el.removeClass(classes.hideOnScroll);
           this.initialPosition = scrollTop;
@@ -90,7 +92,7 @@ export default class HeaderSection extends BaseSection {
   onScroll() {
     this.scrollCheck();
 
-    if ($body.hasClass("testerino")) {
+    if ($body.hasClass("header-hide-on-scroll")) {
       this.positionCheck();    
     }  
   }

@@ -43,15 +43,17 @@
       }
     }
   }
+  
+  @include media-breakpoint-up('lg') {
+    &.hide-on-scroll {
+      transform: translateY(-110%);
+      transition: all $transition-duration-dropdown $transition-timing-function-in;
+    }
 
-  &.hide-on-scroll {
-    transform: translateY(-110%);
-    transition: all $transition-duration-dropdown $transition-timing-function-in;
-  }
-
-  &.show-on-scroll {
-    transform: translateY(0);
-    transition: all $transition-duration-dropdown $transition-timing-function-out;
+    &.show-on-scroll {
+      transform: translateY(0);
+      transition: all $transition-duration-dropdown $transition-timing-function-out;
+    } 
   }
 }
 

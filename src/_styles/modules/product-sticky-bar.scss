@@ -1,3 +1,10 @@
+.showing-header {
+  .product__sticky-bar.is-visible {
+    // transform: translateY(100%);
+    transition: all $transition-duration-dropdown $transition-timing-function-out;
+  }
+}
+
 .product__sticky-bar {
   position: fixed;
   width: 100%;

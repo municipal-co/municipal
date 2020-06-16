@@ -1,11 +1,19 @@
 // -------------------------
 // Collection page
 // -------------------------
+.showing-header {
+  .collection-filter-bar.is-fixed {
+    @include media-breakpoint-up('lg') {
+      transform: translateY(100%);
+      transition: all $transition-duration-dropdown $transition-timing-function-out;
+    }
+  }
+}
 
 .collection-filter-bar {
   display: flex;
   align-items: center;
-  padding: large-vw(20px ,35px) large-vw(25px, 40px);
+  padding: large-vw(3px ,5px) large-vw(25px, 40px);
   border-bottom: 4px solid $black;
   margin-bottom: 80px;
   z-index: 2101;
@@ -16,9 +24,16 @@
     left: 0;
     position: fixed;
     background-color: white;
-    @include media-breakpoint-up('md') {
-      top: large-vw(50px, 80px);
+    transition: all $transition-duration-dropdown $transition-timing-function-in;
+
+    @include media-breakpoint-up('lg') {
+      top: 0;
     }
+  }
+
+  .collection-filter-bar__filter-toggler {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
