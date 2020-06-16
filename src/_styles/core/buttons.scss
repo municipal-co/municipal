@@ -105,6 +105,9 @@
       height: large-vw(30px, 50px);
     }
   }
+  @include media-breakpoint-down('xs') {
+    width: 100%;
+  }
 }
 
 // Future-proof disabling of clicks on `<a>` elements
