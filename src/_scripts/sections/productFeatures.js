@@ -55,7 +55,7 @@ export default class ProductFeatures extends BaseSection {
   observerCallback(entries, observer) {
     entries.forEach((entry) => {
       if (entry.intersectionRatio > 0.4) {
-        const event = $.Event('updateCurrentModule', { selector: '#' + this.$container.attr('id') });
+        const event = $.Event('moduleInView', { selector: '#' + this.$container.attr('id') });
 
         $('body').trigger(event);
       }

@@ -7,6 +7,7 @@ import * as Utils from '../core/utils';
 
 const $window = $(window);
 const $body = $(document.body);
+const history = window.history;
 
 /**
  * Ajax Cart Section Script

@@ -16,8 +16,8 @@ export default class LoadMore {
     this.$el = $(el);
     // this is outside the module so cant be scoped within this.$el
     this.$gridContainer = $(this.$el.data('grid-container'));
-    this.shouldUpdateUrl = this.$el.data('update-url') === false ? false : true;
-
+    this.shouldUpdateUrl = this.$el.data('update-url') !== false;
+    
     if (this.$gridContainer) {
       this.cardSelector = this.$el.data('card-selector');
       this.$button = $(selectors.loadMoreButton, this.$el);
