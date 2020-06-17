@@ -67,14 +67,14 @@
                       {% endif %}
                     </div>
 
-                  <div class="style-slide__image frame frame--16x9">
+                  <div class="style-slide__image frame frame--16x9" data-video-cover>
                     {% render 'image_tag'
                               image: slide_image,
                               object_fit: 'cover'
                     %}
 
                     {% if slide_video != blank %}
-                      <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}">
+                      <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}" data-play-button>
                         {% include 'icon-play-full-color' %}
                       </button>
 
