@@ -1,14 +1,16 @@
 .showing-header {
   .product__sticky-bar.is-visible {
-    // transform: translateY(100%);
-    transition: all $transition-duration-dropdown $transition-timing-function-out;
+    @include media-breakpoint-up('lg') {
+      transform: translateY(large-vw(50px, 80px));
+      transition: all $transition-duration-dropdown $transition-timing-function-out;
+    }
   }
 }
 
 .product__sticky-bar {
   position: fixed;
   width: 100%;
-  padding: 20px;
+  padding: 18px 40px;
   display: flex;
   align-items: center;
   background-color: $white;
@@ -32,7 +34,7 @@
 
 .sticky-bar__submenu,
 .sticky-bar__inner-navigation {
-  font-size: large-vw(25px, 20px);
+  font-size: large-vw(25px, 30px);
 }
 
 .sticky-bar__submenu a {
@@ -75,6 +77,6 @@
 
   .btn {
     cursor: pointer;
-    padding: 18px;
+    padding: 20px;
   }
 }
