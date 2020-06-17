@@ -16,6 +16,7 @@ $gray: #424446 !default; // Custom Color
 $gray-dark: #666 !default;
 $gray-darker: #494949 !default;
 $gray-darkest: #212529 !default;
+$color-dots-border: #DDDDDD;
 
 $black: #121212 !default; // Custom Color
 $red: #ff2b00 !default; // Custom color
@@ -1198,8 +1199,8 @@ $quantity-adjuster-inner-height: $quantity-adjuster-height -
 
 // Yotpo
 
-// $yotpo-icon-star:                     #{"{{ \'icon-star.svg\' | asset_url }}"};
-// $yotpo-icon-star-half:                #{"{{ \'icon-star-half.svg\' | asset_url }}"};
-// $yotpo-icon-star-empty:               #{"{{ \'icon-star-empty.svg\' | asset_url }}"};
+$yotpo-icon-star:                     #{"{{ \'icon-star.svg\' | asset_url }}"};
+$yotpo-icon-star-half:                #{"{{ \'icon-star-half.svg\' | asset_url }}"};
+$yotpo-icon-star-empty:               #{"{{ \'icon-star-empty.svg\' | asset_url }}"};
 // $yotpo-icon-thumbs-up:                #{"{{ \'icon-thumbs-up.svg\' | asset_url }}"};
 // $yotpo-icon-thumbs-down:              #{"{{ \'icon-thumbs-down.svg\' | asset_url }}"};

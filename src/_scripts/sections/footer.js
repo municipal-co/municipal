@@ -22,7 +22,7 @@ export default class FooterSection extends BaseSection {
         $(selectors.newsletterInput, $form).val(successMessage);
 
         setTimeout(function(){
-          $(selectors.newsletterInput, $form).val("");
+          $(selectors.newsletterInput, $form).val('');
         }, 3000);
       },
       onSubscribeFail() {
@@ -30,7 +30,7 @@ export default class FooterSection extends BaseSection {
         $(selectors.newsletterInput, $form).val(successFail);
 
         setTimeout(function(){
-          $(selectors.newsletterInput, $form).val("");
+          $(selectors.newsletterInput, $form).val('');
         }, 3000);
       },
       onSubmitFail() {
@@ -38,7 +38,7 @@ export default class FooterSection extends BaseSection {
         $(selectors.newsletterInput, $form).val(successFail);
 
         setTimeout(function(){
-          $(selectors.newsletterInput, $form).val("");
+          $(selectors.newsletterInput, $form).val('');
         }, 3000);
       }
     };

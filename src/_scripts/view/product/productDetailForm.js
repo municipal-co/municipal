@@ -76,7 +76,7 @@ export default class ProductDetailForm {
     this.$singleOptionSelectors  = $(selectors.singleOptionSelector, this.$container); // Dropdowns for each variant option containing all values for that option
     this.$variantOptionValueList = $(selectors.variantOptionValueList, this.$container); // Alternate UI that takes the place of a single option selector (could be swatches, dots, buttons, whatever..)
     this.$shippingModalTrigger   = $(selectors.shippingModalTrigger, this.$container);
-    this.$shippingModal          = $(selectors.shippingModal, this.$container);
+    this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
     /* eslint-enable */
 
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());

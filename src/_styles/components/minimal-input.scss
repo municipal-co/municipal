@@ -9,7 +9,7 @@
 .minimal-input-box__input {
   @extend .form-control;
   padding: 15px 50px 15px 60px;
-  border: 3px solid $black;
+  border: none;
   border-radius: 0;
   border-radius: 90px;
   height: auto;
@@ -18,7 +18,7 @@
 
   &,
   &:focus {
-    background-color: transparent;
+    background-color: $white;
     color: $black;
   }
 
@@ -38,31 +38,18 @@
 }
 
 .minimal-input-box__input--search {
-    height: large-vw(54px, 120px);
-    background: $white;
-    border-radius: 60px;
-    font-size: large-vw(18px, 50px);
-    font-weight: bold;
-    color: black;
-    font-weight: bold;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: large-vw(50px, 120px);
-    padding-right: large-vw(50px, 120px);
-    margin-bottom: large-vw(22px, 48px);
-    border: none;
+  height: large-vw(54px, 120px);
+  font-size: large-vw(18px, 40px);
+  padding: 0 large-vw(50px, 120px);
+  margin-bottom: large-vw(22px, 48px);
 
-    @include media-breakpoint-down('md') {
-      height: 54px;
-      font-size: 18px;
-      padding: 0 50px;
-      margin-bottom: 22px;
-    }
-
-    &:focus {
-      background-color: white;
-    }
+  @include media-breakpoint-down('md') {
+    height: 54px;
+    font-size: 18px;
+    padding: 0 50px;
+    margin-bottom: 22px;
   }
+}
 
 .minimal-input-box .search-icon {
   position: absolute;
@@ -90,17 +77,36 @@
   position: absolute;
   text-align: right;
   cursor: pointer;
-  width: large-vw(50px, 70px);
-  right: large-vw(25px, 50px);
+  width: large-vw(20px, 50px);
+  left: 93%;
   top: 50%;
+  padding: 0;
   transform: translateY(-50%);
   height: 100%;
   background: transparent;
   opacity: 1;
-  transition: fill 0.3s ease-in-out, transform 0.3s ease-in-out;
+  overflow: hidden;
+  will-change: width;
+  transition: fill 0.3s ease-in-out, width 0.3s cubic-bezier(.4,0,.2,1);
 
-  &:hover {
-    transform: translateY(-50%) scale(1.2);
+  @include media-breakpoint-down('md') {
+    width: 20px;
+  }
+
+  @include media-breakpoint-down('sm') {
+    left: 90%;
+  }
+
+  @include media-breakpoint-down('xs') {
+    left: 86%;
+  }
+
+  &:hover,
+  &.hover {
+    width: large-vw(30px, 70px);
+    @include media-breakpoint-down('md') {
+      width: 30px;
+    }
   }
   
   &:focus,
@@ -108,34 +114,29 @@
     outline: none;
   }
 
-  @include media-breakpoint-down('md') {
-    width: 50px;
-    right: 25px;
-  }
-
   svg {
-    width: large-vw(32px, 70px);
-    height: large-vw(40px, 70px);
-    opacity: 0.5;
+    fill: inherit;
+    float: right;
+    width: large-vw(30px, 70px);
+    height: large-vw(30px, 70px);
 
     @include media-breakpoint-down('md') {
-      width: 32px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
     }
   }
 
   svg g {
     fill: $arrow-gray;
   }
-}
 
-.mobile-menu-block .minimal-input-box .minimal-input-box__input--search {
-  border: 0;
-}
-
-.mobile-menu-block .minimal-input-box .minimal-input-box__submit {
-  height: 90%;
-  background-color: transparent;
+  &.minimal-input-box__submit--search {
+    left: 90%;
+    
+    @include media-breakpoint-down('xs') {
+      left: 86%;
+    }
+  }
 }
 
 .icon-search-container {
@@ -164,7 +165,6 @@
       color: $white;
       border-color: $white;
     }
-
 
     &::placeholder {
       color: $white;

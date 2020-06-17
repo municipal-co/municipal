@@ -130,10 +130,6 @@ body.ajax-cart-open {
   }
 }
 
-.ajax-cart__footer {
-  padding-top: 0;
-}
-
 .ajax-cart__close {
   color: $white;
 
@@ -173,8 +169,8 @@ body.ajax-cart-open {
   padding-top: 40px;
   padding-bottom: 40px;
   border-bottom: 2px solid $black;
-  padding-left: $ajax-cart-padding-horizontal;
-  padding-right: $ajax-cart-padding-horizontal;
+  padding: 40px 0;
+  margin: 0 40px;
   margin-bottom: 0;
   position: relative;
   @include media-breakpoint-down('md') {
@@ -185,6 +181,7 @@ body.ajax-cart-open {
   }
   &:last-child {
     margin-bottom: 0;
+    border-bottom: none;
   }
 
   &.is-being-removed {
@@ -195,18 +192,19 @@ body.ajax-cart-open {
 
 
 .ajax-cart__item-image-wrapper {
-  width: 144px;
-  height: auto;
+  width: 160px;
+  height: 160px;
   float: left;
   position: relative;
   &:after {
     content: '';
     display: block;
     width: 100%;
-    padding-bottom: calc(183 / 138 * 100%);
+    padding-bottom: calc(1 / 1 * 100%);
   }
   @include media-breakpoint-down('md') {
     width: 100px;
+    height: 100px;
   }
 }
 
@@ -216,10 +214,12 @@ body.ajax-cart-open {
   height: 100%;
   width: 100%;
   position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .ajax-cart__item-info {
-  padding-left: 144px + 15px; // Make room for the image floated left
+  padding-left: 200px; // Make room for the image floated left
   @include media-breakpoint-down('md') {
     padding-left: 100px + 15px; // Make room for the image floated left
   }
@@ -228,6 +228,10 @@ body.ajax-cart-open {
 .ajax-cart__title-container {
   display: flex;
   justify-content: space-between;
+  padding-left: 25px;
+  @include media-breakpoint-down('md') {
+    padding-left: 0;
+  }
 }
 
 .ajax-cart__item-title {
@@ -239,7 +243,6 @@ body.ajax-cart-open {
 
 .ajax-cart__item-price {
   font-size: 20px;
-  margin: 18px 0 15px;
   @include media-breakpoint-down('md') {
     margin-bottom: 22px;
   }
@@ -260,20 +263,17 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__footer {
+  padding-top: 0;
+  background-color: $gray-lighter;
   .additional-checkout-button {
     width: 100%;
   }
 }
 
 .ajax-cart__footer-row {
-  padding-top: 35px;
-
+  margin-top: 35px;
   @include media-breakpoint-down('md') {
-    padding-top: 15px;
-  }
-
-  &:not(:last-child) {
-    margin-bottom: 20px;
+    margin-top: 15px;
   }
 
   p:last-child {
@@ -283,6 +283,40 @@ body.ajax-cart-open {
   & button {
     font-weight: $font-weight-semi-bold;
     font-family: $font-family-sans-serif;
+  }
+}
+
+.ajax-cart__footer-subtotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ajax-cart__express-title {
+  position: relative;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 32%;
+    background-color: $black;
+    height: 2px;
+    @include media-breakpoint-down('xs') {
+      width: 29%;
+    }
+  }
+
+  &:before {
+    left: 0;
+  }
+
+  &:after {
+    right: 0;
   }
 }
 
@@ -322,6 +356,9 @@ body.ajax-cart-open {
   &:hover {
     .btn__ui {
       transform: translateX(10px);
+      .icon {
+        fill: $black;
+      }
     }
   }
 }
