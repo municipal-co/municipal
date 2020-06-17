@@ -108,6 +108,11 @@
       margin-bottom: 55px;
     }
 
+    &,
+    .modal-video-player__play-button {
+      cursor: none;
+    }
+
     img {
       position: absolute;
       top: 0;
