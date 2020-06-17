@@ -8,9 +8,6 @@
 
   .row:not(.row--eyebrow) {
     justify-content: center;
-    @include media-breakpoint-down('md') {
-      justify-content: flex-end;
-    }
   }
 
   .ctl__eyebrow {
@@ -58,11 +55,16 @@
   .swiper-container {
     @include media-breakpoint-down('md') {
       margin-bottom: 100px;
+      padding-left: 40px;
     }
   }
 
   .swiper-scrollbar {
+    max-width: 80%;
+    margin: 0 auto;
     height: 4px;
+    left: 0;
+    right: 0;
     border-radius: 0;
 
     @include media-breakpoint-up('lg') {
@@ -72,12 +74,6 @@
     .swiper-scrollbar-drag {
       border-radius: 0;
       background-color: $black;
-    }
-  }
-
-  .product-card__gallery-image{
-    @include media-breakpoint-down('md') {
-      padding-bottom: percentage(215/147);
     }
   }
 

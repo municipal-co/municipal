@@ -60,7 +60,7 @@ export default class AJAXCart {
     };
 
     this.templateData = templateData;
-    
+
     this.$el                = $(selectors.container);
     this.$acBody            = $(selectors.body, this.$el);
     this.$acFooter          = $(selectors.footer, this.$el);
@@ -182,7 +182,7 @@ export default class AJAXCart {
    * @return this
    */
   updateCartCount(cart) {
-    this.$cartBadgeCount.html("("+cart.item_count+")");
+    this.$cartBadgeCount.html('('+cart.item_count+')');
 
     if (cart.item_count) {
       this.$cartBadge.addClass(classes.cartBadgeHasItems);
@@ -322,7 +322,7 @@ export default class AJAXCart {
 
   /**
    * Triggered when someone changes the value of the quantity input through the quantity adjuster
-   * We tap into the quantityAdjuster instance through the data attribute to retrieve the normalized max / min 
+   * We tap into the quantityAdjuster instance through the data attribute to retrieve the normalized max / min
    * (in case they don't exist as html attributes) and adjust the interaction timeout accordingly
    *
    * @param {event} e - Change event
@@ -364,7 +364,7 @@ export default class AJAXCart {
    */
   onTriggerClick(e) {
     e.preventDefault();
-    
+
     // If we haven't rendered the cart yet, don't show it
     if (!this.hasBeenRendered) {
       return;

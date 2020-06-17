@@ -26,7 +26,9 @@ class CartAPI {
     cart.total_price = Currency.stripZeroCents(cart.total_price);
 
     cart.items.map((item) => {
-      item.image = Image.getSizedImageUrl(item.image, '200x');
+      if (item.image) {
+        item.image = Image.getSizedImageUrl(item.image, '200x');
+      }
       item.price = Currency.formatMoney(item.price, theme.moneyFormat);
       item.price = Currency.stripZeroCents(item.price);
 

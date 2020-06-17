@@ -10,7 +10,7 @@
   &--small {
     margin: 0 -#{($dot-small-spacing / 2)} -#{$dot-small-bottom-margin}; // account for the 2px padding + 1px border on the dot
   }
-  
+
   &:not(.dots--color) .dot:hover {
     background-color: $black;
   }
@@ -51,6 +51,7 @@
     fill: $white;
     opacity: 0;
     pointer-events: none;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
   }
 
   &.dot--white .icon-check {
@@ -79,12 +80,22 @@
     }
   }
 
+  &[disabled] {
+    opacity: 0.2;
+    &:hover {
+      background-color: $white !important;
+      .dot__inner {
+        color: $black;
+      }
+    }
+  }
+
   .dots--color &{
-    border: 0;
+    border-color: $color-dots-border;
+    padding: 0;
 
     &.is-active {
       background-color: transparent;
-      border: 0;
     }
   }
 

@@ -131,6 +131,10 @@
   text-align: center;
   color: $cyan;
   text-transform: uppercase;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
 }
 
 .fit-guide__title {
