@@ -38,11 +38,6 @@ export default class HeaderSection extends BaseSection {
       $window.on(this.events.SCROLL, throttle(20, this.onScroll.bind(this)));
       this.onScroll(); // hit this one time on init to make sure everything is good
     }
-
-
-    if ($body.hasClass("testerino")) {
-      $window.on(this.events.SCROLL, throttle(20, this.onScroll.bind(this)));
-    }
   }
 
   scrollCheck() {
@@ -67,8 +62,7 @@ export default class HeaderSection extends BaseSection {
 
   positionCheck() {
    const scrollTop = $window.scrollTop();
-   const actualOffset = this.$container.offset().top;
-   let lastInitialPosition = this.initialPosition;
+   const lastInitialPosition = this.initialPosition;
 
    // Do DOM updates inside.
     if (this.$el.hasClass(classes.headerScroll)) {
@@ -92,9 +86,9 @@ export default class HeaderSection extends BaseSection {
   onScroll() {
     this.scrollCheck();
 
-    if ($body.hasClass("header-hide-on-scroll")) {
-      this.positionCheck();    
-    }  
+    if ($body.hasClass('header-hide-on-scroll')) {
+      this.positionCheck();
+    }
   }
 
   onMouseLeave() {
