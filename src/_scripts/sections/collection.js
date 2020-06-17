@@ -50,40 +50,19 @@ export default class CollectionSection extends BaseSection {
     this.$promoCard = $(selectors.promoCard, this.$container);
     this.drawer =  new Drawer(this.$drawer);
 
-    $(window).on('breakpointChange', this.updateFilterBarPosition.bind(this));
     $(selectors.filtersToggler, this.$container).on('click', this.toggleFilters.bind(this));
-    $(window).on('scroll', throttle(100, this.onWindowScroll.bind(this)));
     this.$filtersEnabler.on('click', this.enableFilters.bind(this));
     $(selectors.filterClear, this.$container).on('click', this.clearFilters.bind(this));
     $(selectors.filterDot, this.$container).on('click', this.onDotclick.bind(this));
-
-    // Execute this once to ensure the sticky bar is correctly positioned.
-    this.onWindowScroll.call(this);
 
     // Initialize load more
     this.$loadMore.each((index, el) => {
       new LoadMore($(el))
     })
   }
-
-  updateFilterBarPosition() {
-    this.$filterBar.removeClass(classes.fixed);
-    this.filterBarPosition = this.$filterBar.offset().top;
-    this.onWindowScroll();
-  }
-
+  
   toggleFilters() {
     this.drawer.toggle();
-  }
-
-  onWindowScroll() {
-    if ($(window).scrollTop() >= this.filterBarPosition && !this.$filterBar.hasClass(classes.fixed)) {
-      this.$filterBar.addClass(classes.fixed);
-      this.$filterBar.parent().css('height', this.$filterBar.outerHeight(true));
-    } else if($(window).scrollTop() < this.filterBarPosition && this.$filterBar.hasClass(classes.fixed)) {
-      this.$filterBar.removeClass(classes.fixed);
-      this.$filterBar.parent().css('height', 'auto');
-    }
   }
 
   enableFilters() {
