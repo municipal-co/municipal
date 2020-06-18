@@ -103,6 +103,7 @@
 
   .style-slide__image {
     margin-bottom: large-vw(55px, 60px);
+    overflow: hidden;
 
     @include media-breakpoint-down('md') {
       margin-bottom: 55px;
