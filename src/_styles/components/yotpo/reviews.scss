@@ -297,6 +297,7 @@
         .yotpo-review-stars .yotpo-icon {
           width: large-vw(30px, 62px) !important;
           height: large-vw(30px, 62px) !important;
+          background: unset !important;
 
           @include media-breakpoint-down('md') {
             width: 30px !important;
@@ -380,6 +381,7 @@
         span.y-label.yotpo-user-title.yotpo-action-hover {
           font-size: large-vw(15px, 22px) !important;
           font-weight: $font-weight-bold;
+          color: $cyan !important;
 
           @include media-breakpoint-down('md') {
             font-size: 15px !important;
