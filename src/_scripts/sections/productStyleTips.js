@@ -56,7 +56,6 @@ export default class ProductStyleTips extends BaseSection {
 
 
     this.$videoCover.on('mouseenter', this.onVideoEnter.bind(this));
-    this.$videoCover.on('mouseleave', this.onVideoLeave.bind(this));
   }
 
   onSlideshowEnter(e) {
@@ -98,12 +97,5 @@ export default class ProductStyleTips extends BaseSection {
         $(selectors.videoPlay, $currentCover).css({left: x, top: y, transform: 'none'});
       });
     }
-  }
-
-  onVideoLeave(e) {
-    e.preventDefault();
-    const $currentCover = $(e.currentTarget);
-
-    $(selectors.videoPlay, $currentCover).removeAttr('style');
   }
 }
