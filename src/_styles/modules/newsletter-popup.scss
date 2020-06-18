@@ -1,36 +1,31 @@
 .newsletter-popup {
   .modal {
-    top: 50%;
-    transform: translateY(-50%);
-
     .popup-eyebrow {
       font-size: 16px;
       color: $white;
       font-size: 16px;
       font-weight: $font-weight-bold;
-      top: 18px;
-      left: 20px;
-      position: absolute;
-
-      @include media-breakpoint-down('md') {
-        top: 12px;
-      }
     }
 
     .modal-header {
       border: none;
-      padding: 0;
+      min-height: 50px;
+      margin: 0 large-vw(0px, -160px) large-vw(0, 30px);
+
+      @include media-breakpoint-down('md') {
+        margin: 0;
+      }
     }
 
     .modal-title {
       font-weight: $font-weight-normal;
-      line-height: large-vw(35px, 85px);
+      line-height: 1em;
       margin-bottom: large-vw(15px, 35px);
-      font-size: large-vw(35px, 75px);
+      font-size: large-vw(35px, 55px);
 
       @include media-breakpoint-down('xl') {
         font-size: 35px;
-        line-height: 35px;
+        line-height: 1em;
       }
 
       @include media-breakpoint-down('md') {
@@ -40,19 +35,13 @@
     }
 
     .modal-dialog {
-      width: 75%;
-      max-width: 109vh;
-      height: auto;
-      min-height: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      margin: 0 auto;
+      width: 60%;
+      max-width: large-vw(950px, 1240px);
 
       @include media-breakpoint-down('md') {
         max-width: 100%;
         width: 100%;
         margin: 0;
-        top: 50px;
         transform: none;
       }
     }
@@ -89,9 +78,6 @@
     }
 
     button.close {
-      position: fixed;
-      top: large-vw(30px, 80px);
-      right: large-vw(30px, 80px);
       width: large-vw(30px, 80px);
       height: large-vw(30px, 80px);
       line-height: 0;
@@ -99,8 +85,7 @@
       @include media-breakpoint-down('md') {
         width: 30px;
         height: 30px;
-        top: 10px;
-        right: 20px;
+        margin: 0;
       }
 
       svg {
@@ -169,7 +154,7 @@
 
   .modal-inner-container {
     width: 60%;
-    padding: large-vw(20px, 70px) large-vw(25px, 80px);
+    padding: large-vw(20px, 70px) large-vw(25px, 80px) large-vw(50px, 150px);
     position: relative;
 
     @include media-breakpoint-down('md') {
@@ -221,7 +206,7 @@
       user-select: none;
       border: $btn-border-width solid transparent;
       font-size: 28px !important;
-      padding: large-vw(21px, 26px) large-vw(50px, 70px) !important;
+      padding: large-vw(10px, 26px) large-vw(30px, 70px) !important;
       border-radius: 90px !important;
       background-color: $black !important;
       border-color: $black;
