@@ -51,5 +51,9 @@
       {{ image | img_url: '2048x' }} 1024w,
       {{ image | img_url: '1920x' }} 1920w,
       {{ image | img_url: '3480x' }} 1920w
-  ">
+  "
+  {% if product_card_image == true %}
+    data-product-card-main-lazy
+  {% endif %}
+  >
 {% endif %}
