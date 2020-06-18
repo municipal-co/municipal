@@ -52,6 +52,7 @@ export default class ProductCard {
 
     this.$mainLazyImg = $(selectors.mainLazyImg, this.$el);
     this.$altLazyImg  = $(selectors.altLazyImg, this.$el);
+    this.timeout = false;
 
     // Unveil plugin to lazy load main product card images
     this.$mainLazyImg.unveil(200, function() {
@@ -146,6 +147,7 @@ export default class ProductCard {
     const $el = $(e.currentTarget);
     const variantId = $el.data('variant-id');
     const self = this;
+    clearTimeout(this.timeout);
 
     $el.addClass(classes.active);
 
@@ -169,6 +171,9 @@ export default class ProductCard {
   onDotMouseleave(e) {
     const $el = $(e.currentTarget);
     $el.removeClass(classes.active);
+    this.timeout = setTimeout(() => {
+      this.resetBarTitle()
+    }, 500);
   }
 
   onMouseenter() {
@@ -180,6 +185,10 @@ export default class ProductCard {
 
     this.$altLazyImg.attr('src', this.$altLazyImg.data('src'));
     this.$altLazyImg.removeAttr('data-src');
+  }
+
+  resetBarTitle() {
+    this.$variantMessage.text('Quick Add to Cart');
   }
 
   destroy() {
