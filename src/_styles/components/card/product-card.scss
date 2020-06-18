@@ -28,6 +28,11 @@
 .product-card__gallery-image {
   padding-bottom: 100%;
   width: 100%;
+  background-color: $gray-lighter;
+  
+  .template-product & {
+    background-color: $white;
+  }
 
   img {
     position: absolute;
@@ -69,13 +74,14 @@
 .product-card__sizes-container {
   display: flex;
   position: absolute;
-  bottom: 0;
-  padding: large-vw(20px, 35px);
-  background-color: $gray-lighter;
+  bottom: large-vw(12px, 20px);
+  left: large-vw(12px, 20px);
+  right: large-vw(12px, 20px);
+  padding: large-vw(12px, 25px);
+  background-color: $white;
   flex-direction: column;
   justify-content: center;
   pointer-events: none;
-  width: 100%;
   opacity: 0;
   will-change: opacity;
   transition: opacity $transition-duration-overlay $transition-timing-function-out;
@@ -86,6 +92,10 @@
       opacity: 1;
       pointer-events: all;
     }
+  }
+
+  .template-product & {
+    background-color: $gray-lighter;
   }
 
   .variant-message {
