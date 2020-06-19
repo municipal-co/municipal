@@ -229,6 +229,7 @@ body.ajax-cart-open {
   display: flex;
   justify-content: space-between;
   padding-left: 25px;
+  
   @include media-breakpoint-down('md') {
     padding-left: 0;
   }
@@ -303,7 +304,7 @@ body.ajax-cart-open {
     content: "";
     position: absolute;
     top: 50%;
-    width: 32%;
+    width: calc((100%/3) - 10px);
     background-color: $black;
     height: 2px;
     @include media-breakpoint-down('xs') {

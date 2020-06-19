@@ -178,17 +178,18 @@
                   <div class="swiper-slide" data-image="{{ image.id }}" {% if image.id == current_variant.featured_image.id %} data-initial-slide{% endif %}>
                     <img data-src="{{ image | img_url: photo_main_dimension }}"
                          alt="{{ image.alt | escape }}"
-                         class="img-fluid"
+                         class="img-fluid swiper-lazy"
                          data-object-fit="cover"
-                         data-object-position="center"
-                         data-image-url="{{ image | img_url: photo_zoom_dimension }}"
-                         class="swiper-lazy">
+                         data-object-position="center">
                     <div class="swiper-lazy-preloader"></div>
                   </div>
                 {% endunless %}
               {% endfor %}
             </div>
             <div class="swiper-scrollbar"></div>
+          </div>
+          <div class="gallery__zoom-icon" data-zoom-in-icon>
+            {% include 'icon-zoom-in-full-color' %}
           </div>
         </div>
       </div>

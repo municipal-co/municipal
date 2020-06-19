@@ -41,10 +41,10 @@
   transition: background-color $transition-duration-fast $transition-timing-function-out;
 
   @include media-breakpoint-down('md') {
-    height: $dot-small-size;
-    width: $dot-small-size;
+    height: 40px;
+    width: 40px;
     border: 2px solid $dot-border-color;
-    line-height: ($dot-small-size - 10px);
+    line-height: (40px - 10px);
   }
 
   .icon-check {

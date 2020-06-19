@@ -100,6 +100,8 @@ export default class ProductDetailForm {
     if (typeof queryParams.size !== 'undefined') {
       this.updateSizeVariant(queryParams.size);
     }
+
+    this.checkVariantsAvailability();
   }
 
   onVariantChange(evt) {
@@ -111,6 +113,7 @@ export default class ProductDetailForm {
     this.updateVariantOptionValues(variant);
     this.updateFullDetailsLink(variant);
     this.updateColorsLink();
+    this.checkVariantsAvailability();
 
     this.$singleOptionSelectors.trigger('chosen:updated');
 
@@ -268,6 +271,32 @@ export default class ProductDetailForm {
     $option.siblings().removeClass(classes.variantOptionValueActive);
     $optionLabel.text(value);
 
+  }
+
+  checkVariantsAvailability() {
+    this.$singleOptionSelectors.each((index, el) => {
+      const $el = $(el);
+      const selectedVariant = $el.val();
+      const optionIndex = $el.data('index');
+
+      $.each(this.productSingleObject.variants, (i, variant) => {
+        if (variant[optionIndex] === selectedVariant) {
+          const unavailableVariant = !variant.available;
+          this.updateUnavailableVariants(variant, optionIndex, unavailableVariant);
+        }
+      });
+    })
+  }
+
+  updateUnavailableVariants(variant, optionIndex, disabled = false) {
+    for (let i = 1; i <= 3; i++) {
+      const currentOption = 'option' + i;
+      if (optionIndex !== currentOption) {
+        const dotToUpdate = variant[currentOption];
+
+        $(`.dot[data-variant-option-value="${dotToUpdate}"]`).attr('disabled', disabled);
+      }
+    }
   }
 
   /**

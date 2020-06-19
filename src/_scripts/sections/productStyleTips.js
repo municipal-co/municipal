@@ -6,7 +6,9 @@ import VideoPlayer from '../ui/videoPlayer';
 const selectors = {
   videoPlayer: '[data-video-player]',
   videoModal: '[data-video-modal]',
+  videoCover: '[data-video-cover]',
   slideshow: '.swiper-container',
+  videoPlay: '[data-play-button]',
   slide: '.swiper-slide'
 };
 
@@ -17,6 +19,7 @@ export default class ProductStyleTips extends BaseSection {
     this.$container = $(container);
     this.$slideshow = $(selectors.slideshow, this.$container);
     this.$slides = $(selectors.slide, this.$container);
+    this.$videoCover = $(selectors.videoCover, this.$container);
     this.$videoPlayer = $(selectors.videoPlayer, this.$container);
 
     const swiperOptions = {
@@ -50,6 +53,9 @@ export default class ProductStyleTips extends BaseSection {
 
     $(selectors.videoModal, this.$container).on('show.bs.modal', this.playVideo.bind(this));
     $(selectors.videoModal, this.$container).on('hide.bs.modal', this.stopVideo.bind(this));
+
+
+    this.$videoCover.on('mouseenter', this.onVideoEnter.bind(this));
   }
 
   onSlideshowEnter(e) {
@@ -70,5 +76,26 @@ export default class ProductStyleTips extends BaseSection {
   stopVideo(e) {
     const videoIndex = $(e.currentTarget).data('video-modal');
     this.videoPlayers[videoIndex].pause();
+  }
+
+  onVideoEnter(e) {
+    e.preventDefault();
+    const $currentCover = $(e.currentTarget);
+    const screenWidth = $(window).width();
+    let x;
+    let y;
+
+    if (screenWidth > 991) {
+      this.$videoCover.mousemove(function(event) {
+        const offset = $(this).offset();
+        const buttonWidth = $(selectors.videoPlay, this.$videoCover).width();
+        const buttonOffset = buttonWidth / 2;
+
+        x = event.pageX - offset.left - buttonOffset;
+        y = event.pageY - offset.top - buttonOffset;
+
+        $(selectors.videoPlay, $currentCover).css({left: x, top: y, transform: 'none'});
+      });
+    }
   }
 }

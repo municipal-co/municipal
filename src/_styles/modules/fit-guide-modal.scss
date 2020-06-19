@@ -159,9 +159,11 @@
   min-height: large-vw(50px, 100px);
   line-height: large-vw(44px, 86px);
   cursor: pointer;
+  transition: $transition-duration-fast $transition-timing-function-out;
+  transition-property: background, color;
 
   @include media-breakpoint-down('md') {
-    border-width: 3px;
+    border: 3px solid $black;
     min-width: 50px;
     min-height: 50px;
     line-height: 44px;
@@ -172,6 +174,12 @@
 
     @include media-breakpoint-down('md') {
       margin-left: 7px;
+    }
+
+    &:hover {
+      transition-timing-function: $transition-timing-function-in;
+      background-color: $black;
+      color: $white;
     }
   }
 
@@ -270,7 +278,8 @@
 }
 
 .fit-guide__gallery-slider {
-  max-width: (percentage(1/18) * 14);
+  width: percentage(14/18);
+  max-width: 871px;
   margin: auto;
   position: relative;
 

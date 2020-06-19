@@ -23,7 +23,6 @@ export default class VideoSection extends BaseSection {
     $(selectors.videoModal, this.$container).on('hide.bs.modal', this.stopVideo.bind(this));
 
     this.$videoCover.on('mouseenter', this.onVideoEnter.bind(this));
-    this.$videoCover.on('mouseleave', this.onVideoLeave.bind(this));
   }
 
   playVideo(e) {
@@ -52,10 +51,5 @@ export default class VideoSection extends BaseSection {
         $(selectors.videoPlay, this.$videoCover).css({left: x, top: y, transform: 'none'});
       });
     }
-  }
-
-  onVideoLeave(e) {
-    e.preventDefault();
-    $(selectors.videoPlay, this.$videoCover).removeAttr('style');
   }
 }
