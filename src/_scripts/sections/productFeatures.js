@@ -7,7 +7,8 @@ const $window = $(window);
 
 const selectors = {
   slideshow: '.swiper-container',
-  slide: '.swiper-slide'
+  slide: '.swiper-slide',
+  imageBlock: '[data-image-block]'
 };
 
 export default class ProductFeatures extends BaseSection {
@@ -24,7 +25,12 @@ export default class ProductFeatures extends BaseSection {
     }
 
     const swiperOptions = {
-      loop: false,
+      loop: true,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
+      speed: 500,
       pagination: {
         el: '.swiper-pagination',
         type: 'fraction',
@@ -44,8 +50,6 @@ export default class ProductFeatures extends BaseSection {
 
     if (this.$slides.length > 1) {
       this.swiper = new Swiper(this.$slideshow, swiperOptions);
-      $('.product-features-inner-container', this.$container).on('mouseenter', this.onSlideshowEnter.bind(this));
-      $('.product-features-inner-container', this.$container).on('mouseleave', this.onSlideshowLeave.bind(this));
     }
 
     $window.on('resize', throttle(100, this.onResize.bind(this)));
@@ -62,18 +66,8 @@ export default class ProductFeatures extends BaseSection {
     })
   }
 
-  onSlideshowEnter(e) {
-    e.preventDefault();
-    $('.swiper-button', this.$container).addClass('visible');
-  }
-
-  onSlideshowLeave(e) {
-    e.preventDefault();
-    $('.swiper-button', this.$container).removeClass('visible');
-  }
-
   onResize() {
-    const scrollbarPosition = $('.features-title-wrapper').height() + $('.feature-slide__image').height() + 16;
+    const scrollbarPosition = $(selectors.imageBlock).outerHeight() + 70;
     const screenWidth = $(window).width();
 
     if (screenWidth < 992) {

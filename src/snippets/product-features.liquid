@@ -19,12 +19,6 @@
       <div class="row justify-content-center row-adjusted">
         <div class="col-lg-22 col-20 product-features-inner-container">
           <div class="swiper-container">
-
-            <div class="features-title-wrapper">
-              <h5 class="features-section-title">Features</h5>
-              <div class="swiper-pagination"></div>
-            </div>
-
             <div class="swiper-wrapper">
               {% for i in fc_keys %}
                 {% assign index = i | plus: 0 %}
@@ -32,23 +26,25 @@
                 {% assign title = feature_title_array[index] %}
                 {% assign copy = feature_copy_array[index] %}
                 {% assign image = feature_image_array[index] %}
-
                 {% if title != blank and image != blank %}
                   {% assign slides_counter = slides_counter | plus: 1 %}
-
                   <div class="feature-slide swiper-slide">
-                    <div class="feature-slide__image frame frame--16x9">
-                      {% render 'image_tag'
-                                image: image,
-                                object_fit: 'cover'
-                      %}
+                    <div class="feature-slide__block">
+                      <span class="h5 features-slide__eyebrow d-none d-lg-block">Features</span>
+                      <h3 class="feature-slide__title">{{ title }}</h3>
+                      {% if copy != blank %}
+                        <div class="feature-slide__copy p2">{{ copy }}</div>
+                      {% endif %}
                     </div>
-
-                    <h4 class="feature-slide__title">{{ title }}</h4>
-
-                    {% if copy != blank %}
-                      <div class="feature-slide__copy p2">{{ copy}}</div>
-                    {% endif %}
+                    <div class="feature-slide__block" data-image-block>
+                      <span class="h5 features-slide__eyebrow d-block d-lg-block">Features</span>
+                      <div class="feature-slide__image frame frame--1x1">
+                        {% render 'image_tag'
+                                  image: image,
+                                  object_fit: 'cover'
+                        %}
+                      </div>
+                    </div>
                   </div>
                 {% endif %}
               {% endfor %}
@@ -56,13 +52,16 @@
           </div>
 
           {% if slides_counter > 1 %}
+          <div class="features__navigation-container">
             <div class="swiper-button-prev swiper-button">
               {% include 'icon-swiper-arrow' %}
             </div>
+            <div class="swiper-pagination"></div>
             <div class="swiper-button-next swiper-button">
               {% include 'icon-swiper-arrow' %}
             </div>
-            <div class="swiper-scrollbar"></div>
+          </div>
+          <div class="swiper-scrollbar"></div>
           {% endif %}
         </div>
       </div>
