@@ -66,8 +66,8 @@
       margin-right: 5px;
 
       @include media-breakpoint-down('md') {
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
       }
     }
 
@@ -75,7 +75,6 @@
       fill: $black;
     }
   }
-
 }
 
 .filters-drawer {
