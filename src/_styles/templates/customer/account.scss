@@ -5,7 +5,11 @@
 // Not scoped to a specific account page
 
 .account-block {
-  margin-bottom: 25px;
+  margin-bottom: large-vw(60px, 120px);
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 60px;
+  }
 
   address {
     margin-bottom: $spacer;
@@ -122,5 +126,7 @@ table.order-detail-totals {
 }
 
 .account__customer-address {
+  display: block;
   font-weight: $font-weight-semi-bold;
+  margin-bottom: large-vw(40px ,80px);
 }

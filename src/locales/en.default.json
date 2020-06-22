@@ -141,11 +141,12 @@
       "title": "My Account",
       "details": "Account Details",
       "view_addresses": "View Addresses",
-      "addresses": "Billing & Shipping",
+      "addresses": "Shipping Addresses",
       "return": "Return to Account Details",
       "account_details": "Account Details",
       "add_new_address": "Add New Address",
       "email": "Email",
+      "password": "Password",
       "order_history": "Order History"
     },
     "activate_account": {
@@ -157,11 +158,11 @@
       "cancel": "Decline Invitation"
     },
     "addresses": {
-      "title": "Billing & Shipping Information",
+      "title": "Shipping Addresses",
       "default": "Default",
-      "default_address": "Billing & Shipping Information",
-      "add_new": "Add Billing \n Address",
-      "edit_address": "Edit Billing \n address",
+      "default_address": "Default Address",
+      "add_new": "Add New \n Address",
+      "edit_address": "Edit New \n address",
       "first_name": "First Name",
       "last_name": "Last Name",
       "company": "Company",
@@ -197,7 +198,7 @@
       "guest_continue": "Continue"
     },
     "orders": {
-      "title": "Purchase History",
+      "title": "Order History",
       "order_number": "Order #",
       "date": "Date",
       "paid_status": "Paid Status",
