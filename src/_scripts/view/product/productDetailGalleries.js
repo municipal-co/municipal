@@ -50,6 +50,7 @@ class ProductDetailGallery {
       speed: 500,
       preloadImages: false,
       direction: 'vertical',
+      slideToClickedSlide: true,
       lazy: {
         loadPrevNext: true,
         loadPrevNextAmount: 1
@@ -88,6 +89,10 @@ class ProductDetailGallery {
     $window.on('resize', throttle('50', this.onResize.bind(this)));
     this.$slideshow.on('mousemove', this.locateZoomIcon.bind(this));
     this.$zoomItem.on('mousemove', this.locateZoomOutIcon.bind(this));
+
+    this.$thumbnails.on('click', selectors.productGalleryThumbnailsSlide, (e) => {
+      this.swiper.slideToLoop($(e.currentTarget).index());
+    });
   }
 
   // Adjust gallery container to match the main gallery so the thumbnails space gets calculated properly.
