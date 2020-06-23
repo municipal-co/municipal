@@ -49,7 +49,7 @@
 {% if product %}
 
   {% assign product_image_dimension = '760x' %}
-  {% assign product_url = variant.url | default: product.url | within: collection %}
+  {% assign product_url = product.url | within: collection %}
 
   <div id="product-card-{{ product.id }}" class="product-card {{ card_classes }}" data-product-card
   {% unless auto_update_image == false and variant == blank %}
