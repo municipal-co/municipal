@@ -25,7 +25,7 @@ export default class ProductFeatures extends BaseSection {
     }
 
     const swiperOptions = {
-      loop: true,
+      loop: false,
       effect: 'fade',
       fadeEffect: {
         crossFade: true

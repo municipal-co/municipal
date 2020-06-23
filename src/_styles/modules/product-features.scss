@@ -1,5 +1,9 @@
 .product-features {
 
+  @include media-breakpoint-down('md') {
+    margin-bottom: 55px;
+  }
+
   .product-features-inner-container {
     margin-top: large-vw(70px, 150px);
     margin-bottom: large-vw(40px, 180px);
@@ -127,6 +131,7 @@
     @include media-breakpoint-down('md') {
       width: 40px;
       height: auto;
+      left: 0;
     }
 
     &:focus {
@@ -135,12 +140,20 @@
 
     &.swiper-button-next {
       transform: scale(-1);
+      
+      @include media-breakpoint-down('md') {
+        right: 0;
+      }
     }
 
     svg {
       width: 100%;
       height: auto;
       color: $black;
+      
+      @include media-breakpoint-down('md') {
+        height: 32px;
+      }
     }
   }
 
