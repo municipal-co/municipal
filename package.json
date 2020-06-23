@@ -60,7 +60,7 @@
     "js-cookie": "^2.2.0",
     "lazysizes": "^5.2.0",
     "objectFitPolyfill": "^2.3.0",
-    "swiper": "^4.5.0",
+    "swiper": "^5.4.5",
     "throttle-debounce": "^2.1.0"
   },
   "scripts": {

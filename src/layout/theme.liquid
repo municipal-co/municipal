@@ -1,5 +1,6 @@
 {% comment %} Changing this will turn on / off the fixed header behavior {% endcomment %}
 {% assign FIXED_HEADER = true %}
+{% assign HIDE_ON_SCROLL = true %}
 
 <!doctype html>
 <!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
@@ -73,6 +74,7 @@
   template-{{ template.name | handle }}
   {% if template.suffix != blank %} template-{{ template.name | append: '-' | append: template.suffix | handle }} {% endif %}
   {% if FIXED_HEADER == true %} site-fixed-header {% endif %}
+  {% if HIDE_ON_SCROLL == true %} header-hide-on-scroll {% endif %}
 {% endcapture %}
 
 <body id="{{ page_title | handle }}" class="{{ body_class | strip | strip_newlines }}">

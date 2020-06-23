@@ -169,8 +169,6 @@ export default class ProductSection extends BaseSection {
     $('html, body').animate({
       scrollTop: targetOffset - stickyBarOffset
     }, 300);
-
-    this.updateScrollerLinks(target);
   }
 
   onModuleInView(event) {

@@ -7,9 +7,9 @@
 {% assign message_success = section.settings.subscribe_success_text %}
 {% if message_success == blank %}
   {% assign message_success = 'general.newsletter.subscribe_success' | t %}
-{% endif %}            
+{% endif %}
 
-{% assign message_fail = 'general.newsletter.subscribe_fail' | t %}  
+{% assign message_fail = 'general.newsletter.subscribe_fail' | t %}
 
 <div data-section-id="{{ section.id }}"
      data-section-type="newsletter-modal"
@@ -17,19 +17,20 @@
      data-delay="{{ section.settings.delay }}"
      data-seen-expiration="{{ section.settings.seen_expiration }}"
      class="newsletter-popup">
-  
-  <div class="modal fade" id="newsletter-modal" tabindex="-1" role="dialog" aria-labelledby="newsletter-modal-title" data-newsletter-modal>
-    <span class="popup-eyebrow d-lg-none d-block">SUBSCRIBE</span>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      {% include 'icon-close' %}
-    </button>   
 
-    <div class="modal-dialog" role="document">
+  <div class="modal fade" id="newsletter-modal" tabindex="-1" role="dialog" aria-labelledby="newsletter-modal-title" data-newsletter-modal>
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
+        <div class="modal-header">
+          <span class="popup-eyebrow d-lg-none d-block">SUBSCRIBE</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            {% include 'icon-close' %}
+          </button>
+        </div>
         <div class="modal-body">
           {% if settings.klaviyo_list_id == blank %}
             <div class="alert alert-danger small">A valid newsletter form action URL is required for this section.  Please go to <strong>General Settings -> Mailing List</strong> in the theme editor to add this information</div>
-          {% endif %}     
+          {% endif %}
 
           {% if section.settings.image %}
             <div class="modal-image frame frame--9x16">
@@ -48,7 +49,7 @@
               </div>
             </div>
           {% endif %}
-          
+
           <div class="modal-inner-container">
             {% if section.settings.header_text != blank %}
               <h4 class="modal-title h4" id="newsletter-modal-title">{{ section.settings.header_text }}</h4>
@@ -57,7 +58,7 @@
             <div class="klaviyo-form-wrapper">
               <div class="klaviyo-form-WCdEBr"></div>
             </div>
-            
+
             <div class="modal-icon-container d-lg-block d-none">
               <div class="modal-icon frame frame--16x9">
                 {% render 'image_tag'

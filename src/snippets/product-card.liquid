@@ -48,7 +48,7 @@
 
 {% if product %}
 
-  {% assign product_image_dimension = '600x' %}
+  {% assign product_image_dimension = '760x' %}
   {% assign product_url = variant.url | default: product.url | within: collection %}
 
   <div id="product-card-{{ product.id }}" class="product-card {{ card_classes }}" data-product-card
@@ -60,7 +60,13 @@
       <div class="product-card__gallery">
         <a href="{{ product_url }}">
           <div class="product-card__gallery-image" data-product-card-gallery>
-            <img data-src="{{ featured_image.src | img_url: product_image_dimension }}" alt="{{ product.featured_image.alt | escape }}" data-product-card-main-lazy>
+            <img data-src="{{featured_image | img_url: product_image_dimension }}"
+            alt="{{ featured_image.alt }}"
+            class="animate"
+            data-animate-image-in
+            data-sizes="auto"
+            data-object-fit="cover"
+            data-product-card-main-lazy>
             <div class="product-card__gallery-placeholder"></div>
           </div>
 

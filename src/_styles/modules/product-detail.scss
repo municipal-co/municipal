@@ -99,6 +99,10 @@
 
 .product__fit-guide-toggler {
   font-size: large-vw(20px, 30px);
+
+  &:focus {
+    outline: none;
+  }
   @include media-breakpoint-down('md') {
     font-size: 20px;
     margin-top: 30px;
