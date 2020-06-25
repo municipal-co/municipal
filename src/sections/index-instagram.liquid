@@ -27,17 +27,16 @@
       {% if text != blank %}
         <div class="two-up-title-wrapper">
           {% if instagram_link != blank %}
-            <a href="{{ instagram_link }}">
-              <h2 class="two-up__title h1">
-                <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }}
+            <a href="{{ instagram_link }}" class="two-up__link">
+              <div class="two-up__title h1" style="animation-duration: {{ animation }};">
+                <span class="title-inner-wrapper text-{{ text_color }}">{{ text }}
                 <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-              </h2>
+              </div>
 
-
-              <h2 class="two-up__title h1">
-                <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }}
+              <div class="two-up__title h1" style="animation-duration: {{ animation }};">
+                <span class="title-inner-wrapper text-{{ text_color }}">{{ text }}
                 <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-              </h2>
+              </div>
             </a>
           {% else %}
               <h2 class="two-up__title h1">

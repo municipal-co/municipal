@@ -37,20 +37,17 @@
     }
   }
 
-  .two-up__title {
-    margin: 0 auto;
+  .two-up__link {
+    position: relative;
     white-space: nowrap;
     overflow: hidden;
-    position: absolute;
-    
-    &,span {
-      height: 100%;
-    }
   }
 
-  .two-up__title .title-inner-wrapper {
+  .two-up__title {
     display: inline-block;
-    padding-left: 100%;
+    text-align: center;
+    min-width: 100%;
+    margin-bottom: 0;
     animation: text-scroll linear infinite;
   }
 
