@@ -182,7 +182,7 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
 .promo__text {
   line-height: large-vw(30px, 65px);
   margin-bottom: large-vw(30px, 60px);
-  
+
   @include media-breakpoint-down('md') {
     line-height: 30px;
     margin-bottom: 30px;
@@ -190,6 +190,7 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
 }
 
 .promo__text-wrapper {
+  max-width: 100%;
   @include media-breakpoint-up('lg') {
     padding-left: $grid-gutter-width;
     padding-right: $grid-gutter-width;
