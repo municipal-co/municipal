@@ -11,7 +11,7 @@
       {% assign dot_handle = block.settings.title | handle %}
       {% assign block_colors = block_colors | append: dot_handle %}
 
-      {% if block.settings.color != blank %}
+      {% if block.settings.color != blank or block.settings.image != blank %}
         {% assign color_hsl_parts = block.settings.color | color_to_hsl | remove_first: 'hsl(' | remove_first : ')' | split: ',' %}
         {% assign hue        = color_hsl_parts[0] | strip | times: 1 %}
         {% assign saturation = color_hsl_parts[1] | remove: '%' | strip | times: 1 %}
@@ -31,6 +31,7 @@
               background: none;
               background-color: transparent !important;
               background-image:url({{ block.settings.image | img_url: '50x50', crop: 'center' }}) !important;
+              background-size: cover;
               border: none !important;
             {% endif %}
 
