@@ -10,7 +10,6 @@
 {% assign instagram_link = section.settings.instagram_link %}
 
 {% assign animation = section.settings.scroll_animation | append: 's' %}
-{% assign animation_delay = animation | divided_by: 2 | append: 's' | prepend: '-' %}
 
 <style>
   {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
@@ -39,16 +38,16 @@
               </div>
             </a>
           {% else %}
-              <h2 class="two-up__title h1">
-                <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }};">{{ text }}
+              <div class="two-up__title h1" style="animation-duration: {{ animation }};">
+                <span class="title-inner-wrapper text-{{ text_color }}">{{ text }}
                 <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-              </h2>
+              </div>
 
 
-              <h2 class="two-up__title h1">
-                <span class="title-inner-wrapper text-{{ text_color }}" style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ text }}
+              <div class="two-up__title h1" style="animation-duration: {{ animation }};">
+                <span class="title-inner-wrapper text-{{ text_color }}">{{ text }}
                 <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
-              </h2>
+              </div>
           {% endif %}
         </div>
       {% endif %}
