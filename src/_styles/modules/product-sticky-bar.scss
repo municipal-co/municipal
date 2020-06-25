@@ -10,7 +10,7 @@
 .product__sticky-bar {
   position: fixed;
   width: 100%;
-  padding: large-vw(5px, 18px) 40px;
+  padding: large-vw(10px, 18px) 40px;
   display: flex;
   align-items: center;
   background-color: $white;
@@ -24,6 +24,7 @@
     top: unset;
     bottom: 0;
     transform: translateY(100%);
+    padding: 10px 25px;
   }
 
   &.is-visible {
@@ -79,6 +80,10 @@
     cursor: pointer;
     padding: large-vw(10px, 20px);
     font-size: large-vw(16px, 26px);
+    @include media-breakpoint-down('md') {
+      padding: 10px;
+      font-size: 16px;
+    }
   }
 }
 
