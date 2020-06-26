@@ -65,9 +65,17 @@
 }
 
 .tiled-image__left-image {
-  margin-top: large-vw(-30px, -277px);
+  margin-top: large-vw(-390px, -277px);
+
+  @include media-breakpoint-down('lg') {
+    margin-top: -330px;
+  }
 
   @include media-breakpoint-down('md') {
+    margin-top: -150px;
+  }
+
+  @include media-breakpoint-down('sm') {
     margin-top: -30px;
   }
   img {
