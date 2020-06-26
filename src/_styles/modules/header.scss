@@ -402,7 +402,7 @@
       font-size: large-vw(50px, 90px);
 
       @include media-breakpoint-down('md') {
-        font-size: 50px;
+        font-size: 40px;
         line-height: 1.2;
       }
     }
