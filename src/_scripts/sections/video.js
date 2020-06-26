@@ -23,6 +23,12 @@ export default class VideoSection extends BaseSection {
     $(selectors.videoModal, this.$container).on('hide.bs.modal', this.stopVideo.bind(this));
 
     this.$videoCover.on('mouseenter', this.onVideoEnter.bind(this));
+    this.$videoCover.on('click', this.onVideoClick.bind(this));
+  }
+
+  onVideoClick(e) {
+    e.preventDefault();
+    $(selectors.videoModal, this.$container).modal('show');
   }
 
   playVideo(e) {
