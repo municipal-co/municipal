@@ -166,18 +166,15 @@ body.ajax-cart-open {
 
 .ajax-cart__item {
   @include clearfix;
-  padding-top: 40px;
-  padding-bottom: 40px;
   border-bottom: 2px solid $black;
   padding: 40px 0;
   margin: 0 40px;
   margin-bottom: 0;
   position: relative;
+
   @include media-breakpoint-down('md') {
-    padding-top: 34px;
-    padding-bottom: 34px;
-    padding-left: $ajax-cart-padding-horizontal-mobile;
-    padding-right: $ajax-cart-padding-horizontal-mobile;
+    padding: 30px 0 0;
+    margin: 0 22px;
   }
   &:last-child {
     margin-bottom: 0;
@@ -196,15 +193,17 @@ body.ajax-cart-open {
   height: 160px;
   float: left;
   position: relative;
+
   &:after {
     content: '';
     display: block;
     width: 100%;
     padding-bottom: calc(1 / 1 * 100%);
   }
+
   @include media-breakpoint-down('md') {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
   }
 }
 
@@ -221,7 +220,7 @@ body.ajax-cart-open {
 .ajax-cart__item-info {
   padding-left: 200px; // Make room for the image floated left
   @include media-breakpoint-down('md') {
-    padding-left: 100px + 15px; // Make room for the image floated left
+    padding-left: 155px; // Make room for the image floated left
   }
 }
 
@@ -240,6 +239,10 @@ body.ajax-cart-open {
   font-size: 22px;
   line-height: 24px;
   padding-left: 15px;
+
+  @include media-breakpoint-down('md') {
+    font-size: 15px;
+  }
 }
 
 .ajax-cart__item-price {
