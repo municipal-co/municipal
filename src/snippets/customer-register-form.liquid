@@ -72,7 +72,7 @@
 
   <div class="form-group form-group__checkboxes">
     <div class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing">
+      <input class="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing" checked>
       <label class="custom-control-label h6" for="AcceptsMarketing">
         {% if marketing_checkbox_label != blank %}
           {{ marketing_checkbox_label }}
@@ -80,23 +80,23 @@
           {{ 'customer.register.news_checkbox' | t }}
         {% endif %}
       </label>
-    </div>   
+    </div>
     <div class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" name="customer[accepts_terms]" value="true" id="AcceptsTerms" required>
+      <input class="custom-control-input" type="checkbox" name="customer[accepts_terms]" value="true" id="AcceptsTerms" required checked >
       <label class="custom-control-label h6" for="AcceptsTerms">
         {% if terms_checkbox_label != blank %}
           {{ terms_checkbox_label }}
         {% else %}
           {{ 'customer.register.terms_checkbox' | t }}
-        {% endif %}        
+        {% endif %}
       </label>
     </div>
   </div>
-  
+
   <div class="form-group form-group__button text-center">
     <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn-primary">
     {% if show_cancel_button %}
       <a href="{{ shop.url }}" data-hide-register-form class="form-button__inline h6">{{ 'customer.register.cancel' | t }}</a>
     {% endif %}
   </div>
-{% endform %}  
+{% endform %}
