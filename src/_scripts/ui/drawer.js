@@ -125,6 +125,8 @@ export default class Drawer {
       this.removeBackdrop();
     }
 
+    this.$el.find(".drawer__header-title").removeClass("in");
+
     if (this.supportsCssTransitions) {
       this.$el.one(this.transitionEndEvent, this.onHidden.bind(this));
     }
@@ -136,16 +138,17 @@ export default class Drawer {
   show() {
     const e = $.Event(this.events.SHOW);
     this.$el.trigger(e);
-
+    
     if (this.stateIsOpen) return;
 
     this.stateIsOpen = true;
 
     this.$el.addClass(classes.visible);
-
     if (this.settings.backdrop) {
       this.addBackdrop();
     }
+    
+    this.$el.find(".drawer__header-title").addClass("in");
 
     if (this.supportsCssTransitions) {
       this.$el.one(this.transitionEndEvent, this.onShown.bind(this));
