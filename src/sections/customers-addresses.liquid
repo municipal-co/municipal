@@ -41,9 +41,12 @@
 
               <div class="row">
                 {% for address in customer.addresses %}
-                  <div class="col-md-12 account__addresses-column">
+                  <div class="col-24 account__addresses-column">
 
                     <div class="account__customer-address">
+                      {% if address == customer.default_address %}
+                        <h5 class="account__block-title">Default Address</h5>
+                      {% endif %}
                       <span>{{ address.first_name }} {{ address.last_name }}</span>
                       <br />
                       <span>{{ address.address1 }}, {{ address.address2 }}</span>
@@ -51,30 +54,26 @@
                       <span>{{ address.city }}, {{ address.province_code }} {{ address.zip }}</span>
                       <br />
                       <span>{{ address.country }}</span>
+                      <div class="account__customer-address-footer">
+                        <a href="#" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ address.id }}">
+                          {{ 'customer.addresses.edit' | t }}
+                        </a>
+                        &middot;
+                        <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                          {{ 'customer.addresses.delete' | t }}
+                        </a>
+                      </div>
                     </div>
-
-                    {% if address == customer.default_address %}
-                      <div class="small text-gray-500"><em>Default Address</em></div>
-                    {% endif %}
-
-                    <a href="#" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ address.id }}">
-                      {{ 'customer.addresses.edit' | t }}
-                    </a>
-                    &middot;
-                    <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
-                      {{ 'customer.addresses.delete' | t }}
-                    </a>
                   </div>
                 {% endfor %}
               </div>
 
-              <hr />
-              <button type="button" class="btn btn-primary" data-address-new-toggle>{{ 'customer.addresses.add_new' | t }}</button>           
+              <button type="button" class="btn btn-primary" data-address-new-toggle>{{ 'customer.addresses.add_new' | t }}</button>
 
             {% else %}
 
               <p>{{ 'customer.addresses.none' | t }}</p>
-              <a href="/account/addresses#new" class="btn btn-primary btn-block" data-address-new-toggle>{{ 'customer.account.add_new_address' | t }}</a>        
+              <a href="/account/addresses#new" class="btn btn-primary btn-block" data-address-new-toggle>{{ 'customer.account.add_new_address' | t }}</a>
 
             {% endif %}
 
@@ -83,7 +82,7 @@
 
       </div>
     </div>
-  </div>        
+  </div>
 
   {% if paginate.pages > 1 %}
     {% include 'pagination' %}

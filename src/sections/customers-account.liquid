@@ -16,53 +16,99 @@
     <div class="container-fluid">
       <div class="row">
 
-        {{ sidebar_html }}        
+        {{ sidebar_html }}
 
         <div class="account-content{% if sidebar_html != blank %} col-md-15{% endif %}">
 
           {% comment %} Account Stuff {% endcomment %}
           <div data-account-section="account">
 
-            <h4 class="account__title">{{ 'customer.account.details' | t }}</h4>
 
+            <h4 class="account__title">NAME</h4>
+            <div class="row">
+              <div class="col-lg-11">
+                <div class="account-block">
+                  <p class="account-block__content"> {{ customer.name }}</p>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="account__title">{{ 'customer.account.email' | t }}</h4>
+            <div class="row">
+              <div class="col-lg-11">
+                <div class="account-block">
+                  <div class="account-block__content">{{ customer.email }}</div>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="account__title">{{'customer.account.password' | t }}</h4>
+            <div class="row">
+              <div class="col-lg-11">
+                <div class="account-block">
+                  <div>********</div>
+                  <a href="#recover" class="btn btn--underlined" data-toggle-password>{{ 'customer.recover_password.title' | t }}</a>
+                  <div class="form-success hide" id="ResetSuccess">
+                    {{ 'customer.recover_password.success' | t }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="account__title">{{ 'customer.addresses.title' | t }}</h4>
             <div class="row">
               <div class="col-lg-11">
                 {% if customer.default_address %}
-                  <div class="account-block">
-                    <h5 class="account-block__title">{{ 'customer.addresses.default_address' | t }}</h5>
-                    <div class="account-block__content">
-                      <div class="account__customer-address">
-                        <span>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</span>
-                        <br />
-                        <span>{{ customer.default_address.address1 }}, {{ customer.default_address.address2 }}</span>
-                        <br />
-                        <span>{{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}</span>
-                        <br />
-                        <span>{{ customer.default_address.country }}</span>
+                    <div class="account__customer-address">
+                      <h5 class="account-block__title">{{ 'customer.addresses.default_address' | t }}</h5>
+                      <span>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</span>
+                      <br />
+                      <span>{{ customer.default_address.address1 }}, {{ customer.default_address.address2 }}</span>
+                      <br />
+                      <span>{{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}</span>
+                      <br />
+                      <span>{{ customer.default_address.country }}</span>
+                      <div class="account__customer-address-footer">
+                        <a href="/account/addresses#edit-{{customer.default_address.id}}" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ customer.default_address.id }}">
+                          {{ 'customer.addresses.edit' | t }}
+                        </a>
+                        &middot;
+                        <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ customer.default_address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                          {{ 'customer.addresses.delete' | t }}
+                        </a>
                       </div>
                     </div>
-                  </div>
                 {% endif %}
-                <a href="/account/addresses#new" class="btn btn-primary btn-block">{{ 'customer.account.add_new_address' | t }}</a>            
-              </div> 
-              <div class="col-lg-11 offset-lg-1">
-                <div class="account-block">
-                  <h5 class="account-block__title">{{ 'customer.account.email' | t }}</h5>
-                  <div class="account-block__content">{{ customer.email }}</div>
-                </div>
-                <a href="#recover" class="btn btn-primary btn-block" data-toggle-password>{{ 'customer.recover_password.title' | t }}</a>
-              </div>         
+                {% for address in customer.addresses %}
+                  {% unless address == customer.default_address %}
+                    <div class="account__customer-address">
+                      <span>{{ address.first_name }} {{ address.last_name }}</span>
+                      <br />
+                      <span>{{ address.address1 }}, {{ address.address2 }}</span>
+                      <br />
+                      <span>{{ address.city }}, {{ address.province_code }} {{ address.zip }}</span>
+                      <br />
+                      <span>{{ address.country }}</span>
+                      <div class="account__customer-address-footer">
+                        <a href="/account/addresses#edit-{{address.id}}" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ address.id }}">
+                          {{ 'customer.addresses.edit' | t }}
+                        </a>
+                        &middot;
+                        <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                          {{ 'customer.addresses.delete' | t }}
+                        </a>
+                      </div>
+                    </div>
+                  {% endunless %}
+                {% endfor %}
+                <a href="/account/addresses#new" class="btn btn-primary btn-block">{{ 'customer.account.add_new_address' | t }}</a>
+              </div>
             </div>
-
-            <div class="form-success hide" id="ResetSuccess">
-              {{ 'customer.recover_password.success' | t }}
-            </div>
-
-            {% if form.posted_successfully? %}
-              {% assign resetPassword = true %}
-            {% endif %}
-
           </div>
+
+          {% if form.posted_successfully? %}
+            {% assign resetPassword = true %}
+          {% endif %}
 
           {% comment %} Password Stuff {% endcomment %}
           <div class="hide" data-account-section="password-recover">
@@ -109,7 +155,7 @@
           </div>
 
         </div>
-        
+
       </div>
     </div>
   </div>

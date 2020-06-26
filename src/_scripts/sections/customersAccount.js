@@ -1,9 +1,11 @@
 import $ from 'jquery';
 import BaseCustomersSection from './baseCustomers';
+import { postLink } from '../core/utils';
 
 const selectors = {
   accountSection: '[data-account-section]',
-  togglePassword: '[data-toggle-password]'
+  togglePassword: '[data-toggle-password]',
+  addressDelete: '[data-address-delete][data-form-id]'
 };
 
 const hashes = {
@@ -25,6 +27,17 @@ export default class CustomersAccountSection extends BaseCustomersSection {
     }
 
     this.$container.on('click', selectors.togglePassword, this.onTogglePasswordClick.bind(this));
+    $(selectors.addressDelete).on('click', this.removeAddress.bind(this));
+  }
+
+  removeAddress(e) {
+    e.preventDefault();
+    const $el = $(e.currentTarget);
+    const formId = $el.data('form-id');
+    const confirmMessage = $el.data('confirm-message');
+    if (window.confirm(confirmMessage || 'Are you sure you wish to delete this address?')) {
+      postLink('/account/addresses/' + formId, { parameters: { _method: 'delete' } });
+    }
   }
 
   onTogglePasswordClick(e) {
