@@ -11,6 +11,9 @@
   &.light {
     .collection-tile__cta {
       color: $white;
+      &:hover svg {
+        fill: $white;
+      }
     }
   }
 
@@ -97,7 +100,6 @@
 
   .collection-tile__cta {
     @include media-breakpoint-down('md') {
-      float: right;
       padding: 0;
     }
   }
