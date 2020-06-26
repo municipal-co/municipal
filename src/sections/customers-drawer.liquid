@@ -5,7 +5,7 @@
         {% include 'icon-close' %}
         <span class="sr-only">Close</span>
       </a>
-      <h5 class="drawer__header-title">{{ section.settings.header }}</h5>
+      <h5 class="drawer__header-title in">{{ section.settings.header }}</h5>
     </div>
     <div class="drawer__body">
       <div class="drawer__body-contents">
@@ -17,7 +17,7 @@
               {% else %}
                 <h5>{{ 'customer.login.title' | t | newline_to_br }}:</h5>
               {% endif %}
-              
+
               {% if section.settings.subtitle != blank %}
                 <div class="h6">{{ section.settings.subtitle }}</div>
               {% else %}
