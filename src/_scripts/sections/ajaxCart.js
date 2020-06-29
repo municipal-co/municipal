@@ -7,7 +7,7 @@ import * as Utils from '../core/utils';
 
 const $window = $(window);
 const $body = $(document.body);
-const history = window.history;
+const $history = window.history;
 
 /**
  * Ajax Cart Section Script
@@ -51,7 +51,7 @@ export default class AJAXCartSection extends BaseSection {
 
       if (queryParams && queryParams['open-mini-cart']) {
         this.ajaxCartUI.open();
-        window.history.pushState({}, null, newUrl);
+        $history.pushState({}, null, newUrl);
       }
     });
 
