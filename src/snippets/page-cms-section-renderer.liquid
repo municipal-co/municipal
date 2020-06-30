@@ -225,14 +225,8 @@
 
           {% if title != blank %}
             <div class="scrolling-text" data-cms-block data-animated-background="#ffffff">
-              <div class="text-wrapper col-24">
-                <h2 class="text h1">
-                  <span style="animation-duration: {{ animation }};">{{ title | strip_html }} &nbsp;</span>
-                </h2>
-                <h2 class="text text--copy h1">
-                  <span style="animation-duration: {{ animation }}; animation-delay: {{ animation_delay }}">{{ title | strip_html }} &nbsp;</span>
-                </h2>
-              </div>
+              <span class="text h1" style="animation-duration: {{ animation }};">{{ title | strip_html }} </span>
+              <span class="text h1" style="animation-duration: {{ animation }};">{{ title | strip_html }} </span>
             </div>
           {% endif %}
 
