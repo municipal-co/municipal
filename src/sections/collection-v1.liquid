@@ -113,7 +113,7 @@
                       {% for color in product_colors %}
                         {% assign default_variant = blank %}
                         {% for variant in product.variants %}
-                          {% if variant[option_handle] == color %}
+                          {% if variant[option_handle] == color and variant.available == true %}
                             {% assign default_variant = variant %}
                           {% endif %}
                         {% endfor %}
