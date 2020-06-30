@@ -2,7 +2,7 @@
   padding-top: large-vw(60px, 155px);
 
   @include media-breakpoint-down('md') {
-    padding-top: 60px;
+    padding-top: 80px;
   }
 
   .style-tips-section-title {
@@ -113,7 +113,7 @@
     .modal-video-player__play-button {
       cursor: none;
     }
-    
+
     &:hover {
       .modal-video-player__play-button svg{
         width: 100%;
@@ -277,7 +277,7 @@
   }
 
   .modal--video {
-    
+
     &.show {
       background-color: rgba(18, 18, 18, 0.9);
     }
