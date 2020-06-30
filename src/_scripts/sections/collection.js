@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import { throttle } from 'throttle-debounce';
 import BaseSection from './base';
 import Drawer from '../ui/drawer';
 import ProductCard from '../view/product/productCard';
