@@ -336,10 +336,10 @@ $headings-color: null !default;
 // Mobile headings
 $h1-font-size-mobile: 40px;
 $h2-font-size-mobile: 45px;
-$h3-font-size-mobile: 40px;
+$h3-font-size-mobile: 35px;
 $h4-font-size-mobile: 35px;
-$h5-font-size-mobile: 25px;
-$h6-font-size-mobile: 10px;
+$h5-font-size-mobile: 20px;
+$h6-font-size-mobile: 13px;
 
 $h1-letter-spacing-mobile: 2px !default;
 $h2-letter-spacing-mobile: 2px !default;
@@ -350,7 +350,7 @@ $h6-letter-spacing-mobile: 0.5px !default;
 
 $h1-line-height-mobile: 1em !default;
 $h2-line-height-mobile: 1em !default;
-$h3-line-height-mobile: 1.13em !default;
+$h3-line-height-mobile: 1em !default;
 $h4-line-height-mobile: 1em !default;
 $h5-line-height-mobile: 1.2em !default;
 $h6-line-height-mobile: 1.2em !default;
