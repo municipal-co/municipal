@@ -161,8 +161,8 @@
       "title": "Shipping Addresses",
       "default": "Default",
       "default_address": "Default Address",
-      "add_new": "Add New \n Address",
-      "edit_address": "Edit New \n address",
+      "add_new": "Add New Address",
+      "edit_address": "Edit Address",
       "first_name": "First Name",
       "last_name": "Last Name",
       "company": "Company",
@@ -245,7 +245,7 @@
       "see_order_status": "See Order Status"
     },
     "recover_password": {
-      "title": "Reset your \n password",
+      "title": "Reset your password",
       "email": "Email",
       "submit": "Submit",
       "cancel": "Cancel",
