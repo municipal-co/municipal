@@ -59,6 +59,7 @@ export default class ProductCard {
       const $img = $(this);
       $img.on('load', () => {
         $img.parents(selectors.gallery).addClass(classes.mainLoaded);
+        $img.addClass('in');
       });
     });
 
