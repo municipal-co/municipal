@@ -176,11 +176,12 @@
       margin-left: 7px;
     }
 
-    &:hover {
-      transition-timing-function: $transition-timing-function-in;
-      background-color: $black;
-      color: $white;
-    }
+  }
+
+  &:hover {
+    transition-timing-function: $transition-timing-function-in;
+    background-color: $black;
+    color: $white;
   }
 
   &.is-active {
