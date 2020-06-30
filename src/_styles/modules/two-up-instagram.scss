@@ -19,7 +19,7 @@
     position: absolute;
     z-index: -1;
     bottom: -1px;
-    
+
     @include media-breakpoint-down('md') {
       height: 15%;
     }
@@ -30,6 +30,7 @@
     position: relative;
     height: large-vw(60px, 170px);
     margin-bottom: large-vw(50px, 185px);
+    white-space: nowrap;
 
     @include media-breakpoint-down('md') {
       margin-bottom: 25px;
@@ -38,16 +39,19 @@
   }
 
   .two-up__link {
+    overflow: hidden;
     position: relative;
     white-space: nowrap;
-    overflow: hidden;
+    display: block;
+    width: 100%;
   }
 
   .two-up__title {
-    display: inline-block;
+    margin: 0 auto;
     text-align: center;
+    position: relative;
     min-width: 100%;
-    margin-bottom: 0;
+    display: inline-block;
     animation: text-scroll linear infinite;
   }
 
@@ -58,7 +62,7 @@
 
   .two-up__image {
     width: 50%;
-    
+
     &:first-child{
       margin-right: large-vw(35px, 80px);
 
