@@ -56,12 +56,13 @@
             {% for product in collection.products %}
               {% for option in product.options_with_values %}
                 {% if option.name == 'Color' %}
+                  {% assign option_handle = 'option' | append: forloop.index %}
                   {% assign product_colors = option.values %}
 
                   {% for color in product_colors %}
                     {% assign default_variant = blank %}
                     {% for variant in product.variants %}
-                      {% if variant.title contains color %}
+                      {% if variant[option_handle] == color %}
                         {% assign default_variant = variant %}
                       {% endif %}
                     {% endfor %}
