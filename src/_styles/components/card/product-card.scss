@@ -29,7 +29,7 @@
   padding-bottom: 100%;
   width: 100%;
   background-color: $gray-lighter;
-  
+
   .template-product & {
     background-color: $white;
   }
@@ -137,7 +137,7 @@
     color: $white;
     text-transform: uppercase;
     font-weight: $font-weight-bold;
-    padding: large-vw(5px, 10px);
+    padding: 2px 8px;
     font-size: large-vw(11px, 20px);
     @include media-breakpoint-down('md') {
       font-size: 11px;

@@ -6,7 +6,7 @@
   margin-top: large-vw(40px, 82px);
 
   @include media-breakpoint-down('md') {
-    margin: 40px 0 35px;
+    margin: 20px 0 35px;
     padding: 0 33px;
   }
 
@@ -48,7 +48,7 @@
 .product__price {
   margin-top: large-vw(25px, 30px);
   font-weight: bold;
-  margin-bottom: 9px;
+  margin-bottom: 5px;
 
   @include media-breakpoint-down('md') {
     font-size: 25px;
@@ -99,23 +99,25 @@
 
 .product__fit-guide-toggler {
   font-size: large-vw(20px, 30px);
+  padding: 5px 0;
 
   &:focus {
     outline: none;
   }
   @include media-breakpoint-down('md') {
     font-size: 20px;
-    margin-top: 30px;
+    margin-top: 10px;
   }
 }
 
 .product__shipping-toggler {
   font-size: large-vw(12px,18px);
-  margin-top: 35px;
+  margin-top: 25px;
   width: 100%;
 
   @include media-breakpoint-down('md') {
-    font-size: 12px;
+    font-size: 13px;
+    margin-top: 30px;
   }
 }
 
