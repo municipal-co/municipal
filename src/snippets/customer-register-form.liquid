@@ -70,10 +70,15 @@
     <span data-password-validation-error-message class="form-password__error-message"></span>
   </div>
 
+  <div class="form-group form-group__button text-center">
+    <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn-primary">
+    <span class="form-group__small-text">By creating an account you agree with our <a href="/pages/privacy-policy">Terms of Service</a></span>
+  </div>
+
   <div class="form-group form-group__checkboxes">
     <div class="custom-control custom-checkbox">
       <input class="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing" checked>
-      <label class="custom-control-label h6" for="AcceptsMarketing">
+      <label class="custom-control-label h6 in" for="AcceptsMarketing">
         {% if marketing_checkbox_label != blank %}
           {{ marketing_checkbox_label }}
         {% else %}
@@ -81,22 +86,11 @@
         {% endif %}
       </label>
     </div>
-    <div class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" name="customer[accepts_terms]" value="true" id="AcceptsTerms" required checked >
-      <label class="custom-control-label h6" for="AcceptsTerms">
-        {% if terms_checkbox_label != blank %}
-          {{ terms_checkbox_label }}
-        {% else %}
-          {{ 'customer.register.terms_checkbox' | t }}
-        {% endif %}
-      </label>
-    </div>
-  </div>
 
-  <div class="form-group form-group__button text-center">
-    <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn-primary">
     {% if show_cancel_button %}
-      <a href="{{ shop.url }}" data-hide-register-form class="form-button__inline h6 in">{{ 'customer.register.cancel' | t }}</a>
+      <div class="register-form__back-message h6 in">
+        Already have an account? <a data-hide-register-form href="/account/login">Sign In</a>
+      </div>
     {% endif %}
   </div>
 {% endform %}

@@ -57,4 +57,24 @@
       font-size: 16px;
     }
   }
+
+}
+
+.form-group__small-text {
+  font-size: 9px;
+  font-weight: bold;
+
+  a {
+    text-decoration: underline;
+  }
+}
+.register-form__back-message {
+  text-align: center;
+  color: #aaabad;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #aaabad;
+  a {
+    color: $cyan;
+  }
 }
