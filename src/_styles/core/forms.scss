@@ -53,6 +53,7 @@
   }
 
   &.account-form__field {
+    font-size: 0.8rem;
     border-radius: 0;
     border: none;
     border-bottom: 4px solid $black;
@@ -190,7 +191,7 @@ textarea.form-control {
   }
 
   &.form-group__checkboxes {
-    margin-top: 60px;
+    margin: 30px 0;
   }
 
   .form-button__inline {
