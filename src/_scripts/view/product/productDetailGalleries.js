@@ -55,6 +55,8 @@ class ProductDetailGallery {
       preloadImages: false,
       direction: 'vertical',
       slideToClickedSlide: true,
+      threshold: 25,
+      // allowTouchMove: false,
       lazy: {
         loadPrevNext: true,
         loadPrevNextAmount: 1
