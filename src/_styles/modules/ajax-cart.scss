@@ -53,11 +53,6 @@ body.ajax-cart-open {
   background: $ajax-cart-bg;
 }
 
-.ajax-cart-form {
-  display: flex;
-  flex-direction: column;
-}
-
 .ajax-cart__header,
 .ajax-cart__footer {
   padding: 20px 35px;
@@ -84,6 +79,7 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__header {
+  position: relative;
   background-color: $black;
   padding: large-vw(9px, 35px) large-vw(20px, 40px);
   display: flex;
@@ -132,21 +128,30 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__close {
+  position: absolute;
   color: $white;
+  top: 50%;
+  transform: translateY(-50%);
+  right: large-vw(20px, 40px);
 
   &:focus .icon,
   &:active .icon,
   &:hover  .icon{
-    fill: white;
+    fill: $white;
   }
-  .icon-close {
-    width: large-vw(28px, 50px);
-    height: large-vw(28px, 50px);
+
+  svg {
+    width: large-vw(20px, 50px);
+    height: large-vw(20px, 50px);
 
     @include media-breakpoint-down('md') {
-      width: 28px;
-      height: 28px;
+      width: 20px;
+      height: 20px;
     }
+  }
+
+  @include media-breakpoint-down('md') {
+    right: 20px;
   }
 }
 
