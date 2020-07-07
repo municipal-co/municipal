@@ -33,7 +33,7 @@
 {% assign photo_main_dimension  = '1680x1680' %}
 {% assign photo_zoom_dimension  = '1680x1680' %}
 {% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
-
+{% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 {% comment %} Defaults {% endcomment %}
 {% assign current_variant = current_variant | default: product.selected_or_first_available_variant %}
 
@@ -89,7 +89,7 @@
                       {% if image_alt_downcase contains color_downcase %}
                         {% unless image_alt_downcase contains alt_swatch_identifier %}
                           <div class="product-gallery__thumbnails-slide swiper-slide {% if image_counter == 0 %}swiper-slide-thumb-active{% endif %}"data-product-gallery-thumbnails-slide>
-                            <img data-src="{{ image.src | img_url: photo_thumb_dimension, crop: 'center' }}"
+                            <img src="{{ image_loading_placeholder }}" data-src="{{ image.src | img_url: photo_thumb_dimension, crop: 'center' }}"
                                  alt="{{ image.alt | escape | remove: '|' }}"
                                  class="swiper-lazy">
                             <div class="swiper-lazy-preloader"></div>
@@ -116,7 +116,7 @@
                       {% if image_alt_downcase contains color_downcase %}
                         {% unless image_alt_downcase contains alt_swatch_identifier %}
                           <div class="swiper-slide" data-image="{{ image.id }}">
-                            <img data-src="{{ image | img_url: photo_main_dimension }}"
+                            <img src="{{ image_loading_placeholder }}" data-src="{{ image | img_url: photo_main_dimension }}"
                                  alt="{{ image.alt | escape | remove: '|' }}"
                                  data-object-fit="cover" data-object-position="center"
                                  data-image-url="{{ image | img_url: photo_zoom_dimension }}"
@@ -151,7 +151,7 @@
               {% assign image_alt_downcase = image.alt | downcase %}
               {% unless image_alt_downcase contains alt_swatch_identifier %}
                 <div class="product-gallery__thumbnails-slide swiper-slide {% if forloop.index == 1 %} swiper-slide-thumb-active{% endif %}" data-product-gallery-thumbnails-slide>
-                  <img data-src="{{ image.src | img_url: photo_thumb_dimension, crop: 'center' }}"
+                  <img src="{{ image_loading_placeholder }}" data-src="{{ image.src | img_url: photo_thumb_dimension, crop: 'center' }}"
                        alt="{{ image.alt | escape | remove: '|' }}"
                        data-object-fit="cover"
                        data-object-position="center"
@@ -176,7 +176,7 @@
                 {% assign image_alt_downcase = image.alt | downcase %}
                 {% unless image_alt_downcase contains alt_swatch_identifier %}
                   <div class="swiper-slide" data-image="{{ image.id }}">
-                    <img data-src="{{ image | img_url: photo_main_dimension }}"
+                    <img src="{{ image_loading_placeholder }}" data-src="{{ image | img_url: photo_main_dimension }}"
                          alt="{{ image.alt | escape | remove: '|' }}"
                          class="img-fluid swiper-lazy"
                          data-object-fit="cover"

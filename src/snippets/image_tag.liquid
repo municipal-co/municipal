@@ -17,7 +17,7 @@
 
 
 
-
+{% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 {% if object_fit != blank %}
   {% assign object_fit_attribute = 'data-object-fit="' | append: object_fit | append: '"'  %}
 {% endif %}
@@ -31,6 +31,7 @@
 
 {% if image contains 'http' %}
   <img alt="{{ image.alt }}"
+    src="{{ image_loading_placeholder }}"
     data-src="{{ image }}"
     data-animate-image-in
     class="lazyload {{animate_class}}"
@@ -38,6 +39,7 @@
     {{  object_position_attribute  }} >
 {% else %}
   <img alt="{{ image.alt }}"
+    src="{{ image_loading_placeholder }}"
     data-src="{{ image | img_url: '1800x' }}"
     class="lazyload {{animate_class}}"
     data-animate-image-in
