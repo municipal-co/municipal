@@ -23,8 +23,6 @@ const classes = {
 
 const $window = $(window);
 
-const breakpointMd = Breakpoints.getBreakpointMinWidth('md');
-
 class ProductDetailGallery {
   /**
    * Product Detail Gallery Constructor
