@@ -49,6 +49,8 @@
 {% if product %}
 
   {% assign product_image_dimension = '760x' %}
+  {% assign product_image_dimension_tablet = '400x' %}
+  {% assign product_image_dimension_mobile = '150x' %}
   {% assign product_url = variant.url | default: product.url | within: collection %}
 
   <div id="product-card-{{ product.id }}" class="product-card {{ card_classes }}" data-product-card
@@ -61,6 +63,10 @@
         <a href="{{ product_url }}">
           <div class="product-card__gallery-image" data-product-card-gallery>
             <img data-src="{{featured_image | img_url: product_image_dimension }}"
+            data-srcset="
+            {{featured_image | img_url: product_image_dimension_mobile }},
+            {{featured_image | img_url: product_image_dimension_tablet }} 768w,
+            {{featured_image | img_url: product_image_dimension }} 992w"
             alt="{{ featured_image.alt }}"
             class="animate"
             data-animate-image-in

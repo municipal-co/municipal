@@ -78,12 +78,14 @@ export default class VideoPlayer {
 
     // These bind functions create a player from their respective JS libraries
     // and add a click handlers on the cover
-    if (this.type === VIDEO_TYPES.VIMEO) {
-      this.bindVimeoPlayer();
-    }
-    else if (this.type === VIDEO_TYPES.YOUTUBE) {
-      this.bindYouTubePlayer();
-    }
+    $(window).on('load', () => {
+      if (this.type === VIDEO_TYPES.VIMEO) {
+        this.bindVimeoPlayer();
+      }
+      else if (this.type === VIDEO_TYPES.YOUTUBE) {
+        this.bindYouTubePlayer();
+      }
+    });
   }
 
   bindVimeoPlayer() {
