@@ -23,6 +23,10 @@
   {% assign quick_view = false %}
 {% endif %}
 
+{% if render_json == blank %}
+  {% assign render_json = true %}
+{% endif %}
+
 {% if show_swatches == blank %}
   {% assign show_swatches = true %}
 {% endif %}
@@ -159,10 +163,12 @@
 
       </div>
     </div>
-
-    <script type="application/json" data-product-json>
-      {% include 'product-json' %}
-    </script>
+    
+    {% if render_json == true %}
+      <script type="application/json" data-product-json>
+        {% include 'product-json' %}
+      </script>      
+    {% endif %}
 
   </div>
 
