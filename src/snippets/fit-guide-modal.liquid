@@ -1,6 +1,6 @@
 {% assign page_handle = product.metafields.custom_fields['fit_guide_reference'] %}
 {% assign metafields = pages[page_handle].metafields.custom_fields %}
-
+{% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 {% assign product_options = product.options_with_values %}
 {% for option in product_options %}
 {% assign option_downcase = option.name | downcase %}
@@ -153,21 +153,21 @@
                       {% assign slide_count = 0 %}
                       {% if image_1_array[index] != blank %}
                         <div class="swiper-slide" data-swiper-slide>
-                          <img data-src="{{ image_1_array[index] }}" class="swiper-lazy">
+                          <img src="{{ image_loading_placeholder }}" data-src="{{ image_1_array[index] }}" class="swiper-lazy">
                           <div class="swiper-lazy-preloader"></div>
                         </div>
                         {% assign slide_count = slide_count | plus: 1 %}
                       {% endif %}
                       {% if image_2_array[index] != blank %}
                         <div class="swiper-slide" data-swiper-slide>
-                          <img data-src="{{ image_2_array[index] }}" class="swiper-lazy">
+                          <img src="{{ image_loading_placeholder }}" data-src="{{ image_2_array[index] }}" class="swiper-lazy">
                           <div class="swiper-lazy-preloader"></div>
                         </div>
                         {% assign slide_count = slide_count | plus: 1 %}
                       {% endif %}
                       {% if image_3_array[index] != blank %}
                         <div class="swiper-slide" data-swiper-slide>
-                          <img data-src="{{ image_3_array[index] }}" class="swiper-lazy">
+                          <img src="{{ image_loading_placeholder }}" data-src="{{ image_3_array[index] }}" class="swiper-lazy">
                           <div class="swiper-lazy-preloader"></div>
                         </div>
                         {% assign slide_count = slide_count | plus: 1 %}
