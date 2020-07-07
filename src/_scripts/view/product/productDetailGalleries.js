@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { throttle } from 'throttle-debounce';
 import Swiper from 'swiper';
+import * as Breakpoints from '../../core/breakpoints';
 
 const selectors = {
   productGallery: '[data-product-gallery]',
@@ -21,6 +22,8 @@ const classes = {
 };
 
 const $window = $(window);
+
+const breakpointMd = Breakpoints.getBreakpointMinWidth('md');
 
 class ProductDetailGallery {
   /**
@@ -69,6 +72,10 @@ class ProductDetailGallery {
       slidesPerView: 1,
       speed: 100,
       effect: 'fade',
+      allowTouchMove: true,
+      threshold: 0,
+      preventClicks: true,
+      preventClicksPropagation: true,
       fadeEffect: {
         crossFade: true
       },
@@ -81,8 +88,13 @@ class ProductDetailGallery {
       },
       on: {
         init: this.onSlideShowInit.bind(this),
-        slideChangeTransitionEnd: this.onSlideChangeTransitionEnd.bind(this),
         slideChange: this.onSlidechange.bind(this)
+      },
+      breakpoints: {
+        992: {
+          // allowTouchMove: false,
+          threshold: 75,
+        }
       },
       thumbs: {
         swiper: this.thumbnailsSwiper
@@ -96,9 +108,6 @@ class ProductDetailGallery {
     this.$slideshow.on('mousemove', this.locateZoomIcon.bind(this));
     this.$zoomItem.on('mousemove', this.locateZoomOutIcon.bind(this));
 
-    this.$thumbnails.on('click', selectors.productGalleryThumbnailsSlide, (e) => {
-      this.swiper.slideToLoop($(e.currentTarget).index());
-    });
   }
 
   // Adjust gallery container to match the main gallery so the thumbnails space gets calculated properly.
@@ -178,15 +187,11 @@ class ProductDetailGallery {
     this.thumbnailsSwiper.update();
   }
 
-  onSlideChangeTransitionEnd() {
-    const sw = this.swiper;
-    this.destroyHoverZoom($(sw.slides[sw.previousIndex]));
-    this.initHoverZoom($(sw.slides[sw.activeIndex]));
-  }
-
   onSlidechange() {
     const sw = this.swiper;
     $(selectors.currentThumbnail, this.$el).text(sw.activeIndex + 1);
+    this.destroyHoverZoom($(sw.slides[sw.previousIndex]));
+    this.initHoverZoom($(sw.slides[sw.activeIndex]));
   }
 }
 
