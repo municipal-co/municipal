@@ -15,6 +15,7 @@
 {% endcomment -%}
 
 {% comment %} Defaults {% endcomment %}
+{% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 
 {% assign card_classes = blank %}
 
@@ -62,7 +63,7 @@
       <div class="product-card__gallery">
         <a href="{{ product_url }}">
           <div class="product-card__gallery-image" data-product-card-gallery>
-            <img data-src="{{featured_image | img_url: product_image_dimension }}"
+            <img src="{{ image_loading_placeholder }}" data-src="{{featured_image | img_url: product_image_dimension }}"
             data-srcset="
             {{featured_image | img_url: product_image_dimension_mobile }},
             {{featured_image | img_url: product_image_dimension_tablet }} 768w,
