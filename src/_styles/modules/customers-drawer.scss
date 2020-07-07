@@ -60,8 +60,13 @@
 
 }
 
+.form-group__small-text--container {
+  line-height: 1;
+  margin-top: 15px;
+}
+
 .form-group__small-text {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: bold;
 
   a {
