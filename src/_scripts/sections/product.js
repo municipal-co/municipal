@@ -95,7 +95,7 @@ export default class ProductSection extends BaseSection {
 
   toggleFitGuideTab(e) {
     const $this = $(e.currentTarget);
-    const $container= $this.parent();
+    const $container = $this.parent();
 
     if (!$this.hasClass(classes.active)) {
       const tabTarget = $this.data('fit-guide-toggle-tab');
