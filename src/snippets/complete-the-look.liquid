@@ -46,7 +46,7 @@
                 {% assign product_id = product_array[index] %}
                 {% assign card_product = all_products[product_id] %}
 
-                {% if product != blank %}
+                {% if card_product != blank %}
                   <div class="content-grid__item swiper-slide">
                     {% include 'product-card',
                        product: card_product,
