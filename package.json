@@ -26,6 +26,7 @@
     "gulp-debug": "^4.0.0",
     "gulp-eslint": "^5.0.0",
     "gulp-if": "^2.0.2",
+    "gulp-minify": "^3.1.0",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
