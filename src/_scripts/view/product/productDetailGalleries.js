@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import { throttle } from 'throttle-debounce';
 import Swiper from 'swiper';
-import * as Breakpoints from '../../core/breakpoints';
 
 const selectors = {
   productGallery: '[data-product-gallery]',
