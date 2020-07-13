@@ -1,6 +1,30 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import BaseSection from './base';
 
+const templates = {
+  sizeFitTemplate: (label, value) => {
+    return `<div class="yotpo-user-field size-fit-field modified-field" data-type="SingleChoice">
+      <span class="yotpo-user-field-description text-s">` + label + `</span>
+      <span class="yotpo-user-field-answer text-s">` + value + `</span>
+    </div>`
+  },
+  dateTemplate: (value) => {
+    return `<div class="yotpo-user-field" data-type="SingleChoice">
+      <span class="yotpo-user-field-description text-s">Date:</span>
+      <span class="yotpo-user-field-answer text-s">` + value + `</span>
+    </div>`
+  },
+  nameTemplate: (value) => {
+    return `<div>
+      <span class="y-label yotpo-user-name yotpo-font-bold pull-left" aria-level="3">` + value + `</span>
+    </div>`
+  },
+  verifiedTemplate:
+    `<div class="label-with-tooltip pull-left" aria-level="3">
+      <span class="y-label yotpo-user-title yotpo-action-hover" data-type="toggleFade" data-target="yotpo-tool-tip" aria-describedby="179043713">Verified Reviewer</span>
+    </div>`
+}
+
 export default class YotpoReviews extends BaseSection {
   constructor(container) {
     super(container, 'yotpo-reviews');
@@ -12,6 +36,7 @@ export default class YotpoReviews extends BaseSection {
       threshold: 0.1
     };
 
+    const containerThis = this;
     /**
      * Yotpo Reviews
      * Format all Yotpo Baseline Reviews as stars + review count, ex: '***** (3)'
@@ -21,7 +46,25 @@ export default class YotpoReviews extends BaseSection {
     const limit = 20; // if yotpo hasn't loaded after 20 checks, bail.
     let count = 0;
     const yotpoReadyCallback = () => {
-      this.formatSizingMessages();
+      this.formatSizingMessages(false);
+
+      function mutationHandler(mutationRecords) {
+        mutationRecords.forEach(function(mutation) {
+          if ($(mutation.addedNodes[0]).is('.yotpo-review')) {
+            containerThis.formatSizingMessages(true);
+          }
+        });
+      }
+
+      const yotpoReviews = $('.yotpo-reviews');
+      const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+      const myObserver = new MutationObserver(mutationHandler);
+      const obsConfig = { childList: true, characterData: true, attributes: true, subtree: true };
+
+      yotpoReviews.each(function() {
+        myObserver.observe(this, obsConfig);
+      });
+
     };
     const yotpoCheck = setInterval(() => {
       if (typeof yotpo !== 'undefined') {
@@ -41,76 +84,83 @@ export default class YotpoReviews extends BaseSection {
       }
     }, 500);
 
-    // $(window).on('load', this.formatSizingMessages.bind(this));
-
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
   }
 
-  formatSizingMessages() {
+  formatSizingMessages(isAddingNewReview) {
     const $yotpoWrapper = this.$container;
 
-    const $yotpoReviewsFieldName = $yotpoWrapper.find('.yotpo-bottomline-box-2 .yotpo-product-related-field-name').text();
+    const $sizeFitFieldName = $yotpoWrapper.find('.yotpo-bottomline-box-2 .yotpo-product-related-field-name').text();
 
     const $yotpoSizesLabels = $yotpoWrapper.find('.yotpo-size-field-titles label');
 
-    const labelValues = [];
+    const sizesValues = [];
 
-    $.each($yotpoSizesLabels, function () {
+    $.each($yotpoSizesLabels, function() {
       const value = $(this).text();
-      labelValues.push(value);
+      sizesValues.push(value);
     });
-    labelValues.splice(1, 0, '');
-    labelValues.splice(3, 0, '');
+    sizesValues.splice(1, 0, '');
+    sizesValues.splice(3, 0, '');
 
     const $yotpoReviewsContainer = $yotpoWrapper.find('.yotpo-reviews');
     const $yotpoReviews = $yotpoReviewsContainer.find('.yotpo-review').not('.yotpo-hidden');
 
-    $.each($yotpoReviews, function () {
+    $.each($yotpoReviews, function() {
       const $this = $(this);
-
-      const $yotpoReviewsColumn = $this.find('.yotpo-product-related-fields-column:first-child');
-      const $yotpoReviewsBars = $yotpoReviewsColumn.find('.yotpo-size-bars').first();
-      const $yotpoSingleBar = $yotpoReviewsBars.find('.yotpo-product-related-field-score-bar');
-
-      let labelText = '';
-
-      $.each($yotpoSingleBar, function (barIndex) {
-        if (!$(this).hasClass('yotpo-size-bar-empty')) {
-          labelText = labelValues[barIndex];
-        }
-      });
 
       const $firstHeaderElement = $this.find('.yotpo-header-element').not('.yotpo-icon-profile').first();
       const $userFields = $firstHeaderElement.find('.yotpo-user-related-fields');
 
-      $userFields.prepend('<div class="yotpo-user-field" data-type="SingleChoice"><span class="yotpo-user-field-description text-s">' + $yotpoReviewsFieldName + '</span><span class="yotpo-user-field-answer text-s">' + labelText + '</span></div>');
+      const $yotpoReviewsColumn = $this.find('.yotpo-product-related-fields-column:first-child');
+      let $yotpoReviewsBars = $yotpoReviewsColumn.find('.yotpo-product-related-fields-bars > .yotpo-field-bars-container > .yotpo-size-bars');
 
-      const $dateValue = $this.find('.yotpo-header-element.yotpo-header-actions .yotpo-review-date').text();
+      if ($userFields.children('.modified-field').length) {
+        return;
+      }
 
-      $userFields.prepend('<div class="yotpo-user-field" data-type="SingleChoice"><span class="yotpo-user-field-description text-s">Date:</span><span class="yotpo-user-field-answer text-s">' + $dateValue + '</span></div>');
+      if (isAddingNewReview) {
+        $yotpoReviewsBars = $yotpoReviewsColumn.find('.yotpo-product-related-fields-bars > .yotpo-size-bars');
+      }
 
-      const $userNameValue = $firstHeaderElement.find('.yotpo-user-name').text();
+      const $yotpoSingleBar = $yotpoReviewsBars.find('.yotpo-product-related-field-score-bar');
 
-      $userFields.prepend('<div><span class="y-label yotpo-user-name yotpo-font-bold pull-left" aria-level="3">' + $userNameValue + '</span></div>');
+      let sizeFitValue = '';
+
+      $.each($yotpoSingleBar, function(barIndex) {
+        if (!$(this).hasClass('yotpo-size-bar-empty')) {
+          sizeFitValue = sizesValues[barIndex];
+        }
+      });
+
+      $userFields.prepend(templates.sizeFitTemplate($sizeFitFieldName, sizeFitValue));
+
+      const dateValue = $this.find('.yotpo-header-element.yotpo-header-actions .yotpo-review-date').text();
+
+      $userFields.prepend(templates.dateTemplate(dateValue));
+
+      const nameValue = $firstHeaderElement.find('.yotpo-user-name').text();
+
+      $userFields.prepend(templates.nameTemplate(nameValue));
 
       const $verifiedLabel = $firstHeaderElement.find('.label-with-tooltip');
 
-      if ($verifiedLabel.length) {
-        $userFields.prepend('<div class="label-with-tooltip pull-left" aria-level="3"><span class="y-label yotpo-user-title yotpo-action-hover" data-type="toggleFade" data-target="yotpo-tool-tip" aria-describedby="179043713">Verified Reviewer</span></div>');
+      if ($verifiedLabel.length && !$verifiedLabel.hasClass('yotpo-hidden')) {
+        $userFields.prepend(templates.verifiedTemplate);
       }
-
 
       const $lastUserField = $userFields.find('.yotpo-user-field').last();
       const $recommendDescription = $lastUserField.find('.yotpo-user-field-description');
       const $recommendAnswer = $lastUserField.find('.yotpo-user-field-answer');
 
+      $lastUserField.addClass('recommend-field');
       $recommendDescription.text($recommendDescription.text().replace(' to a Friend', ''));
 
       if ($recommendAnswer.text() === 'Yes') {
-        $recommendAnswer.text($recommendAnswer.text().replace('Yes', 'Yes👍'));
+        $recommendAnswer.text($recommendAnswer.text().replace('Yes', 'Yes 👍'));
       } else {
-        $recommendAnswer.text($recommendAnswer.text().replace('No', 'No❌'));
+        $recommendAnswer.text($recommendAnswer.text().replace('No', 'No ❌'));
       }
     });
   }

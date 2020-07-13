@@ -165,10 +165,10 @@
       flex-direction: column;
       .yotpo-user-field {
         font-size: 20px !important;
-        &:nth-last-child(4) {
+        &.size-fit-field {
           order: 3;
         }
-        &:nth-last-child(2) {
+        &.recommend-field {
           order: 4;
         }
         .yotpo-user-field-description {
