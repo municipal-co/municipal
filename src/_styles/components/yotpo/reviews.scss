@@ -200,6 +200,9 @@
         .label-with-tooltip {
           line-height: 1 !important;
           margin-top: 15px;
+          @include media-breakpoint-down('md') {
+            margin-top: 0;
+          }
         }
       }
     }
