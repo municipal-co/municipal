@@ -157,32 +157,59 @@
       display: none;
     }
 
-    .yotpo-review .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
-    .yotpo-comment .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
-    .yotpo-question .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
-    .yotpo-onsite-upload .yotpo-header .yotpo-review-stars .yotpo-user-related-fields {
+    &,
+    &.yotpo-small {
+      .yotpo-review .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
+      .yotpo-comment .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
+      .yotpo-question .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
+      .yotpo-onsite-upload .yotpo-header .yotpo-review-stars .yotpo-user-related-fields {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        @include media-breakpoint-down('md') {
+          order: -1;
+          margin-top: 0;
+          margin-bottom: 20px;
+        }
+
+        .yotpo-user-field {
+          font-size: large-vw(15px, 20px) !important;
+          @include media-breakpoint-down('md') {
+            font-size: 15px !important;
+          }
+          &.size-fit-field {
+            order: 3;
+          }
+          &.recommend-field {
+            order: 4;
+          }
+          .yotpo-user-field-description {
+            font-style: normal !important;
+            font-size: large-vw(15px, 20px) !important;
+            @include media-breakpoint-down('md') {
+              font-size: 15px !important;
+            }
+          }
+          .yotpo-user-field-answer {
+            font-size: large-vw(15px, 20px) !important;
+            @include media-breakpoint-down('md') {
+              font-size: 15px !important;
+            }
+          }
+        }
+        .label-with-tooltip {
+          line-height: 1 !important;
+          margin-top: 15px;
+        }
+      }
+    }
+
+    .yotpo-review .yotpo-header .yotpo-review-stars, 
+    .yotpo-comment .yotpo-header .yotpo-review-stars, 
+    .yotpo-question .yotpo-header .yotpo-review-stars, 
+    .yotpo-onsite-upload .yotpo-header .yotpo-review-stars {
       display: flex;
-      flex-direction: column;
-      .yotpo-user-field {
-        font-size: 20px !important;
-        &.size-fit-field {
-          order: 3;
-        }
-        &.recommend-field {
-          order: 4;
-        }
-        .yotpo-user-field-description {
-          font-style: normal !important;
-          font-size: 20px !important;
-        }
-        .yotpo-user-field-answer {
-          font-size: 20px !important;
-        }
-      }
-      .label-with-tooltip {
-        line-height: 1 !important;
-        margin-top: 15px;
-      }
+      flex-wrap: wrap;
     }
 
     .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2, 
@@ -356,7 +383,7 @@
 
           @include media-breakpoint-down('md') {
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
           }
 
           .yotpo-header-element  {
@@ -373,11 +400,12 @@
           }
 
           .yotpo-header-element span.y-label.yotpo-user-name {
-            font-size: large-vw(15px, 40px) !important;
+            font-size: large-vw(20px, 40px) !important;
             margin-bottom: 25px;
 
             @include media-breakpoint-down('md') {
-              font-size: 15px !important;
+              font-size: 20px !important;
+              margin-bottom: 10px;
             }
           }
           .yotpo-header-element.yotpo-header-actions,
@@ -404,7 +432,7 @@
           line-height: large-vw(35px, 85px) !important;
 
           @include media-breakpoint-down('md') {
-            font-size: 40px !important;
+            font-size: 35px !important;
             line-height: 35px !important;
             margin-bottom: 25px;
             padding: 0;
@@ -424,12 +452,13 @@
         }
 
         span.y-label.yotpo-user-title.yotpo-action-hover {
-          font-size: large-vw(15px, 22px) !important;
+          font-size: large-vw(10px, 22px) !important;
           font-weight: $font-weight-bold;
           color: $cyan !important;
+          text-transform: uppercase;
 
           @include media-breakpoint-down('md') {
-            font-size: 15px !important;
+            font-size: 10px !important;
           }
         }
       }
