@@ -37,29 +37,33 @@ export default class CollectionSection extends BaseSection {
       return;
     }
 
-    this.$drawer = $(selectors.filtersDrawers, this.$container);
-    this.$filterBar = $(selectors.filterBar, this.$container);
-    this.filterBarPosition = this.$filterBar.offset().top;
     this.collectionData = JSON.parse($(selectors.collectionJson, this.$container).html());
     this.collectionSections = $('.collection-section', this.$container);
     this.background = this.$container.data('background-color');
-    this.$filtersEnabler = $(selectors.filterEnabler);
-    this.localFiltering = this.$filtersEnabler.data('local-filtering');
     this.$loadMore = $(selectors.loadMore, this.$container);
     this.$promoCard = $(selectors.promoCard, this.$container);
-    this.drawer =  new Drawer(this.$drawer);
+    // filters controllers
+    this.$filterBar = $(selectors.filterBar, this.$container);
 
-    $(selectors.filtersToggler, this.$container).on('click', this.toggleFilters.bind(this));
-    this.$filtersEnabler.on('click', this.enableFilters.bind(this));
-    $(selectors.filterClear, this.$container).on('click', this.clearFilters.bind(this));
-    $(selectors.filterDot, this.$container).on('click', this.onDotclick.bind(this));
+    if (this.$filterBar.length) {
+      this.$drawer = $(selectors.filtersDrawers, this.$container);
+      this.filterBarPosition = this.$filterBar.offset().top;
+      this.$filtersEnabler = $(selectors.filterEnabler);
+      this.localFiltering = this.$filtersEnabler.data('local-filtering');
+      this.drawer =  new Drawer(this.$drawer);
+
+      $(selectors.filtersToggler, this.$container).on('click', this.toggleFilters.bind(this));
+      this.$filtersEnabler.on('click', this.enableFilters.bind(this));
+      $(selectors.filterClear, this.$container).on('click', this.clearFilters.bind(this));
+      $(selectors.filterDot, this.$container).on('click', this.onDotclick.bind(this));
+    }
 
     // Initialize load more
     this.$loadMore.each((index, el) => {
       new LoadMore($(el))
     })
   }
-  
+
   toggleFilters() {
     this.drawer.toggle();
   }

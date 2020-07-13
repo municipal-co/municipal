@@ -16,40 +16,43 @@
 
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-24">
-        <div class="collection-filter-bar" data-filter-bar>
-          {% comment %}
-            Vertically align groupings.  Space them out horizontally, flush to the edges
-            Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
-            This will ensure that flex will always space them out appropriately
-          {% endcomment %}
-          <div class="collection-filter-bar__grouping collection-filter-bar__grouping--breadcrumb">
-            <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
-              {% if collection.metafields.custom_fields["parent_category"] != blank %}
+      {% if section.settings.enable_filters == true %}
+        <div class="col-24">
+          <div class="collection-filter-bar" data-filter-bar>
+            {% comment %}
+              Vertically align groupings.  Space them out horizontally, flush to the edges
+              Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
+              This will ensure that flex will always space them out appropriately
+            {% endcomment %}
+            <div class="collection-filter-bar__grouping collection-filter-bar__grouping--breadcrumb">
+              <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+                {% if collection.metafields.custom_fields["parent_category"] != blank %}
+                  <div class="breadcrumbs__crumb">
+                    {% assign parent_collection = collections[collection.metafields.custom_fields["parent_category"]] %}
+                    <a href="{{ parent_collection.url }}">
+                      {{ parent_collection.title }}
+                    </a>
+                  </div>
+                {% endif %}
                 <div class="breadcrumbs__crumb">
-                  {% assign parent_collection = collections[collection.metafields.custom_fields["parent_category"]] %}
-                  <a href="{{ parent_collection.url }}">
-                    {{ parent_collection.title }}
-                  </a>
+                  <span class="breadcrumbs__crumb">
+                    {{ collection.title }}
+                  </span>
                 </div>
-              {% endif %}
-              <div class="breadcrumbs__crumb">
-                <span class="breadcrumbs__crumb">
-                  {{ collection.title }}
-                </span>
-              </div>
-            </nav>
+              </nav>
 
-          </div>
-          <div class="collection-filter-bar__grouping collection-filter-bar__grouping--filters">
-            <button class="btn btn-cta btn-sm collection-filter-bar__filter-toggler" data-filters-toggler>
-              {% include 'icon-filters' %}
-              Filter
-            </button>
+            </div>
+            <div class="collection-filter-bar__grouping collection-filter-bar__grouping--filters">
+              <button class="btn btn-cta btn-sm collection-filter-bar__filter-toggler" data-filters-toggler>
+                {% include 'icon-filters' %}
+                Filter
+              </button>
 
+            </div>
           </div>
         </div>
-      </div>
+      {% endif %}
+
       {% if collection.metafields.custom_fields["collection_section"] != blank %}
         {% assign separator = "|###|" %}
         {% assign collection_array = collection.metafields.custom_fields["collection"] | split: separator %}
@@ -184,32 +187,35 @@
     </div>
   </div>
 
-  <div class="filters-drawer drawer drawer--right" data-filters-drawer>
-    <div class="drawer__inner">
-      <div class="drawer__header">
-        <a href="#" class="drawer__close" data-drawer-close>
-          {% include 'icon-close' %}
-          <span class="sr-only"></span>
-        </a>
-        <h5 class="drawer__header-title">Filter</h5>
-      </div>
-      <div class="drawer__body">
-        <div class="drawer__body-contents">
-          {% include 'collection-sort' %}
-          {% include 'collection-filters'
-            size_filters: section.settings.size_filters
-          %}
-
-          <button class="btn btn-block btn-primary" data-filter-enable data-local-filtering="false">
-            View Results
-          </button>
-          <a href="{{ collection.url }}" class="btn btn-cta btn-block btn-sm collection-filter__reset" data-filter-clear>
-            {% include 'icon-close' %} Clear All
+  {% if section.settings.enable_filters == true %}
+    <div class="filters-drawer drawer drawer--right" data-filters-drawer>
+      <div class="drawer__inner">
+        <div class="drawer__header">
+          <a href="#" class="drawer__close" data-drawer-close>
+            {% include 'icon-close' %}
+            <span class="sr-only"></span>
           </a>
+          <h5 class="drawer__header-title">Filter</h5>
+        </div>
+        <div class="drawer__body">
+          <div class="drawer__body-contents">
+            {% include 'collection-sort' %}
+            {% include 'collection-filters'
+              size_filters: section.settings.size_filters
+            %}
+
+            <button class="btn btn-block btn-primary" data-filter-enable data-local-filtering="false">
+              View Results
+            </button>
+            <a href="{{ collection.url }}" class="btn btn-cta btn-block btn-sm collection-filter__reset" data-filter-clear>
+              {% include 'icon-close' %} Clear All
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  {% endif %}
+
 
   {% comment %} This JSON is required for filtering and sorting {% endcomment %}
   {% capture collection_url %}
@@ -232,8 +238,13 @@
 
 {% schema %}
 {
-  "name": "collection",
+  "name": "Collection",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_filters",
+      "label": "Enable Filters"
+    },
     {
       "type": "text",
       "id": "size_filters",
