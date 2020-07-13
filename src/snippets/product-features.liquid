@@ -1,5 +1,6 @@
 {% if product.metafields.custom_fields["features_section"] != blank %}
   {% assign separator = "|###|" %}
+  {% assign feature_eyebrow_array = product.metafields.custom_fields["feature_eyebrow"] | split: separator %}
   {% assign feature_title_array = product.metafields.custom_fields["feature_title"] | split: separator %}
   {% assign feature_copy_array = product.metafields.custom_fields["feature_copy"] | split: separator %}
   {% assign feature_image_array = product.metafields.custom_fields["feature_image"] | split: separator %}
@@ -22,7 +23,7 @@
             <div class="swiper-wrapper">
               {% for i in fc_keys %}
                 {% assign index = i | plus: 0 %}
-
+                {% assign eyebrow = feature_eyebrow_array[index] %}
                 {% assign title = feature_title_array[index] %}
                 {% assign copy = feature_copy_array[index] %}
                 {% assign image = feature_image_array[index] %}
@@ -30,7 +31,9 @@
                   {% assign slides_counter = slides_counter | plus: 1 %}
                   <div class="feature-slide swiper-slide">
                     <div class="feature-slide__block">
-                      <span class="h5 features-slide__eyebrow d-none d-lg-block">Features</span>
+                      {% if eyebrow != blank %}
+                        <span class="h5 features-slide__eyebrow d-none d-lg-block">{{eyebrow}}</span>
+                      {% endif %}
                       <h3 class="feature-slide__title">{{ title }}</h3>
                       {% if copy != blank %}
                         <div class="feature-slide__copy p2">{{ copy }}</div>
