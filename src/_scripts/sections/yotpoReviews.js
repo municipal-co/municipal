@@ -70,6 +70,8 @@ export default class YotpoReviews extends BaseSection {
       if (typeof yotpo !== 'undefined') {
         // eslint-disable-next-line no-undef
         if (yotpo.getState() === 'ready') {
+          // eslint-disable-next-line no-undef
+          yotpo.refreshWidgets();
           yotpoReadyCallback();
         }
         // Yotpo emits the ready event anytime yotpo.refreshWidgets()
