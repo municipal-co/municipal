@@ -68,11 +68,11 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__promo {
-  padding: 35px 35px 5px;
+  padding: 25px 35px 5px;
   text-align: center;
-
+  color: $cyan;
   @include media-breakpoint-down('md') {
-    padding: 30px $ajax-cart-padding-horizontal-mobile 0;
+    padding: 20px $ajax-cart-padding-horizontal-mobile 0;
   }
   p {
     margin-bottom: 0;

@@ -335,7 +335,7 @@ $headings-color: null !default;
 
 // Mobile headings
 $h1-font-size-mobile: 40px;
-$h2-font-size-mobile: 45px;
+$h2-font-size-mobile: 40px;
 $h3-font-size-mobile: 35px;
 $h4-font-size-mobile: 35px;
 $h5-font-size-mobile: 20px;
@@ -369,7 +369,7 @@ $p2-letter-spacing: 0 !default;
 $p3-letter-spacing: 0 !default;
 
 $p1-line-height: 2 !default;
-$p2-line-height: 1.86 !default;
+$p2-line-height: 1.86em !default;
 $p3-line-height: 1.4 !default;
 
 // p{1, 2, 3} Mobile
@@ -467,7 +467,7 @@ $input-btn-line-height: $line-height-base !default;
 
 $input-btn-focus-width: 0.2rem !default;
 $input-btn-focus-color: rgba($component-active-bg, 0.25) !default;
-$input-btn-focus-box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
+$input-btn-focus-box-shadow: none !default;
 
 $input-btn-padding-y-sm: 0.25rem !default;
 $input-btn-padding-x-sm: 0.5rem !default;

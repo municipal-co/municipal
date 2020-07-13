@@ -29,11 +29,12 @@
   .collection-section__description {
     margin-bottom: large-vw(28px, 145px);
     line-height: large-vw(30px, 65px);
-
     @include media-breakpoint-down('md') {
-      line-height: 30px;
-      margin-bottom: 28px
+      margin-bottom: 28px;
+      font-size: .9em;
+      line-height: 1.5em;
     }
+
   }
 
   .promo_card {

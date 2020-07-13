@@ -140,21 +140,20 @@
     padding: 2px 8px;
     font-size: large-vw(11px, 20px);
     @include media-breakpoint-down('md') {
-      font-size: 11px;
-      padding: 5px;
+      font-size: 10px;
     }
   }
 }
 
 .product-card__info-title {
   font-size: large-vw(16px, 40px);
-  margin-bottom: large-vw(10px, 23px);
+  margin-bottom: 7px;
+  line-height: 1.2em;
   opacity: 1;
   transform: translateX(0);
 
   @include media-breakpoint-down('md') {
     font-size: 16px;
-    margin-bottom: 10px;
   }
 }
 

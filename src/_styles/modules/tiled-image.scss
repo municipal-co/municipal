@@ -53,8 +53,9 @@
     width: 20%;
   }
   @include media-breakpoint-down('sm') {
-    top: 80px;
-    right: 55%;
+    top: 30px;
+    right: 50%;
+    width: 38%;
   }
 
   img {

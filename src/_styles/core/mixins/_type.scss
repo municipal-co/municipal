@@ -27,7 +27,6 @@
 
 @mixin h3 {
   font-size: $h3-font-size-mobile;
-  letter-spacing: $h3-letter-spacing-mobile;
   line-height: $h3-line-height-mobile;
   @include media-breakpoint-up('lg'){
     font-size: large-vw($h3-font-size-mobile, $h3-font-size);
@@ -80,7 +79,7 @@
 }
 
 @mixin p2 {
-  font-size: $p2-font-size-mobile;
+  font-size: 1em;
   line-height: $p2-line-height;
   letter-spacing: $p2-letter-spacing;
   font-weight: $p2-font-weight;

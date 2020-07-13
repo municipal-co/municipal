@@ -33,7 +33,7 @@
 
   .overview-content__title {
     margin-bottom: large-vw(30px, 45px);
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-normal;
 
     @include media-breakpoint-down('md') {
       margin-bottom: 30px;
@@ -181,12 +181,7 @@
     }
 
     p {
-      line-height: large-vw(45px, 60px);
       margin-bottom: 0;
-
-      @include media-breakpoint-down('md') {
-        line-height: 45px;
-      }
     }
 
     hr {
@@ -197,6 +192,13 @@
         margin: 25px 0 20px;
       }
     }
+
+    li,
+    p {
+      font-weight: $font-weight-semi-bold;
+      font-size: .8em;
+    }
+
   }
 
   .overview-details__small-text {

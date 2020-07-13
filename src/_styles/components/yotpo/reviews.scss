@@ -1,6 +1,6 @@
 .yotpo-reviews-container {
   background-color: $white;
-
+  margin-bottom: 100px;
   @include media-breakpoint-down('md') {
     margin-bottom: 65px;
   }
@@ -596,4 +596,9 @@
       }
     }
   }
+}
+
+
+.yotpo-reviews-container .yotpo.yotpo .yotpo-review.yotpo-regular-box:last-child {
+    border: none !important;
 }
