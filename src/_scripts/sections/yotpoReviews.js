@@ -68,11 +68,13 @@ export default class YotpoReviews extends BaseSection {
     };
     const yotpoCheck = setInterval(() => {
       if (typeof yotpo !== 'undefined') {
+        // eslint-disable-next-line no-undef
         if (yotpo.getState() === 'ready') {
           yotpoReadyCallback();
         }
         // Yotpo emits the ready event anytime yotpo.refreshWidgets()
         // is called, so set this up to re-execute each time going forward
+        // eslint-disable-next-line no-undef
         yotpo.on('ready', yotpoReadyCallback);
         // Clear the interval
         clearInterval(yotpoCheck);
