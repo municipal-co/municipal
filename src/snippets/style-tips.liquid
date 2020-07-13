@@ -1,5 +1,7 @@
 {% if product.metafields.custom_fields["style_tips_section"] != blank %}
   {% assign separator = "|###|" %}
+
+  {% assign style_eyebrow_array = product.metafields.custom_fields["style_eyebrow"] | split: separator %}
   {% assign style_quote_array = product.metafields.custom_fields["style_quote"] | split: separator %}
   {% assign style_image_array = product.metafields.custom_fields["style_image"] | split: separator %}
   {% assign style_name_array = product.metafields.custom_fields["style_name"] | split: separator %}
@@ -26,71 +28,72 @@
       <div class="row justify-content-center row-adjusted">
         <div class="col-lg-22 col-20 style-tips-inner-container">
           <div class="swiper-container">
-            <h5 class="style-tips-section-title">Style Tips</h5>
 
             <div class="swiper-wrapper">
               {% for i in fc_keys %}
-                {% assign index = i | plus: 0 %}
+              {% assign index = i | plus: 0 %}
+              {% assign eyebrow = style_eyebrow_array[index] %}
+              {% assign slide_quote = style_quote_array[index] %}
+              {% assign stylist_image = style_image_array[index] %}
+              {% assign stylist_name = style_name_array[index] %}
+              {% assign stylist_handle = style_handle_array[index] %}
+              {% assign slide_image = style_slide_image_array[index] %}
+              {% assign slide_video = style_video_array[index] %}
+              {% assign slide_subcopy = style_subcopy_array[index] %}
+              {% assign slides_counter = slides_counter | plus: 1 %}
 
-                {% assign slide_quote = style_quote_array[index] %}
-                {% assign stylist_image = style_image_array[index] %}
-                {% assign stylist_name = style_name_array[index] %}
-                {% assign stylist_handle = style_handle_array[index] %}
-                {% assign slide_image = style_slide_image_array[index] %}
-                {% assign slide_video = style_video_array[index] %}
-                {% assign slide_subcopy = style_subcopy_array[index] %}
-                {% assign slides_counter = slides_counter | plus: 1 %}
+              <div class="style-slide swiper-slide">
+                {% if eyebrow != blank %}
+                  <h5 class="style-tips-section-title">{{eyebrow}}</h5>
+                {% endif %}
+                  <div class="style-slide__header">
+                    <h1 class="style-quote">{{ slide_quote }}</h1>
 
-                  <div class="style-slide swiper-slide">
-
-                    <div class="style-slide__header">
-                      <h1 class="style-quote">{{ slide_quote }}</h1>
-
-                      {% if stylist_image != blank %}
-                        <div class="stylist-image frame frame--1x1">
-                          {% render 'image_tag'
-                                  image: stylist_image,
-                                  object_fit: 'cover',
-                                  object-position: 'center'
-                          %}
-                        </div>
-                      {% endif %}
-
-                      {% if stylist_name != blank %}
-                        <div class="stylist-name">
-                          {{ stylist_name }}
-
-                          {% if stylist_handle != blank %}
-                            <span>{{ stylist_handle }}</span>
-                          {% endif %}
-                        </div>
-                      {% endif %}
-                    </div>
-
-                  <div class="style-slide__image frame frame--16x9" data-video-cover>
-                    {% render 'image_tag'
-                              image: slide_image,
-                              object_fit: 'cover'
-                    %}
-
-                    {% if slide_video != blank %}
-                      <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}" data-play-button>
-                        {% include 'icon-play-full-color' %}
-                      </button>
-
-                      <div class="visual-play-button">
-                        {% include 'icon-play-full-color' %}
+                    {% if stylist_image != blank %}
+                      <div class="stylist-image frame frame--1x1">
+                        {% render 'image_tag'
+                                image: stylist_image,
+                                object_fit: 'cover',
+                                object-position: 'center'
+                        %}
                       </div>
+                    {% endif %}
 
-                      {% assign video_index = video_index | plus: 1 %}
+                    {% if stylist_name != blank %}
+                      <div class="stylist-name">
+                        {{ stylist_name }}
+
+                        {% if stylist_handle != blank %}
+                          <span>{{ stylist_handle }}</span>
+                        {% endif %}
+                      </div>
                     {% endif %}
                   </div>
 
-                  {% if slide_subcopy != blank %}
-                    <div class="style-slide__subcopy p2">{{ slide_subcopy}}</div>
+                <div class="style-slide__image frame frame--16x9" data-video-cover>
+                  {% render 'image_tag'
+                            image: slide_image,
+                            object_fit: 'cover'
+                  %}
+
+                  {% if slide_video != blank %}
+                    <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#product-video-modal-{{ product.id }}-{{ video_index }}" data-play-button>
+                      {% include 'icon-play-full-color' %}
+                    </button>
+
+                    <div class="visual-play-button">
+                      {% include 'icon-play-full-color' %}
+                    </div>
+
+                    {% assign video_index = video_index | plus: 1 %}
                   {% endif %}
                 </div>
-              {% endfor %}
+
+                {% if slide_subcopy != blank %}
+                  <div class="style-slide__subcopy p2">{{ slide_subcopy}}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
             </div>
           </div>
 
