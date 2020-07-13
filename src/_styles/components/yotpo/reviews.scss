@@ -150,6 +150,45 @@
       display: none !important;
     }
 
+    .yotpo-review .yotpo-main .yotpo-multiple-rating-fields, 
+    .yotpo-comment .yotpo-main .yotpo-multiple-rating-fields, 
+    .yotpo-question .yotpo-main .yotpo-multiple-rating-fields, 
+    .yotpo-onsite-upload .yotpo-main .yotpo-multiple-rating-fields {
+      display: none;
+    }
+
+    .yotpo-review .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
+    .yotpo-comment .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
+    .yotpo-question .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
+    .yotpo-onsite-upload .yotpo-header .yotpo-review-stars .yotpo-user-related-fields {
+      display: flex;
+      flex-direction: column;
+      .yotpo-user-field {
+        font-size: 20px !important;
+        &.size-fit-field {
+          order: 3;
+        }
+        &.recommend-field {
+          order: 4;
+        }
+        .yotpo-user-field-description {
+          font-style: normal !important;
+          font-size: 20px !important;
+        }
+        .yotpo-user-field-answer {
+          font-size: 20px !important;
+        }
+      }
+      .label-with-tooltip {
+        line-height: 1 !important;
+        margin-top: 15px;
+      }
+    }
+
+    .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2, 
+    .yotpo-modal-dialog .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 {
+      display: none;
+    }
 
     .main-widget.yotpo-display-wrapper {
       display: flex;
@@ -310,7 +349,7 @@
         }
 
         .yotpo-header {
-          width: 25%;
+          width: 30%;
           display: flex;
           align-items: flex-start;
           flex-direction: column;
@@ -325,10 +364,6 @@
             flex-direction: column-reverse;
           }
 
-          .yotpo-review-stars  {
-            margin: 0 0 large-vw(30px, 60px) !important;
-          }
-
           .yotpo-header-element span.y-label.yotpo-review-date {
             font-size: large-vw(12px, 20px) !important;
 
@@ -339,10 +374,16 @@
 
           .yotpo-header-element span.y-label.yotpo-user-name {
             font-size: large-vw(15px, 40px) !important;
+            margin-bottom: 25px;
 
             @include media-breakpoint-down('md') {
               font-size: 15px !important;
             }
+          }
+          .yotpo-header-element.yotpo-header-actions,
+          .yotpo-header-element > .label-with-tooltip,
+          .yotpo-header-element > span.y-label.yotpo-user-name {
+            display: none;
           }
         }
 
@@ -551,6 +592,7 @@
       }
 
       .yotpo-size-field-bars {
+        opacity: 0;
         .yotpo-field-bars-container {
           .yotpo-size-bars {
             display: flex;
