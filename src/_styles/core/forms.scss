@@ -165,6 +165,10 @@ select.form-control {
 
 // stylelint-disable-next-line no-duplicate-selectors
 select.form-control {
+  appearance: none;
+  &:focus {
+    border-color: $black;
+  }
   &[size],
   &[multiple] {
     height: auto;

@@ -46,7 +46,7 @@
         border: 0;
         color: black;
     }
-}*/   
+}*/
 
 .contact__form-message-container {
     @include media-breakpoint-up('lg') {
@@ -59,12 +59,12 @@
 }
 
 .contact__form-input {
+    border: 0;
     border-bottom: 4px solid $black;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
+    border-radius: 0;
     background-color: $white;
     width: 100%;
+
     @extend .p2;
     & ::placeholder {
         @extend .p2;
@@ -86,7 +86,7 @@
 }
 
 .contact__form-submit-container-mobile {
-    
+
     display: none;
     @include media-breakpoint-down('md') {
         display: flex;
