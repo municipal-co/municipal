@@ -85,15 +85,13 @@
 
 .product__selector-header {
   font-size: large-vw(15px, 20px);
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semi-bold;
   @include media-breakpoint-down('md'){
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
 .product__selector-option {
-  font-weight: $font-weight-normal;
-  font-size: 20px;
   padding: 0;
 }
 

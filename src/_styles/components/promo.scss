@@ -171,7 +171,7 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
 .promo__title {
   font-family: $headings-font-family;
   margin-bottom: large-vw(20px, 45px);
-  line-height: large-vw(50px, 150px);
+  line-height: 1em;
 
   @include media-breakpoint-down('md') {
     margin-bottom: 20px;

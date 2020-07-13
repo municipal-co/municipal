@@ -6,7 +6,6 @@
   font-size: $font-size-sm;
 
   .chosen-drop {
-    box-shadow: none;
     border-color: $input-focus-border-color;
     border-top: 1px solid $input-focus-border-color;
     clip: auto;
@@ -53,7 +52,6 @@
   .chosen-single {
     @extend .form-control;
     padding: 10px 0;
-    box-shadow: none;
     background-image: none; // Remove default gradient background image
 
     div {
@@ -80,7 +78,6 @@
 .chosen-container-active {
 
   .chosen-single {
-    box-shadow: none;
   }
 
   &.chosen-with-drop .chosen-single {
