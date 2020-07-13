@@ -161,10 +161,15 @@
     .yotpo-comment .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
     .yotpo-question .yotpo-header .yotpo-review-stars .yotpo-user-related-fields,
     .yotpo-onsite-upload .yotpo-header .yotpo-review-stars .yotpo-user-related-fields {
-      display: flex;
+      display: flex !important;
+
       flex-direction: column;
       .yotpo-user-field {
         font-size: 20px !important;
+        @include media-breakpoint-down('md') {
+          margin-top: 0;
+          font-size: 15px !important;
+        }
         &.size-fit-field {
           order: 3;
         }
@@ -174,14 +179,23 @@
         .yotpo-user-field-description {
           font-style: normal !important;
           font-size: 20px !important;
+          @include media-breakpoint-down('md') {
+            font-size: 15px !important;
+          }
         }
         .yotpo-user-field-answer {
           font-size: 20px !important;
+          @include media-breakpoint-down('md') {
+            font-size: 15px !important;
+          }
         }
       }
       .label-with-tooltip {
         line-height: 1 !important;
         margin-top: 15px;
+        @include media-breakpoint-down('md') {
+          margin-top: 0;
+        }
       }
     }
 
@@ -345,6 +359,7 @@
           @include media-breakpoint-down('md') {
             width: 30px !important;
             height: 30px !important;
+            order: 1;
           }
         }
 
@@ -377,7 +392,8 @@
             margin-bottom: 25px;
 
             @include media-breakpoint-down('md') {
-              font-size: 15px !important;
+              font-size: 20px !important;
+              margin-bottom: 15px;
             }
           }
           .yotpo-header-element.yotpo-header-actions,
@@ -643,4 +659,23 @@
 
 .yotpo-reviews-container .yotpo.yotpo .yotpo-review.yotpo-regular-box:last-child {
     border: none !important;
+}
+
+
+.yotpo .yotpo-review .yotpo-header .yotpo-review-stars {
+  @include media-breakpoint-down('md') {
+    width: 100% !important;
+    float: none !important;
+    display: flex !important;
+    flex-wrap: wrap;
+  }
+}
+
+.yotpo.yotpo-main-widget.yotpo-small .yotpo-review .yotpo-header-element .yotpo-review-stars .yotpo-user-related-fields {
+  @include media-breakpoint-down('md') {
+    margin-top: 0;
+    width: 100%;
+    margin-bottom: 25px;
+    order: 0;
+  }
 }
