@@ -61,6 +61,8 @@ export default class YotpoReviews extends BaseSection {
     const limit = 20; // if yotpo hasn't loaded after 20 checks, bail.
     let count = 0;
     const yotpoReadyCallback = () => {
+      $(selectors.starReviews).addClass(classes.yotpoLoaded);
+
       this.formatSizingMessages(false);
 
       function mutationHandler(mutationRecords) {
@@ -98,9 +100,6 @@ export default class YotpoReviews extends BaseSection {
       if (typeof yotpo !== 'undefined') {
         // eslint-disable-next-line no-undef
         if (yotpo.getState() === 'ready') {
-          // eslint-disable-next-line no-undef
-          yotpo.refreshWidgets();
-          $(selectors.starReviews).addClass(classes.yotpoLoaded);
           yotpoReadyCallback();
         }
         // Yotpo emits the ready event anytime yotpo.refreshWidgets()
@@ -115,7 +114,7 @@ export default class YotpoReviews extends BaseSection {
           clearInterval(yotpoCheck);
         }
       }
-    }, 800);
+    }, 500);
 
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));

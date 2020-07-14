@@ -55,6 +55,11 @@
   {% assign featured_image = variant.featured_image %}
 {% endif %}
 
+{% comment %} This will override the featured image to display the sold out featured image {% endcomment %}
+{% if unavailable_variant != blank %}
+  {% assign featured_image = unavailable_variant.featured_image %}
+{% endif %}
+
 {% if product %}
 
   {% assign product_image_dimension = '760x' %}
