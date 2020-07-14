@@ -115,7 +115,7 @@ export default class YotpoReviews extends BaseSection {
           clearInterval(yotpoCheck);
         }
       }
-    }, 500);
+    }, 800);
 
     this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
     this.IntersectionObserver.observe(this.$container.get(0));
