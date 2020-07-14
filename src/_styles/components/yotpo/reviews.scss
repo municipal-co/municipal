@@ -215,9 +215,12 @@
       flex-wrap: wrap;
     }
 
-    .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2, 
-    .yotpo-modal-dialog .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 {
-      display: none;
+    &,
+    &.yotpo-small {
+      .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2, 
+      .yotpo-modal-dialog .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 {
+        display: none;
+      }
     }
 
     .main-widget.yotpo-display-wrapper {
