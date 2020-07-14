@@ -27,6 +27,10 @@
   {% assign render_json = true %}
 {% endif %}
 
+{% if lazy_load_img == blank %}
+  {% assign lazy_load_img = true %}
+{% endif %}
+
 {% if show_swatches == blank %}
   {% assign show_swatches = true %}
 {% endif %}
@@ -77,7 +81,8 @@
             data-animate-image-in
             data-sizes="auto"
             data-object-fit="cover"
-            data-product-card-main-lazy>
+            data-product-card-image
+            {% if lazy_load_img %} data-product-card-main-lazy {% endif %}>
             <div class="product-card__gallery-placeholder"></div>
           </div>
 
@@ -164,14 +169,11 @@
       </div>
     </div>
     
-    {%- comment -%}
     {% if render_json == true %}
-
+      <script type="application/json" data-product-json>
+        {% include 'product-json' %}
+      </script>      
     {% endif %}
-    {%- endcomment -%}
-    <script type="application/json" data-product-json>
-      {% include 'product-json' %}
-    </script>      
 
   </div>
 

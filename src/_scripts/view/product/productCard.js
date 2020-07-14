@@ -4,6 +4,7 @@ import CartAPI from '../../core/cartAPI';
 const selectors = {
   el: '[data-product-card]',
   gallery: '[data-product-card-gallery]',
+  productCardImg: '[data-product-card-image]',
   mainLazyImg: '[data-product-card-main-lazy]',
   altLazyImg: '[data-product-card-alt-lazy]',
   productJson: '[data-product-json]',
@@ -41,11 +42,16 @@ export default class ProductCard {
 
     this.$el = $(el);
     this.$dot = $(selectors.dot, this.$el);
-    try {
-      this.productData = JSON.parse($(selectors.productJson, this.$el).html());
-    } catch (error) {
-      this.productData = null;
-      console.error(error);
+
+    this.productData = null;
+    const $productJson = $(selectors.productJson, this.$el);
+
+    if ($productJson.length) {
+      try {
+        this.productData = JSON.parse($productJson.html());
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     this.$variantMessage = $(selectors.variantMessage, this.$el);
@@ -56,18 +62,26 @@ export default class ProductCard {
       return;
     }
 
+    this.$productCardImg = $(selectors.productCardImg, this.$el);
     this.$mainLazyImg = $(selectors.mainLazyImg, this.$el);
-    this.$altLazyImg  = $(selectors.altLazyImg, this.$el);
+    this.$altLazyImg = $(selectors.altLazyImg, this.$el);
     this.timeout = false;
 
     // Unveil plugin to lazy load main product card images
-    this.$mainLazyImg.unveil(200, function() {
-      const $img = $(this);
-      $img.on('load', () => {
-        $img.parents(selectors.gallery).addClass(classes.mainLoaded);
-        $img.addClass('in');
+    this.$productCardImg.unveil(200, function() {
+      const $cardImg = $(this);
+
+      $cardImg.on('load', () => {
+        $cardImg.closest(selectors.gallery).addClass(classes.mainLoaded);
+        $cardImg.addClass('in');
       });
     });
+
+    if (!this.$mainLazyImg.length) {
+      this.$productCardImg.trigger('unveil');
+      this.$productCardImg.closest(selectors.gallery).addClass(classes.mainLoaded);
+      this.$productCardImg.addClass('in');
+    }
 
     if (this.$altLazyImg.length) {
       this.$el.one(this.events.MOUSEENTER, this.onMouseenter.bind(this));
@@ -107,29 +121,31 @@ export default class ProductCard {
   }
 
   onVariantUpdate(e) {
-    const currentOption = e.variantSelected;
-    const colorIndex = this.productData.options.indexOf('Color') + 1;
+    if (this.productData) {
+      const currentOption = e.variantSelected;
+      const colorIndex = this.productData.options.indexOf('Color') + 1;
 
-    if (this.$el.is('[data-product-merged]')) {
-      let imageUpdated = false;
-      this.productData.variants.forEach((el) => {
-        const lowcaseColor = el[`option${colorIndex}`].toLowerCase();
-        const lowcaseVariant = currentOption.toLowerCase();
-        if (lowcaseColor === lowcaseVariant && !imageUpdated) {
-          const featuredImage = el.featured_image.src;
-          const variantUrl = el.url;
-          $(selectors.mainLazyImg, this.$el).attr('src', featuredImage);
-          $('a', this.$el).attr('href', variantUrl);
-          imageUpdated = true;
+      if (this.$el.is('[data-product-merged]')) {
+        let imageUpdated = false;
+        this.productData.variants.forEach((el) => {
+          const lowcaseColor = el[`option${colorIndex}`].toLowerCase();
+          const lowcaseVariant = currentOption.toLowerCase();
+          if (lowcaseColor === lowcaseVariant && !imageUpdated) {
+            const featuredImage = el.featured_image.src;
+            const variantUrl = el.url;
+            $(selectors.mainLazyImg, this.$el).attr('src', featuredImage);
+            $('a', this.$el).attr('href', variantUrl);
+            imageUpdated = true;
+          }
+        });
+
+        if (!imageUpdated) {
+          const defaultImage = this.productData.featured_image;
+          const defaultUrl = this.productData.url;
+
+          $(selectors.mainLazyImg, this.$el).attr('src', defaultImage);
+          $('a', this.$el).attr('href', defaultUrl);
         }
-      });
-
-      if (!imageUpdated) {
-        const defaultImage = this.productData.featured_image;
-        const defaultUrl = this.productData.url;
-
-        $(selectors.mainLazyImg, this.$el).attr('src', defaultImage);
-        $('a', this.$el).attr('href', defaultUrl);
       }
     }
   }
@@ -158,21 +174,23 @@ export default class ProductCard {
 
     $el.addClass(classes.active);
 
-    $.each(this.productData.variants, function(index, variant) {
-      if (variant.id === variantId) {
-        const availability = variant.available;
-        const inventoryQuantity = variant.inventory_quantity;
-        self.updateTitleVariant(variantId);
-        if (availability === false) {
-          self.$variantMessage.text('Out of Stock');
-          self.updateTitleVariant('');
-        } else if (inventoryQuantity <= self.lowInventoryThreshold) {
-          self.$variantMessage.text(`Only ${inventoryQuantity} Left`);
-        } else {
-          self.$variantMessage.text('Quick Add to Cart');
+    if (this.productData) {
+      $.each(this.productData.variants, function(index, variant) {
+        if (variant.id === variantId) {
+          const availability = variant.available;
+          const inventoryQuantity = variant.inventory_quantity;
+          self.updateTitleVariant(variantId);
+          if (availability === false) {
+            self.$variantMessage.text('Out of Stock');
+            self.updateTitleVariant('');
+          } else if (inventoryQuantity <= self.lowInventoryThreshold) {
+            self.$variantMessage.text(`Only ${inventoryQuantity} Left`);
+          } else {
+            self.$variantMessage.text('Quick Add to Cart');
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   onDotMouseleave(e) {
