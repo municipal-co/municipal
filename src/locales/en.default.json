@@ -186,13 +186,13 @@
     },
     "login": {
       "main_title": "Login or Create an Account",
-      "title": "Sign in",
+      "title": "Sign in:",
       "subtitle": "For quick checkout and account history.",
       "email": "Email address",
       "password": "Password",
       "forgot_password": "Forgot password?",
       "create_account": "Create account",
-      "sign_in": "Sign In",
+      "sign_in": "Sign In:",
       "cancel": "Return to Store",
       "guest_title": "Continue as a guest",
       "guest_continue": "Continue"
@@ -261,7 +261,7 @@
       "submit": "Reset Password"
     },
     "register": {
-      "title": "Create Account",
+      "title": "Create Account:",
       "subtitle": "Sign up for quick checkout order history, account status and more.",
       "first_name": "First Name",
       "last_name": "Last Name",

@@ -47,9 +47,7 @@
   {% if form.password_needed %}
     <div class="form-group text-center">
       <a href="#recover" {% if is_drawer %}data-recover-password{% endif %} id="RecoverPassword" class="form-text h6 text-center in">{{ 'customer.login.forgot_password' | t }}</a>
-      {% if is_drawer %}
-        <a href="/account/register" data-register-form class="btn btn--small btn--underlined h6 in">{{ 'customer.login.create_account' | t }}</a>
-      {% endif %}
+      <a href="/account/register" data-register-form class="btn btn--small btn--underlined h6 in">{{ 'customer.login.create_account' | t }}</a>
     </div>
   {% endif %}
 

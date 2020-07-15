@@ -13,7 +13,7 @@
           <div class="col-20 col-lg-18 offset-2 offset-lg-3">
             <div id="CustomerLoginForm">
               {% if section.settings.title != blank %}
-                <div class="h5">{{ section.settings.title }}:</div>
+                <div class="h5">{{ section.settings.title }}</div>
               {% else %}
                 <h5>{{ 'customer.login.title' | t | newline_to_br }}:</h5>
               {% endif %}
@@ -31,7 +31,7 @@
 
             <div id="RecoverPasswordForm" class="hide">
               {% if section.settings.title != blank %}
-                <div class="h5">{{ section.settings.recover_title }}:</div>
+                <div class="h5">{{ section.settings.recover_title }}</div>
               {% else %}
                 <h5>{{ 'customer.recover_password.title' | t | newline_to_br }}:</h5>
               {% endif %}
