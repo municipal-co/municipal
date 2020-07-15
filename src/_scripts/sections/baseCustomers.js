@@ -17,13 +17,13 @@ export default class BaseCustomersSection extends BaseSection {
   onSidebarSelectChange(e) {
     const value = $(e.currentTarget).val();
     const link = document.createElement('a');
-    
+
     link.href = value;
 
     // If it's linking to a hash on the same page, don't do anything
-    if (link.host === window.location.host && link.pathname === window.location.pathname) {
-      return;
-    }
+    // if (link.host === window.location.host && link.pathname === window.location.pathname) {
+    //   return;
+    // }
 
     window.location = value;
   }

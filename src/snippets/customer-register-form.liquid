@@ -32,7 +32,8 @@
       id="LastName"
       class="form-control account-form__field"
       placeholder="{{ 'customer.register.last_name' | t }}"
-      {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+      {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
+      required>
   </div>
 
   <div class="form-group">
