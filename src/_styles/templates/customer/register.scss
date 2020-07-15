@@ -1,0 +1,17 @@
+// -------------------------
+// Register
+// -------------------------
+
+.template-register .layout-content-wrapper {
+  padding: #{$spacer * 3} 0;
+}
+.template-register {
+  .custom-control-label, h5, h6, #RecoverPassword {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .form-group__small-text a {
+    display: inline-block;
+  }
+}

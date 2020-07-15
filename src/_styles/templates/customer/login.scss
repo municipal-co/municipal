@@ -3,9 +3,12 @@
 // -------------------------
 
 .template-login {
-  // Space out forms
-  .layout-main-content form {
-    margin-bottom: $spacer * 3;
+  .layout-content-wrapper {
+    margin: #{$spacer * 3} 0;
+  }
+
+  .btn {
+    width: auto !important;
   }
 
   .custom-control-label, h5, h6, #RecoverPassword {

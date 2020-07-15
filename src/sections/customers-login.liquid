@@ -2,83 +2,36 @@
   Combines customer login + register forms into one template
 {% endcomment -%}
 
-<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="customers-login">
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-login">
 
   {% assign page_hero_id = 'page-hero-' | append: section.id %}
-  {% capture page_hero_title %}
-    {% if section.settings.title != blank %}
-      {{ section.settings.title }}
-    {% else %}
-      {{ 'customer.login.main_title' | t }}
-    {% endif %}
-  {% endcapture %}
-  
-  {% include 'page-hero',
-              ph_id: page_hero_id,
-              ph_light_text: section.settings.light_text,
-              ph_background_image: section.settings.background_image,
-              ph_title: page_hero_title,
-              ph_subtitle: section.settings.subtitle
-  %}
 
-  <div class="container-fluid">
+  <div class="container">
 
     <div class="row justify-content-center row-adjusted">
-      <div class="col-22">
+      <div class="col-22 col-md-12">
         <div class="form-success alert alert-success text-center hide" id="ResetSuccess">
           {{ 'customer.recover_password.success' | t }}
         </div>
-        <div class="row">
-          <div class="col-md-11 col-xl-10">
+        <div id="CustomerLoginForm">
+          <h1 class="h5 in">{{ 'customer.login.title' | t }}</h1>
 
-            <div id="CustomerLoginForm">
-              <h5>{{ 'customer.login.title' | t }}</h5>
-              
-              {% if section.settings.login_subtitle != blank %}
-                <div class="h6">{{ section.settings.login_subtitle }}</div>
-              {% else %}
-                <h6>{{ 'customer.login.subtitle' | t }}</h6>
-              {% endif %}
+          <div class="h6 in">{{ 'customer.login.subtitle' | t }}</div>
 
-              {% include 'customer-login-form' %}
-            </div>
+          {% include 'customer-login-form' %}
+        </div>
 
-            <div id="RecoverPasswordForm" class="hide">
-              <h5>{{ 'customer.recover_password.title' | t }}</h5>
+        <div id="RecoverPasswordForm" class="hide">
+          <h5>{{ 'customer.recover_password.title' | t }}</h5>
 
-              {% if section.settings.recover_subtitle != blank %}
-                <div class="h6">{{ section.settings.recover_subtitle }}</div>
-              {% else %}
-                <h6>{{ 'customer.recover_password.subtext' | t }}</h6>
-              {% endif %}
+          {% if section.settings.recover_subtitle != blank %}
+            <div class="h6">{{ section.settings.recover_subtitle }}</div>
+          {% else %}
+            <h6>{{ 'customer.recover_password.subtext' | t }}</h6>
+          {% endif %}
 
-              {% include 'customer-recover-password-form' %}
+          {% include 'customer-recover-password-form' %}
 
-            </div>
-
-          </div>
-
-          <div class="col-md-11 col-xl-10 offset-md-2">
-            <h5>{{ 'customer.register.title' | t }}</h5>
-
-            {% if section.settings.register_subtitle != blank %}
-              <div class="h6">{{ section.settings.register_subtitle }}</div>
-            {% else %}
-              <h6>{{ 'customer.register.subtitle' | t }}</h6>
-            {% endif %}
-
-            {% include 'customer-register-form',
-                        marketing_checkbox_label: section.settings.confirmation_marketing,
-                        terms_checkbox_label: section.settings.confirmation_terms
-            %}
-
-            {% if shop.checkout.guest_login %}
-              {% form 'guest_login' %}
-                <input type="submit" class="btn btn-block" value="{{ 'customer.login.guest_title' | t }}">
-              {% endform %}
-            {% endif %}              
-
-          </div>
         </div>
       </div>
     </div>
@@ -86,75 +39,3 @@
   </div>
 
 </div>
-
-{% schema %}
-  {
-    "name": "Customers - Login",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Page Hero"
-      },    
-      {
-        "type": "checkbox",
-        "id" : "light_text",
-        "label": "Light Text",
-        "default": false
-      },    
-      {
-        "id": "title",
-        "type": "text",
-        "label": "Title",
-        "info": "Leave blank for default title"
-      },
-      {
-        "id": "subtitle",
-        "type": "richtext",
-        "label": "Subtitle"
-      },
-      {
-        "type": "image_picker",
-        "id": "background_image",
-        "label": "Background Image"
-      },
-      {
-        "type": "header",
-        "content": "Messaging"
-      },
-      {
-        "id": "login_subtitle",
-        "type": "richtext",
-        "label": "Login Subtitle",
-        "info": "Leave blank for default message"
-      },
-      {
-        "id": "register_subtitle",
-        "type": "richtext",
-        "label": "Register Subtitle",
-        "info": "Leave blank for default message"
-      },
-      {
-        "id": "recover_subtitle",
-        "type": "richtext",
-        "label": "Recover Password Subtitle",
-        "info": "Leave blank for default message"
-      },
-      {
-        "type": "header",
-        "content": "Confirmation Labels"
-      },
-      {
-        "id": "confirmation_marketing",
-        "type": "richtext",
-        "label": "Accepts Marketing Label",
-        "info": "Leave blank for default message"
-      },
-      {
-        "id": "confirmation_terms",
-        "type": "richtext",
-        "label": "Accepts Terms and Conditions",
-        "info": "Leave blank for default message. Be sure to add links to any relevant information pages"
-      }   
-    ]
-  }
-{% endschema %}

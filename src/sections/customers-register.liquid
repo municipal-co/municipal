@@ -3,50 +3,19 @@
 
 <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-register">
   <div class="container">
-
-    {% include 'page-hero',
-                ph_id: page_hero_id,
-                ph_title: title,
-    %}
-    
     <div class="row justify-content-center row-adjusted">
 
-      <div class="col-sm-12">
-        <h5>{{ 'customer.register.title' | t }}</h5>
+      <div class="col-22 col-md-12">
+        <h1 class="h5 in">{{ 'customer.register.title' | t }}</h1>
 
-        {% if section.settings.register_subtitle != blank %}
-          <div class="h6">{{ section.settings.register_subtitle }}</div>
-        {% else %}
-          <h6>{{ 'customer.register.subtitle' | t }}</h6>
-        {% endif %}
-
+        <div class="h6 in">{{ 'customer.register.subtitle' | t }}</div>
         {% include 'customer-register-form',
                     marketing_checkbox_label: section.settings.confirmation_marketing,
                     terms_checkbox_label: section.settings.confirmation_terms,
                     show_cancel_button: true
-        %}    
+        %}
       </div>
 
     </div>
   </div>
 </div>
-
-{% schema %}
-  {
-    "name": "Customers - Register",
-    "settings": [
-      {
-        "id": "confirmation_marketing",
-        "type": "richtext",
-        "label": "Accepts Marketing Label",
-        "info": "Leave blank for default message"
-      },
-      {
-        "id": "confirmation_terms",
-        "type": "richtext",
-        "label": "Accepts Terms and Conditions",
-        "info": "Leave blank for default message.  Be sure to add links to any relevant information pages"
-      } 
-    ]
-  }
-{% endschema %}
