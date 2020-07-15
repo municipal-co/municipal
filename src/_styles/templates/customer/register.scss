@@ -3,9 +3,11 @@
 // -------------------------
 
 .template-register .layout-content-wrapper {
-  padding: #{$spacer * 3} 0;
+  padding: 30px 0;
 }
 .template-register {
+  overflow-x: hidden;
+
   .custom-control-label, h5, h6, #RecoverPassword {
     opacity: 1;
     transform: translateX(0);

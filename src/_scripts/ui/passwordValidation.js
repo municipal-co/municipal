@@ -33,7 +33,7 @@ export default class PasswordValidation {
     const passwordValidateValue = form.find(selectors.passwordValidate).val();
 
     if (passwordValue) {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,}$/;
+      const passwordRegex = /^(?=.*[a-z])(?=.*[!@#$%^&*\-\.])[\w!@#$%^&*\-\.]{6,}$/;
 
       if (passwordValue.match(passwordRegex)) {
         $(selectors.formErrorMessage).text('');
