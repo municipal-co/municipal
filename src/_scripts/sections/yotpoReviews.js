@@ -16,9 +16,9 @@ const classes = {
 }
 
 const templates = {
-  sizeFitTemplate: (label, value) => {
+  sizeFitTemplate: (value) => {
     return `<div class="yotpo-user-field size-fit-field modified-field" data-type="SingleChoice">
-      <span class="yotpo-user-field-description text-s">` + label + `</span>
+      <span class="yotpo-user-field-description text-s">Size Fit:</span>
       <span class="yotpo-user-field-answer text-s">` + value + `</span>
     </div>`
   },
@@ -59,6 +59,7 @@ export default class YotpoReviews extends BaseSection {
      * each time the widgets are reloaded.
      */
     const limit = 20; // if yotpo hasn't loaded after 20 checks, bail.
+    let isLoading = true;
     let count = 0;
     const yotpoReadyCallback = () => {
       $(selectors.starReviews).addClass(classes.yotpoLoaded);
@@ -97,9 +98,14 @@ export default class YotpoReviews extends BaseSection {
 
     };
     const yotpoCheck = setInterval(() => {
-      if (typeof yotpo !== 'undefined') {
-        // eslint-disable-next-line no-undef
-        if (yotpo.getState() === 'ready') {
+      if (typeof window.yotpo !== 'undefined') {
+        if (isLoading) {
+          window.yotpo.refreshWidgets();
+          isLoading = false;
+        }
+        if (window.yotpo.getState() === 'ready') {
+          window.yotpo.refreshWidgets();
+
           yotpoReadyCallback();
         }
         // Yotpo emits the ready event anytime yotpo.refreshWidgets()
@@ -122,8 +128,6 @@ export default class YotpoReviews extends BaseSection {
 
   formatSizingMessages(isAddingNewReview) {
     const $yotpoWrapper = this.$container;
-
-    const sizeFitFieldName = $yotpoWrapper.find('.yotpo-bottomline-box-2 .yotpo-product-related-field-name').text();
 
     const $yotpoSizesLabels = $yotpoWrapper.find('.yotpo-size-field-titles label');
 
@@ -165,7 +169,7 @@ export default class YotpoReviews extends BaseSection {
         }
       });
 
-      $userFields.prepend(templates.sizeFitTemplate(sizeFitFieldName, sizeFitValue));
+      $userFields.prepend(templates.sizeFitTemplate(sizeFitValue));
 
       const dateValue = $this.find(selectors.dateOriginalLocation).text();
 
