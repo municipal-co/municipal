@@ -72,7 +72,9 @@
                         <a href="/account/addresses#edit-{{customer.default_address.id}}" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ customer.default_address.id }}">
                           {{ 'customer.addresses.edit' | t }}
                         </a>
-                        <br /><br />
+                        <span class="d-none d-sm-inline">&middot;</span>
+                        <br class="d-block d-sm-none" />
+                        <br class="d-block d-sm-none" />
                         <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ customer.default_address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
                           {{ 'customer.addresses.delete' | t }}
                         </a>
@@ -93,7 +95,9 @@
                         <a href="/account/addresses#edit-{{address.id}}" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ address.id }}">
                           {{ 'customer.addresses.edit' | t }}
                         </a>
-                        <br /><br />
+                        <span class="d-none d-sm-inline">&middot;</span>
+                        <br class="d-block d-sm-none" />
+                        <br class="d-block d-sm-none" />
                         <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
                           {{ 'customer.addresses.delete' | t }}
                         </a>
