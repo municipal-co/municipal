@@ -15,12 +15,12 @@
 
   .text-container {
     color: $white;
-    line-height: large-vw(45px, 125px);
+    line-height: large-vw(30px, 125px);
     font-weight: $font-weight-normal;
     
     @include media-breakpoint-down('md') {
-      line-height: 45px;
-      font-size: 40px;
+      line-height: 30px;
+      font-size: 30px;
       letter-spacing: 1.5px;
     }
 
