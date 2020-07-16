@@ -20,6 +20,12 @@
   }
 }
 
+.account-block__content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 table.order-detail-totals {
   @include media-breakpoint-up('lg') {
     max-width: 550px;
