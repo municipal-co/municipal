@@ -551,6 +551,9 @@
 
       .form-group {
         display: unset;
+        .form-element .y-label.yotpo-field-title {
+          white-space: normal;
+        }
       }
 
       .yotpo-header span.y-label,
