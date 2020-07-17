@@ -7,7 +7,7 @@ Z-Theme is a boilerplate Shopify theme built on top of [Slate](https://shopify.g
 ## Getting Started
 
 - If you're kicking off a new project, follow instructions in [Cloning Z-Theme](https://github.com/zehnergroup/z-theme/wiki/Cloning-Z-Theme)
-- Setting up first time? Follow instructions in [Dev Environment Setup](https://github.com/zehnergroup/z-theme/wiki/Dev-Environment-Setup)
+- Setting up first time? Follow instructions in Dev Environment Setup section below.
 - In the project directory, install dependences with `npm install`
 - Setup your [shopify dev store](https://partners.shopify.com/489730/stores)
 - [Generate API credentials](https://help.shopify.com/api/getting-started/api-credentials#get-credentials-through-the-shopify-admin) for your local environment
