@@ -49,6 +49,7 @@ import SwatchesSection from './sections/swatches';
 import VideoSection from './sections/video';
 import CMSPageSection from './sections/cmsPage';
 import CustomersLoginSection from './sections/customersLogin';
+import CustomersRegisterSection from './sections/customersRegister';
 import CustomersAccountSection from './sections/customersAccount';
 import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection from './sections/customersAddresses';
@@ -102,6 +103,7 @@ Breakpoints.initialize();
   sectionManager.register('video', VideoSection);
   sectionManager.register('cms-page', CMSPageSection);
   sectionManager.register('customers-login', CustomersLoginSection);
+  sectionManager.register('customers-register', CustomersRegisterSection);
   sectionManager.register('customers-account', CustomersAccountSection);
   sectionManager.register(
     'customers-account-orders',
