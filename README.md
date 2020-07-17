@@ -94,3 +94,39 @@ The following pages utilize the CMS page schema and renderer.  Any time changes 
 ### Checkout Additional Scripts
 
 Since additional checkout scripts are saved in a textarea inside the checkout admin settings, they do not have versioning and are liable to be modified or removed at any time.  As a precaution, try to store the most up to date version of these scripts inside the snippet `_checkout-additional-scripts.liquid`.  This file doesn't get included on the site anywhere but is the only way to keep this content in version control.
+
+
+
+
+## Local Environment Setup
+
+- Using [NVM](https://github.com/nvm-sh/nvm#install--update-script), install Node v8.2.1: `nvm install 8.2.1 && nvm use 8.2.1`
+- Install Slate & Gulp globally: `npm i -g gulp@3.9.1 && npm i -g @shopify/slate`
+- Verify your installs using `nvm list`, `gulp -v`, `slate -v`
+
+## Code Editor Setup
+
+- [`.editorconfig`](https://editorconfig.org/#download)
+- [Prettier](https://prettier.io/docs/en/editors.html)
+
+### [VS Code](https://code.visualstudio.com/)
+
+_`v2`: open your Command Palette, and search for `Show Recommended Extensions`_.
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Shopify Liquid Template Snippets](https://marketplace.visualstudio.com/items?itemName=killalau.vscode-liquid-snippets)
+- [Liquid Languages Support](https://marketplace.visualstudio.com/items?itemName=neilding.language-liquid)
+- [Sass](https://marketplace.visualstudio.com/items?itemName=robinbentley.sass-indented)
+- [Color Highlight](https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight)
+- [Settings Sync](https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync)
+
+#### Enable 'Format on Save'
+
+- `v2`: open your Command Palette, and search for `Open Settings (JSON)`, ensure that 'Format on Save' is set to `true`:
+```
+"editor.formatOnSave": true,
+```
+
+
+
+
