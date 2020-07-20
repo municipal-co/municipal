@@ -79,7 +79,7 @@ export default class NewsletterModalSection extends BaseSection {
       return false;
     }
 
-    if (User.hasCookie(this.cookies.seen.name) && User.getCookieValue(this.cookies.seen.name) === this.cookies.seen.value) {
+    if (User.hasCookie(this.cookies.seen.name)) {
       return false;
     }
 
