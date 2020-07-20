@@ -26,6 +26,7 @@
   {% assign product_neck_array = metafields["product_neck"] | split: separator %}
   {% assign product_waist_array = metafields["product_waist"] | split: separator %}
   {% assign product_arm_length_array = metafields["product_arm_length"] | split: separator %}
+  {% assign product_length_array = metafields["product_length"] | split: separator %}
   {% assign image_1_array = metafields["image_1"] | split: separator %}
   {% assign image_2_array = metafields["image_2"] | split: separator %}
   {% assign image_3_array = metafields["image_3"] | split: separator %}
@@ -137,10 +138,18 @@
                       {% endif %}
                       {% if product_arm_length_array[index] != blank %}
                         <div class="fit-guide__product-item-descriptor">
-                          Arm Lenght:
+                          Arm Length:
                         </div>
                         <div class="fit-guide__product-item-value">
                           {{ product_arm_length_array[index] }}
+                        </div>
+                      {% endif %}
+                      {% if product_length_array[index] != blank %}
+                        <div class="fit-guide__product-item-descriptor">
+                          Length:
+                        </div>
+                        <div class="fit-guide__product-item-value">
+                          {{ product_length_array[index] }}
                         </div>
                       {% endif %}
                     </div>
