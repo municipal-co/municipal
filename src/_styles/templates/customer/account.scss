@@ -44,6 +44,20 @@ table.order-detail-totals {
 
 .account-sidebar__content {
   height: 100%;
+
+  select {
+    border: 0;
+    border-bottom: 4px solid $black;
+    border-radius: 0;
+    background-color: $white;
+    width: 100%;
+    @extend .p2;
+    line-height: 1;
+
+    & ::placeholder {
+        @extend .p2;
+    }
+  }
 }
 
 .account-sidebar__title {
