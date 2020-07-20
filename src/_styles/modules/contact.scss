@@ -64,8 +64,8 @@
     border-radius: 0;
     background-color: $white;
     width: 100%;
-
     @extend .p2;
+
     & ::placeholder {
         @extend .p2;
     }
@@ -111,8 +111,8 @@
 .dropdown:after {
     content: "";
     position: absolute;
-    right: 10px;
-    top: 35%;
+    right: 20px;
+    top: 25%;
     border: solid #000;
     border-width: 0px 4px 4px 0;
     display: inline-block;

@@ -5,12 +5,14 @@
     <h4 class="account-sidebar__title">{{ customer.first_name }} {{ customer.last_name }}</h4>
     <div class="d-block d-lg-none">
       <div class="form-group">
-        <select class="form-control">
-          <option value="/account" {% if template.name == 'account' and template.suffix == blank %}selected="selected"{% endif %}>{{ 'customer.account.account_details' | t }}</option>
-          <option value="/account?view=orders" {% if template.name == 'account' and template.suffix == 'orders' %}selected="selected"{% endif %}>{{ 'customer.orders.title' | t }}</option>
-          <option value="/account/addresses" {% if template.name == 'addresses' %}selected="selected"{% endif %}>{{ 'customer.account.addresses' | t }}</option>
-          <option value="/account/logout">{{ 'layout.customer.log_out' | t }}</option>
-        </select>
+        <div class="dropdown">
+          <select class="form-control">
+            <option value="/account" {% if template.name == 'account' and template.suffix == blank %}selected="selected"{% endif %}>{{ 'customer.account.account_details' | t }}</option>
+            <option value="/account?view=orders" {% if template.name == 'account' and template.suffix == 'orders' %}selected="selected"{% endif %}>{{ 'customer.orders.title' | t }}</option>
+            <option value="/account/addresses" {% if template.name == 'addresses' %}selected="selected"{% endif %}>{{ 'customer.account.addresses' | t }}</option>
+            <option value="/account/logout">{{ 'layout.customer.log_out' | t }}</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="d-none d-lg-block">
