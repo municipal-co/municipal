@@ -57,10 +57,10 @@
 
             <h4 class="account__title">{{ 'customer.addresses.title' | t }}</h4>
             <div class="row">
-              <div class="col-lg-11">
+              <div class="col-lg-12">
                 {% if customer.default_address %}
                     <div class="account__customer-address">
-                      <h5 class="account-block__title">{{ 'customer.addresses.default_address' | t }}</h5>
+                      <h5 class="account-address__title">{{ 'customer.addresses.default_address' | t }}</h5>
                       <span>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</span>
                       <br />
                       <span>{{ customer.default_address.address1 }}, {{ customer.default_address.address2 }}</span>
@@ -69,13 +69,10 @@
                       <br />
                       <span>{{ customer.default_address.country }}</span>
                       <div class="account__customer-address-footer">
-                        <a href="/account/addresses#edit-{{customer.default_address.id}}" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ customer.default_address.id }}">
+                        <a href="/account/addresses#edit-{{customer.default_address.id}}" class="btn btn--small btn--underlined address-btn" data-address-edit-toggle data-form-id="{{ customer.default_address.id }}">
                           {{ 'customer.addresses.edit' | t }}
                         </a>
-                        <span class="d-none d-sm-inline">&middot;</span>
-                        <br class="d-block d-sm-none" />
-                        <br class="d-block d-sm-none" />
-                        <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ customer.default_address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                        <a href="#" class="btn btn--small btn--underlined address-btn" data-address-delete data-form-id="{{ customer.default_address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
                           {{ 'customer.addresses.delete' | t }}
                         </a>
                       </div>
@@ -92,13 +89,10 @@
                       <br />
                       <span>{{ address.country }}</span>
                       <div class="account__customer-address-footer">
-                        <a href="/account/addresses#edit-{{address.id}}" class="btn btn--small btn--underlined" data-address-edit-toggle data-form-id="{{ address.id }}">
+                        <a href="/account/addresses#edit-{{address.id}}" class="btn btn--small btn--underlined address-btn" data-address-edit-toggle data-form-id="{{ address.id }}">
                           {{ 'customer.addresses.edit' | t }}
                         </a>
-                        <span class="d-none d-sm-inline">&middot;</span>
-                        <br class="d-block d-sm-none" />
-                        <br class="d-block d-sm-none" />
-                        <a href="#" class="btn btn--small btn--underlined" data-address-delete data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                        <a href="#" class="btn btn--small btn--underlined address-btn" data-address-delete data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
                           {{ 'customer.addresses.delete' | t }}
                         </a>
                       </div>
