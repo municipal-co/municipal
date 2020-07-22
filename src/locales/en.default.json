@@ -160,7 +160,7 @@
     "addresses": {
       "title": "Shipping Addresses",
       "default": "Default",
-      "default_address": "Default Address",
+      "default_address": "Default",
       "add_new": "Add New Address",
       "edit_address": "Edit Address",
       "first_name": "First Name",
