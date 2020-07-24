@@ -46,6 +46,7 @@ export default class backgroundAnimation {
             position.bottom >= screenTopLimit &&
             el.backgroundColor !== '' ) {
           $('body').css('background-color', el.backgroundColor);
+          self.currentBackground = el.backgroundColor.substring(1);
           self.updateActiveModule.call(self, el);
         }
       } else if(!el.isActive &&
@@ -53,6 +54,7 @@ export default class backgroundAnimation {
             position.bottom >= screenBottomLimit &&
             el.backgroundColor !== '' ) {
         $('body').css('background-color', el.backgroundColor);
+        self.currentBackground = el.backgroundColor.substring(1);
         self.updateActiveModule.call(self, el);
       }
     });
@@ -69,6 +71,7 @@ export default class backgroundAnimation {
       if (module === currentModule) {
         self.moduleList[index].isActive = true;
       }
+      self.updateModuleTextColor(module.module, self.moduleList[index].isActive);
     });
   }
 
@@ -77,4 +80,60 @@ export default class backgroundAnimation {
     this.topThreshold = this.viewportHeight * 0.4;
     this.bottomThreshold = this.viewportHeight * 0.6;
   }
+
+  updateModuleTextColor(module, moduleIsActive) {
+    if(!moduleIsActive) {
+      const rgbColor = this._breakColorIntoRGB(this.currentBackground);
+      const colorLuminance = this._getColorLuminance(rgbColor.r, rgbColor.g, rgbColor.b);
+
+      const useWhite = this._compareLuminance(colorLuminance);
+      if(useWhite) {
+        $(module).addClass('inactive-white');
+      } else {
+        $(module).addClass('inactive-black');
+      }
+    } else {
+      $(module).removeClass('inactive-white inactive-black');
+    }
+  }
+
+  _breakColorIntoRGB(hex) {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+      return r + r + g + g + b + b;
+    });
+
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  _getColorLuminance(r, g, b) {
+    const a = [r, g, b].map(function(v) {
+        v /= 255;
+        return v <= 0.03928
+            ? v / 12.92
+            : Math.pow( (v + 0.055) / 1.055, 2.4 );
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+  }
+
+  _compareLuminance(color1luminance, color2luminance = 1) {
+    const ratio = color1luminance > color2luminance
+    ? ((color2luminance + 0.05) / (color1luminance + 0.05))
+    : ((color1luminance + 0.05) / (color2luminance + 0.05));
+
+    let optimumContrast;
+    if( ratio < 1/4.5 ) {
+      optimumContrast = true;
+    } else {
+      optimumContrast = false;
+    }
+
+    return optimumContrast;
+  }
+
 }
