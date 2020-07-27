@@ -12,6 +12,17 @@
 
   .selector-wrapper {
     margin-top: 30px;
+    position: relative;
+    .icon-caret {
+      position: absolute;
+      right: 0;
+      bottom: 17px;
+      pointer-events: none;
+
+      @include media-breakpoint-down('md') {
+        right: 20px;
+      }
+    }
   }
 
   .dots {

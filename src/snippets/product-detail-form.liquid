@@ -102,7 +102,10 @@
             <div class="selector-wrapper form-group js">
 
               <label class="product__selector-header" for="SingleOptionSelector-{{ forloop.index0 }}">
-                {% unless base_option_name_downcase == 'color' %}Select {% endunless %}{{ option.name }}: <span class="product__selector-option" data-selected-option-{{option.position}}> {{option.selected_value}} </span>
+                {% unless base_option_name_downcase == 'color' %}Select {% endunless %}{{ option.name }}:
+                {% if option_alt_ui != blank %}
+                  <span class="product__selector-option" data-selected-option-{{option.position}}> {{option.selected_value}} </span>
+                {% endif %}
               </label>
 
 
@@ -120,6 +123,7 @@
                   </option>
                 {% endfor %}
               </select>
+              {% include 'icon-caret' %}
 
               {% comment %} Output alternative option UI here {% endcomment %}
               {{ option_alt_ui }}
