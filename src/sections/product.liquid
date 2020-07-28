@@ -22,7 +22,9 @@
     {% include 'product-overview' %}
     {% include 'product-features' %}
     {% include 'style-tips' %}
-    {% include 'yotpo-reviews' %}
+    {% unless product.type == "Gift Card" %}
+      {% include 'yotpo-reviews' %}
+    {% endunless %}
     {% include 'complete-the-look' %}
 
   </div>

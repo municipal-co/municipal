@@ -115,6 +115,9 @@ class ProductDetailGallery {
   }
 
   locateZoomIcon(event) {
+    if( $('.product__form--gift-card').length > 0 ) {
+      return;
+    }
     const $icon = $(selectors.zoomInIcon);
     const iconSize = $icon.width();
     const slideshowArea = {
@@ -147,6 +150,9 @@ class ProductDetailGallery {
   }
 
   initHoverZoom($zoomTarget) {
+    if( $('.product__form--gift-card').length > 0 ) {
+      return;
+    }
     this.destroyHoverZoom($zoomTarget);
 
     $zoomTarget.zoom({
