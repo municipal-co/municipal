@@ -75,37 +75,45 @@
               {% endif %}
               <div class="fit-guide__tab" data-fit-guide-tab="{{ size_name_array[index] }}" {% unless is_active == true %} style="display:none;"{% endunless %}>
                 <div class="fit-guide__model-info">
-                  <div class="fit-guide__info-block">
-                    <div class="fit-guide__data-title">
-                      Model Measurements:
+                  {% if model_waist_array[index] != blank or model_height_array[index] or model_weight_array[index] %}
+                    <div class="fit-guide__info-block">
+                      <div class="fit-guide__data-title">
+                        Model Measurements:
+                      </div>
+                      <div class="fit-guide__data-group fit-guide__data-group--model">
+                        {% if model_height_array[index] %}
+                          <div class="fit-guide__model-item">
+                            <div class="fit-guide__model-item-value">
+                              {{ model_height_array[index] }}
+                            </div>
+                            <div class="fit-guide__model-item-descriptor">
+                              Height
+                            </div>
+                          </div>
+                        {% endif %}
+                        {% if model_weight_array[index] %}
+                          <div class="fit-guide__model-item">
+                            <div class="fit-guide__model-item-value">
+                              {{ model_weight_array[index] }}
+                            </div>
+                            <div class="fit-guide__model-item-descriptor">
+                              Weight
+                            </div>
+                          </div>
+                        {% endif %}
+                        {% if model_waist_array[index] %}
+                          <div class="fit-guide__model-item">
+                            <div class="fit-guide__model-item-value">
+                              {{ model_waist_array[index] }}
+                            </div>
+                            <div class="fit-guide__model-item-descriptor">
+                              Waist
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
                     </div>
-                    <div class="fit-guide__data-group fit-guide__data-group--model">
-                      <div class="fit-guide__model-item">
-                        <div class="fit-guide__model-item-value">
-                          {{ model_height_array[index] }}
-                        </div>
-                        <div class="fit-guide__model-item-descriptor">
-                          Height
-                        </div>
-                      </div>
-                      <div class="fit-guide__model-item">
-                        <div class="fit-guide__model-item-value">
-                          {{ model_weight_array[index] }}
-                        </div>
-                        <div class="fit-guide__model-item-descriptor">
-                          Weight
-                        </div>
-                      </div>
-                      <div class="fit-guide__model-item">
-                        <div class="fit-guide__model-item-value">
-                          {{ model_waist_array[index] }}
-                        </div>
-                        <div class="fit-guide__model-item-descriptor">
-                          Waist
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {% endif %}
 
                   <div class="fit-guide__info-block">
                     <div class="fit-guide__data-title">
