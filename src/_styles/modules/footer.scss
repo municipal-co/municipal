@@ -189,3 +189,73 @@
     width: $footer-social-icon-width;
   }
 }
+
+// ----------------------------
+// Footer subscription modal
+// ----------------------------
+
+#footer-subscription-modal {
+  .modal-content {
+    border-radius: 0;
+    border: 0;
+    background-color: transparent;
+    margin-top: large-vw(0px, -80px) !important;
+    @include media-breakpoint-down('md') {
+      margin-top: 0 !important;
+    }
+  }
+
+  .modal-header {
+    background-color: transparent;
+    border: 0;
+    margin: 0 large-vw(0px, -160px) large-vw(0, 30px);
+
+    @include media-breakpoint-down('md') {
+      margin: 0;
+      min-height: 50px;
+      padding: 13px;
+    }
+  }
+
+  .close {
+    color: $white;
+    padding: 0;
+    opacity: 1;
+    @include media-breakpoint-down('md') {
+      margin-left: auto !important;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    .icon-close {
+      width: large-vw(30px, 80px);
+      height: large-vw(30px, 80px);
+
+      @include media-breakpoint-down('md') {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    @include media-breakpoint-down('md') {
+      margin: -7px 0;
+    }
+  }
+
+  .modal-body {
+    background-color: $white;
+    padding: large-vw(35px, 70px);
+
+    @include media-breakpoint-down('md') {
+      padding: 35px;
+    }
+
+    span {
+      display: block;
+      color: $black;
+      text-align: center;
+    }
+  }
+}
