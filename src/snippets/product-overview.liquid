@@ -14,7 +14,7 @@
   </style>
 {% endif %}
 
-{% if details != blank and overview_image != blank %}
+{% if eyebrow != blank or title != blank or copy != blank or overview_image != blank or details != blank %}
   <div id="product-overview" class="product-overview" data-section-type="product-overview" data-animated-background="#000000">
     <div class="row no-gutters justify-content-center row-adjusted">
       <div class="col-lg-22 col-20">
@@ -33,33 +33,34 @@
 
         <div class="overview-details row no-gutters">
           <div class="overview-details__image col-lg-12">
-            <div class="image-container frame frame--4x3">
+            {% if overview_image != blank %}
+              <div class="image-container frame frame--4x3">
+                {% if video != blank %}
+                  {% assign yt_video_id = video | remove: "https://www.youtube.com/watch?v=" %}
 
-              {% if video != blank %}
-                {% assign yt_video_id = video | remove: "https://www.youtube.com/watch?v=" %}
+                  <div class="overview-video">
+                    <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="#000000">
+                      <div class="video-player__cover" data-video-player-cover>
+                        <div class="video-player__cover-still lazyload" data-background="{{ overview_image }}"></div>
+                        <span class="video-player__cover-play" data-video-play>
+                          {% include "icon-play-full-color" %}
+                        </span>
 
-                <div class="overview-video">
-                  <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="#000000">
-                    <div class="video-player__cover" data-video-player-cover>
-                      <div class="video-player__cover-still lazyload" data-background="{{ overview_image }}"></div>
-                      <span class="video-player__cover-play" data-video-play>
-                        {% include "icon-play-full-color" %}
-                      </span>
-
-                      <div class="visual-play-button">
-                        {% include 'icon-play-full-color' %}
+                        <div class="visual-play-button">
+                          {% include 'icon-play-full-color' %}
+                        </div>
                       </div>
+                      <div class="video-player__embed" data-video-player-embed></div>
                     </div>
-                    <div class="video-player__embed" data-video-player-embed></div>
                   </div>
-                </div>
-              {% else %}
-                {% render 'image_tag'
+                {% else %}
+                  {% render 'image_tag'
                     image: overview_image,
                     object_fit: 'cover'
-                %}
-              {% endif %}
-            </div>
+                  %}
+                {% endif %}
+              </div>
+            {% endif %}
 
             {% if small_text != blank %}
               <p class="overview-details__small-text d-none d-lg-block">{{ small_text }}</p>
