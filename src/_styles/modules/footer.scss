@@ -195,6 +195,8 @@
 // ----------------------------
 
 #footer-subscription-modal {
+  background-color: rgba(18,18,18,.9);
+
   .modal-content {
     border-radius: 0;
     border: 0;
@@ -206,9 +208,11 @@
   }
 
   .modal-header {
-    background-color: transparent;
+    background-color: black;
     border: 0;
-    margin: 0 large-vw(0px, -160px) large-vw(0, 30px);
+    margin: 0;
+    height: large-vw(30px, 80px);
+    position: relative;
 
     @include media-breakpoint-down('md') {
       margin: 0;
@@ -221,32 +225,30 @@
     color: $white;
     padding: 0;
     opacity: 1;
-    @include media-breakpoint-down('md') {
-      margin-left: auto !important;
-    }
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin: 0;
+    transform: translateY(-50%);
 
     &:focus {
       outline: none;
     }
 
     .icon-close {
-      width: large-vw(30px, 80px);
-      height: large-vw(30px, 80px);
+      width: large-vw(30px, 45px);
+      height: large-vw(30px, 45px);
 
       @include media-breakpoint-down('md') {
         width: 30px;
         height: 30px;
       }
     }
-
-    @include media-breakpoint-down('md') {
-      margin: -7px 0;
-    }
   }
 
   .modal-body {
     background-color: $white;
-    padding: large-vw(35px, 70px);
+    padding: large-vw(35px, 70px) large-vw(20px, 50px);
 
     @include media-breakpoint-down('md') {
       padding: 35px;
