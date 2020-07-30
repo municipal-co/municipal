@@ -249,6 +249,7 @@
   font-size: 20px;
   font-weight: $font-weight-bold;
   text-transform: uppercase;
+  margin-right: 5px;
 }
 
 .fit-guide__data-group--product {
@@ -266,6 +267,7 @@
 .fit-guide__product-item-descriptor {
   font-weight: bold;
   white-space: nowrap;
+  margin-right: 5px;
 
   .fit-guide__product-item-value + &:before {
     content: "|";
