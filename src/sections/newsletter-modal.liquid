@@ -36,6 +36,8 @@
             <div class="modal-image frame frame--9x16">
               {% render 'image_tag'
                         image: section.settings.image,
+                        mobile_image: section.settings.mobile_image,
+                        fallback_layout: true,
                         object_fit: "cover"
               %}
 
@@ -113,6 +115,11 @@
       {
         "type": "image_picker",
         "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
         "label": "Image"
       },
       {
