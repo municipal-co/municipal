@@ -12,6 +12,21 @@
 
   .selector-wrapper {
     margin-top: 30px;
+    position: relative;
+    .icon-caret {
+      position: absolute;
+      right: 0;
+      bottom: 17px;
+      pointer-events: none;
+
+      @include media-breakpoint-down('md') {
+        right: 20px;
+      }
+    }
+
+  }
+  &.product__form--gift-card .selector-wrapper {
+    margin: 120px 0;
   }
 
   .dots {
@@ -199,6 +214,10 @@
     padding-bottom: percentage(1038/1041);
     cursor: none;
 
+    .product-galleryes--gift-card & {
+      cursor: default;
+    }
+
     @include media-breakpoint-down('md') {
       pointer-events: none !important;
     }
@@ -240,6 +259,10 @@
   z-index: 999;
   pointer-events: none;
   opacity: 0;
+
+  .product-galleryes--gift-card & {
+    display: none !important;
+  }
 
   .product-gallery__slideshow:hover ~ & {
     opacity: 1;

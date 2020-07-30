@@ -154,6 +154,13 @@
 
                         {% assign printed_cards = printed_cards | plus: 1 %}
                       {% endfor %}
+                    {% else %}
+                    <div class="content-grid__item" data-grid-item>
+                      {% include 'product-card',
+                          product: product,
+                          show_sizes: true,
+                          show_tag: true %}
+                    </div>
                     {% endif %}
                   {% endfor %}
                 {% endfor %}

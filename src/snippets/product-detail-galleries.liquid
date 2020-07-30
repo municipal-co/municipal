@@ -66,7 +66,7 @@
 {% endfor %}
 
 
-<div class="product-galleries" data-product-detail-galleries>
+<div class="product-galleries {% if product.type == 'Gift Card' %}product-galleryes--gift-card{% endif %}" data-product-detail-galleries>
 
   {% if variant_gallery_possible %}
 

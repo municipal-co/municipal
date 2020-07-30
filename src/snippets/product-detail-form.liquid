@@ -35,7 +35,7 @@
   {% endif %}
 {% endcapture %}
 
-<div class="product__form" data-product-detail-form>
+<div class="product__form {% if product.type == 'Gift Card' %}product__form--gift-card{% endif %}" data-product-detail-form>
 
   {% if tag_html != blank %}
     <div class="product__badge-row">
@@ -45,13 +45,14 @@
 
   <h1 class="h5 product__title">{{ product.title }}</h1>
 
-  {% if settings.display_reviews == true %}
+  {% if settings.display_reviews == true  and product.type != 'Gift Card' %}
     {% include 'rating-stars' %}
   {% endif %}
-
-  <div class="product__price">
-    {% include 'product-detail-price', product: product, current_variant: current_variant %}
-  </div>
+  {% unless product.type == 'Gift Card' %}
+    <div class="product__price">
+      {% include 'product-detail-price', product: product, current_variant: current_variant %}
+    </div>
+  {% endunless %}
   {% if section.settings.enable_klarna == true %}
     <!-- Placement v2 -->
     <klarna-placement
@@ -102,7 +103,10 @@
             <div class="selector-wrapper form-group js">
 
               <label class="product__selector-header" for="SingleOptionSelector-{{ forloop.index0 }}">
-                {% unless base_option_name_downcase == 'color' %}Select {% endunless %}{{ option.name }}: <span class="product__selector-option" data-selected-option-{{option.position}}> {{option.selected_value}} </span>
+                {% unless base_option_name_downcase == 'color' %}Select {% endunless %}{{ option.name }}:
+                {% if option_alt_ui != blank %}
+                  <span class="product__selector-option" data-selected-option-{{option.position}}> {{option.selected_value}} </span>
+                {% endif %}
               </label>
 
 
@@ -120,6 +124,9 @@
                   </option>
                 {% endfor %}
               </select>
+              {% if option_alt_ui == blank %}
+                {% include 'icon-caret' %}
+              {% endif %}
 
               {% comment %} Output alternative option UI here {% endcomment %}
               {{ option_alt_ui }}
