@@ -82,18 +82,22 @@ export default class backgroundAnimation {
   }
 
   updateModuleTextColor(module, moduleIsActive) {
+    const $module = $(module);
+
     if(!moduleIsActive) {
       const rgbColor = this._breakColorIntoRGB(this.currentBackground);
       const colorLuminance = this._getColorLuminance(rgbColor.r, rgbColor.g, rgbColor.b);
 
       const useWhite = this._compareLuminance(colorLuminance);
       if(useWhite) {
-        $(module).addClass('inactive-white');
-      } else {
-        $(module).addClass('inactive-black');
+          $module.removeClass('inactive-black');
+          $module.addClass('inactive-white');
+        } else {
+          $module.removeClass('inactive-white');
+          $module.addClass('inactive-black');
       }
     } else {
-      $(module).removeClass('inactive-white inactive-black');
+      $module.removeClass('inactive-white inactive-black');
     }
   }
 
