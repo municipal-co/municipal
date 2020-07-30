@@ -8,6 +8,7 @@ const selectors = {
   newsletterInput: '.minimal-input-box__input',
   subscriptionModal: '[data-footer-subscription-modal]',
   formResultMessage: '[data-form-result-message]',
+  modalBackdrop: '.modal-backdrop'
 };
 
 export default class FooterSection extends BaseSection {
@@ -26,6 +27,9 @@ export default class FooterSection extends BaseSection {
         $(selectors.subscriptionModal).modal('show');
         $(selectors.newsletterInput, $form).val('');
 
+        setTimeout(function(){
+          $(selectors.modalBackdrop).addClass('footer-backdrop');
+        }, 200);
       },
       onSubscribeFail() {
         const successFail = $(selectors.newsletterFormMessage, $form).data('message-fail');
