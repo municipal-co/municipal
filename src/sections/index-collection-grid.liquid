@@ -47,8 +47,18 @@
               <div class="collection-tile">
                 {% if cta_url != blank%}
                   <a href="{{ cta_url }}">
-                {% endif %}
+                    <div class="collection-tile__image frame frame--1x1">
+                      {% render 'image_tag'
+                                image: collection_image,
+                                object_fit: "cover"
+                      %}
+                    </div>
+                  </a>
 
+                  <a href="{{ cta_url }}">
+                    <h3 class="collection-tile__title">{{ collection_title}}</h3>
+                  </a>
+                {% else %}
                   <div class="collection-tile__image frame frame--1x1">
                     {% render 'image_tag'
                               image: collection_image,
@@ -56,11 +66,8 @@
                     %}
                   </div>
 
-                {% if cta_url != blank %}
-                  </a>
+                  <h3 class="collection-tile__title">{{ collection_title}}</h3>
                 {% endif %}
-
-                <h3 class="collection-tile__title">{{ collection_title}}</h3>
 
                 {% if cta_url != blank and cta_text != blank %}
                   <a class="collection-tile__cta btn btn-link" href="{{ cta_url }}">
