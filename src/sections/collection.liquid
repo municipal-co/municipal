@@ -56,8 +56,10 @@
         {% if collection.products.size > 0 %}
           <div class="content-grid" data-collection-grid="{{ collection.handle }}">
             {% for product in collection.products %}
+              {% assign has_color_option = false %}
               {% for option in product.options_with_values %}
                 {% if option.name == 'Color' %}
+                  {% assign has_color_option = true %}
                   {% assign option_handle = 'option' | append: forloop.index %}
                   {% assign product_colors = option.values %}
 
@@ -100,14 +102,15 @@
                          color: color %}
                     </div>
                   {% endfor %}
-                {% else %}
+                {% endif %}
+                {% unless has_color_option == true %}
                   <div class="content-grid__item" data-grid-item>
                     {% include 'product-card',
-                        product: product,
-                        show_sizes: true,
-                        show_tag: true %}
+                    product: product,
+                    show_sizes: true,
+                    show_tag: true %}
                   </div>
-                {% endif %}
+                {% endunless %}
               {% endfor %}
             {% endfor %}
           </div>
