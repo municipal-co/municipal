@@ -93,7 +93,6 @@
               <div class="content-grid" data-collection-grid="{{the_collection.handle}}" data-collection-url="{{the_collection.url}}">
                 {% assign printed_cards = 0 %}
                 {% for product in the_collection.products %}
-
                   {% if show_promo == true and printed_cards == promo_card_position %}
                     <div class="promo_card content-grid__item frame">
                       <div class="promo-card-inner">
@@ -108,8 +107,10 @@
                     {% assign show_promo = false  %}
                   {% endif %}
 
+                  {% assign has_color_option = false %}
                   {% for option in product.options_with_values %}
                     {% if option.name == 'Color' %}
+                      {% assign has_color_option = true %}
                       {% assign option_handle = 'option' | append: forloop.index %}
                       {% assign product_colors = option.values %}
 
@@ -154,14 +155,15 @@
 
                         {% assign printed_cards = printed_cards | plus: 1 %}
                       {% endfor %}
-                    {% else %}
-                    <div class="content-grid__item" data-grid-item>
-                      {% include 'product-card',
-                          product: product,
-                          show_sizes: true,
-                          show_tag: true %}
-                    </div>
                     {% endif %}
+                    {% unless has_color_option == true %}
+                      <div class="content-grid__item" data-grid-item>
+                        {% include 'product-card',
+                        product: product,
+                        show_sizes: true,
+                        show_tag: true %}
+                      </div>
+                    {% endunless %}
                   {% endfor %}
                 {% endfor %}
 
