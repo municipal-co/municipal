@@ -71,16 +71,12 @@
                 {{/if}}
               {{/unless}}
               <li>
-                {{#if variant_quantity_limit}}
-                  <div class="quantity-adjuster" data-quantity-adjuster>
-                    <button class="quantity-adjuster__decrement" data-decrement>-</button>
-                    <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
-                    <span class="quantity-adjuster__label">Qty: {{ quantity }} </span>
-                    <button class="quantity-adjuster__increment" data-increment>+</button>
-                  </div>
-                {{else}}
-                  Quantity: {{ quantity }}
-                {{/if}}
+                <div class="quantity-adjuster" data-quantity-adjuster>
+                  <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                  <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
+                  <span class="quantity-adjuster__label">Qty: {{ quantity }} </span>
+                  <button class="quantity-adjuster__increment" {{#unless available}}disabled{{available}} data-increment>+</button>
+                </div>
               </li>
               <li class="ajax-cart__item-price">{{ price }}</li>
             </ul>
