@@ -6,7 +6,7 @@
   Usage:
 
   {% include 'product-dots-size',
-              product: { product } - required
+              dots_product: { product } - required
               current_color: { string } - optional
               selected_size: { string } - optional
   %}
@@ -16,9 +16,8 @@
 
 {%- endcomment -%}
 
-{% if product != blank %}
-
-  {% for option in product.options_with_values %}
+{% if dots_product != blank %}
+  {% for option in dots_product.options_with_values %}
   {% comment %}Get the first available color (it will be used to display the corresponding size variants) and can be placed 2nd on the variant lists {% endcomment %}
     {% assign option_name_downcase = option.name | downcase %}
     {% if option_name_downcase == "color" %}
@@ -29,7 +28,7 @@
     {% endif %}
   {% endfor %}
 
-  {% for option in product.options_with_values %}
+  {% for option in dots_product.options_with_values %}
     {% assign option_name_downcase = option.name | downcase %}
     {% assign size_handle = 'option' | append: option.position %}
 
@@ -37,7 +36,7 @@
 
       <div class="dots" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for size in option.values %}
-          {% for variant in product.variants %}
+          {% for variant in dots_product.variants %}
             {% if variant[color_handle] == current_color and variant[size_handle] == size %}
               {% assign current_variant = variant %}
               {% break %}
@@ -59,7 +58,6 @@
           </div>
 
         {% endfor %}
-
       </div>
     {% endif %}
   {% endfor %}

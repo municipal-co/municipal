@@ -50,7 +50,7 @@
 
 {% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
 
-{% assign featured_image = product.featured_image %}
+{% assign featured_image = card_product.selected_or_first_available_variante.image | default: card_product.featured_image %}
 {% if variant != blank %}
   {% assign featured_image = variant.featured_image %}
 {% endif %}
@@ -60,14 +60,14 @@
   {% assign featured_image = unavailable_variant.featured_image %}
 {% endif %}
 
-{% if product %}
+{% if card_product %}
 
   {% assign product_image_dimension = '760x' %}
   {% assign product_image_dimension_tablet = '400x' %}
   {% assign product_image_dimension_mobile = '150x' %}
-  {% assign product_url = variant.url | default: product.url | within: collection %}
+  {% assign product_url = variant.url | default: card_product.url | within: collection %}
 
-  <div id="product-card-{{ product.id }}" class="product-card {{ card_classes }}" data-product-card
+  <div id="product-card-{{ card_product.id }}" class="product-card {{ card_classes }}" data-product-card
   {% unless auto_update_image == false and variant == blank %}
     data-product-merged
   {% endunless %}
@@ -93,7 +93,8 @@
 
           {% if show_sizes %}
             {%- capture sizes_html -%}
-            {% include 'product-dots-sizes'
+            {% render 'product-dots-sizes'
+                        dots_product: card_product,
                         current_color: color %}
             {%- endcapture -%}
 
@@ -113,7 +114,7 @@
         {% if show_tag %}
           {% capture tag_html %}
             {% if product != blank %}
-              {% for tag in product.tags %}
+              {% for tag in card_product.tags %}
                 {% if tag contains 'Badge:' or tag contains 'badge:' %}
                   <span class="badge">{{ tag | remove: 'Badge:' | remove: 'badge:'}}</span>
                   {% break %}
@@ -132,7 +133,7 @@
         {% endif %}
 
         <h3 class="product-card__info-title">
-          <a href="{{ product_url }}">{{ product.title }}</a>
+          <a href="{{ product_url }}">{{ card_product.title }}</a>
         </h3>
 
         {% if show_colors %}
@@ -150,20 +151,20 @@
 
         <div class="product-card__info-price">
 
-          {% if product.compare_at_price > product.price %}
-            <s>{{ product.compare_at_price | money }}</s>
-            <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+          {% if card_product.compare_at_price > card_product.price %}
+            <s>{{ card_product.compare_at_price | money }}</s>
+            <span class="visually-hidden">{{ 'products.card_product.regular_price' | t }}</span>
           {% endif %}
 
-          {% if product.price_varies %}
-            {%- assign price = product.price | money -%}
-            {{ 'products.product.from_text_html' | t: price: price }}
+          {% if card_product.price_varies %}
+            {%- assign price = card_product.price | money -%}
+            {{ 'products.card_product.from_text_html' | t: price: price }}
           {% else %}
-            {{ product.price | money }}
+            {{ card_product.price | money }}
           {% endif %}
 
-          {% unless product.available %}
-            {{ 'products.product.sold_out' | t }}
+          {% unless card_product.available %}
+            {{ 'products.card_product.sold_out' | t }}
           {% endunless %}
         </div>
 
@@ -173,11 +174,11 @@
 
       </div>
     </div>
-    
+
     {% if render_json == true %}
       <script type="application/json" data-product-json>
         {% include 'product-json' %}
-      </script>      
+      </script>
     {% endif %}
 
   </div>
