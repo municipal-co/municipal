@@ -59,6 +59,13 @@ export default class NewsletterModalSection extends BaseSection {
     if (this.shouldShow()) {
       setTimeout(this.show.bind(this), this.settings.delay);
     }
+
+    var ua = navigator.userAgent || navigator.vendor || window.opera;
+    var isInstagram = (ua.indexOf('Instagram') > -1) ? true : false;
+
+    if (isInstagram) {
+      this.$modal.addClass('modal--instagram-in-app');
+    }
   }
 
   hide() {

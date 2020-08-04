@@ -1,5 +1,10 @@
 .newsletter-popup {
   .modal {
+
+    &.modal--instagram-in-app {
+      padding-top: 50px;
+    }
+
     .popup-eyebrow {
       font-size: 16px;
       color: $white;
