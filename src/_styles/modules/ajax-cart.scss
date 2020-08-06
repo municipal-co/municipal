@@ -90,10 +90,12 @@ body.ajax-cart-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 60px;
 
   @include media-breakpoint-down('md') {
     padding: 9px 20px;
+  }
+  @include media-breakpoint-down('lg') {
+    min-height: 60px;
   }
 
   .ajax-cart__title {
