@@ -36,7 +36,7 @@
             Features
           </a>
           {% endif %}
-          {% if settings.display_reviews == true %}
+          {% if settings.display_reviews == true and product.type != 'Gift Card' %}
           <a href="#product-reviews" data-scroll-to-section="reviews">
             Reviews
           </a>
