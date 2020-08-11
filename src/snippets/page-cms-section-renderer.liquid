@@ -68,26 +68,24 @@
           {% include 'spacer', id: block.id, height_name: block.settings.height_name %}
 
         {% elsif block.type == "promo" %}
-          <div data-section-id="{{ block.id }}" data-cms-block data-animated-background="{{ block.settings.background_color }}">
-            {% include 'promo',
-                        p_id: block.id,
-                        p_layout: block.settings.layout,
-                        p_type: 3,
-                        p_bg_color: block.settings.background_color
-                        p_image: block.settings.image,
-                        p_image_small: block.settings.image_small,
-                        p_background_color: block.settings.background_color,
-                        p_title_color: block.settings.title_color,
-                        p_light: block.settings.light_text,
-                        p_eyebrow_icon: block.settings.eyebrow_icon,
-                        p_secondary_icon: block.settings.secondary_icon,
-                        p_eyebrow: block.settings.eyebrow,
-                        p_title: block.settings.title,
-                        p_text: block.settings.text,
-                        p_cta_url: block.settings.cta_url,
-                        p_cta_text: block.settings.cta_text
-            %}
-          </div>
+          {% include 'promo',
+                      p_id: block.id,
+                      p_layout: block.settings.layout,
+                      p_type: 3,
+                      p_bg_color: block.settings.background_color
+                      p_image: block.settings.image,
+                      p_image_small: block.settings.image_small,
+                      p_background_color: block.settings.background_color,
+                      p_title_color: block.settings.title_color,
+                      p_light: block.settings.light_text,
+                      p_eyebrow_icon: block.settings.eyebrow_icon,
+                      p_secondary_icon: block.settings.secondary_icon,
+                      p_eyebrow: block.settings.eyebrow,
+                      p_title: block.settings.title,
+                      p_text: block.settings.text,
+                      p_cta_url: block.settings.cta_url,
+                      p_cta_text: block.settings.cta_text
+          %}
 
         {% elsif block.type == "richtext" %}
           <div class="section-rich-text" data-cms-block data-animated-background="#ffffff">

@@ -170,6 +170,18 @@ h1, h2, h3, h4, h5, h6,
   }
 }
 
+.inactive-white {
+  div, h1, h2, h3, h4, h5, h6, p, b, i, strong, em, span:not(.btn__ui), a:not(.btn)  {
+    color: $white !important
+  }
+}
+
+.inactive-black {
+  div, h1, h2, h3, h4, h5, h6, p, b, i, strong, em, span:not(.btn__ui), a:not(.btn)  {
+    color: $black !important
+  }
+}
+
 
 .development-mode {
   /* stylelint-disable-next-line selector-max-id */
