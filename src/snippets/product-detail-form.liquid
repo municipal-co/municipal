@@ -200,7 +200,7 @@
       </form>
 
       {% if settings.shipping_cta_title != blank and shipping_modal_html != blank%}
-        <button class="btn-link product__shipping-toggler" data-shipping-modal-trigger>{{ settings.shipping_cta_title }}</button>
+        <a href="javascript:void(0);" class="btn-link product__shipping-toggler" data-shipping-modal-trigger>{{ settings.shipping_cta_title }}</a>
       {% endif %}
     </div>
   </div>
