@@ -46,7 +46,7 @@
     {{#if items}}
       <ul class="ajax-cart__list">
       {{#each items}}
-        <li class="ajax-cart__item" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
+        <li class="ajax-cart__item {{#unless available}}ajax-cart__item--sold-out{{/unless}}" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
           <div class="ajax-cart__item-image-wrapper frame frame--1x1">
             <img src="{{ image }}" class="ajax-cart__item-image" data-object-fit="cover" data-object-position="center">
           </div>
@@ -70,20 +70,24 @@
                   {{/if}}
                 {{/if}}
               {{/unless}}
-              <li>
-                {{#if variant_quantity_limit}}
+              {{#if available}}
+                <li>
                   <div class="quantity-adjuster" data-quantity-adjuster>
                     <button class="quantity-adjuster__decrement" data-decrement>-</button>
                     <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
                     <span class="quantity-adjuster__label">Qty: {{ quantity }} </span>
                     <button class="quantity-adjuster__increment" data-increment>+</button>
                   </div>
-                {{else}}
-                  Quantity: {{ quantity }}
-                {{/if}}
-              </li>
-              <li class="ajax-cart__item-price">{{ price }}</li>
+                </li>
+                <li class="ajax-cart__item-price">{{ price }}</li>
+              {{/if}}
             </ul>
+            {{#unless available}}
+            <div class="ajax-item__sold-out-info-container">
+              <span class="ajax-cart__sold-out-notice">THIS ITEM IS CURRENTLY SOLD OUT</span>
+              <button class="ajax-cart__item-remove" data-ajax-cart-item-remove>Remove</button>
+            </div>
+            {{/unless}}
           </div>
         </li>
       {{/each}}
