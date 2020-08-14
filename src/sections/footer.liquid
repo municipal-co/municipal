@@ -40,7 +40,7 @@
 
 {% comment %} SOCIAL Capture {% endcomment %}
 {% capture social_list_items %}
-  {%- assign social_accounts = 'Instagram, Twitter, Facebook, Pinterest, Snapchat, Youtube' | split: ', ' -%}
+  {%- assign social_accounts = 'Instagram, Twitter, Facebook, Pinterest, Snapchat, YouTube' | split: ', ' -%}
   {% for social in social_accounts %}
     {% assign social_handle = social | handleize %}
     {% capture social_enabled_handle %}social_{{ social_handle }}_enabled{% endcapture %}
