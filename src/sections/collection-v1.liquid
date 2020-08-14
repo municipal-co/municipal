@@ -59,8 +59,11 @@
         {% assign collection_title_array = collection.metafields.custom_fields["collection_title"] | split: separator %}
         {% assign collection_description_array = collection.metafields.custom_fields["collection_description"] | split: separator %}
         {% assign show_promo_card_array = collection.metafields.custom_fields["show_promo_card"] | split: separator %}
+        {% assign rotate_promo_card_array = collection.metafields.custom_fields["rotate_promo_card"] | split: separator %}
         {% assign promo_card_image_array = collection.metafields.custom_fields["promo_card_image"] | split: separator %}
         {% assign promo_card_position_array = collection.metafields.custom_fields["promo_card_position"] | split: separator %}
+        {% assign promo_card_link_array = collection.metafields.custom_fields["promo_card_link"] | split: separator %}
+        
         {% assign fc_keys = collection.metafields.custom_fields["collection_section"] | split: "," %}
         {% assign section_index = 0 %}
 
@@ -70,8 +73,10 @@
           {% assign collection_title = collection_title_array[index] %}
           {% assign collection_description = collection_description_array[index] %}
           {% assign show_promo_card = show_promo_card_array[index] %}
+          {% assign rotate_promo_card = rotate_promo_card_array[index] %}
           {% assign promo_card_image = promo_card_image_array[index] %}
           {% assign promo_card_position = promo_card_position_array[index] | times: 1 %}
+          {% assign promo_card_link = promo_card_link_array[index] %}
           {% assign the_collection = collections[section_collection] %}
 
           {% if show_promo_card == '1' %}
@@ -94,15 +99,28 @@
                 {% assign printed_cards = 0 %}
                 {% for product in the_collection.products %}
                   {% if show_promo == true and printed_cards == promo_card_position %}
-                    <div class="promo_card content-grid__item frame">
-                      <div class="promo-card-inner">
-                        <div class="promo_card__image frame frame--1x1">
-                          {% render 'image_tag'
-                                    image: promo_card_image,
-                                    object_fit: "contain"
-                          %}
+                    <div class="promo_card content-grid__item frame {% if rotate_promo_card == '1' %}promo_card--rotate{% endif %}">
+                      {% if promo_card_link != blank %}
+                        <a class="promo_card-link" href="{{ promo_card_link }}">
+                          <div class="promo-card-inner">
+                            <div class="promo_card__image frame frame--1x1">
+                              {% render 'image_tag'
+                                        image: promo_card_image,
+                                        object_fit: "contain"
+                              %}
+                            </div>
+                          </div>
+                        </a>
+                      {% else %}
+                        <div class="promo-card-inner">
+                          <div class="promo_card__image frame frame--1x1">
+                            {% render 'image_tag'
+                                      image: promo_card_image,
+                                      object_fit: "contain"
+                            %}
+                          </div>
                         </div>
-                      </div>
+                      {% endif %}  
                     </div>
                     {% assign show_promo = false  %}
                   {% endif %}
