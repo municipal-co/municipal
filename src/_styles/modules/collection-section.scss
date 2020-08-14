@@ -73,7 +73,10 @@
 
       .promo-card-inner {
         max-width: large-vw(115px ,350px);
-        
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
         @include media-breakpoint-down('md') {
           max-width: 115px;
         }
@@ -91,9 +94,14 @@
     .promo-card-inner {
       position: absolute;
       width: 100%;
-      top: 40%;
+      padding: 0 large-vw(9px, 20px);
       left: 50%;
-      transform: translate(-50%, -50%);
+      top: 0;
+      transform: translateX(-50%);
+
+      @include media-breakpoint-down('md') {
+        padding: 0 9px;
+      }
     }
 
     .promo_card__image {
