@@ -1,13 +1,13 @@
 <div data-section-id="{{ section.id }}" data-section-type="slideshow">
   {% if section.blocks.size > 0 %}
-    <div class="slideshow swiper-container" 
-         id="slideshow-{{ section.id }}" 
-         data-autoplay="{{ section.settings.autoplay }}" 
+    <div class="slideshow swiper-container"
+         id="slideshow-{{ section.id }}"
+         data-autoplay="{{ section.settings.autoplay }}"
          data-speed="{{ section.settings.autoplay_speed }}"
          data-dots="{{ section.settings.dots }}"
          data-animation="{{ section.settings.animation }}"
          data-slideshow>
-      <div class="swiper-wrapper">         
+      <div class="swiper-wrapper">
         {% for block in section.blocks %}
           <div class="slideshow-slide swiper-slide" {{ block.shopify_attributes }} data-slideshow-slide data-block-id="{{ block.id }}">
             <div class="banner">
@@ -51,7 +51,7 @@
         "id": "dots",
         "label": "Pagination Dots",
         "default": true
-      },    
+      },
       {
         "type": "checkbox",
         "id": "autoplay",
@@ -67,7 +67,7 @@
           { "value": "fade", "label": "Fade" }
         ],
         "default": "slide"
-      },      
+      },
       {
         "type": "select",
         "id": "autoplay_speed",
@@ -206,15 +206,6 @@
           }
         ]
       }
-    ],
-    "presets": [{
-      "name": "Banner Slideshow",
-      "category": "Media",
-      "settings": {
-        "autoplay": true,
-        "autoplay_speed": "5000"
-      },
-      "blocks": []
-    }]
+    ]
   }
 {% endschema %}

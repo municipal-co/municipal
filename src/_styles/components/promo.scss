@@ -123,6 +123,10 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
     font-size: 26px;
     margin-bottom: 22px;
   }
+
+  .light-text & {
+    color: $white;
+  }
 }
 
 .eyebrow-icon {
@@ -187,6 +191,10 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
     line-height: 30px;
     margin-bottom: 30px;
   }
+
+  .light-text & {
+    color: $white;
+  }
 }
 
 .promo__text-wrapper {
@@ -194,13 +202,6 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
   @include media-breakpoint-up('lg') {
     padding-left: $grid-gutter-width;
     padding-right: $grid-gutter-width;
-  }
-
-  &.light-text {
-    .promo__eyebrow,
-    .promo__text{
-      color: $white;
-    }
   }
 }
 
