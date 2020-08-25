@@ -73,12 +73,13 @@
 
       .promo-card-inner {
         max-width: 75%;
-        top: 40%;
+        top: 10%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translateX(-50%);
 
         @include media-breakpoint-down('md') {
-          max-width: 115px;
+          top: 5%;
+          max-width: 82%;
         }
       }
     }
