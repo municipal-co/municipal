@@ -183,18 +183,18 @@ body {
 }
 
 .inactive-white {
-  div:not(.color-fixed),
-  h1:not(.color-fixed),
-  h2:not(.color-fixed),
-  h3:not(.color-fixed),
-  h4:not(.color-fixed),
-  h5:not(.color-fixed),
-  h6:not(.color-fixed),
-  p:not(.color-fixed),
-  b:not(.color-fixed),
-  i:not(.color-fixed),
-  strong:not(.color-fixed),
-  em:not(.color-fixed),
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  b,
+  i,
+  strong,
+  em,
   span:not(.btn__ui),
   a:not(.btn)  {
     color: $white;
@@ -202,18 +202,18 @@ body {
 }
 
 .inactive-black {
-  div:not(.color-fixed),
-  h1:not(.color-fixed),
-  h2:not(.color-fixed),
-  h3:not(.color-fixed),
-  h4:not(.color-fixed),
-  h5:not(.color-fixed),
-  h6:not(.color-fixed),
-  p:not(.color-fixed),
-  b:not(.color-fixed),
-  i:not(.color-fixed),
-  strong:not(.color-fixed),
-  em:not(.color-fixed),
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  b,
+  i,
+  strong,
+  em,
   span:not(.btn__ui),
   a:not(.btn) {
     color: $black;
