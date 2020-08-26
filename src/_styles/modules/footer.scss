@@ -189,3 +189,79 @@
     width: $footer-social-icon-width;
   }
 }
+
+// ----------------------------
+// Footer subscription modal
+// ----------------------------
+
+#footer-subscription-modal {
+  background-color: rgba(18,18,18,.9);
+
+  .modal-content {
+    border-radius: 0;
+    border: 0;
+    background-color: transparent;
+    margin-top: large-vw(0px, -80px) !important;
+    @include media-breakpoint-down('md') {
+      margin-top: 0 !important;
+    }
+  }
+
+  .modal-header {
+    background-color: black;
+    border: 0;
+    margin: 0;
+    height: large-vw(30px, 80px);
+    position: relative;
+
+    @include media-breakpoint-down('md') {
+      margin: 0;
+      min-height: 50px;
+      padding: 13px;
+    }
+  }
+
+  .close {
+    color: $white;
+    padding: 0;
+    opacity: 1;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin: 0;
+    transform: translateY(-50%);
+
+    &:focus {
+      outline: none;
+    }
+
+    .icon-close {
+      width: large-vw(30px, 45px);
+      height: large-vw(30px, 45px);
+
+      @include media-breakpoint-down('md') {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+
+  .modal-body {
+    background-color: $white;
+    padding: large-vw(35px, 70px) large-vw(20px, 50px);
+
+    @include media-breakpoint-down('md') {
+      padding: 35px;
+    }
+
+    span {
+      display: block;
+      color: $black;
+      text-align: center;
+    }
+  }
+}
+
+.modal-backdrop.fade.show.footer-backdrop {
+  opacity: 0.5;
+}
