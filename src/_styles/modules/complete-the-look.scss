@@ -12,7 +12,7 @@
   }
 
   .ctl__eyebrow {
-    color: $cyan;
+    color: $cyan !important;
     margin-bottom: large-vw(30px, 50px);
   }
 
@@ -85,7 +85,7 @@
     text-transform: none;
     font-weight: $font-weight-light;
   }
-  
+
   .product-card__badge-row .badge {
     padding: 2px 8px;
   }

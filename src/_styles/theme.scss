@@ -141,44 +141,82 @@ body {
   }
 }
 
-img.animate {
+// img.animate {
+//   opacity: 0;
+//   transform: translateY(20%);
+//   transition: $transition-duration-slow $transition-timing-function-in-out-ui;
+//   transition-property: opacity, transition;
+
+//   &.in {
+//     opacity: 1;
+//     transform: translateY(0);
+//     transition: $transition-duration-slow $transition-timing-function-in-out-ui;
+//   }
+// }
+
+// h1, h2, h3, h4, h5, h6,
+// .h1, .h2, .h3, .h4, .h5, .h6 {
+//   &.text-animate {
+//     opacity: 0;
+//     transform: translateX(10%);
+//     transition: $transition-duration-slow $transition-timing-function-in-out-ui;
+//     transition-property: opacity, transform;
+//   }
+
+//   &.in {
+//     opacity: 1;
+//     transform: translateX(0);
+//   }
+// }
+
+
+.fade-animate {
+  transform: translateY( 200px );
   opacity: 0;
-  transform: translateY(20%);
-  transition: $transition-duration-slow $transition-timing-function-in-out-ui;
-  transition-property: opacity, transition;
 
   &.in {
-    opacity: 1;
+    transition: $transition-duration-slow ease-in-out;
+    transition-timing-function: transform, opacity;
     transform: translateY(0);
-    transition: $transition-duration-slow $transition-timing-function-in-out-ui;
-  }
-}
-
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  &.text-animate {
-    opacity: 0;
-    transform: translateX(10%);
-    transition: $transition-duration-slow $transition-timing-function-in-out-ui;
-    transition-property: opacity, transform;
-  }
-
-  &.in {
     opacity: 1;
-    transform: translateX(0);
-    transition: $transition-duration-slow $transition-timing-function-in-out-ui;
   }
 }
 
 .inactive-white {
-  div, h1, h2, h3, h4, h5, h6, p, b, i, strong, em, span:not(.btn__ui), a:not(.btn)  {
-    color: $white !important
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  b,
+  i,
+  strong,
+  em,
+  span:not(.btn__ui),
+  a:not(.btn)  {
+    color: $white;
   }
 }
 
 .inactive-black {
-  div, h1, h2, h3, h4, h5, h6, p, b, i, strong, em, span:not(.btn__ui), a:not(.btn)  {
-    color: $black !important
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  b,
+  i,
+  strong,
+  em,
+  span:not(.btn__ui),
+  a:not(.btn) {
+    color: $black;
   }
 }
 

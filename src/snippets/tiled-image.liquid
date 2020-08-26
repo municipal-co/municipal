@@ -30,15 +30,13 @@
   {% endif %}
 </style>
 
-{% assign ti_eyebrow_color = "black" %}
 {% assign button_design = "primary" %}
 
 {% if ti_light_text %}
-  {%- assign ti_eyebrow_color = "white" -%}
   {% assign button_design = "white" %}
 {% endif %}
 
-<div class="row no-gutters justify-content-center row-adjusted" data-animated-background="{{ ti_background_color }}" data-section-type="tiled-image" data-section-id="{{ ti_id }}">
+<div class="row no-gutters justify-content-center row-adjusted {% if ti_light_text == true %}light-text{% endif %}" data-animated-background="{{ ti_background_color }}" data-section-type="tiled-image" data-section-id="{{ ti_id }}">
   <div class="col-20 col-lg-22">
     <div class="tiled-image__content">
       <div class="row">

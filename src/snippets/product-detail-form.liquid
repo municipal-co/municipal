@@ -95,7 +95,7 @@
                 {% include 'product-dots-sizes', product: product, selected_size: option.selected_value %}
 
                 {% if product.metafields.custom_fields["show_fit_guide"] == 1 and product.metafields.custom_fields['fit_guide_reference'] != blank %}
-                  <button class="btn-link product__fit-guide-toggler" type="button" data-fit-guide-toggler>FIT Guide +</button>
+                  <a href="javascript:void(0);" class="btn-link product__fit-guide-toggler" data-fit-guide-toggler>FIT Guide +</a>
                 {% endif %}
               {% endif %}
 
@@ -187,7 +187,7 @@
         <button
           type="submit"
           name="add"
-          class="btn btn-primary btn-block"
+          class="btn btn-primary btn-block add-to-cart"
           data-add-to-cart
           {% unless current_variant.available %}disabled="disabled"{% endunless %}>
             <span data-add-to-cart-text>
@@ -201,7 +201,7 @@
       </form>
 
       {% if settings.shipping_cta_title != blank and shipping_modal_html != blank%}
-        <button class="btn-link product__shipping-toggler" data-shipping-modal-trigger>{{ settings.shipping_cta_title }}</button>
+        <a href="javascript:void(0);" class="btn-link product__shipping-toggler" data-shipping-modal-trigger>{{ settings.shipping_cta_title }}</a>
       {% endif %}
     </div>
   </div>

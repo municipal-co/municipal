@@ -57,6 +57,17 @@
       appKey: '{{ settings.yotpo_client_id }}'
     };
   {% endif %}
+
+  {% if settings.section_negative_threshold == true %}
+    {% assign section_animation_threshold = settings.section_load_threshold | times: '-1' %}
+  {% endif %}
+  window.animationSettings = {
+    sectionAnimationThreshold: {{ section_animation_threshold | default: settings.section_load_threshold | json }},
+    backgroundAnimationThreshold: {
+      top: {{ settings.background_top_threshold | times: 0.01 }},
+      bottom: {{ settings.background_bottom_threshold | times: 0.01 }}
+    }
+  }
   </script>
 
 <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor-min.js' | asset_url }}"></script><!--<![endif]-->

@@ -282,5 +282,63 @@
         "label": "Newsletter Form Action URL"
       }
     ]
+  },
+  {
+    "name": "Animations Controls",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sections Animations"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use this to control the threshold line where the sections are animating in, please note that all the sections will use the same settings"
+      },
+      {
+        "type": "range",
+        "id": "section_load_threshold",
+        "label": "Sections load threshold",
+        "min": 0,
+        "max": 400,
+        "step": 10,
+        "unit": "px",
+        "default": 200
+      },
+      {
+        "type": "checkbox",
+        "id": "section_negative_threshold",
+        "label": "Negative threshold",
+        "default": true,
+        "info": "Enabling this will make the sections to animate when they are higher inside of the viewport area while positive numbers will make them animate off-screen"
+      },
+      {
+        "type": "header",
+        "content": "Background Animations"
+      },
+      {
+        "type": "paragraph",
+        "content": "Use this to control the thresholds (2) where the background is change, consider that top threshold is for items scrolling from top, while bottom one is used for items scrolling from the bottom"
+      },
+      {
+        "type": "range",
+        "id": "background_top_threshold",
+        "label": "Background top threshold",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "unit": "%",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "background_bottom_threshold",
+        "label": "Background bottom threshold",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "unit": "%",
+        "default": 60
+      }
+    ]
   }
 ]
