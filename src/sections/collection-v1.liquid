@@ -65,7 +65,7 @@
         {% assign promo_card_link_array = collection.metafields.custom_fields["promo_card_link"] | split: separator %}
         {% assign promo_card_image_alt_text_array = collection.metafields.custom_fields["promo_card_image_alt_text"] | split: separator %}
         {% assign open_link_in_another_tab_array = collection.metafields.custom_fields["open_link_in_another_tab"] | split: separator %}
-        
+
         {% assign fc_keys = collection.metafields.custom_fields["collection_section"] | split: "," %}
         {% assign section_index = 0 %}
 
@@ -149,11 +149,11 @@
                             {% endif %}
                           {% endfor %}
                         {% endif %}
-                        
+
                         {% capture product_card %}
                           <div class="content-grid__item {% if hide_card %} hide{% endif %}" data-grid-item>
                             {% include 'product-card',
-                               product: product,
+                               card_product: product,
                                variant: default_variant,
                                unavailable_variant: unavailable_variant,
                                show_sizes: true,
@@ -189,7 +189,7 @@
                                   %}
                                 </div>
                               </div>
-                            {% endif %}  
+                            {% endif %}
                           </div>
                           {% assign show_promo = false  %}
                         {% endif %}
@@ -231,7 +231,7 @@
                             %}
                           </div>
                         </div>
-                      {% endif %}  
+                      {% endif %}
                     </div>
                     {% assign show_promo = false  %}
                   {% endif %}
