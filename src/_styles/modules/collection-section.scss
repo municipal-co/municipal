@@ -62,27 +62,52 @@
       }
     }
 
+    &.promo_card--rotate {
+      .promo_card__image img{
+        -webkit-animation: rotating 30s linear infinite;
+        -moz-animation: rotating 30s linear infinite;
+        -ms-animation: rotating 30s linear infinite;
+        -o-animation: rotating 30s linear infinite;
+        animation: rotating 30s linear infinite;
+      }
+
+      .promo-card-inner {
+        max-width: 75%;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        @include media-breakpoint-down('md') {
+          top: 5%;
+          max-width: 82%;
+        }
+      }
+    }
+
+    .promo_card-link {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
     .promo-card-inner {
-      max-width: large-vw(115px ,350px);
       position: absolute;
       width: 100%;
-      top: 40%;
+      padding: 0 large-vw(9px, 20px);
       left: 50%;
-      transform: translate(-50%, -50%);
+      top: 0;
+      transform: translateX(-50%);
 
       @include media-breakpoint-down('md') {
-        max-width: 115px;
+        padding: 0 9px;
       }
     }
 
     .promo_card__image {
 
       img {
-        -webkit-animation: rotating 30s linear infinite;
-        -moz-animation: rotating 30s linear infinite;
-        -ms-animation: rotating 30s linear infinite;
-        -o-animation: rotating 30s linear infinite;
-        animation: rotating 30s linear infinite;
         position: absolute;
         top: 0;
         left: 0;
