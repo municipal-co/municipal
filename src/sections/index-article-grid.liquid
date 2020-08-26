@@ -3,7 +3,7 @@
   {% for block in section.blocks %}
     {% if block.type == "article" %}
       <div class="content-grid__item" {{ block.shopify_attributes }}>
-        {% include 'article-card', 
+        {% include 'article-card',
                     article: articles[block.settings.article],
                     show_excerpt: section.settings.show_excerpt,
                     show_author: section.settings.show_author,
@@ -13,7 +13,7 @@
       </div>
       {% assign article_count = article_count | plus: 1 %}
     {% endif %}
-  {% endfor %}   
+  {% endfor %}
 {% endcapture %}
 
 <div class="container">
@@ -30,8 +30,8 @@
     <div class="content-footer">
       <a href="{{ section.settings.cta_url }}" class="btn btn-primary">{{ section.settings.cta_text }}</a>
     </div>
-  {% endif %} 
-     
+  {% endif %}
+
 </div>
 
 
@@ -54,13 +54,13 @@
         "type": "url",
         "id": "cta_url",
         "label": "CTA Link"
-      },      
+      },
       {
         "type": "checkbox",
         "id" : "show_excerpt",
         "label": "Show Excerpt",
         "default": false
-      },       
+      },
       {
         "type": "checkbox",
         "id" : "show_author",
@@ -92,16 +92,6 @@
           }
         ]
       }
-    ],
-    "presets": [
-      {
-        "category": "Blog",
-        "name": "Article Grid",
-        "settings": {
-          "title": "Latest News"
-        },
-        "blocks": []
-      }
-    ]    
+    ]
   }
 {% endschema %}

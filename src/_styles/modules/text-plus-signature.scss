@@ -17,7 +17,7 @@
     color: $white;
     line-height: large-vw(45px, 125px);
     font-weight: $font-weight-normal;
-    
+
     @include media-breakpoint-down('md') {
       line-height: 30px;
       font-size: 30px;
@@ -30,7 +30,7 @@
     }
 
     strong {
-      color: $yellow;
+      color: $yellow !important;
       font-weight: $font-weight-normal;
     }
   }
@@ -39,7 +39,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: large-vw(30px, 75px);
-    
+
     @include media-breakpoint-down('md') {
       margin-top: 30px;
     }

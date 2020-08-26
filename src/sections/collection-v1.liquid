@@ -149,7 +149,7 @@
                             {% endif %}
                           {% endfor %}
                         {% endif %}
-
+                        
                         {% capture product_card %}
                           <div class="content-grid__item {% if hide_card %} hide{% endif %}" data-grid-item>
                             {% include 'product-card',
@@ -200,7 +200,7 @@
                     {% unless has_color_option == true %}
                       <div class="content-grid__item" data-grid-item>
                         {% include 'product-card',
-                        product: product,
+                        card_product: product,
                         show_sizes: true,
                         show_tag: true %}
                       </div>

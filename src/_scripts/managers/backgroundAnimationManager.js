@@ -8,8 +8,8 @@ export default class backgroundAnimation {
     this.moduleList = [];
     this.currentScrollPosition = window.scrollY;
     this.viewportHeight = this.$window.height();
-    this.topThreshold = this.viewportHeight * 0.4;
-    this.bottomThreshold = this.viewportHeight * 0.6;
+    this.topThreshold = this.viewportHeight * window.animationSettings.backgroundAnimationThreshold.top;
+    this.bottomThreshold = this.viewportHeight * window.animationSettings.backgroundAnimationThreshold.bottom;
 
     this.buildModulesList.call(this);
     // Call this to apply the first module background color

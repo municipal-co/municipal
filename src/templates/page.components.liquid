@@ -46,15 +46,15 @@
 
 The color is "{{ color }}"
 {% endraw %}
-</pre>          
+</pre>
         </div>
 
         <div class="docs-well">
 <pre style="margin: 0;">
 // Usage
-//  
+//
 {% raw %}
-{% assign test_color = 'roygbiv' %} 
+{% assign test_color = 'roygbiv' %}
 {% include 'test', color: test_color %} <strong>// The color is "roygbiv"</strong>
 {% include 'test' %} <strong>// The color is "red"</strong>
 {{ color }} <strong>// red</strong>
@@ -64,7 +64,7 @@ The color is "{{ color }}"
 {% include 'test', color: 'blue' %} <strong>// The color is "blue"</strong>
 {% include 'test' %} <strong>// The color is "green"</strong>
 {% endraw %}
-</pre> 
+</pre>
         </div>
 
         <p>As you can see, if a variable is defined <em>inside</em> a snippet, it becomes available outside of the snippet anywhere <em>after</em> the point where that snippet was included.  In the example above, we defined <code>color</code> to be <code>red</code> inside the snippet and were able to output it's value immediately after including it.</p>
@@ -76,7 +76,7 @@ The color is "{{ color }}"
         {% if all_collection.products.size > 0 %}
           {% assign test_product = all_collection.products[0] %}
           <div class="docs-well docs-well--constrained">
-            {% include 'product-card', product: test_product %}
+            {% include 'product-card', card_product: test_product %}
           </div>
         {% else %}
           <em>The product card requires a Shopify product in order to work.  <a href="{{ shop.url }}/admin/products/new">Go here to make one</a></em>.
@@ -88,7 +88,7 @@ The color is "{{ color }}"
             <thead>
               <tr>
                 <th>Option</th>
-                <th>Values</th>                
+                <th>Values</th>
                 <th>Default</th>
                 <th>Description</th>
               </tr>
@@ -111,7 +111,7 @@ The color is "{{ color }}"
                 <td>Boolean</td>
                 <td>False</td>
                 <td>Lazy loads the main product image</td>
-              </tr>                
+              </tr>
               <tr>
                 <td><code>show_swatches</code></td>
                 <td>Boolean</td>
@@ -126,7 +126,7 @@ The color is "{{ color }}"
               </tr>
             </tbody>
           </table>
-        </div>         
+        </div>
 
         <h3 id="docs-article-card" class="docs-title">Article Card</h3>
         <p>See <code>snippets/article-card.liquid</code>.</p>
@@ -146,7 +146,7 @@ The color is "{{ color }}"
             <thead>
               <tr>
                 <th>Option</th>
-                <th>Values</th>                
+                <th>Values</th>
                 <th>Default</th>
                 <th>Description</th>
               </tr>
@@ -187,7 +187,7 @@ The color is "{{ color }}"
                 <td>String</td>
                 <td>600x450</td>
                 <td>Specifies crop of the displayed article image.  See <a href="https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters">URL Filter Size Parameters</a> for more info.</td>
-              </tr>  
+              </tr>
             </tbody>
           </table>
         </div>
@@ -202,7 +202,7 @@ The color is "{{ color }}"
                       cc_text: "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>",
                       cc_cta_text: "Shop Now",
                       cc_cta_url: "#"
-          %} 
+          %}
         </div>
 
         <h3 id="docs-overlay-card" class="docs-title">Overlay Card</h3>
@@ -224,11 +224,11 @@ The color is "{{ color }}"
                       oc_text: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>',
                       oc_url: '#',
                       oc_overlay_bg_brightness: 'light'
-          %} 
+          %}
         </div>
 
         <p>Play with the options and apply a blend mode to the background and make something cool.</p>
-     
+
         <div class="docs-well docs-well--constrained">
           <div style="height: 500px;">
 
@@ -261,7 +261,7 @@ The color is "{{ color }}"
             <thead>
               <tr>
                 <th>Option</th>
-                <th>Values</th>                
+                <th>Values</th>
                 <th>Default</th>
                 <th>Description</th>
               </tr>
@@ -302,10 +302,10 @@ The color is "{{ color }}"
                 <td>Boolean</td>
                 <td>False</td>
                 <td>Makes content display in a light color.</td>
-              </tr> 
+              </tr>
             </tbody>
           </table>
-        </div>        
+        </div>
 
         <h3 id="docs-banners" class="docs-title">Banners</h3>
         <p>Banners are one of the most flexible and re-usable components on the site.  They consist of a parent <code>.banner</code> element and any number of child <code>.banner__panel</code> elements. The parent <code>.banner</code> element accepts <code>.banner--large</code> and <code>.banner--small</code> modifier classes to create different sized banners.  Note that these modifier classes affect the vertical padding of the child banner panels.</p>
@@ -332,12 +332,12 @@ The color is "{{ color }}"
                       bp_content_alignment: "right",
                       bp_text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                       bp_light_text: false
-          %}  
+          %}
         </div>
 
         <h3 id="docs-page-hero" class="docs-title">Page Hero</h3>
         <p>Page heroes function similar to banners but should only be used at the top of a page.  They are typically used as an enhancement over the text-only <code>.page-header</code> element when we want to display text over a background image.  Although their base styling is similar, they are built separately from banners to allow more flexibility.  The snippet API is also slightly different to support different features.</p>
-        
+
         <p><strong>Note</strong>: Because of the limitations of liquid code and the fact that the page-hero snippet is built to accept an image object as opposed to an image file url, it is impossible to pass a theme image asset to the snippet in order to show a fully featured example.  The example below shows the page hero without a background image, but one can be easily passed in as as a section setting (<code>section.settings.image</code>) or a reference from another object (<code>product.featured_image</code>).</p>
 
         {% assign subtitle = 'Subtext goes down here' %}
@@ -350,7 +350,7 @@ The color is "{{ color }}"
                     ph_cta_url: '/collections/all',
                     ph_cta_text: 'Call to action link goes here',
                     ph_light_text: false
-        %}        
+        %}
 
         <h3 id="docs-promo" class="docs-title">Promo</h3>
         <p>Promos consist of an image and text laid out vertically on mobile and horizontally on desktop.  Listed below are the available options that affect layout / styling.</p>
@@ -395,7 +395,7 @@ The color is "{{ color }}"
                 <td>String</td>
                 <td>None</td>
                 <td>If set, images will be applied as a background image to a frame element with this aspect ratio on mobile sized screens.  See <code>frames.scss</code></td>
-              </tr>            
+              </tr>
             </tbody>
           </table>
         </div>
@@ -424,7 +424,7 @@ The color is "{{ color }}"
                 <h3 class="modal-title" id="myModalLabel">Modal title</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   {% include 'icon-close' %}
-                </button>                
+                </button>
               </div>
               <div class="modal-body">
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -454,7 +454,7 @@ The color is "{{ color }}"
         <div id="test-overlay" class="overlay" tabindex="-1">
           <a href="#" class="overlay__close" data-overlay-close title="Close overlay">{% include 'icon-close' %}</a>
           <div class="overlay__content-wrapper">
-            <div class="overlay__content">    
+            <div class="overlay__content">
               {% comment %} Put whatever you want in here {% endcomment %}
                 <h1>Here's some important stuff</h1>
                 {% for i in (1..10) %}
@@ -467,7 +467,7 @@ The color is "{{ color }}"
                 {% endfor %}
             </div>
           </div>
-        </div>        
+        </div>
 
         <div id="test-overlay-2" class="overlay" tabindex="-1">
           <div class="overlay__content-wrapper">
@@ -515,7 +515,7 @@ The color is "{{ color }}"
               </tr>
             </tbody>
           </table>
-        </div>   
+        </div>
 
         <h3 id="docs-drawer" class="docs-title">Drawer</h3>
 
@@ -529,7 +529,7 @@ The color is "{{ color }}"
               <div class="drawer__header">
                 <a href="#" class="drawer__close" data-drawer-close>
                   {% include 'icon-close' %}
-                </a>        
+                </a>
                 <h5 class="drawer__header-title">Example Drawer</h5>
               </div>
               <div class="drawer__body">
@@ -556,7 +556,7 @@ The color is "{{ color }}"
 
         <p>You can use the drawer with or without a backdrop.  If the backdrop is used, scrolling will be killed on the body when the drawer is opened.</p>
 
-        <p>The API closely follows the one for Bootstrap's modals.  You can create the drawer programatically by calling the <code>Drawer</code> constructor and passing in options or by using <code>data-*</code> attributes to specify the element, trigger and options.  The example below uses the data API.</p>        
+        <p>The API closely follows the one for Bootstrap's modals.  You can create the drawer programatically by calling the <code>Drawer</code> constructor and passing in options or by using <code>data-*</code> attributes to specify the element, trigger and options.  The example below uses the data API.</p>
 
         <p>
           <button data-toggle="drawer" data-target="#my-drawer" data-backdrop="true" class="btn btn-primary">Trigger drawer</button>
@@ -568,7 +568,7 @@ The color is "{{ color }}"
             <div class="drawer__header">
               <a href="#" class="drawer__close" data-drawer-close>
                 {% include 'icon-close' %}
-              </a>        
+              </a>
               <h5 class="drawer__header-title">Drawer Header</h5>
             </div>
             <div class="drawer__body">
@@ -580,12 +580,12 @@ The color is "{{ color }}"
               <div class="drawer__body-contents" style="background: #fff6d0; padding-top: 30px; padding-bottom:30px;">
                 <p>I'm content that is using the flush drawer body modifier class.</p>
               </div>
-            </div> 
+            </div>
             <div class="drawer__footer">
               Throw some content in the footer of this drawer.
-            </div>           
+            </div>
           </div>
-        </div>    
+        </div>
 
         <h4 class="docs-subtitle">Options</h4>
 
@@ -611,10 +611,10 @@ The color is "{{ color }}"
                 <td>Boolean</td>
                 <td>true</td>
                 <td>Turns on / off a clickable backdrop.</td>
-              </tr>            
+              </tr>
             </tbody>
           </table>
-        </div> 
+        </div>
 
         <h4 class="docs-subtitle">Events</h4>
 
@@ -675,7 +675,7 @@ The color is "{{ color }}"
         <h3 id="docs-slideup" class="docs-title">Slideup</h3>
         <p>Slideups are similar to drawers in that they are fixed to the screen but they are positioned at the bottom of the viewport and are generally used for site notices as opposed to site functionality.</p>
 
-        <p>The example below is included statically to use as reference while styling.  Clicking the trigger below will show a live, working demo.</p>        
+        <p>The example below is included statically to use as reference while styling.  Clicking the trigger below will show a live, working demo.</p>
 
         <div class="docs-well">
           <div class="slideup is-visible" style="position: relative; z-index: 1">
@@ -689,7 +689,7 @@ The color is "{{ color }}"
               </div>
             </div>
           </div>
-        </div>    
+        </div>
 
         <p>The API closely follows the one for Bootstrap's modals.  You can create the slideup programatically by calling the <code>Slideup</code> constructor and passing in options or by using <code>data-*</code> attributes to specify the element, trigger and options.  The example below uses the data API.</p>
 
@@ -727,10 +727,10 @@ The color is "{{ color }}"
                 <td>String</td>
                 <td>[data-slideup-close]</td>
                 <td>Selector for the close button contained within the slideup element.</td>
-              </tr>           
+              </tr>
             </tbody>
           </table>
-        </div> 
+        </div>
 
         <h4 class="docs-subtitle">Events</h4>
 
@@ -789,7 +789,7 @@ The color is "{{ color }}"
                   <a href="#testCollapseOne" class="card-header__title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="testCollapseOne">
                     Collapsible Item 1
                     <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
-                  </a>                  
+                  </a>
                 </h5>
               </div>
               <div id="testCollapseOne" class="collapse" aria-labelledby="testHeading">
@@ -802,7 +802,7 @@ The color is "{{ color }}"
                   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </div>
               </div>
-            </div>          
+            </div>
           </div>
         </div>
 
@@ -832,7 +832,7 @@ The color is "{{ color }}"
               <div class="dot dot--solid dot--khaki">
                 <div class="dot__inner"></div>
               </div>
-            </div>         
+            </div>
           </div>
         </div>
 
@@ -861,7 +861,7 @@ The color is "{{ color }}"
                   <a href="#collapseTwo" class="card-header__title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo">
                     Collapsible Group Item #2
                     <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
-                  </a>                  
+                  </a>
                 </h5>
               </div>
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
@@ -876,8 +876,8 @@ The color is "{{ color }}"
                   <a href="#collapseThree" class="card-header__title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapseThree">
                     Collapsible Group Item #3
                     <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
-                  </a>                  
-                </h5>                
+                  </a>
+                </h5>
               </div>
               <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                 <div class="card-body">
@@ -1007,7 +1007,7 @@ The color is "{{ color }}"
     - .newsletter-form-inputs
     - .newsletter-form-message[data-form-message][data-message-success][data-message-fail]
 </pre>
-        </div>        
+        </div>
 
         <p>Use the buttons below to toggle various states of the form.</p>
 
@@ -1064,7 +1064,7 @@ The color is "{{ color }}"
             </div>
             <div class="video-player__embed" data-video-player-embed></div>
           </div>
-        </div>        
+        </div>
 
       </div>
     </div>
