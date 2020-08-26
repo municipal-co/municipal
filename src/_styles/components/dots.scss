@@ -64,7 +64,7 @@
     background-color: $black;
 
     .dot__inner {
-      color: $white;
+      color: $white !important;
     }
 
     .icon-check {
@@ -76,7 +76,7 @@
     border-color: $dot-active-border-color;
     transition: background-color $transition-duration-fast $transition-timing-function-in;
     .dot__inner {
-      color: $white;
+      color: $white !important;
     }
   }
 
@@ -142,6 +142,7 @@
     border-radius: $dot-border-radius;
     border: 1px solid transparent;
     transition: color $transition-duration-fast $transition-timing-function-out;
+    color: $black !important;
     background: {
       size: auto;
       position: center;

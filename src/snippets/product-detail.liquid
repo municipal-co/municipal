@@ -16,6 +16,15 @@
 {% if current_variant == blank %}
   {% assign current_variant = product.selected_or_first_available_variant %}
 {% endif %}
+
+{% if template.name == 'product' and template.suffix == 'quick-view' %}
+  {% assign is_quick_view = true %}
+{% endif %}
+
+{%- capture shipping_modal_html -%}
+  {% include 'shipping-modal' %}
+{%- endcapture -%}
+
 {% comment %} End Defaults {% endcomment %}
 
 {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
@@ -43,6 +52,15 @@
         %}
       </div>
     </div>
-
   </div>
 </div>
+
+{% if product.metafields.custom_fields["show_fit_guide"] == 1 and product.metafields.custom_fields['fit_guide_reference'] != blank %}
+  {% include 'fit-guide-modal' %}
+{% endif %}
+
+{% unless is_quick_view or shipping_modal_html == blank %}
+  {{ shipping_modal_html }}
+{% endunless %}
+
+

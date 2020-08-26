@@ -1,0 +1,94 @@
+<!-- Begin Criteo OneTag -->
+<script type="text/javascript" src="//dynamic.criteo.com/js/ld/ld.js?a=70703" async="true"></script>
+{% assign template-type = template | split: '.' | first %}
+{% if template-type == 'cart' or template-type == 'collection' or template-type == 'index' or template-type == 'product' or template-type == 'search' %}
+{% unless template-type == 'cart' and cart.item_count < 1 %}
+<script type="text/javascript">
+    // Fire the normal tags
+    (function(){
+    var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
+    window.criteo_q = window.criteo_q || [];
+    window.criteo_q.push(
+        { event: "setAccount", account: 70703 },
+        { event: "setEmail", email: "{{ customer.email }}" },
+        { event: "setSiteType", type: deviceType },
+        { event: "setZipcode", zipcode: "{{ customer.default_address.zip }}" },
+        {% case template-type %}
+        {% when 'cart' %}{ event: "viewBasket", ecpplugin: "shopify", item: [{% for item in cart.items %}{% unless forloop.index0 == 0 %}, {% endunless %}{ id: "{{ item.product_id }}", price: (typeof({{ item.price }}) != "number") ? {{ item.price }} : ({{ item.price }}/100), quantity: {{ item.quantity }} }{% endfor %}]}
+        {% when 'search' %}{ event: "viewSearchResult", ecpplugin: "shopify", "keyword":"{{search.terms}}", item: [{% for product in search.results limit:3 %}{% if forloop.index0 != 0 %},{% endif %}"{{product.id}}"{% endfor %}]}
+        {% when 'collection' %}{ event: "viewList", ecpplugin: "shopify", category:"{{collection.handle}}", item: [{% for product in collection.products limit:3 %}{% if forloop.index0 != 0 %},{% endif %}"{{product.id}}"{% endfor %}]}
+        {% when 'index' %}{ event: "viewHome", ecpplugin: "shopify" }
+        {% when 'product' %}{ event: "viewItem", ecpplugin: "shopify", item: "{{ product.id }}" }
+        {% endcase %}
+    );
+    })();
+
+    // catch the sliding carts
+    window.addEventListener('load', function() {
+        // ajax request catching
+        (function(open) {
+            XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
+                this.addEventListener("readystatechange", function() {
+                    if (this.readyState == 4 && this._url.includes("/add.js")) {
+                        $.getJSON("/cart.js", function(data) {
+                            var basketData = [];
+                            var item;
+                            if (!data.items || !data.items.length)
+                                return;
+                            for (var i = 0; i < data.items.length; i++) {
+                                item = data.items[i];
+                                if (item.product_id == "{{ product.id }}") {
+                                    basketData.push({
+                                        id: item.product_id,
+                                        price: (typeof(item.price) != "number") ? item.price : (item.price/100),
+                                        quantity: item.quantity
+                                    });
+                                }
+                            }
+                            window.criteo_q.push({ event: "addToCart", ecpplugin: "shopify", product: basketData });
+                        });
+                    }
+                }, false);
+                open.call(this, method, url, async, user, pass);
+            };
+        })(XMLHttpRequest.prototype.open);
+
+        // fetch request catching
+        const crtoIntercept = window.fetch;
+        window.fetch = function() {
+            return new Promise((resolve, reject) => {
+                crtoIntercept.apply(this, arguments).then((response) => {
+                    if(response.url.includes("/add.js") && response.type != "cors"){
+                        $.getJSON("/cart.js", function(data) {
+                            var basketData = [];
+                            var item;
+                            if (!data.items || !data.items.length)
+                                return;
+                            for (var i = 0; i < data.items.length; i++) {
+                                item = data.items[i];
+                                if (item.product_id == "{{ product.id }}") {
+                                    basketData.push({
+                                        id: item.product_id,
+                                        price: (typeof(item.price) != "number") ? item.price : (item.price/100),
+                                        quantity: item.quantity
+                                    });
+                                }
+                            }
+                            window.criteo_q.push({
+                                event: "addToCart",
+                                ecpplugin: "shopify",
+                                product: basketData
+                            });
+                        });
+                    }
+                    resolve(response);
+                }).catch((error) => {
+                    reject(response);
+                })
+            });
+        }
+    }, false);
+</script>
+{% endunless %}
+{% endif %}
+<!-- End Criteo OneTag -->

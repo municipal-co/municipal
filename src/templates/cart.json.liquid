@@ -41,7 +41,7 @@
         "line_price": {{ item.line_price }},
         "original_line_price": {{ item.original_line_price }},
         "original_price": {{ item.original_price }},
-        "discounted_price": {{ item.original_price | minus: item.total_discount }},        
+        "discounted_price": {{ item.original_price | minus: item.total_discount }},
         "quantity": {{ item.quantity }},
         "sku": {{ item.sku | json }},
         "vendor": {{ item.vendor | json }},
@@ -69,6 +69,7 @@
         "product_type": {{ product.type | json }},
         "variant_title": {{ item.variant.title | json }},
         "variant_quantity_limit": {{ variant_quantity_limit }},
+        "available": {{ item.variant.available | json }},
         "variant_options": [
           {% if item.variant.option1 != blank %}{{ item.variant.option1 | json }}{% endif %}
           {% if item.variant.option2 != blank %}, {{ item.variant.option2 | json }}{% endif %}
