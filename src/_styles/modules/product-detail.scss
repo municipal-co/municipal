@@ -135,6 +135,12 @@
     margin-top: 30px;
   }
 }
+.inactive-white .add-to-cart {
+  background-color: $white;
+  span {
+    color: $black !important;
+  }
+}
 
 .mobile-add-to-cart {
   bottom: 0;
