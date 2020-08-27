@@ -158,13 +158,13 @@
 
           {% if card_product.price_varies %}
             {%- assign price = card_product.price | money -%}
-            {{ 'products.card_product.from_text_html' | t: price: price }}
+            {{ 'products.product.from_text_html' | t: price: price }}
           {% else %}
             {{ card_product.price | money }}
           {% endif %}
 
           {% unless card_product.available %}
-            {{ 'products.card_product.sold_out' | t }}
+            {{ 'products.product.sold_out' | t }}
           {% endunless %}
         </div>
 
