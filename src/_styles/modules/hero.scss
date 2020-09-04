@@ -15,6 +15,14 @@
       object-fit: cover;
     }
   }
+
+  .hero__image {
+    .desktop-image  {
+      @include media-breakpoint-down('md') {
+        display: none;
+      }
+    }
+  }
 }
 
 .hero__handscript-svg {

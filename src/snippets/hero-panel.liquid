@@ -52,18 +52,22 @@
           {% if h_cta_url != blank %}
             <a href="{{h_cta_url}}">
               <div class="hero__image frame frame--16x9">
-                {%- render 'image_tag'
+                {% render 'image_tag'
                   image: h_image,
-                  object_fit: 'cover'
-                  -%}
+                  mobile_image: h_mobile_image, 
+                  object_fit: 'cover',
+                  fallback_layout: true
+                %}
               </div>
             </a>
           {% else %}
             <div class="hero__image frame frame--16x9">
-            {%- render 'image_tag'
+            {% render 'image_tag'
                 image: h_image,
-                object_fit: 'cover'
-                -%}
+                mobile_image: h_mobile_image,
+                object_fit: 'cover',
+                fallback_layout: true
+            %}
           </div>
           {% endif %}          
         {%- endif -%}
