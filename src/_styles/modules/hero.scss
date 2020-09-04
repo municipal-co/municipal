@@ -87,7 +87,13 @@
 
 .hero__content--index {
   .hero__media-container {
-    order: 1
+    order: 1;
+    margin-bottom: large-vw(30px, 40px);
+    margin-top: large-vw(10px, 20px);
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 30px;
+    }
   }
 
   .hero__header {
@@ -97,6 +103,12 @@
   .hero__button-container {
     order: 3;
     margin: 0;
+  }
+
+  .hero__image:before {
+    @include media-breakpoint-down('md') {
+      padding-top: 90%;
+    }
   }
 }
 
