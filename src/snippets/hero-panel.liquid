@@ -17,19 +17,25 @@
             %}
           </div>
         {% endif %}
-        {%- if h_title != blank -%}
-          <h1 class="hero__title text-center text-{{h_title_color}}"> {{ h_title }} </h1>
-        {%- endif -%}
+        {% if h_title != blank %}
+          {% if h_cta_url != blank %}
+            <h1 class="hero__title text-center"> 
+              <a class="text-{{h_title_color}}" href="{{h_cta_url}}">{{ h_title }}</a>
+            </h1>
+          {% else %}
+            <h1 class="hero__title text-center text-{{h_title_color}}"> {{ h_title }} </h1>
+          {% endif %}
+        {% endif %}
       </div>
       {% if h_cta_text != blank and h_cta_url != blank %}
-      <div class="hero__button-container">
-        <a href="{{h_cta_url}}" class="btn btn-white">
-          {{h_cta_text}}
-          <span class="btn__ui">
-            {% include 'icon-arrow' %}
-          </span>
-        </a>
-      </div>
+        <div class="hero__button-container">
+          <a href="{{h_cta_url}}" class="btn btn-white">
+            {{h_cta_text}}
+            <span class="btn__ui">
+              {% include 'icon-arrow' %}
+            </span>
+          </a>
+        </div>
       {% endif %}
       <div class="hero__media-container">
         {%- if h_video != blank -%}
@@ -43,12 +49,23 @@
             </div>
           </div>
         {%- elsif h_image != blank -%}
-          <div class="hero__image frame frame--16x9">
+          {% if h_cta_url != blank %}
+            <a href="{{h_cta_url}}">
+              <div class="hero__image frame frame--16x9">
+                {%- render 'image_tag'
+                  image: h_image,
+                  object_fit: 'cover'
+                  -%}
+              </div>
+            </a>
+          {% else %}
+            <div class="hero__image frame frame--16x9">
             {%- render 'image_tag'
                 image: h_image,
                 object_fit: 'cover'
                 -%}
           </div>
+          {% endif %}          
         {%- endif -%}
       </div>
     </div>
