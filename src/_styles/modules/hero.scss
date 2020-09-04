@@ -22,6 +22,12 @@
         display: none;
       }
     }
+
+    .mobile-image {
+      @include media-breakpoint-up('lg') {
+        display: none;
+      }
+    }
   }
 }
 
@@ -75,5 +81,27 @@
   @include media-breakpoint-down('md') {
     order: 3;
     padding: 0 34px;
+  }
+}
+
+
+.hero__content--index {
+  .hero__media-container {
+    order: 1
+  }
+
+  .hero__header {
+    order: 2;
+  }
+
+  .hero__button-container {
+    order: 3;
+    margin: 0;
+  }
+}
+
+.template-index {
+  .hero {
+    padding-top: 0;
   }
 }
