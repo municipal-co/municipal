@@ -20,7 +20,7 @@
     form,
     label {
       font-family: $font-family-base !important;
-      font-size: $font-size-base !important;
+      font-size: $font-size-base;
       line-height: $line-height-base !important;
       color: $body-color !important;
     }
@@ -141,6 +141,7 @@
     .yotpo-default-button .yotpo-icon.yotpo-icon-write,
     .yotpo-review.yotpo-regular-box .yotpo-footer,
     .yotpo-icon-profile.yotpo-header-element,
+    .yotpo-icon-profile-social,
     .yotpo-reviews .yotpo-first-review,
     span.yotpo-icon.yotpo-icon-heart,
     .yotpo-small-box.yotpo-nav,
@@ -150,9 +151,9 @@
       display: none !important;
     }
 
-    .yotpo-review .yotpo-main .yotpo-multiple-rating-fields, 
-    .yotpo-comment .yotpo-main .yotpo-multiple-rating-fields, 
-    .yotpo-question .yotpo-main .yotpo-multiple-rating-fields, 
+    .yotpo-review .yotpo-main .yotpo-multiple-rating-fields,
+    .yotpo-comment .yotpo-main .yotpo-multiple-rating-fields,
+    .yotpo-question .yotpo-main .yotpo-multiple-rating-fields,
     .yotpo-onsite-upload .yotpo-main .yotpo-multiple-rating-fields {
       display: none;
     }
@@ -207,9 +208,9 @@
       }
     }
 
-    .yotpo-review .yotpo-header .yotpo-review-stars, 
-    .yotpo-comment .yotpo-header .yotpo-review-stars, 
-    .yotpo-question .yotpo-header .yotpo-review-stars, 
+    .yotpo-review .yotpo-header .yotpo-review-stars,
+    .yotpo-comment .yotpo-header .yotpo-review-stars,
+    .yotpo-question .yotpo-header .yotpo-review-stars,
     .yotpo-onsite-upload .yotpo-header .yotpo-review-stars {
       display: flex;
       flex-wrap: wrap;
@@ -217,7 +218,7 @@
 
     &,
     &.yotpo-small {
-      .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2, 
+      .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2,
       .yotpo-modal-dialog .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 {
         display: none;
       }
@@ -684,7 +685,6 @@
     border: none !important;
 }
 
-
 .yotpo .yotpo-review .yotpo-header .yotpo-review-stars {
   @include media-breakpoint-down('md') {
     width: 100% !important;
@@ -702,3 +702,62 @@
     order: 0;
   }
 }
+
+// Comments responses
+.yotpo-reviews-container .yotpo-review.yotpo-regular-box {
+  flex-wrap: wrap;
+
+  .yotpo-comments-box {
+    margin-left: 32%;
+    width: 68%;
+    border: 0;
+
+    @include media-breakpoint-down('md') {
+      width: 100%;
+      margin-left: 0 !important;
+      .yotpo-comment-box {
+        margin-left: 0;
+      }
+    }
+
+    .yotpo-main {
+      width: 100% !important;
+
+      .content-review {
+        font-size: 0.8rem;
+
+        &:before {
+          content: "Response from municipal:";
+          color: $cyan;
+          font-weight: $font-weight-bold;
+          font-size: 0.8em;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .yotpo-header-element {
+    .stars-and-name .y-label {
+      margin-bottom: large-vw(0 ,60px);
+      @include media-breakpoint-down('md') {
+        margin-bottom: 0;
+      }
+    }
+    > div:last-of-type {
+      display: none;
+    }
+  }
+
+  .yotpo-comment-box.yotpo-comment {
+    margin-left: 0;
+    background-color: $gray-light;
+    padding: large-vw(30px, 50px) large-vw(15px, 40px);
+
+    @include media-breakpoint-down('md') {
+      padding: 30px 15px;
+      margin-left: 0 !important;
+    }
+  }
+}
+// End of comments responses
