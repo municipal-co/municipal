@@ -106,9 +106,24 @@
   }
 
   .dots {
-    display: flex;
-    flex-wrap: wrap;
+    display: inline-flex;
     justify-content: center;
+    overflow: scroll;
+    justify-content: flex-start;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .dot {
+    min-width: calc((100%/6) - 6px);
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 
