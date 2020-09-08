@@ -15,16 +15,24 @@
   =============================
 
 {%- endcomment -%}
+{% assign dot_counter = 0 %}
 
 {% if dots_product != blank %}
   {% for option in dots_product.options_with_values %}
   {% comment %}Get the first available color (it will be used to display the corresponding size variants) and can be placed 2nd on the variant lists {% endcomment %}
     {% assign option_name_downcase = option.name | downcase %}
+    {% assign size_handle = 'option' | append: option.position %}
     {% if option_name_downcase == "color" %}
       {% assign color_handle = 'option' | append: option.position %}
       {% if current_color == blank %}
         {% assign current_color = option.values[0] %}
       {% endif %}
+    {% endif %}
+
+    {% if option_name_downcase == "size" and option.values.size > 0 %}
+      {% for size in option.values %}
+        {% assign dot_counter = dot_counter | plus: 1 %}
+      {% endfor %}
     {% endif %}
   {% endfor %}
 
@@ -34,7 +42,7 @@
 
     {% if option_name_downcase == "size" and option.values.size > 0 %}
 
-      <div class="dots" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
+      <div class="dots {% if dot_counter > 5 %}dots--smaller{% endif %}" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for size in option.values %}
           {% for variant in dots_product.variants %}
             {% if variant[color_handle] == current_color and variant[size_handle] == size %}

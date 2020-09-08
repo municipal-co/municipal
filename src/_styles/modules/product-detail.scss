@@ -32,17 +32,11 @@
   .dots {
     display: flex;
     flex-wrap: wrap;
-  }
 
-  .dot {
-    max-width: calc((100%/6) - 6px);
-    
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
+    &.dots--smaller {
+      .dot {
+        max-width: calc((100%/6) - 6px);
+      }
     }
   }
 }
