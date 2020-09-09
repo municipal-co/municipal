@@ -9,7 +9,8 @@
   h_mobile_image: section.settings.image_mobile,
   h_video: section.settings.video_url,
   h_cta_text: section.settings.cta_text,
-  h_cta_url: section.settings.cta_url
+  h_cta_url: section.settings.cta_url,
+  h_content_position: section.settings.content_position
  %}
 
 {% schema %}
@@ -74,6 +75,15 @@
       {
         "type": "header",
         "content": "Design"
+      },
+      {
+        "type": "select",
+        "id": "content_position",
+        "label": "Image Position",
+        "options": [
+          {"label": "Image Above Content", "value":"true"},
+          {"label": "Image Below Content", "value":"false"}
+        ]
       },
       {
         "type": "header",
