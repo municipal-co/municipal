@@ -171,7 +171,7 @@ export default class YotpoReviews extends BaseSection {
 
       $userFields.prepend(templates.sizeFitTemplate(sizeFitValue));
 
-      const dateValue = $this.find(selectors.dateOriginalLocation).text();
+      const dateValue = $this.find(selectors.dateOriginalLocation).first().text();
 
       $userFields.prepend(templates.dateTemplate(dateValue));
 
