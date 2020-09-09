@@ -28,6 +28,13 @@
         display: none;
       }
     }
+
+
+    &:before {
+      @include media-breakpoint-down('md') {
+        padding-top: 90%;
+      }
+    }
   }
 }
 
