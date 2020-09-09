@@ -4,6 +4,10 @@
 
 {% assign eyebrow_icon = section.settings.eyebrow_icon %}
 {% assign title = section.settings.title %}
+{% assign cg_title_tag = section.settings.title_tag %}
+{% if cg_title_tag == blank %}
+  {% assign cg_title_tag = 'h2' %}
+{% endif %}
 
 <style>
   {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
@@ -28,7 +32,7 @@
 
       <div class="col-lg-22 col-20">
         {% if title != blank %}
-          <div class="collection-grid__title h1 text-{{ title_color }}">{{ title}}</div>
+          <{{cg_title_tag}} class="collection-grid__title h1 text-{{ title_color }}">{{title}}</{{cg_title_tag}}>
         {% endif %}
 
         <div class="collection-grid-container">
@@ -56,7 +60,7 @@
                   </a>
 
                   <a href="{{ cta_url }}">
-                    <h3 class="collection-tile__title">{{ collection_title}}</h3>
+                    <span class="collection-tile__title h3">{{ collection_title}}</span>
                   </a>
                 {% else %}
                   <div class="collection-tile__image frame frame--1x1">
@@ -66,7 +70,7 @@
                     %}
                   </div>
 
-                  <h3 class="collection-tile__title">{{ collection_title}}</h3>
+                  <span class="collection-tile__title h3">{{ collection_title}}</span>
                 {% endif %}
 
                 {% if cta_url != blank and cta_text != blank %}
@@ -97,6 +101,38 @@
         "type": "image_picker",
         "id": "eyebrow_icon",
         "label": "Eyebrow Icon"
+      },
+      {
+        "type": "select",
+        "id": "title_tag",
+        "label": "Module Title Tag",
+        "options": [
+          {
+            "value": "h1",
+            "label": "h1"
+          },
+          {
+            "value": "h2",
+            "label": "h2"
+          },
+          {
+            "value": "h3",
+            "label": "h3"
+          },
+          {
+            "value": "h4",
+            "label": "h4"
+          },
+          {
+            "value": "h5",
+            "label": "h5"
+          },
+          {
+            "value": "h6",
+            "label": "h6"
+          }
+        ],
+        "default": "h2"
       },
       {
         "type": "textarea",

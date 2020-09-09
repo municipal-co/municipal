@@ -14,6 +14,7 @@
               p_image_small: { image }
               p_frame_ratio: { string } - optional - see frames.scss
               p_frame_ratio_small: { string } - optional - see frames.scss - defaults to frame_ratio if set
+              p_title_tag: { string } - Optional - Defaults to h2
               p_title: { string } - optional
               p_text: { string } - optional
               p_cta_url: { url }
@@ -33,6 +34,10 @@
 
 {% if p_frame_ratio != blank and p_frame_ratio_small == blank %}
   {% assign p_frame_ratio_small = p_frame_ratio %}
+{% endif %}
+
+{% if p_title_tag == blank %}
+  {% assign p_title_tag = 'h2' %}
 {% endif %}
 
 <style type="text/css">
@@ -128,7 +133,7 @@
     <div class="promo__col-inner">
       <div class="promo__text-wrapper {% if p_light == true %}light-text{% endif %}">
         {% if p_eyebrow != blank %}
-          <h4 class="promo__eyebrow">
+          <span class="promo__eyebrow h4">
             {{ p_eyebrow }}
 
             {% if p_eyebrow_icon != blank %}
@@ -138,10 +143,10 @@
                      object_fit: 'contain'  -%}
               </div>
             {% endif %}
-          </h4>
+          </span>
         {% endif %}
         {% if p_title != blank %}
-          <h1 class="promo__title text-{{ p_title_color }}">{{ p_title }}</h1>
+          <{{p_title_tag}} class="promo__title text-{{ p_title_color }} h1">{{ p_title }}</{{p_title_tag}}>
         {% endif %}
         {% if p_text != blank %}
           <div class="promo__text p2">{{ p_text }}</div>

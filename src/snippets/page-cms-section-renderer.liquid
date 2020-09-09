@@ -46,12 +46,12 @@
 {% endif %}
 
 <div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="cms-page">
-
     <div class="hero">
       {% include 'hero-panel'
                   h_id: section.id,
                   h_background_color: section.settings.background_color,
                   h_handwritten_text_image: section.settings.handwritten_text_image,
+                  h_title_tag: section.settings.title_tag,
                   h_title: section.settings.title,
                   h_title_color: section.settings.title_color,
                   h_image: section.settings.image,
@@ -81,6 +81,7 @@
                       p_eyebrow_icon: block.settings.eyebrow_icon,
                       p_secondary_icon: block.settings.secondary_icon,
                       p_eyebrow: block.settings.eyebrow,
+                      p_title_tag: block.settings.title_tag,
                       p_title: block.settings.title,
                       p_text: block.settings.text,
                       p_cta_url: block.settings.cta_url,
@@ -92,7 +93,9 @@
             <div class="container-fluid">
               <div class="row justify-content-center">
                 <div class="col-20">
-                  {% include 'content-header', ch_title: block.settings.title %}
+                  {% include 'content-header',
+                    ch_title_tag: block.settings.title_tag,
+                    ch_title: block.settings.title %}
 
                 </div>
                 <div class="col-lg-14 col-20">
@@ -345,6 +348,7 @@
           {% assign light_text = block.settings.light_text %}
           {% assign title_color = block.settings.title_color %}
           {% assign background_color = block.settings.background_color %}
+          {% assign title_tag = block.settings.title_tag %}
 
           {% assign eyebrow_icon = block.settings.eyebrow_icon %}
           {% assign title = block.settings.title %}
@@ -355,6 +359,10 @@
                 background-color: {{background_color}};
               }
             </style>
+          {% endif %}
+
+          {% if title_tag == blank %}
+            {% assign title_tag = 'h2' %}
           {% endif %}
 
           <div  class="collection-grid {% if light_text == true%}light{% endif %}"
@@ -377,7 +385,7 @@
 
                 <div class="col-lg-22 col-20">
                   {% if title != blank %}
-                    <div class="collection-grid__title h1 text-{{ title_color }}">{{ title}}</div>
+                    <{{title_tag}} class="collection-grid__title h1 text-{{ title_color }}">{{ title}}</{{title_tag}}>
                   {% endif %}
 
                   <div class="collection-grid-container">
@@ -435,6 +443,7 @@
                         ti_light_text: block.settings.light_text,
                         ti_title_color: block.settings.title_color,
                         ti_eyebrow: block.settings.eyebrow,
+                        ti_title_tag: block.settings.title_tag,
                         ti_title: block.settings.title,
                         ti_text: block.settings.text,
                         ti_cta_text: block.settings.cta_text,
