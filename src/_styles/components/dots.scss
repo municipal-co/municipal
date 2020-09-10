@@ -24,8 +24,8 @@
   margin-right: $dot-spacing / 2;
   margin-bottom: $dot-spacing;
   padding: $dot-padding;
-  height: large-vw($dot-small-size, $dot-size);
-  width: large-vw($dot-small-size, $dot-size);
+  height: large-vw(40px, $dot-size);
+  width: large-vw(40px, $dot-size);
   cursor: pointer;
   vertical-align: top;
   border: large-vw(2px, $dot-border-width) solid $dot-border-color;
@@ -33,7 +33,7 @@
   overflow: hidden;
   background-color: $white;
 
-  line-height: large-vw(($dot-small-size - 10px) ,($dot-size - 14px));
+  line-height: large-vw((40px - 10px) ,($dot-size - 14px));
   font-size: $dot-small-font-size;
   text-transform: uppercase;
   text-align: center;
@@ -85,7 +85,7 @@
     &:hover {
       background-color: $white !important;
       .dot__inner {
-        color: $black;
+        color: $black !important;
       }
     }
   }
@@ -104,12 +104,18 @@
     margin-right: $dot-small-spacing / 2;
     margin-bottom: $dot-small-spacing;
     padding: $dot-small-padding;
-    height: $dot-small-size;
-    width: $dot-small-size;
+    height: large-vw(36px, $dot-small-size);
+    width: large-vw(36px, $dot-small-size);
     border: $dot-small-border-width solid $dot-small-border-color;
     border-radius: $dot-small-border-radius;
-    line-height: $dot-small-size - $dot-small-padding*2 - 3px;
-    font-size: $dot-small-font-size;
+    line-height: 2.4em;
+    font-size: large-vw(10px ,$dot-small-font-size);
+
+    @include media-breakpoint-down('md') {
+      height: 40px;
+      width: 40px;
+      font-size: 15px;
+    }
 
     &.is-active {
       border-color: $dot-small-active-border-color;
