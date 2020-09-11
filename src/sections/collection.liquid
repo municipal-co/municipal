@@ -53,12 +53,19 @@
         </div>
       {% endif %}
       <div class="collection-section col-20">
+        {% if collection.metafields.custom_fields['show_new_colors'] == 1 %}
+          {% assign show_news_colors_only =  true %}
+        {% endif %}
+        {% if collection.metafields.custom_fields['hide_sold_out_colors'] == 1 %}
+          {% assign hide_sold_out_colors = true %}
+        {% endif %}
+        {% if collection.metafields.custom_fields['limit_colors'] != blank %}
+          {% assign limited_colors = collection.metafields.custom_fields['limit_colors'] %}
+        {% endif %}
         {% if collection.products.size > 0 %}
           <div class="content-grid" data-collection-grid="{{ collection.handle }}">
             {% for product in collection.products %}
               {% assign has_color_option = false %}
-              {% assign product_card = blank %}
-              {% assign default_variant = blank %}
               {% assign product_colors = blank %}
 
               {% for option in product.options_with_values %}
@@ -77,11 +84,11 @@
               {% endfor %}
 
               {% for color in product_colors %}
+                {% assign product_card = blank %}
                 {% assign default_variant = blank %}
                 {% assign unavailable_variant = blank %}
                 {% assign color_available_variants = product.variants | where: color_handle, color | where: 'available'%}
                 {% for size in sizes_list %}
-
                 {% assign size_filtered_variant = color_available_variants | where: size_handle, size %}
                   {% if size_filtered_variant[0] != blank %}
                     {% assign default_variant = size_filtered_variant[0] %}
@@ -92,6 +99,7 @@
                 {% comment %}Checks for color filtering{% endcomment %}
                 {% assign hide_card = false %}
                 {% assign color_downcase = color | downcase %}
+                {%- comment -%}Checks tag filtering.{%- endcomment -%}
                 {% if current_tags != blank %}
                   {% for current_tag in current_tags %}
                   {% assign current_tag_downcase = current_tag | downcase  %}
@@ -102,6 +110,21 @@
                       {% assign hide_card = true %}
                     {% endif %}
                   {% endfor %}
+                {% endif %}
+
+                {%- comment -%}Checks if any collection filter is enabled{%- endcomment -%}
+                {% if show_news_colors_only == true and default_variant.metafields.custom_fields.new_variant != 1 %}
+                  {% assign hide_card = true %}
+                {% endif %}
+
+                {% if hide_sold_out_colors == true and default_variant.metafields.custom_fields.sold_out_variant == 1 %}
+                  {% assign hide_card = true %}
+                {% endif %}
+
+                {% if limited_colors != blank %}
+                  {% unless limited_colors contains color %}
+                    {% assign hide_card = true %}
+                  {% endunless %}
                 {% endif %}
 
                 {% if has_color_option  == true %}
