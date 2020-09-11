@@ -115,88 +115,95 @@
                 {% for product in the_collection.products %}
 
                   {% assign has_color_option = false %}
+                  {% assign default_variant = false %}
                   {% for option in product.options_with_values %}
                     {% if option.name == 'Color' %}
                       {% assign has_color_option = true %}
-                      {% assign option_handle = 'option' | append: forloop.index %}
+                      {% assign color_handle = 'option' | append: forloop.index %}
                       {% assign product_colors = option.values %}
+                    {% elsif option.name == 'Size' %}
+                      {% assign size_handle = 'option' | append: forloop.index %}
+                    {% endif %}
+                  {% endfor %}
+                  {% assign sizes_list = 'M, L, XL, 2XL, 3XL, 4XL, S' | split: ', ' %}
 
-                      {% for color in product_colors %}
-                        {% assign default_variant = blank %}
-                        {% assign unavailable_variant = blank %}
 
-                        {% for variant in product.variants %}
-                          {% if variant[option_handle] == color %}
-                            {% if variant.available == true %}
-                              {% assign default_variant = variant %}
-                            {% else %}
-                              {% assign unavailable_variant = variant %}
-                            {% endif %}
-                          {% endif %}
-                        {% endfor %}
+                  {% for color in product_colors %}
+                    {% assign default_variant = blank %}
+                    {% assign unavailable_variant = blank %}
+                    {% assign color_available_variants = product.variants | where: color_handle, color | where: 'available'%}
+                    {% for size in sizes_list %}
 
-                        {% comment %}Checks for color filtering{% endcomment %}
-                        {% assign hide_card = false %}
-                        {% assign color_downcase = color | downcase %}
-                        {% if current_tags != blank %}
-                          {% for current_tag in current_tags %}
-                          {% assign current_tag_downcase = current_tag | downcase  %}
-                            {% if current_tag_downcase contains 'color' and current_tag_downcase contains color_downcase %}
-                              {% assign hide_card = false %}
-                              {% break %}
-                            {% else %}
-                              {% assign hide_card = true %}
-                            {% endif %}
-                          {% endfor %}
+                    {% assign size_filtered_variant = color_available_variants | where: size_handle, size %}
+                      {% if size_filtered_variant[0] != blank %}
+                        {% assign default_variant = size_filtered_variant[0] %}
+                        {% break %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% comment %}Checks for color filtering{% endcomment %}
+                    {% assign hide_card = false %}
+                    {% assign color_downcase = color | downcase %}
+                    {% if current_tags != blank %}
+                      {% for current_tag in current_tags %}
+                      {% assign current_tag_downcase = current_tag | downcase  %}
+                        {% if current_tag_downcase contains 'color' and current_tag_downcase contains color_downcase %}
+                          {% assign hide_card = false %}
+                          {% break %}
+                        {% else %}
+                          {% assign hide_card = true %}
                         {% endif %}
-
-                        {% capture product_card %}
-                          <div class="content-grid__item {% if hide_card %} hide{% endif %}" data-grid-item>
-                            {% include 'product-card',
-                               card_product: product,
-                               variant: default_variant,
-                               unavailable_variant: unavailable_variant,
-                               show_sizes: true,
-                               show_colors: true,
-                               show_tag: true,
-                               color: color %}
-
-                            {% assign printed_cards = printed_cards | plus: 1 %}
-                          </div>
-                        {% endcapture %}
-
-                        {% if show_promo == true and printed_cards == promo_card_position and promo_card_image != blank %}
-                          <div class="promo_card content-grid__item frame {% if rotate_promo_card == '1' %}promo_card--rotate{% endif %}">
-                            {% if promo_card_link != blank %}
-                              <a class="promo_card-link" href="{{ promo_card_link }}" {% if new_tab == true %}target="_blank"{% endif %}>
-                                <div class="promo-card-inner">
-                                  <div class="promo_card__image frame frame--1x1">
-                                    {% render 'image_tag'
-                                              image: promo_card_image,
-                                              object_fit: "contain",
-                                              image_alt: promo_card_image_alt
-                                    %}
-                                  </div>
-                                </div>
-                              </a>
-                            {% else %}
-                              <div class="promo-card-inner">
-                                <div class="promo_card__image frame frame--1x1">
-                                  {% render 'image_tag'
-                                            image: promo_card_image,
-                                            object_fit: "contain",
-                                            image_alt: promo_card_image_alt
-                                  %}
-                                </div>
-                              </div>
-                            {% endif %}
-                          </div>
-                          {% assign show_promo = false  %}
-                        {% endif %}
-
-                        {{ product_card }}
                       {% endfor %}
                     {% endif %}
+
+                    {% capture product_card %}
+                      {% unless hide_card %}
+                        <div class="content-grid__item" data-grid-item>
+                          {% include 'product-card',
+                              card_product: product,
+                              variant: default_variant,
+                              unavailable_variant: unavailable_variant,
+                              show_sizes: true,
+                              show_colors: true,
+                              show_tag: true,
+                              color: color %}
+
+                          {% assign printed_cards = printed_cards | plus: 1 %}
+                        </div>
+                      {% endunless %}
+                    {% endcapture %}
+
+                    {% if show_promo == true and printed_cards == promo_card_position and promo_card_image != blank %}
+                      <div class="promo_card content-grid__item frame {% if rotate_promo_card == '1' %}promo_card--rotate{% endif %}">
+                        {% if promo_card_link != blank %}
+                          <a class="promo_card-link" href="{{ promo_card_link }}" {% if new_tab == true %}target="_blank"{% endif %}>
+                            <div class="promo-card-inner">
+                              <div class="promo_card__image frame frame--1x1">
+                                {% render 'image_tag'
+                                          image: promo_card_image,
+                                          object_fit: "contain",
+                                          image_alt: promo_card_image_alt
+                                %}
+                              </div>
+                            </div>
+                          </a>
+                        {% else %}
+                          <div class="promo-card-inner">
+                            <div class="promo_card__image frame frame--1x1">
+                              {% render 'image_tag'
+                                        image: promo_card_image,
+                                        object_fit: "contain",
+                                        image_alt: promo_card_image_alt
+                              %}
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                      {% assign show_promo = false  %}
+                    {% endif %}
+
+                    {{ product_card }}
+
                     {% unless has_color_option == true %}
                       <div class="content-grid__item" data-grid-item>
                         {% include 'product-card',

@@ -36,27 +36,26 @@
 
       <div class="dots" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for size in option.values %}
-          {% for variant in dots_product.variants %}
-            {% if variant[color_handle] == current_color and variant[size_handle] == size %}
-              {% assign current_variant = variant %}
-              {% break %}
-            {% endif %}
-          {% endfor %}
-
-          <div class="dot {% if selected_size == size %} is-active{% endif %}"
-               data-dot
-               title="{{ size }}"
-               data-variant-url="{{ current_variant.url }}"
-               data-variant-option-value="{{ size }}"
-               {% if current_variant.available == false %}
-                 disabled
-               {% endif %}
-               data-variant-id="{{ current_variant.id }}">
-            <div class="dot__inner">
-              {{ size }}
+          {% assign filtered_variant = dots_product.variants | where: size_handle, size %}
+          {% if color_handle != blank %}
+            {% assign filtered_variant = filtered_variant | where: color_handle,  color %}
+          {% endif %}
+          {% assign current_variant = filtered_variant[0] %}
+          {% if current_variant != blank %}
+            <div class="dot {% if selected_size == size %} is-active{% endif %}"
+                data-dot
+                title="{{ size }}"
+                data-variant-url="{{ current_variant.url }}"
+                data-variant-option-value="{{ size }}"
+                {% if current_variant.available == false %}
+                  disabled
+                {% endif %}
+                data-variant-id="{{ current_variant.id }}">
+              <div class="dot__inner">
+                {{ size }}
+              </div>
             </div>
-          </div>
-
+          {% endif %}
         {% endfor %}
       </div>
     {% endif %}
