@@ -19,7 +19,7 @@
         {% endif %}
         {% if h_title != blank %}
           {% if h_cta_url != blank %}
-            <h1 class="hero__title text-center"> 
+            <h1 class="hero__title text-center">
               <a class="text-{{h_title_color}}" href="{{h_cta_url}}">{{ h_title }}</a>
             </h1>
           {% else %}
@@ -51,25 +51,18 @@
         {%- elsif h_image != blank -%}
           {% if h_cta_url != blank %}
             <a href="{{h_cta_url}}">
-              <div class="hero__image frame frame--16x9">
-                {% render 'image_tag'
-                  image: h_image,
-                  mobile_image: h_mobile_image, 
-                  object_fit: 'cover',
-                  fallback_layout: true
-                %}
-              </div>
-            </a>
-          {% else %}
-            <div class="hero__image frame frame--16x9">
-            {% render 'image_tag'
+          {% endif %}
+            <div class="hero__image">
+              {% render 'image_tag'
                 image: h_image,
                 mobile_image: h_mobile_image,
                 object_fit: 'cover',
                 fallback_layout: true
-            %}
-          </div>
-          {% endif %}          
+              %}
+            </div>
+          {% if h_cta_url != blank %}
+          </a>
+          {% endif %}
         {%- endif -%}
       </div>
     </div>
