@@ -737,12 +737,25 @@
     }
   }
 
+  .yotpo-header.yotpo-store-owner {
+    margin-bottom: large-vw(0 ,60px);
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: center !important;
+    width: 100% !important;
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 0;
+    }
+
+    .yotpo-header-actions {
+      display: block !important;
+    }
+  }
+
   .yotpo-header-element {
     .stars-and-name .y-label {
-      margin-bottom: large-vw(0 ,60px);
-      @include media-breakpoint-down('md') {
-        margin-bottom: 0;
-      }
+      margin-bottom: 0 !important;
     }
     > div:last-of-type {
       display: none;
