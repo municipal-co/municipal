@@ -725,6 +725,7 @@
 
       .content-review {
         font-size: 0.8rem;
+        font-weight: $font-weight-bold;
 
         &:before {
           content: "Response from municipal:";
@@ -732,6 +733,7 @@
           font-weight: $font-weight-bold;
           font-size: 0.8em;
           display: block;
+          text-transform: uppercase;
         }
       }
     }
