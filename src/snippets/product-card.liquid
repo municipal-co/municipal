@@ -150,22 +150,31 @@
         {% endif %}
 
         <div class="product-card__info-price">
+          {% if variant != blank %}
+            {% if variant.compare_at_price > variant.price %}
+              <s>{{ variant.compare_at_price | money }}</s>
+              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+            {% endif %}
 
-          {% if card_product.compare_at_price > card_product.price %}
-            <s>{{ card_product.compare_at_price | money }}</s>
-            <span class="visually-hidden">{{ 'products.card_product.regular_price' | t }}</span>
-          {% endif %}
-
-          {% if card_product.price_varies %}
-            {%- assign price = card_product.price | money -%}
-            {{ 'products.product.from_text_html' | t: price: price }}
+            {{ variant.price | money }}
           {% else %}
-            {{ card_product.price | money }}
+            {% if card_product.compare_at_price > card_product.price %}
+              <s>{{ card_product.compare_at_price | money }}</s>
+              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+            {% endif %}
+
+            {% if card_product.price_varies %}
+              {%- assign price = card_product.price | money -%}
+              {{ 'products.product.from_text_html' | t: price: price }}
+            {% else %}
+              {{ card_product.price | money }}
+            {% endif %}
+
+            {% unless card_product.available %}
+              {{ 'products.product.sold_out' | t }}
+            {% endunless %}
           {% endif %}
 
-          {% unless card_product.available %}
-            {{ 'products.product.sold_out' | t }}
-          {% endunless %}
         </div>
 
         {% if show_reviews %}
