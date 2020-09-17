@@ -39,7 +39,7 @@
   {% if mobile_image != blank %}
     <img src="{{ image_loading_placeholder }}" alt="{{ image_alt | default: mobile_image.alt }}" data-src="{{mobile_image | img_url: '1200x'}}" data-animate-image-in class="lazyload mobile-image {{animate_clas}}">
   {% endif %}
-  <img src="{{ image_loading_placeholder }}" alt="{{ image_alt | default: image }}" data-src="{{image | img_url: '1920x'}}" data-animate-image-in class="lazyload desktop-image {{animate_clas}}">
+  <img src="{{ image_loading_placeholder }}" alt="{{ image_alt | default: image.alt }}" data-src="{{image | img_url: '1920x'}}" data-animate-image-in class="lazyload desktop-image {{animate_clas}}">
 {% else %}
   {% if image contains 'http' %}
     <img alt="{{ image_alt | default: image.alt }}"
