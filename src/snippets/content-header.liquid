@@ -7,16 +7,21 @@
 
   {% include 'content-header',
               ch_title: { string } - optional
+              ch_title_tag: { string } - Defaults to h3
               ch_subtitle: { string } - optional
   %}
 
 {% endcomment -%}
 
+{% if ch_title_tag == blank %}
+  {% assign ch_title_tag = 'h3' %}
+{% endif %}
+
 {% if ch_title != blank or ch_subtitle != blank %}
 
   <div class="content-header">
     {% if ch_title != blank %}
-      <h3 class="content-header__title">{{ ch_title | strip }}</h3>
+      <{{ch_title_tag}} class="content-header__title h3">{{ ch_title | strip }}</{{ch_title_tag}}>
     {% endif %}
     {% if ch_subtitle != blank %}
       <div class="content-header__subtitle">{{ ch_subtitle | strip }}</div>

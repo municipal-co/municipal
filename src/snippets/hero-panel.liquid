@@ -6,6 +6,10 @@
   {% endif %}
 </style>
 
+{% if h_title_tag == blank %}
+  {% assign h_title_tag = 'h2' %}
+{% endif %}
+
 <div class="row no-gutters justify-content-center row-adjusted" data-animated-background="{{ h_background_color }}" data-section-type="hero" data-section-id="{{h_id}}">
   <div class="col-md-24 col-lg-22">
     <div class="hero__content {% if h_content_position == 'true' %}hero__content--index{% endif %}">
@@ -19,9 +23,9 @@
         {% endif %}
         {% if h_title != blank %}
           {% if h_cta_url != blank %}
-            <h1 class="hero__title text-center">
+            <{{h_title_tag}} class="hero__title text-center">
               <a class="text-{{h_title_color}}" href="{{h_cta_url}}">{{ h_title }}</a>
-            </h1>
+            </{{h_title_tag}}>
           {% else %}
             <h1 class="hero__title text-center text-{{h_title_color}}"> {{ h_title }} </h1>
           {% endif %}

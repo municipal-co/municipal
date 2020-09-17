@@ -12,6 +12,8 @@
 
 {% paginate customer.orders by 1000 %}
 
+  <h1 class="sr-only"> {{ 'customer.account.title' | t }} </h1>
+
   <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-account">
     <div class="container-fluid">
       <div class="row">

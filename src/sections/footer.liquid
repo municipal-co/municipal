@@ -22,7 +22,7 @@
 
     {% capture desktop_html %}
       <div class="footer-menu col-lg-4">
-        <h6 class="footer-menu__title">{{ section.settings[menu_title_setting_handle] }}</h6>
+        <h2 class="footer-menu__title h6">{{ section.settings[menu_title_setting_handle] }}</h2>
         {% if linklist_handle and linklists[linklist_handle].links.size > 0 %}
           <ul class="footer-menu__list">
             {% for link in linklists[linklist_handle].links %}
@@ -60,7 +60,7 @@
   {% if social_list_items != blank %}
     <div class="footer-menu col-lg-4">
       {% if section.settings.social_menu_title != blank %}
-        <h6 class="footer-menu__title">{{ section.settings.social_menu_title }}</h6>
+        <h2 class="footer-menu__title h6">{{ section.settings.social_menu_title }}</h2>
       {% endif %}
 
       <ul class="footer-menu__list footer-social-list">
@@ -98,7 +98,7 @@
           {% endif %}
 
           {% if section.settings.subscribe_text %}
-            <h4 class="newsletter-text">{{ section.settings.subscribe_text }}</h4>
+            <h2 class="newsletter-text h4">{{ section.settings.subscribe_text }}</h2>
           {% endif %}
 
           <form action="{{ settings.newsletter_form_action }}"
