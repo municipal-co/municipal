@@ -24,8 +24,8 @@
   margin-right: $dot-spacing / 2;
   margin-bottom: $dot-spacing;
   padding: $dot-padding;
-  height: large-vw($dot-small-size, $dot-size);
-  width: large-vw($dot-small-size, $dot-size);
+  height: large-vw(40px, $dot-size);
+  width: large-vw(40px, $dot-size);
   cursor: pointer;
   vertical-align: top;
   border: large-vw(2px, $dot-border-width) solid $dot-border-color;
@@ -33,11 +33,10 @@
   overflow: hidden;
   background-color: $white;
 
-  line-height: large-vw(($dot-small-size - 10px) ,($dot-size - 14px));
+  line-height: large-vw((40px - 10px) ,($dot-size - 14px));
   font-size: $dot-small-font-size;
   text-transform: uppercase;
   text-align: center;
-
   transition: background-color $transition-duration-fast $transition-timing-function-out;
 
   @include media-breakpoint-down('md') {
@@ -85,7 +84,7 @@
     &:hover {
       background-color: $white !important;
       .dot__inner {
-        color: $black;
+        color: $black !important;
       }
     }
   }
@@ -99,20 +98,38 @@
     }
   }
 
-  .dots--small & {
-    margin-left: $dot-small-spacing / 2;
-    margin-right: $dot-small-spacing / 2;
+  .dots--small &,
+  .product-card__sizes-container & {
+    position: relative;
     margin-bottom: $dot-small-spacing;
     padding: $dot-small-padding;
-    height: $dot-small-size;
-    width: $dot-small-size;
+    width: calc(#{percentage(1/6)} - #{$dot-small-spacing});
+    max-width: 73px;
+    height: auto;
     border: $dot-small-border-width solid $dot-small-border-color;
     border-radius: $dot-small-border-radius;
-    line-height: $dot-small-size - $dot-small-padding*2 - 3px;
-    font-size: $dot-small-font-size;
+    font-size: large-vw(10px ,$dot-small-font-size);
+
+    &:after {
+      content: "";
+      display: block;
+      width: 100%;
+      padding-bottom: 100%;
+    }
+
+    @include media-breakpoint-down('md') {
+      height: 40px;
+      width: 40px;
+      font-size: 15px;
+      line-height: 1.9em;
+    }
 
     &.is-active {
       border-color: $dot-small-active-border-color;
+    }
+
+    @at-root .product-card__sizes-container & {
+      width: (calc(#{percentage(1/7) - #{$dot-small-spacing}}))
     }
   }
 
@@ -148,10 +165,20 @@
       position: center;
       repeat: no-repeat;
     }
-  }
 
-  &.dots--small .dot__inner {
-    border-radius: $dot-small-border-radius;
+    .dots--small &,
+    .product-card__sizes-container &{
+      position: absolute;
+      width: unset;
+      top: 0;
+      left: 0;
+      left: 50%;
+      top: 50%;
+      height: auto;
+      transform: translate(-50%, -50%);
+      line-height: 1;
+      border-radius: $dot-small-border-radius;
+    }
   }
 
   // These dot modifier classes use !important to override inline background-color styles

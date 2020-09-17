@@ -27,7 +27,7 @@
           {% if section.settings.recover_subtitle != blank %}
             <div class="h6">{{ section.settings.recover_subtitle }}</div>
           {% else %}
-            <h6>{{ 'customer.recover_password.subtext' | t }}</h6>
+            <div class="h6">{{ 'customer.recover_password.subtext' | t }}</div>
           {% endif %}
 
           {% include 'customer-recover-password-form' %}

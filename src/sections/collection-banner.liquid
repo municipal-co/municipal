@@ -3,6 +3,7 @@
 {% assign banner_video_bg = collection.metafields.custom_fields["banner_video_background"] %}
 {% assign banner_video_url = collection.metafields.custom_fields["banner_video_url"] %}
 {% assign banner_light_bg = collection.metafields.custom_fields["banner_light_background"] %}
+{% assign title_tag = collection.metafields.custom_fields["title_tag"] %}
 {% assign collection_classes = '' %}
 
 {% if collection.metafields.custom_fields["banner_title"] != blank %}
@@ -13,6 +14,10 @@
 
 {% if banner_video_url == blank and banner_video_bg == blank %}
   {% assign collection_classes = collection_classes | append:  'no-video'%}
+{% endif %}
+
+{% if title_tag == blank %}
+  {% assign title_tag = 'h2' %}
 {% endif %}
 
 
@@ -32,7 +37,7 @@
           </div>
           {% endif %}
 
-          <h2 class="collection-banner__title h1">{{ banner_title }}</h2>
+          <{{title_tag}} class="collection-banner__title h1">{{ banner_title }}</{{title_tag}}>
           {% if banner_copy != blank %}
             <div class="collection-banner__content p2">{{ banner_copy }}</div>
           {% endif %}

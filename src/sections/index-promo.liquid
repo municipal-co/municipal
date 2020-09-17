@@ -13,6 +13,7 @@
               p_eyebrow_icon: section.settings.eyebrow_icon,
               p_secondary_icon: section.settings.secondary_icon,
               p_eyebrow: section.settings.eyebrow,
+              p_title_tag: section.settings.title_tag,
               p_title: section.settings.title,
               p_text: section.settings.text,
               p_cta_url: section.settings.cta_url,
@@ -28,7 +29,7 @@
       {
         "type": "header",
         "content": "Content"
-      },   
+      },
       {
         "type": "text",
         "id": "eyebrow",
@@ -38,6 +39,38 @@
         "type": "image_picker",
         "id": "eyebrow_icon",
         "label": "Eyebrow Icon"
+      },
+      {
+        "type": "select",
+        "id": "title_tag",
+        "label": "Module Title Tag",
+        "options": [
+          {
+            "value": "h1",
+            "label": "h1"
+          },
+          {
+            "value": "h2",
+            "label": "h2"
+          },
+          {
+            "value": "h3",
+            "label": "h3"
+          },
+          {
+            "value": "h4",
+            "label": "h4"
+          },
+          {
+            "value": "h5",
+            "label": "h5"
+          },
+          {
+            "value": "h6",
+            "label": "h6"
+          }
+        ],
+        "default": "h2"
       },
       {
         "type": "text",
@@ -58,12 +91,12 @@
         "type": "url",
         "id": "cta_url",
         "label": "CTA Link"
-      },  
+      },
       {
         "type": "image_picker",
         "id": "secondary_icon",
         "label": "Secondary Icon"
-      },    
+      },
       {
         "type": "image_picker",
         "id": "image",
@@ -136,6 +169,6 @@
           "text": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<\/p>"
         }
       }
-    ]    
+    ]
   }
 {% endschema %}
