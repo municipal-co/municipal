@@ -35,7 +35,7 @@ export default class HeaderSection extends BaseSection {
 
     // We pass in the fixed behavior as a class on the body of the site
     if ($body.hasClass(classes.siteHasFixedHeader)) {
-      $window.on(this.events.SCROLL, throttle(20, this.onScroll.bind(this)));
+      $window.on(this.events.SCROLL, throttle(50, this.onScroll.bind(this)));
       this.onScroll(); // hit this one time on init to make sure everything is good
     }
   }
@@ -47,13 +47,13 @@ export default class HeaderSection extends BaseSection {
 
     // Do DOM updates inside.
     requestAnimationFrame(() => {
-      if (scrollTop <= actualOffset) {
+      if (scrollTop < actualOffset) {
         this.$el.removeClass(classes.headerFixed);
         this.$el.removeClass(classes.headerScroll);
         this.$el.removeClass(classes.showOnScroll);
         this.$el.removeClass(classes.hideOnScroll);
       }
-      else {
+      else if(scrollTop > actualOffset){
         this.$el.addClass(classes.headerFixed);
         this.$el.addClass(classes.headerScroll);
       }
@@ -67,13 +67,13 @@ export default class HeaderSection extends BaseSection {
    // Do DOM updates inside.
     if (this.$el.hasClass(classes.headerScroll)) {
       requestAnimationFrame(() => {
-        if (scrollTop >= lastInitialPosition) {
+        if (scrollTop > lastInitialPosition) {
           $body.removeClass('showing-header');
           this.$el.removeClass(classes.showOnScroll);
           this.$el.addClass(classes.hideOnScroll);
           this.initialPosition = scrollTop;
         }
-        else {
+        else if(scrollTop < lastInitialPosition){
           $body.addClass('showing-header');
           this.$el.addClass(classes.showOnScroll);
           this.$el.removeClass(classes.hideOnScroll);
