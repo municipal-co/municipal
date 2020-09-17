@@ -7,9 +7,11 @@
   h_title_tag: section.settings.title_tag,
   h_title_color: section.settings.title_color,
   h_image: section.settings.image,
+  h_mobile_image: section.settings.image_mobile,
   h_video: section.settings.video_url,
   h_cta_text: section.settings.cta_text,
-  h_cta_url: section.settings.cta_url
+  h_cta_url: section.settings.cta_url,
+  h_content_position: section.settings.content_position
  %}
 
 {% schema %}
@@ -108,14 +110,29 @@
         "content": "Design"
       },
       {
+        "type": "select",
+        "id": "content_position",
+        "label": "Image Position",
+        "options": [
+          {"label": "Image Above Content", "value":"true"},
+          {"label": "Image Below Content", "value":"false"}
+        ]
+      },
+      {
         "type": "header",
-        "content": "Image",
-        "info": "Main image will always be used."
+        "content": "Image"
       },
       {
         "type": "image_picker",
         "id": "image",
-        "label": "Main Image"
+        "label": "Main Image",
+        "info": "Recommended Size: 1440w x 810h (double for retina)"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Mobile Image",
+        "info": "Recommended Size: 485w x 437h (double for retina)"
       },
       {
         "type": "header",
