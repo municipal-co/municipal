@@ -156,34 +156,45 @@
                       {% endfor %}
                     {% endif %}
 
-                    {% capture product_card %}
-                      {% unless hide_card %}
-                        <div class="content-grid__item" data-grid-item>
-                          {% include 'product-card',
-                              card_product: product,
-                              variant: default_variant,
-                              unavailable_variant: unavailable_variant,
-                              show_sizes: true,
-                              show_colors: true,
-                              show_tag: true,
-                              color: color %}
+                        {% capture product_card %}
+                          <div class="content-grid__item {% if hide_card %} hide{% endif %}" data-grid-item>
+                            {% include 'product-card',
+                               card_product: product,
+                               variant: default_variant,
+                               unavailable_variant: unavailable_variant,
+                               show_sizes: true,
+                               show_colors: true,
+                               show_tag: true,
+                               color: color,
+                               title_tag: 'h2' %}
 
-                          {% assign printed_cards = printed_cards | plus: 1 %}
-                        </div>
-                      {% endunless %}
-                    {% endcapture %}
+                            {% assign printed_cards = printed_cards | plus: 1 %}
+                          </div>
+                        {% endcapture %}
 
-                    {% if show_promo == true and printed_cards == promo_card_position and promo_card_image != blank %}
-                      <div class="promo_card content-grid__item frame {% if rotate_promo_card == '1' %}promo_card--rotate{% endif %}">
-                        {% if promo_card_link != blank %}
-                          <a class="promo_card-link" href="{{ promo_card_link }}" {% if new_tab == true %}target="_blank"{% endif %}>
-                            <div class="promo-card-inner">
-                              <div class="promo_card__image frame frame--1x1">
-                                {% render 'image_tag'
-                                          image: promo_card_image,
-                                          object_fit: "contain",
-                                          image_alt: promo_card_image_alt
-                                %}
+                        {% if show_promo == true and printed_cards == promo_card_position and promo_card_image != blank %}
+                          <div class="promo_card content-grid__item frame {% if rotate_promo_card == '1' %}promo_card--rotate{% endif %}">
+                            {% if promo_card_link != blank %}
+                              <a class="promo_card-link" href="{{ promo_card_link }}" {% if new_tab == true %}target="_blank"{% endif %}>
+                                <div class="promo-card-inner">
+                                  <div class="promo_card__image frame frame--1x1">
+                                    {% render 'image_tag'
+                                              image: promo_card_image,
+                                              object_fit: "contain",
+                                              image_alt: promo_card_image_alt
+                                    %}
+                                  </div>
+                                </div>
+                              </a>
+                            {% else %}
+                              <div class="promo-card-inner">
+                                <div class="promo_card__image frame frame--1x1">
+                                  {% render 'image_tag'
+                                            image: promo_card_image,
+                                            object_fit: "contain",
+                                            image_alt: promo_card_image_alt
+                                  %}
+                                </div>
                               </div>
                             </div>
                           </a>
