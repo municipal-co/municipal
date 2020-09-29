@@ -65,6 +65,15 @@
   {% endif %}
 {% endfor %}
 
+{%- comment -%}Default settings required to identify if a video needs to be rendered{%- endcomment -%}
+{% if product.metafields.custom_fields["product_gallery_video"] != blank %}
+  {% assign separator = "|###|" %}
+  {% assign video_url_array = product.metafields.custom_fields["video_url"] | split: separator %}
+  {% assign video_thumbnail_array = product.metafields.custom_fields["video_thumbnail"] | split: separator %}
+  {% assign color_name_array = product.metafields.custom_fields["color_name"] | split: separator %}
+  {% assign video_position_array = product.metafields.custom_fields["video_position"] | split: separator %}
+  {% assign fc_keys = product.metafields.custom_fields["product_gallery_video"] | split: "," %}
+{% endif %}
 
 <div class="product-galleries {% if product.type == 'Gift Card' %}product-galleryes--gift-card{% endif %}" data-product-detail-galleries>
 
@@ -88,6 +97,30 @@
                       {% assign image_alt_downcase = image.alt | downcase %}
                       {% if image_alt_downcase contains color_downcase %}
                         {% unless image_alt_downcase contains alt_swatch_identifier %}
+                          {%- comment -%}Video logic, it is set first to ensure the position is right{%- endcomment -%}
+                          {% assign next_image_counter = image_counter | plus: 1 %}
+                          {% if product.metafields.custom_fields["video_position"] contains next_image_counter %}
+                            {%- comment -%}A video is going to be rendered on this position{%- endcomment -%}
+                            {% for i in fc_keys %}
+                              {% assign index = i | plus: 0 %}
+                              {% assign video_thumbnail_index = video_position_array[index] | plus: 0 %}
+                              {% if video_thumbnail_index == next_image_counter %}
+                                {% if color_name_array[index] == color or color_name_array[index] == blank %}
+                                  <div class="product-gallery__thumbnails-slide swiper-slide {%if image_counter == 0 %} swiper-slide-thumb-active{% endif %}" data-product-gallery-thumbnails-slide>
+                                    <img src="{{image_loading_placeholder}}"
+                                        data-src="{{ video_thumbnail_array[index] }}"
+                                        class="swiper-lazy">
+                                    <div class="swiper-lazy-preloader"></div>
+                                    <div class="thumbnail__play-button">
+                                      {% include 'icon-play-full-color' %}
+                                    </div>
+                                    {% assign image_counter = image_counter | plus: 1 %}
+                                  </div>
+                                {% endif %}
+                              {% endif %}
+
+                            {% endfor %}
+                          {% endif %}
                           <div class="product-gallery__thumbnails-slide swiper-slide {% if image_counter == 0 %}swiper-slide-thumb-active{% endif %}"data-product-gallery-thumbnails-slide>
                             <img src="{{ image_loading_placeholder }}" data-src="{{ image.src | img_url: photo_thumb_dimension, crop: 'center' }}"
                                  alt="{{ image.alt | escape | remove: '|' }}"
@@ -96,8 +129,32 @@
                           </div>
                           {% assign image_counter = image_counter | plus: 1 %}
                         {% endunless %}
+
                       {% endif %}
                     {% endfor %}
+
+                    {% if product.metafields.custom_fields["video_position"] != blank %}
+                      {%- comment -%}A video is going to be rendered on this position{%- endcomment -%}
+                      {% for i in fc_keys %}
+                        {% assign index = i | plus: 0 %}
+                        {% assign video_thumbnail_index = video_position_array[index] | plus: 0 %}
+                        {% if video_thumbnail_index > next_image_counter %}
+                          {% if color_name_array[index] == color or color_name_array[index] == blank %}
+                            <div class="product-gallery__thumbnails-slide swiper-slide {%if image_counter == 0 %} swiper-slide-thumb-active{% endif %}" data-product-gallery-thumbnails-slide>
+                              <img src="{{image_loading_placeholder}}"
+                                  data-src="{{ video_thumbnail_array[index] }}"
+                                  class="swiper-lazy">
+                              <div class="swiper-lazy-preloader"></div>
+                              <div class="thumbnail__play-button">
+                                {% include 'icon-play-full-color' %}
+                              </div>
+                              {% assign image_counter = image_counter | plus: 1 %}
+                            </div>
+                          {% endif %}
+                        {% endif %}
+
+                      {% endfor %}
+                    {% endif %}
                   </div>
                 </div>
                 <div class="product-gallery__thumbnail-counter">
@@ -115,6 +172,25 @@
                       {% assign image_alt_downcase = image.alt | downcase %}
                       {% if image_alt_downcase contains color_downcase %}
                         {% unless image_alt_downcase contains alt_swatch_identifier %}
+                          {% assign image_index = image_index | plus: 1 %}
+                          {% if product.metafields.custom_fields["video_position"] contains image_index %}
+                            {%- comment -%}A video is going to be rendered on this position{%- endcomment -%}
+                            {% for i in fc_keys %}
+                              {% assign index = i | plus: 0 %}
+                              {% assign video_position = video_position_array[index] | plus: 0 %}
+                              {% if video_position == image_index  %}
+                                {% if color_name_array[index] contains color or color_name_array[index] == blank %}
+                                <div class="swiper-slide">
+                                  <div class="gallery__video-container" data-video-player data-video-url="{{video_url_array[index]}}" data-video-type="vimeo" data-autopause="true" data-backgorund="true">
+                                  </div>
+                                </div>
+                                {% assign image_index = image_index | plus: 1 %}
+                                {% endif %}
+                              {% endif %}
+                            {% endfor %}
+                          {% endif %}
+
+
                           <div class="swiper-slide" data-image="{{ image.id }}">
                             <img src="{{ image_loading_placeholder }}" data-src="{{ image | img_url: photo_main_dimension }}"
                                  alt="{{ image.alt | escape | remove: '|' }}"
@@ -126,6 +202,23 @@
                         {% endunless %}
                       {% endif %}
                     {% endfor %}
+                    {% if product.metafields.custom_fields["video_position"] != blank %}
+                      {%- comment -%}Check if a video index is larger than the actual number of slides printed{%- endcomment -%}
+                      {% for i in fc_keys %}
+                        {% assign index = i | plus: 0 %}
+                        {% assign video_position = video_position_array[index] | plus: 0 %}
+                        {% if video_position > image_index  %}
+                          {% if color_name_array[index] contains color or color_name_array[index] == blank %}
+                          <div class="swiper-slide">
+                            <div class="gallery__video-container" data-video-player data-video-url="{{video_url_array[index]}}" data-video-type="vimeo" data-autopause="true" data-backgorund="true">
+                            </div>
+                          </div>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+
+                    {% assign image_index = 0 %}
                   </div>
                   <div class="swiper-scrollbar"></div>
                 </div>

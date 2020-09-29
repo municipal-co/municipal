@@ -8,7 +8,6 @@ const path = require('path');
 const size = require('gulp-size');
 const source = require('vinyl-source-stream');
 const uglify = require('gulp-uglify');
-const minify = require('gulp-minify');
 const uglifyify = require('uglifyify');
 const watchify = require('watchify');
 const bundleLogger = require('../lib/bundleLogger');
@@ -36,7 +35,6 @@ const browserifyThis = (bundleConfig) => {
       .pipe(source(bundleConfig.outputName))
       .pipe(buffer()) // optional, remove if no need to buffer file contents
       .pipe(gulpif(productionMode, uglify()))
-      .pipe(minify())
       .pipe(gulp.dest(paths.dest))
       .pipe(size({ showFiles: true, title: 'JS: size of' }))
       .on('finish', function () {

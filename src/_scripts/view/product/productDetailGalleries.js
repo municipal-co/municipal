@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { throttle } from 'throttle-debounce';
 import Swiper from 'swiper';
+import VimeoPlayer from '@vimeo/player';
 
 const selectors = {
   productGallery: '[data-product-gallery]',
@@ -11,7 +12,9 @@ const selectors = {
   currentThumbnail: '[data-current-thumbnail]',
   zoomInIcon: '[data-zoom-in-icon]',
   zoomOutIcon: '[data-zoom-out-icon]',
-  zoomItem: '[data-zoom-item]'
+  zoomItem: '[data-zoom-item]',
+  // Slider video
+  videoContainer: '[data-video-player]',
 };
 
 const classes = {
@@ -36,6 +39,7 @@ class ProductDetailGallery {
     this.$thumbnails = this.$el.find(selectors.productGalleryThumbnails);
     this.optionValue = this.$el.data('option-value');
     this.$zoomItem = $(selectors.zoomItem);
+    this.videoPlayers = [];
 
     // Look for element with the initialSlide selector. Commented due to removal of the feature, uncomment if needed.
     // const initialSlide = this.$slideshow.find(selectors.initialSlide).length ? this.$slideshow.find(selectors.initialSlide).index() : 0;
@@ -188,6 +192,57 @@ class ProductDetailGallery {
 
     this.$thumbnails.height(slideshowHeight - 200);
     this.thumbnailsSwiper.update();
+
+    this.initSlideVideo($(sw.slides[sw.activeIndex]));
+  }
+
+  initSlideVideo($slide) {
+    const $videoContainer = $(selectors.videoContainer, $slide);
+    this.$slideshow.removeClass('video-slideshow');
+    this.pauseCurrentVideo();
+    if($videoContainer.length){
+      const currentPlayer = this.getPlayerBySlide($slide);
+      this.$slideshow.addClass('video-slideshow');
+      if(currentPlayer !== undefined) {
+        currentPlayer.play();
+        currentPlayer.playing = true;
+      } else {
+        const options = {
+          url: $videoContainer.data('video-url'),
+          background: true,
+          autopause: true,
+        }
+
+        const player = new VimeoPlayer($videoContainer, options);
+
+        this.videoPlayers.push ({
+          slide: $slide,
+          player: player,
+          playing: true,
+        });
+      }
+    }
+  }
+
+  getPlayerBySlide($slide) {
+    let playerItem;
+    $.each(this.videoPlayers, (i, playerObject) => {
+      if (playerObject.slide.is($slide)) {
+        playerItem = playerObject.player;
+      }
+    })
+
+    return playerItem;
+  }
+
+  pauseCurrentVideo() {
+    $.each(this.videoPlayers, (i, playerObject) => {
+      if (playerObject.playing === true) {
+        playerObject.player.pause().then(()=> {
+          playerObject.playing = false;
+        });
+      }
+    })
   }
 
   onSlidechange() {
@@ -195,6 +250,7 @@ class ProductDetailGallery {
     $(selectors.currentThumbnail, this.$el).text(sw.activeIndex + 1);
     this.destroyHoverZoom($(sw.slides[sw.previousIndex]));
     this.initHoverZoom($(sw.slides[sw.activeIndex]));
+    this.initSlideVideo($(sw.slides[sw.activeIndex]));
   }
 }
 
