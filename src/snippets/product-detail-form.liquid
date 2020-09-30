@@ -39,7 +39,13 @@
   {% endif %}
 {% endcapture %}
 
-<div class="product__form {% if product.type == 'Gift Card' %}product__form--gift-card{% endif %}" data-product-detail-form>
+{% if product.metafields.custom_fields.disable_back_in_stock == "1" %}
+  {% assign back_in_stock = false %}
+{% else %}
+  {% assign back_in_stock = true %}
+{% endif %}
+
+<div class="product__form {% if product.type == 'Gift Card' %}product__form--gift-card{% endif %}" data-product-detail-form data-back-in-stock={{back_in_stock}}>
   <div class="product__badge-row">
     <span class="badge" data-badge {% unless tag_text != blank %} style="display:none;" {% endunless %}>
       {{ tag_text }}
@@ -186,6 +192,18 @@
             </select>
           </div>
         </div>
+        {% if back_in_stock == true %}
+          <button type="button"
+                  class="btn btn-primary btn-block bis-button BIS_trigger"
+                  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                  data-bis-button
+                  {% unless product.selected_or_first_available_variant.available == true %}
+                    syle="display:none;"
+                  {% endunless %}
+                  >
+                  {{section.settings.back_in_stock_button | default: 'Notify Me When It’s Back'}}
+          </button>
+        {% endif %}
 
         <button
           type="submit"

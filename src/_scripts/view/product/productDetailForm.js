@@ -24,7 +24,8 @@ const selectors = {
   badgesData: '[data-badges-json]',
   dotsColorContainer: '.dots--color',
   dotsContainer: '.dots',
-  dot: '.dot'
+  dot: '.dot',
+  backInStockButton: '[data-bis-button]'
 };
 
 const classes = {
@@ -104,6 +105,7 @@ export default class ProductDetailForm {
     }
 
     this.checkVariantsAvailability();
+    this.updateBISstatus();
   }
 
   onVariantChange(evt) {
@@ -117,6 +119,7 @@ export default class ProductDetailForm {
     this.updateColorsLink();
     this.checkVariantsAvailability();
     this.updateBadge(variant);
+    this.updateBISstatus(variant);
 
     this.$singleOptionSelectors.trigger('chosen:updated');
 
@@ -173,6 +176,33 @@ export default class ProductDetailForm {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.soldOut);
     }
+  }
+
+  updateBISstatus(variant) {
+    let id;
+    const backInStock = this.$container.data('back-in-stock');
+    const $bisButton = $(selectors.backInStockButton);
+    const $addToCartBtn = $(selectors.addToCart);
+    if (variant !== undefined && variant !== null) {
+      id = variant.id;
+    } else {
+      id = $(selectors.singleOptionSelector).val();
+    }
+
+    $.each(this.productSingleObject.variants, (index, variantItem) => {
+
+      if (variantItem.id === id && backInStock === true && !variantItem.available) {
+        $bisButton.show();
+        $bisButton.attr('data-variant-id', id);
+        $addToCartBtn.hide();
+      } else if(variantItem.id === id && backInStock === true && variant.available) {
+        $bisButton.hide();
+        $addToCartBtn.show();
+      } else {
+        $bisButton.hide();
+        $addToCartBtn.show();
+      }
+    })
   }
 
   /**
@@ -314,12 +344,15 @@ export default class ProductDetailForm {
   }
 
   updateBadge(variant) {
-    const id = variant.id;
+    let id;
+    if (variant) {
+      id = variant.id;
+    }
     const badgesData = JSON.parse($(selectors.badgesData).html());
 
-    if( badgesData[id] !== null && badgesData[id] !== '') {
+    if( variant !== null && badgesData[id] !== null && badgesData[id] !== '') {
       $(selectors.badge).text( badgesData[id] ).show();
-    } else if ( badgesData.default !== "" && badgesData.default !== null ) {
+    } else if (badgesData.default !== '' && badgesData.default !== null ) {
       $(selectors.badge).text( badgesData.default ).show();
     } else {
       $(selectors.badge).text('').hide();
