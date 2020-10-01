@@ -35,6 +35,18 @@
     }
   }
 
+  .video-section__header--bottom {
+    margin-top: large-vw(30px, 75px);
+
+    .video-section__title {
+      margin-bottom: 0 !important;
+    }
+
+    @include media-breakpoint-down('md') {
+      margin-top: 25px;
+    }
+  }
+
   .video-section__eyebrow {
     color: $cyan !important;
     display: block;
@@ -203,6 +215,7 @@
 
     @include media-breakpoint-down('md') {
       display: block;
+      position: relative;
     }
   }
 
