@@ -4,9 +4,11 @@
   {% assign style_eyebrow_array = product.metafields.custom_fields["style_eyebrow"] | split: separator %}
   {% assign style_quote_array = product.metafields.custom_fields["style_quote"] | split: separator %}
   {% assign style_image_array = product.metafields.custom_fields["style_image"] | split: separator %}
+  {% assign style_image_alt_array = product.metafields.custom_fields["style_image_alt"] | split: separator %}
   {% assign style_name_array = product.metafields.custom_fields["style_name"] | split: separator %}
   {% assign style_handle_array = product.metafields.custom_fields["style_handle"] | split: separator %}
   {% assign style_slide_image_array = product.metafields.custom_fields["style_slide_image"] | split: separator %}
+  {% assign style_slide_image_alt_array = product.metafields.custom_fields["style_slide_image_alt"] | split: separator %}
   {% assign style_video_array = product.metafields.custom_fields["style_video"] | split: separator %}
   {% assign style_subcopy_array = product.metafields.custom_fields["style_subcopy"] | split: separator %}
   {% assign fc_keys = product.metafields.custom_fields["style_tips_section"] | split: "," %}
@@ -35,9 +37,11 @@
               {% assign eyebrow = style_eyebrow_array[index] %}
               {% assign slide_quote = style_quote_array[index] %}
               {% assign stylist_image = style_image_array[index] %}
+              {% assign stylist_image_alt = style_image_alt_array[index] %}
               {% assign stylist_name = style_name_array[index] %}
               {% assign stylist_handle = style_handle_array[index] %}
               {% assign slide_image = style_slide_image_array[index] %}
+              {% assign slide_image_alt = style_slide_image_alt_array[index] %}
               {% assign slide_video = style_video_array[index] %}
               {% assign slide_subcopy = style_subcopy_array[index] %}
               {% assign slides_counter = slides_counter | plus: 1 %}
@@ -54,7 +58,8 @@
                         {% render 'image_tag'
                                 image: stylist_image,
                                 object_fit: 'cover',
-                                object-position: 'center'
+                                object_position: 'center',
+                                image_alt: stylist_image_alt
                         %}
                       </div>
                     {% endif %}
@@ -73,7 +78,8 @@
                 <div class="style-slide__image frame frame--16x9" data-video-cover>
                   {% render 'image_tag'
                             image: slide_image,
-                            object_fit: 'cover'
+                            object_fit: 'cover',
+                            image_alt: slide_image_alt
                   %}
 
                   {% if slide_video != blank %}

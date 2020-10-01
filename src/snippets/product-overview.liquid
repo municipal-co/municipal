@@ -2,6 +2,7 @@
 {% assign title = product.metafields.custom_fields["overview_title"] %}
 {% assign copy = product.metafields.custom_fields["overview_copy"] %}
 {% assign overview_image = product.metafields.custom_fields["overview_image"] %}
+{% assign overview_image_alt = product.metafields.custom_fields["overview_image_alt"] %}
 {% assign video = product.metafields.custom_fields["overview_video"] %}
 {% assign details = product.metafields.custom_fields["overview_details"] %}
 {% assign small_text = product.metafields.custom_fields["overview_small_text"] %}
@@ -42,6 +43,9 @@
                     <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="#000000">
                       <div class="video-player__cover" data-video-player-cover>
                         <div class="video-player__cover-still lazyload" data-background="{{ overview_image }}"></div>
+                        {% if overview_image_alt %}
+                          <span class="video-player__cover-alt">{{ overview_image_alt }}</span>
+                        {% endif %}
                         <span class="video-player__cover-play" data-video-play>
                           {% include "icon-play-full-color" %}
                         </span>
