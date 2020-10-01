@@ -72,6 +72,8 @@
                     {% assign sizes_list = 'M, L, XL, 2XL, 3XL, 4XL, S' | split: ', ' %}
                   {% elsif '32, 34, 36, 38, 40, 30' contains option.values[0] %}
                     {% assign sizes_list = '32, 34, 36, 38, 40, 30' | split: ', ' %}
+                  {% else %}
+                    {% assign sizes_list = option.values %}
                   {% endif %}
                 {% endif %}
               {% endfor %}
