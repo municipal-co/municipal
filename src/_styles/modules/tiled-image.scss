@@ -16,12 +16,6 @@
   }
 }
 
-.tiled-image__title {
-  @include media-breakpoint-up('xl') {
-    font-size: large-vw($h1-font-size-mobile, 130px);
-  }
-}
-
 .tiled-image__second-column {
   margin-top: large-vw(30px, 75px);
 
@@ -95,7 +89,7 @@
   padding-top: 58px;
 
   @include media-breakpoint-between('md', 'lg') {
-    padding-left: 20px;
+    padding-left: 40px;
   }
 
   @include media-breakpoint-down('md') {
