@@ -13,10 +13,27 @@
 {% assign title_align = section.settings.title_align %}
 {% assign cta_title = section.settings.cta_title %}
 {% assign cta_url = section.settings.cta_url %}
+{% assign header_position = section.settings.video_header_position %}
 
 {% if title_tag == blank %}
   {% assign title_tag = "h2" %}
 {% endif %}
+
+{% if header_position == blank %}
+  {% assign header_position = 'top' %}
+{% endif %}
+
+{% capture video_header %}
+  <div class="video-section__header text-{{title_align}} video-section__header--{{header_position}}">
+    {% if eyebrow != blank %}
+      <span class="video-section__eyebrow h5">{{ eyebrow }}</span>
+    {% endif %}
+
+    {% if title != blank %}
+      <{{title_tag}} class="video-section__title h1 text-{{ title_color }}">{{ title }}</{{title_tag}}>
+    {% endif %}
+  </div>
+{% endcapture %}
 
 <style>
   {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
@@ -40,18 +57,13 @@
       {% endif %}
 
       <div class="col-lg-22 col-20">
-        <div class="video-section__header text-{{title_align}}">
-          {% if eyebrow != blank %}
-            <span class="video-section__eyebrow h5">{{ eyebrow }}</span>
-          {% endif %}
 
-          {% if title != blank %}
-            <{{title_tag}} class="video-section__title h1 text-{{ title_color }}">{{ title }}</{{title_tag}}>
-          {% endif %}
-        </div>
+        {% if header_position == 'top' %}
+          {{ video_header }}
+        {% endif %}
 
         {% if video_url != blank %}
-          <div class="video-section__video-cover frame frame--16x9" data-video-player-cover>
+          <div class="video-section__video-cover frame frame--16x9" data-toggle="modal" data-video-player-cover data-target="#video-modal-{{ section.id }}">
             {% render 'image_tag'
                       image: video_cover,
                       object_fit: 'cover'
@@ -65,46 +77,51 @@
               {% include 'icon-play-full-color' %}
             </div>
           </div>
-
-          <div class="modal modal--video fade" id="video-modal-{{ section.id }}" data-video-modal>
-            <span class="video-eyebrow d-lg-none d-block">Video</span>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              {% include 'icon-close' %}
-            </button>
-
-            {% if cta_title != blank and cta_url != blank%}
-              <a class="btn btn-link product-link d-lg-block d-none"href="{{ cta_url }}">
-                {{ cta_title }}
-                <span class="btn__ui">
-                  {% include 'icon-arrow' %}
-                </span>
-              </a>
-            {% endif %}
-
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-body">
-                  <div id="video-player-{{ video_id }}" class="index-video-player frame frame--16x9" data-video-player data-video-id="{{ video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
-                    <div class="video-player__embed" data-video-player-embed></div>
-                  </div>
-
-                  {% if cta_title != blank and cta_url != blank%}
-                    <a class="btn btn-link product-link d-lg-block d-none"href="{{ cta_url }}">
-                      {{ cta_title }}
-                      <span class="btn__ui">
-                        {% include 'icon-arrow' %}
-                      </span>
-                    </a>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
         {% endif %}
       </div>
     </div>
   </div>
 </div>
+
+<div class="modal modal--video fade" id="video-modal-{{ section.id }}" data-video-modal>
+  <span class="video-eyebrow d-lg-none d-block">Video</span>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    {% include 'icon-close' %}
+  </button>
+
+  {% if cta_title != blank and cta_url != blank%}
+    <a class="btn btn-link product-link d-lg-block d-none"href="{{ cta_url }}">
+      {{ cta_title }}
+      <span class="btn__ui">
+        {% include 'icon-arrow' %}
+      </span>
+    </a>
+  {% endif %}
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="video-player-{{ video_id }}" class="index-video-player frame frame--16x9" data-video-player data-video-id="{{ video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
+          <div class="video-player__embed" data-video-player-embed></div>
+        </div>
+
+        {% if cta_title != blank and cta_url != blank%}
+          <a class="btn btn-link product-link d-lg-none d-block"href="{{ cta_url }}">
+            {{ cta_title }}
+            <span class="btn__ui">
+              {% include 'icon-arrow' %}
+            </span>
+          </a>
+        {% endif %}
+        {% if header_position == 'bottom' %}
+          {{ video_header }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 {% schema %}
   {
