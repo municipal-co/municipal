@@ -229,7 +229,7 @@
     {% if product_default_badge == blank %}
       {% for tag in product.tags %}
         {% if tag contains 'Badge:' or tag contains 'badge:'%}
-          {% assign product_default_badge = tag | remove: 'Badge:' | remove: 'badge' %}
+          {% assign product_default_badge = tag | remove: 'Badge:' | remove: 'badge:' %}
           {% break %}
         {% endif %}
       {% endfor %}

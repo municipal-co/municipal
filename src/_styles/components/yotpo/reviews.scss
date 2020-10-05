@@ -314,7 +314,7 @@
 
         .yotpo-bottomline-box-1.yotpo-stars-and-sum-reviews .yotpo-stars:after {
           content: "Don’t believe the hype - believe the reviews";
-          font-size: large-vw($h2-font-size-mobile, $h2-font-size) !important;
+          font-size: large-vw($h2-font-size-mobile, 120px) !important; //Previously H2 font size on the right of the parentheses
           font-family: $headings-font-family!important;
           text-transform: uppercase;
           line-height: large-vw(45px, 125px) !important;

@@ -1,10 +1,5 @@
 .collection-section {
-  padding-bottom: large-vw(100px ,150px);
   border-bottom: solid 4px $black;
-
-  @include media-breakpoint-down('md') {
-    padding-bottom: 35px;
-  }
 
   & + & {
     padding-top: large-vw(40px ,60px);
@@ -27,7 +22,7 @@
   }
 
   .collection-section__description {
-    margin-bottom: large-vw(28px, 145px);
+    margin-bottom: large-vw(28px, 80px);
     line-height: large-vw(30px, 65px);
     @include media-breakpoint-down('md') {
       margin-bottom: 28px;
