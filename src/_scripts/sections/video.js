@@ -14,13 +14,15 @@ export default class VideoSection extends BaseSection {
     super(container, 'video');
     this.$container = $(container);
     this.$videoCover = $(selectors.videoCover, this.$container);
+    this.videoTarget = this.$videoCover.data('target');
+    this.$modal = $(this.videoTarget);
 
     if ($(selectors.videoPlayer).length) {
-      this.player = new VideoPlayer($(selectors.videoPlayer, this.$container));
+      this.player = new VideoPlayer($(selectors.videoPlayer, this.$modal));
     }
 
-    $(selectors.videoModal, this.$container).on('show.bs.modal', this.playVideo.bind(this));
-    $(selectors.videoModal, this.$container).on('hide.bs.modal', this.stopVideo.bind(this));
+    $(selectors.videoModal).on('show.bs.modal', this.playVideo.bind(this));
+    $(selectors.videoModal).on('hide.bs.modal', this.stopVideo.bind(this));
 
     this.$videoCover.on('mouseenter', this.onVideoEnter.bind(this));
     this.$videoCover.on('click', this.onVideoClick.bind(this));
@@ -28,7 +30,8 @@ export default class VideoSection extends BaseSection {
 
   onVideoClick(e) {
     e.preventDefault();
-    $(selectors.videoModal, this.$container).modal('show');
+    const $target = $(selectors.videoModal).data('target');
+    $($target).modal('show');
   }
 
   playVideo(e) {

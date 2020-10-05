@@ -43,6 +43,10 @@
   {% assign show_reviews = false %}
 {% endif %}
 
+{% if title_tag == blank %}
+  {% assign title_tag = 'h3' %}
+{% endif %}
+
 {% if reverse_card == true %}
   {% assign card_classes = "card--reverse" %}
 {% endif %}
@@ -138,9 +142,9 @@
           </div>
         {% endif %}
 
-        <h3 class="product-card__info-title">
+        <{{title_tag}} class="product-card__info-title">
           <a href="{{ product_url }}">{{ card_product.title }}</a>
-        </h3>
+        </{{title_tag}}>
 
         {% if show_colors %}
 

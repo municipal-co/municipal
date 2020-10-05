@@ -111,6 +111,16 @@
     }
   }
 
+  .video-player__cover-alt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $white;
+    width: 90%;
+    z-index: -1;
+  }
+
   .video-player__cover-play {
     display: block;
     width: large-vw(80px, 180px);
