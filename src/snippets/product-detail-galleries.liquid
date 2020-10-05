@@ -106,7 +106,7 @@
                               {% assign video_thumbnail_index = video_position_array[index] | plus: 0 %}
                               {% if video_thumbnail_index == next_image_counter %}
                                 {% if color_name_array[index] == color or color_name_array[index] == blank %}
-                                  <div class="product-gallery__thumbnails-slide swiper-slide {%if image_counter == 0 %} swiper-slide-thumb-active{% endif %}" data-product-gallery-thumbnails-slide>
+                                  <div class="product-gallery__thumbnails-slide swiper-slide {%if image_counter == 0 %} swiper-slide-thumb-active{% endif %}" data-product-gallery-thumbnails-slide data-play-gallery-video>
                                     <img src="{{image_loading_placeholder}}"
                                         data-src="{{ video_thumbnail_array[index] }}"
                                         class="swiper-lazy">
@@ -140,7 +140,7 @@
                         {% assign video_thumbnail_index = video_position_array[index] | plus: 0 %}
                         {% if video_thumbnail_index > next_image_counter %}
                           {% if color_name_array[index] == color or color_name_array[index] == blank %}
-                            <div class="product-gallery__thumbnails-slide swiper-slide {%if image_counter == 0 %} swiper-slide-thumb-active{% endif %}" data-product-gallery-thumbnails-slide>
+                            <div class="product-gallery__thumbnails-slide swiper-slide {%if image_counter == 0 %} swiper-slide-thumb-active{% endif %}" data-product-gallery-thumbnails-slide data-play-gallery-video>
                               <img src="{{image_loading_placeholder}}"
                                   data-src="{{ video_thumbnail_array[index] }}"
                                   class="swiper-lazy">
@@ -181,7 +181,7 @@
                               {% if video_position == image_index  %}
                                 {% if color_name_array[index] contains color or color_name_array[index] == blank %}
                                 <div class="swiper-slide">
-                                  <div class="gallery__video-container" data-video-player data-video-url="{{video_url_array[index]}}" data-video-type="vimeo" data-autopause="true" data-backgorund="true">
+                                  <div class="gallery__video-container" data-video-player data-video-url="{{video_url_array[index]}}" data-video-type="vimeo" data-autopause="true" data-background="true">
                                   </div>
                                 </div>
                                 {% assign image_index = image_index | plus: 1 %}
@@ -210,7 +210,7 @@
                         {% if video_position > image_index  %}
                           {% if color_name_array[index] contains color or color_name_array[index] == blank %}
                           <div class="swiper-slide">
-                            <div class="gallery__video-container" data-video-player data-video-url="{{video_url_array[index]}}" data-video-type="vimeo" data-autopause="true" data-backgorund="true">
+                            <div class="gallery__video-container" data-video-player data-video-url="{{video_url_array[index]}}" data-video-type="vimeo" data-autopause="true" data-background="true">
                             </div>
                           </div>
                           {% endif %}
