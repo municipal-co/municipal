@@ -1,18 +1,35 @@
 {% comment %} Define validations to display the info {% endcomment %}
+{% assign url_path = request.path | split: '/' %}
 
 {% comment %}Overview module{% endcomment %}
 {% assign overview_details = product.metafields.custom_fields["overview_details"] %}
 {% assign overview_image = product.metafields.custom_fields["overview_image"] %}
-{% assign collection_title = product.metafields.custom_fields["collection_title"] %}
+
+
 {% comment %}Product Features{% endcomment %}
 {% assign product_features = product.metafields.custom_fields["features_section"] %}
-{% assign parent_collection = collection %}
 
-{% if collection_title == blank %}
-  {% assign collection_title = parent_collection.title %}
-{% endif %}
-{% if parent_collection == blank and product.metafields.custom_fields["default_collection"] != blank %}
-  {% assign parent_collection = collections[product.metafields.custom_fields["default_collection"]] %}
+{% comment %}If the user came from a collection page, pull the collection custom fields{% endcomment %}
+{% if url_path contains 'collections' %}
+  {% assign the_collection =  url_path[2] %}
+  {% assign current_collection = collections[the_collection] %}
+
+  {% assign collection_reference =  current_collection.metafields.custom_fields["nav_collection"] %}
+  {% assign parent_collection = collections[collection_reference] %}
+  {% assign collection_title = current_collection.metafields.custom_fields["nav_collection_title"] %}
+
+{% else %}
+
+  {% assign parent_collection = collection %}
+  {% assign collection_title = product.metafields.custom_fields["collection_title"] %}
+
+  {% if collection_title == blank %}
+    {% assign collection_title = parent_collection.title %}
+  {% endif %}
+
+  {% if parent_collection == blank and product.metafields.custom_fields["default_collection"] != blank %}
+    {% assign parent_collection = collections[product.metafields.custom_fields["default_collection"]] %}
+  {% endif %}
 {% endif %}
 
 <div class="product__sticky-bar" data-product-sticky-bar>
