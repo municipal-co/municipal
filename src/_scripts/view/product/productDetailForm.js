@@ -186,7 +186,7 @@ export default class ProductDetailForm {
     if (variant !== undefined && variant !== null) {
       id = variant.id;
     } else {
-      id = $(selectors.singleOptionSelector).val();
+      id = parseInt($('option:selected', selectors.originalSelectorId).val());
     }
 
     $.each(this.productSingleObject.variants, (index, variantItem) => {
@@ -195,7 +195,7 @@ export default class ProductDetailForm {
           $bisButton.show();
           $bisButton.attr('data-variant-id', id);
           $addToCartBtn.hide();
-        } else if(backInStock === true && variant.available) {
+        } else if(backInStock === true && variantItem.available) {
           $bisButton.hide();
           $addToCartBtn.show();
         } else {
