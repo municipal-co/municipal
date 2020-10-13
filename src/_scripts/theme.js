@@ -21,7 +21,7 @@ import * as Breakpoints from './core/breakpoints';
 // Managers
 import BackgroundAnimationManager from './managers/backgroundAnimationManager';
 import SectionBlockAnimation from './managers/sectionBlockAnimation';
-//import IntersectionManager from './managers/intersectionManager';
+// import IntersectionManager from './managers/intersectionManager';
 
 // UI - Import all to enable data API
 import './ui/drawer';

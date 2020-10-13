@@ -319,7 +319,7 @@ export default class ProductDetailForm {
 
     if( badgesData[id] !== null && badgesData[id] !== '') {
       $(selectors.badge).text( badgesData[id] ).show();
-    } else if ( badgesData.default !== "" && badgesData.default !== null ) {
+    } else if ( badgesData.default !== '' && badgesData.default !== null ) {
       $(selectors.badge).text( badgesData.default ).show();
     } else {
       $(selectors.badge).text('').hide();
