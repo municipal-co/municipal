@@ -190,17 +190,18 @@ export default class ProductDetailForm {
     }
 
     $.each(this.productSingleObject.variants, (index, variantItem) => {
-
-      if (variantItem.id === id && backInStock === true && !variantItem.available) {
-        $bisButton.show();
-        $bisButton.attr('data-variant-id', id);
-        $addToCartBtn.hide();
-      } else if(variantItem.id === id && backInStock === true && variant.available) {
-        $bisButton.hide();
-        $addToCartBtn.show();
-      } else {
-        $bisButton.hide();
-        $addToCartBtn.show();
+      if(variantItem.id === id) {
+        if ( backInStock === true && !variantItem.available) {
+          $bisButton.show();
+          $bisButton.attr('data-variant-id', id);
+          $addToCartBtn.hide();
+        } else if(backInStock === true && variant.available) {
+          $bisButton.hide();
+          $addToCartBtn.show();
+        } else {
+          $bisButton.hide();
+          $addToCartBtn.show();
+        }
       }
     })
   }
