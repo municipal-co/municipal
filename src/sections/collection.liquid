@@ -84,10 +84,18 @@
                 {% assign color_available_variants = product.variants | where: color_handle, color | where: 'available'%}
                 {% for size in sizes_list %}
 
-                {% assign size_filtered_variant = color_available_variants | where: size_handle, size %}
+                  {% assign size_filtered_variant = color_available_variants | where: size_handle, size %}
                   {% if size_filtered_variant[0] != blank %}
                     {% assign default_variant = size_filtered_variant[0] %}
                     {% break %}
+                  {% endif %}
+                {% endfor %}
+
+                {% for variant in product.variants %}
+                  {% if variant[color_handle] == color %}
+                    {% if variant.available != true %}
+                      {% assign unavailable_variant = variant %}
+                    {% endif %}
                   {% endif %}
                 {% endfor %}
 
