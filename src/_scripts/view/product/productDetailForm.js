@@ -20,6 +20,8 @@ const selectors = {
   selectedOption: '[data-selected-option]',
   shippingModal: '[data-shipping-modal]',
   shippingModalTrigger: '[data-shipping-modal-trigger]',
+  badge: '[data-badge]',
+  badgesData: '[data-badges-json]',
   dotsColorContainer: '.dots--color',
   dotsContainer: '.dots',
   dot: '.dot'
@@ -114,6 +116,7 @@ export default class ProductDetailForm {
     this.updateFullDetailsLink(variant);
     this.updateColorsLink();
     this.checkVariantsAvailability();
+    this.updateBadge(variant);
 
     this.$singleOptionSelectors.trigger('chosen:updated');
 
@@ -309,4 +312,19 @@ export default class ProductDetailForm {
     evt.preventDefault();
     this.$shippingModal.modal('show');
   }
+
+  updateBadge(variant) {
+    const id = variant.id;
+    const badgesData = JSON.parse($(selectors.badgesData).html());
+
+    if( badgesData[id] !== null && badgesData[id] !== '') {
+      $(selectors.badge).text( badgesData[id] ).show();
+    } else if ( badgesData.default !== "" && badgesData.default !== null ) {
+      $(selectors.badge).text( badgesData.default ).show();
+    } else {
+      $(selectors.badge).text('').hide();
+    }
+
+  }
+
 }

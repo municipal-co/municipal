@@ -4,6 +4,7 @@
   {% assign feature_title_array = product.metafields.custom_fields["feature_title"] | split: separator %}
   {% assign feature_copy_array = product.metafields.custom_fields["feature_copy"] | split: separator %}
   {% assign feature_image_array = product.metafields.custom_fields["feature_image"] | split: separator %}
+  {% assign feature_image_alt_array = product.metafields.custom_fields["feature_image_alt"] | split: separator %}
   {% assign fc_keys = product.metafields.custom_fields["features_section"] | split: "," %}
   {% assign slides_counter = 0 %}
 
@@ -27,6 +28,7 @@
                 {% assign title = feature_title_array[index] %}
                 {% assign copy = feature_copy_array[index] %}
                 {% assign image = feature_image_array[index] %}
+                {% assign image_alt = feature_image_alt_array[index] %}
                 {% if title != blank and image != blank %}
                   {% assign slides_counter = slides_counter | plus: 1 %}
                   <div class="feature-slide swiper-slide">
@@ -34,7 +36,7 @@
                       {% if eyebrow != blank %}
                         <span class="h5 features-slide__eyebrow d-none d-lg-block">{{eyebrow}}</span>
                       {% endif %}
-                      <h3 class="feature-slide__title">{{ title }}</h3>
+                      <h2 class="feature-slide__title">{{ title }}</h2>
                       {% if copy != blank %}
                         <div class="feature-slide__copy p2">{{ copy }}</div>
                       {% endif %}
@@ -44,7 +46,8 @@
                       <div class="feature-slide__image frame frame--1x1">
                         {% render 'image_tag'
                                   image: image,
-                                  object_fit: 'cover'
+                                  object_fit: 'cover',
+                                  image_alt: image_alt
                         %}
                       </div>
                     </div>

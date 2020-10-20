@@ -5,7 +5,7 @@
         {% include 'icon-close' %}
         <span class="sr-only">Close</span>
       </a>
-      <h5 class="drawer__header-title in">{{ section.settings.header }}</h5>
+      <div class="drawer__header-title h5 in">{{ section.settings.header }}</div>
     </div>
     <div class="drawer__body">
       <div class="drawer__body-contents">
@@ -15,13 +15,13 @@
               {% if section.settings.title != blank %}
                 <div class="h5">{{ section.settings.title }}</div>
               {% else %}
-                <h5>{{ 'customer.login.title' | t | newline_to_br }}</h5>
+                <div class="h5">{{ 'customer.login.title' | t | newline_to_br }}</div>
               {% endif %}
 
               {% if section.settings.subtitle != blank %}
                 <div class="h6">{{ section.settings.subtitle }}</div>
               {% else %}
-                <h6>{{ 'customer.login.subtitle' | t }}</h6>
+                <div class="h6">{{ 'customer.login.subtitle' | t }}</div>
               {% endif %}
 
               {% include 'customer-login-form',
@@ -33,25 +33,25 @@
               {% if section.settings.title != blank %}
                 <div class="h5">{{ section.settings.recover_title }}</div>
               {% else %}
-                <h5>{{ 'customer.recover_password.title' | t | newline_to_br }}</h5>
+                <div class="h5">{{ 'customer.recover_password.title' | t | newline_to_br }}</div>
               {% endif %}
 
               {% if section.settings.recover_subtitle != blank %}
                 <div class="h6">{{ section.settings.recover_subtitle }}</div>
               {% else %}
-                <h6>{{ 'customer.recover_password.subtext' | t }}</h6>
+                <div class="h6">{{ 'customer.recover_password.subtext' | t }}</div>
               {% endif %}
 
               {% include 'customer-recover-password-form' %}
             </div>
 
             <div id="CustomerRegisterForm" class="hide">
-              <h5>{{ 'customer.register.title' | t | newline_to_br }}</h5>
+              <div class="h5">{{ 'customer.register.title' | t | newline_to_br }}</div>
 
               {% if section.settings.register_subtitle != blank %}
-                <div class="h6">{{ section.settings.register_subtitle }}</div>
+                <div class="h5">{{ section.settings.register_subtitle }}</div>
               {% else %}
-                <h6>{{ 'customer.register.subtitle' | t }}</h6>
+                <div class="h6">{{ 'customer.register.subtitle' | t }}</div>
               {% endif %}
 
               {% include 'customer-register-form',

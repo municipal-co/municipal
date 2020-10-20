@@ -306,9 +306,9 @@ $line-height-base: 1.5 !default;
 $letter-spacing-base: 0.01em !default;
 
 // Headings
-$h1-font-size: 150px;
-$h2-font-size: 120px;
-$h3-font-size: 100px;
+$h1-font-size: 5.5vw;
+$h2-font-size: 5.5vw;
+$h3-font-size: 3.5vw;
 $h4-font-size: 75px;
 $h5-font-size: 40px;
 $h6-font-size: 20px;
@@ -334,7 +334,7 @@ $headings-line-height: 1.2 !default;
 $headings-color: null !default;
 
 // Mobile headings
-$h1-font-size-mobile: 40px;
+$h1-font-size-mobile: 36px;
 $h2-font-size-mobile: 40px;
 $h3-font-size-mobile: 35px;
 $h4-font-size-mobile: 35px;
@@ -1179,15 +1179,15 @@ $dot-spacing: 6px;
 $dot-padding: 2px;
 $dot-bottom-margin: $dot-spacing;
 $dot-small-font-size: $font-size-sm;
-$dot-small-border-width: 1px;
+$dot-small-border-width: 2px;
 $dot-small-border-radius: 0;
 $dot-small-border-color: $dot-border-color;
 $dot-small-active-border-color: $black;
-$dot-small-size: 38px;
-$dot-small-spacing: 0;
-$dot-small-padding: 0;
+$dot-small-size: 45px;
+$dot-small-spacing: 6px;
+$dot-small-padding: 3px;
 $dot-small-bottom-margin: $dot-spacing;
-$dot-small-font-size: $font-size-xs;
+$dot-small-font-size: 14px;
 
 // #Quantity Adjuster
 $quantity-adjuster-height: 40px;

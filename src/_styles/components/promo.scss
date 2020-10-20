@@ -113,14 +113,14 @@ $type-first-col-widths-reverse: reverse($type-first-col-widths);
 }
 
 .promo__eyebrow {
-  font-size: large-vw(26px, 50px);
+  font-size: 2vw;
   text-transform: none;
   margin-bottom: large-vw(22px, 56px);
   display: inline-block;
   position: relative;
 
   @include media-breakpoint-down('md') {
-    font-size: 26px;
+    font-size: 18px;
     margin-bottom: 22px;
   }
 

@@ -4,11 +4,14 @@
   h_background_color: section.settings.background_color,
   h_handwritten_text_image: section.settings.handwritten_text_image,
   h_title: section.settings.title,
+  h_title_tag: section.settings.title_tag,
   h_title_color: section.settings.title_color,
   h_image: section.settings.image,
+  h_mobile_image: section.settings.image_mobile,
   h_video: section.settings.video_url,
   h_cta_text: section.settings.cta_text,
-  h_cta_url: section.settings.cta_url
+  h_cta_url: section.settings.cta_url,
+  h_content_position: section.settings.content_position
  %}
 
 {% schema %}
@@ -19,6 +22,38 @@
       {
         "type": "header",
         "content": "Content"
+      },
+      {
+        "type": "select",
+        "id": "title_tag",
+        "label": "Module Title Tag",
+        "options": [
+          {
+            "value": "h1",
+            "label": "h1"
+          },
+          {
+            "value": "h2",
+            "label": "h2"
+          },
+          {
+            "value": "h3",
+            "label": "h3"
+          },
+          {
+            "value": "h4",
+            "label": "h4"
+          },
+          {
+            "value": "h5",
+            "label": "h5"
+          },
+          {
+            "value": "h6",
+            "label": "h6"
+          }
+        ],
+        "default": "h2"
       },
       {
         "type": "select",
@@ -75,14 +110,29 @@
         "content": "Design"
       },
       {
+        "type": "select",
+        "id": "content_position",
+        "label": "Image Position",
+        "options": [
+          {"label": "Image Above Content", "value":"true"},
+          {"label": "Image Below Content", "value":"false"}
+        ]
+      },
+      {
         "type": "header",
-        "content": "Image",
-        "info": "Main image will always be used."
+        "content": "Image"
       },
       {
         "type": "image_picker",
         "id": "image",
-        "label": "Main Image"
+        "label": "Main Image",
+        "info": "Recommended Size: 1440w x 810h (double for retina)"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Mobile Image",
+        "info": "Recommended Size: 485w x 437h (double for retina)"
       },
       {
         "type": "header",

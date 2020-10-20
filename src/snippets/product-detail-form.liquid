@@ -24,11 +24,15 @@
   {% assign current_variant = product.selected_or_first_available_variant %}
 {% endif %}
 
-{% capture tag_html %}
-  {% if product != blank %}
+{% capture tag_text %}
+  {% if current_variant.metafields.custom_fields['badge'] != blank %}
+    {{ current_variant.metafields.custom_fields['badge'] }}
+  {% elsif product.metafields.custom_fields['badge'] != blank %}
+    {{ product.metafields.custom_fields['badge'] }}
+  {% else %}
     {% for tag in product.tags %}
       {% if tag contains 'Badge:' or tag contains 'badge:'%}
-        <span class="badge">{{ tag | remove: 'Badge:' | remove: 'badge:' }}</span>
+        {{ tag | remove: 'Badge:' | remove: 'badge:' }}
         {% break %}
       {% endif %}
     {% endfor %}
@@ -36,12 +40,11 @@
 {% endcapture %}
 
 <div class="product__form {% if product.type == 'Gift Card' %}product__form--gift-card{% endif %}" data-product-detail-form>
-
-  {% if tag_html != blank %}
-    <div class="product__badge-row">
-      {{ tag_html }}
-    </div>
-  {% endif %}
+  <div class="product__badge-row">
+    <span class="badge" data-badge {% unless tag_text != blank %} style="display:none;" {% endunless %}>
+      {{ tag_text }}
+    </span>
+  </div>
 
   <h1 class="h5 product__title">{{ product.title }}</h1>
 
@@ -220,6 +223,24 @@
   {% unless product == empty %}
     <script type="application/json" data-product-json>
     {% include 'product-json', product: product %}
+    </script>
+
+    {% assign product_default_badge = product.metafields.custom_fields['badge'] %}
+    {% if product_default_badge == blank %}
+      {% for tag in product.tags %}
+        {% if tag contains 'Badge:' or tag contains 'badge:'%}
+          {% assign product_default_badge = tag | remove: 'Badge:' | remove: 'badge:' %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <script type="application/json" data-badges-json>
+      {
+        "default": {{ product_default_badge | json }},
+      {% for variant in product.variants %}
+        "{{ variant.id }}": {{ variant.metafields.custom_fields['badge'] | json }} {% unless forloop.last %} ,{% endunless %}
+      {% endfor %}
+      }
     </script>
   {% endunless %}
 </div>

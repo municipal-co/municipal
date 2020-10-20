@@ -14,6 +14,7 @@
               p_image_small: { image }
               p_frame_ratio: { string } - optional - see frames.scss
               p_frame_ratio_small: { string } - optional - see frames.scss - defaults to frame_ratio if set
+              p_title_tag: { string } - Optional - Defaults to h2
               p_title: { string } - optional
               p_text: { string } - optional
               p_cta_url: { url }
@@ -33,6 +34,10 @@
 
 {% if p_frame_ratio != blank and p_frame_ratio_small == blank %}
   {% assign p_frame_ratio_small = p_frame_ratio %}
+{% endif %}
+
+{% if p_title_tag == blank %}
+  {% assign p_title_tag = 'h2' %}
 {% endif %}
 
 <style type="text/css">
@@ -77,41 +82,47 @@
   {% endif %}
 {% endcapture %}
 
+{% capture promo_image %}
+  {% if p_frame_ratio != blank %}
+    <div class="frame
+                frame--{{ p_frame_ratio_small }}
+                frame--lg-{{ p_frame_ratio }}"
+          role="img"
+          aria-label="{{ p_image.alt }}">
+    </div>
+  {% else %}
+    {% if p_image != blank %}
+      {% if p_image_small != blank %}
+        <div class="d-none  d-md-block frame frame--3x4">
+          {%- render 'image_tag'
+            image: p_image,
+            object_fit: 'cover'  -%}
+        </div>
 
+        <div class="d-block d-md-none frame frame--3x4">
+          {%- render 'image_tag'
+            image: p_image_small,
+            object_fit: 'cover'  -%}
+        </div>
+      {% else %}
+        <div class="frame frame--3x4">
+          {%- render 'image_tag'
+            image: p_image,
+            object_fit: 'cover'  -%}
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endcapture %}
 
 <div id="promo-{{ p_id }}" class="{{- promo_classes -}} row no-gutters row-adjusted" data-section-type="promo" data-animated-background="{{ p_background_color }}">
   <div class="promo__col promo__col--image col-20 col-lg-10 offset-lg-1">
     <div class="promo__col-inner">
       <div class="promo__img-wrapper">
-        {% if p_frame_ratio != blank %}
-          <div class="frame
-                      frame--{{ p_frame_ratio_small }}
-                      frame--lg-{{ p_frame_ratio }}"
-               role="img"
-               aria-label="{{ p_image.alt }}">
-          </div>
+        {% if p_cta_url != blank %}
+          <a href="{{p_cta_url}}">{{ promo_image }}</a>
         {% else %}
-          {% if p_image != blank %}
-            {% if p_image_small != blank %}
-              <div class="d-none  d-md-block frame frame--3x4">
-                {%- render 'image_tag'
-                 image: p_image,
-                 object_fit: 'cover'  -%}
-              </div>
-
-              <div class="d-block d-md-none frame frame--3x4">
-                {%- render 'image_tag'
-                 image: p_image_small,
-                 object_fit: 'cover'  -%}
-              </div>
-            {% else %}
-              <div class="frame frame--3x4">
-                {%- render 'image_tag'
-                 image: p_image,
-                 object_fit: 'cover'  -%}
-              </div>
-            {% endif %}
-          {% endif %}
+          {{ promo_image }}
         {% endif %}
 
         {% if p_secondary_icon != blank %}
@@ -128,7 +139,7 @@
     <div class="promo__col-inner">
       <div class="promo__text-wrapper {% if p_light == true %}light-text{% endif %}">
         {% if p_eyebrow != blank %}
-          <h4 class="promo__eyebrow">
+          <span class="promo__eyebrow h4">
             {{ p_eyebrow }}
 
             {% if p_eyebrow_icon != blank %}
@@ -138,10 +149,16 @@
                      object_fit: 'contain'  -%}
               </div>
             {% endif %}
-          </h4>
+          </span>
         {% endif %}
         {% if p_title != blank %}
-          <h1 class="promo__title text-{{ p_title_color }}">{{ p_title }}</h1>
+          {% if p_cta_url != blank %}
+            <{{p_title_tag}} class="promo__title h1">
+              <a class="text-{{p_title_color}}" href="{{p_cta_url}}">{{ p_title }}</a>
+            </{{p_title_tag}}>
+          {% else %}
+            <{{ p_title_tag }} class="promo__title text-{{p_title_color}} h1"> {{ p_title }} </{{ p_title_tag }}>
+          {% endif %}
         {% endif %}
         {% if p_text != blank %}
           <div class="promo__text p2">{{ p_text }}</div>

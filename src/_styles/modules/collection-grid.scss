@@ -59,11 +59,11 @@
   .collection-tile {
     width: 50%;
     text-align: center;
-    
+
     @include media-breakpoint-down('md') {
       width: 100%;
     }
-    
+
     &:first-child {
       margin-right: large-vw(35px, 80px);
 
@@ -79,6 +79,7 @@
     text-transform: none;
     color: $yellow;
     margin: 0;
+    display: block;
   }
 
   .collection-tile__image {
@@ -88,7 +89,7 @@
       padding-bottom: 12px;
     }
   }
-  
+
   .collection-tile__image img {
     position: absolute;
     top: 0;

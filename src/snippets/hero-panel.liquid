@@ -6,9 +6,13 @@
   {% endif %}
 </style>
 
+{% if h_title_tag == blank %}
+  {% assign h_title_tag = 'h2' %}
+{% endif %}
+
 <div class="row no-gutters justify-content-center row-adjusted" data-animated-background="{{ h_background_color }}" data-section-type="hero" data-section-id="{{h_id}}">
   <div class="col-md-24 col-lg-22">
-    <div class="hero__content">
+    <div class="hero__content {% if h_content_position == 'true' %}hero__content--index{% endif %}">
       <div class="hero__header">
         {% if h_handwritten_text_image != blank %}
           <div class="hero__handscript-svg">
@@ -17,19 +21,25 @@
             %}
           </div>
         {% endif %}
-        {%- if h_title != blank -%}
-          <h1 class="hero__title text-center text-{{h_title_color}}"> {{ h_title }} </h1>
-        {%- endif -%}
+        {% if h_title != blank %}
+          {% if h_cta_url != blank %}
+            <{{h_title_tag}} class="hero__title text-center">
+              <a class="text-{{h_title_color}}" href="{{h_cta_url}}">{{ h_title }}</a>
+            </{{h_title_tag}}>
+          {% else %}
+            <h1 class="hero__title text-center text-{{h_title_color}}"> {{ h_title }} </h1>
+          {% endif %}
+        {% endif %}
       </div>
       {% if h_cta_text != blank and h_cta_url != blank %}
-      <div class="hero__button-container">
-        <a href="{{h_cta_url}}" class="btn btn-white">
-          {{h_cta_text}}
-          <span class="btn__ui">
-            {% include 'icon-arrow' %}
-          </span>
-        </a>
-      </div>
+        <div class="hero__button-container">
+          <a href="{{h_cta_url}}" class="btn btn-white">
+            {{h_cta_text}}
+            <span class="btn__ui">
+              {% include 'icon-arrow' %}
+            </span>
+          </a>
+        </div>
       {% endif %}
       <div class="hero__media-container">
         {%- if h_video != blank -%}
@@ -43,12 +53,20 @@
             </div>
           </div>
         {%- elsif h_image != blank -%}
-          <div class="hero__image frame frame--16x9">
-            {%- render 'image_tag'
+          {% if h_cta_url != blank %}
+            <a href="{{h_cta_url}}">
+          {% endif %}
+            <div class="hero__image">
+              {% render 'image_tag'
                 image: h_image,
-                object_fit: 'cover'
-                -%}
-          </div>
+                mobile_image: h_mobile_image,
+                object_fit: 'cover',
+                fallback_layout: true
+              %}
+            </div>
+          {% if h_cta_url != blank %}
+          </a>
+          {% endif %}
         {%- endif -%}
       </div>
     </div>

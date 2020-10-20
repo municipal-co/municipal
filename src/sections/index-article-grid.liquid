@@ -18,7 +18,9 @@
 
 <div class="container">
 
-  {% include 'content-header', ch_title: section.settings.title %}
+  {% include 'content-header',
+     ch_title: section.settings.title
+     ch_title_tag: section.settings.title_tag %}
 
   {% if content_grid_html != blank %}
     <div class="content-grid content-grid--centered content-grid--1-col content-grid--lg-{{ article_count }}-col">
@@ -40,6 +42,38 @@
     "name": "Article Grid",
     "max_blocks": 3,
     "settings": [
+      {
+        "type": "select",
+        "id": "title_tag",
+        "label": "Module Title Tag",
+        "options": [
+          {
+            "value": "h1",
+            "label": "h1"
+          },
+          {
+            "value": "h2",
+            "label": "h2"
+          },
+          {
+            "value": "h3",
+            "label": "h3"
+          },
+          {
+            "value": "h4",
+            "label": "h4"
+          },
+          {
+            "value": "h5",
+            "label": "h5"
+          },
+          {
+            "value": "h6",
+            "label": "h6"
+          }
+        ],
+        "default": "h2"
+      },
       {
         "type": "text",
         "id": "title",

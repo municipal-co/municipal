@@ -11,6 +11,7 @@
               ti_light_text: { boolean } - defaults to false
               ti_title_color: { string }
               ti_eyebrow: { string }
+              ti_title_tag: { string } - Defaults to h2
               ti_title: { string }
               ti_text: { string }
               ti_cta_text: { string }
@@ -36,6 +37,10 @@
   {% assign button_design = "white" %}
 {% endif %}
 
+{% if ti_title_tag == blank %}
+  {% assign ti_title_tag = 'h2' %}
+{% endif %}
+
 <div class="row no-gutters justify-content-center row-adjusted {% if ti_light_text == true %}light-text{% endif %}" data-animated-background="{{ ti_background_color }}" data-section-type="tiled-image" data-section-id="{{ ti_id }}">
   <div class="col-20 col-lg-22">
     <div class="tiled-image__content">
@@ -44,11 +49,18 @@
 
           <div class="tiled-image__header">
             {%- if ti_eyebrow != blank -%}
-              <h5 class="tiled-image__eyebrow text-{{ ti_eyebrow_color }}">{{ ti_eyebrow }}</h5>
+              <span class="tiled-image__eyebrow text-{{ ti_eyebrow_color }} h5">{{ ti_eyebrow }}</span>
             {%- endif -%}
 
             {%- if ti_title != blank -%}
-              <h2 class="tiled-image__title h1 text-{{ ti_title_color }}"> {{ ti_title }} </h2>
+              {% if ti_cta_url != blank %}
+                <{{ti_title_tag}} class="tiled-image__title h1">
+                  <a class="text-{{ti_title_color}}" href="{{ti_cta_url}}">{{ ti_title }}</a>
+                </{{ti_title_tag}}>
+              {% else %}
+                <{{ ti_title_tag }} class="tiled-image__title text-{{ti_title_color}} h1"> {{ ti_title }} </{{ ti_title_tag }}>
+              {% endif %}
+
             {%- endif -%}
           </div>
 
@@ -62,8 +74,15 @@
           {%- endif -%}
           {%- if ti_right_image != blank -%}
             <div class="tiled-image__right-image text-right">
-              {%- render 'image_tag'
-                image: ti_right_image -%}
+              {% if ti_cta_url != blank %}
+                <a href="{{ti_cta_url}}">
+                  {%- render 'image_tag'
+                    image: ti_right_image -%}
+                </a>
+              {% else %}
+                {%- render 'image_tag'
+                  image: ti_right_image -%}
+              {% endif %}
             </div>
           {%- endif -%}
         </div>
@@ -73,8 +92,15 @@
         <div class="col-md-14">
           {%- if ti_left_image != blank -%}
             <div class="tiled-image__left-image">
-              {%- render 'image_tag'
-                image: ti_left_image -%}
+              {% if ti_cta_url != blank %}
+                <a href="{{ti_cta_url}}">
+                  {%- render 'image_tag'
+                    image: ti_left_image -%}
+                </a>
+              {% else %}
+                {%- render 'image_tag'
+                  image: ti_left_image -%}
+              {% endif %}
             </div>
           {%- endif -%}
         </div>
