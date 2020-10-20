@@ -149,7 +149,7 @@
         {% if show_colors %}
 
           {% capture color_html %}
-            {% include 'product-colors-counter', product: product, current_color: color %}
+            {% include 'product-colors-counter', product: card_product current_color: color %}
           {% endcapture %}
 
           {% if color_html != blank %}
