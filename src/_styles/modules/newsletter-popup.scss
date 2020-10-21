@@ -197,6 +197,8 @@
       background-image: none !important;
       padding: 10px 0px !important;
       height: large-vw(35px, 70px) !important;
+      -webkit-appearance: none !important;
+      -webkit-border-radius: 0 !important;
 
       @include media-breakpoint-down('md') {
         border-bottom: solid 2px $black !important;
