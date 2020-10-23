@@ -112,6 +112,15 @@
 
               <div class="content-grid" data-collection-grid="{{the_collection.handle}}" data-collection-url="{{the_collection.url}}">
                 {% assign printed_cards = 0 %}
+                {% if the_collection.metafields.custom_fields['show_new_colors'] == 1 %}
+                  {% assign show_news_colors_only =  true %}
+                {% endif %}
+                {% if the_collection.metafields.custom_fields['hide_sold_out_colors'] == 1 %}
+                  {% assign hide_sold_out_colors = true %}
+                {% endif %}
+                {% if the_collection.metafields.custom_fields['limit_colors'] != blank %}
+                  {% assign limited_colors = the_collection.metafields.custom_fields['limit_colors'] %}
+                {% endif %}
                 {% for product in the_collection.products %}
 
                   {% assign has_color_option = false %}
@@ -170,20 +179,36 @@
                       {% endfor %}
                     {% endif %}
 
-                    {% capture product_card %}
-                      <div class="content-grid__item {% if hide_card %} hide{% endif %}" data-grid-item>
-                        {% include 'product-card',
-                           card_product: product,
-                           variant: default_variant,
-                           unavailable_variant: unavailable_variant,
-                           show_sizes: true,
-                           show_colors: true,
-                           show_tag: true,
-                           color: color,
-                           title_tag: 'h2' %}
+                    {%- comment -%}Checks if any collection filter is enabled{%- endcomment -%}
+                    {% if show_news_colors_only == true and default_variant.metafields.custom_fields.new_variant != 1 %}
+                      {% assign hide_card = true %}
+                    {% endif %}
 
-                        {% assign printed_cards = printed_cards | plus: 1 %}
-                      </div>
+                    {% if hide_sold_out_colors == true and default_variant.metafields.custom_fields.sold_out_variant == 1 %}
+                      {% assign hide_card = true %}
+                    {% endif %}
+
+                    {% if limited_colors != blank %}
+                      {% unless limited_colors contains color %}
+                        {% assign hide_card = true %}
+                      {% endunless %}
+                    {% endif %}
+
+                    {% capture product_card %}
+                      {% unless hide_card %}
+                        <div class="content-grid__item" data-grid-item>
+                          {% include 'product-card',
+                              card_product: product,
+                              variant: default_variant,
+                              unavailable_variant: unavailable_variant,
+                              show_sizes: true,
+                              show_colors: true,
+                              show_tag: true,
+                              color: color %}
+
+                          {% assign printed_cards = printed_cards | plus: 1 %}
+                        </div>
+                      {% endunless %}
                     {% endcapture %}
 
                     {% if show_promo == true and printed_cards == promo_card_position and promo_card_image != blank %}
