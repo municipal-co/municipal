@@ -1,14 +1,32 @@
-{% comment %} Define validations to display the info {% endcomment %}
-
 {% comment %}Overview module{% endcomment %}
 {% assign overview_details = product.metafields.custom_fields["overview_details"] %}
 {% assign overview_image = product.metafields.custom_fields["overview_image"] %}
+
+
 {% comment %}Product Features{% endcomment %}
 {% assign product_features = product.metafields.custom_fields["features_section"] %}
-{% assign parent_collection = collection %}
 
-{% if parent_collection == blank and product.metafields.custom_fields["default_collection"] != blank %}
+{% comment %}If the user came from a collection page, pull the collection custom fields{% endcomment %}
+{% if collection != blank %}
+
+  {% assign parent_collection = collections[collection.metafields.custom_fields["nav_collection"]] %}
+
+  {% if collection.metafields.custom_fields["nav_collection_title"] == blank %}
+    {% assign collection_title = parent_collection.title %}
+  {% else %}
+    {% assign collection_title = collection.metafields.custom_fields["nav_collection_title"] %}
+  {% endif %}
+
+{% else %}
+
   {% assign parent_collection = collections[product.metafields.custom_fields["default_collection"]] %}
+
+  {% if product.metafields.custom_fields["collection_title"] == blank %}
+    {% assign collection_title = parent_collection.title %}
+  {% else %}
+    {% assign collection_title = product.metafields.custom_fields["collection_title"] %}
+  {% endif %}
+
 {% endif %}
 
 <div class="product__sticky-bar" data-product-sticky-bar>
@@ -18,7 +36,7 @@
         {% if parent_collection != blank %}
           <div class="sticky-bar__submenu">
             <a href="#" data-toggle-collection-grid>
-              {{ product.title }}
+              {{ collection_title }}
               {% include 'icon-caret-down' %}
             </a>
           </div>
@@ -63,7 +81,7 @@
           {% include 'icon-close' %}
           <span class="sr-only">Close</span>
         </a>
-        <span class="drawer__header-title h5">{{ product.title }}</span>
+        <span class="drawer__header-title h5">{{ collection_title }}</span>
       </div>
       <div class="drawer__body">
         <div class="drawer__body-contents">
