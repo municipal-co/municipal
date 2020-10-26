@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { throttle } from 'throttle-debounce';
 import Swiper from 'swiper';
+import VimeoPlayer from '@vimeo/player';
 
 const selectors = {
   productGallery: '[data-product-gallery]',
@@ -11,7 +12,10 @@ const selectors = {
   currentThumbnail: '[data-current-thumbnail]',
   zoomInIcon: '[data-zoom-in-icon]',
   zoomOutIcon: '[data-zoom-out-icon]',
-  zoomItem: '[data-zoom-item]'
+  zoomItem: '[data-zoom-item]',
+  // Slider video
+  videoContainer: '[data-video-player]',
+  playVideo: '[data-play-gallery-video]'
 };
 
 const classes = {
@@ -36,6 +40,8 @@ class ProductDetailGallery {
     this.$thumbnails = this.$el.find(selectors.productGalleryThumbnails);
     this.optionValue = this.$el.data('option-value');
     this.$zoomItem = $(selectors.zoomItem);
+    this.playButton = this.$el.find($(selectors.playVideo));
+    this.videoPlayers = [];
 
     // Look for element with the initialSlide selector. Commented due to removal of the feature, uncomment if needed.
     // const initialSlide = this.$slideshow.find(selectors.initialSlide).length ? this.$slideshow.find(selectors.initialSlide).index() : 0;
@@ -105,6 +111,9 @@ class ProductDetailGallery {
     this.$slideshow.on('mousemove', this.locateZoomIcon.bind(this));
     this.$zoomItem.on('mousemove', this.locateZoomOutIcon.bind(this));
 
+    if (this.playButton.length) {
+      this.playButton.on('click', this.onPlaySlideVideo.bind(this));
+    }
   }
 
   // Adjust gallery container to match the main gallery so the thumbnails space gets calculated properly.
@@ -181,6 +190,17 @@ class ProductDetailGallery {
     $zoomTarget.trigger('zoom.destroy');
   }
 
+  // This is plays the gallery video when the user clicks on the play thumbnail
+  onPlaySlideVideo() {
+    const sw = this.swiper;
+    const currentPlayer = this.getPlayerBySlide($(sw.slides[sw.activeIndex]));
+
+    if(currentPlayer !== undefined) {
+      currentPlayer.play();
+      currentPlayer.playing = true;
+    }
+  }
+  
   onSlideShowInit() {
     const sw = this.swiper;
     this.initHoverZoom($(sw.slides[sw.activeIndex]));
@@ -188,6 +208,59 @@ class ProductDetailGallery {
 
     this.$thumbnails.height(slideshowHeight - 200);
     this.thumbnailsSwiper.update();
+
+    this.initSlideVideo($(sw.slides[sw.activeIndex]));
+  }
+
+  initSlideVideo($slide) {
+    const $videoContainer = $(selectors.videoContainer, $slide);
+    this.$slideshow.removeClass('video-slideshow');
+    this.pauseCurrentVideo();
+
+    if($videoContainer.length){
+      const currentPlayer = this.getPlayerBySlide($slide);
+      this.$slideshow.addClass('video-slideshow');
+      if(currentPlayer !== undefined) {
+        currentPlayer.pause();
+        currentPlayer.playing = false;
+      } else {
+        const options = {
+          url: $videoContainer.data('video-url'),
+          background: true,
+          autopause: true,
+        }
+
+        const player = new VimeoPlayer($videoContainer, options);
+
+        this.videoPlayers.push ({
+          slide: $slide,
+          player: player,
+          playing: true,
+        });
+      }
+    }
+  }
+
+  getPlayerBySlide($slide) {
+    let playerItem;
+    $.each(this.videoPlayers, (i, playerObject) => {
+      if (playerObject.slide.is($slide)) {
+        playerItem = playerObject.player;
+      }
+    });
+
+    return playerItem;
+  }
+
+  pauseCurrentVideo() {
+    $.each(this.videoPlayers, (i, playerObject) => {
+
+      if (playerObject.playing === true) {
+        playerObject.player.pause().then(()=> {
+          playerObject.playing = false;
+        });
+      }
+    });
   }
 
   onSlidechange() {
@@ -195,6 +268,7 @@ class ProductDetailGallery {
     $(selectors.currentThumbnail, this.$el).text(sw.activeIndex + 1);
     this.destroyHoverZoom($(sw.slides[sw.previousIndex]));
     this.initHoverZoom($(sw.slides[sw.activeIndex]));
+    this.initSlideVideo($(sw.slides[sw.activeIndex]));
   }
 }
 
@@ -228,6 +302,8 @@ export default class ProductDetailGalleries {
     this.$galleries = $(selectors.productGallery, this.$container); // Galleries contain a slideshow + thumbnails
 
     this.galleries = this.$galleries.toArray().map(el => new ProductDetailGallery(el));
+
+    const self = this;
   }
 
   getProductDetailGalleryForVariantOptionValue(optionValue) {
@@ -243,11 +319,26 @@ export default class ProductDetailGalleries {
   updateForVariant(variant) {
     if (!variant) return;
 
+    // This makes sure to pause all videos on all galleries when said gallery changes
+    $.each(this.galleries, (i, gallery) => {
+      
+      if ($(selectors.videoContainer, gallery.$slideshow).length) {
+        const sw = gallery.swiper;
+        const currentPlayer = gallery.getPlayerBySlide($(sw.slides[sw.activeIndex]));
+        
+        if(currentPlayer !== undefined) {
+          gallery.swiper.slideTo(0);
+          gallery.pauseCurrentVideo();
+        }
+      }
+    });
+
     if (this.galleries.length > 1) {
       for (let i = 3; i >= 1; i--) {
         const gallery = this.getProductDetailGalleryForVariantOptionValue(variant['option' + i]);
 
         if (gallery && gallery.$el.hasClass(classes.hide)) {
+
           this.$galleries.addClass(classes.hide);
           gallery.$el.removeClass(classes.hide);
 
