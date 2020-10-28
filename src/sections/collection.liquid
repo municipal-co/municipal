@@ -60,13 +60,17 @@
           {% assign hide_sold_out_colors = true %}
         {% endif %}
         {% if collection.metafields.custom_fields['limit_colors'] != blank %}
-          {% assign limited_colors = collection.metafields.custom_fields['limit_colors'] %}
+          {% assign limited_colors = collection.metafields.custom_fields['limit_colors'] | split: ', ' %}
         {% endif %}
         {% if collection.products.size > 0 %}
           <div class="content-grid" data-collection-grid="{{ collection.handle }}">
             {% for product in collection.products %}
               {% assign has_color_option = false %}
               {% assign product_colors = blank %}
+
+              {% if limited_colors != blank %}
+                {% assign hide_card = true %}
+              {% endif %}
 
               {% for option in product.options_with_values %}
                 {% if option.name == 'Color' %}
@@ -134,9 +138,13 @@
                 {% endif %}
 
                 {% if limited_colors != blank %}
-                  {% unless limited_colors contains color %}
-                    {% assign hide_card = true %}
-                  {% endunless %}
+                  {% assign hide_card = true %}
+                  {% for limited_color in limited_colors %}
+                    {% if color == limited_color %}
+                      {% assign hide_card = false %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
                 {% endif %}
 
                 {% if has_color_option  == true %}
@@ -192,7 +200,7 @@
 
               {% endfor %}
 
-              {% unless has_color_option == true %}
+              {% unless has_color_option == true or hide_card == true %}
                 <div class="content-grid__item" data-grid-item>
                   {% include 'product-card',
                   card_product: product,
