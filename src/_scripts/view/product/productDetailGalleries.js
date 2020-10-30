@@ -200,7 +200,7 @@ class ProductDetailGallery {
       currentPlayer.playing = true;
     }
   }
-  
+
   onSlideShowInit() {
     const sw = this.swiper;
     this.initHoverZoom($(sw.slides[sw.activeIndex]));
@@ -218,11 +218,11 @@ class ProductDetailGallery {
     this.pauseCurrentVideo();
 
     if($videoContainer.length){
-      const currentPlayer = this.getPlayerBySlide($slide);
+      const playerObject = this.getPlayerBySlide($slide);
       this.$slideshow.addClass('video-slideshow');
-      if(currentPlayer !== undefined) {
-        currentPlayer.pause();
-        currentPlayer.playing = false;
+      if(playerObject !== undefined) {
+        playerObject.player.play();
+        playerObject.playing = true;
       } else {
         const options = {
           url: $videoContainer.data('video-url'),
@@ -245,7 +245,7 @@ class ProductDetailGallery {
     let playerItem;
     $.each(this.videoPlayers, (i, playerObject) => {
       if (playerObject.slide.is($slide)) {
-        playerItem = playerObject.player;
+        playerItem = playerObject;
       }
     });
 
@@ -254,7 +254,6 @@ class ProductDetailGallery {
 
   pauseCurrentVideo() {
     $.each(this.videoPlayers, (i, playerObject) => {
-
       if (playerObject.playing === true) {
         playerObject.player.pause().then(()=> {
           playerObject.playing = false;
@@ -302,8 +301,6 @@ export default class ProductDetailGalleries {
     this.$galleries = $(selectors.productGallery, this.$container); // Galleries contain a slideshow + thumbnails
 
     this.galleries = this.$galleries.toArray().map(el => new ProductDetailGallery(el));
-
-    const self = this;
   }
 
   getProductDetailGalleryForVariantOptionValue(optionValue) {
@@ -321,11 +318,11 @@ export default class ProductDetailGalleries {
 
     // This makes sure to pause all videos on all galleries when said gallery changes
     $.each(this.galleries, (i, gallery) => {
-      
+
       if ($(selectors.videoContainer, gallery.$slideshow).length) {
         const sw = gallery.swiper;
         const currentPlayer = gallery.getPlayerBySlide($(sw.slides[sw.activeIndex]));
-        
+
         if(currentPlayer !== undefined) {
           gallery.swiper.slideTo(0);
           gallery.pauseCurrentVideo();
