@@ -92,8 +92,8 @@
               {% for color in product_colors %}
                 {% assign product_card = blank %}
                 {% assign default_variant = blank %}
-                {% assign unavailable_variant = blank %}
                 {% assign color_available_variants = product.variants | where: color_handle, color | where: 'available'%}
+                {% assign color_variants = product.variants | where: color_handle, color %}
                 {% for size in sizes_list %}
 
                   {% assign size_filtered_variant = color_available_variants | where: size_handle, size %}
@@ -104,13 +104,10 @@
                   {% endif %}
                 {% endfor %}
 
-                {% for variant in product.variants %}
-                  {% if variant[color_handle] == color %}
-                    {% if variant.available != true %}
-                      {% assign unavailable_variant = variant %}
-                    {% endif %}
-                  {% endif %}
-                {% endfor %}
+                {% if default_variant == blank %}
+                  {% assign size_filtered_variant = color_variants | where: size_handle, sizes_list[0] %}
+                  {% assign default_variant = size_filtered_variant[0] %}
+                {% endif %}
 
                 {% comment %}Checks for color filtering{% endcomment %}
                 {% assign hide_card = false %}
@@ -154,7 +151,6 @@
                         {% include 'product-card',
                             card_product: product,
                             variant: default_variant,
-                            unavailable_variant: unavailable_variant,
                             show_sizes: true,
                             show_colors: true,
                             show_tag: true,
