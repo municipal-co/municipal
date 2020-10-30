@@ -196,7 +196,7 @@ class ProductDetailGallery {
     const currentPlayer = this.getPlayerBySlide($(sw.slides[sw.activeIndex]));
 
     if(currentPlayer !== undefined) {
-      currentPlayer.play();
+      currentPlayer.player.play();
       currentPlayer.playing = true;
     }
   }
