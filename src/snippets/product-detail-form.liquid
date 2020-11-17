@@ -56,6 +56,9 @@
       {% include 'product-detail-price', product: product, current_variant: current_variant %}
     </div>
   {% endunless %}
+  
+  {% include 'product-upsell', pum_product: product %}
+
   {% if section.settings.enable_klarna == true %}
     <!-- Placement v2 -->
     <klarna-placement
