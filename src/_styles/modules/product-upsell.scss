@@ -7,10 +7,10 @@
     margin-top: 1rem;
     position: relative;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 20px 30px 20px 53px;
 
     @include media-breakpoint-down('md') {
-      padding: 1rem 1.5rem;
+      padding: 15px 30px 15px 53px;
     }
 
     &:hover {
@@ -23,6 +23,7 @@
       text-align: left;
       margin: 0;
     }
+
     a {
       color: $white;
       border-bottom: 1px $yellow solid;
@@ -32,26 +33,26 @@
     }
 
     &.dot-active {
-      padding: 0.5rem 0.5rem 0.5rem 50px;
+      padding: 20px 30px 20px 53px;
 
       @include media-breakpoint-down('md') {
-        padding: 0.75rem 0.75rem 0.75rem 50px;
+        padding: 15px 30px 15px 53px;
       }
 
       &:before {
         content: '';
         background-color: $yellow;
-        height: 12px;
-        width: 12px;
-        border-radius: 12px;
+        height: 14px;
+        width: 14px;
+        border-radius: 14px;
         position: absolute;
-        left: 20px;
-        top: 0.5rem;
+        left: 25px;
+        top: 18px;
         transform: translateY(30%);
         animation: blink 1.1s step-start infinite;
   
         @include media-breakpoint-down('md') {
-          top: 0.75rem;
+          top: 13px;
         }
       }
     }
