@@ -13,8 +13,10 @@
       padding: 15px 30px 15px 53px;
     }
 
+    &:focus,
     &:hover {
       background-color: $gray-darkest;
+      box-shadow: none;
     }
 
     p {
