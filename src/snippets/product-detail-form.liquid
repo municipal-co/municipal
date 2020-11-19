@@ -57,8 +57,6 @@
     </div>
   {% endunless %}
   
-  {% include 'product-upsell', pum_product: product %}
-
   {% if section.settings.enable_klarna == true %}
     <!-- Placement v2 -->
     <klarna-placement
@@ -69,6 +67,8 @@
     ></klarna-placement>
     <!-- end Placement -->
   {% endif %}
+
+  {% include 'product-upsell', pum_product: product %}
 
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <meta itemprop="priceCurrency" content="{{ shop.currency }}">
