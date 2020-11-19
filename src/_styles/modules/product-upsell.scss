@@ -1,0 +1,189 @@
+
+.product-upsell {
+  .product-upsell__description,
+  .product-upsell__modal-trigger {
+    background-color: $black;
+    color: $white;
+    margin-top: 1rem;
+    position: relative;
+    border: none;
+    padding: 20px 33px;
+
+    @include media-breakpoint-down('md') {
+      padding: 15px 33px;
+    }
+
+    &:focus,
+    &:hover {
+      background-color: $gray-darkest;
+      box-shadow: none;
+    }
+
+    p {
+      @extend .p3;
+      font-size: 13px;
+      text-align: left;
+      margin: 0;
+    }
+
+    a {
+      color: $white;
+      border-bottom: 1px $yellow solid;
+      &:hover {
+        color: $yellow;
+      }
+    }
+
+    &.dot-active {
+      padding: 20px 33px 20px 53px;
+
+      @include media-breakpoint-down('md') {
+        padding: 15px 33px 15px 53px;
+      }
+
+      &:before {
+        content: '';
+        background-color: $yellow;
+        height: 14px;
+        width: 14px;
+        border-radius: 14px;
+        position: absolute;
+        left: 25px;
+        top: 18px;
+        transform: translateY(30%);
+        animation: blink 1.1s step-start infinite;
+  
+        @include media-breakpoint-down('md') {
+          top: 13px;
+        }
+      }
+    }
+  }
+  .modal {
+    padding-right: 0 !important;
+    right: 0;
+    bottom: 0;
+    
+    .modal-dialog {
+      width: 60%;
+      max-width: large-vw(950px, 1240px);
+
+      @include media-breakpoint-down('md') {
+        margin: 1rem;
+        width: auto;
+        transform: none;
+      }
+    }
+
+    .modal-header {
+      border: none;
+      min-height: 50px;
+      margin: 0 large-vw(0px, -160px) large-vw(0, 30px);
+
+      @include media-breakpoint-down('md') {
+        margin: 0;
+        padding-right: 0;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .modal-body {
+      display: flex;
+      background-color: $white;
+      padding: 0;
+
+      @include media-breakpoint-down('md') {
+        padding: 0;
+        flex-direction: column;
+      }
+    }
+
+    &.show {
+      background-color: rgba(18, 18, 18, 0.9);
+    }
+
+    .modal-content {
+      background-color: transparent;
+      border: 0;
+      min-height: 0;
+
+      @include media-breakpoint-down('md') {
+        position: absolute;
+        top: 0;
+      }
+    }
+
+    button.close {
+      opacity: 1;
+      padding: 0;
+    }
+
+    button.close {
+      width: large-vw(30px, 80px);
+      height: large-vw(30px, 80px);
+      line-height: 0;
+
+      @include media-breakpoint-down('md') {
+        width: 30px;
+        height: 30px;
+        margin: 0;
+      }
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      svg path {
+        fill: $white;
+      }
+    }
+
+    .modal-icon-container {
+      position: absolute;
+      width: 47%;
+      left: -3%;
+      bottom: 0;
+      z-index: 0;
+
+      @include media-breakpoint-down('md') {
+        width: 28%;
+        right: 15px;
+        bottom: 25px;
+        left: initial;
+      }
+    }
+
+    .modal-icon {
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+
+        @include media-breakpoint-down('md') {
+
+        }
+      }
+    }
+  }
+
+  .modal-inner-container {
+    padding: large-vw(20px, 70px) large-vw(25px, 80px) large-vw(50px, 150px);
+    position: relative;
+
+    @include media-breakpoint-down('md') {
+      padding: 28px 35px;
+      width: 100%;
+    }
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

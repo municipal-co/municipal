@@ -318,8 +318,8 @@ button {
 //
 // Credit: https://github.com/suitcss/base/
 button:focus {
-  outline: 1px dotted;
-  outline: 5px auto -webkit-focus-ring-color;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(76,122,138,.5);
 }
 
 input,

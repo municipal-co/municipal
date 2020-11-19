@@ -1,0 +1,46 @@
+{%- comment %}
+
+  Product Upsell Modal
+  ------------------------------------------------------------------------------
+  rendered on the PDP and pulls all data from product metafields if they exist
+
+  Usage:
+
+  {% include 'product-upsell',
+              pum_product: { object } - Required - won't render if none is passed explicitly
+  %}
+
+{% endcomment -%}
+
+{% if product.metafields.custom_fields["p_upsell_text"] != blank %}
+  {% if product.metafields.custom_fields["p_upsell_alert_dot"] == 1 %}
+    {% assign dot_active_class = "dot-active" %}
+  {% endif %}
+  <div data-section-id="{{ section.id }}" class="product-upsell">
+    {% if product.metafields.custom_fields["p_upsell_detail_text"] != blank %}      
+      <button type="button" class="product-upsell__modal-trigger {{ dot_active_class }}" data-toggle="modal" data-target="#product-upsell">
+        <div class="">{{ product.metafields.custom_fields["p_upsell_text"] }}</div>        
+      </button>
+      <div class="modal fade" id="product-upsell" tabindex="-1" role="dialog" aria-labelledby="product-upsell-label" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                {% include 'icon-close' %}
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-inner-container">
+                {{ product.metafields.custom_fields["p_upsell_detail_text"] }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="product-upsell__description {{ dot_active_class }}">
+        {{ product.metafields.custom_fields["p_upsell_text"] }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
