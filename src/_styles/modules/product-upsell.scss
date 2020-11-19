@@ -7,10 +7,10 @@
     margin-top: 1rem;
     position: relative;
     border: none;
-    padding: 20px 30px 20px 53px;
+    padding: 20px 33px;
 
     @include media-breakpoint-down('md') {
-      padding: 15px 30px 15px 53px;
+      padding: 15px 33px;
     }
 
     &:focus,
@@ -35,10 +35,10 @@
     }
 
     &.dot-active {
-      padding: 20px 30px 20px 53px;
+      padding: 20px 33px 20px 53px;
 
       @include media-breakpoint-down('md') {
-        padding: 15px 30px 15px 53px;
+        padding: 15px 33px 15px 53px;
       }
 
       &:before {
