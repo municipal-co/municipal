@@ -133,16 +133,22 @@
                   {% assign hide_card = true %}
                 {% endif %}
 
-                
-                {% if hide_sold_out_colors == true %}
-                  {%- comment -%}
-                    Hide sold out colors is enabeld at collection level 
-                    Check to see if the variant setting to show sold_out_variant is false or whether or not the whole variant is unavailable
-                    If variant_unavailable is not blank, default_variant will be blank so we have to account for both use cases
-                  {%- endcomment -%}
-                  {% if default_variant.metafields.custom_fields.sold_out_variant == 0 or unavailable_variant != blank %}
-                    {% assign hide_card = true %}
+                {% assign hide_sold_out_colors = true %}
+                {% assign hide_sold_out_variant = false %}
+                {% if default_variant != blank %}
+                  {% if default_variant.metafields.custom_fields.sold_out_variant == 1 %}
+                    {% assign hide_sold_out_variant = true %}
                   {% endif %}
+                {% elsif unavailable_variant != blank %}
+                  {% if unavailable_variant.metafields.custom_fields["sold_out_variant"] == 1 %}
+                    {% assign hide_sold_out_variant = true %}
+                  {% endif %}
+                {% endif %}
+
+
+
+                {% if hide_sold_out_colors == true and hide_sold_out_variant == true%}
+                  {% assign hide_card = true %}
                 {% endif %}
 
                 {% if limited_colors != blank %}
