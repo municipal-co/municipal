@@ -49,13 +49,14 @@
 .text-white { color: $white !important; }
 .text-black { color: $black !important; }
 
-// Contextual colors - without !important to preserve background changes
+// Contextual colors - without !important to preserve background changes 
+// without conflicting with bootstrap utility classes
 
 .u-text-white { color: $white; }
 .u-text-black { color: $black; }
 
 // Contextual colors - that follow the same format as the utiltiy classes without !important
-// for use with the same cms inputs
+// for use with the same cms settings
 
 .u-text-red { color: $red !important; }
 .u-text-yellow { color: $yellow !important; }

@@ -155,7 +155,7 @@
                   {% endif %}
 
                   {% if title != blank %}
-                    <div class="video-section__title h1 text-{{ title_color }}">{{ title }}</div>
+                    <div class="video-section__title h1 u-text-{{ title_color }}">{{ title }}</div>
                   {% endif %}
 
                   {% if video_url != blank %}
@@ -385,7 +385,7 @@
 
                 <div class="col-lg-22 col-20">
                   {% if title != blank %}
-                    <{{title_tag}} class="collection-grid__title h1 text-{{ title_color }}">{{ title}}</{{title_tag}}>
+                    <{{title_tag}} class="collection-grid__title h1 u-text-{{ title_color }}">{{ title}}</{{title_tag}}>
                   {% endif %}
 
                   <div class="collection-grid-container">
@@ -482,14 +482,14 @@
                   {% if text != blank %}
                     <div class="two-up-title-wrapper col-24">
                       <div class="two-up__title h1" style="animation-duration: {{ animation }};">
-                        <span class="title-inner-wrapper text-{{ text_color }}">{{ text }}
-                        <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                        <span class="title-inner-wrapper u-text-{{ text_color }}">{{ text }}
+                        <span class="u-text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                       </div>
 
 
                       <div class="two-up__title h1" style="animation-duration: {{ animation }};">
-                        <span class="title-inner-wrapper text-{{ text_color }}">{{ text }}
-                        <span class="text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
+                        <span class="title-inner-wrapper u-text-{{ text_color }}">{{ text }}
+                        <span class="u-text-{{accent_color }}">{{ accent_text }}</span>&nbsp;</span>
                       </div>
                     </div>
                   {% endif %}
