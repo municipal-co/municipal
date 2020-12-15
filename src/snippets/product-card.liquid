@@ -6,10 +6,17 @@
   Usage:
 
   {% include 'product-card',
-              product: { product } - required
-              quick_view: { boolean } - optional, defaults to false
-              show_swatches: { boolean } - optional, defaults to true
-              show_reviews: { boolean } - optional, defaults to false
+        card_product: { product } - required
+        variant: { product.variant } - optional - if not blank, product card will render an individual variant's data
+        unavailable_variant: { product.variant } - optional - overrides the featured image to display the sold out featured image
+        quick_view: { boolean } - optional, defaults to false
+        show_swatches: { boolean } - optional, defaults to true
+        show_reviews: { boolean } - optional, defaults to false
+        show_sizes: { boolean } - optional, defaults to false
+        show_colors: { boolean } - optional, defaults to false
+        show_tag: { bool } - optional, defaults to false
+        color: { string } - optional
+        title_tag: { string } - optional - defaults to 'h3'
   %}
 
 {% endcomment -%}
@@ -54,7 +61,7 @@
 
 {% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
 
-{% assign featured_image = card_product.selected_or_first_available_variante.image | default: card_product.featured_image %}
+{% assign featured_image = card_product.selected_or_first_available_variant.image | default: card_product.featured_image %}
 {% if variant != blank %}
   {% assign featured_image = variant.featured_image %}
 {% endif %}
@@ -69,7 +76,7 @@
   {% assign product_image_dimension = '760x' %}
   {% assign product_image_dimension_tablet = '400x' %}
   {% assign product_image_dimension_mobile = '150x' %}
-  {% assign product_url = variant.url | default: card_product.url | within: collection %}
+  {% assign product_url = variant.url | default: unavailable_variant.url | default: card_product.url | within: collection %}
 
   <div id="product-card-{{ card_product.id }}" class="product-card {{ card_classes }}" data-product-card
   {% unless auto_update_image == false and variant == blank %}
@@ -120,6 +127,8 @@
             {% if card_product != blank %}
               {% if variant.metafields.custom_fields['badge'] != blank %}
                 <span class="badge">{{ variant.metafields.custom_fields['badge'] }}</span>
+              {% elsif unavailable_variant.metafields.custom_fields['badge'] != blank %}
+                <span class="badge">{{ unavailable_variant.metafields.custom_fields['badge'] }}</span>
               {% elsif card_product.metafields.custom_fields['badge'] %}
                 <span class="badge">{{ card_product.metafields.custom_fields['badge'] }}</span>
               {% else %}
