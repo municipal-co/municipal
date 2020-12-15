@@ -154,10 +154,10 @@
         {% if p_title != blank %}
           {% if p_cta_url != blank %}
             <{{p_title_tag}} class="promo__title h1">
-              <a class="text-{{p_title_color}}" href="{{p_cta_url}}">{{ p_title }}</a>
+              <a class="u-text-{{p_title_color}}" href="{{p_cta_url}}">{{ p_title }}</a>
             </{{p_title_tag}}>
           {% else %}
-            <{{ p_title_tag }} class="promo__title text-{{p_title_color}} h1"> {{ p_title }} </{{ p_title_tag }}>
+            <{{ p_title_tag }} class="promo__title u-text-{{p_title_color}} h1"> {{ p_title }} </{{ p_title_tag }}>
           {% endif %}
         {% endif %}
         {% if p_text != blank %}
