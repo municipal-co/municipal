@@ -12,18 +12,58 @@
   text-align: center;
   color: $black;
   font-size: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
 
   p{
     margin-bottom: 0;
     font-size: 13px;
   }
 
-  a {
-    color: inherit;
-    text-decoration: underline;
-  }
-
   &.pencil-banner--light {
     color: $white;
   }
+
+  &__content-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    min-width: 100%;
+    animation: marquee linear infinite;
+    animation-play-state: running;
+
+    &.marquee-paused {
+      animation-play-state: paused;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+    strong {
+      font-weight: 800;
+    }
+  }
+
+  &__content-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:after {
+      content: "•";
+    }
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
 }

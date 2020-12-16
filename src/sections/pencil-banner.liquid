@@ -3,12 +3,37 @@
 {% assign banner_content = section.settings.banner_content %}
 {% assign light_text = section.settings.light_text %}
 
+{% assign animation = section.settings.scroll_animation | append: 's' %}
+
+{% capture marquee_content %}
+  {% for block in section.blocks %}
+    <div 
+      class="pencil-banner__content" 
+      {% if block.settings.content_url != blank %}
+      style="cursor: pointer;" 
+      onclick="window.location='{{ block.settings.content_url }}';"
+      {% endif %}>
+        {{ block.settings.banner_content }}
+    </div>
+    <div class="pencil-banner__content-divider"></div>
+  {% endfor %}
+{% endcapture %}
+
 <div data-section-id="{{ section.id }}" data-section-type="pencil-banner">
   {% if show_banner == true %}
-    <div class="pencil-banner {% if light_text == true %}pencil-banner--light{% endif %}" style="background-color: {{ background_color }};">
-      <div class="container">
-        <div class="banner-content">{{ banner_content }}</div>
-      </div>
+    <div class="pencil-banner {% if light_text == true %}pencil-banner--light{% endif %}" style="background-color: {{ background_color }};" data-pencil-banner>
+      {% if section.blocks.size > 1 %}
+        <div class="pencil-banner__content-container" style="animation-duration: {{ animation }};" data-marquee-content-container>
+          {{ marquee_content }}
+        </div> 
+        <div class="pencil-banner__content-container" style="animation-duration: {{ animation }};" data-marquee-content-container>
+          {{ marquee_content }}
+        </div> 
+      {% elsif section.blocks.size == 1 %}
+        <div class="container">
+          <div class="pencil-banner__content">{{ section.blocks[0].settings.banner_content }}</div>
+        </div>
+      {% endif %}
     </div>
   {% endif %}
 </div>
@@ -16,6 +41,7 @@
 {% schema %}
   {
     "name": "Pencil Banner",
+    "max_blocks": 4,
     "settings": [
       {
         "id": "banner_enabled",
@@ -30,20 +56,44 @@
         "default": true
       },
       {
-        "id": "banner_content",
-        "type": "richtext",
-        "label": "Content"
-      },
-      {
         "type": "select",
         "id": "background_color",
         "label": "Background Color",
         "options": [
           { "value": "#f3f3f3", "label": "Gray" },
-          { "value": "#121212 ", "label": "Black" },
+          { "value": "#121212", "label": "Black" },
           { "value": "#ccff00", "label": "Yellow" }
         ],
-        "default": "#121212 "
+        "default": "#121212"
+      },
+      {
+        "type": "range",
+        "id":   "scroll_animation",
+        "min":  10,
+        "max":  100,
+        "step": 5,
+        "unit": "s",
+        "label": "Scrolling Text Duration",
+        "default": 20
+      }
+    ],
+    "blocks": [      
+      {
+        "type": "content",
+        "name": "Content",
+        "settings": [
+          {
+            "type": "url",
+            "id": "content_url",
+            "label": "Content Link",
+            "info": "If not blank, will allow the user to click anywhere on this content."
+          },
+          {
+            "id": "banner_content",
+            "type": "richtext",
+            "label": "Content Richtext"
+          }
+        ]
       }
     ]
   }
