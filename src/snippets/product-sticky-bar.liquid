@@ -88,10 +88,21 @@
           <div class="content-grid">
             {% for rel_product in parent_collection.products %}
               {% unless rel_product.title == product.title %}
+
+                {% assign rel_variant = product.variants.first %}
+                {% if product.metafields.custom_fields['default_collection_color'] != blank %}
+                  {% for variant in rel_product.variants %}
+                    {% if variant.title contains product.metafields.custom_fields['default_collection_color'] %}
+                      {% assign rel_variant = variant %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+
                 <div class="content-grid__item">
                   {% include 'product-card',
                     card_product: rel_product,
-                    variant: blank,
+                    variant: rel_variant,
                     show_tag: true,
                     show_sizes: false,
                     reverse_card: true,
