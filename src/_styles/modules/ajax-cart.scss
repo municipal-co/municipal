@@ -325,6 +325,11 @@ body.ajax-cart-open {
   }
 }
 .ajax-cart__footer-bottom {
+  
+  .shopify-cleanslate li {
+    list-style-type: none;
+  }
+
   .ajax-cart__footer-row {
     margin-top: 25px;
     @include media-breakpoint-down('md') {
