@@ -19,6 +19,11 @@
   p{
     margin-bottom: 0;
     font-size: 13px;
+    white-space: nowrap;
+
+    @include media-breakpoint-up('lg') {
+      white-space: normal;
+    }
   }
 
   &.pencil-banner--light {
@@ -29,9 +34,12 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
-    min-width: 100%;
     animation: marquee linear infinite;
     animation-play-state: running;
+
+    @include media-breakpoint-up('lg') {
+      min-width: 100%;
+    }
 
     &.marquee-paused {
       animation-play-state: paused;
@@ -57,6 +65,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 25px;
+
+    @include media-breakpoint-up('lg') {
+      margin: 0;
+    }
+
     &:after {
       content: "•";
     }
