@@ -65,6 +65,8 @@ body.ajax-cart-open {
   @include media-breakpoint-down('md') {
     padding: 20px 35px;
   }
+}.ajax-cart__footer-bottom .shopify-cleanslate li {
+   list-style-type: none;
 }
 
 .ajax-cart__promo {
@@ -325,6 +327,11 @@ body.ajax-cart-open {
   }
 }
 .ajax-cart__footer-bottom {
+  
+  .shopify-cleanslate li {
+    list-style-type: none;
+  }
+
   .ajax-cart__footer-row {
     margin-top: 25px;
     @include media-breakpoint-down('md') {

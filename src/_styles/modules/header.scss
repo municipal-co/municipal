@@ -329,7 +329,7 @@
 
   .drawer__header {
     padding: 0;
-    margin: 0 40px 0 80px;
+    margin: 0 40px 0 40px;
     margin-bottom: large-vw(0px, 60px);
     border: none;
     display: flex;
@@ -354,9 +354,9 @@
   }
 
   .drawer__body {
-    padding: 0px 80px 30px;
+    padding: 0px 40px 30px;
     @include media-breakpoint-down('md') {
-      padding: 15px 30px 30px;
+      padding: 15px 20px 30px;
     }
   }
 
@@ -400,7 +400,7 @@
       font-size: large-vw(50px, 90px);
 
       @include media-breakpoint-down('md') {
-        font-size: 35px;
+        font-size: 32px;
         line-height: 1.2em;
       }
     }
