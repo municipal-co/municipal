@@ -133,7 +133,7 @@
                   {% assign hide_card = true %}
                 {% endif %}
 
-                {% if hide_sold_out_colors == true and default_variant.metafields.custom_fields.sold_out_variant == 1 %}
+                {% if hide_sold_out_colors == true and unavailable_variant != blank and unavailable_variant.metafields.custom_fields.sold_out_variant == 0 %}
                   {% assign hide_card = true %}
                 {% endif %}
 
