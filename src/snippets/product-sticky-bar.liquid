@@ -24,9 +24,9 @@
   {% assign parent_collection = collections[product.metafields.custom_fields["default_collection"]] %}
 
   {% if product.metafields.custom_fields["collection_title"] == blank %}
-    {% assign collection_title = product.metafields.custom_fields["collection_title"] %}
-  {% else %}
     {% assign collection_title = parent_collection.title %}
+  {% else %}
+    {% assign collection_title = product.metafields.custom_fields["collection_title"] %}
   {% endif %}
 
   {% assign collection_display_color = product.metafields.custom_fields['default_collection_color'] %}
