@@ -17,15 +17,19 @@
     {% assign collection_title = collection.metafields.custom_fields["nav_collection_title"] %}
   {% endif %}
 
+  {% assign collection_display_color = collection.metafields.custom_fields['nav_collection_display_color'] %}
+
 {% else %}
 
   {% assign parent_collection = collections[product.metafields.custom_fields["default_collection"]] %}
 
   {% if product.metafields.custom_fields["collection_title"] == blank %}
-    {% assign collection_title = parent_collection.title %}
-  {% else %}
     {% assign collection_title = product.metafields.custom_fields["collection_title"] %}
+  {% else %}
+    {% assign collection_title = parent_collection.title %}
   {% endif %}
+
+  {% assign collection_display_color = product.metafields.custom_fields['default_collection_color'] %}
 
 {% endif %}
 
@@ -88,29 +92,41 @@
           <div class="content-grid">
             {% for rel_product in parent_collection.products %}
               {% unless rel_product.title == product.title %}
-
-                {% assign rel_variant = product.variants.first %}
-                {% if product.metafields.custom_fields['default_collection_color'] != blank %}
+                {% assign rel_variant = rel_product.variants.first %}
+                {% if collection_display_color != blank %}
                   {% for variant in rel_product.variants %}
-                    {% if variant.title contains product.metafields.custom_fields['default_collection_color'] %}
-                      {% assign rel_variant = variant %}
+                    {% assign variant_title_downcase = variant.title | downcase %}
+                    {% assign display_color_downcase = collection_display_color | downcase %}
+                    {% if variant_title_downcase contains display_color_downcase %}
+                      <div class="content-grid__item">
+                        {% include 'product-card',
+                          card_product: rel_product,
+                          variant: variant,
+                          show_tag: true,
+                          show_sizes: false,
+                          reverse_card: true,
+                          show_colors: true,
+                          render_json: false,
+                          lazy_load_img: false,
+                          color: blank %}
+                        </div>
                       {% break %}
                     {% endif %}
                   {% endfor %}
+                {% else %}
+                  <div class="content-grid__item">
+                    {% include 'product-card',
+                      card_product: rel_product,
+                      variant: rel_variant,
+                      show_tag: true,
+                      show_sizes: false,
+                      reverse_card: true,
+                      show_colors: true,
+                      render_json: false,
+                      lazy_load_img: false,
+                      color: blank %}
+                  </div>
                 {% endif %}
-
-                <div class="content-grid__item">
-                  {% include 'product-card',
-                    card_product: rel_product,
-                    variant: rel_variant,
-                    show_tag: true,
-                    show_sizes: false,
-                    reverse_card: true,
-                    show_colors: true,
-                    render_json: false,
-                    lazy_load_img: false,
-                    color: blank %}
-                </div>
               {% endunless %}
             {% endfor %}
           </div>
