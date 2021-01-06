@@ -199,10 +199,10 @@
                     {% if show_news_colors_only == true and default_variant.metafields.custom_fields.new_variant != 1 %}
                       {% assign hide_card = true %}
                     {% endif %}
-                    
+
                     {% comment %} 
-                      Checks that the collection metafield for hiding all products is set to true
-                      Checks if any of the color variants have been set to show when they're out of stock 
+                      Checks if the collection metafield for hiding all products when they're oos is set to true
+                      Checks if any of the color variants have been set to show when they're out of stock via variant metafields
                       Checks that all of the variants with a specific color are out of stock
                     {% endcomment %}
                     {% if hide_sold_out_colors == true and should_show_variant_when_oos == false and all_variants_of_this_color_oos == true %}
