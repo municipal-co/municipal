@@ -93,6 +93,8 @@
                 {% assign product_card = blank %}
                 {% assign default_variant = blank %}
                 {% assign unavailable_variant = blank %}
+                {% assign show_this_variant_when_oos = false %}
+                {% assign all_color_variants_oos = true %}
                 {% assign color_available_variants = product.variants | where: color_handle, color | where: 'available'%}
                 {% for size in sizes_list %}
 
@@ -106,7 +108,12 @@
 
                 {% for variant in product.variants %}
                   {% if variant[color_handle] == color %}
-                    {% if variant.available != true %}
+                    {% if variant.metafields.custom_fields.sold_out_variant == 1 and show_this_variant_when_oos == false %}
+                      {% assign show_this_variant_when_oos = true %}
+                    {% endif %}
+                    {% if variant.available == true %}
+                      {% assign all_color_variants_oos = false %}
+                    {% else %}
                       {% assign unavailable_variant = variant %}
                     {% endif %}
                   {% endif %}
@@ -133,7 +140,7 @@
                   {% assign hide_card = true %}
                 {% endif %}
 
-                {% if hide_sold_out_colors == true and unavailable_variant != blank and unavailable_variant.metafields.custom_fields.sold_out_variant == 0 %}
+                {% if hide_sold_out_colors == true and show_this_variant_when_oos == false and all_color_variants_oos == true %}
                   {% assign hide_card = true %}
                 {% endif %}
 
