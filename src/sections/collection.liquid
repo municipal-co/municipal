@@ -93,8 +93,8 @@
                 {% assign product_card = blank %}
                 {% assign default_variant = blank %}
                 {% assign unavailable_variant = blank %}
-                {% assign show_this_variant_when_oos = false %}
-                {% assign all_color_variants_oos = true %}
+                {% assign should_show_variant_when_oos = false %}
+                {% assign all_variants_of_this_color_oos = true %}
                 {% assign color_available_variants = product.variants | where: color_handle, color | where: 'available'%}
                 {% for size in sizes_list %}
 
@@ -108,11 +108,18 @@
 
                 {% for variant in product.variants %}
                   {% if variant[color_handle] == color %}
-                    {% if variant.metafields.custom_fields.sold_out_variant == 1 and show_this_variant_when_oos == false %}
-                      {% assign show_this_variant_when_oos = true %}
+                    {% comment %} 
+                      Admin has toggled the variant metafield to override hididng this color variant when oos 
+                    {% endcomment %}
+                    {% if variant.metafields.custom_fields.sold_out_variant == 1 and should_show_variant_when_oos == false %}
+                      {% assign should_show_variant_when_oos = true %}
                     {% endif %}
+
+                    {% comment %} 
+                      There is at least one variant that with this color that isn't out of stock 
+                    {% endcomment %}
                     {% if variant.available == true %}
-                      {% assign all_color_variants_oos = false %}
+                      {% assign all_variants_of_this_color_oos = false %}
                     {% else %}
                       {% assign unavailable_variant = variant %}
                     {% endif %}
@@ -140,7 +147,12 @@
                   {% assign hide_card = true %}
                 {% endif %}
 
-                {% if hide_sold_out_colors == true and show_this_variant_when_oos == false and all_color_variants_oos == true %}
+                {% comment %} 
+                  Checks that the collection metafield for hiding all products is set to true
+                  Checks if any of the color variants have been set to show when they're out of stock 
+                  Checks that all of the variants with a specific color are out of stock
+                {% endcomment %}
+                {% if hide_sold_out_colors == true and should_show_variant_when_oos == false and all_variants_of_this_color_oos == true %}
                   {% assign hide_card = true %}
                 {% endif %}
 
