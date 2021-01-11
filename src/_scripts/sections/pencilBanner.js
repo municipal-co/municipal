@@ -15,8 +15,8 @@ export default class PencilBannerSection extends BaseSection {
   }
 
   onTouch(e) {  
-    if (e.type == 'touchstart' || e.type =='mounseenter') {
-      $(selectors.marqueeContentContainer, this.$container).addClass('marquee-paused');
+    if (e.type == 'touchstart' || e.type =='mouseenter') {
+      $(selectors.marqueeContentContainer, this.$container).toggleClass('marquee-paused');
     } else {
       $(selectors.marqueeContentContainer, this.$container).removeClass('marquee-paused');
     }
