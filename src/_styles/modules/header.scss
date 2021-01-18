@@ -410,11 +410,11 @@
     }
 
     @include media-breakpoint-up('lg') {
-      &.panel--featured:before {
+      &.panel--featured .expandable-list__header-title:before {
         background-image: url("hover-arrow--blue.svg");
       }
 
-      &:before {
+      .expandable-list__header-title:before {
         content: "";
         padding-right: 0px;
         height: large-vw(50px, 90px);
@@ -430,7 +430,7 @@
         }
       }
 
-      &:hover:before {
+      .expandable-list__header-title:hover:before {
         padding-right: large-vw(80px, 95px);
         margin-right: large-vw(0, 45px);
       }
