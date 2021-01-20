@@ -2,6 +2,7 @@ import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import BaseSection from './base';
 
 const selectors = {
+  pencilBanner: '[data-pencil-banner]',
   marqueeContentContainer: '[data-marquee-content-container]'
 };
 
@@ -11,14 +12,17 @@ export default class PencilBannerSection extends BaseSection {
 
     this.$container = $(container);
 
-    this.$container.on('touchstart touchend mouseenter mouseleave', this.onTouch.bind(this))
+    $(selectors.pencilBanner, this.$container).on('click mouseenter mouseleave', this.onTouch.bind(this));
   }
 
-  onTouch(e) {  
-    if (e.type == 'touchstart' || e.type == 'mouseenter') {
-      $(selectors.marqueeContentContainer, this.$container).addClass('marquee-paused')
+  onTouch(e) {
+    const $marqueeContentContainer = $(selectors.marqueeContentContainer, this.$container);
+    if (!$marqueeContentContainer.hasClass('marquee-paused')) {
+      $marqueeContentContainer.addClass('marquee-paused');
+      debugger
     } else {
-      $(selectors.marqueeContentContainer, this.$container).removeClass('marquee-paused')
-    }
+      $marqueeContentContainer.removeClass('marquee-paused');
+      debugger
+    }    
   }
 }
