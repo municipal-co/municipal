@@ -19,10 +19,8 @@ export default class PencilBannerSection extends BaseSection {
     const $marqueeContentContainer = $(selectors.marqueeContentContainer, this.$container);
     if (!$marqueeContentContainer.hasClass('marquee-paused')) {
       $marqueeContentContainer.addClass('marquee-paused');
-      debugger
     } else {
       $marqueeContentContainer.removeClass('marquee-paused');
-      debugger
     }    
   }
 }
