@@ -391,11 +391,13 @@
                   <div class="collection-grid-container">
                     {% for i in (1..2) %}
                       {% assign index_title = 'collection_title_' | append: i %}
+                      {% assign index_title_color = 'collection_title_color_' | append: i %}
                       {% assign index_cta_text = 'cta_text_' | append: i %}
                       {% assign index_cta_url =  'cta_url_' | append: i %}
                       {% assign index_image =  'collection_image_' | append: i %}
 
                       {% assign collection_title = block.settings[index_title] %}
+                      {% assign collection_title_color = block.settings[index_title_color] %}
                       {% assign cta_text = block.settings[index_cta_text] %}
                       {% assign cta_url = block.settings[index_cta_url] %}
                       {% assign collection_image = block.settings[index_image] %}
@@ -417,7 +419,7 @@
                             </a>
                           {% endif %}
 
-                          <h3 class="collection-tile__title">{{ collection_title}}</h3>
+                          <h3 class="collection-tile__title u-text-{{ collection_title_color }}">{{ collection_title}}</h3>
 
                           {% if cta_url != blank and cta_text != blank %}
                             <a class="collection-tile__cta btn btn-link" href="{{ cta_url }}">
