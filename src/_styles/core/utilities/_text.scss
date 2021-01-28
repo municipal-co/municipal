@@ -59,8 +59,17 @@
 // for use with the same cms settings
 
 .u-text-red { color: $red !important; }
+.u-text-green { color: $green !important; }
 .u-text-yellow { color: $yellow !important; }
+.u-text-blue { color: $blue !important; }
+.u-text-orange { color: $orange !important; }
+.u-text-magenta { color: $magenta !important; }
 .u-text-cyan { color: $cyan !important; }
+.u-text-core-grey-1 { color: $core-grey-1 !important; }
+.u-text-core-grey-2 { color: $core-grey-2 !important; }
+.u-text-core-grey-3 { color: $core-grey-3 !important; }
+
+
 
 @each $color, $value in $colors {
   @include text-emphasis-variant(".text-#{$color}", $value);
