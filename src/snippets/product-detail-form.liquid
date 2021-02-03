@@ -63,7 +63,7 @@
       class="klarna-messaging"
       data-key="credit-promotion-small"
       data-locale="en-US"
-      data-purchase-amount="{{ product.price }}"
+      data-purchase-amount="{{ product.selected_or_first_available_variant.price }}"
     ></klarna-placement>
     <!-- end Placement -->
   {% endif %}
