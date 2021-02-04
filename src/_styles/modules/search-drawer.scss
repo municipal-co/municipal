@@ -1,0 +1,71 @@
+.search-drawer {
+  .drawer {
+    width: 100%;
+    max-width: 100%;
+    z-index: 100;
+
+    &.drawer--top {
+      top: 0;
+      transform: translateY(-100%);
+
+      //This has an important to prevent the transform give by js
+      @include media-breakpoint-down('md') {
+        transform: none !important;
+        position: static;
+        pointer-events: auto;
+      }
+    }
+  }
+
+  .drawer__body {
+    position: relative;
+  }
+
+  .minimal-input-box {
+    input {
+      margin: 0;
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: large-vw(22px, 54px);
+
+      @include media-breakpoint-down('md') {
+        left: 22px;
+      }
+    }
+  }
+
+  .drawer__close {
+    position: absolute;
+    right: large-vw(20px, 30px);
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+
+    @include media-breakpoint-down('md') {
+      display: none;
+    }
+
+    .icon {
+      width: large-vw(35px, 40px);
+      height: large-vw(35px, 40px);
+    }
+  }
+}
+
+body.header-hide-on-scroll:not(.showing-header) {
+  .search-drawer .drawer.is-visible {
+    transform: translateY(0) !important;
+  }
+}
+
+.template-product {
+  .search-drawer {
+    display: none;
+  }
+}
+
+

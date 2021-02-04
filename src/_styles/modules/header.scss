@@ -181,6 +181,17 @@
     margin-right: 0;
   }
 
+
+  &.header-nav__menu-item--search {
+    color: $white;
+    cursor: pointer;
+
+    .icon {
+      width: large-vw(35px, 35px);
+      height: large-vw(35px, 35px);
+    }
+  }
+
   > a {
     padding: 27px 4px; // use vertical padding to match the height of the header
     font-size: large-vw(16px, 25px);

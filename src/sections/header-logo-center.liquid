@@ -17,6 +17,12 @@
           </div>
 
           <div>
+            {% if settings.search_form == "findify" %}
+              <div title="Toggle Search" data-search-drawer-toggle class="header-nav__menu-item header-nav__menu-item--search hide-on-mobile">
+                {% include 'icon-search' %}
+              </div>
+            {% endif %}
+
             {% if shop.customer_accounts_enabled %}
               <div class="header-nav__menu-item hide-on-mobile">
                 {% if customer %}

@@ -78,6 +78,7 @@ export default class HeaderSection extends BaseSection {
           this.$el.addClass(classes.showOnScroll);
           this.$el.removeClass(classes.hideOnScroll);
           this.initialPosition = scrollTop;
+          $window.trigger("showing-header");
         }
       });
     }
