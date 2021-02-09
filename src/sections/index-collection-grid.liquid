@@ -38,11 +38,13 @@
         <div class="collection-grid-container">
           {% for i in (1..2) %}
             {% assign index_title = 'collection_title_' | append: i %}
+            {% assign index_title_color = 'collection_title_color_' | append: i %}
             {% assign index_cta_text = 'cta_text_' | append: i %}
             {% assign index_cta_url =  'cta_url_' | append: i %}
             {% assign index_image =  'collection_image_' | append: i %}
 
             {% assign collection_title = section.settings[index_title] %}
+            {% assign collection_title_color = section.settings[index_title_color] %}
             {% assign cta_text = section.settings[index_cta_text] %}
             {% assign cta_url = section.settings[index_cta_url] %}
             {% assign collection_image = section.settings[index_image] %}
@@ -60,7 +62,7 @@
                   </a>
 
                   <a href="{{ cta_url }}">
-                    <span class="collection-tile__title h3">{{ collection_title}}</span>
+                    <span class="collection-tile__title h3 u-text-{{ collection_title_color }}">{{ collection_title}}</span>
                   </a>
                 {% else %}
                   <div class="collection-tile__image frame frame--1x1">
@@ -149,6 +151,25 @@
         "label": "Collection Title"
       },
       {
+        "type": "select",
+        "id": "collection_title_color_1",
+        "label": "Title Color",
+        "options": [
+          {"label":"Primary-White", "value":"white"},
+          {"label":"Primary-Black", "value":"black"},
+          {"label":"Sport-Magenta", "value":"magenta"},
+          {"label":"Sport-Orange", "value":"orange"},
+          {"label":"Sport-Green", "value":"green"},
+          {"label":"Sport-Yellow", "value":"yellow"},
+          {"label":"Sport-Blue", "value":"blue"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label": "Core-Grey-1", "value": "core-grey-1"},
+          {"label": "Core-Grey-2", "value": "core-grey-2"},
+          {"label": "Core-Grey-3", "value": "core-grey-3"}
+        ],
+        "default": "yellow"
+      },
+      {
         "type": "text",
         "id": "cta_text_1",
         "label": "CTA Text"
@@ -171,6 +192,25 @@
         "type": "text",
         "id": "collection_title_2",
         "label": "Collection Title"
+      },
+      {
+        "type": "select",
+        "id": "collection_title_color_2",
+        "label": "Title Color",
+        "options": [
+          {"label":"Primary-White", "value":"white"},
+          {"label":"Primary-Black", "value":"black"},
+          {"label":"Sport-Magenta", "value":"magenta"},
+          {"label":"Sport-Orange", "value":"orange"},
+          {"label":"Sport-Green", "value":"green"},
+          {"label":"Sport-Yellow", "value":"yellow"},
+          {"label":"Sport-Blue", "value":"blue"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label": "Core-Grey-1", "value": "core-grey-1"},
+          {"label": "Core-Grey-2", "value": "core-grey-2"},
+          {"label": "Core-Grey-3", "value": "core-grey-3"}
+        ],
+        "default": "yellow"
       },
       {
         "type": "text",
@@ -204,9 +244,15 @@
         "options": [
           {"label":"Primary-White", "value":"white"},
           {"label":"Primary-Black", "value":"black"},
-          {"label":"Sport-Orange", "value":"red"},
-          {"label":"Sport-Green", "value":"yellow"},
-          {"label":"Sport-Blue", "value":"cyan"}
+          {"label":"Sport-Magenta", "value":"magenta"},
+          {"label":"Sport-Orange", "value":"orange"},
+          {"label":"Sport-Green", "value":"green"},
+          {"label":"Sport-Yellow", "value":"yellow"},
+          {"label":"Sport-Blue", "value":"blue"},
+          {"label":"Cyan", "value":"cyan"},
+          {"label": "Core-Grey-1", "value": "core-grey-1"},
+          {"label": "Core-Grey-2", "value": "core-grey-2"},
+          {"label": "Core-Grey-3", "value": "core-grey-3"}
         ],
         "default": "white"
       },
@@ -215,17 +261,25 @@
         "id": "background_color",
         "label": "Background Color",
         "options": [
-          {"label": "Primary-White", "value":"#ffffff"},
-          {"label": "Primary-Black", "value":"#121212"},
+          {"label": "Primary-White", "value": "#ffffff"},
+          {"label": "Primary-Black", "value": "#121212"},
           {"label": "Utility-Charcoal", "value": "#424446"},
-          {"label": "Utility-Army", "value": "#4A5D36"},
+          {"label": "Utility-Army", "value": "#2D402A"},
           {"label": "Utility-OffWhite", "value": "#F1F1F1"},
           {"label": "Utility-TealBlue", "value": "#2c6275"},
           {"label": "Utility-khaki", "value": "#C0B095"},
-          {"label": "Utility-Crimson", "value": "#452b2b"},
-          {"label": "Sport-Orange", "value":"#ff2b00"},
-          {"label": "Sport-Green", "value": "#CCFF00"},
-          {"label": "Sport-Blue", "value":"#009dcc"}
+          {"label": "Utility-Blush", "value": "#DFBFC0"},
+          {"label": "Utility-Crimson", "value": "#3F2727"},
+          {"label": "Utility-Navy", "value": "#0A3055"},
+          {"label": "Utility-Tan", "value": "#B9B093"},
+          {"label": "Sport-Magenta", "value": "#FF00FF"},
+          {"label": "Sport-Orange", "value": "#FF4500"},
+          {"label": "Sport-Yellow", "value": "#FFEA06"},
+          {"label": "Sport-Green", "value": "#BEFF00"},
+          {"label": "Sport-Blue", "value": "#0036EB"},
+          {"label": "Core-Grey-1", "value": "#f1f1f1"},
+          {"label": "Core-Grey-2", "value": "#B1B7C2"},
+          {"label": "Core-Grey-3", "value": "#393D49"}
         ],
         "default": "#2c6275"
       }
