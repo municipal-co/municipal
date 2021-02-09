@@ -34,7 +34,7 @@
                   <table class="table table-borderless table-sm">
                     <tr>
                       <th>{{ 'customer.orders.shipped_to' | t }}</th>
-                      <td>{{ order.customer.name }}</td>
+                      <td>{{ order.shipping_address.name }}</td>
                     </tr>
                     <tr>
                       <th>{{ 'customer.orders.date' | t }}</th>
@@ -76,7 +76,7 @@
                 <tbody>
                   {% for order in customer.orders %}
                     <tr>
-                      <td>{{ order.customer.name }}</td>
+                      <td>{{ order.shipping_address.name }}</td>
                       <td>{{ order.created_at | time_tag: format: 'month_day_year_short' }}</td>
                       <td><a href="{{ order.customer_url }}" class="btn btn--smallest btn--underlined font-weight-normal">{{ order.order_number }}</a></td>
                       <td><a href="{{ order.order_status_url }}" class="btn btn--smallest btn--underlined font-weight-normal">{{ order.financial_status_label }}</a></td>
