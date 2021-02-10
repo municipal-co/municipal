@@ -12,13 +12,30 @@ export default class backgroundAnimation {
     this.bottomThreshold = this.viewportHeight * window.animationSettings.backgroundAnimationThreshold.bottom;
 
     this.buildModulesList.call(this);
+
     // Call this to apply the first module background color
-    this.checkModulesPosition.call(this);
+    this.setInitialBackgroundColor.call(this);
 
     this.$window.on('scroll', throttle(50, this.checkModulesPosition.bind(this)));
     this.$window.on('resize', this.updateViewportHeight.bind(this));
   }
 
+  setInitialBackgroundColor() {
+
+    const self = this;
+    const el = self.moduleList[0];
+
+    // if there are no modules configured, bail
+    if (typeof self.moduleList[0] === 'undefined') {
+      return;
+    }
+
+    // set background color based on the first module on page load
+    $('body').css('background-color', el.backgroundColor);
+    self.currentBackground = el.backgroundColor.substring(1);
+    self.updateActiveModule.call(self, el);
+
+  }
 
   buildModulesList() {
     this.$sections.each((index, el) => {

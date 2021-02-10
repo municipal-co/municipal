@@ -447,7 +447,8 @@
           }
         }
 
-        .yotpo-review-wrapper .content-review {
+        .yotpo-review-wrapper .content-review,
+        .yotpo-review-wrapper .content-review p.rest-content-collapsed {
           font-size: large-vw(20px, 35px) !important;
           font-weight: $font-weight-semi-bold;
           line-height: large-vw(30px, 65px) !important;
