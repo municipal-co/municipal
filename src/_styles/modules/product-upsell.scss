@@ -28,9 +28,9 @@
 
     a {
       color: $white;
-      border-bottom: 1px $yellow solid;
+      border-bottom: 1px $green solid;
       &:hover {
-        color: $yellow;
+        color: $green;
       }
     }
 
@@ -43,7 +43,7 @@
 
       &:before {
         content: '';
-        background-color: $yellow;
+        background-color: $green;
         height: 14px;
         width: 14px;
         border-radius: 14px;
