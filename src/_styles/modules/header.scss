@@ -192,6 +192,10 @@
     }
   }
 
+  &.header-nav__menu-item--search.search-is-open {
+    color: $gray-dark;
+  }
+
   > a {
     padding: 27px 4px; // use vertical padding to match the height of the header
     font-size: large-vw(16px, 25px);

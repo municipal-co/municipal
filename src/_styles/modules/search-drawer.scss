@@ -3,6 +3,7 @@
     width: 100%;
     max-width: 100%;
     z-index: 100;
+    max-height: initial;
 
     &.drawer--top {
       top: 0;
@@ -56,9 +57,29 @@
   }
 }
 
-body.header-hide-on-scroll:not(.showing-header) {
+.header{
+  .search-drawer {
+    @include media-breakpoint-down('md') {
+      display: none;
+    }
+  }
+
   .search-drawer .drawer.is-visible {
-    transform: translateY(0) !important;
+    transform: translateY(100%);
+    position: absolute;
+    top: 0;
+  }
+
+  &.is-fixed.hide-on-scroll {
+    .search-drawer .drawer.is-visible {
+      transform: translateY(large-vw(50px, 80px));
+    }
+  }
+  
+  &.is-fixed.show-on-scroll {
+    .search-drawer .drawer.is-visible {
+      transform: translateY(large-vw(50px, 80px));
+    }
   }
 }
 

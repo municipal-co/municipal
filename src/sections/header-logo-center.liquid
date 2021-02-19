@@ -46,6 +46,10 @@
         </div>
       </div>
     </div>
+
+    {% if settings.search_form == "findify" %}
+      {% include 'search-drawer' %}
+    {% endif %}
   </header>
 </div>
 
