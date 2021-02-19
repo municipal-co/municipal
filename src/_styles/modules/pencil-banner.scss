@@ -20,10 +20,6 @@
     margin-bottom: 0;
     font-size: 13px;
     white-space: nowrap;
-
-    @include media-breakpoint-up('lg') {
-      white-space: normal;
-    }
   }
 
   &.pencil-banner--light {
@@ -36,9 +32,10 @@
     justify-content: space-around;
     animation: marquee linear infinite;
     animation-play-state: running;
+    animation-duration: var(--animation-duration-mobile);
 
-    @include media-breakpoint-up('lg') {
-      min-width: 100%;
+    @include media-breakpoint-up('md') {
+      animation-duration: var(--animation-duration-desktop);
     }
 
     &.marquee-paused {
@@ -65,14 +62,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 25px;
-
-    @include media-breakpoint-up('lg') {
-      margin: 0;
-    }
+    margin: 0 35px;
 
     &:after {
-      content: "•";
+      content: "\2022";
     }
   }
 }

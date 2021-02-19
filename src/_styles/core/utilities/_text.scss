@@ -49,18 +49,29 @@
 .text-white { color: $white !important; }
 .text-black { color: $black !important; }
 
+.u-text-red { color: $red !important; }
+.u-text-green { color: $green !important; }
+.u-text-yellow { color: $yellow !important; }
+.u-text-blue { color: $blue !important; }
+.u-text-orange { color: $orange !important; }
+.u-text-magenta { color: $magenta !important; }
+.u-text-cyan { color: $cyan !important; }
+.u-text-core-grey-1 { color: $core-grey-1 !important; }
+.u-text-core-grey-2 { color: $core-grey-2 !important; }
+.u-text-core-grey-3 { color: $core-grey-3 !important; }
+
+
 // Contextual colors - without !important to preserve background changes 
 // without conflicting with bootstrap utility classes
 
-.u-text-white { color: $white; }
-.u-text-black { color: $black; }
-
-// Contextual colors - that follow the same format as the utiltiy classes without !important
-// for use with the same cms settings
-
-.u-text-red { color: $red !important; }
-.u-text-yellow { color: $yellow !important; }
-.u-text-cyan { color: $cyan !important; }
+.u-text-white,
+.u-text-white:hover,
+.u-text-white:focus,
+.u-text-white:active { color: $white; }
+.u-text-black,
+.u-text-black:hover,
+.u-text-black:focus,
+.u-text-black:active { color: $black; }
 
 @each $color, $value in $colors {
   @include text-emphasis-variant(".text-#{$color}", $value);

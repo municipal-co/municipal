@@ -42,10 +42,12 @@
                   <div class="overview-video">
                     <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="false" data-embed-color="#000000">
                       <div class="video-player__cover" data-video-player-cover>
-                        <div class="video-player__cover-still lazyload" data-background="{{ overview_image }}"></div>
-                        {% if overview_image_alt %}
-                          <span class="video-player__cover-alt">{{ overview_image_alt }}</span>
-                        {% endif %}
+                        {% render 'image_tag'
+                          image: overview_image,
+                          object_fit: 'cover',
+                          image_alt: overview_image_alt
+                        %}
+
                         <span class="video-player__cover-play" data-video-play>
                           {% include "icon-play-full-color" %}
                         </span>
@@ -60,7 +62,8 @@
                 {% else %}
                   {% render 'image_tag'
                     image: overview_image,
-                    object_fit: 'cover'
+                    object_fit: 'cover',
+                    image_alt: overview_image_alt
                   %}
                 {% endif %}
               </div>

@@ -3,16 +3,12 @@
 {% assign banner_content = section.settings.banner_content %}
 {% assign light_text = section.settings.light_text %}
 
-{% assign animation = section.settings.scroll_animation | append: 's' %}
+{% assign animation_speed_mobile = section.settings.scroll_animation_mobile | append: 's' %}
+{% assign animation_speed_desktop = section.settings.scroll_animation_desktop | append: 's' %}
 
 {% capture marquee_content %}
   {% for block in section.blocks %}
-    <div 
-      class="pencil-banner__content" 
-      {% if block.settings.content_url != blank %}
-      style="cursor: pointer;" 
-      onclick="window.location='{{ block.settings.content_url }}';"
-      {% endif %}>
+    <div class="pencil-banner__content">
         {{ block.settings.banner_content }}
     </div>
     <div class="pencil-banner__content-divider"></div>
@@ -23,10 +19,18 @@
   {% if show_banner == true %}
     <div class="pencil-banner {% if light_text == true %}pencil-banner--light{% endif %}" style="background-color: {{ background_color }};" data-pencil-banner>
       {% if section.blocks.size > 1 %}
-        <div class="pencil-banner__content-container" style="animation-duration: {{ animation }};" data-marquee-content-container>
+        <div 
+          class="pencil-banner__content-container" 
+          style="--animation-duration-desktop: {{ animation_speed_desktop }}; --animation-duration-mobile: {{ animation_speed_mobile }};" 
+          data-marquee-content-container>
+          {{ marquee_content }}
           {{ marquee_content }}
         </div> 
-        <div class="pencil-banner__content-container" style="animation-duration: {{ animation }};" data-marquee-content-container>
+        <div 
+          class="pencil-banner__content-container" 
+          style="--animation-duration-desktop: {{ animation_speed_desktop }}; --animation-duration-mobile: {{ animation_speed_mobile }};" 
+          data-marquee-content-container>
+          {{ marquee_content }}
           {{ marquee_content }}
         </div> 
       {% elsif section.blocks.size == 1 %}
@@ -68,12 +72,22 @@
       },
       {
         "type": "range",
-        "id":   "scroll_animation",
+        "id":   "scroll_animation_mobile",
         "min":  10,
-        "max":  100,
+        "max":  200,
         "step": 5,
         "unit": "s",
-        "label": "Scrolling Text Duration",
+        "label": "Scrolling Text Duration - Mobile",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id":   "scroll_animation_desktop",
+        "min":  10,
+        "max":  200,
+        "step": 5,
+        "unit": "s",
+        "label": "Scrolling Text Duration - Desktop",
         "default": 20
       }
     ],
@@ -82,12 +96,6 @@
         "type": "content",
         "name": "Content",
         "settings": [
-          {
-            "type": "url",
-            "id": "content_url",
-            "label": "Content Link",
-            "info": "If not blank, will allow the user to click anywhere on this content."
-          },
           {
             "id": "banner_content",
             "type": "richtext",
