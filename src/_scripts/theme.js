@@ -66,7 +66,7 @@ import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
-import SearchDrawer from './sections/searchDrawer';
+// import SearchDrawer from './sections/searchDrawer';
 
 // Managers
 import QuickViewManager from './managers/quickView';
