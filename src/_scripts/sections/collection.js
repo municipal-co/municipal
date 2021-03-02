@@ -32,7 +32,7 @@ export default class CollectionSection extends BaseSection {
     super(container, 'collection');
 
     window.getCollectionJson = function() {
-      return $.getJSON($('[data-collection-json]'));
+      return JSON.parse($('[data-collection-json]').html());
     }
 
     // Stop parsing if we don't have the collection json script tag
