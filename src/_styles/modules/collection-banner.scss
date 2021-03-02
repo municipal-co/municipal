@@ -15,6 +15,20 @@
     }
   }
 
+  &.findify-collection-banner {
+    &.no-video {
+      @include media-breakpoint-down('md') {
+        padding-top: 20px;
+        padding-bottom: 0;
+      }
+    }
+
+    .collection-banner__content {
+      margin-bottom: 30px;
+      border-bottom: 3px solid $black;
+    }
+  }
+
   &.no-video {
     padding-top: large-vw(65px, 150px);
     
@@ -41,6 +55,30 @@
     }
     
     img{
+      width: 100%;
+    }
+  }
+
+  .collection-banner__image {
+    position: relative;
+    margin-bottom: 40px;
+
+    &:before {
+      content: "";
+      @include aspect-ratio-padding(1320, 390);
+      display: block;
+
+      @include media-breakpoint-down('md') {
+        @include aspect-ratio-padding(390, 180);
+      }
+    }
+
+    img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      object-fit: cover;
       width: 100%;
     }
   }

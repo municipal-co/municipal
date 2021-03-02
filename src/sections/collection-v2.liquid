@@ -1,0 +1,401 @@
+{%- comment %}
+
+  Collection Section
+  ------------------------------------------------------------------------------
+
+  The tags using for filtering are the ones that starts with:
+    - `color:`
+    - `size:`
+
+{% endcomment -%}
+
+{% assign filter_types = 'color,size' | split: "," %}
+{% assign promo_position = collection.metafields.custom_fields["promo_position"] | times: 1 %}
+
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection">
+
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      {% if section.settings.enable_filters == true %}
+        <div class="col-24">
+          <div class="collection-filter-bar" data-filter-bar>
+            {% comment %}
+              Vertically align groupings.  Space them out horizontally, flush to the edges
+              Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
+              This will ensure that flex will always space them out appropriately
+            {% endcomment %}
+            <div class="collection-filter-bar__grouping collection-filter-bar__grouping--breadcrumb">
+              <nav class="breadcrumbs" role="navigation" aria-label="breadcrumbs">
+                {% if collection.metafields.custom_fields["parent_category"] != blank %}
+                  <div class="breadcrumbs__crumb">
+                    {% assign parent_collection = collections[collection.metafields.custom_fields["parent_category"]] %}
+                    <a href="{{ parent_collection.url }}">
+                      {{ parent_collection.title }}
+                    </a>
+                  </div>
+                {% endif %}
+                <div class="breadcrumbs__crumb">
+                  <span class="breadcrumbs__crumb">
+                    {{ collection.title }}
+                  </span>
+                </div>
+              </nav>
+
+            </div>
+            <div class="collection-filter-bar__grouping collection-filter-bar__grouping--filters">
+              <button class="btn btn-cta btn-sm collection-filter-bar__filter-toggler" data-filters-toggler>
+                {% include 'icon-filters' %}
+                Filter
+              </button>
+
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if collection.metafields.custom_fields["collection_section"] != blank %}
+        {% assign separator = "|###|" %}
+        {% assign collection_array = collection.metafields.custom_fields["collection"] | split: separator %}
+        {% assign collection_title_array = collection.metafields.custom_fields["collection_title"] | split: separator %}
+        {% assign collection_description_array = collection.metafields.custom_fields["collection_description"] | split: separator %}
+        {% assign show_promo_card_array = collection.metafields.custom_fields["show_promo_card"] | split: separator %}
+        {% assign rotate_promo_card_array = collection.metafields.custom_fields["rotate_promo_card"] | split: separator %}
+        {% assign promo_card_image_array = collection.metafields.custom_fields["promo_card_image"] | split: separator %}
+        {% assign promo_card_position_array = collection.metafields.custom_fields["promo_card_position"] | split: separator %}
+        {% assign promo_card_link_array = collection.metafields.custom_fields["promo_card_link"] | split: separator %}
+        {% assign promo_card_image_alt_text_array = collection.metafields.custom_fields["promo_card_image_alt_text"] | split: separator %}
+        {% assign open_link_in_another_tab_array = collection.metafields.custom_fields["open_link_in_another_tab"] | split: separator %}
+
+        {% assign fc_keys = collection.metafields.custom_fields["collection_section"] | split: "," %}
+        {% assign section_index = 0 %}
+
+        {% for i in fc_keys %}
+          {% assign index = i | plus: 0 %}
+          {% assign section_collection = collection_array[index] %}
+          {% assign collection_title = collection_title_array[index] %}
+          {% assign collection_description = collection_description_array[index] %}
+          {% assign show_promo_card = show_promo_card_array[index] %}
+          {% assign rotate_promo_card = rotate_promo_card_array[index] %}
+          {% assign promo_card_image = promo_card_image_array[index] %}
+          {% assign promo_card_image_alt = promo_card_image_alt_text_array[index] %}
+          {% assign promo_card_position = promo_card_position_array[index] | times: 1 %}
+          {% assign promo_card_link = promo_card_link_array[index] %}
+          {% assign the_collection = collections[section_collection] %}
+          {% assign open_in_new_tab = open_link_in_another_tab_array[index] %}
+          {% assign show_promo = false %}
+          {% assign rotate_promo = false %}
+          {% assign new_tab = false %}
+
+          {% if show_promo_card == '1' %}
+            {% assign show_promo = true  %}
+          {% endif %}
+
+          {% if rotate_promo_card == '1' %}
+            {% assign rotate_promo = true  %}
+          {% endif %}
+
+          {% if open_in_new_tab == '1' %}
+            {% assign new_tab = true %}
+          {% endif %}
+
+          {% if section_collection != blank and the_collection.products.size > 0%}
+            {% assign section_index = section_index | plus: 1 %}
+
+            <div class="collection-section col-20" data-animated-background="#ffffff">
+              {% if collection_title != blank %}
+                <h2 class="collection-section__title h2">{{ collection_title }}</h2>
+              {% endif %}
+
+              {% if collection_description != blank %}
+                <div class="collection-section__description p2">{{ collection_description }}</div>
+              {% endif %}
+
+              <div class="content-grid" data-collection-grid="{{the_collection.handle}}" data-collection-url="{{the_collection.url}}">
+                {% assign printed_cards = 0 %}
+                {% if the_collection.metafields.custom_fields['show_new_colors'] == 1 %}
+                  {% assign show_news_colors_only =  true %}
+                {% endif %}
+                {% if the_collection.metafields.custom_fields['hide_sold_out_colors'] == 1 %}
+                  {% assign hide_sold_out_colors = true %}
+                {% endif %}
+                {% if the_collection.metafields.custom_fields['limit_colors'] != blank %}
+                  {% assign limited_colors = the_collection.metafields.custom_fields['limit_colors'] %}
+                {% endif %}
+                {% for product in the_collection.products %}
+                  {% if limited_colors != blank %}
+                    {% assign hide_card = true %}
+                  {% endif %}
+                  {% assign has_color_option = false %}
+                  {% assign default_variant = false %}
+                  {% for option in product.options_with_values %}
+                    {% if option.name == 'Color' %}
+                      {% assign has_color_option = true %}
+                      {% assign color_handle = 'option' | append: forloop.index %}
+                      {% assign product_colors = option.values %}
+                    {% elsif option.name == 'Size' %}
+                      {% assign size_handle = 'option' | append: forloop.index %}
+                      {% if 'M, L, XL, 2XL, 3XL, 4XL, S' contains option.values[0] %}
+                        {% assign sizes_list = 'M, L, XL, 2XL, 3XL, 4XL, S' | split: ', ' %}
+                      {% elsif '32, 34, 36, 38, 40, 30' contains option.values[0] %}
+                        {% assign sizes_list = '32, 34, 36, 38, 40, 30' | split: ', ' %}
+                      {% else %}
+                        {% assign sizes_list = option.values %}
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+
+
+                  {% for color in product_colors %}
+                    {% assign default_variant = blank %}
+                    {% assign unavailable_variant = blank %}
+                    {% assign should_show_variant_when_oos = false %}
+                    {% assign all_variants_of_this_color_oos = true %}
+                    {% assign color_available_variants = product.variants | where: color_handle, color | where: 'available'%}
+                    {% for size in sizes_list %}
+
+                      {% assign size_filtered_variant = color_available_variants | where: size_handle, size %}
+                      {% if size_filtered_variant[0] != blank %}
+                        {% assign default_variant = size_filtered_variant[0] %}
+                        {% break %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% for variant in product.variants %}
+                      {% if variant[color_handle] == color %}
+                        {% comment %} 
+                          Admin has toggled the variant metafield to override hididng this color variant when oos 
+                        {% endcomment %}
+                        {% if variant.metafields.custom_fields.sold_out_variant == 1 and should_show_variant_when_oos == false %}
+                          {% assign should_show_variant_when_oos = true %}
+                        {% endif %}
+
+                        {% comment %} 
+                          There is at least one variant that with this color that isn't out of stock 
+                        {% endcomment %}
+                        {% if variant.available == true %}
+                          {% assign all_variants_of_this_color_oos = false %}
+                        {% else %}
+                          {% assign unavailable_variant = variant %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% comment %}Checks for color filtering{% endcomment %}
+                    {% assign hide_card = false %}
+                    {% assign color_downcase = color | downcase %}
+                    {% if current_tags != blank %}
+                      {% for current_tag in current_tags %}
+                      {% assign current_tag_downcase = current_tag | downcase  %}
+                        {% if current_tag_downcase contains 'color' and current_tag_downcase contains color_downcase %}
+                          {% assign hide_card = false %}
+                          {% break %}
+                        {% else %}
+                          {% assign hide_card = true %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+
+                    {%- comment -%}Checks if any collection filter is enabled{%- endcomment -%}
+                    {% if show_news_colors_only == true and default_variant.metafields.custom_fields.new_variant != 1 %}
+                      {% assign hide_card = true %}
+                    {% endif %}
+
+                    {% comment %} 
+                      Checks if the collection metafield for hiding all products when they're oos is set to true
+                      Checks if any of the color variants have been set to show when they're out of stock via variant metafields
+                      Checks that all of the variants with a specific color are out of stock
+                    {% endcomment %}
+                    {% if hide_sold_out_colors == true and should_show_variant_when_oos == false and all_variants_of_this_color_oos == true %}
+                      {% assign hide_card = true %}
+                    {% endif %}
+
+                    {% if limited_colors != blank %}
+                      {% assign hide_card = true %}
+                      {% for limited_color in limited_colors %}
+                        {% if color == limited_color %}
+                          {% assign hide_card = false %}
+                          {% break %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+
+                    {% capture product_card %}
+                      {% unless hide_card %}
+                        <div class="content-grid__item" data-grid-item>
+                          {% include 'product-card',
+                              card_product: product,
+                              variant: default_variant,
+                              unavailable_variant: unavailable_variant,
+                              show_sizes: true,
+                              show_colors: true,
+                              show_tag: true,
+                              color: color %}
+
+                          {% assign printed_cards = printed_cards | plus: 1 %}
+                        </div>
+                      {% endunless %}
+                    {% endcapture %}
+
+                    {% if show_promo == true and printed_cards == promo_card_position and promo_card_image != blank %}
+                      <div class="promo_card content-grid__item frame {% if rotate_promo_card == '1' %}promo_card--rotate{% endif %}">
+                        {% if promo_card_link != blank %}
+                          <a class="promo_card-link" href="{{ promo_card_link }}" {% if new_tab == true %}target="_blank"{% endif %}>
+                            <div class="promo-card-inner">
+                              <div class="promo_card__image frame frame--1x1">
+                                {% render 'image_tag'
+                                          image: promo_card_image,
+                                          object_fit: "contain",
+                                          image_alt: promo_card_image_alt
+                                %}
+                              </div>
+                            </div>
+                          </a>
+                        {% else %}
+                          <div class="promo-card-inner">
+                            <div class="promo_card__image frame frame--1x1">
+                              {% render 'image_tag'
+                                        image: promo_card_image,
+                                        object_fit: "contain",
+                                        image_alt: promo_card_image_alt
+                              %}
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                      {% assign show_promo = false  %}
+                    {% endif %}
+
+                    {{ product_card }}
+
+                    {% unless has_color_option == true or hide_card == true %}
+                      <div class="content-grid__item" data-grid-item>
+                        {% include 'product-card',
+                        card_product: product,
+                        show_sizes: true,
+                        show_tag: true %}
+                      </div>
+                    {% endunless %}
+                  {% endfor %}
+
+                  {% if show_promo == true and promo_card_position == 0 and promo_card_image != blank %}
+                    <div class="promo_card content-grid__item frame {% if rotate_promo_card == '1' %}promo_card--rotate{% endif %}">
+                      {% if promo_card_link != blank %}
+                        <a class="promo_card-link" href="{{ promo_card_link }}">
+                          <div class="promo-card-inner">
+                            <div class="promo_card__image frame frame--1x1">
+                              {% render 'image_tag'
+                                        image: promo_card_image,
+                                        object_fit: "contain",
+                                        image_alt: promo_card_image_alt
+                              %}
+                            </div>
+                          </div>
+                        </a>
+                      {% else %}
+                        <div class="promo-card-inner">
+                          <div class="promo_card__image frame frame--1x1">
+                            {% render 'image_tag'
+                                      image: promo_card_image,
+                                      object_fit: "contain",
+                                      image_alt: promo_card_image_alt
+                            %}
+                          </div>
+                        </div>
+                      {% endif %}
+                    </div>
+                    {% assign show_promo = false  %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              {% assign grid_container = '[data-collection-grid=' | append: the_collection.handle | append: ']' %}
+              {% assign tags_filters = current_tags | join: '+' %}
+              {% if the_collection.products.size > 50 %}
+                {% assign collection_next_page = the_collection.url | append: '?page=2' %}
+              {% endif %}
+                {% include 'load-more'
+                   card_selector: '[data-grid-item]',
+                   grid_container: grid_container,
+                   next_page_url: collection_next_page,
+                   update_url: "false" %}
+            </div>
+          {% endif %}
+
+          {% if promo_position == section_index %}
+            {% include 'collection-promo' %}
+          {% elsif forloop.last and promo_position > forloop.length %}
+            {% include 'collection-promo' %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.enable_filters == true %}
+    <div class="filters-drawer drawer drawer--right" data-filters-drawer>
+      <div class="drawer__inner">
+        <div class="drawer__header">
+          <a href="#" class="drawer__close" data-drawer-close>
+            {% include 'icon-close' %}
+            <span class="sr-only"></span>
+          </a>
+          <h5 class="drawer__header-title">Filter</h5>
+        </div>
+        <div class="drawer__body">
+          <div class="drawer__body-contents">
+            {% include 'collection-sort' %}
+            {% include 'collection-filters'
+              size_filters: section.settings.size_filters
+            %}
+
+            <button class="btn btn-block btn-primary" data-filter-enable data-local-filtering="false">
+              View Results
+            </button>
+            <a href="{{ collection.url }}" class="btn btn-cta btn-block btn-sm collection-filter__reset" data-filter-clear>
+              {% include 'icon-close' %} Clear All
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+
+  {% comment %} This JSON is required for filtering and sorting {% endcomment %}
+  {% capture collection_url %}
+    {% if collection.handle == "all" %}
+      /collections/all
+    {% else %}
+      {{ collection.url }}
+    {% endif %}
+  {% endcapture %}
+
+  <script type="application/json" data-collection-json>
+    {
+      "url": {{ collection_url | strip | json }},
+      "sortDefault": {{ collection.default_sort_by | json }},
+      "sortApplied": {{ collection.sort_by | json }}
+    }
+  </script>
+</div>
+
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_filters",
+      "label": "Enable Filters"
+    },
+    {
+      "type": "text",
+      "id": "size_filters",
+      "label": "Size filters",
+      "default": "s, m, l, xl, 2xl",
+      "info": "Define the order of the size filters, separate each value with a comma"
+    }
+  ]
+}
+{% endschema %}
