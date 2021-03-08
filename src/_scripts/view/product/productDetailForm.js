@@ -297,7 +297,7 @@ export default class ProductDetailForm {
       if (optionIndex !== currentOption) {
         const dotToUpdate = variant[currentOption];
 
-        $(`.dot[data-variant-option-value="${dotToUpdate}"]`).attr('disabled', disabled);
+        $(`.dot[data-variant-option-value="${dotToUpdate}"]`, this.$container).attr('disabled', disabled);
       }
     }
   }
