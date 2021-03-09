@@ -371,12 +371,7 @@
   {% endcapture %}
 
   <script type="application/json" data-collection-json>
-    {
-      "url": {{ collection_url | strip | json }},
-      "sortDefault": {{ collection.default_sort_by | json }},
-      "sortApplied": {{ collection.sort_by | json }},
-      "lowInventoryThreshold": {{ settings.low_inventory_threshold }}
-    }
+    {% include 'collection-json', collection: collection %}
   </script>
 </div>
 
