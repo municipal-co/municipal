@@ -66,7 +66,6 @@ import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
-// import SearchDrawer from './sections/searchDrawer';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -127,7 +126,6 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
-  sectionManager.register('search-drawer', SearchDrawer);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
