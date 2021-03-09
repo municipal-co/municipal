@@ -321,7 +321,8 @@
     {
       "url": {{ collection_url | strip | json }},
       "sortDefault": {{ collection.default_sort_by | json }},
-      "sortApplied": {{ collection.sort_by | json }}
+      "sortApplied": {{ collection.sort_by | json }},
+      "lowInventoryThreshold": {{ settings.low_inventory_threshold }}
       {%- if filter_url != blank -%}
         ,"filterUrl": {{ filter_url | json }}
       {%- endif -%}
