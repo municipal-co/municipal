@@ -86,8 +86,8 @@
 
 .template-product {
   .search-drawer {
-    display: none;
+    @include media-breakpoint-down('md') {
+      display: none;
+    }
   }
 }
-
-
