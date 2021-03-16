@@ -259,4 +259,8 @@ Breakpoints.initialize();
   if (window.location.hostname === 'localhost') {
     $body.addClass('development-mode');
   }
+
+  window.getSiteSettingsJson = function() {
+    return JSON.parse($('[data-theme-settings-json]').html());
+  }
 })(Modernizr);
