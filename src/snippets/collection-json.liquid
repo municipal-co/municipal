@@ -23,17 +23,7 @@
         "banner_image": {{ collection.metafields.custom_fields["banner_image"] | json }},
         "banner_image_mobile": {{ collection.metafields.custom_fields["banner_image_mobile"] | json }}
       },
-      "collection_promo_cards": {
-        "pc_collection_title_array": {{ collection.metafields.custom_fields['pc_collection_title'] | json }},
-        "pc_collection_description_array": {{ collection.metafields.custom_fields['pc_collection_description'] | json }},
-        "pc_show_promo_card_array": {{ collection.metafields.custom_fields['pc_show_promo_card'] | json }},
-        "pc_rotate_promo_card_array": {{ collection.metafields.custom_fields['pc_rotate_promo_card'] | json }},
-        "pc_promo_card_image_array": {{ collection.metafields.custom_fields['pc_promo_card_image'] | json }},
-        "pc_promo_card_position_array": {{ collection.metafields.custom_fields['pc_promo_card_position'] | json }},
-        "pc_promo_card_link_array": {{ collection.metafields.custom_fields['pc_promo_card_link'] | json }},
-        "pc_promo_card_image_alt_text_array": {{ collection.metafields.custom_fields['pc_promo_card_image_alt_text'] | json }},
-        "pc_open_link_in_another_tab_array": {{ collection.metafields.custom_fields['pc_open_link_in_another_tab'] | json }}
-      },
+      "collection_promo_cards": {{ collection.metafields.custom_fields["collection_promo_cards"] | json }},
       "collection_section": {
         "collection_array": {{ collection.metafields.custom_fields['collection'] | json }},
         "collection_title_array": {{ collection.metafields.custom_fields['collection_title'] | json }},
