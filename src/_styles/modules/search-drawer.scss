@@ -83,11 +83,3 @@
     }
   }
 }
-
-.template-product {
-  .search-drawer {
-    @include media-breakpoint-down('md') {
-      display: none;
-    }
-  }
-}
