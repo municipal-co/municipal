@@ -22,15 +22,17 @@ class CartAPI {
     }
 
     // Make adjustments to the cart object contents before we pass it off to the handlebars template
+    cart.unformatted_price = cart.total_price;
     cart.total_price = Currency.formatMoney(cart.total_price, theme.moneyFormat);
     cart.total_price = Currency.stripZeroCents(cart.total_price);
-
     cart.items.map((item) => {
       if (item.image) {
         item.image = Image.getSizedImageUrl(item.image, '200x');
       }
       item.price = Currency.formatMoney(item.price, theme.moneyFormat);
       item.price = Currency.stripZeroCents(item.price);
+      item.original_price = Currency.formatMoney(item.original_price, theme.moneyFormat);
+      item.original_price = Currency.stripZeroCents(item.original_price);
 
       // Adjust the item's variant options to add "name" and "value" properties
       if (item.hasOwnProperty('product')) {

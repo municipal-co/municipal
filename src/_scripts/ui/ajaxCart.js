@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Handlebars from 'handlebars';
 import * as Utils from '../core/utils';
 import CartAPI from '../core/cartAPI';
+import * as Currency from '../core/currency';
 import QuantityAdjuster from './quantityAdjuster';
 
 const $window = $(window);
@@ -21,7 +22,11 @@ const selectors = {
   itemQuantityInput: '[data-ajax-cart-body] input[type="number"]',
   quantityAdjuster: '[data-quantity-adjuster]',
   cartBadge: '[data-cart-badge]',
-  cartBadgeCount: '[data-cart-badge-count]'
+  cartBadgeCount: '[data-cart-badge-count]',
+  shippingThresholdContainer: '[data-threshold-container]',
+  shippingThresholdMessage: '[data-threshold-message]',
+  shippingThresholdBaseValue: '[data-threshold-value]',
+  shippingThresholdBar: '[data-threshold-bar]'
 };
 
 const classes = {
@@ -69,6 +74,10 @@ export default class AJAXCart {
     this.$footerTopTemplate = $(selectors.footerTopTemplate);
     this.$cartBadge         = $(selectors.cartBadge);
     this.$cartBadgeCount    = $(selectors.cartBadgeCount);
+    this.$thresholdContainer = $(selectors.shippingThresholdContainer, this.$el);
+    this.$thresholdBar      = $(selectors.shippingThresholdBar, this.$thresholdContainer);
+    this.$thresholdMessage  = $(selectors.shippingThresholdMessage, this.$thresholdContainer);
+
 
     this.$backdrop            = null;
     this.stateIsOpen          = null; // Store visibilty state of the cart so we dont' have to query DOM for a class name
@@ -76,6 +85,9 @@ export default class AJAXCart {
     this.qaInteractionTimeout = null;
     this.qaInteractionDelay   = 350; // Delay before triggering the quantityadjuster change event (allows user to increment / decrement quickly)
     this.transitionEndEvent   = Utils.whichTransitionEnd();
+    this.thresholdBaseValue   = this.$thresholdContainer.data('threshold-value');
+    this.thresholdCompleteMsg = this.$thresholdContainer.data('complete-message');
+    this.thresholdActiveMsg   = this.$thresholdContainer.data('in-progress-message');
 
 
     if (!this.$bodyTemplate.length || !this.$footerTopTemplate.length) {
@@ -166,11 +178,13 @@ export default class AJAXCart {
    */
   render(cart) {
     const templateData = $.extend(this.templateData, cart);
+    this.updateFreeShippingThreshold(cart);
 
     $window.trigger($.Event(this.events.DESTROY));
     this.$acBody.empty().append(this.bodyTemplate(templateData));
     this.$acFooterTop.empty().append(this.footerTopTemplate(templateData));
     $window.trigger($.Event(this.events.RENDER, { cart }));
+
 
     return this;
   }
@@ -192,6 +206,24 @@ export default class AJAXCart {
     }
 
     return this;
+  }
+
+  updateFreeShippingThreshold(cart) {
+    const currentValueDifference = this.thresholdBaseValue - cart.unformatted_price;
+    const currentPriceDifference = Currency.formatMoney(currentValueDifference, theme.moneyFormat);
+    const currentPercentage = (cart.unformatted_price * 100) / this.thresholdBaseValue;
+    if (currentValueDifference <= 0 && this.thresholdCompleteMsg !== undefined) {
+      this.$thresholdMessage.text(this.thresholdCompleteMsg);
+    } else if (currentValueDifference > 0 && this.thresholdActiveMsg !== undefined) {
+      const text = this.thresholdActiveMsg.replace('[value]', currentPriceDifference);
+      this.$thresholdMessage.text(text);
+    }
+
+    if (currentPercentage > 100) {
+      this.$thresholdBar.css('width', '100%');
+    } else {
+      this.$thresholdBar.css('width', `${currentPercentage}%`);
+    }
   }
 
   addBackdrop(callback) {
