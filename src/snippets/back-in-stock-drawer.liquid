@@ -1,0 +1,41 @@
+<div class="bis__container">
+  <div class="bis__inner">
+    <div class="bis__header">
+      <div class="bis__close" data-bis-close>
+        {% include 'icon-close' %}
+      </div>
+      <div class="bis__title">
+        Notify
+      </div>
+    </div>
+    <div class="bis__body">
+      <div class="bis__featured-image-container" >
+        <div class="bis__notify-icon">
+          <span>Notify Me</span>
+        </div>
+        <img src="{{product.selected_or_first_available_variant.featured_image | img_url: '600x'}}" alt="{{product.selected_or_first_available_variant.featured_image.alt}}" data-bis-featured-image class="bis__featured-image">
+      </div>
+
+      <div class="bis__body-info">
+        {{ section.settings.bis_notify_text | replace: '[[product]]', product.title | replace: '[[color]]', '<span class="bis__highlighted-text" data-bis-product-color>Test</span>' | replace: '[[size]]', '<span class="bis__highlighted-text" data-bis-product-size>Test</span>'}}
+      </div>
+
+      <form action="#" data-bis-form class="bis__form">
+        <div class="minimal-input-box">
+          <input type="email"
+          name="email"
+          class="bis__input minimal-input-box__input"
+          placeholder="What's your email?">
+          <button type="submit" class="bis__submit minimal-input-box__submit">
+            {% include 'icon-arrow' %}
+            <span class="icon-fallback-text">Submit</span>
+          </button>
+        </div>
+      </form>
+      <small class="bis__footer-info">
+        By submitting your email you are agreeing to our <a href="{{section.settings.bis_tos_link}}">Terms of Service</a> and our <a href="{{section.settings.bis_privacy_policy_link}}">Privacy Policy</a>.<br>
+        You may unsubscribe at any time
+      </small>
+    </div>
+  </div>
+</div>
