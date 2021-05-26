@@ -195,6 +195,9 @@
           name="add"
           class="btn btn-primary btn-block add-to-cart"
           data-add-to-cart
+          {% unless current_variant.available and product.metafields.custom_fields['bis_disable'] == 0 and current_variant.metafields.custom_fields['bis_disable'] == 0 %}
+            style="display: none;"
+          {% endunless %}
           {% unless current_variant.available %}disabled="disabled"{% endunless %}>
             <span data-add-to-cart-text>
               {% if current_variant.available %}
@@ -204,6 +207,20 @@
               {% endif %}
             </span>
         </button>
+        {% unless product.metafields.custom_fields['bis_disable'] == 1 %}
+          <button
+            type="button"
+            name="bis-button"
+            class="btn btn--small btn-outline-primary btn-back-in-stock"
+            data-bis-toggler
+            data-bis-button
+            {% if current_variant.available or current_variant.metafields.custom_fields['bis_disable'] == 1 %}
+              style="display:none;"
+            {% endif %}>
+            {% include 'icon-bell' %}
+            Notify me when back in stock
+          </button>
+        {% endunless %}
       </form>
 
       {% if settings.shipping_cta_title != blank and shipping_modal_html != blank%}

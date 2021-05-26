@@ -259,6 +259,11 @@
         "type": "text",
         "id": "klaviyo_list_id",
         "label": "List ID"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_api_key",
+        "label": "Public API Key"
       }
     ]
   },

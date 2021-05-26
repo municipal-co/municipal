@@ -24,12 +24,23 @@ const selectors = {
   badgesData: '[data-badges-json]',
   dotsColorContainer: '.dots--color',
   dotsContainer: '.dots',
-  dot: '.dot'
+  dot: '.dot',
+  bisContainer: '[data-bis-container]',
+  bisForm: '[data-bis-form]',
+  bisButton: '[data-bis-button]',
+  bisToggler: '[data-bis-toggler]',
+  bisVariantOption: '[data-bis-variant-option]',
+  bisVariantId: '[data-bis-variant-id]',
+  bisFeaturedImage: '[data-bis-featured-image]',
+  bisEmailInput: '[data-bis-email-input]',
+  bisResponseMessage: '[data-bis-response-message]',
 };
 
 const classes = {
   hide: 'hide',
-  variantOptionValueActive: 'is-active'
+  variantOptionValueActive: 'is-active',
+  open: 'is-open',
+  submitted: 'submitted',
 };
 
 export default class ProductDetailForm {
@@ -48,7 +59,8 @@ export default class ProductDetailForm {
 
     this.events = {
       RESIZE: `resize${this.namespace}`,
-      CLICK:  `click${this.namespace}`
+      CLICK:  `click${this.namespace}`,
+      SUBMIT: `submit${this.namespace}`,
     };
 
     const defaults = {
@@ -79,6 +91,12 @@ export default class ProductDetailForm {
     this.$variantOptionValueList = $(selectors.variantOptionValueList, this.$container); // Alternate UI that takes the place of a single option selector (could be swatches, dots, buttons, whatever..)
     this.$shippingModalTrigger   = $(selectors.shippingModalTrigger, this.$container);
     this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
+    this.$bisDrawer              = $(selectors.bisContainer);
+    this.$bisButton              = $(selectors.bisButton);
+    this.$bisToggler             = $(selectors.bisToggler);
+    this.$bisForm                = $(selectors.bisForm);
+    this.$bisEmailInput          = $(selectors.bisEmailInput, this.$bisForm);
+    this.$bisResponseMessage     = $(selectors.bisResponseMessage);
     /* eslint-enable */
 
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());
@@ -94,7 +112,8 @@ export default class ProductDetailForm {
     this.$container.on('variantChange', this.onVariantChange.bind(this));
     this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
-
+    this.$bisToggler.on(this.events.CLICK, this.toggleBisContainer.bind(this));
+    this.$bisForm.on('submit', this.onBisSubmit.bind(this));
     Utils.chosenSelects(this.$container);
 
     const queryParams = Utils.getQueryParams();
@@ -117,6 +136,7 @@ export default class ProductDetailForm {
     this.updateColorsLink();
     this.checkVariantsAvailability();
     this.updateBadge(variant);
+    this.updateBisFlyout(variant);
 
     this.$singleOptionSelectors.trigger('chosen:updated');
 
@@ -168,10 +188,19 @@ export default class ProductDetailForm {
     if (variant.available) {
       this.$addToCartBtn.prop('disabled', false);
       this.$addToCartBtnText.html(theme.strings.addToCart);
+      this.$addToCartBtn.show();
+      this.$bisButton.hide();
     }
     else {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.soldOut);
+      if(variant.metafields.bis_disable == 0) {
+        this.$addToCartBtn.hide();
+        this.$bisButton.show();
+      } else {
+        this.$addToCartBtn.show();
+        this.$bisButton.hide();
+      }
     }
   }
 
@@ -325,6 +354,65 @@ export default class ProductDetailForm {
       $(selectors.badge).text('').hide();
     }
 
+  }
+
+  toggleBisContainer() {
+    this.$bisDrawer.toggleClass(classes.open);
+  }
+
+  updateBisFlyout(variant) {
+    const id = variant.id;
+    const options = this.productSingleObject.options;
+    const option_map = {};
+
+    options.forEach((el, index) => {
+      option_map[el.toLowerCase()] = variant[`option${index+1}`];
+    });
+
+    // Update drawer content
+    $(selectors.bisFeaturedImage).attr('src', variant.featured_image.src).attr('alt', variant.featured_image.alt);
+    $(selectors.bisVariantId).val(id);
+    for (const optionName in option_map) {
+      $(`[data-bis-variant-option=${optionName}]`).text(option_map[optionName])
+    }
+  }
+
+  onBisSubmit(evt) {
+    evt.preventDefault();
+
+    const publicKey = this.$bisForm.data('api-key');
+    const customerEmail = this.$bisEmailInput.val();
+    const selectedVariant = $(selectors.bisVariantId, this.$bisForm).val();
+    const successMessage = this.$bisForm.data('success-message');
+    const errorMessage = this.$bisForm.data('error-message');
+
+    if (this.$bisEmailInput.get(0).checkValidity() === false) {
+      this.$bisEmailInput.addClass('has-error');
+      return;
+    }
+
+    $.ajax({
+      type: 'POST',
+      url:  'https://a.klaviyo.com/onsite/components/back-in-stock/subscribe',
+      data: {
+        a: publicKey,
+        email: customerEmail,
+        variant: selectedVariant,
+        platform: 'shopify'
+      }
+    }).done((data) => {
+      if(data.success == true) {
+        this.$bisForm.addClass(classes.submitted);
+        this.$bisResponseMessage.text(successMessage);
+      } else {
+        this.$bisForm.addClass(classes.submitted);
+        this.$bisResponseMessage.text(errorMessage);
+
+        setTimeout(() => {
+          this.$bisForm.removeClass(classes.submitted);
+        }, 5000);
+      }
+    })
   }
 
 }
