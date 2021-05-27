@@ -56,7 +56,7 @@
       {% include 'product-detail-price', product: product, current_variant: current_variant %}
     </div>
   {% endunless %}
-  
+
   {% if section.settings.enable_klarna == true %}
     <!-- Placement v2 -->
     <klarna-placement
@@ -229,6 +229,11 @@
     </script>
 
     {% assign product_default_badge = product.metafields.custom_fields['badge'] %}
+
+    {% unless product.available %}
+      {% assign product_default_badge = 'Sold Out' %}
+    {% endunless %}
+
     {% if product_default_badge == blank %}
       {% for tag in product.tags %}
         {% if tag contains 'Badge:' or tag contains 'badge:'%}
