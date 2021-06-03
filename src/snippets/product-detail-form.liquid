@@ -25,6 +25,7 @@
 {% endif %}
 
 {% capture tag_text %}
+{% if product.available %}
   {% if current_variant.metafields.custom_fields['badge'] != blank %}
     {{ current_variant.metafields.custom_fields['badge'] }}
   {% elsif product.metafields.custom_fields['badge'] != blank %}
@@ -37,6 +38,9 @@
       {% endif %}
     {% endfor %}
   {% endif %}
+{% else %}
+  SOLD OUT
+{% endif %}
 {% endcapture %}
 
 <div class="product__form {% if product.type == 'Gift Card' %}product__form--gift-card{% endif %}" data-product-detail-form>
