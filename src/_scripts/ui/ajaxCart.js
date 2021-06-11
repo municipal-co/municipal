@@ -220,9 +220,9 @@ export default class AJAXCart {
     }
 
     if (currentPercentage > 100) {
-      this.$thresholdBar.css('width', '100%');
+      this.$thresholdBar.css('width', 'calc(100% + 2px)');
     } else {
-      this.$thresholdBar.css('width', `${currentPercentage}%`);
+      this.$thresholdBar.css('width', `calc(${currentPercentage}% + 2px)`);
     }
   }
 
