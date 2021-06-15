@@ -70,7 +70,7 @@ body.ajax-cart-open {
 .ajax-cart__promo {
   padding: 25px 35px 5px;
   text-align: center;
-  color: $cyan;
+  color: $blue;
   @include media-breakpoint-down('md') {
     padding: 20px $ajax-cart-padding-horizontal-mobile 0;
   }
@@ -325,7 +325,7 @@ body.ajax-cart-open {
   }
 }
 .ajax-cart__footer-bottom {
-  
+
   .shopify-cleanslate li {
     list-style-type: none;
   }

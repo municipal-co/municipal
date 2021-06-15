@@ -406,12 +406,12 @@
     }
 
     &.panel--featured .expandable-list__header-title {
-      color: $cyan;
+      color: $green;
     }
 
     @include media-breakpoint-up('lg') {
       &.panel--featured .expandable-list__header-title:before {
-        background-image: url("hover-arrow--blue.svg");
+        background-image: url("hover-arrow--green.svg?v3");
       }
 
       .expandable-list__header-title:before {

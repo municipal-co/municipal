@@ -145,10 +145,10 @@ fieldset:disabled a.btn {
   border: none;
 
   @include hover {
-    color: $cyan;
+    color: $blue;
     text-decoration: none;
     .btn__ui .icon {
-      fill: $cyan;
+      fill: $blue;
     }
   }
 
