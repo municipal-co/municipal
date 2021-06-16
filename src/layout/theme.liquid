@@ -86,6 +86,8 @@
   {% if template.suffix != blank %} template-{{ template.name | append: '-' | append: template.suffix | handle }} {% endif %}
   {% if FIXED_HEADER == true %} site-fixed-header {% endif %}
   {% if HIDE_ON_SCROLL == true %} header-hide-on-scroll {% endif %}
+
+  {% if canonical_url contains 'search-results' %}search-results-page{% endif %}
 {% endcapture %}
 
 <body id="{{ page_title | handle }}" class="{{ body_class | strip | strip_newlines }}">
