@@ -4,6 +4,7 @@
     max-width: 100%;
     z-index: 100;
     max-height: initial;
+    overflow: hidden;
 
     &.drawer--top {
       top: 0;
@@ -76,7 +77,7 @@
       transform: translateY(large-vw(50px, 80px));
     }
   }
-  
+
   &.is-fixed.show-on-scroll {
     .search-drawer .drawer.is-visible {
       transform: translateY(large-vw(50px, 80px));

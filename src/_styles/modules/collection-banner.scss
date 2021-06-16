@@ -1,4 +1,4 @@
-.collection-banner {  
+.collection-banner {
   background-color: $black;
   padding-top: large-vw(35px, 120px);
 
@@ -7,7 +7,7 @@
   }
 
   &.light {
-    background-color: $white;
+    background-color: $bg-white;
 
     .collection-banner__title,
     .collection-banner__content {
@@ -34,7 +34,7 @@
 
   &.no-video {
     padding-top: large-vw(65px, 150px);
-    
+
     @include media-breakpoint-down('md') {
       padding-top: 65px;
       padding-bottom: 40px;
@@ -51,12 +51,12 @@
   .collection-banner_icon {
     max-width: large-vw(200px, 500px);
     margin: 0 auto;
-    
+
     @include media-breakpoint-down('md') {
       max-width: 200px;
       margin-bottom: 10px;
     }
-    
+
     img{
       width: 100%;
     }
