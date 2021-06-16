@@ -4,6 +4,10 @@
   text-transform: uppercase;
   width: 100%;
 
+  @include media-breakpoint-down('xl') {
+    padding: 19px 20px;
+  }
+
   .icon-bell {
     width: 15px;
     height: 15px;
