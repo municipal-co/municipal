@@ -463,7 +463,7 @@
         span.y-label.yotpo-user-title.yotpo-action-hover {
           font-size: large-vw(10px, 22px) !important;
           font-weight: $font-weight-bold;
-          color: $cyan !important;
+          color: $blue !important;
           text-transform: uppercase;
 
           @include media-breakpoint-down('md') {
@@ -478,7 +478,7 @@
       position: initial;
       border: none;
       display: block !important;
-      background-image: url('icon-arrow-yotpo.svg');
+      background-image: url('icon-arrow-yotpo.svg?v1');
       background-repeat: no-repeat;
       background-position: right;
       background-size: contain;
@@ -494,7 +494,7 @@
 
       span {
         font-weight: $font-weight-bold;
-        color: $cyan !important;
+        color: $blue !important;
         font-size: large-vw(18px, 28px) !important;
         text-transform: capitalize;
         display: block;
@@ -730,7 +730,7 @@
 
         &:before {
           content: "Response from municipal:";
-          color: $cyan;
+          color: $blue;
           font-weight: $font-weight-bold;
           font-size: 0.8em;
           display: block;

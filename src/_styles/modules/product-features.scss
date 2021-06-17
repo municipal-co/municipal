@@ -65,7 +65,7 @@
   .features-slide__eyebrow {
     display: block;
     margin-bottom: large-vw(35px, 55px);
-    color: $cyan !important;
+    color: $blue !important;
 
     @include media-breakpoint-down('md') {
       margin-bottom: 35px;
