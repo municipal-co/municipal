@@ -86,6 +86,8 @@
   {% if template.suffix != blank %} template-{{ template.name | append: '-' | append: template.suffix | handle }} {% endif %}
   {% if FIXED_HEADER == true %} site-fixed-header {% endif %}
   {% if HIDE_ON_SCROLL == true %} header-hide-on-scroll {% endif %}
+
+  {% if canonical_url contains 'search-results' %}search-results-page{% endif %}
 {% endcapture %}
 
 <body id="{{ page_title | handle }}" class="{{ body_class | strip | strip_newlines }}">
@@ -97,14 +99,16 @@
   {% section 'pencil-banner' %}
   {% section 'mobile-menu' %}
 
+
   <div class="layout-wrapper">
 
     {% comment %} Select the appropriate 'header-*' section for the theme you are building and remove the files for the others {% endcomment %}
     {% section 'header-logo-center' %}
-    {% comment %}{% section 'header-logo-left' %} {% endcomment %}
 
     <main role="main" id="MainContent">
       <div class="layout-main-content">
+        
+        {% include 'search-drawer' %}
         {{ content_for_layout }}
       </div>
     </main>
@@ -130,5 +134,8 @@
   {% endunless %}
   <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=P5FsAy"></script>
   {% comment %}{% section 'newsletter-slideup' %}{% endcomment %}
+  {% comment %} Findify Integraion {% endcomment %}
+  {% include 'findify-tagging' %}
+  {% comment %} End Findify Integraion {% endcomment %}
 </body>
 </html>

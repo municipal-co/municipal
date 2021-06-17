@@ -17,24 +17,48 @@ class AJAXFormManager {
     this.namespace = `.${this.name}`;
     this.events = {
       ADD_SUCCESS: `addSuccess${this.namespace}`,
-      ADD_FAIL: `addFail${this.namespace}`
+      ADD_FAIL: `addFail${this.namespace}`,
+      ADD_FROM_VARIANT_ID: `add_one_from_variant_id`
     };
 
     this.requestInProgress = false;
 
-    $body.on('submit', selectors.addForm, (e) => {
-      e.preventDefault();
+    $body.on('submit', selectors.addForm, this.addToCartFromForm.bind(this));
 
-      if (this.requestInProgress) return;
+    $window.on(this.events.ADD_FROM_VARIANT_ID, this.addToCartByVariantID.bind(this));
+  }
 
-      const $submitButton = $(e.target).find(selectors.addToCart);
-      const $submitButtonText = $submitButton.find(selectors.addToCartText);
+  addToCartFromForm(e) {
+    e.preventDefault();
 
-      // Update the submit button text and disable the button so the user knows the form is being submitted
-      $submitButton.prop('disabled', true);
-      $submitButtonText.html(getPropByString(window, 'theme.strings.adding') || 'Adding');
+    if (this.requestInProgress) return;
 
-      CartAPI.addItemFromForm($(e.target))
+    const $submitButton = $(e.target).find(selectors.addToCart);
+    const $submitButtonText = $submitButton.find(selectors.addToCartText);
+
+    // Update the submit button text and disable the button so the user knows the form is being submitted
+    $submitButton.prop('disabled', true);
+    $submitButtonText.html(getPropByString(window, 'theme.strings.adding') || 'Adding');
+
+    CartAPI.addItemFromForm($(e.target))
+      .then((data) => {
+        const event = $.Event(this.events.ADD_SUCCESS, { cart: data });
+        $window.trigger(event);
+      })
+      .fail((data) => {
+        const event = $.Event(this.events.ADD_FAIL, { data });
+        $window.trigger(event);
+      })
+      .always(() => {
+        // Reset button state
+        $submitButton.prop('disabled', false);
+        $submitButtonText.html(theme.strings.addToCart);
+      });
+  }   
+
+  addToCartByVariantID(e) {
+    if (e.variantID) {
+      CartAPI.addItemFromID(e.variantID)
         .then((data) => {
           const event = $.Event(this.events.ADD_SUCCESS, { cart: data });
           $window.trigger(event);
@@ -43,12 +67,7 @@ class AJAXFormManager {
           const event = $.Event(this.events.ADD_FAIL, { data });
           $window.trigger(event);
         })
-        .always(() => {
-          // Reset button state
-          $submitButton.prop('disabled', false);
-          $submitButtonText.html(theme.strings.addToCart);
-        });
-    });
+    }
   }
 }
 

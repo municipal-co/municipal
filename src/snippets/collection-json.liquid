@@ -1,0 +1,69 @@
+{% if collection %}
+
+  {% capture collection_json %}
+
+    {
+      "parent_category": {{ collection.metafields.custom_fields["parent_category"] | json }},
+      "show_new_colors": {{ collection.metafields.custom_fields["show_new_colors"] | json }},
+      "hide_sold_out_colors": {{ collection.metafields.custom_fields["hide_sold_out_colors"] | json }},
+      "limit_colors": {{ collection.metafields.custom_fields["limit_colors"] | json }},
+      "secondary_nav": {
+        "nav_collection": {{ collection.metafields.custom_fields["nav_collection"] | json }},
+        "nav_collection_title": {{ collection.metafields.custom_fields["nav_collection_title"] | json }},
+        "nav_collection_display_color": {{ collection.metafields.custom_fields["nav_collection_display_color"] | json }}
+      },
+      "collection_banner" : {
+        "banner_title": {{ collection.metafields.custom_fields["banner_title"] | json }},
+        "banner_icon": {{ collection.metafields.custom_fields["banner_icon"] | json }},
+        "banner_copy": {{ collection.metafields.custom_fields["banner_copy"] | json }},
+        "banner_video_bg": {{ collection.metafields.custom_fields["banner_video_background"] | json }},
+        "banner_video_url": {{ collection.metafields.custom_fields["banner_video_url"] | json }},
+        "banner_light_bg": {{ collection.metafields.custom_fields["banner_light_background"] | json }},
+        "title_tag": {{ collection.metafields.custom_fields["title_tag"] | json }},
+        "banner_image": {{ collection.metafields.custom_fields["banner_image"] | json }},
+        "banner_image_mobile": {{ collection.metafields.custom_fields["banner_image_mobile"] | json }}
+      },
+      "collection_promo_cards": {{ collection.metafields.custom_fields["collection_promo_cards"] | json }},
+      "collection_section": {
+        "collection_array": {{ collection.metafields.custom_fields['collection'] | json }},
+        "collection_title_array": {{ collection.metafields.custom_fields['collection_title'] | json }},
+        "collection_description_array": {{ collection.metafields.custom_fields['collection_description'] | json }},
+        "show_promo_card_array": {{ collection.metafields.custom_fields['show_promo_card'] | json }},
+        "rotate_promo_card_array": {{ collection.metafields.custom_fields['rotate_promo_card'] | json }},
+        "promo_card_image_array": {{ collection.metafields.custom_fields['promo_card_image'] | json }},
+        "promo_card_position_array": {{ collection.metafields.custom_fields['promo_card_position'] | json }},
+        "promo_card_link_array": {{ collection.metafields.custom_fields['promo_card_link'] | json }},
+        "promo_card_image_alt_text_array": {{ collection.metafields.custom_fields['promo_card_image_alt_text'] | json }},
+        "open_link_in_another_tab_array": {{ collection.metafields.custom_fields['open_link_in_another_tab'] | json }}
+      },
+      "promo_section": {
+        "promo_position": {{ collection.metafields["promo_position"] | json }},
+        "promo_eyebrow": {{ collection.metafields["promo_eyebrow"] | json }},
+        "eyebrow_icon": {{ collection.metafields["eyebrow_icon"] | json }},
+        "promo_title_tag": {{ collection.metafields["promo_title_tag"] | json }},
+        "promo_title": {{ collection.metafields["promo_title"] | json }},
+        "promo_text": {{ collection.metafields["promo_text"] | json }},
+        "promo_cta_text": {{ collection.metafields["promo_cta_text"] | json }},
+        "promo_cta_url": {{ collection.metafields["promo_cta_url"] | json }},
+        "promo_secondary_icon": {{ collection.metafields["promo_secondary_icon"] | json }},
+        "promo_image": {{ collection.metafields["promo_image"] | json }},
+        "promo_image_mobile": {{ collection.metafields["promo_image_mobile"] | json }},
+        "promo_image_layout": {{ collection.metafields["promo_image_layout"] | json }},
+        "promo_light_text": {{ collection.metafields["promo_light_text"] | json }},
+        "promo_title_color": {{ collection.metafields["promo_title_color"] | json }},
+        "promo_background_color": {{ collection.metafields["promo_background_color"] | json }}
+      },
+      "url": {{ collection_url | strip | json }},
+      "sortDefault": {{ collection.default_sort_by | json }},
+      "sortApplied": {{ collection.sort_by | json }},
+      "lowInventoryThreshold": {{ settings.low_inventory_threshold | json }}
+      {%- if filter_url != blank -%}
+        ,"filterUrl": {{ filter_url | json }}
+      {%- endif -%}
+    }
+
+  {% endcapture %}
+
+  {{ collection_json | strip_newlines | strip }}
+
+{% endif %}
