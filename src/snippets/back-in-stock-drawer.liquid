@@ -1,0 +1,70 @@
+{% assign current_variant = product.selected_variant | default: product.variant[0] %}
+{% for option in product.options_with_values %}
+  {% assign option_lowercase = option.name | downcase %}
+  {% if option_lowercase == "color"  %}
+    {% assign color_index = forloop.index %}
+  {% endif %}
+
+  {% if option_lowercase == "size" %}
+    {% assign size_index = forloop.index %}
+  {% endif %}
+{% endfor %}
+
+<div class="bis__container" data-bis-container>
+  <div class="bis__inner">
+    <div class="bis__header">
+      <button class="bis__close" data-bis-toggler>
+        {% include 'icon-close' %}
+      </button>
+      <div class="bis__title">
+        Notify
+      </div>
+    </div>
+    <div class="bis__body">
+      <div class="bis__featured-image-container">
+        <div class="bis__notify-icon">
+          <span>Notify Me</span>
+        </div>
+        <img src="{{product.selected_or_first_available_variant.featured_image | img_url: '600x'}}" alt="{{product.selected_or_first_available_variant.featured_image.alt}}" data-bis-featured-image class="bis__featured-image">
+      </div>
+
+      <div class="bis__body-info">
+        {% assign color_handle = "option" | append: color_index %}
+        {% assign size_handle = "option" | append: size_index %}
+        {% capture current_color %}
+          <span class="bis__highlighted-text" data-bis-variant-option="color">{{ current_variant[color_handle] }}</span>
+        {% endcapture %}
+        {% capture current_size %}
+          <span class="bis__highlighted-text" data-bis-variant-option="size">{{current_variant[size_handle]}}</span>
+        {% endcapture %}
+        {{ section.settings.bis_notify_text | replace: '[[product]]', product.title | replace: '[[color]]', current_color | replace: '[[size]]', current_size}}
+      </div>
+
+      <form action="/" class="bis__form"
+            data-bis-form data-api-key="{{settings.klaviyo_api_key}}"
+            data-success-message="{{section.settings.bis_success_message}}"
+            data-error-message="{{section.settings.bis_error_message}}">
+        <input data-bis-variant-id name="variant-id" type="hidden" value="{{current_variant.id}}">
+        <div class="minimal-input-box">
+          <input class="bis__input minimal-input-box__input" name="email" placeholder="What's your email?" type="email" required data-bis-email-input>
+          <button class="bis__submit minimal-input-box__submit" type="submit">
+            {% include 'icon-arrow' %}
+            <span class="icon-fallback-text">Submit</span>
+          </button>
+        </div>
+      </form>
+      <div class="bis__response-message" data-bis-response-message>
+
+      </div>
+      <small class="bis__footer-info">
+        By submitting your email you are agreeing to our
+        <a href="{{section.settings.bis_tos_link}}">Terms of Service</a>
+        and our
+        <a href="{{section.settings.bis_privacy_policy_link}}">Privacy Policy</a>.<br>
+        You may unsubscribe at any time
+      </small>
+    </div>
+  </div>
+
+  <div class="bis__overlay" data-bis-toggler></div>
+</div>
