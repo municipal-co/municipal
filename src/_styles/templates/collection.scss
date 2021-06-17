@@ -1,6 +1,9 @@
 // -------------------------
 // Collection page
 // -------------------------
+.template-collection main {
+  background-color: $bg-white;
+}
 .showing-header {
   .collection-filter-bar.is-fixed {
     @include media-breakpoint-up('lg') {

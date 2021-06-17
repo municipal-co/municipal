@@ -13,6 +13,19 @@
   @include visually-shown();
 }
 
+
+.hidden-on-desktop {
+  @include media-breakpoint-up('lg') {
+    display: none;
+  }
+}
+
+.hidden-on-mobile {
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+}
+
 // Only show when JS is not supported
 .no-js:not(html) {
   display: none;

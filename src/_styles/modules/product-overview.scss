@@ -13,7 +13,7 @@
 
 .overview-details__small-text,
 .overview-content__eyebrow {
-  color: $cyan !important;
+  color: $green !important;
 }
 
 .overview-content__title,
@@ -183,7 +183,7 @@
   }
 
   h1,h2,h3,h4,h5,h6{
-    color: $cyan;
+    color: $green;
 
     @include media-breakpoint-down('md') {
       margin-bottom: 8px;

@@ -145,10 +145,10 @@ fieldset:disabled a.btn {
   border: none;
 
   @include hover {
-    color: $cyan;
+    color: $blue;
     text-decoration: none;
     .btn__ui .icon {
-      fill: $cyan;
+      fill: $blue;
     }
   }
 
@@ -267,17 +267,17 @@ input[type='button'] {
 }
 
 .btn-secondary {
-  background-color: $cyan;
-  border-color: $cyan;
+  background-color: $blue;
+  border-color: $blue;
   &:hover {
-    background-color: $cyan;
-    border-color: $cyan;
+    background-color: $blue;
+    border-color: $blue;
   }
 
   &.disabled,
   &[disabled] {
-    background-color: $cyan;
-    border-color: $cyan;
+    background-color: $blue;
+    border-color: $blue;
   }
 }
 
