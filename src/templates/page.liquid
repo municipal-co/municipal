@@ -1,19 +1,31 @@
+{% assign body_classes = "col-xl-20 col-lg-20" %}
+
+{% if canonical_url contains 'search-results' %}
+  {% assign body_classes = "col-xl-22 col-lg-22" %}
+{% endif %}
+
+{% if canonical_url contains 'search-results' %}
+  {% section 'findify-collection-banner' %}
+{% endif %}
+
 <div class="layout-content-wrapper">
   <div class="container-fluid">
     <div class="page-text-only">
       
+      {% unless canonical_url contains 'search-results' %}
+        <div class="row justify-content-center">
+          <div class="col-xl-22 col-lg-22 col-md-20 col-sm-20 col-20">
+            <div class="page-text-only__header">
+              <span class="h5">{{ page.metafields.custom_fields["page_subheader"] }}</span>
+              <h1>{{ page.title }}</h1>
+              <p class="p2">{{ page.metafields.custom_fields["page_subtitle"] }}</p>
+            </div>
+          </div>  
+        </div>
+      {% endunless %}
+      
       <div class="row justify-content-center">
-        <div class="col-xl-22 col-lg-22 col-md-20 col-sm-20 col-20">
-          <div class="page-text-only__header">
-            <span class="h5">{{ page.metafields.custom_fields["page_subheader"] }}</span>
-            <h1>{{ page.title }}</h1>
-            <p class="p2">{{ page.metafields.custom_fields["page_subtitle"] }}</p>
-          </div>
-        </div>  
-      </div>
-             
-      <div class="row justify-content-center">
-        <div class="col-xl-20 col-lg-20 col-md-20 col-sm-20 col-20">
+        <div class="{{ body_classes }} col-md-20 col-sm-20 col-20">
           <div class="page-text-only__content">
             {{ page.content }}
           </div>

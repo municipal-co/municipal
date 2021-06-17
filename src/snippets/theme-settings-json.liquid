@@ -1,0 +1,27 @@
+{% capture theme_settings_json %}
+  {
+    "color_swatches": [
+      {% for block in section.blocks %}
+        {
+          {{ block.settings.title | handle | json }}: {
+            "color":{{ block.settings.color | json }},
+            "image":{{ block.settings.image | json }}
+          }
+        }{% unless forloop.last %},{% endunless %} 
+      {% endfor %}
+    ],
+
+
+
+
+    "lowInventoryThreshold": {{ settings.low_inventory_threshold | json }}
+    {%- if filter_url != blank -%}
+      ,"filterUrl": {{ filter_url | json }}
+    {%- endif -%}
+  }
+{% endcapture %}
+
+{{ theme_settings_json | strip_newlines | strip }}
+
+
+

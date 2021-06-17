@@ -68,6 +68,7 @@ body.ajax-cart-open {
   font-size: 20px;
   line-height: 30px;
   position: relative;
+  color: $blue;
   @include media-breakpoint-down('md') {
     font-size: 12px;
     padding: 25px 20px 10px;

@@ -111,6 +111,8 @@
 @import 'modules/customers-drawer';
 @import 'modules/fit-guide-modal';
 @import 'modules/product-upsell.scss';
+@import 'modules/back-in-stock.scss';
+@import 'modules/search-drawer.scss';
 
 /**
  * Templates
@@ -170,6 +172,9 @@ body {
 //   }
 // }
 
+.findify-autocomplete {
+  position: fixed;
+}
 
 .fade-animate {
   transform: translateY( 200px );

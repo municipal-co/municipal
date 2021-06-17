@@ -14,7 +14,7 @@
           {% comment %} Menus {% endcomment %}
           <div class="mobile-menu-block mobile-menu-block--primary">
 
-            {% if section.settings.search_enabled %}
+            {% if settings.search_form == "default" %}
               <form action="/search" method="get" role="search" data-search-form>
                 <div class="minimal-input-box">
 
@@ -127,12 +127,6 @@
   {
     "name": "Navigation Menu",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "search_enabled",
-        "label" : "Show search form",
-        "default": true
-      },
       {
         "type": "link_list",
         "id": "blue_linklist",

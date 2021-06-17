@@ -1,0 +1,16 @@
+{% if product %}
+  <div data-findify-event="view-page" data-findify-item-id="{{product.id}}" data-findify-variant-item-id="{{product.selected_or_first_available_variant.id}}"></div>
+  <div data-findify-filter="category" data-findify-filter-value='{{product.type | escape}}'></div>
+  <div data-findify-filter="brand" data-findify-filter-value='{{product.vendor | escape}}'></div>
+  <div data-findify-filter="id" data-findify-filter-value='{{product.id}}'></div>
+{% endif %}
+
+{% if cart %} 
+  <div data-findify-event="update-cart">
+    {% for item in cart.items %}
+      <div data-findify-item-id="{{ item.product_id }}" data-findify-variant-item-id="{{item.variant_id}}" data-findify-unit-price="{{ item.price | money_without_currency }}" data-findify-quantity="{{ item.quantity }}"></div>
+    {% endfor %}
+  </div>
+
+  <div data-findify-filter="id" data-findify-filter-value='[{% for item in cart.items %} { "value": [{{ item.product_id }}] } {% if forloop.last == false %},{%endif%}{% endfor %}]'></div>
+{% endif %}
