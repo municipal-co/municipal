@@ -68,11 +68,11 @@
 
     &:before {
       content: "";
-      @include aspect-ratio-padding(1320, 390);
+      padding-bottom: percentage(18/44);
       display: block;
 
       @include media-breakpoint-down('md') {
-        @include aspect-ratio-padding(390, 180);
+        padding-bottom: percentage(1/2)
       }
     }
 

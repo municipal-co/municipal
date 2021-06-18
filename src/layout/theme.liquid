@@ -107,7 +107,7 @@
 
     <main role="main" id="MainContent">
       <div class="layout-main-content">
-        
+
         {% include 'search-drawer' %}
         {{ content_for_layout }}
       </div>
@@ -137,5 +137,8 @@
   {% comment %} Findify Integraion {% endcomment %}
   {% include 'findify-tagging' %}
   {% comment %} End Findify Integraion {% endcomment %}
+  <!-- CRITEO START -->
+  {% include 'criteo-tracking' %}
+  <!-- CRITEO END -->
 </body>
 </html>
