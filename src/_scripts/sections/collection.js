@@ -31,6 +31,10 @@ export default class CollectionSection extends BaseSection {
   constructor(container) {
     super(container, 'collection');
 
+    window.getCollectionJson = function() {
+      return JSON.parse($('[data-collection-json]').html());
+    }
+
     // Stop parsing if we don't have the collection json script tag
     if (!$(selectors.collectionJson, this.$container).html()) {
       console.warn(`[${this.name}] - Element matching ${selectors.collectionJson} required.`);

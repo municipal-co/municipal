@@ -129,7 +129,7 @@
   display: block;
   font-weight: $font-weight-bold;
   text-align: center;
-  color: $cyan;
+  color: $blue;
   text-transform: uppercase;
 
   @include media-breakpoint-down('md') {
@@ -240,7 +240,7 @@
 .fit-guide__model-item-value {
   @extend .h5;
   font-weight: $font-weight-bold;
-  color: $cyan;
+  color: $blue;
   margin-bottom: 5px;
   text-transform: uppercase;
 }

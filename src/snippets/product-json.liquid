@@ -69,7 +69,10 @@
             "taxable": {{ variant.taxable | json }},
             "title": {{ variant.title | json }},
             "weight": {{ variant.weight }},
-            "url": {{ variant.url | within: collection | json }}
+            "url": {{ variant.url | within: collection | json }},
+            "metafields": {
+              "bis_disable": {{ variant.metafields.custom_fields["bis_disable"] | default: 0 | json}}
+            }
           }
           {% unless forloop.last %},{% endunless %}
         {% endfor %}

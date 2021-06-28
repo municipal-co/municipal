@@ -8,6 +8,22 @@
     "theme_support_url": "https://github.com/zehnergroup/z-theme"
   },
   {
+    "name": "Search Options",
+    "settings": [
+      {
+        "type": "select",
+        "id": "search_form",
+        "label": "Search Form Type",
+        "options": [
+          { "value": "default", "label": "Default Search Form" },
+          { "value": "findify", "label": "Findify Search Form" },
+          { "value": "disable", "label": "Disabled" }
+        ],
+        "default": "default"
+      }
+    ]
+  },
+  {
     "name": "products",
     "settings": [
       {
@@ -259,6 +275,11 @@
         "type": "text",
         "id": "klaviyo_list_id",
         "label": "List ID"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_api_key",
+        "label": "Public API Key"
       }
     ]
   },

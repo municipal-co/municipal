@@ -8,7 +8,10 @@ const $body   = $(document.body);
 
 const selectors = {
   header: '[data-header]',
-  dropdownTrigger: '[data-dropdown-trigger][data-block]'
+  dropdownTrigger: '[data-dropdown-trigger][data-block]',
+  toggle: '[data-search-drawer-toggle]',
+  searchDrawer: '[data-search-drawer]',
+  closeSearchDrawer: '[data-drawer-close]'
 };
 
 const classes = {
@@ -25,6 +28,10 @@ export default class HeaderSection extends BaseSection {
 
     this.$el = $(selectors.header, this.$container);
 
+    this.$toggleSearchDrawer = $(selectors.toggle, this.$container);
+    this.$closeSearchDrawer = $(selectors.closeSearchDrawer, this.$container);
+    this.$searchDrawer  = $(selectors.searchDrawer, this.$container);
+
     this.$container.on(this.events.MOUSELEAVE, this.onMouseLeave.bind(this));
     this.initialPosition = 0;
 
@@ -38,6 +45,9 @@ export default class HeaderSection extends BaseSection {
       $window.on(this.events.SCROLL, throttle(50, this.onScroll.bind(this)));
       this.onScroll(); // hit this one time on init to make sure everything is good
     }
+
+    this.$toggleSearchDrawer.on('click', this.onToggleSearchDrawer.bind(this));
+    this.$closeSearchDrawer.on('click', this.onCloseSearchDrawer.bind(this));
   }
 
   scrollCheck() {
@@ -78,6 +88,7 @@ export default class HeaderSection extends BaseSection {
           this.$el.addClass(classes.showOnScroll);
           this.$el.removeClass(classes.hideOnScroll);
           this.initialPosition = scrollTop;
+          $window.trigger("showing-header");
         }
       });
     }
@@ -93,6 +104,18 @@ export default class HeaderSection extends BaseSection {
 
   onMouseLeave() {
     DropdownManager.closeAllDropdowns();
+  }
+
+  onToggleSearchDrawer(e) {
+    e.preventDefault();
+    this.$searchDrawer.toggleClass('is-visible');
+    this.$toggleSearchDrawer.toggleClass('search-is-open');
+  }
+
+  onCloseSearchDrawer(e) {
+    e.preventDefault();
+    this.$searchDrawer.removeClass('is-visible');
+    this.$toggleSearchDrawer.removeClass('search-is-open');
   }
 
   onBlockSelect(e) {

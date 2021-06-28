@@ -34,6 +34,8 @@
 
 {% endcomment %}
 
+
+{% assign hidden_colors = product.metafields.custom_fields['hide_colors'] %}
 {% assign product_swatch_size = '50x50' %}
 {% assign alt_swatch_identifier = 'swatch' %}
 
@@ -88,20 +90,22 @@
             background-color property must be set by capitalizing the color and removing spaces.
             We're looking for valid CSS color names - see: https://www.w3schools.com/cssref/css_colors.asp
           {% endcomment %}
-          <div class="dot dot--{{ color_slug }}{% if selected_color == color %} is-active{% endif %}"
-               title="{{ color }}"
-               data-variant-option-value="{{ color }}"
-               {% if swatch_variant %}
-               data-variant-url="{{ swatch_variant.url }}"
-               data-variant-img="{{ swatch_variant.image | img_url: product_thumb_size, crop: product_thumb_crop }}"
-               {% endif %}>
-            <div class="dot__inner"
-                 style="background-color:{{ color_css }};
-  {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}">
-                {% include 'icon-check' %}
+          {% assign search_string = color | prepend: '[' | append: ']' %}
+          {% unless hidden_colors contains search_string %}
+            <div class="dot dot--{{ color_slug }}{% if selected_color == color %} is-active{% endif %}"
+                title="{{ color }}"
+                data-variant-option-value="{{ color }}"
+                {% if swatch_variant %}
+                data-variant-url="{{ swatch_variant.url }}"
+                data-variant-img="{{ swatch_variant.image | img_url: product_thumb_size, crop: product_thumb_crop }}"
+                {% endif %}>
+              <div class="dot__inner"
+                  style="background-color:{{ color_css }};
+    {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}">
+                  {% include 'icon-check' %}
+              </div>
             </div>
-          </div>
-
+          {% endunless %}
         {% endfor %}
 
       </div>
