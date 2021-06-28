@@ -84,6 +84,10 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+
+  @include media-breakpoint-down('sm') {
+    padding: 25px;
+  }
 }
 
 .bis__featured-image-container {
@@ -101,6 +105,7 @@
   position: absolute;
   right: 0;
   top: 0;
+  z-index: 1;
 
   span {
     text-align: center;
@@ -143,7 +148,7 @@
 .bis__input {
   border-radius: 25px;
   border: 2.5px solid $black;
-  padding: 11px 105px 11px 38px;
+  padding: 11px 60px 11px 38px;
   font-size: 15px;
 
   &.has-error {
@@ -153,7 +158,7 @@
 
 .bis__submit {
   width: 35px;
-  left: 90%;
+  left: calc(100% - 55px);
   color: $black;
   opacity: 0.25;
 
