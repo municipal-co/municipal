@@ -123,6 +123,7 @@ export default class ProductDetailForm {
     }
 
     this.checkVariantsAvailability();
+    this.updateBadge(this.variants.currentVariant);
   }
 
   onVariantChange(evt) {
@@ -310,23 +311,32 @@ export default class ProductDetailForm {
       const $el = $(el);
       const selectedVariant = $el.val();
       const optionIndex = $el.data('index');
+      let colorIndex = 0;
+
+      $.each(this.productSingleObject.options_with_values, (i, option) => {
+        if(option.name === 'Color' || option.name === 'color') {
+          colorIndex = option.position;
+        }
+      });
 
       $.each(this.productSingleObject.variants, (i, variant) => {
-        if (variant[optionIndex] === selectedVariant) {
+        if (variant[optionIndex] === selectedVariant && optionIndex !== colorIndex) {
           const unavailableVariant = !variant.available;
-          this.updateUnavailableVariants(variant, optionIndex, unavailableVariant);
+          this.updateUnavailableVariants(variant, optionIndex, colorIndex, unavailableVariant);
         }
       });
     })
   }
 
-  updateUnavailableVariants(variant, optionIndex, disabled = false) {
+  updateUnavailableVariants(variant, optionIndex, colorIndex, disabled = false) {
     for (let i = 1; i <= 3; i++) {
-      const currentOption = 'option' + i;
-      if (optionIndex !== currentOption) {
-        const dotToUpdate = variant[currentOption];
+      if(i !== colorIndex) {
+        const currentOption = 'option' + i;
+        if (optionIndex !== currentOption) {
+          const dotToUpdate = variant[currentOption];
 
-        $(`.dot[data-variant-option-value="${dotToUpdate}"]`, this.$container).attr('disabled', disabled);
+          $(`.dot[data-variant-option-value="${dotToUpdate}"]`, this.$container).attr('disabled', disabled);
+        }
       }
     }
   }
@@ -345,10 +355,31 @@ export default class ProductDetailForm {
   updateBadge(variant) {
     const id = variant.id;
     const badgesData = JSON.parse($(selectors.badgesData).html());
+    let sizeOptionIndex = 0;
+    let disabledSizeDotsLength = 0;
 
-    if( badgesData[id] !== null && badgesData[id] !== '') {
+    $.each(this.productSingleObject.options_with_values, (i, option) => {
+      if(option.name === 'Size' || option.name === 'size') {
+        sizeOptionIndex = option.position;
+        return false;
+      }
+    })
+
+    const $sizeDotsContainer = $(`${selectors.dotsContainer}[data-option-position=${sizeOptionIndex}]`, this.$container);
+    const $sizeDots = $(selectors.dot, $sizeDotsContainer);
+    const sizeDotsLength = $sizeDots.length;
+
+    $sizeDots.each((i, dot) => {
+      if($(dot).attr('disabled') === 'disabled') {
+        disabledSizeDotsLength += 1;
+      }
+    });
+
+    if(disabledSizeDotsLength === sizeDotsLength) {
+      $(selectors.badge).text('Sold Out').show();
+    } else if( badgesData[id] !== null && badgesData[id] !== '') {
       $(selectors.badge).text( badgesData[id] ).show();
-    } else if ( badgesData.default !== "" && badgesData.default !== null ) {
+    } else if ( badgesData.default !== '' && badgesData.default !== null ) {
       $(selectors.badge).text( badgesData.default ).show();
     } else {
       $(selectors.badge).text('').hide();
