@@ -191,11 +191,10 @@ export default class ProductDetailForm {
       this.$addToCartBtnText.html(theme.strings.addToCart);
       this.$addToCartBtn.show();
       this.$bisButton.hide();
-    }
-    else {
+    } else {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.soldOut);
-      if(variant.metafields.bis_disable == 0) {
+      if(this.productSingleObject.metafields.bis_disable === 0 && variant.metafields.bis_disable === 0) {
         this.$addToCartBtn.hide();
         this.$bisButton.show();
       } else {
