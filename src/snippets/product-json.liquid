@@ -106,6 +106,7 @@
       ],
       "metafields": {
         "_": 0 {% comment %} Add an extra field here to ensure we don't have a dangling comma {% endcomment %}
+        , "bis_disable": {{ product.metafields.custom_fields['bis_disable'] | default: 0 | json }}
       }
     }
 

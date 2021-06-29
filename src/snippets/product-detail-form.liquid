@@ -190,13 +190,22 @@
           </div>
         </div>
 
+        {% assign product_disable_bis = product.metafields.custom_fields['bis_disable'] | default: 0 %}
+        {% assign variant_disable_bis = current_variant.metafields.custom_fields['bis_disable'] | default: 0 %}
+        {% if product_disable_bis == 1 or variant_disable_bis == 1 %}
+          {% assign disable_bis_button = true %}
+        {% else %}
+          {% assign disable_bis_button = false %}
+        {% endif %}
         <button
           type="submit"
           name="add"
           class="btn btn-primary btn-block add-to-cart"
           data-add-to-cart
-          {% unless current_variant.available and product.metafields.custom_fields['bis_disable'] == 0 and current_variant.metafields.custom_fields['bis_disable'] == 0 %}
-            style="display: none;"
+          {% unless current_variant.available %}
+            {% unless disable_bis_button == true %}
+              style="display: none;"
+            {% endunless %}
           {% endunless %}
           {% unless current_variant.available %}disabled="disabled"{% endunless %}>
             <span data-add-to-cart-text>
@@ -207,20 +216,18 @@
               {% endif %}
             </span>
         </button>
-        {% unless product.metafields.custom_fields['bis_disable'] == 1 %}
-          <button
-            type="button"
-            name="bis-button"
-            class="btn btn--small btn-outline-primary btn-back-in-stock"
-            data-bis-toggler
-            data-bis-button
-            {% if current_variant.available or current_variant.metafields.custom_fields['bis_disable'] == 1 %}
-              style="display:none;"
-            {% endif %}>
-            {% include 'icon-bell' %}
-            Notify me when back
-          </button>
-        {% endunless %}
+        <button
+          type="button"
+          name="bis-button"
+          class="btn btn--small btn-outline-primary btn-back-in-stock"
+          data-bis-toggler
+          data-bis-button
+          {% if current_variant.available or disable_bis_button == true %}
+            style="display:none;"
+          {% endif %}>
+          {% include 'icon-bell' %}
+          Notify me when back
+        </button>
       </form>
 
       {% if settings.shipping_cta_title != blank and shipping_modal_html != blank%}
