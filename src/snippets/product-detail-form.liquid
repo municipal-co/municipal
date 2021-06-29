@@ -25,6 +25,7 @@
 {% endif %}
 
 {% capture tag_text %}
+{% if product.available %}
   {% if current_variant.metafields.custom_fields['badge'] != blank %}
     {{ current_variant.metafields.custom_fields['badge'] }}
   {% elsif product.metafields.custom_fields['badge'] != blank %}
@@ -37,6 +38,9 @@
       {% endif %}
     {% endfor %}
   {% endif %}
+{% else %}
+  SOLD OUT
+{% endif %}
 {% endcapture %}
 
 <div class="product__form {% if product.type == 'Gift Card' %}product__form--gift-card{% endif %}" data-product-detail-form>
@@ -246,6 +250,11 @@
     </script>
 
     {% assign product_default_badge = product.metafields.custom_fields['badge'] %}
+
+    {% unless product.available %}
+      {% assign product_default_badge = 'Sold Out' %}
+    {% endunless %}
+
     {% if product_default_badge == blank %}
       {% for tag in product.tags %}
         {% if tag contains 'Badge:' or tag contains 'badge:'%}

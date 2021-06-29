@@ -188,10 +188,6 @@
             {% else %}
               {{ card_product.price | money }}
             {% endif %}
-
-            {% unless card_product.available %}
-              {{ 'products.product.sold_out' | t }}
-            {% endunless %}
           {% endif %}
 
         </div>
