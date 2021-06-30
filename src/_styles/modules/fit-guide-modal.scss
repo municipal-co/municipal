@@ -85,6 +85,7 @@
     display: inherit !important;
     top: auto !important;
     bottom: auto !important;
+    padding: 0 !important;
 
     @include media-breakpoint-down('md') {
       display: none;

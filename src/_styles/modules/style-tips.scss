@@ -162,6 +162,7 @@
     display: inherit !important;
     top: 50% !important;
     bottom: 50% !important;
+    padding: 0 !important;
 
 
     @include media-breakpoint-down('md') {
