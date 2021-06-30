@@ -126,6 +126,10 @@
     display: flex;
     align-items: center;
     margin-top: 0;
+    // Arrows temporary fix
+    display: inherit !important;
+    top: auto !important;
+    bottom: auto !important;
 
     @include media-breakpoint-down('md') {
       width: 40px;
