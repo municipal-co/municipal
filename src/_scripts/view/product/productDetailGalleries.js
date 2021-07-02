@@ -76,9 +76,7 @@ class ProductDetailGallery {
       speed: 100,
       effect: 'fade',
       allowTouchMove: true,
-      threshold: 0,
-      preventClicks: true,
-      preventClicksPropagation: true,
+      threshold: 20,
       fadeEffect: {
         crossFade: true
       },

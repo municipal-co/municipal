@@ -195,6 +195,7 @@
   font-weight: bold;
 
   @include media-breakpoint-down('md') {
+    white-space: nowrap;
     display: block;
     top: 10px;
     left: 10px;
