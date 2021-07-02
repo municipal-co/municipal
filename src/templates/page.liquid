@@ -11,7 +11,7 @@
 <div class="layout-content-wrapper">
   <div class="container-fluid">
     <div class="page-text-only">
-      
+
       {% unless canonical_url contains 'search-results' %}
         <div class="row justify-content-center">
           <div class="col-xl-22 col-lg-22 col-md-20 col-sm-20 col-20">
@@ -20,10 +20,10 @@
               <h1>{{ page.title }}</h1>
               <p class="p2">{{ page.metafields.custom_fields["page_subtitle"] }}</p>
             </div>
-          </div>  
+          </div>
         </div>
       {% endunless %}
-      
+
       <div class="row justify-content-center">
         <div class="{{ body_classes }} col-md-20 col-sm-20 col-20">
           <div class="page-text-only__content">
