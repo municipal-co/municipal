@@ -1,7 +1,7 @@
 {% if section.settings.contact__instagram-check or
       section.settings.contact__twitter-check or
       section.settings.contact__email-check or
-      section.settings.contact__address-check 
+      section.settings.contact__address-check
 %}
 
 {% assign contact_link_check = true %}
@@ -13,7 +13,7 @@
   <div class="contact">
     <div class="container-fluid">
       <div class="row justify-content-center row-adjusted">
-        <div class="col-xl-22 col-lg-22 col-md-20 col-sm-20 col-20">
+        <div class="col-xl-22 col-lg-22 col-md-20 col-sm-22 col-22">
           <div class="contact__banner-container">
             {% if section.settings.contact__banner-image %}
               <!--<img src="{{ section.settings.contact__banner-image | img_url: "1080x1080" }}" alt="contact__banner-image">-->
@@ -43,7 +43,7 @@
                             {{ 'contact.default.instagram_default' | t }}
                           {% endif %}
                         </a>
-                      </li>  
+                      </li>
                     {% endif %}
 
                     {% if section.settings.contact__twitter-check %}
@@ -86,12 +86,12 @@
                     {% endif %}
 
                   </ul>
-                </div> 
+                </div>
               {% endif %}
               <div class="contact__form-container {%if contact_link_check %}col-xl-17 col-lg-17 col-md-24 col-sm-24 col-24{%else%}col-xl-20 col-lg-20 col-md-24 col-sm-24 col-24{%endif%}">
-              
+
                     {% form 'contact' %}
-              
+
                       {% if form.posted_successfully? %}
                         <div class="alert alert-success">
                           {% if section.settings.success_message != blank %}
@@ -101,16 +101,16 @@
                           {% endif %}
                         </div>
                       {% endif %}
-              
+
                       {% if form.errors %}
                         <div class="alert alert-danger">
                           {{ form.errors | default_errors }}
                         </div>
                       {% endif %}
-              
+
                       <div class="contact__form-input-container">
                         <label class="h5 contact__form-label" for="contact__form-name">{{ 'contact.form.name' | t }}*</label>
-                        <input 
+                        <input
                           class="contact__form-input"
                           type="text"
                           name="contact[name]"
@@ -119,10 +119,10 @@
                           value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}"
                           required>
                       </div>
-              
+
                       <div class="contact__form-input-container">
                         <label class="h5 contact__form-label" for="contact__form-email">{{ 'contact.form.email' | t }}*</label>
-                        <input 
+                        <input
                           class="contact__form-input"
                           type="email"
                           name="contact[email]"
@@ -134,7 +134,7 @@
                           autocapitalize="off"
                           required>
                       </div>
-              
+
                       <div class="form-group">
                         <div class="contact__form-input-container">
                           <label class="h5 contact__form-label" for="contact__form-subject-select">{{ 'contact.form.subject' | t }}*</label>
@@ -147,7 +147,7 @@
                           </div>
                         </div>
                       </div>
-              
+
                       <div class="contact__form-input-container contact__form-message-container">
                         <label class="h5 contact__form-label" for="contact__form-message">{{ 'contact.form.message' | t }}*</label>
                           <textarea rows="10"
@@ -161,28 +161,28 @@
                             {%- endif -%}
                           </textarea>
                       </div>
-              
+
                       <div class="contact__form-submit-container-mobile">
                           <input type="submit" class="btn btn-primary contact__form-submit" form="contact_form" value="{{ 'contact.form.send' | t }}">
                       </div>
-                      
+
                       {% endform %}
                   </div>
               </div>
             </div>
           </div>
         </div>
-        
+
         <div class="row justify-content-center">
           <div class="col-xl-22 col-lg-22">
             <div class="row justify-content-center">
               <div class="contact__form-submit-container-desktop offset-xl-8 offset-lg-8 col-xl-16 col-lg-16">
                 <input type="submit" class="btn btn-primary contact__form-submit" form="contact_form" value="{{ 'contact.form.send' | t }}">
               </div>
-            </div>    
+            </div>
           </div>
       </div>
-            
+
     </div>
   </div>
 

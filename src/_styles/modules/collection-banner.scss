@@ -27,7 +27,7 @@
     }
 
     .collection-banner__content {
-      margin-bottom: 30px;
+      margin-bottom: 0;
       border-bottom: 3px solid $black;
     }
   }
@@ -65,6 +65,10 @@
   .collection-banner__image {
     position: relative;
     margin-bottom: 40px;
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 20px;
+    }
 
     &:before {
       content: "";

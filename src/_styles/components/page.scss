@@ -10,6 +10,12 @@
     margin-top: 40px;
     margin-bottom: 90px;
   }
+
+  .search-results-page & {
+    @include media-breakpoint-down('md') {
+      margin-top: 0;
+    }
+  }
 }
 
 .page-text-only__content {
@@ -188,5 +194,12 @@
 
   .page-hero--content-right & {
     margin-right: 0;
+  }
+}
+
+// Findify search result page overrides
+.search-results-page {
+  .findify-components-search--mobile-actions {
+    margin-top: 0;
   }
 }
