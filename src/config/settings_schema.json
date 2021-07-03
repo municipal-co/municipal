@@ -147,6 +147,12 @@
         "label": "Low Inventory Threshold",
         "info": "Defines the value where product cards are going to display the message 'Only X Left'",
         "default": 6
+      },
+      {
+        "type": "checkbox",
+        "id": "show_findify_badges",
+        "label": "Show findify badges",
+        "info": "When enable it lets the badges shown by findify cards to be displayed, otherwise they will remain hidden"
       }
     ]
   },
