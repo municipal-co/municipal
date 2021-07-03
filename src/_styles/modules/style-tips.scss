@@ -158,9 +158,15 @@
     pointer-events: none;
     transition: all $transition-duration-base $transition-timing-function-out;
     background-image: none;
+    // Arrows temporary fix
+    display: inherit !important;
+    top: 50% !important;
+    bottom: 50% !important;
+    padding: 0 !important;
+
 
     @include media-breakpoint-down('md') {
-      display: none;
+      display: none !important;
     }
 
     &:focus {
