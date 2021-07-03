@@ -79,6 +79,13 @@
   {{ content_for_header }}
 
   {% include 'third-party-scripts-head' %}
+  {% unless  settings.show_findify_badges == true %}
+    <style>
+    .findify-badge-new {
+      display: none !important;
+    }
+    </style>
+  {% endunless %}
 </head>
 
 {% capture body_class %}
