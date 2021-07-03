@@ -66,6 +66,10 @@
     position: relative;
     margin-bottom: 40px;
 
+    @include media-breakpoint-down('md') {
+      margin-bottom: 20px;
+    }
+
     &:before {
       content: "";
       padding-bottom: percentage(18/44);
