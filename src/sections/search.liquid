@@ -31,7 +31,7 @@
     {% if search.performed %}
       <div class="search__results-header">
         <div class="row align-items-end">
-          <div class="col-20 offset-2 col-lg-9 offset-lg-0 order-lg-2">
+          <div class="col-22 offset-1 col-lg-9 offset-lg-0 order-lg-2">
             <div class="search__count">
               {% if search.results_count > 0 %}
                 {% if search.results_count == 1 %}
@@ -44,7 +44,7 @@
           </div>
 
           {% if search.results.size > 0 %}
-            <div class="col-20 offset-2 col-lg-13 offset-lg-1 order-lg-1 ">
+            <div class="col-22 offset-1 col-lg-13 offset-lg-1 order-lg-1 ">
               <div class="h2 search__title">
                 Results:
               </div>
@@ -57,7 +57,7 @@
 
     {% if search.performed %}
       {% if search.results.size > 0 %}
-        <div class="col-20 offset-2 col-lg-22 offset-lg-1">
+        <div class="col-22 offset-1 col-lg-22 offset-lg-1">
           <div class="content-grid" data-content-grid>
             {% for product in search.results %}
               {% for option in product.options_with_values %}
