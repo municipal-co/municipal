@@ -1,7 +1,7 @@
-{% assign body_classes = "col-xl-20 col-lg-20" %}
+{% assign body_classes = "col-xl-20 col-lg-20 col-md-20 col-sm-20 col-20" %}
 
 {% if canonical_url contains 'search-results' %}
-  {% assign body_classes = "col-xl-22 col-lg-22" %}
+  {% assign body_classes = "col-22" %}
 {% endif %}
 
 {% if canonical_url contains 'search-results' %}
@@ -25,7 +25,7 @@
       {% endunless %}
 
       <div class="row justify-content-center">
-        <div class="{{ body_classes }} col-md-20 col-sm-20 col-20">
+        <div class="{{ body_classes }}">
           <div class="page-text-only__content">
             {{ page.content }}
           </div>
