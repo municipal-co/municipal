@@ -255,11 +255,6 @@ Breakpoints.initialize();
     QuickViewManager.onQuickViewTriggerClick($(this));
   });
 
-  // Add "development mode" class for CSS hook
-  if (window.location.hostname === 'localhost') {
-    $body.addClass('development-mode');
-  }
-
   window.getSiteSettingsJson = function() {
     return JSON.parse($('[data-theme-settings-json]').html());
   }

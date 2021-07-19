@@ -222,9 +222,78 @@
       height: 28px;
     }
   }
+  // Cart Icon + Quantity
+  .hamburger {
+    width: auto;
+    padding: 15px 2px;
+    display: inline-block;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    margin: 0;
+    overflow: visible;
+    color: $white;
+    box-shadow: none;
+
+    .hamburger-box {
+      width: large-vw(40px, 55px);
+      height: 24px;
+      display: inline-block;
+      position: relative;
+      margin-bottom: -2px;
+      margin-right: 10px;
+
+      @include media-breakpoint-down('md') {
+        width: 40px;
+      }
+    }
+
+    &.is-open .hamburger-inner {
+      &::before {
+        top: 0;
+        transform: rotate(-135deg);
+        transition: top 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+      &::after {
+        bottom: 0;
+        transform: rotate(-45deg);
+        transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+    }
+  }
+
+  .hamburger-inner {
+    display: block;
+    top: 50%;
+    margin-top: -2px;
+
+    &,
+    &::before,
+    &::after {
+      width: large-vw(40px, 50px);
+      height: 6px;
+      position: absolute;
+      background: transparent;
+    }
+
+    &::before,
+    &::after {
+      background-color: $white;
+      content: "";
+      display: block;
+    }
+    &::before {
+      top: -10px;
+      transition: top 0.075s 0.20s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+
+    &::after {
+      bottom: -10px;
+      transition: bottom 0.075s 0.20s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+  }
 }
 
-// Cart Icon + Quantity
 .header-cart__badge {
   display: inline-block;
   position: relative;
@@ -335,47 +404,28 @@
 }
 
 .main-navigation {
+  width: 100%;
 
-  .drawer{
+  .drawer {
+    max-width: unset;
+    width: 100%;
     height: 100%;
-    background-color: $black;
+    background-color: $slate-gray;
     border: none;
+    overflow: hidden;
+
+    &.is-visible {
+      transition: transform $transition-duration-base $transition-timing-function-in-out-ui !important;
+    }
   }
 
   .drawer__inner {
-    padding: 0;
-  }
-
-  .drawer__header {
-    padding: 0;
-    margin: 0 40px 0 40px;
-    margin-bottom: large-vw(0px, 60px);
-    border: none;
     display: flex;
-    height: large-vw(50px, 120px);
-    align-items: center;
+    height: 100%;
 
-    @include media-breakpoint-down('md') {
-      height: 50px;
-      margin: 0 20px;
-    }
-  }
-
-  .drawer__header-title {
-    font-size: large-vw(18px, 30px);
-    font-weight: $font-weight-bold;
-    color: $white;
-    text-transform: none;
-
-    @include media-breakpoint-down('md') {
-      font-size: 18px;
-    }
-  }
-
-  .drawer__body {
-    padding: 0px 40px 30px;
-    @include media-breakpoint-down('md') {
-      padding: 15px 20px 30px;
+    @include media-breakpoint-down('sm') {
+      flex-wrap: wrap;
+      overflow-y: auto;
     }
   }
 
@@ -394,65 +444,6 @@
 
     svg path {
       fill: $white;
-    }
-  }
-
-  .panel {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-    .expandable-list {
-      display: inline-block;
-    }
-    .expandable-list__header {
-      padding: 0;
-      margin-bottom: 0;
-      line-height: 1.25;
-    }
-
-    .expandable-list__header-title {
-      color: $white;
-      font-weight: bold;
-      line-height: large-vw(60px, 120px);
-      text-transform: uppercase;
-      font-size: large-vw(50px, 90px);
-
-      @include media-breakpoint-down('md') {
-        font-size: 32px;
-        line-height: 1.2em;
-      }
-    }
-
-    &.panel--featured .expandable-list__header-title {
-      color: $green;
-    }
-
-    @include media-breakpoint-up('lg') {
-      &.panel--featured .expandable-list__header-title:before {
-        background-image: url("hover-arrow--green.svg?v3");
-      }
-
-      .expandable-list__header-title:before {
-        content: "";
-        padding-right: 0px;
-        height: large-vw(50px, 90px);
-        display: inline-block;
-        transition: all 150ms ease-in-out;
-        background-image: url("hover-arrow.svg");
-        background-size: contain;
-        background-position: left;
-        background-repeat: no-repeat;
-
-        @include media-breakpoint-down('md') {
-          height: 30px;
-        }
-      }
-
-      .expandable-list__header-title:hover:before {
-        padding-right: large-vw(80px, 95px);
-        margin-right: large-vw(0, 45px);
-      }
     }
   }
 }

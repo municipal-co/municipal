@@ -322,3 +322,15 @@ input[type='button'] {
     }
   }
 }
+
+.btn-hollow-white {
+  border: 2px solid $white;
+  background-color: transparent;
+  color: $white;
+
+  &:hover {
+    border-color: $white;
+    color: $white;
+    background-color: transparent;
+  }
+}

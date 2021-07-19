@@ -3,121 +3,132 @@
   <div class="drawer drawer--left" data-mobile-menu>
 
     <div class="drawer__inner">
-      <div class="drawer__header">
-        <a href="#" class="drawer__close" data-drawer-close>
-          {% include 'icon-close' %}
-        </a>
-        <h5 class="drawer__header-title in">Shop</h5>
-      </div>
-      <div class="drawer__body">
-        <div class="drawer__body-contents">
-          {% comment %} Menus {% endcomment %}
-          <div class="mobile-menu-block mobile-menu-block--primary">
-
-            {% if settings.search_form == "default" %}
-              <form action="/search" method="get" role="search" data-search-form>
-                <div class="minimal-input-box">
-
-                  <div class="search-icon">{% include 'icon-search' %}</div>
-                  <input type="hidden" name="type" value="product" />
-                  <input type="text" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input minimal-input-box__input--search" autocomplete="off" data-search-input />
-
-                  <div class="search-autocomplete-container" style="display: none;" data-autocomplete-container>
-                    <ul>
-                      <li class="autocomplete-item loader"></li>
-                      <li class="autocomplete-item loader"></li>
-                      <li class="autocomplete-item loader"></li>
-                    </ul>
-                  </div>
-
-                  <button type="submit" class="minimal-input-box__submit minimal-input-box__submit--search">
-                    {% include 'icon-arrow' %}
-                    <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-                  </button>
-                </div>
-              </form>
+      {% comment %} Menus {% endcomment %}
+      <div class="mobile-menu__main-group">
+        {% if section.settings.primary_linklist != blank and linklists[section.settings.primary_linklist].links.size > 0 %}
+          <div class="mobile-menu__navigation-block">
+            {% if section.blocks.size > 0 %}
+              <div class="mobile-menu__link-group mobile-menu__featured-button-container" data-link-group>
+                <a href="#" class="mobile-menu__link-item" data-link-group-header data-featured-button >FEATURED</a>
+              </div>
             {% endif %}
+            {% assign navigation_images = "" %}
+            {% for link in linklists[section.settings.primary_linklist].links %}
+              {% capture childlinks_html %}
+                {% for childlink in link.links %}
+                  {% assign image_id = blank %}
+                  {% if childlink.object.metafields.custom_fields["menu_featured_image"] != blank %}
+                    {% assign image_id = link.handle | append: childlink.handle | append: forloop.index | md5 %}
+                  {% endif %}
 
-            {% if section.settings.blue_linklist and linklists[section.settings.blue_linklist].links.size > 0 %}
-              {% for link in linklists[section.settings.blue_linklist].links %}
-                {% assign sublist_id = 'mobile-primary-menu-' | append: forloop.index %}
-                <div class="panel panel--featured">
-                  <div class="expandable-list">
-                    <div class="expandable-list__header">
-                      {% if link.links.size > 0 %}
-                        <a href="#{{ sublist_id }}" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="false" aria-controls="{{ sublist_id }}">
-                          {{ link.title }} {% include 'icon-caret-down' %}
-                        </a>
-                      {% else %}
-                        <a href="{{ link.url }}" class="expandable-list__header-title">{{ link.title }}</a>
-                      {% endif %}
-                    </div>
-                    {% if link.links.size > 0 %}
-                      <div id="{{ sublist_id }}" class="collapse">
-                        <div class="expandable-list__body">
-                          {% for sublink in link.links %}
-                            <div class="expandable-list__item">
-                              <a href="{{ sublink.url }}" class="expandable-list__item-title">{{ sublink.title }}</a>
-                            </div>
-                          {% endfor %}
-                        </div>
-                      </div>
-                    {% endif %}
+                  <a href="{{ childlink.url }}"
+                     class="mobile-menu__childlink"
+                     data-hover-image="{{image_id}}"
+                     data-submenu-link>
+                     {{ childlink.title }}
+                  </a>
+                  {% if image_id != blank %}
+                    {% capture navigation_image_addition %}
+                      <img data-src="{{childlink.object.metafields.custom_fields["menu_featured_image"]}}"
+                            alt="{{childlink.object.metafields.custom_fields['menu_featured_image_alt']}}"
+                            class="lazypreload mobile-menu__featured-image"
+                            data-image-id="{{image_id}}"
+                            data-featured-image
+                      />
+                    {% endcapture %}
+                    {% assign navigation_images = navigation_images | append: navigation_image_addition %}
+                  {% endif %}
+                  {% if forloop.last %}
+                  <div class="mobile-menu__cta-container">
+                    <a href="{{ link.url }}" class="btn btn-sm btn-hollow-white mobile-menu__btn">
+                      Shop all {{ link.title }}
+                    </a>
                   </div>
-                </div>
-              {% endfor %}
-            {% endif %}
-
-            {% if section.settings.primary_linklist and linklists[section.settings.primary_linklist].links.size > 0 %}
-              {% for link in linklists[section.settings.primary_linklist].links %}
-                {% assign sublist_id = 'mobile-primary-menu-' | append: forloop.index %}
-                <div class="panel">
-                  <div class="expandable-list">
-                    <div class="expandable-list__header">
-                      {% if link.links.size > 0 %}
-                        <a href="#{{ sublist_id }}" class="expandable-list__header-title" data-toggle="collapse" aria-expanded="false" aria-controls="{{ sublist_id }}">
-                          {{ link.title }} {% include 'icon-caret-down' %}
-                        </a>
-                      {% else %}
-                        <a href="{{ link.url }}" class="expandable-list__header-title">{{ link.title }}</a>
-                      {% endif %}
-                    </div>
-                    {% if link.links.size > 0 %}
-                      <div id="{{ sublist_id }}" class="collapse">
-                        <div class="expandable-list__body">
-                          {% for sublink in link.links %}
-                            <div class="expandable-list__item">
-                              <a href="{{ sublink.url }}" class="expandable-list__item-title">{{ sublink.title }}</a>
-                            </div>
-                          {% endfor %}
-                        </div>
-                      </div>
-                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              {% endcapture %}
+              <div class="mobile-menu__link-group"
+                   data-link-group
+                   {% if childlinks_html != blank %}data-has-childlinks{% endif %}>
+                <a {% if childlinks_html != blank %} href="#" {% else %} href="{{link.url}}" {% endif %}
+                  class="mobile-menu__link-item"
+                  data-link-group-header>
+                  {{ link.title }}
+                  {% if childlinks_html != blank %}
+                    {% include 'icon-caret-down' %}
+                  {% endif %}
+                </a>
+                {% if childlinks_html != blank %}
+                  <div class="mobile-menu__link--submenu" data-mobile-submenu-container>
+                    {{ childlinks_html }}
                   </div>
-                </div>
-              {% endfor %}
-            {% endif %}
-          </div>
-
-          <div class="mobile-menu-block mobile-menu-block--secondary">
-            <ul class="mobile-menu-list">
-
-              {% if shop.customer_accounts_enabled %}
-                {% if customer %}
-                  <li><a href="/account">My Account</a></li>
-                  <li>{{ 'Log out' | customer_logout_link }}</li>
-                {% else %}
-                  <li><a href="/account/login">Account Login</a></li>
                 {% endif %}
-              {% endif %}
-
-              {% for link in linklists[section.settings.secondary_linklist].links %}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {% endfor %}
-            </ul>
+              </div>
+            {% endfor %}
           </div>
+        {% endif %}
+        {% if section.settings.secondary_linklist != blank and linklists[section.settings.secondary_linklist].links.size > 0 %}
+          <div class="mobile-menu__navigation-block mobile-menu__navigation-block--secondary">
+            {% for link in linklists[section.settings.secondary_linklist].links %}
+              <a href="{{link.url}}" class="mobile-menu__link-item">{{ link.title }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="mobile-menu__secondary-group">
+        <div class="mobile-menu__desktop-submenu-container" data-desktop-submenu-container></div>
+        <div class="mobile-menu__featured-image-container" data-featured-image-container>
+          {{ navigation_images }}
         </div>
       </div>
+      {% if section.blocks != blank %}
+        {% assign blocks_modulo = section.blocks.size | modulo: 2 %}
+        {% if blocks_modulo == 0 %}
+          {% assign blocks_layout = 'even' %}
+        {% else %}
+          {% assign blocks_layout = 'odd' %}
+        {% endif %}
+        <div class="mobile-menu__featured-links mobile-menu__featured-links--{{blocks_layout}}">
+          <div class="mobile-menu__featured-links-title">
+            FEATURED
+          </div>
+          <div class="mobile-menu__featured-links-inner">
+            {% for block in section.blocks %}
+              <div class="mobile-menu__featured-block">
+                <div class="mobile-menu__featured-block-inner">
+                  <picture class="mobile-menu__featured-block-image">
+                    <source media="(min-width: 992px)" data-srcset="{{block.settings.fl_desktop_image | img_url: '1200x' }}" class="lazyload lazypreload">
+                    <img data-src="{{block.settings.fl_mobile_image | img_url: '600x'}}" alt="{{block.settings.fl_desktop_image.alt }}" class="lazyload lazypreload">
+                  </picture>
+                  {% if block.settings.fl_title != blank %}
+                    <h4 class="mobile-menu__featured-block-title">
+                      {{ block.settings.fl_title | replace: '[br]', '<br>' }}
+                    </h4>
+                  {% endif %}
+                  <div class="mobile-menu__featured-block-footer">
+                    {% if block.settings.fl_subtitle %}
+                      <span class="mobile-menu__featured-block-subtitle">
+                        {{ block.settings.fl_subtitle }}
+                      </span>
+                    {% endif %}
+                    {% include 'icon-arrow' %}
+                  </div>
+                  {% if block.settings.fl_url != blank %}
+                    <a href="{{block.settings.fl_url}}" class="mobile-menu__featured-block-link">
+                      <span class="sr-only">{{block.settings.fl_subtitle}}</span>
+                    </a>
+                  {% endif %}
+                </div>
+                {% if block.settings.fl_fine_print != blank %}
+                  <div class="mobile-menu__featured-block-fine-print">
+                    {{block.settings.fl_fine_print}}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
 
@@ -126,13 +137,8 @@
 {% schema %}
   {
     "name": "Navigation Menu",
+    "max_blocks": 4,
     "settings": [
-      {
-        "type": "link_list",
-        "id": "blue_linklist",
-        "label": "Featured Navigation Items",
-        "info": "These items will appear blue and at the top of the menu."
-      },
       {
         "type": "link_list",
         "id": "primary_linklist",
@@ -144,6 +150,48 @@
         "id": "secondary_linklist",
         "label": "Small Navigation Items",
         "info": "These items will appear under all the other items and will be smaller."
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Featured Link",
+        "type": "featured-link",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "fl_desktop_image",
+            "label": "Desktop Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "fl_mobile_image",
+            "label": "Mobile Image"
+          },
+          {
+            "type": "textarea",
+            "id": "fl_title",
+            "label": "Title",
+            "info": "Text to be shown on the top left corner of the card, use [br] to create a line break for both desktop and mobile"
+          },
+          {
+            "type": "text",
+            "id": "fl_subtitle",
+            "label": "Subtitle",
+            "info": "Text to be shown on the bottom left corner of the card"
+          },
+          {
+            "type": "richtext",
+            "id": "fl_fine_print",
+            "label": "Fine Print",
+            "info": "Extra details to be shown under the card, consider on even layouts this will add extra space on both cards on the same row"
+          },
+          {
+            "type": "url",
+            "id": "fl_url",
+            "label": "URL",
+            "info": "Link where the card will be redirecting to"
+          }
+        ]
       }
     ]
   }
