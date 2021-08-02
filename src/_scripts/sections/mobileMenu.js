@@ -50,7 +50,8 @@ export default class MobileMenuSection extends BaseSection {
     this.$toggle.on(this.events.CLICK, this.onToggleClick.bind(this));
     this.$mainLinkHeader.on(`${this.events.CLICK}, ${this.events.MOUSEENTER}`, this.openSubmenu.bind(this));
     this.$desktopSubmenuContainer.on(this.events.MOUSEENTER, selectors.submenuLink, this.updateFeaturedImage.bind(this));
-    $window.on('resize', throttle(20, true, this.updateNavPosition.bind(this), 250));
+    $window.on('resize', throttle(20, false, this.updateNavPosition.bind(this)));
+    $window.on('scroll', throttle(20, this.updateNavPosition.bind(this)));
     $window.on('breakpointChange', this._checkBreakpoint.bind(this));
     $window.on('toggleSearchDrawer', this.closeMobileNav.bind(this))
     this._initFeaturedImages();
@@ -74,7 +75,11 @@ export default class MobileMenuSection extends BaseSection {
 
   updateNavPosition() {
     const headerHeight = this.$header.outerHeight();
-    const headerOffset = this.$header.offset().top - $window.scrollTop();
+    let headerOffset = this.$header.offset().top - $window.scrollTop();
+    if(headerOffset < 0){ // iOS is loading the browser navigation details
+      headerOffset = 0;
+    };
+
     const navOffset = headerHeight + headerOffset;
 
     this.$el.css({
@@ -126,7 +131,6 @@ export default class MobileMenuSection extends BaseSection {
 
   _openFeaturedLinks($navigationHeader) {
     this.$el.removeClass(classes.subnavOpen);
-    console.log(this);
     this._closeAllDrawers($navigationHeader);
     $navigationHeader.addClass(classes.open);
   }

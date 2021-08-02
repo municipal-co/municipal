@@ -328,9 +328,11 @@ input[type='button'] {
   background-color: transparent;
   color: $white;
 
-  &:hover {
-    border-color: $white;
-    color: $white;
-    background-color: transparent;
+  @include media-breakpoint-up('md') {
+    &:hover {
+      border-color: $green;
+      color: $green;
+      background-color: transparent;
+    }
   }
 }

@@ -236,7 +236,7 @@
     box-shadow: none;
 
     .hamburger-box {
-      width: large-vw(40px, 55px);
+      width: 55px;
       height: 24px;
       display: inline-block;
       position: relative;
@@ -270,10 +270,15 @@
     &,
     &::before,
     &::after {
-      width: large-vw(40px, 50px);
+      width: 50px;
       height: 6px;
       position: absolute;
       background: transparent;
+
+      @include media-breakpoint-down('md') {
+        height: 4px;
+        width: 30px;
+      }
     }
 
     &::before,
@@ -285,11 +290,19 @@
     &::before {
       top: -10px;
       transition: top 0.075s 0.20s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+      @include media-breakpoint-down('md') {
+        top: -8px
+      }
     }
 
     &::after {
       bottom: -10px;
       transition: bottom 0.075s 0.20s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+      @include media-breakpoint-down('md') {
+        bottom: -8px
+      }
     }
   }
 }
