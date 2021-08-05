@@ -34,6 +34,7 @@ const selectors = {
   bisFeaturedImage: '[data-bis-featured-image]',
   bisEmailInput: '[data-bis-email-input]',
   bisResponseMessage: '[data-bis-response-message]',
+  klarnaOnsiteMessagingPrice: '[data-purchase-amount]'
 };
 
 const classes = {
@@ -138,6 +139,7 @@ export default class ProductDetailForm {
     this.checkVariantsAvailability();
     this.updateBadge(variant);
     this.updateBisFlyout(variant);
+    this.updateKlarnaPricing(variant);
 
     this.$singleOptionSelectors.trigger('chosen:updated');
 
@@ -393,17 +395,27 @@ export default class ProductDetailForm {
   updateBisFlyout(variant) {
     const id = variant.id;
     const options = this.productSingleObject.options;
-    const option_map = {};
+    const optionMap = {};
 
     options.forEach((el, index) => {
-      option_map[el.toLowerCase()] = variant[`option${index+1}`];
+      optionMap[el.toLowerCase()] = variant[`option${index+1}`];
     });
 
     // Update drawer content
     $(selectors.bisFeaturedImage).attr('src', variant.featured_image.src).attr('alt', variant.featured_image.alt);
     $(selectors.bisVariantId).val(id);
-    for (const optionName in option_map) {
-      $(`[data-bis-variant-option=${optionName}]`).text(option_map[optionName])
+    for (const optionName in optionMap) {
+      $(`[data-bis-variant-option=${optionName}]`).text(optionMap[optionName])
+    }
+  }
+
+  updateKlarnaPricing(variant) {
+    // refresh klarna widget on variant change
+    const $klarnaMessaging = $(selectors.klarnaOnsiteMessagingPrice, this.$container);
+    if ($klarnaMessaging.length > 0 && variant) {
+      $klarnaMessaging.attr('data-purchase-amount', variant.price);
+      window.KlarnaOnsiteService = window.KlarnaOnsiteService || []
+      window.KlarnaOnsiteService.push({ eventName: 'refresh-placements' })
     }
   }
 
