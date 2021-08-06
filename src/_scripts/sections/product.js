@@ -21,7 +21,6 @@ const selectors = {
   fitGuideGallery: '[data-fit-guide-gallery]',
   fitGuideTabsDots: '[data-fit-guide-toggle-tab]',
   fitGuideTabContent: '[data-fit-guide-tab]',
-  klarnaOnsiteMessagingPrice: 'data-purchase-amount'
 };
 
 const classes = {
@@ -120,14 +119,7 @@ export default class ProductSection extends BaseSection {
       $(`[data-fit-guide-tab="${variant}"]`).show();
     }
 
-    // refresh klarna widget on variant change
-    const $klarnaMessaging = $(`[${selectors.klarnaOnsiteMessagingPrice}]`, this.$container);
-    if ($klarnaMessaging.length > 0) {
-      const variantPriceCents = variant.replace('$', '').replace('.','');
-      $(`[${selectors.klarnaOnsiteMessagingPrice}]`, this.$container).attr('data-purchase-amount', variantPriceCents);
-      window.KlarnaOnsiteService = window.KlarnaOnsiteService || []
-      window.KlarnaOnsiteService.push({ eventName: 'refresh-placements' })
-    }
+    //
   }
 
   observerCallback(entries, observer) {
