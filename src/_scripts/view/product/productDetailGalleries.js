@@ -314,25 +314,23 @@ export default class ProductDetailGalleries {
   updateForVariant(variant) {
     if (!variant) return;
 
-    // This makes sure to pause all videos on all galleries when said gallery changes
-    $.each(this.galleries, (i, gallery) => {
-
-      if ($(selectors.videoContainer, gallery.$slideshow).length) {
-        const sw = gallery.swiper;
-        const currentPlayer = gallery.getPlayerBySlide($(sw.slides[sw.activeIndex]));
-
-        if(currentPlayer !== undefined) {
-          gallery.swiper.slideTo(0);
-          gallery.pauseCurrentVideo();
-        }
-      }
-    });
-
     if (this.galleries.length > 1) {
       for (let i = 3; i >= 1; i--) {
         const gallery = this.getProductDetailGalleryForVariantOptionValue(variant['option' + i]);
-
         if (gallery && gallery.$el.hasClass(classes.hide)) {
+          // This makes sure to pause all videos on all galleries when said gallery changes
+          $.each(this.galleries, (i, gallery) => {
+
+            if ($(selectors.videoContainer, gallery.$slideshow).length) {
+              const sw = gallery.swiper;
+              const currentPlayer = gallery.getPlayerBySlide($(sw.slides[sw.activeIndex]));
+
+              if(currentPlayer !== undefined) {
+                gallery.swiper.slideTo(0);
+                gallery.pauseCurrentVideo();
+              }
+            }
+          });
 
           this.$galleries.addClass(classes.hide);
           gallery.$el.removeClass(classes.hide);

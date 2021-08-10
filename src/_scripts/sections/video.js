@@ -21,8 +21,8 @@ export default class VideoSection extends BaseSection {
       this.player = new VideoPlayer($(selectors.videoPlayer, this.$modal));
     }
 
-    $(selectors.videoModal).on('show.bs.modal', this.playVideo.bind(this));
-    $(selectors.videoModal).on('hide.bs.modal', this.stopVideo.bind(this));
+    this.$modal.on('show.bs.modal', this.playVideo.bind(this));
+    this.$modal.on('hide.bs.modal', this.stopVideo.bind(this));
 
     this.$videoCover.on('mouseenter', this.onVideoEnter.bind(this));
     this.$videoCover.on('click', this.onVideoClick.bind(this));
@@ -30,8 +30,7 @@ export default class VideoSection extends BaseSection {
 
   onVideoClick(e) {
     e.preventDefault();
-    const $target = $(selectors.videoModal).data('target');
-    $($target).modal('show');
+    this.$modal.modal('show');
   }
 
   playVideo(e) {
