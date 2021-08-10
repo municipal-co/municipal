@@ -61,12 +61,17 @@ export default class VideoPlayer {
       return;
     }
 
+    this.isReady = false;
+
     this.player     = null;
     this.state      = null;
     this.type       = this.$el.data('video-type');
     this.id         = this.$el.data('video-id');
     this.background = this.$el.data('background');
     this.embedColor = this.$el.data('embed-color') || '000';
+
+    this.playInterval = false;
+    this.pauseInterval = false;
 
     if (!this.id || !(this.type === VIDEO_TYPES.VIMEO || this.type === VIDEO_TYPES.YOUTUBE)) {
       console.warn(`[${this.name}] - Video ID and valid video type required to initialize`);
@@ -99,7 +104,7 @@ export default class VideoPlayer {
     opts.autoplay   = this.background;
 
     this.player = new VimeoPlayer(this.$embed, opts);
-
+    this.isReady = true;
     this.player.on('ended', this.onEnded.bind(this));
     this.player.on('play',  this.onPlay.bind(this));
     this.player.on('pause', this.onPaused.bind(this));
@@ -133,14 +138,14 @@ export default class VideoPlayer {
           controls: this.background ? 0 : 1,
           loop: this.background ? 1 : 0,
           autoplay: this.background ? 1 : 0,
-          playlist: this.background ? this.id : false,
+          playlist: this.id,
           playsinline: 1,
           modestbranding: 1,
-          wmode: 'transparent',
         },
         events: {
           onReady: (e) => {
             this.$cover.on('click', this.onCoverClick.bind(this));
+            this.isReady = true;
             if (this.background === true) {
               this.player.mute();
             }
@@ -197,20 +202,35 @@ export default class VideoPlayer {
   }
 
   play() {
-    if (this.type === VIDEO_TYPES.YOUTUBE) {
-      this.player.playVideo();
-    }
-    else if (this.type === VIDEO_TYPES.VIMEO) {
-      this.player.play().then(this.onPlaying.bind(this));
+    if(this.isReady) {
+      clearInterval(this.playInterval);
+
+      if (this.type === VIDEO_TYPES.YOUTUBE) {
+        this.player.playVideo();
+      }
+      else if (this.type === VIDEO_TYPES.VIMEO) {
+        this.player.play().then(this.onPlaying.bind(this));
+      }
+    } else if(this.playInterval === false) {
+      this.playInterval = setInterval(() => {
+        this.play();
+      }, 300);
     }
   }
 
   pause() {
-    if (this.type === VIDEO_TYPES.YOUTUBE) {
-      this.player.pauseVideo();
-    }
-    else if (this.type === VIDEO_TYPES.VIMEO) {
-      this.player.pause().then(this.onPaused.bind(this));
+    if(this.isReady) {
+      clearInterval(this.pauseInterval);
+      if (this.type === VIDEO_TYPES.YOUTUBE) {
+        this.player.pauseVideo();
+      }
+      else if (this.type === VIDEO_TYPES.VIMEO) {
+        this.player.pause().then(this.onPaused.bind(this));
+      }
+    } else if(this.pauseInterval === false) {
+      this.pauseInterval = setInterval( () => {
+        this.pause();
+      }, 300);
     }
   }
 
