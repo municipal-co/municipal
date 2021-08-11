@@ -39,13 +39,15 @@
             <div class="collection-banner__image hidden-on-mobile">
               {% render 'image_tag'
                           image: banner_image,
-                          object_fit: "contain"
+                          object_fit: "contain",
+                          image_alt: banner_title
               %}
             </div>
             <div class="collection-banner__image hidden-on-desktop">
               {% render 'image_tag'
                           image: banner_image_mobile,
-                          object_fit: "contain"
+                          object_fit: "contain",
+                          image_alt: banner_title
               %}
             </div>
           {% endif %}
