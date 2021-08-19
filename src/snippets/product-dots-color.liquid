@@ -52,7 +52,7 @@
 
       {% assign option_handle = 'option' | append: option.position %}
 
-      <div class="dots dots--color" data-option-position="{{ option.position }}" data-variant-option-value-list>
+      <div class="dots dots--color dots--placeholder" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for color in option.values %}
 
           {% assign color_downcase = color | downcase %}

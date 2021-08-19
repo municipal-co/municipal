@@ -195,6 +195,24 @@
       }
     }
   }
+
+
+  .dots--placeholder &{
+    filter: grayscale(1);
+    opacity: 0.2;
+  }
+
+  .dots--disabled &,
+  .dots-disabled &.is-active {
+    cursor: not-allowed;
+    border: 2px solid $dot-border-color !important;
+    background-color: transparent;
+    .dot__inner {
+      background-color: $white;
+      color: $black !important;
+      border-width: $dot-border-width !important;
+    }
+  }
 }
 
 // Only used inside the theme editor

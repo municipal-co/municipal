@@ -33,7 +33,7 @@
     {% assign size_handle = 'option' | append: option.position %}
 
     {% if option_name_downcase == "size" and option.values.size > 0 %}
-      <div class="dots {% if option.values.size > 5 %} dots--small{% endif %}" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
+      <div class="dots {% if option.values.size > 5 %} dots--small{% endif %} dots--placeholder" data-low-inventory-threshold="{{ settings.low_inventory_threshold }}" data-option-position="{{ option.position }}" data-variant-option-value-list>
         {% for size in option.values %}
           {% assign filtered_variant = dots_product.variants | where: size_handle, size %}
           {% if color_handle != blank %}

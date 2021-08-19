@@ -71,7 +71,8 @@
             "weight": {{ variant.weight }},
             "url": {{ variant.url | within: collection | json }},
             "metafields": {
-              "bis_disable": {{ variant.metafields.custom_fields["bis_disable"] | default: 0 | json}}
+              "enable_bis": {{ variant.metafields.custom_fields["enable_notify_me"] | default: 0 | json}}
+              ,"enable_sold_out": {{ variant.metafields.custom_fields["enable_sold_out"] | default: 0 | json}}
             }
           }
           {% unless forloop.last %},{% endunless %}
@@ -106,7 +107,8 @@
       ],
       "metafields": {
         "_": 0 {% comment %} Add an extra field here to ensure we don't have a dangling comma {% endcomment %}
-        , "bis_disable": {{ product.metafields.custom_fields['bis_disable'] | default: 0 | json }}
+        , "enable_bis": {{ product.metafields.custom_fields['enable_notify_me'] | default: 0 | json }}
+        , "enable_sold_out": {{ product.metafields.custom_fields['enable_sold_out'] | default: 0 | json }}
       }
     }
 
