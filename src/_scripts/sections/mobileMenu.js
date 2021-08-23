@@ -153,21 +153,22 @@ export default class MobileMenuSection extends BaseSection {
   }
 
   _openMobileSubnav($navigationHeader, $submenu) {
-    if($navigationHeader.hasClass(classes.open)) {
-      $navigationHeader.addClass(classes.closing);
-      $submenu.slideUp(() => {
-        $submenu.removeAttr('style');
-        $navigationHeader.removeClass(`${classes.open} ${classes.closing}`);
-      });
-    } else {
-      this._closeAllDrawers($navigationHeader);
-
-      $navigationHeader.addClass(classes.opening);
-      $submenu.slideDown(() => {
-        $navigationHeader.addClass(classes.open);
-        $navigationHeader.removeClass(classes.opening);
-        $submenu.removeAttr('style');
-      })
+    if($submenu.length){
+      if($navigationHeader.hasClass(classes.open)) {
+        $navigationHeader.addClass(classes.closing);
+        $submenu.slideUp(() => {
+          $submenu.removeAttr('style');
+          $navigationHeader.removeClass(`${classes.open} ${classes.closing}`);
+        });
+      } else {
+        this._closeAllDrawers($navigationHeader);
+        $navigationHeader.addClass(classes.opening);
+        $submenu.slideDown(() => {
+          $navigationHeader.addClass(classes.open);
+          $navigationHeader.removeClass(classes.opening);
+          $submenu.removeAttr('style');
+        })
+      }
     }
   }
 
