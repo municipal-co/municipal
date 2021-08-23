@@ -142,10 +142,14 @@ export default class MobileMenuSection extends BaseSection {
     $navigationHeader.addClass(classes.open);
     // Shows the floating subnav UI
     this.$el.addClass(classes.subnavOpen);
-    // Clones the current submenu into the floating UI
-    this.$desktopSubmenuContainer.html($submenu.html());
+    // Clones the current submenu into the floating UI or clears the space
+    if($submenu.length) {
+      this.$desktopSubmenuContainer.html($submenu.html());
+    } else {
+      this.$desktopSubmenuContainer.html('');
+    }
     // Updates the featured image from the floating UI
-    this.updateFeaturedImage();
+    this.updateFeaturedImage($navigationHeader);
   }
 
   _openMobileSubnav($navigationHeader, $submenu) {
@@ -179,21 +183,25 @@ export default class MobileMenuSection extends BaseSection {
 
     if($navigationHeader.attr('href') === '#') {
       evt.preventDefault();
+    }
 
-      if(screenWidth > getBreakpointMinWidth('sm')){
-        this._openFloatingSubnav($navigationHeader, $submenu);
-      } else {
-        this._openMobileSubnav($navigationHeader, $submenu)
-      }
+    if(screenWidth > getBreakpointMinWidth('sm')){
+      this._openFloatingSubnav($navigationHeader, $submenu);
+    } else {
+      this._openMobileSubnav($navigationHeader, $submenu)
     }
 
     return true;
   }
 
-  updateFeaturedImage(evt) {
+  updateFeaturedImage(reference) {
     const $featuredImages = $(selectors.featuredImage);
-    if(evt) {
-      const $this = $(evt.currentTarget);
+    let isEvent = false;
+    if(reference.hasOwnProperty('currentTarget')){
+      isEvent = true;
+    }
+    if(isEvent) {
+      const $this = $(reference.currentTarget);
       const imageId = $this.data('hover-image');
       const $currentImage = $featuredImages.filter((index, image) => {
         const $image = $(image);
@@ -207,9 +215,13 @@ export default class MobileMenuSection extends BaseSection {
         $currentImage.show();
       }
     } else {
-      // Get the first sub nav item
-      const $firstLink = $(selectors.submenuLink, this.$desktopSubmenuContainer).eq(0);
-      const imageId = $firstLink.data('hover-image');
+      // Get the image ID from the main nav (if exists)
+      let imageId = reference.data('image-id');
+      // Get the firt sub nav item
+      if(imageId === '') {
+        const $firstLink = $(selectors.submenuLink, this.$desktopSubmenuContainer).eq(0);
+        imageId = $firstLink.data('hover-image');
+      }
       const $currentImage = $featuredImages.filter((index, image) => {
         const $image = $(image);
 

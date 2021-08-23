@@ -287,9 +287,9 @@
       }
     }
 
-    &:nth-child(2n+2) {
-      .mobile-menu__featured-links--even & {
-        margin-left: 0;
+    .mobile-menu__featured-links--even & {
+      &:nth-child(2n+2) {
+        margin-right: 0;
       }
     }
     &:nth-child(2n+3) {
@@ -363,7 +363,11 @@
   display: block;
   font-family: $headings-font-family;
   color: inherit;
-  font-size: 0.9rem;
+  font-size: 0.65rem;
+
+  @include media-breakpoint-down('sm') {
+    font-size: 0.9rem;
+  }
 }
 
 .mobile-menu__featured-block-fine-print {

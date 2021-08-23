@@ -47,11 +47,25 @@
                   {% endif %}
                 {% endfor %}
               {% endcapture %}
+              {% assign image_id = blank %}
+              {% capture navigation_image_addition %}
+                {% if link.object.metafields.custom_fields["menu_featured_image"] != blank %}
+                  {% assign image_id = link.handle | md5 %}
+                  <img data-src="{{link.object.metafields.custom_fields["menu_featured_image"]}}"
+                        alt="{{link.object.metafields.custom_fields["menu_featured_image_alt"]}}"
+                        class="lazypreload mobile-menu__featured-image"
+                        data-image-id="{{image_id}}"
+                        data-featured-image
+                  />
+                {% endif %}
+              {% endcapture %}
+              {% assign navigation_images = navigation_images | append: navigation_image_addition %}
               <div class="mobile-menu__link-group"
                    data-link-group
                    {% if childlinks_html != blank %}data-has-childlinks{% endif %}>
                 <a {% if childlinks_html != blank %} href="#" {% else %} href="{{link.url}}" {% endif %}
                   class="mobile-menu__link-item"
+                  data-image-id="{{image_id}}"
                   data-link-group-header>
                   {{ link.title }}
                   {% if childlinks_html != blank %}
