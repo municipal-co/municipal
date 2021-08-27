@@ -227,6 +227,10 @@ body {
   }
 }
 
+.menu-open {
+  overflow: hidden !important;
+}
+
 
 .development-mode {
   /* stylelint-disable-next-line selector-max-id */

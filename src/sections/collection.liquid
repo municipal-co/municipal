@@ -108,15 +108,15 @@
 
                 {% for variant in product.variants %}
                   {% if variant[color_handle] == color %}
-                    {% comment %} 
-                      Admin has toggled the variant metafield to override hididng this color variant when oos 
+                    {% comment %}
+                      Admin has toggled the variant metafield to override hididng this color variant when oos
                     {% endcomment %}
                     {% if variant.metafields.custom_fields.sold_out_variant == 1 and should_show_variant_when_oos == false %}
                       {% assign should_show_variant_when_oos = true %}
                     {% endif %}
 
-                    {% comment %} 
-                      There is at least one variant that with this color that isn't out of stock 
+                    {% comment %}
+                      There is at least one variant that with this color that isn't out of stock
                     {% endcomment %}
                     {% if variant.available == true %}
                       {% assign all_variants_of_this_color_oos = false %}
@@ -147,7 +147,7 @@
                   {% assign hide_card = true %}
                 {% endif %}
 
-                {% comment %} 
+                {% comment %}
                   Checks if the collection metafield for hiding all products when they're oos is set to true
                   Checks if any of the color variants have been set to show when they're out of stock via variant metafields
                   Checks that all of the variants with a specific color are out of stock

@@ -322,3 +322,17 @@ input[type='button'] {
     }
   }
 }
+
+.btn-hollow-white {
+  border: 2px solid $white;
+  background-color: transparent;
+  color: $white;
+
+  @include media-breakpoint-up('md') {
+    &:hover {
+      border-color: $green;
+      color: $green;
+      background-color: transparent;
+    }
+  }
+}

@@ -48,6 +48,7 @@ export default class HeaderSection extends BaseSection {
 
     this.$toggleSearchDrawer.on('click', this.onToggleSearchDrawer.bind(this));
     this.$closeSearchDrawer.on('click', this.onCloseSearchDrawer.bind(this));
+    $window.on('toggleMobileMenu', this.onCloseSearchDrawer.bind(this));
   }
 
   scrollCheck() {
@@ -110,6 +111,7 @@ export default class HeaderSection extends BaseSection {
     e.preventDefault();
     this.$searchDrawer.toggleClass('is-visible');
     this.$toggleSearchDrawer.toggleClass('search-is-open');
+    $window.trigger('toggleSearchDrawer');
   }
 
   onCloseSearchDrawer(e) {
