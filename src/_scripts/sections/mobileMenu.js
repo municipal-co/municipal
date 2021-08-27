@@ -74,7 +74,7 @@ export default class MobileMenuSection extends BaseSection {
   }
 
   updateNavPosition() {
-    const headerHeight = this.$header.outerHeight();
+    const headerHeight = this.$header.innerHeight();
     let headerOffset = this.$header.offset().top - $window.scrollTop();
     if(headerOffset < 0){ // iOS is loading the browser navigation details
       headerOffset = 0;
@@ -83,7 +83,7 @@ export default class MobileMenuSection extends BaseSection {
     const navOffset = headerHeight + headerOffset;
 
     this.$el.css({
-      'max-height': `calc(100vh - ${navOffset}px)`,
+      'max-height': `calc(100% - ${navOffset}px)`,
       'top': navOffset,
     });
   }
