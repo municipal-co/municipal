@@ -12,14 +12,13 @@
   }
 }
 .klaviyo-form.klaviyo-form[class*="Modal__ModalPortalStyled"] {
-  transform: scale(1) translateX(-50%);
+  transform: scale(1) translateX(-50%) !important;
 }
 .klaviyo-form.klaviyo-form [class*="ModalContent__StyledModalContent-sc-"] {
   width: 100%;
 }
 .klaviyo-form.klaviyo-form [class*="animation__AnimatedModal"] {
-  background-color: #121212;
-  animation: none;
+  animation: none !important;
 }
 .klaviyo-form.klaviyo-form [class*="View__FormView-"] {
   padding-top: 30px;
@@ -158,51 +157,58 @@
       padding: 8px 50px 10px 25px;
   }
 }
-.klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"] {
-  width: 30px;
-  height: 30px;
-  top: 15px;
-  right: 15px;
+.klaviyo-form.klaviyo-form [class*="ModalContent__StyledModalContent"],
+.klaviyo-form.klaviyo-form [class*="ModalContent__MarginBox"],
+.klaviyo-form.klaviyo-form [class*="ModalContent__ViewContainer"] {
+    position: static; /* allow close button outside of container */
 }
-@media (max-width: 599px) {
-  .klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"] {
-      width: 15px;
-      height: 15px;
+
+
+.klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"] {
+    width: 30px;
+    height: 30px;
+    top: 15px;
+    right: 15px;
   }
-}
-.klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"] > img {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  z-index: 20;
-  opacity: 0;
-  cursor: pointer;
-}
-.klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"]:after,
-.klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"]:before {
-  content: "";
-  display: block;
-  width: 38px;
-  height: 5px;
-  background-color: #212121;
-  position: absolute;
-  top: 12px;
-  left: -4px;
-  z-index: 10;
-  pointer-events: none;
-}
-@media (max-width: 599px) {
-  .klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"]:after,
-  .klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"]:before {
-      width: 19px;
-      height: 3px;
-      top: 6px;
-      left: -2px;
+  @media (max-width: 599px) {
+    .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"] {
+        width: 15px;
+        height: 15px;
+    }
   }
-}
-.klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"]:before {
-  transform: rotate(45deg);
-}
-.klaviyo-form.klaviyo-form button[class*="DismissButton__closeButtonImage"]:after {
-  transform: rotate(-45deg);
-}
+  .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"] > svg {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 20;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"]:after,
+  .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"]:before {
+    content: "";
+    display: block;
+    width: 38px;
+    height: 5px;
+    background-color: #212121;
+    position: absolute;
+    top: 12px;
+    left: -4px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  @media (max-width: 599px) {
+    .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"]:after,
+    .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"]:before {
+        width: 19px;
+        height: 3px;
+        top: 6px;
+        left: -2px;
+    }
+  }
+  .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"]:before {
+    transform: rotate(45deg);
+  }
+  .klaviyo-form.klaviyo-form button[class*="CloseButton__StyledSvgInput"]:after {
+    transform: rotate(-45deg);
+  }
