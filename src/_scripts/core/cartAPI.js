@@ -125,24 +125,29 @@ class CartAPI {
    * @return {Promise} - Resolve returns JSON cart | Reject returns an error message
    */
   addItemFromForm($form) {
-    const promise = $.Deferred();
+    let promise = $.Deferred();
 
-    $.ajax({
-      type: 'post',
-      dataType: 'json',
-      url: '/cart/add.js',
-      data: $form.serialize(),
-      success: () => {
-        this.getCart().then((cart) => {
-          promise.resolve(cart);
-        });
-      },
-      error: () => {
-        promise.reject({
-          message: 'The quantity you entered is not available.'
-        });
-      }
-    });
+    const bundleSelection = this.validateBundleSelection($form);
+    if(bundleSelection !== false) {
+      promise = this.addMultipleItems(bundleSelection);
+    } else {
+      $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: '/cart/add.js',
+        data: $form.serialize(),
+        success: () => {
+          this.getCart().then((cart) => {
+            promise.resolve(cart);
+          });
+        },
+        error: () => {
+          promise.reject({
+            message: 'The quantity you entered is not available.'
+          });
+        }
+      });
+    }
 
     return promise;
   }
@@ -169,6 +174,36 @@ class CartAPI {
       error: () => {
         promise.reject({
           message: 'The quantity you entered is not available.'
+        });
+      }
+    });
+
+    return promise;
+  }
+
+  /**
+   * AJAX submit multiple items  within one 'add to cart' request
+   *
+   * @param {jQuery} items - array of product items following shopify cart api
+   * @return {Promise} - Resolve returns JSON cart | Reject returns an error message
+   */
+
+  addMultipleItems(items) {
+    const promise = $.Deferred();
+
+    $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: '/cart/add.js',
+      data: {items: items},
+      success: () => {
+        this.getCart().then((cart) => {
+          promise.resolve(cart);
+        });
+      },
+      error: () => {
+        promise.reject({
+          message: 'One or more of the items added is not available.'
         });
       }
     });
@@ -229,6 +264,31 @@ class CartAPI {
    */
   changeLineItemQuantityByKey(key, qty) {
     return this.changeLineItemQuantity(this.getCartLineByItemKey(key), qty);
+  }
+
+  validateBundleSelection($form) {
+    const $bundleSelectors = $form.find('[data-bundle-product-item]');
+    const $activeBundleSelectors = $bundleSelectors.filter((index, el) => {
+      if($(el).is(':visible')) return true;
+    })
+    const bundleId = Date.now();
+    const itemsObject = [];
+
+    $activeBundleSelectors.each((index, el) => {
+      itemsObject.push({
+        id: $(el).find('[data-bundle-product-id]').val(),
+        quantity: 1,
+        properties: {
+          _bundleId: bundleId
+        }
+      })
+    })
+
+    if(!$activeBundleSelectors.length) {
+      return false;
+    };
+
+    return itemsObject;
   }
 }
 

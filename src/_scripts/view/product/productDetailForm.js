@@ -2,6 +2,7 @@ import $ from 'jquery';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
 import Variants from './variants';
+import ProductBundles from '../../managers/product-bundles'
 
 const selectors = {
   addToCart: '[data-add-to-cart]',
@@ -116,6 +117,8 @@ export default class ProductDetailForm {
     this.$bisToggler.on(this.events.CLICK, this.toggleBisContainer.bind(this));
     this.$bisForm.on('submit', this.onBisSubmit.bind(this));
     Utils.chosenSelects(this.$container);
+    this.productBundles = new ProductBundles(this.$container);
+
 
     const queryParams = Utils.getQueryParams();
 
@@ -141,6 +144,7 @@ export default class ProductDetailForm {
     this.updateBadge(variant);
     this.updateBisFlyout(variant);
     this.updateKlarnaPricing(variant);
+    this.productBundles.updateVariant(variant);
 
     this.$singleOptionSelectors.trigger('chosen:updated');
 

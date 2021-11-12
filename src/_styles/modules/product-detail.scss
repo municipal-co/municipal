@@ -104,8 +104,10 @@
 }
 
 .product__selector-header {
+  display: block;
   font-size: large-vw(15px, 20px);
   font-weight: $font-weight-semi-bold;
+  margin-bottom: .5rem;
   @include media-breakpoint-down('md'){
     font-size: 16px;
   }
@@ -175,8 +177,13 @@
 // --------------------------------------------------------
 
 .product-galleries {
-  position: relative;
+  position: sticky;
   overflow: hidden;
+  top: 0;
+}
+
+.product-galleries--sticky {
+  display: sticky;
 }
 
 // Make these go flush on mobile

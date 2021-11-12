@@ -75,7 +75,7 @@
   {% assign fc_keys = product.metafields.custom_fields["product_gallery_video"] | split: "," %}
 {% endif %}
 
-<div class="product-galleries {% if product.type == 'Gift Card' %}product-galleryes--gift-card{% endif %}" data-product-detail-galleries>
+<div class="product-galleries {% if product.type == 'Gift Card' %}product-galleryes--gift-card{% endif %} {% if bundles_enabled %} product-galleries--sticky {% endif %}" data-product-detail-galleries>
 
   {% if variant_gallery_possible %}
 
