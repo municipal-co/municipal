@@ -17,10 +17,9 @@ const selectors = {
   mobileProductFormContainer: '[data-mobile-product-form-container]',
   addToCartFormDrawer: '[data-add-to-cart-drawer]',
   fitGuideToggleButton: '[data-fit-guide-toggler]',
-  fitGuideModal: '[data-fit-guide-modal]',
+  fitGuideDrawer: '[data-fit-guide-drawer]',
   fitGuideGallery: '[data-fit-guide-gallery]',
-  fitGuideTabsDots: '[data-fit-guide-toggle-tab]',
-  fitGuideTabContent: '[data-fit-guide-tab]',
+  fitGuideGalleryIndex: '[data-fit-guide-gallery-current-index]',
 };
 
 const classes = {
@@ -37,10 +36,12 @@ export default class ProductSection extends BaseSection {
     this.$productForm = $(selectors.productForm);
     this.$productFormContainer = $(selectors.productFormContainer);
     this.$mobileProductFormContainer = $(selectors.mobileProductFormContainer);
+    this.$fitGuideGalleryIndexcontainer = $(selectors.fitGuideGalleryIndex);
 
     // drawers
     this.productsDrawer = new Drawer($(selectors.collectionDrawer));
     this.addToCartFormDrawer = new Drawer($(selectors.addToCartFormDrawer));
+    this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
     this.galleries = [];
 
     this.observerProperties = {
@@ -53,8 +54,10 @@ export default class ProductSection extends BaseSection {
     $('body').on('moduleInView', this.onModuleInView.bind(this));
     $(selectors.drawerToggler).on('click', this.toggleCollectionDrawer.bind(this));
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
-    $(selectors.fitGuideTabsDots).on('click', this.toggleFitGuideTab.bind(this));
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
+    this.fitGuideDrawer.onHidden(function() {
+      $('body').removeClass('drawer-open');
+    })
 
     this.initFitGuideGalleries();
 
@@ -63,7 +66,8 @@ export default class ProductSection extends BaseSection {
   }
 
   toggleFitGuideModal() {
-    $(selectors.fitGuideModal).modal('show');
+    $('body').addClass('drawer-open');
+    this.fitGuideDrawer.show();
   }
 
   initFitGuideGalleries() {
@@ -72,38 +76,29 @@ export default class ProductSection extends BaseSection {
       const galleryOptions = {
         watchOverflow: true,
         preloadImages: false,
-        arrows: true,
+        arrows: false,
         observer: true,
         observeParents: true,
+        loop: true,
 
         navigation: {
           nextEl: $('.swiper-button-next', $(el).parent()),
           prevEl: $('.swiper-button-prev', $(el).parent()),
         },
-        scrollbar: {
-          el: $('.swiper-scrollbar', $(el).parent()),
-          dragabble: true,
+        pagination: {
+          el: '.fit-guide__gallery-pagination',
+          type: 'bullets',
         },
-        lazy: true
+        lazy: {
+          loadPrevNext: true,
+        },
       }
 
       const swiperGallery = new Swiper($(el), galleryOptions);
-
-      this.galleries.push(swiperGallery);
+      swiperGallery.on('slideChange', () => {
+        this.$fitGuideGalleryIndexcontainer.text(swiperGallery.realIndex + 1);
+      });
     });
-  }
-
-  toggleFitGuideTab(e) {
-    const $this = $(e.currentTarget);
-    const $container = $this.parent();
-
-    if (!$this.hasClass(classes.active)) {
-      const tabTarget = $this.data('fit-guide-toggle-tab');
-      $(selectors.fitGuideTabsDots, $container).removeClass(classes.active);
-      $this.addClass(classes.active);
-      $(`${selectors.fitGuideTabContent}`).hide();
-      $(`[data-fit-guide-tab="${tabTarget}"]`).show();
-    }
   }
 
   onToggleVariant(e) {
@@ -114,12 +109,7 @@ export default class ProductSection extends BaseSection {
     if ($optionToEnable.length > 0 && !$optionToEnable.hasClass(classes.active)) {
       $(selectors.fitGuideTabsDots, $optionToEnable.parent()).removeClass(classes.active);
       $optionToEnable.addClass(classes.active);
-
-      $(`${selectors.fitGuideTabContent}`).hide();
-      $(`[data-fit-guide-tab="${variant}"]`).show();
     }
-
-    //
   }
 
   observerCallback(entries, observer) {
