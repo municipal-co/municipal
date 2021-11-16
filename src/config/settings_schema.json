@@ -367,5 +367,33 @@
         "default": 60
       }
     ]
+  },
+  {
+    "name": "Gift With Purchase",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_gwp",
+        "label": "Enable Gift With Purchase",
+        "info": "Allows the feature to be disabled without clearing the options for future quick updates"
+      },
+      {
+        "type": "product",
+        "id": "gift_product",
+        "label": "Gift Product",
+        "info": "Product that needs to be added to the cart once the user reaches the threshold"
+      },
+      {
+        "type": "range",
+        "id": "gift_threshold",
+        "label": "Gift threshold",
+        "unit": "$",
+        "default": 5,
+        "step": 5,
+        "min": 0,
+        "max": 500,
+        "info": "Order value that needs to be achieved to add the free gift to the cart"
+      }
+    ]
   }
 ]
