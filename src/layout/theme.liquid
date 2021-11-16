@@ -49,7 +49,29 @@
         unavailable: {{ 'products.product.unavailable' | t | json }},
         adding: {{ 'products.product.adding' | t | json }}
       },
-      moneyFormat: {{ shop.money_format | json }}
+      moneyFormat: {{ shop.money_format | json }},
+      {% if settings.enable_gwp && settings.gift_product != blank %}
+        {% assign gift_product = all_products[settings.gift_product] %}
+        giftWithPurchase: {
+          giftThreshold: {{ settings.gift_threshold | times: 100 }},
+          {% if gift_product.has_only_default_variant %}
+            variant_id: {{ gift_product.variants[0].id | json }},
+            has_multiple_variants: false,
+          {% else %}
+            has_multiple_variants: true,
+            variants: [
+              {% for variant in gift_product.variants %}
+                {
+                  variant_id: {{ variant.id }},
+                  variant_title: {{ variant.title | json }},
+                  {%- comment -%}Contains the name of the variant options to match with the form options{%- endcomment -%}
+                }
+                {% unless forloop.last %}, {% endunless %}
+              {% endfor %}
+            ]
+          {% endif %}
+        }
+      {% endif%}
     };
 
   {% if settings.yotpo_client_id != blank %}
