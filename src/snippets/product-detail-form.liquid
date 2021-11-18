@@ -43,6 +43,17 @@
 {% endif %}
 {% endcapture %}
 
+{% capture klarna_snippet %}
+  <!-- Placement v2 -->
+    <klarna-placement
+      class="klarna-messaging"
+      data-key="credit-promotion-small"
+      data-locale="en-US"
+      data-purchase-amount="{{ product.selected_or_first_available_variant.price }}"
+    ></klarna-placement>
+  <!-- end Placement -->
+{% endcapture %}
+
 <div class="product__form {% if product.type == 'Gift Card' %}product__form--gift-card{% endif %}" data-product-detail-form>
   <div class="product__badge-row">
     <span class="badge" data-badge {% unless tag_text != blank %} style="display:none;" {% endunless %}>
@@ -55,24 +66,20 @@
   {% if settings.display_reviews == true  and product.type != 'Gift Card' %}
     {% include 'rating-stars' %}
   {% endif %}
-  {% unless product.type == 'Gift Card' %}
+  {% unless product.type == 'Gift Card' or enable_bundles == true %}
     <div class="product__price">
       {% include 'product-detail-price', product: product, current_variant: current_variant %}
     </div>
   {% endunless %}
+  {% unless enable_bundles == true %}
+    {% if section.settings.enable_klarna == true %}
+      {{ klarna_snippet }}
+    {% endif %}
+  {% endunless %}
 
-  {% if section.settings.enable_klarna == true %}
-    <!-- Placement v2 -->
-    <klarna-placement
-      class="klarna-messaging"
-      data-key="credit-promotion-small"
-      data-locale="en-US"
-      data-purchase-amount="{{ product.selected_or_first_available_variant.price }}"
-    ></klarna-placement>
-    <!-- end Placement -->
-  {% endif %}
 
   {% include 'product-upsell', pum_product: product %}
+
 
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <meta itemprop="priceCurrency" content="{{ shop.currency }}">
@@ -81,6 +88,78 @@
 
     <div data-add-to-cart-form-wrapper>
       <form action="/cart/add" method="post" enctype="multipart/form-data" data-add-to-cart-form>
+        {% if enable_bundles == true %}
+          <div class="bundle-options selector-wrapper">
+            <span class="product__selector-header"> {{ section.settings.bundle_quantity_title }}</span>
+            <div class="bundle__options-container bundle__options-container--disabled" data-bundle-options-container>
+              {% for i in product.metafields.custom_fields["bundle_options"] %}
+                <label class="bundle__option-container">
+                  <input type="radio" name="bundleOption" {% if forloop.index == 1 %} checked{% endif %} style="display:none;" value="{{i.quantity}}" data-bundle-quantity-option>
+                  <div class="bundle__option">
+                    <span class="bundle__option-description">
+                      {{ i.quantity }} {{ i.unit_descriptor }}
+                    </span>
+
+                    <div class="bundle__price">
+                      {% unless i.discount_value == "0" or i.discount_value == blank %}
+                      {% assign discount_value = 100 | minus: i.discount_value %}
+                      {% assign discount_value = current_variant.price | times: discount_value | divided_by: 100 %}
+                        <span class="bundle__discount-price" data-bundle-discount-price="{{discount_value | times: i.quantity }}"> {{ discount_value | times: i.quantity | money_without_trailing_zeros }}</span>
+                      {% endunless %}
+                      <span class="bundle__full-price" data-bundle-full-price="{{ current_variant.price | times: i.quantity }}">{{ current_variant.price | times: i.quantity | money_without_trailing_zeros }}</span>
+                    </div>
+                  </div>
+
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+          {{ klarna_snippet }}
+        {% endif %}
+
+        {% if enable_bundles == true %}
+          <div class="bundle-products selector-wrapper" data-bundle-products-container>
+            {%- comment -%}Get the largest amount of items out of the metafield options{%- endcomment -%}
+            {% assign max_items = 0 %}
+            {% for i in product.metafields.custom_fields["bundle_options"] %}
+              {% if i.quantity > max_items %}
+                {% assign max_items = i.quantity %}
+              {% endif %}
+            {% endfor %}
+            <span class="product__selector-header">{{ section.settings.bundle_product_title }}</span>
+            <div class="bundle-products__container">
+              {% for i in (1..max_items) %}
+              <label class="bundle-product__wrapper" data-bundle-product-item>
+                <input type="hidden" name="bundle-product-id" data-bundle-product-id value="{{current_variant.id}}">
+                <input type="radio" name="current_bundle" value="{{forloop.index}}" data-bundle-product style="display:none;">
+                <div class="bundle-product__container">
+                  <div class="bundle-product__image">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                        data-src="{{ current_variant.featured_image | img_url: '70x' | format: "pjpg" }}"
+                        alt="{{current_variant.featured_image.alt }}"
+                        data-bundle-product-image
+                        class="lazyload">
+                  </div>
+
+                  <div class="bundle-product__info">
+                    <span class="bundle-product__title">{{ product.title }}</span>
+                    {% for option in product.options %}
+                      <span class="bundle-product__option">
+                        {{ option }}:
+                        {% assign option_index = "option" | append:forloop.index %}
+                        <span data-option-{{ forloop.index }}> {{current_variant[option_index] }}</span>
+                        {% if forloop.last %}
+                          <span class="bundle-product__sold-out-badge {% if current_variant.available == false %} is-visible{% endif %}" data-bundle-product-sold-out-badge>Sold Out</span>
+                        {% endif %}
+                      </span>
+                    {% endfor %}
+                  </div>
+                </div>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
 
