@@ -5,7 +5,8 @@ import CartAPI from '../core/cartAPI';
 const selectors = {
   addForm: 'form[action^="/cart/add"]',
   addToCart: '[data-add-to-cart]',
-  addToCartText: '[data-add-to-cart-text]'
+  addToCartText: '[data-add-to-cart-text]',
+  freeGiftForm: '[data-free-gift-form]',
 };
 
 const $window = $(window);
@@ -24,6 +25,7 @@ class AJAXFormManager {
     this.requestInProgress = false;
 
     $body.on('submit', selectors.addForm, this.addToCartFromForm.bind(this));
+    $body.on('submit', selectors.freeGiftForm, this.addToCartFreeGift.bind(this));
 
     $window.on(this.events.ADD_FROM_VARIANT_ID, this.addToCartByVariantID.bind(this));
   }
@@ -54,7 +56,7 @@ class AJAXFormManager {
         $submitButton.prop('disabled', false);
         $submitButtonText.html(theme.strings.addToCart);
       });
-  }   
+  }
 
   addToCartByVariantID(e) {
     if (e.variantID) {
@@ -68,6 +70,33 @@ class AJAXFormManager {
           $window.trigger(event);
         })
     }
+  }
+
+  addToCartFreeGift(e) {
+    e.preventDefault();
+    let hasFreeGift = false;
+
+    const formData = new FormData(e.currentTarget);
+    const productId = formData.get('id');
+
+
+    CartAPI.getCart().then((cart) => {
+      cart.items.forEach((item) => {
+        if(item.properties.hasOwnProperty('_freeGift')) {
+          hasFreeGift = true;
+        }
+      })
+
+      if(hasFreeGift) {
+        const event = $.Event(this.events.ADD_SUCCESS, {cart});
+        $window.trigger(event);
+      } else {
+        CartAPI.addItemFromID(productId, {_freeGift: true}).then((cart) => {
+          const event = $.Event(this.events.ADD_SUCCESS, {cart});
+          $window.trigger(event);
+        });
+      }
+    })
   }
 }
 
