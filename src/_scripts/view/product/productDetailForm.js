@@ -476,9 +476,13 @@ export default class ProductDetailForm {
       if (option.name === 'Color' || option.name === 'color') {
         return true;
       };
-
       return false;
     });
+
+    if(colorOption.length === 0) {
+      return false;
+    }
+
     const optionPosition = `option${colorOption[0].position}`;
 
     colorOption[0].values.forEach((color) => {
