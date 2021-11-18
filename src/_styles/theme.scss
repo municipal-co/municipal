@@ -109,7 +109,7 @@
 @import 'modules/newsletter-popup';
 @import 'modules/contact';
 @import 'modules/customers-drawer';
-@import 'modules/fit-guide-modal';
+@import 'modules/fit-guide-drawer';
 @import 'modules/product-upsell.scss';
 @import 'modules/back-in-stock.scss';
 @import 'modules/search-drawer.scss';
@@ -142,7 +142,7 @@ body {
 
   // Prevents window scroll on drawer open
   &.drawer-open {
-    overflow: hidden;
+    overflow: hidden !important;
   }
 }
 

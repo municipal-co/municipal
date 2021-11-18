@@ -56,8 +56,8 @@
   </div>
 </div>
 
-{% if product.metafields.custom_fields["show_fit_guide"] == 1 and product.metafields.custom_fields['fit_guide_reference'] != blank %}
-  {% include 'fit-guide-modal' %}
+{% if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 %}
+{% include 'fit-guide-drawer' %}
 {% endif %}
 
 {% unless is_quick_view or shipping_modal_html == blank %}
