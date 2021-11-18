@@ -55,9 +55,6 @@ export default class ProductSection extends BaseSection {
     $(selectors.drawerToggler).on('click', this.toggleCollectionDrawer.bind(this));
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
-    this.fitGuideDrawer.onHidden(function() {
-      $('body').removeClass('drawer-open');
-    })
 
     this.initFitGuideGalleries();
 
