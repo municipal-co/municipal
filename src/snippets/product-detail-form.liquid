@@ -73,7 +73,9 @@
   {% endunless %}
   {% unless enable_bundles == true %}
     {% if section.settings.enable_klarna == true %}
-      {{ klarna_snippet }}
+      {% unless product.type == "Gift Card" %}
+        {{ klarna_snippet }}
+      {% endunless %}
     {% endif %}
   {% endunless %}
 
