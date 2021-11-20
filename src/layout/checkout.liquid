@@ -12,7 +12,7 @@
 
     {{ checkout_stylesheets }}
     {{ 'checkout.css' | asset_url | stylesheet_tag }}
-    
+
     {{ checkout_scripts }}
 
     {%- comment -%}
@@ -20,13 +20,13 @@
     <!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
 
     <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'checkout.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
-    <!--[if lt IE 9]><script src="{{ 'checkout.js' | asset_url }}"></script><![endif]-->    
+    <!--[if lt IE 9]><script src="{{ 'checkout.js' | asset_url }}"></script><![endif]-->
     {%- endcomment -%}
 
     <!-- Postscript SMS consent -->
     <script type="application/javascript" async src="https://sdk.postscript.io/integrations/sdk-min.js"></script>
     <!-- End Postscript SMS consent -->
-    
+
   </head>
   <body>
     {{ skip_to_content_link }}
@@ -66,3 +66,6 @@
     {{ tracking_code }}
   </body>
 </html>
+
+{{ 'idme-checkout-style.css' | asset_url | stylesheet_tag }}
+{{ 'idme-checkout-template.js' | asset_url | script_tag }}
