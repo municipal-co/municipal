@@ -209,6 +209,11 @@ body.ajax-cart-open {
   }
 }
 
+.ajax-cart__list--highlight {
+  margin-bottom: -2px;
+  background-color: $gray-lighter;
+}
+
 .ajax-cart__item {
   @include clearfix;
   border-top: 2px solid $core-grey-1;
@@ -269,6 +274,33 @@ body.ajax-cart-open {
 
   @include media-breakpoint-down('md') {
     width: calc(100% - 100px);
+  }
+}
+
+.ajax-cart__item-message {
+  margin-bottom: 5px;
+  padding-left: 15px;
+  position: relative;
+  font-family: $font-family-sans-serif;
+  letter-spacing: normal;
+  font-weight: $font-weight-bold;
+  font-size: 14px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: $blue;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    background-color: $blue;
+    border-radius: 50%;
+    animation: blink 1.1s step-start infinite;
   }
 }
 
@@ -340,6 +372,11 @@ body.ajax-cart-open {
   }
 }
 
+.ajax-cart__discounted-price--free {
+  text-transform: uppercase;
+  color: $blue;
+}
+
 .ajax-cart__compare-at-price {
   color: $core-grey-2;
   display: inline-block;
@@ -362,6 +399,145 @@ body.ajax-cart-open {
     font-size: 10px;
   }
 }
+
+
+
+
+
+.item-choices {
+  @include media-breakpoint-up('md') {
+    display: flex;
+  }
+}
+
+.item-choice {
+  & + & {
+    margin-top: 10px;
+  }
+
+  @include media-breakpoint-up('md') {
+    flex: 1 1 auto;
+    & + & {
+      margin-top: 0;
+      margin-left: 20px;
+    }
+  }
+}
+
+.item-choice__label {
+  margin-bottom: 3px;
+  display: block;
+  font-family: $font-family-sans-serif;
+  letter-spacing: normal;
+  font-weight: $font-weight-semi-bold;
+  font-size: 10px;
+  line-height: 1.5;
+
+  @include media-breakpoint-up('md') {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+}
+
+.item-choice__wrap {
+  position: relative;
+}
+
+.item-choice__button {
+  padding: 3px 28px 3px 3px;
+  width: 100%;
+  height: 32px;
+  position: relative;
+  background-color: $white;
+  border: none;
+  display: block;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.item-choice__button-lining,
+.iten-choice__dropdown-lining {
+  display: flex;
+  align-items: center;
+}
+
+.item-choice__button-label,
+.item-choice__dropdown-label {
+  margin-left: 9px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: $font-family-sans-serif;
+  letter-spacing: normal;
+  font-weight: $font-weight-semi-bold;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.item-choice__button-icon {
+  margin-left: .75rem;
+  width: 10px;
+  position: absolute;
+  top: 0;
+  right: 9px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: transform .15s ease-in-out;
+
+  .item-choice__button:hover & {
+    transform: translate3d(0, 2px, 0);
+  }
+
+  .item-choice.is-active & {
+    transform: rotate(180deg);
+  }
+}
+
+.item-choice__swatch {
+  width: 26px;
+  height: 26px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/**
+ * Set a max height of dropdown for any variant list greater than 7 (i.e. s-3xl)
+ **/
+.item-choice__dropdown {
+  padding: 0;
+  width: 100%;
+  max-height: 231px; /* 1 - height of 7 variants */
+  position: absolute;
+  z-index: 10;
+  background-color: $white;
+  list-style: none;
+  display: none;
+
+  .is-active & {
+    display: block;
+  }
+}
+
+.item-choice__dropdown-option {
+  padding: 3px;
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+  border-top: 1px solid $arrow-gray;
+
+  &:hover {
+    color: $white;
+    background-color: $blue;
+  }
+}
+
+
+
 
 .ajax-item__discount-message,
 .ajax-cart__sold-out-notice {
@@ -562,4 +738,3 @@ body.ajax-cart-open {
 .ajax-cart__footer-row--btn {
   text-align: right;
 }
-
