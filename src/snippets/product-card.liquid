@@ -57,6 +57,24 @@
 {% if reverse_card == true %}
   {% assign card_classes = "card--reverse" %}
 {% endif %}
+
+{% if cart_product.metafields.custom-fields.hide_colors %}
+  {% assign hidden_colors_list = cart_product.metafields.custom-fields.hide_colors | split: ',' %}
+  {% assign hidden_colors_count = hidden_colors_list | size %}
+{% endif %}
+
+{%- comment -%}
+Locate Current Available color and its array position
+{%- endcomment -%}
+{% for option in card_product.options_with_value %}
+  {% if option.name == 'color' or option.name == 'Color' %}
+    {% assign color_index = forloop.index %}
+  {% endif %}
+
+  {% assign product_current_variant = card_product.first_available_variant %}
+  {% assign product_current_color = current_color | default: product_curent_variant.options[color_index] %}
+{% endfor %}
+
 {% comment %} End Defaults {% endcomment %}
 
 {% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
@@ -106,7 +124,7 @@
             {%- capture sizes_html -%}
             {% render 'product-dots-sizes'
                         dots_product: card_product,
-                        current_color: color %}
+                        current_color: product_current_color %}
             {%- endcapture -%}
 
             {% if sizes_html != blank %}
@@ -156,9 +174,8 @@
         </{{title_tag}}>
 
         {% if show_colors %}
-
           {% capture color_html %}
-            {% include 'product-colors-counter', product: card_product current_color: color %}
+            {% include 'product-colors-counter', product: card_product, current_color: product_current_color, hidden_colors: hidden_colors_count %}
           {% endcapture %}
 
           {% if color_html != blank %}
