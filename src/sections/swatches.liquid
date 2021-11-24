@@ -18,7 +18,8 @@
         {% assign lightness  = color_hsl_parts[2] | remove: '%' | strip | times: 1 %}
 
         {% capture dot_styles %}
-          .dot.dot--{{ dot_handle }} .dot__inner {
+          .dot.dot--{{ dot_handle }} .dot__inner,
+          .swatch--{{ dot_handle }} {
             {% if block.settings.color != blank %}
               background-color: {{ block.settings.color }} !important;
               {% if lightness and lightness >= 90 %}

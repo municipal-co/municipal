@@ -4,6 +4,7 @@ import * as Utils from '../core/utils';
 import CartAPI from '../core/cartAPI';
 import * as Currency from '../core/currency';
 import QuantityAdjuster from './quantityAdjuster';
+import GwpManager from './giftWithPurchase';
 
 const $window = $(window);
 const $body = $(document.body);
@@ -26,7 +27,9 @@ const selectors = {
   shippingThresholdContainer: '[data-threshold-container]',
   shippingThresholdMessage: '[data-threshold-message]',
   shippingThresholdBaseValue: '[data-threshold-value]',
-  shippingThresholdBar: '[data-threshold-bar]'
+  shippingThresholdBar: '[data-threshold-bar]',
+  gwpUiContainer: '[data-gwp-ui-container]',
+  gwpUi: '[data-gwp-ui]',
 };
 
 const classes = {
@@ -184,6 +187,13 @@ export default class AJAXCart {
     this.$acBody.empty().append(this.bodyTemplate(templateData));
     this.$acFooterTop.empty().append(this.footerTopTemplate(templateData));
     $window.trigger($.Event(this.events.RENDER, { cart }));
+
+    const gwp_ui = $(selectors.gwpUi).contents().clone();
+
+    if($(selectors.gwpUiContainer).length) {
+      $(selectors.gwpUiContainer).append(gwp_ui);
+      new GwpManager($(selectors.gwpUiContainer));
+    }
 
 
     return this;

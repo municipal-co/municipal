@@ -24,150 +24,6 @@
           </div>
         {% endif %}
 
-        <div class="ajax-cart__gwp">
-
-          <input type="hidden" name="id" value="" data-free-gift-form>
-
-          <ul class="ajax-cart__list ajax-cart__list--highlight">
-            <li class="ajax-cart__item">
-              <div class="ajax-cart__item-image-wrapper frame frame--1x1">
-                <img class="ajax-cart__item-image" src="//cdn.shopify.com/s/files/1/0380/4705/6011/products/municipal-apparel_armband-superblend-ls-t-shirt_ocean-heather-white_MMTEE004_front_6e40f57c-73a0-45a4-a022-ee3fd837f322_200x.png?v=1634057476" alt="" data-object-fit="cover" data-object-position="center">
-              </div>
-              <div class="ajax-cart__item-info">
-                <div class="ajax-cart__item-message">
-                  Free gift with $100 purchase
-                </div>
-                <div class="ajax-cart__title-container">
-                  <a href="" class="ajax-cart__item-header">
-                    Armband SuperBlend LS T-Shirt
-                  </a>
-                </div>
-
-                <div class="ajax-cart__item-choices">
-                  <div class="item-choices">
-
-                    <div class="item-choice is-active">
-                      <label id="choice-color" class="item-choice__label">
-                        Color:
-                      </label>
-                      <div class="item-choice__wrap">
-                        <button class="item-choice__button" type="button" aria-haspopup="choice-color" aria-expanded="false" aria-labelledby="choice-color">
-                          <span class="item-choice__button-lining">
-                            <div class="item-choice__swatch" style="background-image: url(//cdn.shopify.com/s/files/1/0380/4705/6011/files/charcoal-marble_swatch_50x50_crop_center.png?v=1602535000)"></div>
-                            <span class="item-choice__button-label">
-                              Charcoal Marble
-                            </span>
-                          </span>
-                          <span class="item-choice__button-icon">
-                            {% include 'icon-caret-down' %}
-                          </span>
-                        </button>
-
-                        <ul class="item-choice__dropdown" tabindex="-1" role="listbox" aria-labelledby="choice-size">
-
-                          <li class="item-choice__dropdown-option" role="option">
-                            <div class="iten-choice__dropdown-lining">
-                              <div class="item-choice__swatch" style="background-image: url(//cdn.shopify.com/s/files/1/0380/4705/6011/files/black-black_swatch_50x50_crop_center.png?v=1594326290)"></div>
-                              <span class="item-choice__dropdown-label">
-                                Black
-                              </span>
-                            </div>
-                          </li>
-
-                          <li class="item-choice__dropdown-option" role="option">
-                            <div class="iten-choice__dropdown-lining">
-                              <div class="item-choice__swatch" style="background-image: url(//cdn.shopify.com/s/files/1/0380/4705/6011/files/charcoal-marble_swatch_50x50_crop_center.png?v=1602535000)"></div>
-                              <span class="item-choice__dropdown-label">
-                                Charcoal Marble
-                              </span>
-                            </div>
-                          </li>
-
-                          <li class="item-choice__dropdown-option" role="option">
-                            <div class="iten-choice__dropdown-lining">
-                              <div class="item-choice__swatch" style="background-image: url(//cdn.shopify.com/s/files/1/0380/4705/6011/files/crimson_swatch_50x50_crop_center.png?v=1601677033);"></div>
-                              <span class="item-choice__dropdown-label">
-                                Crimson
-                              </span>
-                            </div>
-                          </li>
-
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class="item-choice">
-                      <label id="choice-size" class="item-choice__label">
-                        Size:
-                      </label>
-                      <div class="item-choice__wrap">
-                        <button class="item-choice__button" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="choice-size">
-                          <span class="item-choice__button-lining">
-                            <span class="item-choice__button-label">
-                              S
-                            </span>
-                          </span>
-                          <span class="item-choice__button-icon">
-                            {% include 'icon-caret-down' %}
-                          </span>
-                        </button>
-
-                        <ul class="item-choice__dropdown" tabindex="-1" role="listbox" aria-labelledby="choice-size">
-
-                          <li class="item-choice__dropdown-option" role="option">
-                            <div class="iten-choice__dropdown-lining">
-                              <span class="item-choice__dropdown-label">
-                                M
-                              </span>
-                            </div>
-                          </li>
-
-                          <li class="item-choice__dropdown-option" role="option">
-                            <div class="iten-choice__dropdown-lining">
-                              <span class="item-choice__dropdown-label">
-                                L
-                              </span>
-                            </div>
-                          </li>
-
-                          <li class="item-choice__dropdown-option" role="option">
-                            <div class="iten-choice__dropdown-lining">
-                              <span class="item-choice__dropdown-label">
-                                XL
-                              </span>
-                            </div>
-                          </li>
-
-                          <li class="item-choice__dropdown-option" role="option">
-                            <div class="iten-choice__dropdown-lining">
-                              <span class="item-choice__dropdown-label">
-                                2XL
-                              </span>
-                            </div>
-                          </li>
-
-                        </ul>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div class="ajax-item__footer">
-                  <div class="ajax-cart__item-price">
-                    <s class="ajax-cart__compare-at-price">
-                      $28
-                    </s>
-                    <span class="ajax-cart__discounted-price ajax-cart__discounted-price--free">
-                      Free
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
         <div class="ajax-cart__body" data-ajax-cart-body>
           {% comment %} Filled in via JS {% endcomment %}
         </div>
@@ -198,94 +54,209 @@
   {% include 'icon-close' %}
 {% endcapture %}
 
-{% raw %}
-  <script type="text/x-handlebars-template" data-ajax-cart-body-template>
-    {{#if items}}
-      <ul class="ajax-cart__list">
-      {{#each items}}
-        <li class="ajax-cart__item {{#unless available}}ajax-cart__item--sold-out{{/unless}}" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
-          <button class="ajax-cart__item-remove" data-ajax-cart-item-remove>
-            {% endraw %}
-            {% include 'icon-close' %}
-            {% raw %}
-          </button>
+{% if settings.enable_gwp and settings.gift_product != blank%}
+  <template data-gwp-ui>
+    {% assign gwp_product = all_products[settings.gift_product] %}
+    {% assign current_variant = gwp_product.first_available_variant %}
+    <div class="ajax-cart__gwp">
+      <script data-gwp-product-json>
+        {% include 'product-json' with product: gwp_product %}
+      </script>
+      <select name="id" data-gwp-product-id style="display:none;" data-gwp-id-selector>
+        {% for variant in gwp_product.variants %}
+          <option value="{{variant.id}}" {% unless variant.available %} disabled {% endunless %} {% if variant == gwp_product.first_available_variant %} selected {% endif %}>{{ variant.title }}</option>
+        {% endfor %}
+      </select>
+
+      <ul class="ajax-cart__list ajax-cart__list--highlight">
+        <li class="ajax-cart__item">
           <div class="ajax-cart__item-image-wrapper frame frame--1x1">
-            <img src="{{ image }}" class="ajax-cart__item-image" data-object-fit="cover" data-object-position="center">
+            <img class="ajax-cart__item-image"
+                  src="{{ current_variant.featured_image.src | img_url: "160x" }}" alt="{{ current_variant.featured_image.alt }}"
+                  data-object-fit="cover"
+                  data-object-position="center"
+                  data-gwp-image>
           </div>
           <div class="ajax-cart__item-info">
-            <div class="ajax-cart__title-container">
-                <a href="{{ url }}" class="ajax-cart__item-header">
-                  {{ product_title }}
-                </a>
-            </div>
-            <ul class="ajax-cart__item-options">
-              {{#unless has_only_default_variant}}
-                {{#if variant_options}}
-                  {{#each variant_options}}
-                    <li>
-                      {{ name }}: {{ value }}
-                    </li>
-                  {{/each}}
-                {{else}}
-                  {{#if variant_title}}
-                    <li>{{ variant_title }}</li>
-                  {{/if}}
-                {{/if}}
-              {{/unless}}
-              {{#if available}}
-                {{#each discounts}}
-                  <li class="ajax-item__discount-message">
-                    {{title}}
-                  </li>
-                {{/each}}
-              {{/if}}
-              {{#unless available}}
-                <li class="ajax-item__sold-out-info-container">
-                  <span class="ajax-cart__sold-out-notice">This item is currently sold out.</span>
-                </li>
-              {{/unless}}
-            </ul>
-            {{#if available}}
-              <div class="ajax-item__footer">
-                {{#if discounts}}
-                  <div class="ajax-cart__item-price">
-                    <s class="ajax-cart__compare-at-price">
-                      {{ original_price }}
-                    </s>
-                    <span class="ajax-cart__discounted-price">
-                      {{ price }}
-                    </span>
-                  </div>
-                {{else}}
-                  <div class="ajax-cart__item-price">
-                    {{ price }}
-                  </div>
-                {{/if }}
-                {{#if available}}
-                  <div class="ajax-item__quantity-adjuster" data-quantity-adjuster>
-                    <button class="quantity-adjuster__decrement" data-decrement>-</button>
-                    <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
-                    <span class="quantity-adjuster__label">{{ quantity }} </span>
-                    <button class="quantity-adjuster__increment" data-increment>+</button>
-                  </div>
-                {{/if}}
+            {% if settings.gift_notification_message != blank %}
+              {% assign threshold = settings.gift_threshold | times: 100 | money_without_trailing_zeros %}
+              <div class="ajax-cart__item-message">
+                {{ settings.gift_notification_message | replace: '[threshold]', threshold }}
               </div>
-            {{/if}}
+            {% endif %}
+            <div class="ajax-cart__title-container">
+              <span class="ajax-cart__item-header">
+                {{ gwp_product.title }}
+              </span>
+            </div>
+
+            <div class="ajax-cart__item-choices">
+              <div class="item-choices">
+                {% for option in gwp_product.options_with_values %}
+                {% assign option_index = 'option' | append: option.position %}
+                <div class="item-choice item-choice--{{option.name | handleize }}">
+                  <label id="choice-{{option.name}}" class="item-choice__label">
+                    {{option.name}}:
+                  </label>
+                  <div class="item-choice__wrap" data-gwp-option-wrapper>
+                    <input type="hidden" value="{{ current_variant[option_index] }}" data-gwp-option-input>
+                    <button class="item-choice__button"
+                            type="button"
+                            aria-haspopup="choice-{{option.name | handleize }}"
+                            aria-expanded="false"
+                            aria-labelledby="choice-{{option.name | handleize }}"
+                            data-gwp-option-toggler>
+                      <span class="item-choice__button-lining" data-gwp-option-toggler-content>
+                        {% if option.name == 'Color' or option.name == "color" %}
+                          <div class="item-choice__swatch swatch--{{current_variant[option_index] | handleize }}"></div>
+                        {% endif %}
+                        <span class="item-choice__button-label">
+                          {{ current_variant[option_index] }}
+                        </span>
+                      </span>
+                      <span class="item-choice__button-icon">
+                        {% include 'icon-caret-down' %}
+                      </span>
+                    </button>
+
+                    <ul class="item-choice__dropdown" tabindex="-1" role="listbox" aria-labelledby="choice-{{option.name | handleize}}">
+                      {% for option_value in option.values %}
+                        <li class="item-choice__dropdown-option" role="option">
+                          <div class="item-choice__dropdown-lining" data-gwp-option-value="{{ option_value }}">
+                            {% if option.name == 'Color' or option.name == 'color' %}
+                              <div class="item-choice__swatch swatch--{{ option_value | handleize }}"></div>
+                            {% endif %}
+                            <span class="item-choice__dropdown-label">
+                              {{ option_value }}
+                            </span>
+                          </div>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="ajax-item__footer">
+              <div class="ajax-cart__item-price">
+                <s class="ajax-cart__compare-at-price" data-gwp-price>
+                  {{ current_variant.price | money_without_trailing_zeros}}
+                </s>
+                <span class="ajax-cart__discounted-price ajax-cart__discounted-price--free">
+                  Free
+                </span>
+              </div>
+
+              <button type="button" class="btn btn-primary ajax-item__btn btn--smallest" data-gwp-add-to-cart>
+                Add to cart
+              </button>
+            </div>
           </div>
         </li>
-      {{/each}}
-    </ul>
-  {{else}}
-    <div class="ajax-cart__empty-message">
-      {% endraw %}
-      {% if section.settings.empty_text != blank %}
-        {{ section.settings.empty_text }}
-      {% else %}
-        {{ 'cart.general.empty' | t }}
-      {% endif %}
-      {% raw %}
+      </ul>
     </div>
-  {{/if}}
+  </template>
+{% endif %}
+
+
+{% raw %}
+  <script type="text/x-handlebars-template" data-ajax-cart-body-template>
+    <div class="ajax-cart-inner">
+      {{#if show_gwp_ui}} {% endraw %}
+        <div data-gwp-ui-container> </div>
+      {% raw %}
+      {{/if}}
+      {{#if items}}
+        <ul class="ajax-cart__list">
+        {{#each items}}
+          <li class="ajax-cart__item {{#unless available}}ajax-cart__item--sold-out{{/unless}}" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
+            <button class="ajax-cart__item-remove" data-ajax-cart-item-remove>
+              {% endraw %}
+              {% include 'icon-close' %}
+              {% raw %}
+            </button>
+            <div class="ajax-cart__item-image-wrapper frame frame--1x1">
+              <img src="{{ image }}" class="ajax-cart__item-image" data-object-fit="cover" data-object-position="center">
+            </div>
+            <div class="ajax-cart__item-info">
+              <div class="ajax-cart__title-container">
+                  <a href="{{ url }}" class="ajax-cart__item-header">
+                    {{ product_title }}
+                  </a>
+              </div>
+              <ul class="ajax-cart__item-options">
+                {{#unless has_only_default_variant}}
+                  {{#if variant_options}}
+                    {{#each variant_options}}
+                      <li>
+                        {{ name }}: {{ value }}
+                      </li>
+                    {{/each}}
+                  {{else}}
+                    {{#if variant_title}}
+                      <li>{{ variant_title }}</li>
+                    {{/if}}
+                  {{/if}}
+                {{/unless}}
+                {{#if available}}
+                  {{#each discounts}}
+                    <li class="ajax-item__discount-message">
+                      {{title}}
+                    </li>
+                  {{/each}}
+                {{/if}}
+                {{#unless available}}
+                  <li class="ajax-item__sold-out-info-container">
+                    <span class="ajax-cart__sold-out-notice">This item is currently sold out.</span>
+                  </li>
+                {{/unless}}
+              </ul>
+              {{#if available}}
+                <div class="ajax-item__footer">
+                  {{#if discounts}}
+                    <div class="ajax-cart__item-price">
+                      <s class="ajax-cart__compare-at-price">
+                        {{ original_price }}
+                      </s>
+                      <span class="ajax-cart__discounted-price">
+                        {{ price }}
+                      </span>
+                    </div>
+                  {{else}}
+                    <div class="ajax-cart__item-price">
+                      {{ price }}
+                    </div>
+                  {{/if }}
+                  {{#if available}}
+                    {{#unless is_free_gift}}
+                    <div class="ajax-item__quantity-adjuster" data-quantity-adjuster>
+                      <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                      <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
+                      <span class="quantity-adjuster__label">{{ quantity }} </span>
+                      <button class="quantity-adjuster__increment" data-increment>+</button>
+                    </div>
+                    {{/unless}}
+                  {{/if}}
+                </div>
+              {{/if}}
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{else}}
+      <div class="ajax-cart__empty-message">
+        {% endraw %}
+        {% if section.settings.empty_text != blank %}
+          {{ section.settings.empty_text }}
+        {% else %}
+          {{ 'cart.general.empty' | t }}
+        {% endif %}
+        {% raw %}
+      </div>
+    {{/if}}
   </script>
 
   <script type="text/x-handlebars-template" data-ajax-cart-footer-top-template>

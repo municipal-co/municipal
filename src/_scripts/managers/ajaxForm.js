@@ -19,15 +19,16 @@ class AJAXFormManager {
     this.events = {
       ADD_SUCCESS: `addSuccess${this.namespace}`,
       ADD_FAIL: `addFail${this.namespace}`,
-      ADD_FROM_VARIANT_ID: `add_one_from_variant_id`
+      ADD_FROM_VARIANT_ID: `add_one_from_variant_id`,
+      GWP_ADD: 'GWP:add'
     };
 
     this.requestInProgress = false;
 
     $body.on('submit', selectors.addForm, this.addToCartFromForm.bind(this));
-    $body.on('submit', selectors.freeGiftForm, this.addToCartFreeGift.bind(this));
 
     $window.on(this.events.ADD_FROM_VARIANT_ID, this.addToCartByVariantID.bind(this));
+    $window.on(this.events.GWP_ADD, this.addToCartFreeGift.bind(this));
   }
 
   addToCartFromForm(e) {
@@ -73,12 +74,10 @@ class AJAXFormManager {
   }
 
   addToCartFreeGift(e) {
-    e.preventDefault();
+
     let hasFreeGift = false;
 
-    const formData = new FormData(e.currentTarget);
-    const productId = formData.get('id');
-
+    const productId = e.product_id;
 
     CartAPI.getCart().then((cart) => {
       cart.items.forEach((item) => {

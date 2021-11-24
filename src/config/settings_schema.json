@@ -393,6 +393,13 @@
         "min": 0,
         "max": 500,
         "info": "Order value that needs to be achieved to add the free gift to the cart"
+      },
+      {
+        "type": "text",
+        "label": "Gift product messaging",
+        "id": "gift_notification_message",
+        "default": "Free gift with [threshold] purchase",
+        "info": "Use [threshold] to place the money value of the threshold anywhere on the phrase"
       }
     ]
   }

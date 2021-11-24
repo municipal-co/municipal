@@ -95,10 +95,10 @@ export default class Drawer {
       cb();
     }
   }
-  
+
   /**
    * Called after the closing animation has run
-   */    
+   */
   onHidden() {
     this.stateIsOpen = false;
     const e = $.Event(this.events.HIDDEN);
@@ -138,7 +138,7 @@ export default class Drawer {
   show() {
     const e = $.Event(this.events.SHOW);
     this.$el.trigger(e);
-    
+
     if (this.stateIsOpen) return;
 
     this.stateIsOpen = true;
@@ -147,7 +147,7 @@ export default class Drawer {
     if (this.settings.backdrop) {
       this.addBackdrop();
     }
-    
+
     this.$el.find('.drawer__header-title').addClass('in');
 
     if (this.supportsCssTransitions) {

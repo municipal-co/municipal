@@ -21,6 +21,13 @@ class CartAPI {
     if (cart && cart.is_formatted) {
       return cart;
     }
+    if(typeof theme.giftWithPurchase !== 'undefined') {
+      if (cart.total_price >= theme.giftWithPurchase.giftThreshold) {
+        cart.show_gwp_ui = true;
+      } else {
+        cart.show_gwp_ui = false;
+      }
+    }
 
     // Make adjustments to the cart object contents before we pass it off to the handlebars template
     cart.unformatted_price = cart.total_price;
@@ -53,6 +60,12 @@ class CartAPI {
       }
       else {
         delete item.variant_options; // skip it and use the variant title instead
+      }
+
+       // Cart has free gift already
+       if (item.properties.hasOwnProperty('_freeGift')) {
+        cart.show_gwp_ui = false;
+        item.is_free_gift = true;
       }
 
       return item;
@@ -163,14 +176,14 @@ class CartAPI {
    * @param {jQuery} $form - jQuery instance of the form
    * @return {Promise} - Resolve returns JSON cart | Reject returns an error message
    */
-  addItemFromID(id) {
+  addItemFromID(id, properties) {
     const promise = $.Deferred();
 
     $.ajax({
       type: 'post',
       dataType: 'json',
       url: '/cart/add.js',
-      data: { quantity: 1, id: id },
+      data: { quantity: 1, id: id, properties },
       success: () => {
         this.getCart().then((cart) => {
           promise.resolve(cart);
