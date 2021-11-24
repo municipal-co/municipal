@@ -183,7 +183,7 @@ class CartAPI {
       type: 'post',
       dataType: 'json',
       url: '/cart/add.js',
-      data: { quantity: 1, id: id, properties },
+      data: { quantity: 1, id: id, properties: properties },
       success: () => {
         this.getCart().then((cart) => {
           promise.resolve(cart);
@@ -213,7 +213,7 @@ class CartAPI {
       type: 'post',
       dataType: 'json',
       url: '/cart/add.js',
-      data: { quantity: 1, id: id, properties: properties},
+      data: { items },
       success: () => {
         this.getCart().then((cart) => {
           promise.resolve(cart);
