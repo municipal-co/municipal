@@ -502,9 +502,12 @@ body.ajax-cart-open {
 
   .item-choice__button:hover & {
     transform: translate3d(0, 2px, 0);
+    .is-active & {
+      transform: rotate(180deg);
+    }
   }
 
-  .item-choice.is-active & {
+  .is-active & {
     transform: rotate(180deg);
   }
 }
