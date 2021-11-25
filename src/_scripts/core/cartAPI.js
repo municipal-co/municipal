@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import * as Currency from './currency';
 import * as Image from './image';
+import AJAXFormManager from '../managers/ajaxForm';
 
 class CartAPI {
   constructor() {
@@ -19,6 +20,13 @@ class CartAPI {
   formatCart(cart) {
     if (cart && cart.is_formatted) {
       return cart;
+    }
+    if(typeof theme.giftWithPurchase !== 'undefined') {
+      if (cart.total_price >= theme.giftWithPurchase.giftThreshold) {
+        cart.show_gwp_ui = true;
+      } else {
+        cart.show_gwp_ui = false;
+      }
     }
 
     // Make adjustments to the cart object contents before we pass it off to the handlebars template
@@ -52,6 +60,12 @@ class CartAPI {
       }
       else {
         delete item.variant_options; // skip it and use the variant title instead
+      }
+
+       // Cart has free gift already
+       if (item.properties.hasOwnProperty('_freeGift')) {
+        cart.show_gwp_ui = false;
+        item.is_free_gift = true;
       }
 
       return item;
@@ -102,7 +116,11 @@ class CartAPI {
       success: (data) => {
         // Theme editor adds HTML comments to JSON response, strip these
         data = data.replace(/<\/?[^>]+>/gi, '');
-        const cart = JSON.parse(data);
+        let cart = JSON.parse(data);
+
+        const newCart = this.validateGiftThreshold(cart);
+
+        cart = newCart;
 
         this.cart = this.formatCart(cart);
 
@@ -158,14 +176,14 @@ class CartAPI {
    * @param {jQuery} $form - jQuery instance of the form
    * @return {Promise} - Resolve returns JSON cart | Reject returns an error message
    */
-  addItemFromID(id) {
+  addItemFromID(id, properties) {
     const promise = $.Deferred();
 
     $.ajax({
       type: 'post',
       dataType: 'json',
       url: '/cart/add.js',
-      data: { quantity: 1, id: id },
+      data: { quantity: 1, id: id, properties: properties },
       success: () => {
         this.getCart().then((cart) => {
           promise.resolve(cart);
@@ -195,7 +213,7 @@ class CartAPI {
       type: 'post',
       dataType: 'json',
       url: '/cart/add.js',
-      data: {items: items},
+      data: { items },
       success: () => {
         this.getCart().then((cart) => {
           promise.resolve(cart);
@@ -245,7 +263,7 @@ class CartAPI {
       },
       error: () => {
         const data = {
-          message: 'Something went wrong.'
+          message: 'Something went wrong. With the line'
         };
         promise.reject(data);
       }
@@ -289,6 +307,40 @@ class CartAPI {
     };
 
     return itemsObject;
+  }
+
+  validateGiftThreshold(cart) {
+    let hasFreeGift = false;
+    let freeGiftIndex = -1;
+    let itemsArrayIndex = -1;
+    const freeGiftEnabled = theme.hasOwnProperty('giftWithPurchase');
+    let removeFreeGift = false;
+
+    cart.items.forEach((item, index) => {
+      if(item.properties.hasOwnProperty('_freeGift')) {
+        hasFreeGift = true;
+        itemsArrayIndex = index;
+        freeGiftIndex = index + 1;
+      }
+    })
+
+    if(freeGiftEnabled === true) {
+      const giftThreshold = theme.giftWithPurchase.giftThreshold;
+      if(cart.total_price < giftThreshold) {
+        removeFreeGift = true;
+      }
+    } else {
+      removeFreeGift = true;
+    }
+
+    if(removeFreeGift && hasFreeGift) {
+      this.changeLineItemQuantity(freeGiftIndex, 0).then((newCart)=>{
+        const event = $.Event(AJAXFormManager.events.ADD_SUCCESS, {cart: newCart});
+        $(window).trigger(event);
+      })
+    }
+
+    return cart;
   }
 }
 
