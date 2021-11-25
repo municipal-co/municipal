@@ -71,11 +71,11 @@
       {% include 'product-detail-price', product: product, current_variant: current_variant %}
     </div>
   {% endunless %}
-  {% unless enable_bundles == true %}
-    {% if section.settings.enable_klarna == true %}
+  {% if section.settings.enable_klarna == true %}
+    {% unless enable_bundles == true or product.type == 'Gift Card' or product.tags contains 'klarna-hide' %}
       {{ klarna_snippet }}
-    {% endif %}
-  {% endunless %}
+    {% endunless %}
+  {% endif %}
 
 
   {% include 'product-upsell', pum_product: product %}
@@ -114,7 +114,11 @@
               {% endfor %}
             </div>
           </div>
-          {{ klarna_snippet }}
+          {% if section.settings.enable_klarna == true %}
+          {% unless product.type == 'Gift Card' or product.tags contains 'klarna-hide' %}
+              {{ klarna_snippet }}
+            {% endunless %}
+          {% endif %}
         {% endif %}
 
         {% if enable_bundles == true %}
