@@ -293,13 +293,25 @@ class CartAPI {
     const itemsObject = [];
 
     $activeBundleSelectors.each((index, el) => {
-      itemsObject.push({
-        id: $(el).find('[data-bundle-product-id]').val(),
-        quantity: 1,
-        properties: {
-          _bundleId: bundleId
+      const productId = $(el).find('[data-bundle-product-id]').val();
+      let productFound = false;
+
+      itemsObject.forEach((item) => {
+        if(item.id === productId) {
+          item.quantity++;
+          productFound = true;
         }
-      })
+      });
+
+      if(productFound === false ){
+        itemsObject.push({
+          id: productId,
+          quantity: 1,
+          properties: {
+            _bundleId: bundleId
+          }
+        })
+      };
     })
 
     if(!$activeBundleSelectors.length) {
