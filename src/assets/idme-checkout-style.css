@@ -1,13 +1,26 @@
 .idme {
-  padding-bottom: 1.5em;
   width: 100%;
 }
-.idme-shopify {}
+
+.idme-shopify {
+  border-top: 1px solid rgba(169,169,169,0.34);
+  padding: 20px 0;
+}
+
 .idme-btn-affinity {
   padding-bottom: .75em;
   text-align: left;
 }
+
 .idme-btn-unify {}
+#cart-notification .idme-btn-affinity {
+  width: 100%;
+}
+
+.idme-btn-unify > img {
+  height: 40px !important;
+}
+
 #cart-notification .idme-btn-affinity {
   width: 100%;
 }
