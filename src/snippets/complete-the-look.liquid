@@ -46,13 +46,6 @@
                 {% assign product_id = product_array[index] %}
                 {% assign card_product = all_products[product_id] %}
 
-                {% for option in product.options_with_values %}
-                  {% if option.name == color %}
-                    {% assign current_color = option.value %}
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
-
                 {% if card_product != blank %}
                   <div class="content-grid__item swiper-slide">
                     {% include 'product-card',
@@ -61,7 +54,6 @@
                        show_colors: true,
                        show_tag: true,
                        reverse_card: false,
-                       current_color: current_color,
                        auto_update_image: false
                     %}
                   </div>

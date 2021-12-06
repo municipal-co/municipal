@@ -312,7 +312,7 @@ export default class ProductDetailForm {
   }
 
   checkVariantsAvailability() {
-    const $sizeDotsContainer = $(selectors.dotsContainer).not('.dots--color');
+    const $sizeDotsContainer = $(selectors.dotsContainer, this.$container).not('.dots--color');
     $sizeDotsContainer.removeClass('dots--disabled');
     $sizeDotsContainer.find('.dot').attr('disabled', true);
     this.$singleOptionSelectors.each((index, el) => {
@@ -536,6 +536,6 @@ export default class ProductDetailForm {
     this.$addToCartBtnText.html(theme.strings.unavailable);
     this.$priceWrapper.addClass(classes.hide);
     this.$bisButton.hide();
-    $(selectors.dotsContainer).not('.dots--color').addClass('dots--disabled');
+    $(selectors.dotsContainer, this.$container).not('.dots--color').addClass('dots--disabled');
   }
 }

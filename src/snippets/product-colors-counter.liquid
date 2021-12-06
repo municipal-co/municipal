@@ -1,18 +1,34 @@
-{% unless show_collection_colors == false %}
-  {% if product.meta_fields.custom_fields['color_descriptor'] != blank %}
-    {{ product.meta_fields.custom_fields['color_descriptor'] }}
-  {% elsif current_color != blank %}
-    {{ current_color }}
-  {% else %}
-    {% if product != blank %}
-      {% for option in product.options_with_values %}
-        {% assign option_name_downcase = option.name | downcase %}
-        {% if option_name_downcase == 'color' %}
-          {% assign values_quantity = option.values | size %}
-            {{ values_quantity }} {{ values_quantity | pluralize: 'Color', 'Colors' }}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  {% endif %}
-{% endunless %}
+{%- unless show_collection_colors == false -%}
+  {%- if product != blank -%}
+    {%- assign colors_quantity = 0 -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign option_name_downcase = option.name | downcase -%}
+      {%- if option_name_downcase == 'color' -%}
+      {%- assign option_index = "option" | append: option.position -%}
+      {%- for color in option.values -%}
+        {%- assign filter_color =  color | prepend: '[' | append: ']' -%}
+          {%- assign current_variant_available = false -%}
+          {%- assign current_color_variants = product.variants | where: option_index, color -%}
+
+          {%- if product.metafields.custom_fields['hide_colors'] contains filter_color -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- for color_variant in current_color_variants -%}
+            {%- if color_variant.available or color_variant.metafields.custom_fields['enable_notify_me'] == 1 or color_variant.metafields.custom_fields['enable_sold_out'] == 1 -%}
+              {%- assign current_variant_available = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if current_variant_available == true -%}
+            {%- assign colors_quantity = colors_quantity | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {{ colors_quantity }} {{ colors_quantity | pluralize: 'Color', 'Colors' }}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endunless -%}
 
