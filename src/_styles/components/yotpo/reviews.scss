@@ -329,6 +329,11 @@
         justify-content: space-between;
         border-bottom: solid 4px $black;
 
+        .stacked & {
+          flex-direction: column !important;
+          flex-wrap: nowrap !important;
+        }
+
         @include media-breakpoint-down('md') {
           flex-direction: column;
           padding: 20px 0 35px;
@@ -684,6 +689,13 @@
 
 .yotpo-regular-box-filters-padding {
   width: 100%;
+}
+
+.yotpo.yotpo-main-widget.yotpo-small ,
+.yotpo.yotpo-main-widget.yotpo-medium {
+  .yotpo-review .yotpo-header-element .yotpo-review-stars .yotpo-user-related-fields {
+    display: flex !important;
+  }
 }
 
 
