@@ -63,7 +63,6 @@ export default class YotpoReviews extends BaseSection {
     let count = 0;
     const yotpoReadyCallback = () => {
       $(selectors.starReviews).addClass(classes.yotpoLoaded);
-
       this.formatSizingMessages(false);
 
       function mutationHandler(mutationRecords) {
@@ -156,7 +155,9 @@ export default class YotpoReviews extends BaseSection {
       }
 
       if (isAddingNewReview) {
-        $yotpoReviewsBars = $yotpoReviewsColumn.find('.yotpo-product-related-fields-bars > .yotpo-size-bars');
+        setTimeout(() => {
+          $yotpoReviewsBars = $yotpoReviewsColumn.find('.yotpo-product-related-fields-bars > .yotpo-size-bars');
+        }, 500);
       }
 
       const $yotpoSingleBar = $yotpoReviewsBars.find('.yotpo-product-related-field-score-bar');
