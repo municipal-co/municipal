@@ -17,7 +17,7 @@ const classes = {
 
 const templates = {
   sizeFitTemplate: (value) => {
-    return `<div class="yotpo-user-field size-fit-field modified-field" data-type="SingleChoice">
+    return `<div class="yotpo-user-field size-fit-field modified-field" data-type="SingleValue">
       <span class="yotpo-user-field-description text-s">Size Fit:</span>
       <span class="yotpo-user-field-answer text-s">` + value + `</span>
     </div>`
@@ -79,7 +79,7 @@ export default class YotpoReviews extends BaseSection {
 
               $('html, body').animate({
                 scrollTop: $(selectors.yotpoReviews).offset().top - topSeparation
-              }, 2000);
+              }, 500);
 
               containerThis.makeOnceTheFormatting = false;
             }
@@ -147,30 +147,18 @@ export default class YotpoReviews extends BaseSection {
       const $firstHeaderElement = $this.find(selectors.yotpoHeaderElement).not('.yotpo-icon-profile').first();
       const $userFields = $firstHeaderElement.find('.yotpo-user-related-fields');
 
-      const $yotpoReviewsColumn = $this.find('.yotpo-product-related-fields-column:first-child');
-      let $yotpoReviewsBars = $yotpoReviewsColumn.find('.yotpo-product-related-fields-bars > .yotpo-field-bars-container > .yotpo-size-bars');
+      let yotpoFitSizeVal = $this.find('.product-related-fields-item[data-type="Size"] .product-related-fields-item-value').eq(0).text();
 
       if ($userFields.children('.modified-field').length) {
         return;
       }
 
       if (isAddingNewReview) {
-        setTimeout(() => {
-          $yotpoReviewsBars = $yotpoReviewsColumn.find('.yotpo-product-related-fields-bars > .yotpo-size-bars');
-        }, 500);
+        yotpoFitSizeVal = $this.find('.product-related-fields-item[data-type="Size"] .product-related-fields-item-value').eq(0).text();
       }
 
-      const $yotpoSingleBar = $yotpoReviewsBars.find('.yotpo-product-related-field-score-bar');
 
-      let sizeFitValue = '';
-
-      $.each($yotpoSingleBar, function(barIndex) {
-        if (!$(this).hasClass('yotpo-size-bar-empty')) {
-          sizeFitValue = sizesValues[barIndex];
-        }
-      });
-
-      $userFields.prepend(templates.sizeFitTemplate(sizeFitValue));
+      $userFields.prepend(templates.sizeFitTemplate(yotpoFitSizeVal));
 
       const dateValue = $this.find(selectors.dateOriginalLocation).first().text();
 
