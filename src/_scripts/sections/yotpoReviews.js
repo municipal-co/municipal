@@ -63,7 +63,6 @@ export default class YotpoReviews extends BaseSection {
     let count = 0;
     const yotpoReadyCallback = () => {
       $(selectors.starReviews).addClass(classes.yotpoLoaded);
-
       this.formatSizingMessages(false);
 
       function mutationHandler(mutationRecords) {
