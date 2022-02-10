@@ -1,0 +1,14 @@
+.badge {
+  border: 2px solid $black;
+  font-size: $font-size-xs;
+  font-family: $headings-font-family;
+  line-height: 1.5;
+  padding: 12px 40px;
+  border-radius: 50px;
+  display: inline-block;
+}
+
+.badge--white {
+  border-color: $white;
+  color: $white;
+}

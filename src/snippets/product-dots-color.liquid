@@ -102,7 +102,7 @@
               <div class="dot__inner"
                   style="background-color:{{ color_css }};
     {% if swatch_image %} background-image:url({{ swatch_image | img_url: product_swatch_size, crop: 'center' }}) !important; border: none !important{% endif %}">
-                  {% include 'icon-check' %}
+                  {% render 'icon-check' %}
               </div>
             </div>
           {% endunless %}

@@ -1,0 +1,62 @@
+.sticky-image {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: block;
+  overflow: hidden;
+
+  @include media-breakpoint-down('sm') {
+    position: relative;
+    height: auto;
+  }
+}
+
+.sticky-image__background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+
+  @include media-breakpoint-down('sm') {
+    position: relative;
+    padding-bottom: 160%;
+    height: auto;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+.sticky-image__info-container {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  @include media-breakpoint-down('sm') {
+    top: 30px;
+    left: 30px;
+  }
+
+}
+
+
+.sticky-image__title {
+  margin: 12px 0;
+  color: $white;
+
+  // To be replaced by global variables
+  font-size: 40px;
+  font-family: $headings-font-family;
+}
+
+.sticky-image__price {
+  @extend .p2;
+  font-size: 22px;
+  color: $white;
+  margin-top: 0;
+  line-height: 1;
+}

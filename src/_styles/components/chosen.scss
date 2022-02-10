@@ -51,7 +51,7 @@
 .chosen-container-single {
   .chosen-single {
     @extend .form-control;
-    padding: 10px 0;
+    padding: 10px;
     background-image: none; // Remove default gradient background image
 
     div {

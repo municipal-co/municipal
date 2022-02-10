@@ -125,7 +125,7 @@ fieldset:disabled a.btn {
 .btn-link {
   font-weight: $font-weight-bold;
   color: $link-color;
-  text-decoration: $link-decoration;
+  text-decoration: underline;
   background: none;
   border: none;
 
@@ -139,7 +139,7 @@ fieldset:disabled a.btn {
 
   &:focus,
   &.focus {
-    text-decoration: $link-hover-decoration;
+    text-decoration: underline;
     box-shadow: none;
   }
 
@@ -298,10 +298,18 @@ input[type='button'] {
   color: $white;
 
   @include media-breakpoint-up('md') {
-    &:hover {
+    &:hover {
       border-color: $green;
       color: $green;
       background-color: transparent;
     }
   }
+}
+
+
+// New styles
+
+.btn__icon {
+  display: inline-block;
+  margin-left: 10px;
 }

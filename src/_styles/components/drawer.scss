@@ -24,6 +24,8 @@
   }
 
   &--bottom {
+    top: auto;
+    bottom: 0;
     transform: translateY(100%);
 
     &.is-visible {
@@ -51,12 +53,14 @@
     position: relative;
     margin-bottom: 20px;
     padding: 30px 0 $headings-margin-bottom;
-    border-bottom: 2px solid $drawer-border-color;
+    padding: 30px;
 
     .drawer__close {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: 45%;
+      right: 30px;
+      transform: translatey(-50%);
+
       z-index: 3;
 
       &:hover .icon {
@@ -68,6 +72,8 @@
   .drawer__header-title {
     margin: 0;
     padding: 0;
+    font-family: $headings-font-family;
+    font-size: 20px;
   }
 
   .drawer__body {

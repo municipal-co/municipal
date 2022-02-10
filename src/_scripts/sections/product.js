@@ -44,11 +44,6 @@ export default class ProductSection extends BaseSection {
     this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
     this.galleries = [];
 
-    this.observerProperties = {
-      root: null,
-      threshold: [0.1, 0.4]
-    }
-
     $(selectors.desktopBuyNow, this.container).on('click', this.onBuyNowClick.bind(this));
     $(selectors.sectionScroller, this.container).on('click', this.sectionScrollerClick.bind(this));
     $('body').on('moduleInView', this.onModuleInView.bind(this));
@@ -57,9 +52,6 @@ export default class ProductSection extends BaseSection {
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
 
     this.initFitGuideGalleries();
-
-    this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
-    this.IntersectionObserver.observe($(selectors.productDetail).get(0));
   }
 
   toggleFitGuideModal() {
