@@ -293,6 +293,10 @@ $font-family-sans-serif: 'Sequel Sans Body', -apple-system, BlinkMacSystemFont,
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace !default;
 $font-family-base: $font-family-sans-serif !default;
+
+$font-family-heading-large: 'Sequel Sans Title', sans-serif;
+$font-family-heading-medium: 'Sequel Sans Medium Title', sans-serif;
+$font-family-heading-small: 'Sequel Sans Small Title', sans-serif;
 // stylelint-enable value-keyword-case
 
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`

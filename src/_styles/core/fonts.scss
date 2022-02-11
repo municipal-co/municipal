@@ -12,6 +12,6 @@
 // If you have italic versions of the font, add them below
 // =======================================================
 @include font-face('Sequel Sans Title', 'SequelSans-BoldDisp', $font-weight-normal, normal);
-@include font-face('Sequel Sans Medium Title', 'SequelSans-BoldDisp', $font-weight-normal, normal);
-@include font-face('Sequel Sans Small title' 'SequelSans-SemiBoldHead', $font-weight-normal, normal);
+@include font-face('Sequel Sans Medium Title', 'SequelSans-BoldHead', $font-weight-normal, normal);
+@include font-face('Sequel Sans Small Title', 'SequelSans-SemiBoldHead', $font-weight-normal, normal);
 @include font-face('Sequel Sans Body', 'sequel-sans-semi-bold-body', $font-weight-normal, normal);
