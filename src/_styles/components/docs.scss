@@ -38,6 +38,7 @@
   border: 1px solid darken($body-bg, 15%);
   border-radius: 3px;
   box-shadow: -4px 6px 10px -8px transparentize(darken($body-bg, 20%), 0.2);
+  padding: 20px;
 
   &--dark {
     background-color: $black;

@@ -287,12 +287,14 @@ $embed-responsive-aspect-ratios: join(
 // Font, line-height, and color for body text, headings, and more.
 
 // stylelint-disable value-keyword-case
-$font-family-sans-serif: 'Sequel Sans Body', -apple-system, BlinkMacSystemFont,
-  'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
-  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
+$font-family-sans-serif: 'SequelSans Body', sans-serif;
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
   'Liberation Mono', 'Courier New', monospace !default;
 $font-family-base: $font-family-sans-serif !default;
+
+$font-family-heading-large: 'Sequel Sans Title', sans-serif;
+$font-family-heading-medium: 'Sequel Sans Medium Title', sans-serif;
+$font-family-heading-small: 'Sequel Sans Small Title', sans-serif;
 // stylelint-enable value-keyword-case
 
 $font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
@@ -310,7 +312,7 @@ $font-weight-bolder: bolder !default;
 
 $font-weight-base: $font-weight-normal !default;
 $line-height-base: 1.5 !default;
-$letter-spacing-base: 0.01em !default;
+$letter-spacing-base: unset !default;
 
 // Headings
 $h1-font-size: 5.5vw;

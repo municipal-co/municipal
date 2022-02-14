@@ -4,95 +4,147 @@
 //
 
 @mixin h1 {
-  font-size: $h1-font-size-mobile;
-  letter-spacing: $h1-letter-spacing-mobile;
-  line-height: $h1-line-height-mobile;
+  font-family: 'Sequel Sans Title', sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  @include media-breakpoint-up('md') {
+    font-size: 50px;
+  }
   @include media-breakpoint-up('lg'){
-    font-size: $h1-font-size;
-    letter-spacing: large-vw($h1-letter-spacing-mobile, $h1-letter-spacing);
-    line-height: $h1-line-height;
+    font-size: 78px;
   }
 }
 
 @mixin h2 {
-  font-size: $h2-font-size-mobile;
-  letter-spacing: $h2-letter-spacing-mobile;
-  line-height: $h2-line-height-mobile;
+  font-family: 'Sequel Sans title', sans-serif;
+  font-size: 28px;
+  line-height: 1;
+  @include media-breakpoint-up('md'){
+    font-size: 44px;
+  }
   @include media-breakpoint-up('lg'){
-    font-size: $h2-font-size;
-    letter-spacing: large-vw($h2-letter-spacing-mobile, $h2-letter-spacing);
-    line-height: $h2-line-height;
+    font-size: 68px;
   }
 }
 
 @mixin h3 {
-  font-size: $h3-font-size-mobile;
-  line-height: $h3-line-height-mobile;
+  font-family: 'Sequel Sans Title', sans-serif;
+  font-size: 26px;
+  line-height: 1;
+  @include media-breakpoint-up('md') {
+    font-size: 41px;
+  }
   @include media-breakpoint-up('lg'){
-    font-size: $h3-font-size;
-    letter-spacing: large-vw($h3-letter-spacing-mobile, $h3-letter-spacing);
-    line-height: $h3-line-height;
+    font-size: 63px;
   }
 }
 
 @mixin h4 {
-  font-size: $h4-font-size-mobile;
-  letter-spacing: $h4-letter-spacing-mobile;
-  line-height: $h4-line-height-mobile;
+  font-family: 'Sequel Sans Medium Title', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  @include media-breakpoint-up('md') {
+    font-size: 38px;
+  }
   @include media-breakpoint-up('lg'){
-    font-size: large-vw($h4-font-size-mobile, $h4-font-size);
-    letter-spacing: large-vw($h4-letter-spacing-mobile, $h4-letter-spacing);
-    line-height: $h4-line-height;
+    font-size: 60px
   }
 }
 
 @mixin h5 {
-  font-size: $h5-font-size-mobile;
-  letter-spacing: $h5-letter-spacing-mobile;
-  line-height: $h5-line-height-mobile;
+  font-family: 'Sequel Sans Medium Title', sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  @include media-breakpoint-up('md') {
+    font-size: 28px;
+  }
   @include media-breakpoint-up('lg'){
-    font-size: large-vw($h5-font-size-mobile, $h5-font-size);
-    letter-spacing: large-vw($h5-letter-spacing-mobile, $h5-letter-spacing);
-    line-height: $h5-line-height;
+    font-size: 44px;
   }
 }
 
 @mixin h6 {
-  font-size: $h6-font-size-mobile;
-  letter-spacing: $h6-letter-spacing-mobile;
-  line-height: $h6-line-height-mobile;
+  font-family: 'Sequel Sans Small Title', sans-serif;
+  font-size: 15px;
+  line-height: 17px;
+  @include media-breakpoint-up('md') {
+    font-size: 23px;
+    line-height: 25px;
+  }
   @include media-breakpoint-up('lg'){
-    font-size: large-vw($h6-font-size-mobile, $h6-font-size);
-    letter-spacing: large-vw($h6-letter-spacing-mobile, $h6-letter-spacing);
-    line-height: $h6-line-height;
+    font-size: 37px;
+    line-height: 39px;
+  }
+}
+
+@mixin h7 {
+  font-family: 'Sequel Sans Small Title', sans-serif;
+  font-size: 13px;
+  line-height: 15px;
+  @include media-breakpoint-up('md') {
+    font-size: 20px;
+    line-height: 23px;
+  }
+  @include media-breakpoint-up('lg') {
+    font-size: 31px;
+    line-height: 36px;
   }
 }
 
 @mixin p1 {
-  font-size: $p1-font-size-mobile;
-  line-height: $p1-line-height;
-  letter-spacing: $p1-letter-spacing;
-  font-weight: $p1-font-weight;
-  @include media-breakpoint-up('lg'){
-    font-size: large-vw($p1-font-size-mobile, $p1-font-size);
+  font-family: 'SequelSans Body', sans-serif;
+  font-size: 17px;
+  line-height: 27px;
+  @include media-breakpoint-up('md') {
+    font-size: 27px;
+    line-height: 37px;
+  }
+  @include media-breakpoint-up('lg') {
+    font-size: 33px;
+    line-height: 43px;
   }
 }
 
 @mixin p2 {
-  font-size: 1em;
-  line-height: $p2-line-height;
-  letter-spacing: $p2-letter-spacing;
-  font-weight: $p2-font-weight;
+  font-family: 'SequelSans Body', sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+  @include media-breakpoint-up('md') {
+    font-size: 22px;
+    line-height: 33px;
+  }
   @include media-breakpoint-up('lg'){
-    font-size: large-vw($p2-font-size-mobile, $p2-font-size);
+    font-size: 27px;
+    line-height: 38px;
   }
 }
 
 @mixin p3 {
-  font-size: $p3-font-size;
-  letter-spacing: $p3-letter-spacing;
-  line-height: $p3-line-height;
-  font-weight: $p3-font-weight;
+  font-family: 'SequelSans Body', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  @include media-breakpoint-up('md') {
+    font-size: 19px;
+    line-height: 29px;
+  }
+  @include media-breakpoint-up('lg') {
+    font-size: 23px;
+    line-height: 37px;
+  }
+}
+
+@mixin p4 {
+  font-family: 'SequelSans Body', sans-serif;
+  font-size: 10px;
+  line-height: 15px;
+  @include media-breakpoint-up('md') {
+    font-size: 16px;
+    line-height: 23px;
+  }
+  @include media-breakpoint-up('lg') {
+    font-size: 20px;
+    line-height: 29px;
+  }
 }
 
 // RTE styling for long form content

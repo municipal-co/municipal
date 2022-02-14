@@ -4,7 +4,7 @@
 {% endcomment %}
 
 <div class="layout-content-wrapper">
-  <div class="container-fluid">
+  <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-22">
 
@@ -116,17 +116,19 @@
         <h2 id="docs-typography" class="docs-title">Typography</h2>
 
         <h4 class="docs-subtitle">Headings</h4>
-        <h1>H1 Sequel Sans Disp</h1>
-        <h2>H2 Sequel Sans Disp</h2>
-        <h3>H3 Sequel Sans Disp</h3>
-        <h4>H4 Sequel Sans Disp</h4>
-        <h5>H5 Sequel Sans Disp</h5>
-        <h6>H6 Sequel Sans Body</h6>
+        <h1>H1 Sequel Sans Bold Display</h1>
+        <h2>H2 Sequel Sans Bold Display</h2>
+        <h3>H3 Sequel Sans Bold Display</h3>
+        <h4>H4 Sequel Sans Bold Display</h4>
+        <h5>H5 Sequel Sans Bold Head</h5>
+        <h6>H6 Sequel Sans Semi Bold Head</h6>
+        <h6 class="h7">H7 Sequel Sans Semi Bold Head</h6>
 
         <h4 class="docs-subtitle">Type variations</h4>
-        <p class="p1">P1 Sequel Sans Roman Body</p>
-        <p class="p1 font-weight-bold">P1 Bold / Sequel Sans Bold Body</p>
+        <p class="p1">P1 Sequel Sans Semi Bold Body</p>
         <p class="p2">P2 Sequel Sans Semi Bold Body</p>
+        <p class="p3">P3 Sequel Sans Semi Bold Body</p>
+        <p class="p4">P4 Sequel Sans Semi Bold Body</p>
 
         <h4 class="docs-subtitle">Paragraphs</h4>
         <p>
@@ -691,42 +693,42 @@
 
         <form>
           <div class="form-group row">
-            <label for="text1" class="col-sm-2 col-form-label">Text Field</label>
+            <label for="text1" class="col-sm-4 col-form-label">Text Field</label>
             <div class="col-sm-10">
               <input type="text" id="text1" class="form-control">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="text2" class="col-sm-2 col-form-label">Placeholder</label>
+            <label for="text2" class="col-sm-4 col-form-label">Placeholder</label>
             <div class="col-sm-10">
               <input type="text" id="text2" placeholder="Placeholder text" class="form-control">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="text3" class="col-sm-2 col-form-label">Disabled Field</label>
+            <label for="text3" class="col-sm-4 col-form-label">Disabled Field</label>
             <div class="col-sm-10">
               <input type="text" id="text3" disabled="disabled" class="form-control">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="text5" class="col-sm-2 col-form-label">Text Field (Valid)</label>
+            <label for="text5" class="col-sm-4 col-form-label">Text Field (Valid)</label>
             <div class="col-sm-10">
               <input type="text" id="text5" class="form-control is-valid" value="Valid Entry">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="text4" class="col-sm-2 col-form-label">Text Field (Error)</label>
+            <label for="text4" class="col-sm-4 col-form-label">Text Field (Error)</label>
             <div class="col-sm-10">
               <input type="text" id="text4" class="form-control is-invalid" value="Invalid Entry">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="select1" class="col-sm-2 col-form-label">Select Field</label>
+            <label for="select1" class="col-sm-4 col-form-label">Select Field</label>
             <div class="col-sm-10">
               <select id="select1" class="form-control">
                 <option value="0">-- Choose --</option>
@@ -739,7 +741,7 @@
           </div>
 
           <div class="form-group row">
-            <label for="text6" class="col-sm-2 col-form-label">Text Area</label>
+            <label for="text6" class="col-sm-4 col-form-label">Text Area</label>
             <div class="col-sm-10">
               <textarea type="text" id="text6" class="form-control" value="Invalid Entry" rows="5"></textarea>
             </div>
