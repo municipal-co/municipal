@@ -92,7 +92,7 @@
 }
 
 @mixin p1 {
-  font-family: 'Sequel Sans Body', serif;
+  font-family: 'SequelSans Body', sans-serif;
   font-size: 17px;
   line-height: 27px;
   @include media-breakpoint-up('md') {
@@ -106,7 +106,7 @@
 }
 
 @mixin p2 {
-  font-family: 'Sequel Sans Body', sans-serif;
+  font-family: 'SequelSans Body', sans-serif;
   font-size: 15px;
   line-height: 22px;
   @include media-breakpoint-up('md') {
@@ -120,7 +120,7 @@
 }
 
 @mixin p3 {
-  font-family: 'Sequel Sans Body', sans-serif;
+  font-family: 'SequelSans Body', sans-serif;
   font-size: 14px;
   line-height: 22px;
   @include media-breakpoint-up('md') {
@@ -134,7 +134,7 @@
 }
 
 @mixin p4 {
-  font-family: 'Sequel Sans Body', sans-serif;
+  font-family: 'SequelSans Body', sans-serif;
   font-size: 10px;
   line-height: 15px;
   @include media-breakpoint-up('md') {

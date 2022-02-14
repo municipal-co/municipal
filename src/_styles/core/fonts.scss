@@ -14,4 +14,4 @@
 @include font-face('Sequel Sans Title', 'SequelSans-BoldDisp', $font-weight-normal, normal);
 @include font-face('Sequel Sans Medium Title', 'SequelSans-BoldHead', $font-weight-normal, normal);
 @include font-face('Sequel Sans Small Title', 'SequelSans-SemiBoldHead', $font-weight-normal, normal);
-@include font-face('Sequel Sans Body', 'SequelSans-SemiBoldBody', $font-weight-bold, bold);
+@include font-face('SequelSans Body', 'SequelSans-SemiBoldBody', $font-weight-normal, normal);
