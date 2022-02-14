@@ -239,13 +239,6 @@ body.ajax-cart-open {
   position: relative;
   flex-shrink: 0;
 
-  &:after {
-    content: '';
-    display: block;
-    width: 100%;
-    padding-bottom: calc(1 / 1 * 100%);
-  }
-
   @include media-breakpoint-down('md') {
     width: 100px;
     height: 100px;
@@ -585,8 +578,8 @@ body.ajax-cart-open {
     border-width: 2px;
   }
 
-  .quantity-adjuster__decrement,
-  .quantity-adjuster__increment {
+  button.quantity-adjuster__decrement,
+  button.quantity-adjuster__increment {
     height: 100%;
     font-size: 40px;
     text-align: center;
@@ -596,6 +589,8 @@ body.ajax-cart-open {
     margin-top: -3px;
     border: none;
     background-color: transparent;
+    padding: 0;
+    color: $black;
 
     &:focus {
       box-shadow: none;

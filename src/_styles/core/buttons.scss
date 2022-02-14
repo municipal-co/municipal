@@ -4,31 +4,42 @@
 // Base styles
 //
 
-.btn {
+.btn,
+button {
   display: inline-block;
-  font-family: $btn-font-family;
-  font-weight: $btn-font-weight;
-  color: $body-color;
+  font-family: 'Sequel Sans Small Title', sans-serif;
+  color: $white;
   text-align: center;
   vertical-align: middle;
   user-select: none;
-  background-color: transparent;
-  border: $btn-border-width solid transparent;
-  font-size: 16px;
-  padding: 12px 50px;
+  background-color: $black;
+  border: 1.2px solid transparent;
+  font-size: 13px;
+  line-height: 20px;
+  padding: 12px 32px;
   border-radius: 90px;
   position: relative;
+  margin-bottom: 1em;
   @include transition($btn-transition);
+
+  @include media-breakpoint-up('md') {
+    font-size: 16px;
+    line-height: 1;
+    padding: 14px 42px;
+  }
+
+  @include media-breakpoint-up('lg') {
+    font-size: 19px;
+    line-height: 1;
+    padding: 15px 53px;
+  }
+
   @include hover {
     color: $body-color;
     text-decoration: none;
 
     .btn__ui {
-      margin-left: 30px;
-    }
-
-    .icon {
-      fill: $white;
+      color: $white;
     }
   }
 
@@ -55,34 +66,20 @@
   }
 
   .btn__ui {
-    @include transition(
-      margin-left $transition-duration-fast $transition-timing-function-base
-    );
     margin-left: 20px;
     .icon {
-      @include transition(
-        fill $transition-duration-fast $transition-timing-function-base
-      );
+      fill: currentColor;
       width: 30px;
       height: 30px;
     }
   }
 
-  &.btn--small {
-    font-size: large-vw($h6-font-size-mobile, $h6-font-size);
-
-    @include media-breakpoint-down('md') {
-      font-size: $h6-font-size-mobile;
-    }
-  }
-
-  &.btn--smallest {
-    font-size: 16px;
-  }
-
   &.btn--underlined {
+    background-color: transparent;
+    border-radius: 0;
     font-weight: $font-weight-normal;
     padding: 0 0 5px;
+    color: $black;
     &:focus {
       box-shadow: none;
     }
@@ -95,18 +92,6 @@
       width: 100%;
       background-color: $black;
     }
-  }
-
-  @include media-breakpoint-up('lg') {
-    padding: large-vw(12px, 25px) large-vw(50px, 50px);
-    font-size: large-vw(16px, 28px);
-    .btn__ui .icon {
-      width: large-vw(30px, 50px);
-      height: large-vw(30px, 50px);
-    }
-  }
-  @include media-breakpoint-down('xs') {
-    width: 100%;
   }
 }
 
@@ -167,29 +152,6 @@ fieldset:disabled a.btn {
   // No need for an active state here
 }
 
-//
-// Button Sizes
-//
-
-.btn-lg {
-  @include button-size(
-    $btn-padding-y-lg,
-    $btn-padding-x-lg,
-    $btn-font-size-lg,
-    $btn-line-height-lg,
-    $btn-border-radius-lg
-  );
-}
-
-.btn-sm {
-  @include button-size(
-    $btn-padding-y-sm,
-    $btn-padding-x-sm,
-    $btn-font-size-sm,
-    $btn-line-height-sm,
-    $btn-border-radius-sm
-  );
-}
 
 //
 // Block button
@@ -198,15 +160,22 @@ fieldset:disabled a.btn {
 .btn-block {
   display: block;
   width: 100%;
-  padding: 18px 50px;
+  min-height: 50px;
+  padding: 14px 32px;
 
   // Vertically space out multiple block buttons
   + .btn-block {
     margin-top: $btn-block-spacing-y;
   }
 
-  @include media-breakpoint-down('md') {
-    padding: 15.5px 20px;
+  @include media-breakpoint-up('md') {
+    min-height: 66px;
+    padding: 23px 42px;
+  }
+
+  @include media-breakpoint-up('lg') {
+    min-height: 70px;
+    padding: 23px 53px;
   }
 }
 

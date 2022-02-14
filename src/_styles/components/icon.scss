@@ -4,11 +4,20 @@
 
 .icon {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   vertical-align: middle;
   fill: currentColor;
 
+  @include media-breakpoint-up('md') {
+    width: 42px;
+    height: 42px;
+  }
+
+  @include media-breakpoint-up('lg') {
+    width: 52px;
+    height: 52px;
+  }
   .no-svg & {
     display: none;
   }
@@ -35,6 +44,16 @@ symbol {
 .icon-play {
   fill: none;
   stroke: currentColor;
+  width: 120px;
+  height: auto;
+
+  @include media-breakpoint-up('md') {
+    width: 187px;
+  }
+
+  @include media-breakpoint-up('lg') {
+    width: 243px;
+  }
 }
 
 /* ============================================================================

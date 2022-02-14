@@ -1,35 +1,15 @@
 // stylelint-disable declaration-no-important, selector-list-comma-newline-after
 
 // Defaults style for all the html fields, so they don't have to be re-styled afterwards.
-html {
+html,
+body {
   @include p1;
 }
 
-//
-// Headings
-//
-
 h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  margin-bottom: $headings-margin-bottom;
-  font-family: $headings-font-family;
-  font-weight: $headings-font-weight;
-  line-height: $headings-line-height;
-  color: $headings-color;
-  text-transform: uppercase;
-  word-wrap: break-word;
+.h1,.h2,.h3,.h4,.h5,.h6,.h7 {
+  font-weight: normal;
 }
-
-h6, .h6 {
-  text-transform: none;
-}
-
-// h1, .h1 { @include font-size($h1-font-size); }
-// h2, .h2 { @include font-size($h2-font-size); }
-// h3, .h3 { @include font-size($h3-font-size); }
-// h4, .h4 { @include font-size($h4-font-size); }
-// h5, .h5 { @include font-size($h5-font-size); }
-// h6, .h6 { @include font-size($h6-font-size); }
 
 h1, .h1 { @include h1; }
 h2, .h2 { @include h2; }
@@ -37,6 +17,7 @@ h3, .h3 { @include h3; }
 h4, .h4 { @include h4; }
 h5, .h5 { @include h5; }
 h6, .h6 { @include h6; }
+.h7 { @include h7; }
 
 .lead {
   @include font-size($lead-font-size);
@@ -69,10 +50,10 @@ h6, .h6 { @include h6; }
 // Paragraphs
 //
 
-.p1 { @include p1; }
+p, .p1 { @include p1; }
 .p2 { @include p2; }
 .p3 { @include p3; }
-
+.p4 { @include p4; }
 
 //
 // Horizontal rules
