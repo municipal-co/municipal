@@ -51,10 +51,12 @@
   }
 
   // Create the plus / minus buttons
-  .quantity-adjuster__increment,
-  .quantity-adjuster__decrement {
+  button.quantity-adjuster__increment,
+  button.quantity-adjuster__decrement {
     position: relative;
     vertical-align: middle;
+    padding: 0 !important;
+    color: $black;
 
     &:before,
     &:after {

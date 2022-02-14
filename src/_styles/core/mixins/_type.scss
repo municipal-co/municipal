@@ -92,7 +92,7 @@
 }
 
 @mixin p1 {
-  font-family: 'Sequel Sans Body', sans-serif;
+  font-family: 'Sequel Sans Body', serif;
   font-size: 17px;
   line-height: 27px;
   @include media-breakpoint-up('md') {

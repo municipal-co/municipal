@@ -1,7 +1,8 @@
 // stylelint-disable declaration-no-important, selector-list-comma-newline-after
 
 // Defaults style for all the html fields, so they don't have to be re-styled afterwards.
-html {
+html,
+body {
   @include p1;
 }
 
@@ -49,7 +50,7 @@ h6, .h6 { @include h6; }
 // Paragraphs
 //
 
-.p1 { @include p1; }
+p, .p1 { @include p1; }
 .p2 { @include p2; }
 .p3 { @include p3; }
 .p4 { @include p4; }

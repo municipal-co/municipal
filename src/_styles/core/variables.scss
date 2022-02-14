@@ -314,7 +314,7 @@ $font-weight-bolder: bolder !default;
 
 $font-weight-base: $font-weight-normal !default;
 $line-height-base: 1.5 !default;
-$letter-spacing-base: 0.01em !default;
+$letter-spacing-base: unset !default;
 
 // Headings
 $h1-font-size: 5.5vw;
