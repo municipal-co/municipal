@@ -11,6 +11,13 @@
   }
 }
 
+.sticky-image__background-container {
+  @include media-breakpoint-down('sm') {
+    padding-bottom: 120%;
+    width: 100%;
+  }
+}
+
 .sticky-image__background-image {
   position: absolute;
   width: 100%;
@@ -19,9 +26,9 @@
   top: 0;
 
   @include media-breakpoint-down('sm') {
-    position: relative;
-    padding-bottom: 160%;
-    height: auto;
+    position: absolute;
+    height: 100%;
+    width: 100%;
   }
 
   img {
@@ -40,23 +47,21 @@
     top: 30px;
     left: 30px;
   }
-
 }
 
 
 .sticky-image__title {
   margin: 12px 0;
   color: $white;
-
-  // To be replaced by global variables
   font-size: 40px;
-  font-family: $headings-font-family;
+  @include media-breakpoint-down('md') {
+    font-size: 32px;
+  }
 }
 
 .sticky-image__price {
-  @extend .p2;
-  font-size: 22px;
+  @extend .p3;
+  font-family: $font-family-heading-medium;
   color: $white;
   margin-top: 0;
-  line-height: 1;
 }
