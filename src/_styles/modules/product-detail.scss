@@ -95,8 +95,6 @@
 }
 
 .product-option__drawer {
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
   overflow-x: hidden;
   width: calc(10/24*100%);
   right: 0;
@@ -109,6 +107,8 @@
     top: auto;
     bottom: 0;
     transform: translateY(100%);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
 
     .is-visible & {
       transform: translateY(0);

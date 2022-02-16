@@ -304,7 +304,7 @@ export default class ProductDetailForm {
 
   updateSelectedOptionLabel(index, value, name) {
     if(name === 'size' || name === 'Size') {
-      $(`[data-selected-option=${index}]`).text(`Selected size: ${value}`);
+      $(`[data-selected-option=${index}]`).text(`Selected ${name}: ${value}`);
     } else {
       $(`[data-selected-option=${index}]`).text(value);
     }
