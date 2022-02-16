@@ -10,7 +10,7 @@ $grid-gutter-width: 0;
 // Color system
 
 $white: #fff !default;
-$bg-white: #f3f3f3 !default;
+$bg-white: #f5f5f6 !default;
 $gray-lighter: #f1f1f1 !default;
 $gray-light: #e9ecef !default;
 $gray: #424446 !default; // Custom Color
@@ -19,7 +19,7 @@ $gray-darker: #494949 !default;
 $gray-darkest: #212529 !default;
 $slate-gray: #31363F !default; // Custom color
 $nav-fine-print-gray: #777A7D !default; // Custom color
-$color-dots-border: #DDDDDD;
+$color-dots-border: #DBDBDB;
 
 $black: #121212 !default; // Custom Color
 $red: #ff2b00 !default; // Custom color
@@ -1147,8 +1147,10 @@ $arrow-icon-tip-skew: 45deg;
 // Slideshow
 
 $slideshow-dot-size: 10px;
-$slideshow-dot-color: $white;
-$slideshow-dot-active-color: #f00;
+$slideshow-dot-width: 19px;
+$slideshow-dot-height: 3px;
+$slideshow-dot-color: rgba($black, 0.3);
+$slideshow-dot-active-color: $black;
 
 // Panel
 

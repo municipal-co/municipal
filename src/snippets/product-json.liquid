@@ -60,6 +60,7 @@
             "inventory_management": {{ variant.inventory_management | json }},
             "inventory_quantity": {{ variant.inventory_quantity }},
             "name": {{ product.title | append: ' - ' | append: variant.title | json }},
+            "options": {{ product.options | json }},
             "option1": {{ variant.option1 | json }},
             "option2": {{ variant.option2 | json }},
             "option3": {{ variant.option3 | json }},

@@ -3,7 +3,7 @@
   <div class="drawer__inner fit-guide__inner">
     <div class="drawer__header fit-guide__header">
       <a href="javascript:void(0);"class="fit-guide__close" data-drawer-close>
-        {% include 'icon-close' %}
+        {% render 'icon-close' %}
         <span class="sr-only">Close fit guide</span>
       </a>
       <div class="fit-guide__header-title">
@@ -24,7 +24,7 @@
               {% for image in metafields["fg_images"] %}
               <div class="swiper-slide">
                 {% capture image_tag %}
-                  {% include 'cf-image' with image: image, print: "tag", size: "599x599", crop: "center", tag_class: "swiper-lazy fit-guide__gallery-image"%}
+                  {% render 'cf-image' with image: image, print: "tag", size: "599x599", crop: "center", tag_class: "swiper-lazy fit-guide__gallery-image"%}
                 {% endcapture %}
                 {{ image_tag | replace: 'src=', 'data-src=' }}
               </div>
