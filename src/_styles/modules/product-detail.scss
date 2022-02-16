@@ -255,6 +255,10 @@
   }
 }
 
+.product__atc-price:before {
+  content: '- ';
+}
+
 .klarna-messaging {
   text-align: center;
   margin-top: 20px;

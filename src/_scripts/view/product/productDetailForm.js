@@ -14,6 +14,7 @@ const selectors = {
   priceWrapper: '[data-price-wrapper]',
   productJson: '[data-product-json]',
   productPrice: '[data-product-price]',
+  addToCartPrice: '[data-add-to-cart-price]',
   singleOptionSelector: '[data-single-option-selector]',
   variantOptionValueList: '[data-variant-option-value-list][data-option-position]',
   variantOptionValue: '[data-variant-option-value]',
@@ -92,6 +93,7 @@ export default class ProductDetailForm {
     this.$addToCartBtn           = $(selectors.addToCart, this.$container);
     this.$addToCartBtnText       = $(selectors.addToCartText, this.$container); // Text inside the add to cart button
     this.$priceWrapper           = $(selectors.priceWrapper, this.$container); // Contains all price elements
+    this.$atcPrice               = $(selectors.addToCartPrice, this.$container);
     this.$productPrice           = $(selectors.productPrice, this.$container);
     this.$comparePrice           = $(selectors.comparePrice, this.$container);
     this.$compareEls             = this.$comparePrice.add($(selectors.comparePriceText, this.$container));
@@ -135,6 +137,7 @@ export default class ProductDetailForm {
     // this.updateBadge(this.variants.currentVariant);
     this.productColorValidation();
     this.updateAddToCartState(this.variants.currentVariant);
+    this.updateProductPrices(this.variants.currentVariant);
   }
 
   onVariantChange(evt) {
@@ -211,6 +214,7 @@ export default class ProductDetailForm {
       this.$addToCartBtnText.html(theme.strings.unavailable);
       this.$priceWrapper.addClass(classes.hide);
       this.$bisButton.hide();
+      this.$atcPrice.hide();
       return;
     }
 
@@ -218,17 +222,21 @@ export default class ProductDetailForm {
       this.$addToCartBtn.prop('disabled', false);
       this.$addToCartBtnText.html(theme.strings.addToCart);
       this.$addToCartBtn.show();
+      this.$atcPrice.show();
     } else {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.soldOut);
+      this.$atcPrice.show();
       this.$addToCartBtn.show();
 
       if(this.productSingleObject.metafields.enable_sold_out !== 1 || variant.metafields.enable_sold_out !== 1) {
         this.$addToCartBtnText.html(theme.strings.unavailable);
+        this.$atcPrice.hide();
       }
 
       if(this.productSingleObject.metafields.enable_bis === 1 || variant.metafields.enable_bis === 1) {
         this.$addToCartBtnText.html(theme.strings.soldOut);
+        this.$atcPrice.hide();
       }
     }
   }
@@ -255,6 +263,7 @@ export default class ProductDetailForm {
   updateProductPrices(variant) {
     if (variant) {
       this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
+      this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
 
       if (variant.compare_at_price > variant.price) {
         this.$comparePrice.html(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat));
