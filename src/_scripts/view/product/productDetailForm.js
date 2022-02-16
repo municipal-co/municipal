@@ -64,6 +64,7 @@ export default class ProductDetailForm {
     this.namespace = `.${this.name}`;
 
     this.events = {
+      CHANGE: `change${this.namespace}`,
       RESIZE: `resize${this.namespace}`,
       CLICK:  `click${this.namespace}`,
       SUBMIT: `submit${this.namespace}`,
@@ -121,17 +122,19 @@ export default class ProductDetailForm {
     });
 
     this.$container.on('variantChange', this.onVariantChange.bind(this));
-    this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
+    // this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
     this.$bisToggler.on(this.events.CLICK, this.toggleBisContainer.bind(this));
-    this.$bisForm.on('submit', this.onBisSubmit.bind(this));
-    this.$pdpDrawerToggler.on('click', this._toggleOptionDrawer.bind(this));
+    this.$bisForm.on(this.events.SUBMIT, this.onBisSubmit.bind(this));
+    this.$pdpDrawerToggler.on(this.events.CLICK, this._toggleOptionDrawer.bind(this));
     Utils.chosenSelects(this.$container);
     this.productBundles = new ProductBundles(this.$container);
+    this.$singleOptionSelectors.on(this.events.CHANGE, this.onOptionChange.bind(this));
 
     this.checkVariantsAvailability(this.variants.currentVariant);
     // this.updateBadge(this.variants.currentVariant);
     this.productColorValidation();
+    this.updateAddToCartState(this.variants.currentVariant);
   }
 
   onVariantChange(evt) {
@@ -141,13 +144,23 @@ export default class ProductDetailForm {
     this.updateAddToCartState(variant);
     this.updateQuantitySelect(variant);
     this.updateVariantOptionValues(variant);
-    this.updateSelectedOptionLabel(variant);
     this.updateFullDetailsLink(variant);
     this.checkVariantsAvailability(variant);
+    this.updateKlarnaPricing(variant);
+
+    this.settings.onVariantChange(variant);
     // this.updateColorsLink();
     // this.updateBadge(variant);
-    this.updateKlarnaPricing(variant);
     // this.productBundles.updateVariant(variant);
+  }
+
+  onOptionChange(evt) {
+    const $this = $(evt.currentTarget);
+    const optionIndex = $this.data('product-option');
+    const optionValue = $this.val();
+    const optionName = $this.data('option-name');
+
+    this.updateSelectedOptionLabel(optionIndex, optionValue, optionName);
   }
 
   // /**
@@ -172,6 +185,25 @@ export default class ProductDetailForm {
    * @param {Object} variant - Shopify variant object
    */
   updateAddToCartState(variant) {
+
+    const optionLenght = this.productSingleObject.options.length;
+
+    let selectedOptions = 0;
+
+    this.$singleOptionSelectors.each((i, el) => {
+      if($(el).is(':radio') && $(el).is(':checked')) {
+        selectedOptions ++;
+      } else if ($(el).is('select') && $(el).val() !== '') {
+        selectedOptions ++;
+      }
+    })
+
+    if(selectedOptions < optionLenght) {
+      this.$addToCartBtn.prop('disabled', true);
+      this.$addToCartBtnText.html(theme.strings.addToCart);
+      return;
+    }
+
     if (variant) {
       this.$priceWrapper.removeClass(classes.hide);
     } else {
@@ -261,9 +293,11 @@ export default class ProductDetailForm {
     }
   }
 
-  updateSelectedOptionLabel(variant) {
-    for(let i = 1; i <= 3; i++) {
-      $(`[data-selected-option=option${i}]`).text(variant[`option${i}`]);
+  updateSelectedOptionLabel(index, value, name) {
+    if(name === 'size' || name === 'Size') {
+      $(`[data-selected-option=${index}]`).text(`Selected size: ${value}`);
+    } else {
+      $(`[data-selected-option=${index}]`).text(value);
     }
   }
 
@@ -281,32 +315,31 @@ export default class ProductDetailForm {
     }
   }
 
-  /**
-   * Handle variant option value click event.
-   * Update the associated select tag and update the UI for this value
-   *
-   * @param {event} evt
-   */
-  onVariantOptionValueClick(e) {
-    console.log('clicked on a variant option');
-    const $option = $(e.currentTarget);
+  // /**
+  //  * Handle variant option value click event.
+  //  * Update the associated select tag and update the UI for this value
+  //  *
+  //  * @param {event} evt
+  //  */
+  // onVariantOptionValueClick(e) {
+  //   const $option = $(e.currentTarget);
 
-    if ($option.hasClass(classes.variantOptionValueActive) || $option.closest('.dots--disabled').length > 0 || $option.closest('.dots--placeholder').length > 0) {
-      return;
-    }
+  //   if ($option.hasClass(classes.variantOptionValueActive) || $option.closest('.dots--disabled').length > 0 || $option.closest('.dots--placeholder').length > 0) {
+  //     return;
+  //   }
 
-    const value     = $option.data('variant-option-value');
-    const position  = $option.parents(selectors.variantOptionValueList).data('option-position');
-    const $selector = this.$singleOptionSelectors.filter(`[data-index="option${position}"]`);
-    const $optionLabel = $(`[data-selected-option-${position}]`);
+  //   const value     = $option.data('variant-option-value');
+  //   const position  = $option.parents(selectors.variantOptionValueList).data('option-position');
+  //   const $selector = this.$singleOptionSelectors.filter(`[data-index="option${position}"]`);
+  //   const $optionLabel = $(`[data-selected-option-${position}]`);
 
-    $selector.val(value);
-    $selector.trigger('change');
+  //   $selector.val(value);
+  //   $selector.trigger('change');
 
-    $option.addClass(classes.variantOptionValueActive);
-    $option.siblings().removeClass(classes.variantOptionValueActive);
-    $optionLabel.text(value);
-  }
+  //   $option.addClass(classes.variantOptionValueActive);
+  //   $option.siblings().removeClass(classes.variantOptionValueActive);
+  //   $optionLabel.text(value);
+  // }
 
   checkVariantsAvailability(currentVariant) {
     let colorOptionIndex;
@@ -491,7 +524,7 @@ export default class ProductDetailForm {
         platform: 'shopify'
       }
     }).done((data) => {
-      if(data.success == true) {
+      if(data.success === true) {
         this.$bisForm.addClass(classes.submitted);
         this.$bisResponseMessage.text(successMessage);
       } else {

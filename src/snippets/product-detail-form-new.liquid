@@ -13,7 +13,7 @@
       {%- elsif option == "size" or option == "Size" -%}
         {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
         <div class="btn-container text-center">
-          <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button"> Need help with sizing? </a>
+          <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
         </div>
         {%- endif -%}
 
@@ -48,13 +48,7 @@
       type="submit"
       name="add"
       class="btn btn-primary btn-block add-to-cart"
-      data-add-to-cart
-      {% unless current_variant.available %}
-        {% unless disable_bis_button == true %}
-          style="display: none;"
-        {% endunless %}
-      {% endunless %}
-      {% unless current_variant.available %}disabled="disabled"{% endunless %}>
+      data-add-to-cart>
         <span data-add-to-cart-text>
           {% if current_variant.available %}
             {{ 'products.product.add_to_cart' | t }}
@@ -62,6 +56,7 @@
             {{ 'products.product.sold_out' | t }}
           {% endif %}
         </span>
+        <span data-add-to-cart-price></span>
     </button>
     {% unless product.type == "Gift Card" or product.tags contains 'klarna-hide' %}
     <klarna-placement

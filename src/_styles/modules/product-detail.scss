@@ -19,9 +19,12 @@
   margin-bottom: 15px;
 }
 
-.product-option__header-label {
-  font-family: $headings-font-family;
-  font-size: 14px;
+.product-option__header-label,
+.product-option__selected-option {
+  font-family: $font-family-heading-medium;
+  @include media-breakpoint-down('sm') {
+    font-size: 12px;
+  }
 }
 
 // Product option type: swatches
@@ -41,8 +44,8 @@
     width: 100%;
     background-color: $white;
     position: relative;
-    border: 1px solid transparent;
-    border-radius: 2px;
+    border: 2px solid transparent;
+    border-radius: 5px;
     cursor: pointer;
 
     &:before {
@@ -66,23 +69,54 @@
 
   input[type="radio"]:checked ~ .product-option__ui,
   input[type="checkbox"]:checked ~  .product-option__ui{
-    border: 1.3px solid $black;
+    border: 2px solid $black;
   }
 }
 
 .product-option__selected-option {
-  font-family: $font-family-sans-serif;
-  font-size: 14px;
-  font-weight: $font-weight-semi-bold;
+  font-family: $font-family-heading-medium;
 }
 // Product option type: drawer
+.product-option__drawer-btn {
+  border-color: $color-dots-border;
+
+  &:hover,
+  &:focus {
+    border-color: $color-dots-border;
+  }
+  .btn__ui {
+    display: inline-block;
+
+    .icon {
+      width: 20px;
+      height: auto;
+    }
+  }
+}
+
 .product-option__drawer {
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
+  overflow-x: hidden;
   width: calc(10/24*100%);
+  right: 0;
+  height: 100%;
+  transform: translateX(100%);
 
   @include media-breakpoint-down('md') {
     width: 100%;
+    height: auto;
+    top: auto;
+    bottom: 0;
+    transform: translateY(100%);
+
+    .is-visible & {
+      transform: translateY(0);
+    }
+  }
+
+  .drawer__close .icon {
+    width: 20px;
   }
 
   .drawer__body-contents {
@@ -102,6 +136,30 @@
     display: flex;
     padding: 30px 20px;
     align-items: center;
+    cursor: pointer;
+  }
+
+  .product-option__ui-group-corner {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &:last-of-type {
+      justify-content: flex-end;
+    }
+
+    @include media-breakpoint-down('sm') {
+      width: 35%;
+    }
+  }
+
+  .product-option__ui-group-middle {
+    width: 20%;
+
+    @include media-breakpoint-down('sm') {
+      width: 30%;
+    }
   }
 
   .product-option__ui-checkmark {
@@ -161,6 +219,7 @@
   .product-option__ui-availability {
     font-size: 16px;
     margin: auto;
+    text-align: center;
   }
 
   .product-option__ui-quantity {
@@ -188,10 +247,12 @@
 }
 
 .product__size-guide-button {
-  font-family: $font-family-sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
+  font-family: $font-family-heading-medium;
   margin-top: -20px;
+
+  @include media-breakpoint-down('sm') {
+    font-size: 12px;
+  }
 }
 
 .klarna-messaging {

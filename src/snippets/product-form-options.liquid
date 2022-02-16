@@ -25,10 +25,10 @@
 {% if type == "swatch" %}
   <div class="product-option">
     <div class="product-option__header">
-      <div class="product-option__header-label">
+      <div class="product-option__header-label p4">
         {{ print_option | capitalize | append: ':'}}
       </div>
-      <div class="product-option__selected-option" data-selected-option="{{option_index}}">
+      <div class="product-option__selected-option p4" data-selected-option="{{option_index}}">
         {{ current_variant[option_index]  }}
       </div>
     </div>
@@ -62,17 +62,17 @@
 
 {% if type == "drawer" %}
   <div class="product-option">
-    <button class="btn btn-outline-primary btn-block" type="button" data-pdp-drawer-toggler data-drawer-id="{{print_option}}">
-      <span class="button__text">
+    <button class="btn btn-outline-primary btn-block product-option__drawer-btn" type="button" data-pdp-drawer-toggler data-drawer-id="{{print_option}}">
+      <span class="button__text" data-selected-option="{{option_index}}">
         Select
         {{ print_option | capitalize }}
       </span>
-      <div class="btn__icon">
+      <div class="btn__ui">
         {% render 'icon-caret-down' %}
       </div>
     </button>
 
-    <div class="drawer drawer--bottom product-option__drawer" data-pdp-option-drawer data-drawer-id="{{print_option}}">
+    <div class="drawer product-option__drawer" data-pdp-option-drawer data-drawer-id="{{print_option}}">
       <div class="drawer__inner product-option__drawer-inner">
         <div class="drawer__header">
           <div class="drawer__header-title">
@@ -99,31 +99,37 @@
                     value="{{option_value}}"
                     data-option-name="{{ option_downcase }}"
                     data-product-option="{{ option_index }}"
-                    data-option-value="{{option_value | downcase}}" {% if current_variant[option_index] == option_value %} checked="checked" {% endif %}
+                    data-option-value="{{option_value | downcase}}"
                     class="hide"
                     data-index="{{option_index}}"
                     data-single-option-selector>
                   <div class="product-option__ui" data-option-ui>
-                    <div class="product-option__ui-checkmark">
-                      {% render 'icon-checkmark' %}
-                    </div>
-                    <div class="product-option__ui-label">
-                      {{ option_value }}
-                    </div>
-                    <div class="product-option__ui-availability" data-option-availability>
-                      {% if current_variant[option_index] == option_value and current_variant.available%}
-                        Available
-                      {% else %}
-                        Out Of Stock
-                      {% endif %}
-                    </div>
-                    <div class="product-option__ui-quantity">
-                      <div class="product-option__ui-low-quantity" data-low-quantity data-message-template="Hurry, only [quantity] left">
+                    <div class="product-option__ui-group-corner">
+                      <div class="product-option__ui-checkmark">
+                        {% render 'icon-checkmark' %}
                       </div>
-                      <div class="product-option__ui-bis-button">
-                        <button type="button" name="bis-button" class="btn-small btn-link btn-back-in-stock" data-bis-toggler data-bis-button {% if current_variant.available or disable_bis_button == true %}  {% endif %}>
-                          Notify Me
-                        </button>
+                      <div class="product-option__ui-label">
+                        {{ option_value }}
+                      </div>
+                    </div>
+                    <div class="product-option__ui-group-middle">
+                      <div class="product-option__ui-availability" data-option-availability>
+                        {% if current_variant[option_index] == option_value and current_variant.available%}
+                          Available
+                        {% else %}
+                          Out Of Stock
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="product-option__ui-group-corner">
+                      <div class="product-option__ui-quantity">
+                        <div class="product-option__ui-low-quantity" data-low-quantity data-message-template="Hurry, only [quantity] left">
+                        </div>
+                        <div class="product-option__ui-bis-button">
+                          <button type="button" name="bis-button" class="btn-small btn-link btn-back-in-stock" data-bis-toggler data-bis-button {% if current_variant.available or disable_bis_button == true %}  {% endif %}>
+                            Notify Me
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -135,7 +141,7 @@
           {%- if option_downcase == "size" -%}
             {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
             <div class="btn-container text-center">
-              <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button"> Need help with sizing? </a>
+              <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
             </div>
             {%- endif -%}
           {%- endif -%}
