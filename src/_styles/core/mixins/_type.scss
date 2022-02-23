@@ -7,10 +7,10 @@
   font-family: 'Sequel Sans Title', sans-serif;
   font-size: 32px;
   line-height: 1;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 50px;
   }
-  @include media-breakpoint-up('lg'){
+  @include media-breakpoint-up('xl'){
     font-size: 78px;
   }
 }
@@ -19,10 +19,10 @@
   font-family: 'Sequel Sans title', sans-serif;
   font-size: 28px;
   line-height: 1;
-  @include media-breakpoint-up('md'){
+  @include media-breakpoint-up('lg'){
     font-size: 44px;
   }
-  @include media-breakpoint-up('lg'){
+  @include media-breakpoint-up('xl'){
     font-size: 68px;
   }
 }
@@ -31,10 +31,10 @@
   font-family: 'Sequel Sans Title', sans-serif;
   font-size: 26px;
   line-height: 1;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 41px;
   }
-  @include media-breakpoint-up('lg'){
+  @include media-breakpoint-up('xl'){
     font-size: 63px;
   }
 }
@@ -43,10 +43,10 @@
   font-family: 'Sequel Sans Medium Title', sans-serif;
   font-size: 24px;
   line-height: 1;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 38px;
   }
-  @include media-breakpoint-up('lg'){
+  @include media-breakpoint-up('xl'){
     font-size: 60px
   }
 }
@@ -55,10 +55,10 @@
   font-family: 'Sequel Sans Medium Title', sans-serif;
   font-size: 18px;
   line-height: 1;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 28px;
   }
-  @include media-breakpoint-up('lg'){
+  @include media-breakpoint-up('xl'){
     font-size: 44px;
   }
 }
@@ -67,11 +67,11 @@
   font-family: 'Sequel Sans Small Title', sans-serif;
   font-size: 15px;
   line-height: 17px;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 23px;
     line-height: 25px;
   }
-  @include media-breakpoint-up('lg'){
+  @include media-breakpoint-up('xl'){
     font-size: 37px;
     line-height: 39px;
   }
@@ -81,11 +81,11 @@
   font-family: 'Sequel Sans Small Title', sans-serif;
   font-size: 13px;
   line-height: 15px;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 20px;
     line-height: 23px;
   }
-  @include media-breakpoint-up('lg') {
+  @include media-breakpoint-up('xl') {
     font-size: 31px;
     line-height: 36px;
   }
@@ -95,11 +95,11 @@
   font-family: 'SequelSans Body', sans-serif;
   font-size: 17px;
   line-height: 27px;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 27px;
     line-height: 37px;
   }
-  @include media-breakpoint-up('lg') {
+  @include media-breakpoint-up('xl') {
     font-size: 33px;
     line-height: 43px;
   }
@@ -109,11 +109,11 @@
   font-family: 'SequelSans Body', sans-serif;
   font-size: 15px;
   line-height: 22px;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 22px;
     line-height: 33px;
   }
-  @include media-breakpoint-up('lg'){
+  @include media-breakpoint-up('xl'){
     font-size: 27px;
     line-height: 38px;
   }
@@ -123,11 +123,11 @@
   font-family: 'SequelSans Body', sans-serif;
   font-size: 14px;
   line-height: 22px;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 19px;
     line-height: 29px;
   }
-  @include media-breakpoint-up('lg') {
+  @include media-breakpoint-up('xl') {
     font-size: 23px;
     line-height: 37px;
   }
@@ -137,11 +137,11 @@
   font-family: 'SequelSans Body', sans-serif;
   font-size: 10px;
   line-height: 15px;
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-up('lg') {
     font-size: 16px;
     line-height: 23px;
   }
-  @include media-breakpoint-up('lg') {
+  @include media-breakpoint-up('xl') {
     font-size: 20px;
     line-height: 29px;
   }
