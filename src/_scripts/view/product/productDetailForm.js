@@ -48,6 +48,8 @@ const classes = {
   variantOptionValueActive: 'is-active',
   open: 'is-open',
   submitted: 'submitted',
+  bis: 'is-bis',
+  soldOut: 'is-sold-out'
 };
 
 export default class ProductDetailForm {
@@ -138,6 +140,7 @@ export default class ProductDetailForm {
     this.productColorValidation();
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant);
+    this.validateSizeAvailability();
   }
 
   onVariantChange(evt) {
@@ -204,6 +207,7 @@ export default class ProductDetailForm {
     if(selectedOptions < optionLenght) {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.addToCart);
+      this.$atcPrice.show();
       return;
     }
 
@@ -213,7 +217,6 @@ export default class ProductDetailForm {
       this.$addToCartBtn.prop('disabled', true).show();
       this.$addToCartBtnText.html(theme.strings.unavailable);
       this.$priceWrapper.addClass(classes.hide);
-      this.$bisButton.hide();
       this.$atcPrice.hide();
       return;
     }
@@ -304,9 +307,47 @@ export default class ProductDetailForm {
 
   updateSelectedOptionLabel(index, value, name) {
     if(name === 'size' || name === 'Size') {
+
       $(`[data-selected-option=${index}]`).text(`Selected ${name}: ${value}`);
     } else {
       $(`[data-selected-option=${index}]`).text(value);
+      this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
+    }
+  }
+
+  validateSizeAvailability(currentOption) {
+    let sizeIndex;
+    let colorIndex;
+    let $currentOption = currentOption;
+
+    this.productSingleObject.options_with_values.forEach((evalOption, index) => {
+      if(evalOption.name === 'size' || evalOption.name === 'Size') {
+        sizeIndex = `option${evalOption.position}`;
+      }
+      if(evalOption.name === 'Color' || evalOption.name === 'color') {
+        colorIndex = `option${evalOption.position}`;
+      }
+    })
+
+    if(typeof currentOption === 'undefined') {
+      $currentOption = $(`[data-product-option=${colorIndex}]:checked`).parent();
+    }
+
+    const $selectedSize = $(`[data-product-option=${sizeIndex}]:checked`);
+
+    if($currentOption.is('.is-bis')) {
+      $(`[data-selected-option=${sizeIndex}]`).text('Notify me when back');
+      this._disablePurchase(true);
+    } else if ($currentOption.is('.is-sold-out')) {
+      $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', true);
+      this._disablePurchase(true)
+    } else if($selectedSize.length) {
+      $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', false);
+      $(`[data-selected-option=${sizeIndex}]`).text(`Selected Size: ${$selectedSize.val()}`);
+    } else {
+      $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', false);
+      $(`[data-selected-option=${sizeIndex}]`).text('Select Size');
+
     }
   }
 
@@ -355,7 +396,7 @@ export default class ProductDetailForm {
 
     $.each(this.productSingleObject.options_with_values, (i, option) => {
       if(option.name === 'Color' || option.name === 'color') {
-        colorOptionIndex = 'option' + option.position;
+        colorOptionIndex = `option${option.position}`;
       }
     });
 
@@ -549,6 +590,8 @@ export default class ProductDetailForm {
 
   productColorValidation() {
     const colorsToHide = [];
+    const soldOutColors = [];
+
     const colorOption = this.productSingleObject.options_with_values.filter((option) => {
       if (option.name === 'Color' || option.name === 'color') {
         return true;
@@ -563,18 +606,34 @@ export default class ProductDetailForm {
     const optionPosition = `option${colorOption[0].position}`;
 
     colorOption[0].values.forEach((color) => {
-
-      if(this._validateColorAvailability(color, optionPosition)) {
+      const colorState = this._validateColorAvailability(color, optionPosition);
+      if(colorState.hideColor) {
         colorsToHide.push(color);
 
         if(this.variants.currentVariant[optionPosition] === color) {
           this._disablePurchase();
         }
       };
+
+      if(colorState.soldOutColor && !colorState.hideColor) {
+        soldOutColors.push({
+          color: color,
+          enableBis: colorState.enableBis
+        });
+      }
     });
 
     colorsToHide.forEach((color) => {
       $(`${selectors.singleOptionSelector}[value="${color}"]`).parent().hide();
+    })
+
+    soldOutColors.forEach((colorObject) => {
+      if(colorObject.enableBis) {
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.bis);
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message p3">Back<br>Soon</span>');
+      } else {
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.soldOut);
+      }
     })
   }
 
@@ -587,30 +646,39 @@ export default class ProductDetailForm {
     });
     const variantCount = colorVariants.length;
     let unavailableVariantcount = 0;
+    let soldOutCount = 0;
+    let enableBis = false;
 
     colorVariants.forEach((variant) => {
-      if(variant.metafields.enable_bis || variant.metafields.enable_sold_out) {
-        return false;
-      }
-
       if(!variant.available) {
+        soldOutCount++;
+
+        if(variant.metafields.enable_bis) {
+          enableBis = true;
+        }
+        if(variant.metafields.enable_bis || variant.metafields.enable_sold_out) {
+          return false;
+        }
         unavailableVariantcount++;
       }
     });
 
-    if(unavailableVariantcount === variantCount) {
-      return true;
+    return {
+      hideColor: variantCount === unavailableVariantcount,
+      soldOutColor: variantCount === soldOutCount,
+      enableBis: enableBis
     }
-
-    return false;
   }
 
-  _disablePurchase() {
-    this.$addToCartBtn.prop('disabled', true).show();
-    this.$addToCartBtnText.html(theme.strings.unavailable);
+  _disablePurchase(soldOut = false) {
+    this.$addToCartBtn.prop('disabled', true);
     this.$priceWrapper.addClass(classes.hide);
-    this.$bisButton.hide();
-    $(selectors.dotsContainer, this.$container).not('.dots--color').addClass('dots--disabled');
+    if(soldOut) {
+      this.$addToCartBtnText.html(theme.strings.soldOut);
+      this.$atcPrice.hide();
+    } else {
+      this.$addToCartBtnText.html(theme.strings.unavailable);
+    }
   }
 
   _setUpOptionDrawers() {
