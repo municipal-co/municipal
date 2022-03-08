@@ -1,25 +1,19 @@
 {% assign metafields = product.metafields.custom_fields %}
-<div class="drawer drawer--right fit-guide__drawer" data-fit-guide-drawer>
+<div class="drawer fit-guide__drawer col-lg-10" data-fit-guide-drawer>
   <div class="drawer__inner fit-guide__inner">
     <div class="drawer__header fit-guide__header">
+      <div class="fit-guide__header-title">
+        Size Guide
+      </div>
       <a href="javascript:void(0);"class="fit-guide__close" data-drawer-close>
         {% render 'icon-close' %}
-        <span class="sr-only">Close fit guide</span>
+        <span class="sr-only">Close size guide</span>
       </a>
-      <div class="fit-guide__header-title">
-        Find My Fit
-      </div>
     </div>
     <div class="drawer__body-contents fit-guide__body">
       {% if metafields["fg_images"] != blank %}
         <div class="fit-guide__gallery-container" data-fit-guide-slider>
           <div class="swiper swiper-container" data-fit-guide-gallery>
-            <div class="fit-guide__gallery-pagination-container">
-              <div class="fit-guide__gallery-pagination-fraction">
-                <span data-fit-guide-gallery-current-index>1</span> / {{ metafields["fg_images"].size }}
-              </div>
-              <div class="fit-guide__gallery-pagination"></div>
-            </div>
             <div class="swiper-wrapper">
               {% for image in metafields["fg_images"] %}
               <div class="swiper-slide">
@@ -31,41 +25,12 @@
               {% endfor %}
             </div>
           </div>
-          <div class="fit-guide__gallery-description-content">
-            {% if metafields["fg_model_height"] != blank %}
-              <div class="fit-guide__gallery-description-item text-center">
-                <span class="fit-guide__gallery-description-value">{{metafields["fg_model_height"]}}</span>
-                <b class="fit-guide__gallery-description-title">Height</b>
-              </div>
-            {% endif %}
-            {% if metafields["fg_model_chest"] != blank %}
-              <div class="fit-guide__gallery-description-item text-center">
-                <span class="fit-guide__gallery-description-value">{{metafields["fg_model_chest"]}}</span>
-                <b class="fit-guide__gallery-description-title">Chest</b>
-              </div>
-            {% endif %}
-            {% if metafields["fg_model_waist"] != blank %}
-              <div class="fit-guide__gallery-description-item text-center">
-                <span class="fit-guide__gallery-description-value">{{metafields["fg_model_waist"]}}</span>
-                <b class="fit-guide__gallery-description-title">Waist</b>
-              </div>
-            {% endif %}
-            {% if metafields["fg_model_size"] != blank %}
-              <div class="fit-guide__gallery-description-item text-center">
-                <span class="fit-guide__gallery-description-value">{{metafields["fg_model_size"]}}</span>
-                <b class="fit-guide__gallery-description-title">Size</b>
-              </div>
-            {% endif %}
-          </div>
+          {% if metafields["fg_model_description"] != blank %}
+            <div class="fit-guide__gallery-description-content">
+              {{ metafields["fg_model_description"] }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-      <span class="h6 fit-guide__subtitle">
-        {{ metafields["fg_table_subtitle"] | default: product.title }}
-      </span>
-      {% if metafields["fg_table_title"] != blank %}
-        <h4 class="h2 fit-guide__title">
-          {{ metafields["fg_table_title"]}}
-        </h4>
       {% endif %}
       {% if metafields["fg_size_list"] != blank %}
         <table class="fit-guide__table responsible-table table-striped">

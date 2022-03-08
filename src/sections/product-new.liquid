@@ -1,3 +1,5 @@
+
+
 <div data-section-id="{{section.id}}" data-section-type="product">
   <div class="container-fluid">
     <div class="row product-container">
@@ -11,6 +13,9 @@
           product: product,
           metafields: product.metafields.custom_fields
         %}
+
+        {% include 'pdp-drawer-buttons' %}
+
       </div>
     </div>
   </div>

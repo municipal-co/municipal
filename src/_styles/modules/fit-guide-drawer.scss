@@ -2,24 +2,40 @@
   height: 100vh;
   overflow: auto;
   border: 0;
-  max-width: 680px;
+  width: 100%;
+  @include media-breakpoint-down('md') {
+    transform: translateY(100%);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+
+  @include media-breakpoint-up('lg') {
+    width: calc(10/24*100%);
+    transform: translateX(100%);
+  }
 }
 
 .fit-guide__header {
-  background-color: $black;
-  padding: 14px 30px !important;
+  padding: 20px 80px 20px 40px !important;
   margin-bottom: 0 !important;
   border: 0 !important;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
 }
 
 .fit-guide__close {
-  color: $white;
+  color: $black;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 0;
 
+  .icon-close {
+    width: 20px !important;
+    height: 20px !important;
+  }
   &:hover {
-    color: $white;
+    color: $black;
     .icon-close {
       fill: currentColor;
     }
@@ -36,12 +52,10 @@
 }
 
 .fit-guide__header-title {
-  font-family: $headings-font-family;
-  color: $white;
-  font-size: large-vw(16px, 30px);
-  font-weight: $headings-font-weight;
-  opacity: 1;
-  margin-left: 21px;
+  font-family: $font-family-heading-medium;
+  color: $black;
+  font-size: 24px;
+  font-weight: bold;
 
   @include media-breakpoint-down('md') {
     font-size: 16px;
@@ -49,11 +63,7 @@
 }
 
 .fit-guide__body {
-  padding: 40px;
-
-  @include media-breakpoint-down('md') {
-    padding: 20px;
-  }
+  padding: 15px 40px 40px;
 }
 
 .fit-guide__gallery-container {
@@ -65,81 +75,15 @@
   display: block;
 }
 
-.fit-guide__gallery-pagination-container {
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  top: 0;
-  z-index: 2;
-  width: 100%;
-  padding: 16px 14px;
-}
-
-.fit-guide__gallery-pagination {
-  gap: 7px;
-  display: flex;
-  align-items: center;
-
-  .swiper-pagination-bullet {
-    background-color: rgba($black, 0.4);
-    width: 9px;
-    height: 9px;
-  }
-
-  .swiper-pagination-bullet-active {
-    width: 15px;
-    height: 15px;
-    background-color: $arrow-gray;
-  }
-}
-
-.fit-guide__gallery-pagination-fraction {
-  font-size: 12px;
-  letter-spacing: 0;
-  font-family: $headings-font-family;
-  font-weight: $font-weight-bold;
-}
-
 .fit-guide__gallery-description-content {
-  display: flex;
-  justify-content: space-around;
-  font-size: 14px;
-  border-bottom: 2px solid $black;
-  margin-bottom: 50px;
-  padding: 45px 0 55px;
-
-  @include media-breakpoint-down('md') {
-    padding: 20px 0 25px;
-    margin-bottom: 20px;
-  }
-}
-
-.fit-guide__gallery-description-value {
-  display: block;
-  margin-bottom: 20px;
-
-  @include media-breakpoint-down('md') {
-    margin-bottom: 0;
-  }
-}
-
-.fit-guide__subtitle {
-  margin-bottom: 6px;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-.fit-guide__title {
-  color: $black;
-  margin-bottom: 46px;
-  font-size: 35px;
-
-  @include media-breakpoint-down('sm') {
-    font-size: 23px;
-    margin-bottom: 30px;
-    line-height: 1;
-    letter-spacing: 1px;
-  }
+  font-size: 15px;
+  text-align: center;
+  font-family: $font-family-base;
+  font-weight: bold;
+  line-height: 1.5;
+  padding: 25px 0;
+  margin-bottom: 30px;
+  border-bottom: 3px solid $black;
 }
 
 .fit-guide__table {
@@ -151,28 +95,32 @@
   }
 
   th {
-    font-weight: $font-weight-semi-bold;
+    font-weight: bold;
+    font-family: $font-family-heading-medium;
     text-align: center;
-    font-size: 15px;
-    line-height: 25px;
-    letter-spacing: 0.4px;
-    height: 38px;
+    font-size: 18px;
+    line-height: 1;
+    text-transform: uppercase;
+    padding-bottom: 15px;
+  }
+
+  tr {
+    height: 44px;
   }
 
   td {
     text-align: center;
-    font-size: 13px;
-    letter-spacing: 0.4px;
-    line-height: 25px;
-    height: 38px;
+    font-size: 14px;
+    font-family: $font-family-base;
 
     &:first-child {
-      font-weight: $font-weight-semi-bold;
-      font-size: 15px;
-      line-height: 25px;
-      width: 67px;
+      font-weight: bold;
+      font-family: $font-family-heading-medium;
+      font-size: 18px;
+      line-height: 1;
+      width: 70px;
       text-align: left;
-      padding-left: 10px;
+      padding-left: 23px;
 
       @include media-breakpoint-down('md') {
         width: 30px;
@@ -182,19 +130,17 @@
 }
 
 .fit-guide__tips {
-  background-color: $black;
-  padding: 40px;
-
-  @include media-breakpoint-down('md') {
-    padding: 20px;
-  }
+  background-color: $bg-white;
+  padding: 30px;
 }
 
 .fit-guide__tips-title {
-  color: $green;
-  font-size: 13px;
+  color: $black;
+  font-size: 18px;
   text-transform: uppercase;
   margin-bottom: 10px;
+  font-family: $font-family-heading-medium;
+  font-weight: bold;
 
   &:before {
     content: "";
@@ -211,8 +157,8 @@
 
 .fit-guide__tips-content {
   ul, ol, p, span {
-    color: $white;
-    font-size: 13px;
+    color: $black;
+    font-size: 14px;
     margin-bottom: 0;
   }
 
@@ -227,5 +173,9 @@
       display: inline-block;
       margin-right: 5px;
     };
+  }
+  li {
+    line-height: 1.5;
+    font-weight: bold;
   }
 }

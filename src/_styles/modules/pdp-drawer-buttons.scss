@@ -1,0 +1,40 @@
+.pdp-drawer-buttons-container {
+  background-color: $white;
+  left: -30px;
+  position: relative;
+  padding: 35px 0;
+  width: calc(100% + 60px);
+  position: relative;
+}
+
+.pdp-drawer-button {
+  border: none;
+  background: unset;
+  border-top: 3px solid $black;
+  width: 100%;
+  padding: 30px 100px 30px 30px;
+  box-sizing: border-box;
+  text-align: left;
+  cursor: pointer;
+  line-height: 1;
+
+  &:last-of-type {
+    border-bottom: 3px solid $black;
+  }
+
+  .icon {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+  }
+}
+
+.pdp-drawer-button__label {
+  font-size: 26px;
+  line-height: 1;
+  font-size: 26px;
+  font-family: $font-family-heading-large;
+  letter-spacing: unset;
+}

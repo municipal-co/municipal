@@ -1,0 +1,10 @@
+<div class="pdp-drawer-buttons-container">
+  {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
+    <button class="pdp-drawer-button" data-fit-guide-toggler>
+      <span class="pdp-drawer-button__label"> Sizing </span>
+      <div class="pdp-drawer-button__icon">
+        {% render 'icon-arrow' %}
+      </div>
+    </button>
+  {%- endif -%}
+</div>
