@@ -17,6 +17,7 @@
   text-align: left;
   cursor: pointer;
   line-height: 1;
+  position: relative;
 
   &:last-of-type {
     border-bottom: 3px solid $black;
