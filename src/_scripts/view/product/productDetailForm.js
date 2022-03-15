@@ -28,16 +28,8 @@ const selectors = {
   dotsColorContainer: '.dots--color',
   dotsContainer: '.dots',
   dot: '.dot',
-  bisContainer: '[data-bis-container]',
-  bisForm: '[data-bis-form]',
-  bisButton: '[data-bis-button]',
-  bisToggler: '[data-bis-toggler]',
-  bisVariantOption: '[data-bis-variant-option]',
-  bisVariantId: '[data-bis-variant-id]',
-  bisFeaturedImage: '[data-bis-featured-image]',
-  bisEmailInput: '[data-bis-email-input]',
-  bisResponseMessage: '[data-bis-response-message]',
   klarnaOnsiteMessagingPrice: '[data-purchase-amount]',
+  bisButton: '[data-bis-button]',
   // Size drawer toggler
   pdpOptionDrawerToggler: '[data-pdp-drawer-toggler]',
   pdpOptionDrawer: '[data-pdp-option-drawer]',
@@ -103,14 +95,9 @@ export default class ProductDetailForm {
     this.$variantOptionValueList = $(selectors.variantOptionValueList, this.$container); // Alternate UI that takes the place of a single option selector (could be swatches, dots, buttons, whatever..)
     this.$shippingModalTrigger   = $(selectors.shippingModalTrigger, this.$container);
     this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
-    this.$bisDrawer              = $(selectors.bisContainer);
-    this.$bisButton              = $(selectors.bisButton);
-    this.$bisToggler             = $(selectors.bisToggler);
-    this.$bisForm                = $(selectors.bisForm);
-    this.$bisEmailInput          = $(selectors.bisEmailInput, this.$bisForm);
-    this.$bisResponseMessage     = $(selectors.bisResponseMessage);
     this.$pdpDrawerToggler       = $(selectors.pdpOptionDrawerToggler, this.$container);
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
+    this.$bisButton              =$(selectors.bisButton);
 
     /* eslint-enable */
 
@@ -128,12 +115,11 @@ export default class ProductDetailForm {
     this.$container.on('variantChange', this.onVariantChange.bind(this));
     // this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
-    this.$bisToggler.on(this.events.CLICK, this.toggleBisContainer.bind(this));
-    this.$bisForm.on(this.events.SUBMIT, this.onBisSubmit.bind(this));
     this.$pdpDrawerToggler.on(this.events.CLICK, this._toggleOptionDrawer.bind(this));
     Utils.chosenSelects(this.$container);
     this.productBundles = new ProductBundles(this.$container);
     this.$singleOptionSelectors.on(this.events.CHANGE, this.onOptionChange.bind(this));
+    this.$bisButton.on(this.events.CLICK, this.onBisButtonClick.bind(this));
 
     this.checkVariantsAvailability(this.variants.currentVariant);
     // this.updateBadge(this.variants.currentVariant);
@@ -503,43 +489,6 @@ export default class ProductDetailForm {
 
   // }
 
-  toggleBisContainer(evt) {
-    const $this = $(evt.currentTarget);
-    const variantId = $this.data('variant-id');
-    let currentVariant;
-
-    this.$bisDrawer.toggleClass(classes.open);
-
-    if(variantId === undefined) {
-      return
-    }
-
-    this.productSingleObject.variants.forEach((variant) => {
-      if(variant.id === variantId) {
-        currentVariant = variant;
-        return false;
-      }
-    })
-
-    if(currentVariant) {
-      const id = currentVariant.id;
-      const options = this.productSingleObject.options;
-      const optionMap = {};
-
-      options.forEach((el, index) => {
-        optionMap[el.toLowerCase()] = currentVariant[`option${index+1}`];
-      });
-
-      // Update drawer content
-      $(selectors.bisFeaturedImage).attr('src', currentVariant.featured_image.src).attr('alt', currentVariant.featured_image.alt);
-      $(selectors.bisVariantId).val(id);
-
-      for (const optionName in optionMap) {
-        $(`[data-bis-variant-option=${optionName}]`).text(optionMap[optionName])
-      }
-    }
-  }
-
   updateKlarnaPricing(variant) {
     // refresh klarna widget on variant change
     const $klarnaMessaging = $(selectors.klarnaOnsiteMessagingPrice, this.$container);
@@ -548,44 +497,6 @@ export default class ProductDetailForm {
       window.KlarnaOnsiteService = window.KlarnaOnsiteService || []
       window.KlarnaOnsiteService.push({ eventName: 'refresh-placements' })
     }
-  }
-
-  onBisSubmit(evt) {
-    evt.preventDefault();
-
-    const publicKey = this.$bisForm.data('api-key');
-    const customerEmail = this.$bisEmailInput.val();
-    const selectedVariant = $(selectors.bisVariantId, this.$bisForm).val();
-    const successMessage = this.$bisForm.data('success-message');
-    const errorMessage = this.$bisForm.data('error-message');
-
-    if (this.$bisEmailInput.get(0).checkValidity() === false) {
-      this.$bisEmailInput.addClass('has-error');
-      return;
-    }
-
-    $.ajax({
-      type: 'POST',
-      url:  'https://a.klaviyo.com/onsite/components/back-in-stock/subscribe',
-      data: {
-        a: publicKey,
-        email: customerEmail,
-        variant: selectedVariant,
-        platform: 'shopify'
-      }
-    }).done((data) => {
-      if(data.success === true) {
-        this.$bisForm.addClass(classes.submitted);
-        this.$bisResponseMessage.text(successMessage);
-      } else {
-        this.$bisForm.addClass(classes.submitted);
-        this.$bisResponseMessage.text(errorMessage);
-
-        setTimeout(() => {
-          this.$bisForm.removeClass(classes.submitted);
-        }, 5000);
-      }
-    })
   }
 
   productColorValidation() {
@@ -707,5 +618,33 @@ export default class ProductDetailForm {
     })
 
     drawerObject[0].drawer.toggle();
+  }
+
+  onBisButtonClick(evt) {
+    const $this = $(evt.currentTarget);
+    const currentVariant = $this.data('variant-id');
+
+    const selectedVariant = this.productSingleObject.variants.filter((variant) => {
+      return variant.id === currentVariant;
+    })
+    const data = {
+      productData: {
+        variantId: selectedVariant[0].id,
+        productTitle: this.productSingleObject.title,
+        productImage: selectedVariant[0].featured_image.src,
+        productOptions: []
+      }
+    }
+
+    selectedVariant[0].options.forEach((option, index) => {
+      data.productData.productOptions.push({
+        label: option,
+        value: selectedVariant[0][`option${index+1}`]
+      })
+    });
+
+    const event = $.Event('back-in-stock:open', data)
+
+    $(window).trigger(event);
   }
 }
