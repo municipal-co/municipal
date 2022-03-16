@@ -42,7 +42,7 @@ export default class BisDrawer extends BaseSection {
 
 
     // Event listeners
-    $(window).on(this.events.OPEN, this.updateDrawerData.bind(this));
+    $(document).on(this.events.OPEN, this.updateDrawerData.bind(this));
     this.$bisForm.on(this.events.SUBMIT, this.onBisSubmit.bind(this));
   }
 

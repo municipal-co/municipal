@@ -645,6 +645,6 @@ export default class ProductDetailForm {
 
     const event = $.Event('back-in-stock:open', data)
 
-    $(window).trigger(event);
+    $(document).trigger(event);
   }
 }

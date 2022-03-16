@@ -3,11 +3,23 @@
 }
 
 .bis__container {
-  height: 100%;
+  height: auto;
   width: 100%;
+  transform: translateY(100%);
+  left: 0;
+  bottom: 0;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 
   @include media-breakpoint-up('lg') {
+    height: 100%;
     max-width: calc(100% / 24 * 10);
+    transform: translateX(100%);
+    left: unset;
+    bottom: unset;
+    top: 0;
+    right: 0;
+    border-radius: 0;
   }
 }
 
@@ -50,11 +62,9 @@
 }
 
 .bis__featured-image-container {
-  height: 100vh;
-  min-height:400px;
-  padding-left: 100%;
   position: relative;
   margin: auto;
+  width: 100%;
 
   @include media-breakpoint-down('sm') {
     width: 100%;
