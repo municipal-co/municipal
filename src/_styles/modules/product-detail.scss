@@ -64,7 +64,22 @@
       top: 0;
       left: 0;
     }
+  }
 
+  .is-sold-out img,
+  .is-bis  img{
+    opacity: 0.4 !important;
+  }
+
+  .product-option__bis-message {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    top: 50%;
+    transform: translatey(-50%);
+    line-height: 1.2;
   }
 
   input[type="radio"]:checked ~ .product-option__ui,
