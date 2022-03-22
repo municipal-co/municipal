@@ -577,6 +577,9 @@ export default class ProductDetailForm {
       if(data.success === true) {
         this.$bisForm.addClass(classes.submitted);
         this.$bisResponseMessage.text(successMessage);
+        setTimeout(() => {
+          this.$bisForm.removeClass(classes.submitted);
+        }, 5000);
       } else {
         this.$bisForm.addClass(classes.submitted);
         this.$bisResponseMessage.text(errorMessage);

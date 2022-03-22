@@ -21,4 +21,17 @@
       </div>
     </button>
   {%- endif -%}
+  <button class="pdp-drawer-button" data-reviews-toggler>
+    <span class="pdp-drawer-button__label">
+      {% render 'rating-stars' %}
+    </span>
+    {% if settings.display_reviews == true %}
+      <div class="pdp-drawer-button__icon">
+        {% render 'icon-arrow' %}
+      </div>
+    </button>
+
+    {% render 'yotpo-reviews' %}
+  {% endif %}
+
 </div>

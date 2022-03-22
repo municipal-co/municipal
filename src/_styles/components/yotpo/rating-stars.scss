@@ -1,59 +1,45 @@
 
 #yotpo-star-reviews.yotpo.yotpo-rating-stars {
-  margin: 10px 0 0;
+  margin: 0;
   min-height: 20px; // initial height
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  &.yotpo-loaded { // transition to display the review as soon as yotpo is ready
-    opacity: 1;
-  }
 
   @include media-breakpoint-down('md') {
     margin: 10px 0 0;
   }
 
-  &.bottomLine .yotpo-icon-star,
-  &.bottomLine .yotpo-icon-empty-star {
+  &.bottomLine .yotpo-icon.yotpo-icon-half-star,
+  &.bottomLine .yotpo-icon.yotpo-icon-star,
+  &.bottomLine .yotpo-icon.yotpo-icon-empty-star {
     background-image: none !important;
   }
 
   .yotpo-bottomline.pull-left.star-clickable {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 
     a.text-m {
-      font-size: 12px;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: black !important;
-      font-family: $font-family-sans-serif;
-      margin-left: 15px;
-
-      @include media-breakpoint-down('md') {
-        margin-top: 5px;
-      }
+      font-size: 26px;
+      color: $black !important;
+      font-family: $font-family-heading-medium;
+      margin-right: 15px;
     }
   }
 
   .yotpo-stars {
     overflow: hidden;
     float: left;
+    order: 2;
   }
 
   @if $yotpo-icon-star {
     .yotpo-icon-default-star,
     .yotpo-icon-star {
-      width: large-vw(20px, 24px) !important;
-      height: large-vw(20px, 24px) !important;
       border: 0px solid transparent;
       margin: 1px;
       display: block;
       float: left;
       position: relative;
-      // margin-right: 2px;
-      // &:last-child {
-      //   margin-right: 0;
-      // }
 
       @include media-breakpoint-down('md') {
         width: 20px !important;
@@ -86,17 +72,11 @@
   @if $yotpo-icon-star-half {
     .yotpo-icon-default-half-star,
     .yotpo-icon-half-star {
-      width: large-vw(20px, 24px) !important;
-      height: large-vw(20px, 24px) !important;
       border: 0px solid transparent;
       margin: 1px;
       display: block;
       float: left;
       position: relative;
-      // margin-right: 2px;
-      // &:last-child {
-      //   margin-right: 0;
-      // }
 
       @include media-breakpoint-down('md') {
         width: 20px !important;

@@ -24,6 +24,7 @@
               </div>
               {% endfor %}
             </div>
+            <div class="swiper-pagination fit-guide__gallery-pagination"></div>
           </div>
           {% if metafields["fg_model_description"] != blank %}
             <div class="fit-guide__gallery-description-content">
@@ -54,14 +55,14 @@
       {% endif %}
 
       {% if metafields["fg_tips_content"] != blank %}
-        <div class="fit-guide__tips">
+        <div class="blink-box">
           {% if metafields["fg_tips_title"] != blank %}
-            <h6 class="fit-guide__tips-title">
+            <h6 class="blink-box__title">
               {{ metafields["fg_tips_title"] }}
             </h6>
           {% endif %}
 
-          <div class="fit-guide__tips-content">
+          <div class="blink-box__content">
             {{ metafields["fg_tips_content"] }}
           </div>
         </div>
