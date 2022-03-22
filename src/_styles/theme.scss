@@ -75,6 +75,7 @@
 @import 'components/load-more';
 @import 'components/badge.scss';
 @import 'components/sticker.scss';
+@import 'components/blink-box.scss';
 
 /**
  * MODULES
@@ -117,6 +118,9 @@
 @import 'modules/search-drawer.scss';
 @import 'modules/bundle-products.scss';
 @import 'modules/sticky-image.scss';
+/* New modules */
+@import 'modules/pdp-drawer-buttons.scss';
+@import 'modules/features-detail-drawer.scss';
 
 /**
  * Templates
@@ -135,6 +139,7 @@
 @import 'templates/password.scss';
 @import 'templates/search.scss';
 @import 'templates/about-us.scss';
+
 
 // Background animation styles
 body {

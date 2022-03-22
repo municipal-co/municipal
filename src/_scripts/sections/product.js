@@ -20,6 +20,9 @@ const selectors = {
   fitGuideDrawer: '[data-fit-guide-drawer]',
   fitGuideGallery: '[data-fit-guide-gallery]',
   fitGuideGalleryIndex: '[data-fit-guide-gallery-current-index]',
+  featuresDrawer: '[data-features-drawer]',
+  featuresDrawerToggler: '[data-features-toggler]',
+  featuresDrawerGallery: '[data-features-gallery]'
 };
 
 const classes = {
@@ -37,11 +40,14 @@ export default class ProductSection extends BaseSection {
     this.$productFormContainer = $(selectors.productFormContainer);
     this.$mobileProductFormContainer = $(selectors.mobileProductFormContainer);
     this.$fitGuideGalleryIndexcontainer = $(selectors.fitGuideGalleryIndex);
+    this.$featuresDrawerToggler = $(selectors.featuresDrawerToggler);
+    this.$featuresDrawerGallery = $(selectors.featuresDrawerGallery);
 
     // drawers
     this.productsDrawer = new Drawer($(selectors.collectionDrawer));
     this.addToCartFormDrawer = new Drawer($(selectors.addToCartFormDrawer));
     this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
+    this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
     this.galleries = [];
 
     $(selectors.desktopBuyNow, this.container).on('click', this.onBuyNowClick.bind(this));
@@ -50,13 +56,19 @@ export default class ProductSection extends BaseSection {
     $(selectors.drawerToggler).on('click', this.toggleCollectionDrawer.bind(this));
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
+    this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
     this.initFitGuideGalleries();
+    this.initFeaturesGalleries();
   }
 
   toggleFitGuideModal() {
     $('body').addClass('drawer-open');
     this.fitGuideDrawer.show();
+  }
+
+  toggleFeatureDrawer() {
+    this.featuresDrawer.toggle();
   }
 
   initFitGuideGalleries() {
@@ -69,14 +81,10 @@ export default class ProductSection extends BaseSection {
         observer: true,
         observeParents: true,
         loop: true,
-
-        navigation: {
-          nextEl: $('.swiper-button-next', $(el).parent()),
-          prevEl: $('.swiper-button-prev', $(el).parent()),
-        },
         pagination: {
           el: '.fit-guide__gallery-pagination',
           type: 'bullets',
+          clickable: true,
         },
         lazy: {
           loadPrevNext: true,
@@ -84,10 +92,28 @@ export default class ProductSection extends BaseSection {
       }
 
       const swiperGallery = new Swiper($(el), galleryOptions);
-      swiperGallery.on('slideChange', () => {
-        this.$fitGuideGalleryIndexcontainer.text(swiperGallery.realIndex + 1);
-      });
     });
+  }
+
+  initFeaturesGalleries() {
+    this.$featuresDrawerGallery.each(function(index, gallery) {
+      new Swiper($(gallery), {
+        watchOverflow: true,
+        preloadImages: false,
+        arrows: false,
+        observer: true,
+        observeParents: true,
+        loop: true,
+        pagination: {
+          el: '.features-detail__gallery-pagination',
+          type: 'bullets',
+          clickable: true,
+        },
+        lazy: {
+          loadPrevNext: true,
+        }
+      })
+    })
   }
 
   onToggleVariant(e) {

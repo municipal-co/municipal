@@ -499,6 +499,47 @@ export default class ProductDetailForm {
     }
   }
 
+  onBisSubmit(evt) {
+    evt.preventDefault();
+
+    const publicKey = this.$bisForm.data('api-key');
+    const customerEmail = this.$bisEmailInput.val();
+    const selectedVariant = $(selectors.bisVariantId, this.$bisForm).val();
+    const successMessage = this.$bisForm.data('success-message');
+    const errorMessage = this.$bisForm.data('error-message');
+
+    if (this.$bisEmailInput.get(0).checkValidity() === false) {
+      this.$bisEmailInput.addClass('has-error');
+      return;
+    }
+
+    $.ajax({
+      type: 'POST',
+      url:  'https://a.klaviyo.com/onsite/components/back-in-stock/subscribe',
+      data: {
+        a: publicKey,
+        email: customerEmail,
+        variant: selectedVariant,
+        platform: 'shopify'
+      }
+    }).done((data) => {
+      if(data.success === true) {
+        this.$bisForm.addClass(classes.submitted);
+        this.$bisResponseMessage.text(successMessage);
+        setTimeout(() => {
+          this.$bisForm.removeClass(classes.submitted);
+        }, 5000);
+      } else {
+        this.$bisForm.addClass(classes.submitted);
+        this.$bisResponseMessage.text(errorMessage);
+
+        setTimeout(() => {
+          this.$bisForm.removeClass(classes.submitted);
+        }, 5000);
+      }
+    })
+  }
+
   productColorValidation() {
     const colorsToHide = [];
     const soldOutColors = [];
