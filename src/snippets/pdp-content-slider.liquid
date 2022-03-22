@@ -1,0 +1,48 @@
+{% assign slides_array = metafields[prefix] %}
+{% if slides_array != blank %}
+  <div id="{{bg_prefix}}" class="content-slider__container">
+    <div class="content-slider" data-section-type="content-slider">
+      <div class="swiper-container" data-slideshow>
+        <div class="swiper-wrapper">
+          {% for slide in slides_array %}
+            {% capture slide_buttons %}
+              {% if slide.button_1 != blank %}
+                {{ slide.button_1 | replace: "<a", "<a class='btn btn-white content-slider__button'"}}
+              {% endif %}
+
+              {% if slide.button_2 != blank %}
+                {{ slide.button_2 | replace: "<a", "<a class='btn btn-white content-slider__button'"}}
+              {% endif %}
+            {% endcapture %}
+
+
+            <div class="swiper-slide" data-slide>
+              {% if slide.image != blank %}
+                <div class="content-slider__image-container">
+                  <img class="content-slider__img" src="{% render "cf-image" with
+                    image: slide.image,
+                    print: 'url',
+                    format: 'pjpg',
+                    size:'100x'%}" alt="{{slide.image_alt}}">
+                </div>
+              {% endif %}
+              {% if slide.title != blank %}
+                <span class="font-weight-bold content-slider__title">{{ slide.title }}</span>
+              {% endif %}
+              {% if slide.body_content != blank %}
+                  {{ slide.body_content | replace: '<strong>', '<strong class="content-slider__highlighted-text">' | replace: '<p>', '<p class="content-slider__body-content">' | replace: '<a', '<a class="btn-link"' }}
+              {% endif %}
+              {% if slide_buttons != blank %}
+                <div class="content-slider__button-container">
+                  {{ slide_buttons }}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <div class="content-slider__bottom-color"></div>
+  </div>
+{% endif %}

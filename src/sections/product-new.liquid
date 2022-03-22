@@ -14,9 +14,21 @@
           metafields: product.metafields.custom_fields
         %}
 
+        {% render 'pdp-content-slider'
+          metafields: product.metafields.custom_fields,
+          prefix: 'value_props',
+          bg_prefix: 'vp'
+        %}
+
         {% include 'pdp-drawer-buttons' %}
 
+        {% render 'pdp-content-slider'
+          metafields: product.metafields.custom_fields,
+          prefix: 'questions_slider',
+          bg_prefix: 'qs'
+        %}
       </div>
+
     </div>
   </div>
 </div>
