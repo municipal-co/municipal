@@ -131,7 +131,7 @@
     span {
       font-size: 13px;
       line-height: 1;
-      color: white;
+      color: $white;
       font-family: $font-family-heading-medium;
     }
 
@@ -163,7 +163,7 @@
 
       &:before {
         content: "";
-        background-color: $gray-lighter;
+        background-color: $bg-white;
         background-image: url($yotpo-icon-star);
         background-repeat: no-repeat;
         background-position: center;
@@ -320,6 +320,7 @@
   .yotpo-user-field.recommend-field {
     display: block;
     width: 100%;
+    margin-bottom: 5px;
 
     .yotpo-user-field-description {
       font-style: normal !important;
@@ -354,6 +355,7 @@
     font-family: $font-family-base;
     font-size: 17px;
     color: $black;
+    line-height: 1.5;
   }
 
   .yotpo-read-more {
