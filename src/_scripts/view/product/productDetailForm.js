@@ -97,7 +97,7 @@ export default class ProductDetailForm {
     this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
     this.$pdpDrawerToggler       = $(selectors.pdpOptionDrawerToggler, this.$container);
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
-    this.$bisButton              =$(selectors.bisButton);
+    this.$bisButton              = $(selectors.bisButton);
 
     /* eslint-enable */
 
@@ -141,9 +141,6 @@ export default class ProductDetailForm {
     this.updateKlarnaPricing(variant);
 
     this.settings.onVariantChange(variant);
-    // this.updateColorsLink();
-    // this.updateBadge(variant);
-    // this.productBundles.updateVariant(variant);
   }
 
   onOptionChange(evt) {
@@ -154,22 +151,6 @@ export default class ProductDetailForm {
 
     this.updateSelectedOptionLabel(optionIndex, optionValue, optionName);
   }
-
-  // /**
-  //  * Updates the URL of the color dots on PDP that contains collection colors
-  //  *
-  //  */
-
-  // updateColorsLink() {
-  //   const $sizeDotsContainer = $(selectors.dotsContainer).not(selectors.dotsColorContainer);
-  //   const variantName = $('.dot.is-active', $sizeDotsContainer).attr('title');
-
-  //   $('a', selectors.dotsColorContainer).each((index, el) => {
-  //     const currentUrl = $(el).attr('href');
-  //     const newUrl = Utils.getUrlWithUpdatedQueryStringParameter('size', variantName, currentUrl);
-  //     $(el).attr('href', newUrl);
-  //   })
-  // }
 
   /**
    * Updates the DOM state of the add to cart button
@@ -351,32 +332,6 @@ export default class ProductDetailForm {
     }
   }
 
-  // /**
-  //  * Handle variant option value click event.
-  //  * Update the associated select tag and update the UI for this value
-  //  *
-  //  * @param {event} evt
-  //  */
-  // onVariantOptionValueClick(e) {
-  //   const $option = $(e.currentTarget);
-
-  //   if ($option.hasClass(classes.variantOptionValueActive) || $option.closest('.dots--disabled').length > 0 || $option.closest('.dots--placeholder').length > 0) {
-  //     return;
-  //   }
-
-  //   const value     = $option.data('variant-option-value');
-  //   const position  = $option.parents(selectors.variantOptionValueList).data('option-position');
-  //   const $selector = this.$singleOptionSelectors.filter(`[data-index="option${position}"]`);
-  //   const $optionLabel = $(`[data-selected-option-${position}]`);
-
-  //   $selector.val(value);
-  //   $selector.trigger('change');
-
-  //   $option.addClass(classes.variantOptionValueActive);
-  //   $option.siblings().removeClass(classes.variantOptionValueActive);
-  //   $optionLabel.text(value);
-  // }
-
   checkVariantsAvailability(currentVariant) {
     let colorOptionIndex;
 
@@ -449,45 +404,6 @@ export default class ProductDetailForm {
     evt.preventDefault();
     this.$shippingModal.modal('show');
   }
-
-  // updateBadge(variant) {
-  //   if (variant){
-  //     const id = variant.id;
-  //     const badgesData = JSON.parse($(selectors.badgesData).html());
-  //     let sizeOptionIndex = 0;
-  //     let disabledSizeDotsLength = 0;
-
-  //     $.each(this.productSingleObject.options_with_values, (i, option) => {
-  //       if(option.name === 'Size' || option.name === 'size') {
-  //         sizeOptionIndex = option.position;
-  //         return false;
-  //       }
-  //     })
-
-  //     const $sizeDotsContainer = $(`${selectors.dotsContainer}[data-option-position=${sizeOptionIndex}]`, this.$container);
-  //     const $sizeDots = $(selectors.dot, $sizeDotsContainer);
-  //     const sizeDotsLength = $sizeDots.length;
-
-  //     $sizeDots.each((i, dot) => {
-  //       if($(dot).attr('disabled') === 'disabled') {
-  //         disabledSizeDotsLength += 1;
-  //       }
-  //     });
-
-  //     if(disabledSizeDotsLength === sizeDotsLength) {
-  //       $(selectors.badge).text('Sold Out').show();
-  //     } else if( badgesData[id] !== null && badgesData[id] !== '') {
-  //       $(selectors.badge).text( badgesData[id] ).show();
-  //     } else if ( badgesData.default !== '' && badgesData.default !== null ) {
-  //       $(selectors.badge).text( badgesData.default ).show();
-  //     } else {
-  //       $(selectors.badge).text('').hide();
-  //     }
-  //   } else {
-  //     $(selectors.badge).text('').hide();
-  //   }
-
-  // }
 
   updateKlarnaPricing(variant) {
     // refresh klarna widget on variant change
@@ -582,7 +498,7 @@ export default class ProductDetailForm {
     soldOutColors.forEach((colorObject) => {
       if(colorObject.enableBis) {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.bis);
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message p3">Back<br>Soon</span>');
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message">Back<br>Soon</span>');
       } else {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.soldOut);
       }
@@ -668,6 +584,7 @@ export default class ProductDetailForm {
     const selectedVariant = this.productSingleObject.variants.filter((variant) => {
       return variant.id === currentVariant;
     })
+
     const data = {
       productData: {
         variantId: selectedVariant[0].id,
