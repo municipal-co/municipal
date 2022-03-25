@@ -299,7 +299,7 @@
 .sticky-image ~ .product-detail {
   @include media-breakpoint-down('md') {
     .product-gallery {
-      margin-top: -50%;
+      margin-top: -30%;
     }
   }
 }
