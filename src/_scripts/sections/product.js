@@ -3,6 +3,7 @@ import Swiper from 'swiper';
 import BaseSection from './base';
 import ProductDetail from '../view/product/productDetail';
 import Drawer from '../ui/drawer';
+import VideoPlayer from '../ui/videoPlayer';
 
 const selectors = {
   productDetail: '[data-product-detail]',
@@ -12,6 +13,7 @@ const selectors = {
   fitGuideDrawer: '[data-fit-guide-drawer]',
   fitGuideGallery: '[data-fit-guide-gallery]',
   fitGuideGalleryIndex: '[data-fit-guide-gallery-current-index]',
+  videoPlayer: '[data-video-player]',
 };
 
 export default class ProductSection extends BaseSection {
@@ -28,6 +30,9 @@ export default class ProductSection extends BaseSection {
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
 
     this.initFitGuideGalleries();
+
+    new VideoPlayer(selectors.videoPlayer);
+
   }
 
   toggleFitGuideModal() {
