@@ -25,6 +25,8 @@ export default class ProductSection extends BaseSection {
 
     this.productDetail = new ProductDetail($(selectors.productDetail, this.$container));
     this.$productForm = $(selectors.productForm);
+    this.$featuresDrawerToggler = $(selectors.featuresDrawerToggler);
+    this.$featuresDrawerGallery = $(selectors.featuresDrawerGallery);
 
     // drawers
     this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
@@ -32,6 +34,7 @@ export default class ProductSection extends BaseSection {
     this.galleries = [];
 
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
+    this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
     this.initFitGuideGalleries();
     this.initFeaturesGalleries();
@@ -71,5 +74,26 @@ export default class ProductSection extends BaseSection {
 
       const swiperGallery = new Swiper($(el), galleryOptions);
     });
+  }
+
+  initFeaturesGalleries() {
+    this.$featuresDrawerGallery.each(function(index, gallery) {
+      new Swiper($(gallery), {
+        watchOverflow: true,
+        preloadImages: false,
+        arrows: false,
+        observer: true,
+        observeParents: true,
+        loop: true,
+        pagination: {
+          el: '.features-detail__gallery-pagination',
+          type: 'bullets',
+          clickable: true,
+        },
+        lazy: {
+          loadPrevNext: true,
+        }
+      })
+    })
   }
 }
