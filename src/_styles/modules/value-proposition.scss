@@ -1,6 +1,8 @@
 .value-prop {
-  margin-top: 70px;
-  margin-bottom: 70px;
+  padding: 35px 30px;
+  width: calc(100% + 60px);
+  margin-left: -30px;
+  background-color: $white;
 }
 
 .value-prop__title {
