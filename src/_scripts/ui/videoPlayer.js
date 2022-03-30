@@ -70,8 +70,6 @@ export default class VideoPlayer {
     this.background = this.$el.data('background');
     this.embedColor = this.$el.data('embed-color') || '000';
     this.muted      = this.$el.data('muted');
-    this.loop       = this.$el.data('loop');
-
 
     this.playInterval = false;
     this.pauseInterval = false;
@@ -104,7 +102,7 @@ export default class VideoPlayer {
 
     opts.background = this.background || false;
     opts.muted      = this.background || this.muted;
-    opts.autoplay   = this.background || this.autoplay;
+    opts.autoplay   = this.background || false;
 
     this.player = new VimeoPlayer(this.$embed, opts);
     this.isReady = true;
