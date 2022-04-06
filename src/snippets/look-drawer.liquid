@@ -1,0 +1,88 @@
+<div class="drawer look-drawer" data-drawer data-drawer-id="{{ look.look_id }}">
+  <div class="drawer__inner">
+    <div class="drawer__header look-drawer__header">
+      <div class="look-drawer__header-title">
+        Shop This look
+      </div>
+      <button class="look-drawer__icon-close icon-close" data-drawer-close>
+        {% render 'icon-close' %}
+        <div class="sr-only">Close Look Drawer</div>
+      </button>
+    </div>
+
+    <div class="drawer__body-contents look-drawer__body">
+      <div class="look-drawer__image-container frame frame--4x5">
+        {% capture look_image %}
+        {% render 'cf-image' image: look.look_image , size: '700x', format: 'pjpg', tag_alt: look.look_image.alt, tag_class: 'lazyload look-drawer__image frame__inner' %}
+        {% endcapture %}
+        {{ look_image | replace: 'src=', 'data-src=' }}
+
+        {% if look.card_text != blank %}
+          <div class="look-drawer__image-text">
+            {{ look.card_text }}
+          </div>
+        {% endif %}
+      </div>
+
+      {% capture products_ui %}
+        {% for i in (1..6) %}
+          {% assign product_key = 'product_' | append: forloop.index %}
+          {% assign color_key = 'product_' | append: forloop.index | append: '_color'%}
+          {% assign current_product = all_products[look[product_key]] %}
+
+          {% if current_product != blank %}
+            {% for variant in current_product.variants %}
+              {%- if variant.title contains look[color_key] -%}
+                {% assign current_variant = variant %}
+                {% break %}
+              {%- endif -%}
+            {% endfor %}
+            <div class="swiper-slide" data-slide>
+              <div class="look-drawer__product-card-image-container frame frame--1x1">
+                <img data-src="{{ current_variant.image | img_url: '500x' }}" alt="{{ current_variant.image.alt }}" class="swiper-lazy look-drawer__product-card-image frame__inner">
+              </div>
+
+              <span class="look-drawer__product-card-color">
+                {% for option in current_product.options_with_values %}
+                  {% if option.name == 'color' or option.name == "Color" %}
+                    {% assign color_key = 'option' | append: forloop.index %}
+                  {% endif %}
+                {% endfor %}
+                {{ current_variant[color_key] }}
+              </span>
+
+              <div class="look-drawer__product-card-title h6">
+                {{ current_product.title }}
+              </div>
+              <form class="look-drawer__product-card-form" action="/cart/add.js">
+                {% render 'product-form-options',
+                  product: current_product,
+                  type: 'drawer',
+                  print_option: 'size'
+                %}
+
+                <button class="btn btn-primary btn-block">
+                  Add To Bag
+                  <span class="look-drawer__product-card-price" data-product-price>
+                    {{ current_product.price | money_without_trailing_zeros }}
+                  </span>
+                </button>
+
+                <a class="look-drawer__product-card-link btn btn-link" href="{{ current_product.url }}" data-product-url="{{ current_product.url }}">View this product</a>
+            </div>
+            </form>
+          {% endif %}
+        {% endfor %}
+      {% endcapture %}
+
+      {% if products_ui != blank %}
+
+        <div class="look-drawer__slider" data-product-slider>
+          <div class="swiper-wrapper">
+            {{ products_ui }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

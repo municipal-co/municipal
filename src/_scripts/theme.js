@@ -67,6 +67,7 @@ import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
 import BisDrawer from './sections/bisDrawer';
+import ShopTheLook from './sections/shop-the-look';
 
 
 // Managers
@@ -129,6 +130,7 @@ Breakpoints.initialize();
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
   sectionManager.register('bis-drawer', BisDrawer);
+  sectionManager.register('shop-the-look', ShopTheLook);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

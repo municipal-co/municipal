@@ -11,6 +11,11 @@
           product: product,
           metafields: product.metafields.custom_fields
         %}
+
+
+        {% include 'shop-the-look'
+          s: product.metafields.custom_fields
+        %}
       </div>
     </div>
   </div>
