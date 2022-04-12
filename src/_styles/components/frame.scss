@@ -2,7 +2,8 @@ $frame-ratios: (
   (1, 1),
   (6, 4),
   (16, 9),
-  (4, 3)
+  (4, 3),
+  (4, 5),
 );
 
 @mixin aspect-ratio-padding($width, $height) {

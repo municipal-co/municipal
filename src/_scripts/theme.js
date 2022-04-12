@@ -21,7 +21,6 @@ import * as Breakpoints from './core/breakpoints';
 // Managers
 import BackgroundAnimationManager from './managers/backgroundAnimationManager';
 import SectionBlockAnimation from './managers/sectionBlockAnimation';
-//import IntersectionManager from './managers/intersectionManager';
 
 // UI - Import all to enable data API
 import './ui/drawer';
@@ -67,8 +66,8 @@ import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
 import BisDrawer from './sections/bisDrawer';
-
 import ContentSlider from './sections/contentSlider';
+import LinkCardSlider from './sections/linkCardSlider';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -129,8 +128,12 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
+<<<<<<< HEAD
   sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('content-slider', ContentSlider);
+=======
+  sectionManager.register('link-card-slider', LinkCardSlider);
+>>>>>>> feature/81448-cards-carousel
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
