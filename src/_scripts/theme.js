@@ -128,12 +128,9 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
-<<<<<<< HEAD
   sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('content-slider', ContentSlider);
-=======
   sectionManager.register('link-card-slider', LinkCardSlider);
->>>>>>> feature/81448-cards-carousel
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
