@@ -21,7 +21,6 @@ import * as Breakpoints from './core/breakpoints';
 // Managers
 import BackgroundAnimationManager from './managers/backgroundAnimationManager';
 import SectionBlockAnimation from './managers/sectionBlockAnimation';
-//import IntersectionManager from './managers/intersectionManager';
 
 // UI - Import all to enable data API
 import './ui/drawer';
@@ -66,6 +65,7 @@ import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
+import LinkCardSlider from './sections/linkCardSlider';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -126,6 +126,7 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
+  sectionManager.register('link-card-slider', LinkCardSlider);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
