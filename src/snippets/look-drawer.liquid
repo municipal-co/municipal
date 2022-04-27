@@ -46,29 +46,59 @@
                 {% for option in current_product.options_with_values %}
                   {% if option.name == 'color' or option.name == "Color" %}
                     {% assign color_key = 'option' | append: forloop.index %}
+                    {% break %}
                   {% endif %}
                 {% endfor %}
                 {{ current_variant[color_key] }}
               </span>
 
+
               <div class="look-drawer__product-card-title h6">
                 {{ current_product.title }}
               </div>
-              <form class="look-drawer__product-card-form" action="/cart/add.js">
-                {% render 'product-form-options',
-                  product: current_product,
-                  type: 'drawer',
-                  print_option: 'size'
-                %}
 
-                <button class="btn btn-primary btn-block">
+              <form class="look-drawer__product-card-form" action="/cart/add.js" data-product-form>
+                <input type="hidden" name="{{color_key}}" value="{{current_variant[color_key]}}" data-product-option>
+
+                {% for option in current_product.options %}
+                {% assign option_downcase = option | downcase %}
+                  {% if option_downcase == 'size' %}
+                    {% assign size_key = 'option' | append: forloop.index %}
+                  {% endif %}
+                {% endfor %}
+
+                <input type="hidden" name="{{size_key}}" data-product-option="{{size_key}}">
+
+                <button class="btn btn-outline-primary btn-block product-option__drawer-btn"
+                        type="button"
+                        data-current-color="{{ current_variant[color_key] }}"
+                        data-color-index="{{ color_key }}"
+                        data-print-option="Size"
+                        data-print-option-key="{{size_key}}"
+                        data-size-drawer-toggler>
+                  <span class="button__text" data-option-text="{{size_key}}" data-print-option="Size">
+                    Select Size
+                  </span>
+
+                  <div class="btn__ui">
+                    {% render 'icon-caret-down' %}
+                  </div>
+                </button>
+
+                <button class="btn btn-primary btn-block" data-add-to-cart-button disabled>
                   Add To Bag
                   <span class="look-drawer__product-card-price" data-product-price>
                     {{ current_product.price | money_without_trailing_zeros }}
                   </span>
                 </button>
 
-                <a class="look-drawer__product-card-link btn btn-link" href="{{ current_product.url }}" data-product-url="{{ current_product.url }}">View this product</a>
+                <input type="hidden" name="id" data-product-id>
+
+                <script type="application/json" data-product-json>
+                  {% render 'product-json' product: current_product %}
+                </script>
+
+                <a class="look-drawer__product-card-link btn btn-link" href="{{ current_product.url }}?variant={{current_variant.id}}" data-product-url="{{ current_product.url }}">View this product</a>
             </div>
             </form>
           {% endif %}

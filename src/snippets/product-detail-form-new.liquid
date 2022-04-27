@@ -1,6 +1,6 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div data-product-detail-form data-low-quantity-threshold="10">
+<div data-product-detail-form data-low-quantity-threshold="{{ settings.low_inventory_threshold | default: 0 }}">
   {%- form 'product', product, data-add-to-cart-form:"" -%}
     {%- for option in product.options -%}
       {%- if option == "color" or option == "Color" -%}

@@ -3,9 +3,16 @@
   padding-bottom: 70px;
   opacity: 0;
   transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
+  pointer-events: none;
+
 
   .swiper-slide-active & {
     opacity: 1;
+    pointer-events: all;
+  }
+
+  .btn-block + .btn-block {
+    margin-top: 20px;
   }
 }
 
@@ -35,7 +42,8 @@
   line-height: 15px;
   font-family: $font-family-heading-medium;
   display: block;
-  margin-top: 8px;
+  margin-top: 16px;
+
   @include media-breakpoint-up('lg') {
     font-size: 15px;
     line-height: 17px;
@@ -48,8 +56,10 @@
   font-size-adjust: $font-family-heading-large;
   text-align: center;
   width: 100%;
+  margin-top: 5px;
   display: block;
   margin-bottom: 30px;
+
   @include media-breakpoint-up('lg') {
     font-size: 27px;
   }
