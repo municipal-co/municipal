@@ -1,5 +1,6 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
 import Swiper from 'swiper';
+import * as Currency from '../core/currency'
 import Drawer from '../ui/drawer'
 import BaseSection from './base';
 
@@ -13,6 +14,7 @@ const selectors = {
   formProductId: '[data-product-id]',
   productData: '[data-product-json]',
   productOption: '[data-product-option]',
+  productPrice: '[data-product-price]',
   productId: '[data-product-id]',
   addToCartButton: '[data-add-to-cart-button]'
 };
@@ -169,11 +171,12 @@ export default class ShopTheLook extends BaseSection {
 
     productData.variants.forEach((variant) => {
       if(variant.title === currentOptions.join(' / ')) {
-        currentVariant = variant.id;
+        currentVariant = variant;
       }
     })
 
-    $form.find(selectors.productId).val(currentVariant);
+    $form.find(selectors.productId).val(currentVariant.id);
+    $form.find(selectors.variantPrice).text(Currency.formatMoney(currentVariant.price, window.moneyFormat).replace('.00', ''));
 
     if(currentVariant != '') {
       $form.find(selectors.addToCartButton).prop('disabled', false);
