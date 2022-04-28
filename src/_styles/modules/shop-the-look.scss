@@ -1,0 +1,25 @@
+.shop-the-look {
+  width: calc(100% + 60px);
+  background-color: $white;
+  margin-left: -30px;
+  padding: 35px 30px;
+}
+
+.shop-the-look__looks-container {
+  width: calc(100% + 60px);
+  margin-left: -30px;
+  overflow: hidden;
+}
+
+.shop-the-look__slider {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.shop-the-look__slide {
+  width: 90%;
+}
+
+@import "../components/card/look-card.scss";
+@import "../components/look-drawer.scss";
+@import "../components/card/look-drawer-card.scss";

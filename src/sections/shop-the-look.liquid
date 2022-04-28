@@ -1,0 +1,31 @@
+{% include 'shop-the-look'
+  s: section.settings
+%}
+
+{% schema %}
+  {
+  "name": "Shop the look",
+  "settings": [
+   {
+     "type": "page",
+     "id": "looks_page",
+     "label": "Looks",
+     "info": "Page containing all the looks metafields populated"
+   }
+  ],
+  "blocks": [
+    {
+      "name": "Look",
+      "type": "look",
+      "settings": [
+       {
+         "type": "text",
+         "id": "look_id",
+         "label": "Look ID",
+         "info": "Unique identifier for the look set on the metafield Look ID"
+       }
+      ]
+    }
+  ]
+}
+{% endschema %}

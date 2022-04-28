@@ -20,6 +20,10 @@
           bg_prefix: 'vp'
         %}
 
+        {% include 'shop-the-look'
+          s: product.metafields.custom_fields
+        %}
+
         {% render 'value-proposition' %}
 
         {% include 'pdp-drawer-buttons' %}
@@ -29,6 +33,7 @@
           prefix: 'questions_slider',
           bg_prefix: 'qs'
         %}
+
       </div>
 
     </div>

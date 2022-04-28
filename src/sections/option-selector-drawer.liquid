@@ -1,0 +1,88 @@
+<div class="drawer product-option__drawer" data-section-type="option-selector-drawer" data-section-id="option-selector-drawer">
+  <div class="drawer__inner product-option__drawer-inner">
+    <div class="drawer__header">
+      <div class="drawer__header-title">
+        Select
+        <span data-option-name></span>
+      </div>
+
+      <a class="drawer__close" data-drawer-close href="javascript:void(0);">
+        {% render 'icon-close' %}
+        <div class="sr-only">Close
+          <span data-option-name></span>
+          drawer</div>
+      </a>
+    </div>
+    <div class="drawer__body-contents" data-drawer-body>
+    </div>
+  </div>
+  <script type="text/x-handlebars-template" data-drawer-template>
+    {% raw %}
+      <div>
+        {{#each variants}}
+        <label class="product-option__single-selector">
+          <input  type="radio"
+                  name="{{../optionIndex}}"
+                  value="{{optionValue}}"
+                  data-option-name="{{ optionDowncase }}"
+                  data-product-option="{{ option }}"
+                  data-option-value="{{ optionValue }}"
+                  data-variant-id="{{id}}"
+                  class="hide"
+                  {{#if selected}}
+                  checked="checked"
+                  {{/if}}
+                  {{#unless available}}
+                    disabled
+                  {{/unless}}
+                  data-option-selector>
+                <div class="product-option__ui" data-option-ui>
+                  <div class="product-option__ui-group-corner">
+                    <div class="product-option__ui-checkmark">
+                      {% endraw %} {% render 'icon-checkmark' %} {% raw %}
+                    </div>
+                    <div class="product-option__ui-label">
+                      {{ optionValue }}
+                    </div>
+                  </div>
+                  <div class="product-option__ui-group-middle">
+                    <div class="product-option__ui-availability">
+                      {{#if available}}
+                        Available
+                      {{ else }}
+                        Out Of Stock
+                      {{/if}}
+                    </div>
+                  </div>
+                  <div class="product-option__ui-group-corner">
+                    <div class="product-option__ui-quantity">
+                      {{#if available}}
+                        {{#if lowInventory}}
+                          <div class="product-option__ui-low-quantity" data-low-quantity>Hurry, only {{inventory_quantity}} left </div>
+                        {{/if}}
+                      {{else}}
+                        {{#with metafields}}
+                         {{#if enable_bis}}
+                            <div class="product-option__ui-bis-button">
+                              <button type="button" name="bis-button" class="btn-small btn-link btn-back-in-stock" data-bis-toggler data-bis-button data-variant-id="{{../id}}">
+                                Notify Me
+                              </button>
+                            </div>
+                          {{/if}}
+                        {{/with}}
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
+        </label>
+        {{/each}}
+
+        {{#if show_sizing }}
+          <div class="btn-container text-center">
+            <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
+          </div>
+        {{/if}}
+      </div>
+    {% endraw %}
+  </script>
+</div>

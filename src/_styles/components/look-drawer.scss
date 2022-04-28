@@ -1,0 +1,72 @@
+.look-drawer {
+  @include media-breakpoint-up ('lg') {
+    width: calc(100% / 24 * 10);
+  }
+  background-color: $bg-white;
+}
+
+.drawer__header.look-drawer__header {
+  padding: 30px 40px;
+  margin-bottom: 18px;
+}
+
+.look-drawer__header-title {
+  font-family: $font-family-heading-large;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.look-drawer__icon-close {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.look-drawer__body {
+  padding: 0 40px;
+}
+
+.look-drawer__slider {
+  margin-top: 30px;
+  width: calc( 100% + 80px);
+  margin-left: -40px;
+  overflow: hidden;
+}
+
+.look-drawer__image-container {
+  &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 95px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(0deg, rgba($black, 0.8) 0%, rgba($black, 0) 100%);
+  }
+}
+
+.look-drawer__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.look-drawer__image-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1;
+  color: $white;
+  font-size: 15px;
+  line-height: 17px;
+  font-family: $font-family-heading-medium;
+}

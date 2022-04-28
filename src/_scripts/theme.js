@@ -68,6 +68,9 @@ import FouroFour from './sections/fourofour';
 import BisDrawer from './sections/bisDrawer';
 import ContentSlider from './sections/contentSlider';
 import LinkCardSlider from './sections/linkCardSlider';
+import ShopTheLook from './sections/shop-the-look';
+import OptionDrawer from './sections/optionDrawer';
+
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -131,6 +134,8 @@ Breakpoints.initialize();
   sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('content-slider', ContentSlider);
   sectionManager.register('link-card-slider', LinkCardSlider);
+  sectionManager.register('shop-the-look', ShopTheLook);
+  sectionManager.register('option-selector-drawer', OptionDrawer);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
