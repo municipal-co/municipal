@@ -150,6 +150,18 @@ export default class ProductDetailForm {
     const optionName = $this.data('option-name');
 
     this.updateSelectedOptionLabel(optionIndex, optionValue, optionName);
+    if($this.parents(selectors.pdpOptionDrawer)){
+      const $currentDrawer = $this.parents(selectors.pdpOptionDrawer);
+
+      for(let i = 0; i <= this.optionDrawers.length - 1; i++) {
+        console.log(this.optionDrawers[i]);
+        console.log($currentDrawer.data('drawer-id'));
+        if( this.optionDrawers[i].id === $currentDrawer.data('drawer-id')) {
+          this.optionDrawers[i].drawer.hide();
+          break;
+        }
+      }
+    }
   }
 
   /**
