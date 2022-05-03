@@ -1,0 +1,229 @@
+{% assign s = section.settings %}
+
+<div id="link-card-slider-{{section.id}}" class="card-slider" data-section-type="link-card-slider" data-section-id="{{section.id}}">
+  <style>
+    #link-card-slider-{{section.id}} {
+      background-color: {{s.bg_color}};
+    }
+
+    #link-card-slider-{{section.id}} {
+      color: {{s.text_color}};
+    }
+
+  </style>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card-slider__heading">
+        <div class="card-slider__info-container">
+          {% if s.title != blank %}
+            <{{s.title_tag}} class="card-slider__title h2">{{ s.title }}</{{s.title_tag}}>
+          {% endif %}
+
+          {% if s.heading_copy %}
+          <p class="card-slider__copy p3">
+            {{ s.heading_copy }}
+          </p>
+          {% endif %}
+        </div>
+        {% if s.heading_cta_title != blank and s.heading_cta_url != blank %}
+          <div class="card-slider__cta-container">
+            <a class="btn-link card-slider__button" href="{{s.heading_cta_url}}">{{s.heading_cta_title}}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row card-slider__slider" data-slider>
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          {% assign bs = block.settings %}
+          {% capture card_text_html %}
+          {% if bs.cta_label != blank%}
+            <span class="link-card__cta-label">
+              {{ bs.cta_label }}
+            </span>
+          {% endif %}
+            {% if bs.corner_small_text != blank  %}
+              <div class="link-card__corner-label">
+                {{ bs.corner_small_text }}
+              </div>
+            {% endif %}
+          {% endcapture %}
+          <div class="swiper-slide" data-slide {{block.shopify_attributes}}>
+            <div class="link-card">
+              <div class="link-card__image-container frame {{s.card_aspect_ratio}}">
+                <a class="link-card__link" href="{{bs.cta_url}}" aria-title="{{bs.cta_label | default: bs.cta_ada_label }}"></a>
+                <img data-src="{{bs.card_image | img_url: '600x' }}" alt="{{bs.card_image.alt}}" class="frame__inner swiper-lazy link-card__image">
+                {% if bs.category != blank %}
+                  <div class="link-card__category">
+                    {{ bs.category }}
+                  </div>
+                {% endif %}
+                {% if card_text_html != blank %}
+                  <div class="link-card__bottom-text">
+                    {{ card_text_html }}
+                  </div>
+                {% endif %}
+              </div>
+              {% if bs.bottom_text != blank %}
+                <div class="link-card__outer-text">
+                  {{ bs.bottom_text }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+	"name": "Link Cards Carousel",
+	"settings": [{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "select",
+			"id": "card_aspect_ratio",
+			"label": "Card aspect ratio",
+			"options": [{
+					"value": "frame--4x5",
+					"label": "4:5"
+				},
+				{
+					"value": "frame--9x16",
+					"label": "9:16"
+				}
+			]
+		},
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text Color",
+			"default": "#ffffff"
+		},
+		{
+			"type": "color",
+			"id": "bg_color",
+			"label": "Background Color",
+			"default": "#393d49"
+		},
+		{
+			"type": "select",
+			"id": "title_tag",
+			"label": "Section Title Tag",
+			"options": [{
+					"value": "h1",
+					"label": "h1"
+				},
+				{
+					"value": "h2",
+					"label": "h2"
+				},
+				{
+					"value": "h3",
+					"label": "h3"
+				},
+				{
+					"value": "h4",
+					"label": "h4"
+				},
+				{
+					"value": "h5",
+					"label": "h5"
+				},
+				{
+					"value": "h6",
+					"label": "h6"
+				}
+			],
+			"default": "h2",
+			"info": "This will not change the text styling (font size)"
+		},
+		{
+			"type": "header",
+			"content": "Section Content"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Main Title"
+		},
+		{
+			"type": "textarea",
+			"id": "heading_copy",
+			"label": "Heading Copy",
+			"default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse et explicabo iste deserunt corrupti sed perspiciatis hic. "
+		},
+		{
+			"type": "text",
+			"id": "heading_cta_title",
+			"label": "Heading CTA Title",
+			"default": "CTA Title"
+		},
+		{
+			"type": "url",
+			"id": "heading_cta_url",
+			"label": "Heading CTA URL"
+		}
+	],
+  "blocks": [
+    {
+     "name": "Card",
+     "type": "link-card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Card category",
+          "info": "Optional"
+        },
+        {
+          "type": "text",
+          "id": "corner_small_text",
+          "label": "Corner Small Text",
+          "info": "Content displayed within the card, next to the card CTA (if exists)"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA Label",
+          "info": "Optional, if not present bottom right corner link on the card will not be shown"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA Url",
+          "info": "Links the entire card image"
+        },
+        {
+          "type": "text",
+          "id": "ada_label",
+          "label": "CTA ADA Label",
+          "info": "Used for ADA compliance, fill this up if the CTA label will not be populated"
+        },
+        {
+          "type": "textarea",
+          "id": "bottom_text",
+          "label": "Bottom card text",
+          "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit corrupti earum, magnam ad maxime id"
+        }
+      ]
+    }
+  ],
+ "presets": [
+   {
+     "category": "layout",
+     "name":"Link card slider"
+   }
+ ]
+}
+{% endschema %}

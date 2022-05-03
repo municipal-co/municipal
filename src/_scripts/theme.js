@@ -21,7 +21,6 @@ import * as Breakpoints from './core/breakpoints';
 // Managers
 import BackgroundAnimationManager from './managers/backgroundAnimationManager';
 import SectionBlockAnimation from './managers/sectionBlockAnimation';
-//import IntersectionManager from './managers/intersectionManager';
 
 // UI - Import all to enable data API
 import './ui/drawer';
@@ -69,7 +68,7 @@ import FouroFour from './sections/fourofour';
 import BisDrawer from './sections/bisDrawer';
 import ShopTheLook from './sections/shop-the-look';
 import OptionDrawer from './sections/optionDrawer';
-
+import LinkCardSlider from './sections/linkCardSlider';
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -133,6 +132,7 @@ Breakpoints.initialize();
   sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('shop-the-look', ShopTheLook);
   sectionManager.register('option-selector-drawer', OptionDrawer);
+  sectionManager.register('link-card-slider', LinkCardSlider);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
