@@ -4,7 +4,7 @@
     #shop-the-look-{{section.id}} {
       background-color: {{s.bg_color}};
     }
-    #shop-the-look-{{section.id}} .card-slider__info-container {
+    #shop-the-look-{{section.id}} .card-slider__heading {
       color: {{s.text_color}};
     }
   </style>
@@ -34,6 +34,7 @@
   {% include 'shop-the-look'
     s: section,
     type: 'section'
+    id: section.id
   %}
 </div>
 

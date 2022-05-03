@@ -26,7 +26,7 @@
 {% endif %}
 
 
-<div class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
+<div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
   <div class="shop-the-look__looks-container" data-looks-container>
     <div class="shop-the-look__slider swiper-wrapper" data-slider>
       {% for id in look_ids %}
