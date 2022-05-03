@@ -1,6 +1,42 @@
-{% include 'shop-the-look'
-  s: section.settings
-%}
+<div id="shop-the-look-{{section.id}}" class="card-slider">
+  {% assign s = section.settings %}
+  <style>
+    #shop-the-look-{{section.id}} {
+      background-color: {{s.bg_color}};
+    }
+    #shop-the-look-{{section.id}} .card-slider__heading {
+      color: {{s.text_color}};
+    }
+  </style>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card-slider__heading">
+        <div class="card-slider__info-container">
+          {% if s.title != blank %}
+            <{{s.title_tag}} class="card-slider__title h2">{{ s.title }}</{{s.title_tag}}>
+          {% endif %}
+
+          {% if s.heading_copy %}
+          <p class="card-slider__copy p3">
+            {{ s.heading_copy }}
+          </p>
+          {% endif %}
+        </div>
+
+        {% if s.heading_cta_title != blank and s.heading_cta_url != blank %}
+          <div class="card-slider__cta-container">
+            <a class="btn-link card-slider__button" href="{{s.heading_cta_url}}">{{s.heading_cta_title}}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% include 'shop-the-look'
+    s: section,
+    type: 'section'
+    id: section.id
+  %}
+</div>
 
 {% schema %}
   {
@@ -11,7 +47,82 @@
      "id": "looks_page",
      "label": "Looks",
      "info": "Page containing all the looks metafields populated"
-   }
+   },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#393d49"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Section Title Tag",
+      "options": [{
+          "value": "h1",
+          "label": "h1"
+        },
+        {
+          "value": "h2",
+          "label": "h2"
+        },
+        {
+          "value": "h3",
+          "label": "h3"
+        },
+        {
+          "value": "h4",
+          "label": "h4"
+        },
+        {
+          "value": "h5",
+          "label": "h5"
+        },
+        {
+          "value": "h6",
+          "label": "h6"
+        }
+      ],
+      "default": "h2",
+      "info": "This will not change the text styling (font size)"
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Main Title"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_copy",
+      "label": "Heading Copy",
+      "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse et explicabo iste deserunt corrupti sed perspiciatis hic. "
+    },
+    {
+      "type": "text",
+      "id": "heading_cta_title",
+      "label": "Heading CTA Title",
+      "default": "CTA Title"
+    },
+    {
+      "type": "url",
+      "id": "heading_cta_url",
+      "label": "Heading CTA URL"
+    }
   ],
   "blocks": [
     {
@@ -20,11 +131,16 @@
       "settings": [
        {
          "type": "text",
-         "id": "look_id",
+         "id": "title",
          "label": "Look ID",
          "info": "Unique identifier for the look set on the metafield Look ID"
        }
       ]
+    }
+  ],
+  "presets":  [
+    {
+      "name": "Shop the look"
     }
   ]
 }

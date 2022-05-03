@@ -71,7 +71,6 @@ import LinkCardSlider from './sections/linkCardSlider';
 import ShopTheLook from './sections/shop-the-look';
 import OptionDrawer from './sections/optionDrawer';
 
-
 // Managers
 import QuickViewManager from './managers/quickView';
 

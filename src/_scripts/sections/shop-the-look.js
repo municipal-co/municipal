@@ -50,6 +50,13 @@ export default class ShopTheLook extends BaseSection {
       threshold: 10
     }
 
+    if(this.$container.attr('id') !== 'shop-the-look-pdp') {
+      looksSliderOptions.slidesPerView = 3.5;
+      looksSliderOptions.spaceBetween = 20;
+      looksSliderOptions.slidesOffsetBefore = 50;
+      looksSliderOptions.slidesOffsetAfter = 50;
+    }
+
     this.looksSlider = new Swiper(this.$looksContainer, looksSliderOptions);
   }
 
