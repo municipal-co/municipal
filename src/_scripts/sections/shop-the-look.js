@@ -47,14 +47,30 @@ export default class ShopTheLook extends BaseSection {
       spaceBetween: 15,
       slidesOffsetBefore: 30,
       slidesOffsetAfter: 30,
-      threshold: 10
+      threshold: 10,
+      watchOverflow: true,
     }
 
     if(this.$container.attr('id') !== 'shop-the-look-pdp') {
-      looksSliderOptions.slidesPerView = 3.5;
+      looksSliderOptions.slidesPerView = 1.3;
       looksSliderOptions.spaceBetween = 20;
-      looksSliderOptions.slidesOffsetBefore = 50;
-      looksSliderOptions.slidesOffsetAfter = 50;
+      looksSliderOptions.slidesOffsetBefore = 30;
+      looksSliderOptions.slidesOffsetAfter = 30;
+      looksSliderOptions.breakpoints = {
+        530: {
+          slidesPerView: 2.3
+        },
+        992: {
+          slidesPerView: 3.3,
+          slidesOffsetAfter: 50,
+          slidesOffsetBefore: 50,
+        },
+        1400: {
+          slidesPerView: 4.3,
+          slidesOffsetAfter: 50,
+          slidesOffsetBefore: 50,
+        }
+      }
     }
 
     this.looksSlider = new Swiper(this.$looksContainer, looksSliderOptions);
