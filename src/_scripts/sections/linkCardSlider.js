@@ -24,7 +24,7 @@ export default class LinkCardSlider extends BaseSection {
       spaceBetween: 20,
       slidesOffsetBefore: 30,
       slidesOffsetAfter: 30,
-      freeMode: true,
+      watchOverflow: true,
       lazy: {
         enabled: true,
         loadPrevNext: true,
