@@ -30,8 +30,50 @@
   z-index:1;
 }
 
+.hero__title-image {
+  max-width: 100%;
+  width: auto;
+  margin-bottom: 21px;
+  @include media-breakpoint-down('md') {
+    margin-bottom: 15px;
+  }
+}
+
+.hero__video-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+
+  video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .hero__title {
-  margin: 0;
+  margin-bottom: 21px;
+  margin-top: 0;
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 15px;
+  }
+}
+
+.hero__text {
+  @include media-breakpoint-up('lg') {
+    font-size: 25px;
+    line-height: 1.44;
+  }
+}
+
+.hero__btn {
+  font-size: 17px;
+  padding:15px 58px;
 }
 
 .hero__highlight-text {
@@ -59,3 +101,4 @@
   justify-content: center;
   text-align: center;
 }
+
