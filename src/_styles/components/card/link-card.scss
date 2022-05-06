@@ -67,8 +67,8 @@
 .link-card__corner-label {
   position: relative;
   z-index: 2;
-  font-size: 15px;
-  line-height: 17px;
+  font-size: 14px;
+  line-height: 1.5;
   text-align: center;
   color: $white;
 
@@ -81,9 +81,9 @@
   position: relative;
   z-index: 2;
   font-size: 15px;
-  line-height: 17px;
-  text-decoration: underline;
+  line-height: 1.5;
   color: $white;
+  border-bottom: 2px solid currentColor;
 }
 
 .link-card__outer-text {

@@ -51,10 +51,11 @@
 .card-slider__button {
   color: $white;
   font-size: 18px;
-  line-height: 1;
+  line-height: 1.5;
   border-bottom: 2px solid currentColor;
   color: currentColor;
   border-color: currentColor;
+  display: inline-block;
 
   &:hover {
     color: currentColor;
@@ -62,7 +63,7 @@
 
   @include media-breakpoint-down('md') {
     font-size: 12px;
-    line-height: 1;
+    line-height: 1.5;
   }
 }
 
