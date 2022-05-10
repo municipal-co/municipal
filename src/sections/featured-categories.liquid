@@ -1,0 +1,75 @@
+{% assign s = section.settings %}
+<style>
+  #featured-categories-{{section.id}} .category-capsule--highlighted {
+    border-color: {{s.highlight_color}};
+  }
+</style>
+<div class="" id="featured-categories-{{section.id}}" data-section-type="featured-categories">
+  <div class="featured-categories swiper-container" data-slideshow>
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        {% assign bs = block.settings %}
+        {% if bs.url != blank %}
+          <a href="{{bs.url}}" class="swiper-slide category-capsule {% if bs.highlight_link == true %} category-capsule--highlighted {% endif %}" data-slide {{block.shopify_attributes}}>{{ bs.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="featured-categories__navigation">
+      <span class="navigation-area navigation-area--prev" data-arrow-prev aria-label="Scroll to prev slide"></span>
+      <span class="navigation-area navigation-area--next" data-arrow-next aria-label="Scroll to next slide"></span>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Categories",
+  "settings": [
+   {
+     "type": "color",
+     "id": "highlight_color",
+     "label": "Highlight Color",
+     "default": "#ff00ff"
+   }
+  ],
+  "blocks": [
+    {
+      "name": "Featured Category",
+      "type": "featured_category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "Link Label"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_link",
+          "label": "Highlight link?",
+          "default": false,
+          "info": "Enables special highlight color to the link"
+        },
+       {
+         "type": "checkbox",
+         "id": "new_tab",
+         "label": "Open on new tab?",
+         "default": false,
+         "info": "Opens the link on a new tab, to link to external pages (other subsites)"
+       }
+      ]
+    }
+  ],
+ "presets": [
+   {
+     "category": "layout",
+     "name":"Featured Categories"
+   }
+ ]
+}
+{% endschema %}
