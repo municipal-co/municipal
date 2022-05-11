@@ -10,7 +10,7 @@
 .product-option {
   display: flex;
   flex-direction: column;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 .product-option__header {
@@ -80,6 +80,11 @@
     top: 50%;
     transform: translatey(-50%);
     line-height: 1.2;
+    font-size: 17px;
+
+    @include media-breakpoint-down('sm') {
+      font-size: 12px;
+    }
   }
 
   input[type="radio"]:checked ~ .product-option__ui,
@@ -101,10 +106,18 @@
   }
   .btn__ui {
     display: inline-block;
+    margin-left: 15px;
+    @include media-breakpoint-down('md') {
+      margin-left: 10px;
+    }
 
     .icon {
       width: 20px;
       height: auto;
+
+      @include media-breakpoint-down('md') {
+        width: 15px;
+      }
     }
   }
 }
@@ -135,7 +148,7 @@
   }
 
   .drawer__body-contents {
-    padding: 0 30px 30px;;
+    padding: 0 30px 30px;
   }
 
   .product-option__single-selector {
@@ -286,7 +299,7 @@
 .sticky-image ~ .product-detail {
   @include media-breakpoint-down('md') {
     .product-gallery {
-      margin-top: -50%;
+      margin-top: -30%;
     }
   }
 }
