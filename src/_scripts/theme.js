@@ -65,6 +65,7 @@ import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
+import FeaturedCategory from './sections/featuredCategories'
 import ShopTheLook from './sections/shop-the-look';
 import OptionDrawer from './sections/optionDrawer';
 import LinkCardSlider from './sections/linkCardSlider';
@@ -132,6 +133,7 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
+  sectionManager.register('featured-categories', FeaturedCategory);
   sectionManager.register('shop-the-look', ShopTheLook);
   sectionManager.register('option-selector-drawer', OptionDrawer);
   sectionManager.register('link-card-slider', LinkCardSlider);
