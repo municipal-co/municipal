@@ -75,6 +75,7 @@
 @import 'components/load-more';
 @import 'components/badge.scss';
 @import 'components/blink-box.scss';
+@import 'components/sticker.scss';
 
 /**
  * MODULES
@@ -120,6 +121,8 @@
 /* New modules */
 @import 'modules/pdp-drawer-buttons.scss';
 @import 'modules/features-detail-drawer.scss';
+@import 'modules/pdp-content-slider.scss';
+
 
 /**
  * Templates

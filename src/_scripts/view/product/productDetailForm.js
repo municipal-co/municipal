@@ -28,16 +28,8 @@ const selectors = {
   dotsColorContainer: '.dots--color',
   dotsContainer: '.dots',
   dot: '.dot',
-  bisContainer: '[data-bis-container]',
-  bisForm: '[data-bis-form]',
-  bisButton: '[data-bis-button]',
-  bisToggler: '[data-bis-toggler]',
-  bisVariantOption: '[data-bis-variant-option]',
-  bisVariantId: '[data-bis-variant-id]',
-  bisFeaturedImage: '[data-bis-featured-image]',
-  bisEmailInput: '[data-bis-email-input]',
-  bisResponseMessage: '[data-bis-response-message]',
   klarnaOnsiteMessagingPrice: '[data-purchase-amount]',
+  bisButton: '[data-bis-button]',
   // Size drawer toggler
   pdpOptionDrawerToggler: '[data-pdp-drawer-toggler]',
   pdpOptionDrawer: '[data-pdp-option-drawer]',
@@ -103,14 +95,9 @@ export default class ProductDetailForm {
     this.$variantOptionValueList = $(selectors.variantOptionValueList, this.$container); // Alternate UI that takes the place of a single option selector (could be swatches, dots, buttons, whatever..)
     this.$shippingModalTrigger   = $(selectors.shippingModalTrigger, this.$container);
     this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
-    this.$bisDrawer              = $(selectors.bisContainer);
-    this.$bisButton              = $(selectors.bisButton);
-    this.$bisToggler             = $(selectors.bisToggler);
-    this.$bisForm                = $(selectors.bisForm);
-    this.$bisEmailInput          = $(selectors.bisEmailInput, this.$bisForm);
-    this.$bisResponseMessage     = $(selectors.bisResponseMessage);
     this.$pdpDrawerToggler       = $(selectors.pdpOptionDrawerToggler, this.$container);
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
+    this.$bisButton              = $(selectors.bisButton);
 
     /* eslint-enable */
 
@@ -128,12 +115,11 @@ export default class ProductDetailForm {
     this.$container.on('variantChange', this.onVariantChange.bind(this));
     // this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
-    this.$bisToggler.on(this.events.CLICK, this.toggleBisContainer.bind(this));
-    this.$bisForm.on(this.events.SUBMIT, this.onBisSubmit.bind(this));
     this.$pdpDrawerToggler.on(this.events.CLICK, this._toggleOptionDrawer.bind(this));
     Utils.chosenSelects(this.$container);
     this.productBundles = new ProductBundles(this.$container);
     this.$singleOptionSelectors.on(this.events.CHANGE, this.onOptionChange.bind(this));
+    this.$bisButton.on(this.events.CLICK, this.onBisButtonClick.bind(this));
 
     this.checkVariantsAvailability(this.variants.currentVariant);
     // this.updateBadge(this.variants.currentVariant);
@@ -155,9 +141,6 @@ export default class ProductDetailForm {
     this.updateKlarnaPricing(variant);
 
     this.settings.onVariantChange(variant);
-    // this.updateColorsLink();
-    // this.updateBadge(variant);
-    // this.productBundles.updateVariant(variant);
   }
 
   onOptionChange(evt) {
@@ -167,23 +150,19 @@ export default class ProductDetailForm {
     const optionName = $this.data('option-name');
 
     this.updateSelectedOptionLabel(optionIndex, optionValue, optionName);
+    if($this.parents(selectors.pdpOptionDrawer)){
+      const $currentDrawer = $this.parents(selectors.pdpOptionDrawer);
+
+      for(let i = 0; i <= this.optionDrawers.length - 1; i++) {
+        console.log(this.optionDrawers[i]);
+        console.log($currentDrawer.data('drawer-id'));
+        if( this.optionDrawers[i].id === $currentDrawer.data('drawer-id')) {
+          this.optionDrawers[i].drawer.hide();
+          break;
+        }
+      }
+    }
   }
-
-  // /**
-  //  * Updates the URL of the color dots on PDP that contains collection colors
-  //  *
-  //  */
-
-  // updateColorsLink() {
-  //   const $sizeDotsContainer = $(selectors.dotsContainer).not(selectors.dotsColorContainer);
-  //   const variantName = $('.dot.is-active', $sizeDotsContainer).attr('title');
-
-  //   $('a', selectors.dotsColorContainer).each((index, el) => {
-  //     const currentUrl = $(el).attr('href');
-  //     const newUrl = Utils.getUrlWithUpdatedQueryStringParameter('size', variantName, currentUrl);
-  //     $(el).attr('href', newUrl);
-  //   })
-  // }
 
   /**
    * Updates the DOM state of the add to cart button
@@ -365,32 +344,6 @@ export default class ProductDetailForm {
     }
   }
 
-  // /**
-  //  * Handle variant option value click event.
-  //  * Update the associated select tag and update the UI for this value
-  //  *
-  //  * @param {event} evt
-  //  */
-  // onVariantOptionValueClick(e) {
-  //   const $option = $(e.currentTarget);
-
-  //   if ($option.hasClass(classes.variantOptionValueActive) || $option.closest('.dots--disabled').length > 0 || $option.closest('.dots--placeholder').length > 0) {
-  //     return;
-  //   }
-
-  //   const value     = $option.data('variant-option-value');
-  //   const position  = $option.parents(selectors.variantOptionValueList).data('option-position');
-  //   const $selector = this.$singleOptionSelectors.filter(`[data-index="option${position}"]`);
-  //   const $optionLabel = $(`[data-selected-option-${position}]`);
-
-  //   $selector.val(value);
-  //   $selector.trigger('change');
-
-  //   $option.addClass(classes.variantOptionValueActive);
-  //   $option.siblings().removeClass(classes.variantOptionValueActive);
-  //   $optionLabel.text(value);
-  // }
-
   checkVariantsAvailability(currentVariant) {
     let colorOptionIndex;
 
@@ -464,82 +417,6 @@ export default class ProductDetailForm {
     this.$shippingModal.modal('show');
   }
 
-  // updateBadge(variant) {
-  //   if (variant){
-  //     const id = variant.id;
-  //     const badgesData = JSON.parse($(selectors.badgesData).html());
-  //     let sizeOptionIndex = 0;
-  //     let disabledSizeDotsLength = 0;
-
-  //     $.each(this.productSingleObject.options_with_values, (i, option) => {
-  //       if(option.name === 'Size' || option.name === 'size') {
-  //         sizeOptionIndex = option.position;
-  //         return false;
-  //       }
-  //     })
-
-  //     const $sizeDotsContainer = $(`${selectors.dotsContainer}[data-option-position=${sizeOptionIndex}]`, this.$container);
-  //     const $sizeDots = $(selectors.dot, $sizeDotsContainer);
-  //     const sizeDotsLength = $sizeDots.length;
-
-  //     $sizeDots.each((i, dot) => {
-  //       if($(dot).attr('disabled') === 'disabled') {
-  //         disabledSizeDotsLength += 1;
-  //       }
-  //     });
-
-  //     if(disabledSizeDotsLength === sizeDotsLength) {
-  //       $(selectors.badge).text('Sold Out').show();
-  //     } else if( badgesData[id] !== null && badgesData[id] !== '') {
-  //       $(selectors.badge).text( badgesData[id] ).show();
-  //     } else if ( badgesData.default !== '' && badgesData.default !== null ) {
-  //       $(selectors.badge).text( badgesData.default ).show();
-  //     } else {
-  //       $(selectors.badge).text('').hide();
-  //     }
-  //   } else {
-  //     $(selectors.badge).text('').hide();
-  //   }
-
-  // }
-
-  toggleBisContainer(evt) {
-    const $this = $(evt.currentTarget);
-    const variantId = $this.data('variant-id');
-    let currentVariant;
-
-    this.$bisDrawer.toggleClass(classes.open);
-
-    if(variantId === undefined) {
-      return
-    }
-
-    this.productSingleObject.variants.forEach((variant) => {
-      if(variant.id === variantId) {
-        currentVariant = variant;
-        return false;
-      }
-    })
-
-    if(currentVariant) {
-      const id = currentVariant.id;
-      const options = this.productSingleObject.options;
-      const optionMap = {};
-
-      options.forEach((el, index) => {
-        optionMap[el.toLowerCase()] = currentVariant[`option${index+1}`];
-      });
-
-      // Update drawer content
-      $(selectors.bisFeaturedImage).attr('src', currentVariant.featured_image.src).attr('alt', currentVariant.featured_image.alt);
-      $(selectors.bisVariantId).val(id);
-
-      for (const optionName in optionMap) {
-        $(`[data-bis-variant-option=${optionName}]`).text(optionMap[optionName])
-      }
-    }
-  }
-
   updateKlarnaPricing(variant) {
     // refresh klarna widget on variant change
     const $klarnaMessaging = $(selectors.klarnaOnsiteMessagingPrice, this.$container);
@@ -548,47 +425,6 @@ export default class ProductDetailForm {
       window.KlarnaOnsiteService = window.KlarnaOnsiteService || []
       window.KlarnaOnsiteService.push({ eventName: 'refresh-placements' })
     }
-  }
-
-  onBisSubmit(evt) {
-    evt.preventDefault();
-
-    const publicKey = this.$bisForm.data('api-key');
-    const customerEmail = this.$bisEmailInput.val();
-    const selectedVariant = $(selectors.bisVariantId, this.$bisForm).val();
-    const successMessage = this.$bisForm.data('success-message');
-    const errorMessage = this.$bisForm.data('error-message');
-
-    if (this.$bisEmailInput.get(0).checkValidity() === false) {
-      this.$bisEmailInput.addClass('has-error');
-      return;
-    }
-
-    $.ajax({
-      type: 'POST',
-      url:  'https://a.klaviyo.com/onsite/components/back-in-stock/subscribe',
-      data: {
-        a: publicKey,
-        email: customerEmail,
-        variant: selectedVariant,
-        platform: 'shopify'
-      }
-    }).done((data) => {
-      if(data.success === true) {
-        this.$bisForm.addClass(classes.submitted);
-        this.$bisResponseMessage.text(successMessage);
-        setTimeout(() => {
-          this.$bisForm.removeClass(classes.submitted);
-        }, 5000);
-      } else {
-        this.$bisForm.addClass(classes.submitted);
-        this.$bisResponseMessage.text(errorMessage);
-
-        setTimeout(() => {
-          this.$bisForm.removeClass(classes.submitted);
-        }, 5000);
-      }
-    })
   }
 
   productColorValidation() {
@@ -633,7 +469,7 @@ export default class ProductDetailForm {
     soldOutColors.forEach((colorObject) => {
       if(colorObject.enableBis) {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.bis);
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message p3">Back<br>Soon</span>');
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message">Back<br>Soon</span>');
       } else {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.soldOut);
       }
@@ -710,5 +546,34 @@ export default class ProductDetailForm {
     })
 
     drawerObject[0].drawer.toggle();
+  }
+
+  onBisButtonClick(evt) {
+    const $this = $(evt.currentTarget);
+    const currentVariant = $this.data('variant-id');
+
+    const selectedVariant = this.productSingleObject.variants.filter((variant) => {
+      return variant.id === currentVariant;
+    })
+
+    const data = {
+      productData: {
+        variantId: selectedVariant[0].id,
+        productTitle: this.productSingleObject.title,
+        productImage: selectedVariant[0].featured_image.src,
+        productOptions: []
+      }
+    }
+
+    selectedVariant[0].options.forEach((option, index) => {
+      data.productData.productOptions.push({
+        label: option,
+        value: selectedVariant[0][`option${index+1}`]
+      })
+    });
+
+    const event = $.Event('back-in-stock:open', data)
+
+    $(document).trigger(event);
   }
 }

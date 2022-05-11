@@ -3,18 +3,10 @@ import Swiper from 'swiper';
 import BaseSection from './base';
 import ProductDetail from '../view/product/productDetail';
 import Drawer from '../ui/drawer';
-import * as Breakpoints from '../core/breakpoints';
 
 const selectors = {
   productDetail: '[data-product-detail]',
-  productStickyBar: '[data-product-sticky-bar]',
-  sectionScroller: '[data-scroll-to-section]',
-  desktopBuyNow: '[data-desktop-buy-now]',
-  collectionDrawer: '[data-collection-drawer]',
-  drawerToggler: '[data-toggle-collection-grid]',
   productForm: '[data-product-detail-form]',
-  productFormContainer: '[data-product-form-container]',
-  mobileProductFormContainer: '[data-mobile-product-form-container]',
   addToCartFormDrawer: '[data-add-to-cart-drawer]',
   fitGuideToggleButton: '[data-fit-guide-toggler]',
   fitGuideDrawer: '[data-fit-guide-drawer]',
@@ -25,17 +17,11 @@ const selectors = {
   featuresDrawerGallery: '[data-features-gallery]'
 };
 
-const classes = {
-  visible: 'is-visible',
-  active: 'is-active'
-}
-
 export default class ProductSection extends BaseSection {
   constructor(container) {
     super(container, 'product');
 
     this.productDetail = new ProductDetail($(selectors.productDetail, this.$container));
-    this.$stickyBar = $(selectors.productStickyBar, this.$container);
     this.$productForm = $(selectors.productForm);
     this.$productFormContainer = $(selectors.productFormContainer);
     this.$mobileProductFormContainer = $(selectors.mobileProductFormContainer);
@@ -44,16 +30,10 @@ export default class ProductSection extends BaseSection {
     this.$featuresDrawerGallery = $(selectors.featuresDrawerGallery);
 
     // drawers
-    this.productsDrawer = new Drawer($(selectors.collectionDrawer));
-    this.addToCartFormDrawer = new Drawer($(selectors.addToCartFormDrawer));
     this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
     this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
     this.galleries = [];
 
-    $(selectors.desktopBuyNow, this.container).on('click', this.onBuyNowClick.bind(this));
-    $(selectors.sectionScroller, this.container).on('click', this.sectionScrollerClick.bind(this));
-    $('body').on('moduleInView', this.onModuleInView.bind(this));
-    $(selectors.drawerToggler).on('click', this.toggleCollectionDrawer.bind(this));
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
     this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
