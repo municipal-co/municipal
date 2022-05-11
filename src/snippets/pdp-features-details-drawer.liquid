@@ -1,0 +1,57 @@
+{%- capture details_drawer_content -%}
+  {%- if metafields["dd_images"] != blank -%}
+  <div class="features-detail__gallery">
+    <div class="swiper swiper-container" data-features-gallery>
+      <div class="swiper-wrapper">
+        {% for item in metafields["dd_images"] %}
+          <div class="swiper-slide" data-slide>
+            <div class="frame frame--1x1">
+              {% capture image_tag %}
+                {% render 'cf-image' with image: item["dd_images"], print: "tag", size: "500x500", crop: "center", tag_class: "swiper-lazy features-detail__gallery-image"%}
+              {% endcapture %}
+              {{ image_tag | replace: "src=", "data-src=" }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination features-detail__gallery-pagination"></div>
+    </div>
+  </div>
+  {%- endif -%}
+  {%- if metafields["dd_body_content"] != blank -%}
+  <div class="features-detail__body-content">
+    {{ metafields["dd_body_content"] }}
+  </div>
+  {%- endif -%}
+  {%- if metafields["dd_details"] != blank -%}
+  <div class="blink-box">
+  {% if metafields["dd_details_title"] != blank%}
+    <div class="blink-box__title">
+      {{ metafields["dd_details_title"] }}
+    </div>
+  {% endif %}
+    <div class="blink-box__content">
+      {{ metafields["dd_details"] }}
+    </div>
+  </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if details_drawer_content != blank -%}
+  <div class="drawer features-detail__drawer" data-features-drawer>
+    <div class="drawer__inner">
+      <div class="drawer__header features-detail__header">
+        <div class="features-detail__header-title">
+          Features & Details
+        </div>
+        <a href="javascript:void(0);" class="features-detail__close" data-drawer-close>
+          {% render 'icon-close' %}
+          <span class="sr-only">Close features detail drawer</span>
+        </a>
+      </div>
+      <div class="darwer__body-contents features-detail__body">
+        {{ details_drawer_content }}
+      </div>
+    </div>
+  </div>
+{%- endif -%}

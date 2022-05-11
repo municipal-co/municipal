@@ -12,6 +12,9 @@ const selectors = {
   fitGuideDrawer: '[data-fit-guide-drawer]',
   fitGuideGallery: '[data-fit-guide-gallery]',
   fitGuideGalleryIndex: '[data-fit-guide-gallery-current-index]',
+  featuresDrawer: '[data-features-drawer]',
+  featuresDrawerToggler: '[data-features-toggler]',
+  featuresDrawerGallery: '[data-features-gallery]'
 };
 
 export default class ProductSection extends BaseSection {
@@ -20,19 +23,32 @@ export default class ProductSection extends BaseSection {
 
     this.productDetail = new ProductDetail($(selectors.productDetail, this.$container));
     this.$productForm = $(selectors.productForm);
+    this.$productFormContainer = $(selectors.productFormContainer);
+    this.$mobileProductFormContainer = $(selectors.mobileProductFormContainer);
+    this.$fitGuideGalleryIndexcontainer = $(selectors.fitGuideGalleryIndex);
+    this.$featuresDrawerToggler = $(selectors.featuresDrawerToggler);
+    this.$featuresDrawerGallery = $(selectors.featuresDrawerGallery);
 
     // drawers
     this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
+    this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
     this.galleries = [];
 
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
+    $('body').on('updateVariant', this.onToggleVariant.bind(this));
+    this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
     this.initFitGuideGalleries();
+    this.initFeaturesGalleries();
   }
 
   toggleFitGuideModal() {
     $('body').addClass('drawer-open');
     this.fitGuideDrawer.show();
+  }
+
+  toggleFeatureDrawer() {
+    this.featuresDrawer.toggle();
   }
 
   initFitGuideGalleries() {
@@ -45,14 +61,10 @@ export default class ProductSection extends BaseSection {
         observer: true,
         observeParents: true,
         loop: true,
-
-        navigation: {
-          nextEl: $('.swiper-button-next', $(el).parent()),
-          prevEl: $('.swiper-button-prev', $(el).parent()),
-        },
         pagination: {
           el: '.fit-guide__gallery-pagination',
           type: 'bullets',
+          clickable: true,
         },
         lazy: {
           loadPrevNext: true,
@@ -60,9 +72,107 @@ export default class ProductSection extends BaseSection {
       }
 
       const swiperGallery = new Swiper($(el), galleryOptions);
-      swiperGallery.on('slideChange', () => {
-        this.$fitGuideGalleryIndexcontainer.text(swiperGallery.realIndex + 1);
-      });
     });
+  }
+
+  initFeaturesGalleries() {
+    this.$featuresDrawerGallery.each(function(index, gallery) {
+      new Swiper($(gallery), {
+        watchOverflow: true,
+        preloadImages: false,
+        arrows: false,
+        observer: true,
+        observeParents: true,
+        loop: true,
+        pagination: {
+          el: '.features-detail__gallery-pagination',
+          type: 'bullets',
+          clickable: true,
+        },
+        lazy: {
+          loadPrevNext: true,
+        }
+      })
+    })
+  }
+
+  onToggleVariant(e) {
+    const variant = e.variantSelected;
+
+    const $optionToEnable = $(`[data-fit-guide-toggle-tab="${variant}"]`);
+
+    if ($optionToEnable.length > 0 && !$optionToEnable.hasClass(classes.active)) {
+      $(selectors.fitGuideTabsDots, $optionToEnable.parent()).removeClass(classes.active);
+      $optionToEnable.addClass(classes.active);
+    }
+  }
+
+  observerCallback(entries, observer) {
+    entries.forEach((entry) => {
+      if (entry.intersectionRatio < 0.1) {
+        this.$stickyBar.addClass(classes.visible);
+        this.dettachAddToCartForm();
+      }
+
+      if (entry.intersectionRatio > 0.4) {
+        this.$stickyBar.removeClass(classes.visible);
+        this.attachAddToCartForm();
+      }
+    })
+  }
+
+  dettachAddToCartForm() {
+    const formHeight = this.$productForm.height();
+
+    this.$productFormContainer.css('min-height', formHeight);
+    this.$productForm.detach().appendTo(this.$mobileProductFormContainer);
+  }
+
+  attachAddToCartForm() {
+    this.$productFormContainer.css('min-height', null);
+    this.$productForm.detach().appendTo(this.$productFormContainer);
+  }
+
+  onBuyNowClick(event) {
+    event.preventDefault();
+    const screenWidth = $(window).width();
+    const breakpointMinWidth = Breakpoints.getBreakpointMinWidth('md');
+    if (screenWidth <= breakpointMinWidth) {
+      this.addToCartFormDrawer.show();
+      $('body').addClass('drawer-open');
+    } else {
+      $('html, body').animate({
+        scrollTop: 0
+      }, 300);
+    }
+  }
+
+  sectionScrollerClick(event) {
+    event.preventDefault();
+    const target = $(event.currentTarget).attr('href');
+    const targetOffset = $(target).offset().top;
+    const stickyBarOffset = this.$stickyBar.outerHeight();
+
+    $('html, body').animate({
+      scrollTop: targetOffset - stickyBarOffset
+    }, 300);
+  }
+
+  onModuleInView(event) {
+    this.updateScrollerLinks(event.selector);
+  }
+
+  updateScrollerLinks(target) {
+    $(selectors.sectionScroller).each((index, el) => {
+      if ($(el).attr('href') === target) {
+        $(el).addClass(classes.active).siblings().removeClass(classes.active);
+      }
+    })
+  }
+
+  toggleCollectionDrawer(event) {
+    event.preventDefault();
+    $('body').toggleClass('drawer-open');
+    this.productsDrawer.toggle();
   }
 }
