@@ -40,3 +40,15 @@
   @include font-size($figure-caption-font-size);
   color: $figure-caption-color;
 }
+
+.lazyload,
+.swiper-lazy {
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+
+.lazyloaded,
+.swiper-lazy.swiper-lazy-loaded {
+  opacity: 1;
+  transition: opacity 150ms ease-in-out;
+}

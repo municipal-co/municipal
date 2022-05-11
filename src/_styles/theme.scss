@@ -73,6 +73,8 @@
 @import 'components/yotpo';
 @import 'components/newsletter-form';
 @import 'components/load-more';
+@import 'components/badge.scss';
+@import 'components/sticker.scss';
 
 /**
  * MODULES
@@ -114,6 +116,7 @@
 @import 'modules/back-in-stock.scss';
 @import 'modules/search-drawer.scss';
 @import 'modules/bundle-products.scss';
+@import 'modules/sticky-image.scss';
 
 /**
  * Templates
