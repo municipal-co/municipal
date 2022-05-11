@@ -1,0 +1,178 @@
+{% comment %}
+  Usage:
+    {% render 'product-form-options',
+      product, { product object } Product data containing the options to be rendered
+      type: { string, accepts: swatch, drawer, select } defines the way the options are going to be printed
+      print_option: { string } defines which kind of selector is going to be rendered
+      current_variant: { object} Optional, sets the currently selected variant for a pre-selected status
+    %}
+
+  Printing type options:
+    - "swatch": renders variant image as swatch color and lets select the options inline
+    - "drawer": renders buttons with the name of the variant to be selected through a drawer option
+    - "select": renders the options as an styled select tag for instances where a simpler layout is required
+
+{% endcomment %}
+{% assign option_index = "" %}
+{% assign option_downcase = print_option | downcase %}
+{% for option in product.options %}
+  {% assign product_option_downcase = option | downcase %}
+  {% if option_downcase == product_option_downcase %}
+    {% assign option_index = 'option' | append: forloop.index %}
+  {% endif %}
+{% endfor %}
+
+{% if type == "swatch" %}
+  <div class="product-option">
+    <div class="product-option__header">
+      <div class="product-option__header-label p4">
+        {{ print_option | capitalize | append: ':'}}
+      </div>
+      <div class="product-option__selected-option p4" data-selected-option="{{option_index}}">
+        {{ current_variant[option_index] }}
+      </div>
+    </div>
+    <div class="product-option__swatch">
+      {% assign printed_variant = "" %}
+      {% for variant in product.variants %}
+        {%- if printed_variant == variant[option_index] -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign printed_variant = variant[option_index] -%}
+        <label class="product-option__single-selector">
+          <input type="radio"
+                 name="{{option_index}}"
+                 value="{{variant[option_index]}}"
+                 class="hide"
+                 data-option-name="{{option_downcase}}"
+                 data-product-option="{{ option_index }}"
+                 data-option-value="{{variant[option_index] | downcase}}"
+                 {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
+                 data-index="{{ option_index }}"
+                 data-single-option-selector>
+
+          <div class="product-option__ui">
+            <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+          </div>
+        </label>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+{% if type == "drawer" %}
+  <div class="product-option">
+    <button class="btn btn-outline-primary btn-block product-option__drawer-btn" type="button" data-pdp-drawer-toggler data-drawer-id="{{print_option}}">
+      <span class="button__text" data-selected-option="{{option_index}}">
+        Select
+        {{ print_option | capitalize }}
+      </span>
+      <div class="btn__ui">
+        {% render 'icon-caret-down' %}
+      </div>
+    </button>
+
+    <div class="drawer product-option__drawer" data-pdp-option-drawer data-drawer-id="{{print_option}}">
+      <div class="drawer__inner product-option__drawer-inner">
+        <div class="drawer__header">
+          <div class="drawer__header-title">
+            Select
+            {{ print_option | capitalize }}
+          </div>
+
+          <a class="drawer__close" data-drawer-close href="javascript:void(0);">
+            {% render 'icon-close' %}
+            <div class="sr-only">Close
+              {{print_option}}
+              drawer</div>
+          </a>
+        </div>
+        <div class="drawer__body-contents">
+          {% for option in product.options_with_values %}
+            {% assign option_downcase = option.name | downcase %}
+            {% if option_downcase == print_option %}
+              {% for option_value in option.values %}
+                <label class="product-option__single-selector">
+                  <input
+                    type="radio"
+                    name="{{option_index}}"
+                    value="{{option_value}}"
+                    data-option-name="{{ option_downcase }}"
+                    data-product-option="{{ option_index }}"
+                    data-option-value="{{option_value | downcase}}"
+                    class="hide"
+                    data-index="{{option_index}}"
+                    data-single-option-selector>
+                  <div class="product-option__ui" data-option-ui>
+                    <div class="product-option__ui-group-corner">
+                      <div class="product-option__ui-checkmark">
+                        {% render 'icon-checkmark' %}
+                      </div>
+                      <div class="product-option__ui-label">
+                        {{ option_value }}
+                      </div>
+                    </div>
+                    <div class="product-option__ui-group-middle">
+                      <div class="product-option__ui-availability" data-option-availability>
+                        {% if current_variant[option_index] == option_value and current_variant.available%}
+                          Available
+                        {% else %}
+                          Out Of Stock
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="product-option__ui-group-corner">
+                      <div class="product-option__ui-quantity">
+                        <div class="product-option__ui-low-quantity" data-low-quantity data-message-template="Hurry, only [quantity] left">
+                        </div>
+                        <div class="product-option__ui-bis-button">
+                          <button type="button" name="bis-button" class="btn-small btn-link btn-back-in-stock" data-bis-toggler data-bis-button {% if current_variant.available or disable_bis_button == true %}  {% endif %}>
+                            Notify Me
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+
+          {%- if option_downcase == "size" -%}
+            {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
+            <div class="btn-container text-center">
+              <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
+            </div>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if type == "select" %}
+  <div class="product-option">
+    <div class="selector-wrapper form-group product-option__select">
+      <select
+        class="form-control"
+        name="{{option_index}}"
+        data-option-name="{{ print_option }}"
+        data-product-option="{{ option_index }}"
+        data-option-value="{{option_value | downcase}}"
+        data-index={{ option_index }}
+        data-single-option-selector>
+        {% for option in product.options_with_values %}
+          {% if option.name == print_option %}
+            {% for option_value in option.values %}
+              <option value="{{option_value}}">
+                {{ option_value }}
+              </option>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </select>
+      {% render 'icon-caret' %}
+    </div>
+  </div>
+{% endif %}

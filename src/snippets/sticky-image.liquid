@@ -1,0 +1,27 @@
+  <div class="sticky-image col-lg-14">
+    <div class="sticky-image__background-container">
+      {% if metafields.si_desktop_image != blank or metafields.si_mobile_image != blank %}
+        <picture class="sticky-image__background-image">
+          <source media="(min-width: 992px)" data-srcset="{% render "cf-image", image: metafields.si_desktop_image, size: '600x', format: 'pjpg', print: 'url' %}">
+          <img data-src="{% render "cf-image", image: metafields.si_mobile_image, size: '600x', format: 'pjpg', print: 'url' %}" alt="{{metafields.si_image_alt}}" class="lazyload">
+        </picture>
+      {% endif %}
+
+      <div class="sticky-image__info-container">
+        {% if collection != blank %}
+          <div class="badge badge--white">
+            {{ collection.title }}
+          </div>
+        {% endif %}
+        <h1 class="sticky-image__title">
+          {{ object.title }}
+        </h1>
+
+        {% if object.price != blank %}
+          <div class="sticky-image__price" data-price>
+            {% render 'product-detail-price', product: object %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>

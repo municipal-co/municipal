@@ -1,0 +1,82 @@
+.card-slider {
+  padding: 100px 50px;
+
+  @include media-breakpoint-down('md') {
+    padding: 60px 30px;
+  }
+}
+
+.card-slider__heading {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 30px;
+
+  @include media-breakpoint-down('md') {
+    margin-bottom: 25px;
+  }
+}
+
+
+.card-slider__info-container {
+  @include media-breakpoint-down('md') {
+    padding-right: 20px;
+  }
+}
+
+.card-slider__title {
+  margin-bottom: 13px;
+  line-height: 1;
+}
+
+.card-slider__copy {
+  max-width: 600px;
+}
+
+.card-slider__cta-container {
+  align-self: center;
+  justify-self: flex-end;
+  margin-left: auto;
+  position: relative;
+  margin-top: -50px;
+  flex-shrink: 0;
+
+  @include media-breakpoint-down('sm') {
+    margin-left: 0;
+    margin-top: 0;
+    align-self: flex-start;
+  }
+}
+
+.card-slider__button {
+  color: $white;
+  font-size: 18px;
+  line-height: 1.5;
+  border-bottom: 2px solid currentColor;
+  color: currentColor;
+  border-color: currentColor;
+  display: inline-block;
+
+  &:hover {
+    color: currentColor;
+  }
+
+  @include media-breakpoint-down('md') {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+.card-slider__slider {
+  width: calc(100% + 100px);
+  margin-left: -50px;
+  overflow: hidden;
+  @include media-breakpoint-down('md') {
+    width: calc(100% + 60px);
+    margin-left: -30px;
+  }
+}
+
+@import '../components/card/link-card.scss';
+
+

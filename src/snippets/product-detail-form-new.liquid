@@ -1,0 +1,91 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+<div data-product-detail-form data-low-quantity-threshold="{{ settings.low_inventory_threshold | default: 0 }}">
+  {%- form 'product', product, data-add-to-cart-form:"" -%}
+    {%- for option in product.options -%}
+      {%- if option == "color" or option == "Color" -%}
+        {%- render 'product-form-options',
+          product: product,
+          type: 'swatch',
+          print_option: 'color'
+          current_variant: current_variant
+        %}
+      {%- elsif option == "size" or option == "Size" -%}
+        {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
+        <div class="btn-container text-center">
+          <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
+        </div>
+        {%- endif -%}
+
+        {%- render 'product-form-options',
+          product: product,
+          type: 'drawer',
+          print_option: 'size'
+          current_variant: current_variant
+        -%}
+      {%- else -%}
+        {%- render 'product-form-options'
+          product: product,
+          type: 'select'
+          print_option: option,
+          current_variant: current_variant
+        -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    <select name="id" class="no-js" data-product-select>
+      {% for variant in product.variants %}
+        <option
+        {% if variant == current_variant %} selected{% endif %}
+        {% unless variant.available %} disabled="disabled"{% endunless %}
+        value="{{variant.id}}"> {{ variant.title }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="hidden" name="quantity" value="1">
+
+    <button
+      type="submit"
+      name="add"
+      class="btn btn-primary btn-block add-to-cart"
+      data-add-to-cart>
+        <span data-add-to-cart-text>
+          {% if current_variant.available %}
+            {{ 'products.product.add_to_cart' | t }}
+          {% else %}
+            {{ 'products.product.sold_out' | t }}
+          {% endif %}
+        </span>
+        <span class="product__atc-price" data-add-to-cart-price></span>
+    </button>
+    {% unless product.type == "Gift Card" or product.tags contains 'klarna-hide' %}
+    <klarna-placement
+      class="klarna-messaging"
+      data-key="credit-promotion-small"
+      data-locale="en-US"
+      data-purchase-amount="{{ product.selected_or_first_available_variant.price }}"
+    ></klarna-placement>
+    {% endunless %}
+    {% if section.settings.enable_klarna == true %}
+    {%- comment -%}TODO: Add settings to controll klarna snippet to the section and move it inside here{%- endcomment -%}
+    {% endif %}
+  {%- endform -%}
+
+  {%- unless product == blank -%}
+    <script type="application/json" data-product-json>
+      {%- render 'product-json', product: product -%}
+    </script>
+    <script type="application/json" data-badges-json>
+      {
+        "default": {{ product_default_badge | json }},
+      {%- for variant in product.variants -%}
+        "{{ variant.id }}": {{ variant.metafields.custom_fields['badge'] | json }} {%- unless forloop.last %} ,{%- endunless -%}
+      {%- endfor -%}
+      }
+    </script>
+  {%- endunless -%}
+
+  {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
+    {%- render 'fit-guide-drawer' -%}
+  {%- endif -%}
+</div>

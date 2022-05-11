@@ -21,7 +21,6 @@ import * as Breakpoints from './core/breakpoints';
 // Managers
 import BackgroundAnimationManager from './managers/backgroundAnimationManager';
 import SectionBlockAnimation from './managers/sectionBlockAnimation';
-//import IntersectionManager from './managers/intersectionManager';
 
 // UI - Import all to enable data API
 import './ui/drawer';
@@ -67,6 +66,13 @@ import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
 import FeaturedCategory from './sections/featuredCategories'
+import ShopTheLook from './sections/shop-the-look';
+import OptionDrawer from './sections/optionDrawer';
+import LinkCardSlider from './sections/linkCardSlider';
+import ContentSlider from './sections/contentSlider';
+import BisDrawer from './sections/bisDrawer';
+import Hero from './sections/hero';
+
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -128,6 +134,12 @@ Breakpoints.initialize();
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
   sectionManager.register('featured-categories', FeaturedCategory);
+  sectionManager.register('shop-the-look', ShopTheLook);
+  sectionManager.register('option-selector-drawer', OptionDrawer);
+  sectionManager.register('link-card-slider', LinkCardSlider);
+  sectionManager.register('content-slider', ContentSlider);
+  sectionManager.register('bis-drawer', BisDrawer);
+  sectionManager.register('hero', Hero);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

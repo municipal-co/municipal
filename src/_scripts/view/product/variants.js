@@ -15,7 +15,7 @@ export default class Variants {
    * Variant constructor
    *
    * @param {object} options - Settings from `product.js`
-   */  
+   */
   constructor(options) {
     this.$container = options.$container;
     this.product = options.product;

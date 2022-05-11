@@ -1,74 +1,55 @@
-<style>
-  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
-    [data-section-id="{{h_id}}"] {
-      background-color: {{h_background_color}};
+<div id="hero-{{id}}" class="hero container-fluid {{s.vertical_position}} {{s.horizontal_position}}" data-section-id="{{section.id}}" data-section-type="hero">
+  <style>
+    #hero-{{id}} .hero__text,
+    #hero-{{id}} .hero__title {
+      color: {{s.text_color}};
     }
-  {% endif %}
-</style>
 
-{% if h_title_tag == blank %}
-  {% assign h_title_tag = 'h2' %}
-{% endif %}
+    #hero-{{id}} .hero__highlight-text {
+      color: {{ s.highlight_color }};
+    }
+  </style>
+  <picture class="hero__bg">
+    <source data-srcset="{{ s.image | img_url: '1440x' }}" media="(min-width: 1024px)">
+    <img data-src="{{ s.image_mobile | default: s.image | img_url: '800x' }}" alt="{{s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload">
+  </picture>
 
-<div class="row no-gutters justify-content-center row-adjusted" data-animated-background="{{ h_background_color }}" data-section-type="hero" data-section-id="{{h_id}}">
-  <div class="col-md-24 col-lg-22">
-    <div class="hero__content {% if h_content_position == 'true' %}hero__content--index{% endif %}">
-      <div class="hero__header">
-        {% if h_handwritten_text_image != blank %}
-          <div class="hero__handscript-svg">
-            {% include 'image_tag'
-              image: h_handwritten_text_image
-            %}
-          </div>
-        {% endif %}
-        {% if h_title != blank %}
-          {% if h_cta_url != blank %}
-            <{{h_title_tag}} class="hero__title text-center">
-              <a class="u-text-{{h_title_color}}" href="{{h_cta_url}}">{{ h_title }}</a>
-            </{{h_title_tag}}>
-          {% else %}
-            <h1 class="hero__title text-center u-text-{{h_title_color}}"> {{ h_title }} </h1>
-          {% endif %}
-        {% endif %}
-      </div>
-      {% if h_cta_text != blank and h_cta_url != blank %}
-        <div class="hero__button-container">
-          <a href="{{h_cta_url}}" class="btn btn-white">
-            {{h_cta_text}}
-            <span class="btn__ui">
-              {% include 'icon-arrow' %}
-            </span>
-          </a>
-        </div>
-      {% endif %}
-      <div class="hero__media-container">
-        {%- if h_video != blank -%}
-          {%- assign yt_video_id = h_video.id -%}
-          <div class="hero__video">
-            <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="true" data-embed-color="#000000">
-              <div class="video-player__cover" data-video-player-cover>
-                <div class="video-player__cover-still lazyload" data-background="{{h_image | img_url: '1800x'}}"></div>
-              </div>
-              <div class="video-player__embed" data-video-player-embed></div>
-            </div>
-          </div>
-        {%- elsif h_image != blank -%}
-          {% if h_cta_url != blank %}
-            <a href="{{h_cta_url}}">
-          {% endif %}
-            <div class="hero__image">
-              {% render 'image_tag'
-                image: h_image,
-                mobile_image: h_mobile_image,
-                object_fit: 'cover',
-                fallback_layout: true
-              %}
-            </div>
-          {% if h_cta_url != blank %}
-          </a>
-          {% endif %}
-        {%- endif -%}
-      </div>
+  {% if s.desktop_video_webm != blank or s.desktop_video_mp4 != blank or s.mobile_video_webm != blank or s.mobile_video_mp4 != blank %}
+    <div class="hero__video-container">
+      <video
+        data-background-video
+        data-desktop-video-webm="{{s.desktop_video_webm}}"
+        data-desktop-video-mp4="{{s.desktop_video_mp4}}"
+        data-mobile-video-webm="{{s.mobile_video_webm}}"
+        data-mobile-video-mp4="{{s.mobile_video_mp4}}"
+        autoplay
+        loop
+        muted
+      >
+        <source type="video/webm" src="{{s.desktop_video_webm}}" data-webm-video>
+        <source type="video/mp4" src="{{s.desktop_video_mp4}}" data-mp4-video>
+      </video>
     </div>
+  {% endif %}
+
+  <div class="hero__inner col-20 col-lg-14">
+    {% if s.handwritten_image != blank %}
+      <img data-src="{{s.handwritten_image | img_url: 'master'}}" alt="{{s.handwritten_image.alt}}" class="hero__title-image lazyload">
+    {% endif %}
+    {% if s.title != blank %}
+      <{{s.title_tag}} class="hero__title h1">
+        {{ s.title | replace: '<strong>', '<span class="hero__highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}
+      </{{s.title_tag}}>
+    {% endif %}
+    {% if s.body_content != blank %}
+      <p class="hero__text p2">
+        {{ s.body_content }}
+      </p>
+    {% endif %}
+    {% if s.cta_text != blank and s.cta_url != blank%}
+      <a href="{{s.cta_url}}" class="btn {{ s.button_style }} hero__btn">
+        {{ s.cta_text }}
+      </a>
+    {% endif %}
   </div>
 </div>

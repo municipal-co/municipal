@@ -3,68 +3,57 @@ import Swiper from 'swiper';
 import BaseSection from './base';
 import ProductDetail from '../view/product/productDetail';
 import Drawer from '../ui/drawer';
-import * as Breakpoints from '../core/breakpoints';
+import VideoPlayer from '../ui/videoPlayer';
 
 const selectors = {
   productDetail: '[data-product-detail]',
-  productStickyBar: '[data-product-sticky-bar]',
-  sectionScroller: '[data-scroll-to-section]',
-  desktopBuyNow: '[data-desktop-buy-now]',
-  collectionDrawer: '[data-collection-drawer]',
-  drawerToggler: '[data-toggle-collection-grid]',
   productForm: '[data-product-detail-form]',
-  productFormContainer: '[data-product-form-container]',
-  mobileProductFormContainer: '[data-mobile-product-form-container]',
   addToCartFormDrawer: '[data-add-to-cart-drawer]',
   fitGuideToggleButton: '[data-fit-guide-toggler]',
   fitGuideDrawer: '[data-fit-guide-drawer]',
   fitGuideGallery: '[data-fit-guide-gallery]',
   fitGuideGalleryIndex: '[data-fit-guide-gallery-current-index]',
+  videoPlayer: '[data-video-player]',
+  featuresDrawer: '[data-features-drawer]',
+  featuresDrawerToggler: '[data-features-toggler]',
+  featuresDrawerGallery: '[data-features-gallery]'
 };
-
-const classes = {
-  visible: 'is-visible',
-  active: 'is-active'
-}
 
 export default class ProductSection extends BaseSection {
   constructor(container) {
     super(container, 'product');
 
     this.productDetail = new ProductDetail($(selectors.productDetail, this.$container));
-    this.$stickyBar = $(selectors.productStickyBar, this.$container);
     this.$productForm = $(selectors.productForm);
     this.$productFormContainer = $(selectors.productFormContainer);
     this.$mobileProductFormContainer = $(selectors.mobileProductFormContainer);
     this.$fitGuideGalleryIndexcontainer = $(selectors.fitGuideGalleryIndex);
+    this.$featuresDrawerToggler = $(selectors.featuresDrawerToggler);
+    this.$featuresDrawerGallery = $(selectors.featuresDrawerGallery);
 
     // drawers
-    this.productsDrawer = new Drawer($(selectors.collectionDrawer));
-    this.addToCartFormDrawer = new Drawer($(selectors.addToCartFormDrawer));
     this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
+    this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
     this.galleries = [];
 
-    this.observerProperties = {
-      root: null,
-      threshold: [0.1, 0.4]
-    }
-
-    $(selectors.desktopBuyNow, this.container).on('click', this.onBuyNowClick.bind(this));
-    $(selectors.sectionScroller, this.container).on('click', this.sectionScrollerClick.bind(this));
-    $('body').on('moduleInView', this.onModuleInView.bind(this));
-    $(selectors.drawerToggler).on('click', this.toggleCollectionDrawer.bind(this));
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
+    this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
     this.initFitGuideGalleries();
 
-    this.IntersectionObserver = new IntersectionObserver(this.observerCallback.bind(this), this.observerProperties);
-    this.IntersectionObserver.observe($(selectors.productDetail).get(0));
+    new VideoPlayer(selectors.videoPlayer);
+
+    this.initFeaturesGalleries();
   }
 
   toggleFitGuideModal() {
     $('body').addClass('drawer-open');
     this.fitGuideDrawer.show();
+  }
+
+  toggleFeatureDrawer() {
+    this.featuresDrawer.toggle();
   }
 
   initFitGuideGalleries() {
@@ -77,14 +66,10 @@ export default class ProductSection extends BaseSection {
         observer: true,
         observeParents: true,
         loop: true,
-
-        navigation: {
-          nextEl: $('.swiper-button-next', $(el).parent()),
-          prevEl: $('.swiper-button-prev', $(el).parent()),
-        },
         pagination: {
           el: '.fit-guide__gallery-pagination',
           type: 'bullets',
+          clickable: true,
         },
         lazy: {
           loadPrevNext: true,
@@ -92,10 +77,28 @@ export default class ProductSection extends BaseSection {
       }
 
       const swiperGallery = new Swiper($(el), galleryOptions);
-      swiperGallery.on('slideChange', () => {
-        this.$fitGuideGalleryIndexcontainer.text(swiperGallery.realIndex + 1);
-      });
     });
+  }
+
+  initFeaturesGalleries() {
+    this.$featuresDrawerGallery.each(function(index, gallery) {
+      new Swiper($(gallery), {
+        watchOverflow: true,
+        preloadImages: false,
+        arrows: false,
+        observer: true,
+        observeParents: true,
+        loop: true,
+        pagination: {
+          el: '.features-detail__gallery-pagination',
+          type: 'bullets',
+          clickable: true,
+        },
+        lazy: {
+          loadPrevNext: true,
+        }
+      })
+    })
   }
 
   onToggleVariant(e) {
