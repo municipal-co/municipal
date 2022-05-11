@@ -1,4 +1,5 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
+import drawer from '../ui/drawer'
 import BaseSection from './base';
 
 const selectors = {
@@ -8,7 +9,8 @@ const selectors = {
   yotpoHeaderElement: '.yotpo-header-element',
   dateOriginalLocation: '.yotpo-header-element.yotpo-header-actions .yotpo-review-date',
   productStickyBar: '.product__sticky-bar',
-  header: '.header'
+  header: '.header',
+  reviewDrawerToggler: '[data-reviews-toggler]'
 }
 
 const classes = {
@@ -43,6 +45,11 @@ export default class YotpoReviews extends BaseSection {
   constructor(container) {
     super(container, 'yotpo-reviews');
 
+    this.drawer = new drawer(container);
+    this.$drawerToggler = $(selectors.reviewDrawerToggler); // Not wrapped because this is outside of the container
+
+    this.$drawerToggler.on('click', this.toggleDrawer.bind(this));
+
     this.$container = $(container);
     this.observerProperties = {
       root: null,
@@ -50,7 +57,7 @@ export default class YotpoReviews extends BaseSection {
       threshold: 0.1
     };
     this.makeOnceTheFormatting = true;
-
+    const self = this;
     const containerThis = this;
     /**
      * Yotpo Reviews
@@ -64,7 +71,6 @@ export default class YotpoReviews extends BaseSection {
     const yotpoReadyCallback = () => {
       $(selectors.starReviews).addClass(classes.yotpoLoaded);
       this.formatSizingMessages(false);
-
       function mutationHandler(mutationRecords) {
         mutationRecords.forEach(function(mutation) {
           containerThis.makeOnceTheFormatting = true;
@@ -73,12 +79,8 @@ export default class YotpoReviews extends BaseSection {
             if ($(singleNode).is(selectors.yotpoReview) && containerThis.makeOnceTheFormatting) {
               containerThis.formatSizingMessages(true);
 
-              const productStyickyBarHeight = $(selectors.productStickyBar).outerHeight();
-              const headerHeight = $(selectors.header).outerHeight();
-              const topSeparation = productStyickyBarHeight + headerHeight;
-
-              $('html, body').animate({
-                scrollTop: $(selectors.yotpoReviews).offset().top - topSeparation
+              self.$container.animate({
+                scrollTop: 0
               }, 500);
 
               containerThis.makeOnceTheFormatting = false;
@@ -198,5 +200,9 @@ export default class YotpoReviews extends BaseSection {
         $('body').trigger(event);
       }
     })
+  }
+
+  toggleDrawer() {
+    this.drawer.toggle();
   }
 }

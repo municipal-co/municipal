@@ -65,10 +65,13 @@ import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
-import BisDrawer from './sections/bisDrawer';
 import ShopTheLook from './sections/shop-the-look';
 import OptionDrawer from './sections/optionDrawer';
 import LinkCardSlider from './sections/linkCardSlider';
+import ContentSlider from './sections/contentSlider';
+import BisDrawer from './sections/bisDrawer';
+import Hero from './sections/hero';
+
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -129,10 +132,12 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
-  sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('shop-the-look', ShopTheLook);
   sectionManager.register('option-selector-drawer', OptionDrawer);
   sectionManager.register('link-card-slider', LinkCardSlider);
+  sectionManager.register('content-slider', ContentSlider);
+  sectionManager.register('bis-drawer', BisDrawer);
+  sectionManager.register('hero', Hero);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

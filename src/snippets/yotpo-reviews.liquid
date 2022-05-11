@@ -1,8 +1,17 @@
-{% if settings.display_reviews == true %}
-  <div id="product-reviews" class="yotpo-reviews-container" data-section-type="yotpo-reviews" data-animated-background="#ffffff">
-    <div class="container-fluid">
-      <div class="row row-adjusted">
-        <div  class="yotpo yotpo-main-widget col-lg-22 col-20 offset-lg-1 offset-2"
+<div class="drawer reviews__drawer" data-section-type="yotpo-reviews">
+  <div class="drawer__inner reviews__drawer-inner">
+    <div class="drawer__header reviews__drawer-header">
+      <div class="reviews__drawer-title">
+        Reviews
+      </div>
+      <a href="javascript:void(0);"class="fit-guide__close" data-drawer-close>
+        {% render 'icon-close' %}
+        <span class="sr-only">Close size guide</span>
+      </a>
+    </div>
+    <div class="drawer__body-contents reviews__drawer-body">
+      <div id="product-reviews" class="yotpo-reviews-container">
+        <div  class="yotpo yotpo-main-widget"
               data-product-id="{{ product.id }}"
               data-name="{{ product.title | escape }}"
               data-url="{{ shop.url }}{{ product.url }}"
@@ -12,4 +21,4 @@
       </div>
     </div>
   </div>
-{% endif %}
+</div>

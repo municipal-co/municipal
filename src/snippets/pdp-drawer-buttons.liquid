@@ -1,0 +1,37 @@
+{% capture features_details_drawer %}
+  {% include 'pdp-features-details-drawer'
+  metafields: product.metafields.custom_fields %}
+{% endcapture %}
+
+<div class="pdp-drawer-buttons-container">
+  {% if features_details_drawer != blank %}
+    <button class="pdp-drawer-button" data-features-toggler>
+      <span class="pdp-drawer-button__label"> Features & Details </span>
+      <div class="pdp-drawer-button__icon">
+        {% render 'icon-arrow' %}
+      </div>
+    </button>
+  {% endif %}
+  {{ features_details_drawer }}
+  {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
+    <button class="pdp-drawer-button" data-fit-guide-toggler>
+      <span class="pdp-drawer-button__label"> Sizing </span>
+      <div class="pdp-drawer-button__icon">
+        {% render 'icon-arrow' %}
+      </div>
+    </button>
+  {%- endif -%}
+  <button class="pdp-drawer-button" data-reviews-toggler>
+    <span class="pdp-drawer-button__label">
+      {% render 'rating-stars' %}
+    </span>
+    {% if settings.display_reviews == true %}
+      <div class="pdp-drawer-button__icon">
+        {% render 'icon-arrow' %}
+      </div>
+    </button>
+
+    {% render 'yotpo-reviews' %}
+  {% endif %}
+
+</div>

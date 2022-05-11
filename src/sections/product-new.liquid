@@ -1,3 +1,5 @@
+
+
 <div data-section-id="{{section.id}}" data-section-type="product">
   <div class="container-fluid">
     <div class="row product-container">
@@ -12,12 +14,28 @@
           metafields: product.metafields.custom_fields
         %}
 
+        {% render 'pdp-content-slider'
+          metafields: product.metafields.custom_fields,
+          prefix: 'value_props',
+          bg_prefix: 'vp'
+        %}
 
         {% include 'shop-the-look'
           s: product.metafields.custom_fields,
           type: 'metafields'
         %}
+
+        {% render 'value-proposition' %}
+
+        {% include 'pdp-drawer-buttons' %}
+
+        {% render 'pdp-content-slider'
+          metafields: product.metafields.custom_fields,
+          prefix: 'questions_slider',
+          bg_prefix: 'qs'
+        %}
       </div>
+
     </div>
   </div>
 </div>
