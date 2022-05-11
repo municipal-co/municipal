@@ -90,6 +90,10 @@
       bottom: {{ settings.background_bottom_threshold | times: 0.01 }}
     }
   }
+
+  window.settings = {
+    lowInventoryThreshold: {{ settings.low_inventory_threshold | default: 0 | json }}
+  }
   </script>
 
 <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
@@ -153,7 +157,7 @@
   {% if shop.customer_accounts_enabled %}
     {% section 'customers-drawer' %}
   {% endif %}
-
+  {% section 'option-selector-drawer' %}
   {% section 'bis-drawer' %}
 
   {% include 'slideup-template' %}
