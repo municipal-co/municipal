@@ -18,9 +18,11 @@
           prefix: 'value_props',
           bg_prefix: 'vp'
         %}
+        
+        {% render 'value-proposition' %}
 
         {% include 'pdp-drawer-buttons' %}
-
+    
         {% render 'pdp-content-slider'
           metafields: product.metafields.custom_fields,
           prefix: 'questions_slider',
