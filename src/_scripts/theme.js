@@ -66,6 +66,7 @@ import CollectionBanner from './sections/collectionBanner';
 import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
+import ContentSlider from './sections/contentSlider';
 import BisDrawer from './sections/bisDrawer';
 
 
@@ -128,6 +129,7 @@ Breakpoints.initialize();
   sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
+  sectionManager.register('content-slider', ContentSlider);
   sectionManager.register('bis-drawer', BisDrawer);
 
   $('.in-page-link').on('click', (evt) => {

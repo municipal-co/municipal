@@ -74,6 +74,7 @@
 @import 'components/newsletter-form';
 @import 'components/load-more';
 @import 'components/badge.scss';
+@import 'components/blink-box.scss';
 @import 'components/sticker.scss';
 
 /**
@@ -118,6 +119,11 @@
 @import 'modules/bundle-products.scss';
 @import 'modules/sticky-image.scss';
 @import 'modules/value-proposition.scss';
+/* New modules */
+@import 'modules/pdp-drawer-buttons.scss';
+@import 'modules/features-detail-drawer.scss';
+@import 'modules/pdp-content-slider.scss';
+
 
 /**
  * Templates
@@ -136,6 +142,7 @@
 @import 'templates/password.scss';
 @import 'templates/search.scss';
 @import 'templates/about-us.scss';
+
 
 // Background animation styles
 body {
