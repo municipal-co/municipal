@@ -5,7 +5,7 @@
 
   Usage:
 
-  {% include 'product-detail-form',
+  {% render 'product-detail-form',
               product: { product } - required
               current_variant: { variant} - optional
   %}
@@ -13,7 +13,7 @@
 {% endcomment -%}
 
 {%- capture shipping_modal_html -%}
-  {% include 'shipping-modal' %}
+  {% render 'shipping-modal' %}
 {%- endcapture -%}
 
 {% if template.name == 'product' and template.suffix == 'quick-view' %}
@@ -64,11 +64,11 @@
   <h1 class="h5 product__title">{{ product.title }}</h1>
 
   {% if settings.display_reviews == true  and product.type != 'Gift Card' %}
-    {% include 'rating-stars' %}
+    {% render 'rating-stars' %}
   {% endif %}
   {% unless product.type == 'Gift Card' or enable_bundles == true %}
     <div class="product__price">
-      {% include 'product-detail-price', product: product, current_variant: current_variant %}
+      {% render 'product-detail-price', product: product, current_variant: current_variant %}
     </div>
   {% endunless %}
   {% if section.settings.enable_klarna == true %}
@@ -78,7 +78,7 @@
   {% endif %}
 
 
-  {% include 'product-upsell', pum_product: product %}
+  {% render 'product-upsell', pum_product: product %}
 
 
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -173,19 +173,19 @@
 
               {% if base_option_name_downcase == "color" %}
                 {% capture collection_product_html %}
-                  {% include 'collection-color-dots', product: product %}
+                  {% render 'collection-color-dots', product: product %}
                 {% endcapture %}
 
                 {% if collection_product_html != blank %}
                   {{ collection_product_html }}
                 {% else %}
-                  {% include 'product-dots-color', product: product, selected_color: option.selected_value %}
+                  {% render 'product-dots-color', product: product, selected_color: option.selected_value %}
                 {% endif %}
 
               {% endif %}
 
               {% if base_option_name_downcase == "size" %}
-                {% include 'product-dots-sizes', dots_product: product, selected_size: option.selected_value %}
+                {% render 'product-dots-sizes', dots_product: product, selected_size: option.selected_value %}
 
                 {% if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 %}
                   <a href="javascript:void(0);" class="btn-link product__fit-guide-toggler" data-fit-guide-toggler>Fit Guide +</a>
@@ -219,7 +219,7 @@
                 {% endfor %}
               </select>
               {% if option_alt_ui == blank %}
-                {% include 'icon-caret' %}
+                {% render 'icon-caret' %}
               {% endif %}
 
               {% comment %} Output alternative option UI here {% endcomment %}
@@ -307,12 +307,11 @@
           type="button"
           name="bis-button"
           class="btn btn--small btn-outline-primary btn-back-in-stock"
-          data-bis-toggler
           data-bis-button
           {% if current_variant.available or disable_bis_button == true %}
             style="display:none;"
           {% endif %}>
-          {% include 'icon-bell' %}
+          {% render 'icon-bell' %}
           Notify me when back
         </button>
       </form>
@@ -336,7 +335,7 @@
 
   {% unless product == empty %}
     <script type="application/json" data-product-json>
-    {% include 'product-json', product: product %}
+    {% render 'product-json', product: product %}
     </script>
 
     {% assign product_default_badge = product.metafields.custom_fields['badge'] %}

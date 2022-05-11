@@ -1,0 +1,16 @@
+.badge {
+  border: 2px solid $white;
+  font-size: 14px;
+  font-family: $font-family-heading-medium;
+  line-height: 1;
+  height: 40px;
+  padding: 11px 25px;
+  border-radius: 50px;
+  display: inline-block;
+  color: $white;
+}
+
+.badge--highlight {
+  border-color: $magenta;
+  color: $white;
+}

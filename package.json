@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "@shopify/slate": "^0.14.0",
+    "@shopify/themekit": "^1.1.9",
     "@vimeo/player": "^2.8.2",
     "bootstrap": "^4.3.1",
     "chosen-js": "^1.8.3",

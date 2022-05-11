@@ -1,0 +1,46 @@
+.sticker {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: relative;
+  background-color: $black;
+  z-index: 1;
+
+  &.sticker--medium {
+    @include media-breakpoint-up('sm') {
+      width: 94px;
+      height: 94px;
+    }
+  }
+
+  &.sticker--large {
+    @include media-breakpoint-up('lg') {
+      width: 146px;
+      height: 146px;
+    }
+  }
+}
+
+.sticker__text {
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  position: absolute;
+  color: $green;
+  font-family: $font-family-heading-large;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1;
+  font-size: 11px;
+  .sticker--medium & {
+    @include media-breakpoint-up('md') {
+      font-size: 17px;
+    }
+  }
+  &.sticker--large & {
+    @include media-breakpoint-up('lg'){
+      font-size: 27px;
+    }
+  }
+}

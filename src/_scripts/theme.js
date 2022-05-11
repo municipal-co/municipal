@@ -66,6 +66,10 @@ import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
 import FouroFour from './sections/fourofour';
 import LinkCardSlider from './sections/linkCardSlider';
+import ContentSlider from './sections/contentSlider';
+import BisDrawer from './sections/bisDrawer';
+import Hero from './sections/hero';
+
 
 // Managers
 import QuickViewManager from './managers/quickView';
@@ -127,6 +131,9 @@ Breakpoints.initialize();
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('fourofour', FouroFour);
   sectionManager.register('link-card-slider', LinkCardSlider);
+  sectionManager.register('content-slider', ContentSlider);
+  sectionManager.register('bis-drawer', BisDrawer);
+  sectionManager.register('hero', Hero);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
