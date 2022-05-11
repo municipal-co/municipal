@@ -1,23 +1,12 @@
 
 {% include 'hero-panel'
-  h_id: section.id,
-  h_background_color: section.settings.background_color,
-  h_handwritten_text_image: section.settings.handwritten_text_image,
-  h_title: section.settings.title,
-  h_title_tag: section.settings.title_tag,
-  h_title_color: section.settings.title_color,
-  h_image: section.settings.image,
-  h_mobile_image: section.settings.image_mobile,
-  h_video: section.settings.video_url,
-  h_cta_text: section.settings.cta_text,
-  h_cta_url: section.settings.cta_url,
-  h_content_position: section.settings.content_position
- %}
+  id: section.id,
+  s: section.settings
+%}
 
 {% schema %}
   {
     "name": "hero",
-    "class": "hero container-fluid",
     "settings":[
       {
         "type": "header",
@@ -56,54 +45,35 @@
         "default": "h2"
       },
       {
-        "type": "select",
-        "id": "background_color",
-        "label": "Background Color",
-        "options": [
-          {"label": "Primary-White", "value": "#ffffff"},
-          {"label": "Primary-Black", "value": "#121212"},
-          {"label": "Utility-Army", "value": "#2D402A"},
-          {"label": "Utility-Blush", "value": "#DFBFC0"},
-          {"label": "Utility-Crimson", "value": "#3F2727"},
-          {"label": "Utility-Navy", "value": "#0A3055"},
-          {"label": "Utility-Tan", "value": "#B9B093"},
-          {"label": "Sport-Magenta", "value": "#FF00FF"},
-          {"label": "Sport-Orange", "value": "#FF4500"},
-          {"label": "Sport-Yellow", "value": "#FFEA06"},
-          {"label": "Sport-Green", "value": "#BEFF00"},
-          {"label": "Sport-Blue", "value": "#0036EB"},
-          {"label": "Core-Grey-1", "value": "#f1f1f1"},
-          {"label": "Core-Grey-2", "value": "#B1B7C2"},
-          {"label": "Core-Grey-3", "value": "#393D49"}
-        ]
-      },
-      {
         "type": "image_picker",
-        "id": "handwritten_text_image",
-        "label": "Handwritten text image"
+        "id": "handwritten_image",
+        "label": "Handwritten image",
+        "info": "Image placed on top of the hero title"
       },
       {
-        "type": "text",
+        "type": "richtext",
         "id": "title",
-        "label": "Title"
+        "label": "Title",
+        "info": "Use Bold to create a color highlight on the text"
       },
       {
-        "type": "select",
-        "id": "title_color",
-        "label": "Header Color",
-        "options": [
-          {"label":"Primary-White", "value":"white"},
-          {"label":"Primary-Black", "value":"black"},
-          {"label":"Sport-Magenta", "value":"magenta"},
-          {"label":"Sport-Orange", "value":"orange"},
-          {"label":"Sport-Green", "value":"green"},
-          {"label":"Sport-Yellow", "value":"yellow"},
-          {"label":"Sport-Blue", "value":"blue"},
-          {"label":"Cyan", "value":"cyan"},
-          {"label": "Core-Grey-1", "value": "core-grey-1"},
-          {"label": "Core-Grey-2", "value": "core-grey-2"},
-          {"label": "Core-Grey-3", "value": "core-grey-3"}
-        ]
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#000000",
+        "info": "Default color of the body content text"
+      },
+      {
+        "type": "color",
+        "id": "highlight_color",
+        "label": "Highlight Color",
+        "default": "#FF00FF",
+        "info": "Color for the highlighted text on the title of the module"
+      },
+      {
+        "type": "textarea",
+        "id": "body_content",
+        "label": "Body content"
       },
       {
         "type": "text",
@@ -115,17 +85,61 @@
         "id": "cta_url",
         "label": "CTA Link"
       },
+     {
+       "type": "select",
+       "id": "button_style",
+       "label": "Button Style",
+       "options": [
+         {
+           "value": "btn-primary",
+           "label": "Black"
+         },
+        {
+          "value": "btn-secondary",
+          "label": "Blue"
+        },
+        {
+          "value": "btn-white",
+          "label": "White"
+        }
+       ]
+     },
       {
         "type": "header",
-        "content": "Design"
+        "content": "Layout"
       },
       {
         "type": "select",
-        "id": "content_position",
-        "label": "Image Position",
+        "id": "vertical_position",
+        "label": "Text Vertical Position",
         "options": [
-          {"label": "Image Above Content", "value":"true"},
-          {"label": "Image Below Content", "value":"false"}
+          {
+            "value": "hero--vertical-top",
+            "label": "Top"
+          },
+          {
+            "value": "hero--vertical-center",
+            "label": "Center"
+          },
+          {
+            "value": "hero--vertical-bottom",
+            "label": "Bottom"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "horizontal_position",
+        "label": "Text Horizontal Position",
+        "options": [
+          {
+            "value": "hero--horizontal-left",
+            "label": "Left"
+          },
+          {
+            "value": "hero--horizontal-center",
+            "label": "Center"
+          }
         ]
       },
       {
@@ -135,33 +149,44 @@
       {
         "type": "image_picker",
         "id": "image",
-        "label": "Main Image",
-        "info": "Recommended Size: 1440w x 810h (double for retina)"
+        "label": "Desktop Image",
+        "info": "Recommended Size: 1440w x 660h"
+      },
+      {
+        "type": "text",
+        "id": "desktop_video_mp4",
+        "label": "Desktop Video (MP4)",
+        "info": "Replaces desktop background image for a video, aspect ratio required 16x9"
+      },
+      {
+        "type": "text",
+        "id": "desktop_video_webm",
+        "label": "Desktop Video (WEBM)",
+        "info": "Replaces desktop background image for a video, aspect ratio required 16x9"
       },
       {
         "type": "image_picker",
         "id": "image_mobile",
         "label": "Mobile Image",
-        "info": "Recommended Size: 485w x 437h (double for retina)"
+        "info": "Recommended Size: 485w x 437h"
       },
       {
-        "type": "header",
-        "content": "Video"
+        "type": "text",
+        "id": "mobile_video_mp4",
+        "label": "Mobile Video (MP4)",
+        "info": "Replaces mobile image for a looping video"
       },
       {
-        "type": "video_url",
-        "id": "video_url",
-        "label": "Video Url",
-        "accept": ["youtube"]
+        "type": "text",
+        "id": "mobile_video_webm",
+        "label": "Mobile Video (WEBM)",
+        "info": "Replaces mobile image for a looping video"
       }
     ],
     "presets": [
       {
         "name": "Hero",
-        "category": "Media",
-        "settings": {
-          "title": "Banner Text Here"
-        }
+        "category": "Layout"
       }
     ]
   }
