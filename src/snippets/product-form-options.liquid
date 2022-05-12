@@ -32,30 +32,36 @@
         {{ current_variant[option_index] }}
       </div>
     </div>
-    <div class="product-option__swatch">
-      {% assign printed_variant = "" %}
-      {% for variant in product.variants %}
-        {%- if printed_variant == variant[option_index] -%}
-          {%- continue -%}
-        {%- endif -%}
-        {%- assign printed_variant = variant[option_index] -%}
-        <label class="product-option__single-selector">
-          <input type="radio"
-                 name="{{option_index}}"
-                 value="{{variant[option_index]}}"
-                 class="hide"
-                 data-option-name="{{option_downcase}}"
-                 data-product-option="{{ option_index }}"
-                 data-option-value="{{variant[option_index] | downcase}}"
-                 {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
-                 data-index="{{ option_index }}"
-                 data-single-option-selector>
+    <div class="product-option__swatch swiper-container" data-swatch-slider>
+      <div class="swiper-wrapper">
+        {% assign printed_variant = "" %}
+        {% for variant in product.variants %}
+          {%- if printed_variant == variant[option_index] -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- assign printed_variant = variant[option_index] -%}
+          <label class="product-option__single-selector swiper-slide" data-swatch-slide>
+            <input type="radio"
+                  name="{{option_index}}"
+                  value="{{variant[option_index]}}"
+                  class="hide"
+                  data-option-name="{{option_downcase}}"
+                  data-product-option="{{ option_index }}"
+                  data-option-value="{{variant[option_index] | downcase}}"
+                  {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
+                  data-index="{{ option_index }}"
+                  data-single-option-selector>
 
-          <div class="product-option__ui">
-            <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
-          </div>
-        </label>
-      {% endfor %}
+            <div class="product-option__ui">
+              <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+            </div>
+          </label>
+        {% endfor %}
+      </div>
+      <div class="product-option__arrows">
+        <div class="product-option__arrow product-option__arrow-prev" data-arrow-prev></div>
+        <div class="product-option__arrow product-option__arrow-next" data-arrow-next></div>
+      </div>
     </div>
   </div>
 {% endif %}
