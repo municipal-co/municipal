@@ -20,6 +20,8 @@
   width: calc(100% + 60px);
   margin-left: -30px;
   overflow: hidden;
+  position: relative;
+
 
   .shop-the-look:not([id=shop-the-look-pdp]) & {
     width: 100%;
@@ -35,6 +37,33 @@
 
 .shop-the-look__slide {
   width: 90%;
+}
+
+.shop-the-look__arrow {
+  display: block;
+  width: 80px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  cursor: pointer;
+  background: linear-gradient(90deg, rgba($black, 0.5) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity  $transition-duration-base $transition-timing-function-in-out-ui;
+  &:hover {
+    opacity: 1;
+  }
+
+  @include media-breakpoint-up('xl') {
+    width: 120px;
+  }
+}
+
+.shop-the-look__arrow--next {
+  left: unset;
+  right: 0;
+  transform: scale(-1);
 }
 
 @import "../components/card/look-card.scss";

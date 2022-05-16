@@ -25,7 +25,6 @@
   {% assign look_ids = look_ids | split: ', ' %}
 {% endif %}
 
-
 <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
   <div class="shop-the-look__looks-container" data-looks-container>
     <div class="shop-the-look__slider swiper-wrapper" data-slider>
@@ -76,6 +75,8 @@
         {% assign  current_look = blank %}
       {% endfor %}
     </div>
+    <div class="shop-the-look__arrow shop-the-look__arrow--prev" data-arrow-prev></div>
+    <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
   </div>
 
   {{ look_drawers }}

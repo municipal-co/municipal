@@ -49,6 +49,10 @@ export default class ShopTheLook extends BaseSection {
       slidesOffsetAfter: 30,
       threshold: 10,
       watchOverflow: true,
+      navigation: {
+        nextEl: '[data-arrow-next]',
+        prevEl: '[data-arrow-prev]'
+      }
     }
 
     if(this.$container.attr('id') !== 'shop-the-look-pdp') {
@@ -119,9 +123,13 @@ export default class ShopTheLook extends BaseSection {
         slidesPerView: 1.5,
         spaceBetween: 15,
         threshold: 20,
+        navigation: {
+          prevEl: '[data-arrow-prev]',
+          nextEl: '[data-arrow-next]'
+        },
         lazy: {
           enabled: true,
-          loadPrevNextAmount: 2,
+          loadPrevNextAmount: 3,
           checkInView: true,
         },
       })
