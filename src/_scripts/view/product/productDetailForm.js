@@ -183,8 +183,6 @@ export default class ProductDetailForm {
       }
     })
 
-    console.log(currentSlide);
-
     this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
       slideClass: 'swiper-slide',
       slidesPerView: 4.4,
