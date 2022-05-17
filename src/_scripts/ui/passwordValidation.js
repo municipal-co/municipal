@@ -49,7 +49,7 @@ export default class PasswordValidation {
       } else {
         enableCreateCustomerSubmit = false;
         $(selectors.formErrorMessage).text(
-          'The password does not fullfil the conditions.'
+          'The password does not fulfill the conditions.'
         );
         $(selectors.formErrorMessage).addClass('show');
       }
