@@ -94,22 +94,28 @@
             <div class="bundle__options-container bundle__options-container--disabled" data-bundle-options-container>
               {% for i in product.metafields.custom_fields["bundle_options"] %}
                 <label class="bundle__option-container">
-                  <input type="radio" name="bundleOption" {% if forloop.index == 1 %} checked{% endif %} style="display:none;" value="{{i.quantity}}" data-bundle-quantity-option>
+                  <input type="radio" name="bundleOption" {% if forloop.index == 1 %} checked{% endif %} style="display:none;" value="{{i.quantity}}" data-bundle-quantity-option data-bundle-discount="{{i.discount_value}}">
                   <div class="bundle__option">
                     <span class="bundle__option-description">
                       {{ i.quantity }} {{ i.unit_descriptor }}
                     </span>
 
-                    <div class="bundle__price">
-                      {% unless i.discount_value == "0" or i.discount_value == blank %}
-                      {% assign discount_value = 100 | minus: i.discount_value %}
-                      {% assign discount_value = current_variant.price | times: discount_value | divided_by: 100 %}
-                        <span class="bundle__discount-price" data-bundle-discount-price="{{discount_value | times: i.quantity }}"> {{ discount_value | times: i.quantity | money_without_trailing_zeros }}</span>
-                      {% endunless %}
-                      <span class="bundle__full-price" data-bundle-full-price="{{ current_variant.price | times: i.quantity }}">{{ current_variant.price | times: i.quantity | money_without_trailing_zeros }}</span>
-                    </div>
+                    {% if i.quantity == 1 %}
+                      <div class="bundle__price">
+                        {% if product.compare_price_varies %}
+                          <span class="bundle__price-min">{{product.compare_at_price_min | money_without_trailing_zeros }}</span>
+                          -
+                          <span class="bundle_price-max">{{product.compare_at_price_max | money_without_trailing_zeros }}</span>
+                        {% else %}
+                          <span class="bundle__full-price">{{product.price | money_without_trailing_zeros }}</span>
+                        {% endif %}
+                      </div>
+                    {% else %}
+                      <span class="bundle__discount">
+                        {{i.discount_value}}% off
+                      </span>
+                    {% endif %}
                   </div>
-
                 </label>
               {% endfor %}
             </div>
@@ -157,6 +163,10 @@
                         {% endif %}
                       </span>
                     {% endfor %}
+                    <div  class="bundle-product__variant-price">
+                      <s data-bundle-current-price class="bundle-product__compare-at-price">{%- if current_variant.compare_at_price > current_variant.price -%} {{current_variant.compare_at_price | money_without_trailing_zeros}} {%- endif -%}</s>
+                      <span data-bundle-discount-price data-variant-price="{{current_variant.price}}">{{current_variant.price | money_without_trailing_zeros }}</span>
+                    </div>
                   </div>
                 </div>
               </label>
@@ -302,6 +312,7 @@
                 {{ 'products.product.sold_out' | t }}
               {% endif %}
             </span>
+            - <span data-add-to-cart-price>{{ current_variant.price | money_without_trailing_zeros }}</span>
         </button>
         <button
           type="button"
