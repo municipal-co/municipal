@@ -1,0 +1,93 @@
+<div class="bundle-options">
+  <span class="bundle-options__title">{{section.settings.bundle_quantity_title}}</span>
+  {% for bundle in product.metafields.custom_fields["bundle_options"] %}
+    <label class="bundle-option__container">
+      <input type="radio" name="bundle_quantity" value="{{ bundle.quantity }}" {% if forloop.index == 1 %} checked {% endif %} style="display: none;">
+      <div class="bundle-option__ui">
+        <div class="bundle-option__corner">
+          <span class="bundle-option__checkmark">
+            {% render 'icon-checkmark' %}
+          </span>
+          <span class="bundle-option__descriptor"> {{bundle.quantity}} pack </span>
+        </div>
+        {% if bundle.discount_value != '0' and bundle.discount_value != blank %}
+          <div class="bundle-option__center">
+            save {{ bundle.discount_value }}%
+          </div>
+        {% endif %}
+
+        <div class="bundle-option__price">
+          {% unless bundle.discount_value == '0' or bundle.discount_value == blank %}
+            {% assign discount_value = 100 | minus: bundle.discount_value %}
+            {% assign discount_value = current_variant.price | times: discount_value | divided_by: 100 %}
+            <span class="bundle-option__discount-price" data-discount="{{ 100 | minus: bundle.discount_value }}" data-bundle-discount-price="{{discount_value | times: bundle.quantity }}"> {{ discount_value | times: bundle.quantity | money_without_trailing_zeros }} </span>
+          {% endunless %}
+          <div class="bundle-option__full-price" data-discount="{{ 100 | minus: bundle.discount_value }}" data-bundle-full-price="{{current_variant.price | times: i.quantity }}">{{ current_variant.price | times: bundle.quantity | money_without_trailing_zeros }}</div>
+        </div>
+      </div>
+    </label>
+  {% endfor %}
+
+  <div class="bundle-items" data-bundle-items>
+    <span class="bundle-items__title">Edit color and size:</span>
+    {% for i in (1..product.metafields.custom_fields["bundle_options"].size) %}
+      <div class="bundle-item__drawer">
+        <div class="bundle-item__drawer-head">
+          <div class="bundle-item__image">
+            <img data-src="{{product.selected_or_first_available_variant.image | img_url: '100x', scale: "2" }}" alt="" class="lazyload">
+          </div>
+          <div class="bundle-item__product-data">
+            <div class="bundle-item__product-title">
+              {{ product.title }}
+            </div>
+            <span class="bundle-item__option" data-option-1>{{product.selected_or_first_available_variant.option1}}</span>
+            <span class="bundle-item__option" data-option-2>{{product.selected_or_first_available_variant.option2}}</span>
+          </div>
+        </div>
+        <div class="bundle-item__drawer-body">
+          {% for option in product.options %}
+            {% if option == 'color' or option == "Color" %}
+              {% render 'product-form-options',
+                type: 'swatch',
+                print_option: 'color',
+                current_variant: product.selected_or_first_available_variant
+              %}
+            {% elsif option == 'size' or option == 'Size' %}
+            {% for option in current_product.options %}
+            {% assign option_downcase = option | downcase %}
+              {% if option_downcase == 'size' %}
+                {% assign size_key = 'option' | append: forloop.index %}
+              {% endif %}
+            {% endfor %}
+
+            <input type="hidden" name="{{size_key}}" data-product-option="{{size_key}}">
+
+            <button class="btn btn-outline-primary btn-block product-option__drawer-btn"
+                    type="button"
+                    data-current-color="{{ current_variant[color_key] }}"
+                    data-color-index="{{ color_key }}"
+                    data-print-option="Size"
+                    data-print-option-key="{{size_key}}"
+                    data-size-drawer-toggler>
+              <span class="button__text" data-option-text="{{size_key}}" data-print-option="Size">
+                Select Size
+              </span>
+
+              <div class="btn__ui">
+                {% render 'icon-caret-down' %}
+              </div>
+            </button>
+            {% else  %}
+              {% render 'product-form-options'
+                type: 'radio',
+                print_option: option,
+                current_variant: product.selected_or_first_available_variant
+              %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>

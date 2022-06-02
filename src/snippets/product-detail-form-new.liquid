@@ -41,8 +41,12 @@
         value="{{variant.id}}"> {{ variant.title }}</option>
       {% endfor %}
     </select>
-
     <input type="hidden" name="quantity" value="1">
+
+    {% if enable_bundles %}
+      {% render 'bundles-ui',
+      current_variant: current_variant %}
+    {% endif %}
 
     <button
       type="submit"
