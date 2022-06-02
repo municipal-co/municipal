@@ -142,6 +142,16 @@
     margin-top: 30px;
   }
 }
+
+.btn.product__add-to-cart {
+  font-size: 20px;
+  padding: 20px;
+
+  @include media-breakpoint-down('md') {
+    font-size: 20px;
+  }
+}
+
 .inactive-white .add-to-cart {
   background-color: $white;
   span {

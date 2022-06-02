@@ -165,7 +165,7 @@
                     {% endfor %}
                     <div  class="bundle-product__variant-price">
                       <s data-bundle-current-price class="bundle-product__compare-at-price">{%- if current_variant.compare_at_price > current_variant.price -%} {{current_variant.compare_at_price | money_without_trailing_zeros}} {%- endif -%}</s>
-                      <span data-bundle-discount-price data-variant-price="{{current_variant.price}}">{{current_variant.price | money_without_trailing_zeros }}</span>
+                      <span data-bundle-discount-price data-add-to-cart-price data-variant-price="{{current_variant.price}}">{{current_variant.price | money_without_trailing_zeros }}</span>
                     </div>
                   </div>
                 </div>
@@ -297,7 +297,7 @@
         <button
           type="submit"
           name="add"
-          class="btn btn-primary btn-block add-to-cart"
+          class="btn btn-primary btn-block product__add-to-cart"
           data-add-to-cart
           {% unless current_variant.available %}
             {% unless disable_bis_button == true %}
