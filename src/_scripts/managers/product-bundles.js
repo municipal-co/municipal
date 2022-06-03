@@ -2,24 +2,24 @@ import $ from 'jquery';
 import * as imageUtils from '../core/image';
 
 const selectors = {
-  bundleOptionsContainer: '[data-bundle-options-container]',
-  bundleOption: '[data-bundle-quantity-option]',
-  bundleProductsContainer: '[data-bundle-products-container]',
+  bundleOption: '[data-bundle-option]',
   bundleProduct: '[data-bundle-product]',
-  bundleItemId: '[data-bundle-product-id]',
-  bundleProductImage: '[data-bundle-product-image]',
-  bundleVariantOptions: '[data-variant-options]',
+  bundleProductsContainer: '[data-bundle-products]',
   bundleProductId: '[data-bundle-product-id]',
-  bundleProductSoldout: '[data-bundle-product-sold-out-badge]',
+  bundleProductImage: '[data-bundle-product-image]',
+  productDrawer: '[data-product-drawer]',
+  productOption1: '[data-option-1]',
+  productOption2: '[data-option-2]',
+  productOption3: '[data-option-3]',
+  proudctComparePrice: '[data-item-compare-price]',
+  productFullPrice: '[data-item-full-price]',
+  bundleEditToggle: '[data-bundle-edit-toggle]',
+  addToCartPrice: '[data-add-to-cart-price]',
   productAddToCart: '[data-add-to-cart]',
-  klarnaMessagingPrice: '[data-purchase-amount]',
-  bundleDiscountPrice: '[data-bundle-discount-price]',
-  bundleFullPrice: '[data-bundle-full-price]',
 }
 
 const classes = {
-  visible: 'is-visible',
-  optionsDisabled: 'bundle__options-container--disabled'
+  open: 'is-open',
 }
 
 export default class ProductBundles {
@@ -31,34 +31,48 @@ export default class ProductBundles {
     this.$bundleOptions = $(selectors.bundleOption, this.$container);
     this.$bundleProductsContainer = $(selectors.bundleProductsContainer, this.$container);
     this.$bundleProducts = $(selectors.bundleProduct, this.$container);
+    this.$bundleEditToggle = $(selectors.bundleEditToggle);
 
     this.$bundleOptions.on('change', this.onBundleOptionChange.bind(this));
-    this.$bundleProducts.on('change', this.onProductSelectedChange.bind(this));
-
-    $(selectors.bundleOptionsContainer).removeClass(classes.optionsDisabled);
+    this.$bundleEditToggle.on('click', this.toggleBundleDrawer.bind(this));
+    // this.$bundleProducts.on('change', this.onProductSelectedChange.bind(this));
   }
 
   onBundleOptionChange(evt) {
     const $this = $(evt.currentTarget);
     const selectedQty = $this.val();
 
-    this.updateKlarnaPrice($this.parent());
-
     if(selectedQty > 1) {
       this.$bundleProductsContainer.show();
-      this.$bundleProducts.first().prop('checked', true);
-      this.$bundleProducts.each((index, el) => {
-        const $productParent = $(el).parent();
+      this.$bundleProducts.each((index, product) => {
+        const $product =$(product);
         if(index + 1 <= selectedQty) {
-          $productParent.addClass(classes.visible);
+          $(product).show();
         } else {
-          $productParent.removeClass(classes.visible);
+          $(product).hide();
         }
       })
     } else {
       this.$bundleProductsContainer.hide();
-      this.$bundleProducts.prop('checked', false);
+      this.$bundleProducts.hide()
     }
+  }
+
+  toggleBundleDrawer(evt) {
+    const $this = $(evt.currentTarget);
+    const $container = $this.parents(selectors.bundleProduct);
+    const $drawer = $container.find(selectors.productDrawer);
+
+    if($container.hasClass(classes.open)) {
+      $container.removeClass(classes.open);
+      $drawer.css('height', 0);
+    } else {
+      const drawerHeight = $container.find(selectors.productDrawer).get(0).scrollHeight;
+
+      $container.addClass(classes.open);
+      $drawer.css('height', drawerHeight);
+    }
+
   }
 
   updateKlarnaPrice($container) {
