@@ -223,16 +223,16 @@ export default class AJAXCart {
     const currentPriceDifference = Currency.formatMoney(currentValueDifference, theme.moneyFormat);
     const currentPercentage = (cart.unformatted_price * 100) / this.thresholdBaseValue;
     if (currentValueDifference <= 0 && this.thresholdCompleteMsg !== undefined) {
-      this.$thresholdMessage.text(this.thresholdCompleteMsg);
+      this.$thresholdMessage.html(this.thresholdCompleteMsg);
     } else if (currentValueDifference > 0 && this.thresholdActiveMsg !== undefined) {
-      const text = this.thresholdActiveMsg.replace('[value]', currentPriceDifference);
-      this.$thresholdMessage.text(text);
+      const text = this.thresholdActiveMsg.replace('[value]', '<span>' + currentPriceDifference + '</span>');
+      this.$thresholdMessage.html(text);
     }
 
     if (currentPercentage > 100) {
-      this.$thresholdBar.css('width', 'calc(100% + 2px)');
+      this.$thresholdBar.css('width', 'calc(100%)');
     } else {
-      this.$thresholdBar.css('width', `calc(${currentPercentage}% + 2px)`);
+      this.$thresholdBar.css('width', `calc(${currentPercentage}%)`);
     }
   }
 

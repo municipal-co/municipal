@@ -33,6 +33,12 @@
         {% endif %}
       {% endif %}
 
+      {% capture variant_title %}
+        {% if item.variant.option1 != blank %}{{ item.variant.option1 }}{% endif %}
+        {% if item.variant.option2 != blank %} - {{ item.variant.option2 }}{% endif %}
+        {% if item.variant.option3 != blank %} - {{ item.variant.option3 }}{% endif %}
+      {% endcapture %}
+
       {
         "id": {{ item.variant_id }},
         "key": {{ item.key | json }},
@@ -70,7 +76,7 @@
         "product_title": {{ product.title | json }},
         "product_description": {{ product.description | json }},
         "product_type": {{ product.type | json }},
-        "variant_title": {{ item.variant.title | json }},
+        "variant_title": {{ variant_title | json }},
         "variant_quantity_limit": {{ variant_quantity_limit }},
         "available": {{ item.variant.available | json }},
         "variant_options": [

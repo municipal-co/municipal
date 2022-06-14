@@ -72,6 +72,7 @@
   "cart": {
     "general": {
       "title": "Carrinho de Compras",
+      "contents_title": "Itens",
       "remove": "Eliminar",
       "note": "Instruções especiais para o vendedor",
       "subtotal": "Subtotal",
