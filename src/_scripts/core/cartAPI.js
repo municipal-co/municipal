@@ -285,7 +285,7 @@ class CartAPI {
   }
 
   validateBundleSelection($form) {
-    const $bundleSelectors = $form.find('[data-bundle-product-item]');
+    const $bundleSelectors = $form.find('[data-bundle-product]');
     const $activeBundleSelectors = $bundleSelectors.filter((index, el) => {
       if($(el).is(':visible')) return true;
     })

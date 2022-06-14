@@ -154,6 +154,12 @@
   color: $blue;
 }
 
+.bundle-item__sold-out {
+  font-size: 13px;
+  color: $red;
+  line-height: 1.5;
+}
+
 .bundle-item__edit-button {
   border: 1.5px solid $black;
   border-radius: 9999px;
@@ -222,4 +228,13 @@
   .product-option__drawer-btn {
     margin-bottom: 20px;
   }
+}
+
+.bundle-savings {
+  color: $blue;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 27px;
+  margin-top: 10px;
 }

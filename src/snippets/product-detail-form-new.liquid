@@ -2,46 +2,48 @@
 
 <div data-product-detail-form data-low-quantity-threshold="{{ settings.low_inventory_threshold | default: 0 }}">
   {%- form 'product', product, data-add-to-cart-form:"" -%}
-    {%- for option in product.options -%}
-      {%- if option == "color" or option == "Color" -%}
-        {%- render 'product-form-options',
-          product: product,
-          type: 'swatch',
-          print_option: 'color'
-          current_variant: current_variant
-        %}
-      {%- elsif option == "size" or option == "Size" -%}
-        {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
-        <div class="btn-container text-center">
-          <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
-        </div>
+    <div data-product-detail-options>
+      {%- for option in product.options -%}
+        {%- if option == "color" or option == "Color" -%}
+          {%- render 'product-form-options',
+            product: product,
+            type: 'swatch',
+            print_option: 'color'
+            current_variant: current_variant
+          %}
+        {%- elsif option == "size" or option == "Size" -%}
+          {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
+          <div class="btn-container text-center">
+            <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
+          </div>
+          {%- endif -%}
+
+          {%- render 'product-form-options',
+            product: product,
+            type: 'drawer',
+            print_option: 'size'
+            current_variant: current_variant
+          -%}
+        {%- else -%}
+          {%- render 'product-form-options'
+            product: product,
+            type: 'select'
+            print_option: option,
+            current_variant: current_variant
+          -%}
         {%- endif -%}
+      {%- endfor -%}
 
-        {%- render 'product-form-options',
-          product: product,
-          type: 'drawer',
-          print_option: 'size'
-          current_variant: current_variant
-        -%}
-      {%- else -%}
-        {%- render 'product-form-options'
-          product: product,
-          type: 'select'
-          print_option: option,
-          current_variant: current_variant
-        -%}
-      {%- endif -%}
-    {%- endfor -%}
-
-    <select name="id" class="no-js" data-product-select>
-      {% for variant in product.variants %}
-        <option
-        {% if variant == current_variant %} selected{% endif %}
-        {% unless variant.available %} disabled="disabled"{% endunless %}
-        value="{{variant.id}}"> {{ variant.title }}</option>
-      {% endfor %}
-    </select>
-    <input type="hidden" name="quantity" value="1">
+      <select name="id" class="no-js" data-product-select>
+        {% for variant in product.variants %}
+          <option
+          {% if variant == current_variant %} selected{% endif %}
+          {% unless variant.available %} disabled="disabled"{% endunless %}
+          value="{{variant.id}}"> {{ variant.title }}</option>
+        {% endfor %}
+      </select>
+      <input type="hidden" name="quantity" value="1">
+    </div>
 
     {% if enable_bundles %}
       {% render 'bundles-ui',
