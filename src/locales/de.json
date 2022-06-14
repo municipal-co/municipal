@@ -72,6 +72,7 @@
   "cart": {
     "general": {
       "title": "Einkaufswagen",
+      "contents_title": "Produkte",
       "remove": "Entfernen",
       "note": "Besondere Hinweise an den Verkäufer",
       "subtotal": "Zwischensumme",

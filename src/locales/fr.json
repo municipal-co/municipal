@@ -72,6 +72,7 @@
   "cart": {
     "general": {
       "title": "Panier",
+      "contents_title": "Articles",
       "remove": "Retirer",
       "note": "Instructions spéciales pour la commande",
       "subtotal": "Sous-total",

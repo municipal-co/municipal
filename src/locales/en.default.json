@@ -86,6 +86,7 @@
   "cart": {
     "general": {
       "title": "Bag",
+      "contents_title": "Items",
       "remove": "Remove",
       "note": "Special instructions for seller",
       "subtotal": "Subtotal",
@@ -93,7 +94,7 @@
       "update": "Update Cart",
       "checkout": "Checkout",
       "view": "View Cart",
-      "empty": "Your cart is currently empty.",
+      "empty": "Your bag is empty",
       "cookies_required": "Enable cookies to use the shopping cart",
       "continue_browsing_html": "Continue browsing <a href=\"/collections/all\">here</a>.",
       "item_quantity": "Item quantity",

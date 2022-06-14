@@ -1,9 +1,30 @@
+<style>
+  {% if section.settings.empty_cart_image != blank %}
+  .ajax-cart__empty-lining {
+    background-image: url('{{section.settings.empty_cart_image | img_url: 'master'}}');
+  }
+  {% endif %}
+  {% if section.settings.empty_cart_image_mobile != blank %}
+  @media (max-width: 575.98px) {
+    .ajax-cart__empty-lining {
+      background-image: url('{{section.settings.empty_cart_image_mobile | img_url: 'master'}}');
+    }
+  }
+  {% endif %}
+  .ajax-cart__empty-title,
+  .ajax-cart__empty-text {
+    color: {{section.settings.text_color}};
+  }
+  .ajax-cart__empty-highlight-text {
+    color: {{ section.settings.highlight_color }};
+  }
+</style>
 <div data-section-id="{{ section.id }}" data-section-type="ajax-cart">
   <div class="ajax-cart-container" data-ajax-cart-container>
       <form action="/cart" method="post" class="ajax-cart-form" novalidate>
         <div class="ajax-cart__header">
-          <a href="#" class="ajax-cart__close" data-ajax-cart-close>{% include 'icon-close' %}</a>
           <span class="ajax-cart__title">{{ 'cart.general.title' | t }}</span>
+          <a href="#" class="ajax-cart__close" data-ajax-cart-close>{% include 'icon-close' %}</a>
         </div>
         {% if section.settings.free_shipping_threshold > 0 %}
         {% assign shipping_threshold = section.settings.free_shipping_threshold | times: 100 %}
@@ -14,7 +35,7 @@
                data-complete-message="{{ section.settings.free_shipping_message}}">
             {% if section.settings.shipping_threshold_message != blank %}
               <div class="ajax-cart__shipping-bar-message" data-threshold-message>
-                {% assign threshold_money = shipping_threshold | money %}
+                {% assign threshold_money = shipping_threshold | money | prepend: "<span>" | append: "</span>" %}
                 {{ section.settings.shipping_threshold_message | replace: '[value]', threshold_money }}
               </div>
             {% endif %}
@@ -38,7 +59,7 @@
           </div>
           <div class="ajax-cart__footer-bottom">
             <div class="ajax-cart__footer-row">
-              <button type="submit" name="checkout" class="btn btn-block btn-secondary">{{ 'cart.general.checkout' | t }}</button>
+              <button type="submit" name="checkout" class="ajax-cart__footer-checkout btn btn-block btn-secondary">{{ 'cart.general.checkout' | t }}</button>
             </div>
             <div class="ajax-cart__footer-row text-center">
               <button class="btn btn-link ajax-cart__continue-shopping-btn" data-ajax-cart-close>Continue Shopping</button>
@@ -169,14 +190,12 @@
       {% raw %}
       {{/if}}
       {{#if items}}
+        {% endraw %}
+        <h3 class="ajax-cart__list-title"> {{ 'cart.general.contents_title' | t }}:</h3>
+        {% raw %}
         <ul class="ajax-cart__list">
         {{#each items}}
           <li class="ajax-cart__item {{#unless available}}ajax-cart__item--sold-out{{/unless}}" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
-            <button class="ajax-cart__item-remove" data-ajax-cart-item-remove>
-              {% endraw %}
-              {% include 'icon-close' %}
-              {% raw %}
-            </button>
             <div class="ajax-cart__item-image-wrapper frame frame--1x1">
               <img src="{{ image }}" class="ajax-cart__item-image" data-object-fit="cover" data-object-position="center">
             </div>
@@ -188,16 +207,8 @@
               </div>
               <ul class="ajax-cart__item-options">
                 {{#unless has_only_default_variant}}
-                  {{#if variant_options}}
-                    {{#each variant_options}}
-                      <li>
-                        {{ name }}: {{ value }}
-                      </li>
-                    {{/each}}
-                  {{else}}
-                    {{#if variant_title}}
-                      <li>{{ variant_title }}</li>
-                    {{/if}}
+                  {{#if variant_title}}
+                    <li>{{ variant_title }}</li>
                   {{/if}}
                 {{/unless}}
                 {{#if available}}
@@ -229,16 +240,23 @@
                       {{ price }}
                     </div>
                   {{/if }}
-                  {{#if available}}
-                    {{#unless is_free_gift}}
-                    <div class="ajax-item__quantity-adjuster" data-quantity-adjuster>
-                      <button class="quantity-adjuster__decrement" data-decrement>-</button>
-                      <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
-                      <span class="quantity-adjuster__label">{{ quantity }} </span>
-                      <button class="quantity-adjuster__increment" data-increment>+</button>
-                    </div>
-                    {{/unless}}
-                  {{/if}}
+                  <div class="ajax-item__item-controls">
+                    {{#if available}}
+                      {{#unless is_free_gift}}
+                      <div class="ajax-item__quantity-adjuster" data-quantity-adjuster>
+                        <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                        <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
+                        <span class="quantity-adjuster__label">{{ quantity }} </span>
+                        <button class="quantity-adjuster__increment" data-increment>+</button>
+                      </div>
+                      {{/unless}}
+                    {{/if}}
+                    <button class="ajax-cart__item-remove" data-ajax-cart-item-remove>
+                      {% endraw %}
+                      {{ 'cart.general.remove' | t }}
+                      {% raw %}
+                    </button>
+                  </div>
                 </div>
               {{/if}}
             </div>
@@ -247,15 +265,28 @@
       </ul>
     </div>
     {{else}}
-      <div class="ajax-cart__empty-message">
-        {% endraw %}
-        {% if section.settings.empty_text != blank %}
-          {{ section.settings.empty_text }}
-        {% else %}
-          {{ 'cart.general.empty' | t }}
-        {% endif %}
-        {% raw %}
+    {% endraw %}
+      <div class="ajax-cart__empty">
+        <div class="ajax-cart__empty-heading">{{ 'cart.general.empty' | t }}</div>
+        <div class="ajax-cart__empty-lining">
+          {% if section.settings.title != blank %}
+            <{{section.settings.title_tag}} class="ajax-cart__empty-title h1">
+              {{ section.settings.title | replace: '<strong>', '<span class="ajax-cart__empty-highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}
+            </{{section.settings.title_tag}}>
+          {% endif %}
+          {% if section.settings.body_content != blank %}
+            <p class="ajax-cart__empty-text p2">
+              {{ section.settings.body_content }}
+            </p>
+          {% endif %}
+          {% if section.settings.cta_text != blank and section.settings.cta_url != blank%}
+            <a href="{{section.settings.cta_url}}" class="btn {{ section.settings.button_style }} ajax-cart__empty-btn">
+              {{ section.settings.cta_text }}
+            </a>
+          {% endif %}
+        </div>
       </div>
+    {% raw %}
     {{/if}}
   </script>
 
@@ -266,16 +297,116 @@
   </script>
 {% endraw %}
 
-
 {% schema %}
   {
     "name": "Ajax Cart",
     "settings": [
       {
-        "id": "empty_text",
+        "type": "header",
+        "content": "Empty Cart",
+        "info": "This section is added to the mini cart when no products have been added."
+      },
+      {
+        "type": "select",
+        "id": "title_tag",
+        "label": "Title Tag",
+        "options": [
+          {
+            "value": "h1",
+            "label": "h1"
+          },
+          {
+            "value": "h2",
+            "label": "h2"
+          },
+          {
+            "value": "h3",
+            "label": "h3"
+          },
+          {
+            "value": "h4",
+            "label": "h4"
+          },
+          {
+            "value": "h5",
+            "label": "h5"
+          },
+          {
+            "value": "h6",
+            "label": "h6"
+          }
+        ],
+        "default": "h2"
+      },
+      {
         "type": "richtext",
-        "label": "Empty Text",
-        "default": "<p>Your bag is empty</p>"
+        "id": "title",
+        "label": "Title",
+        "info": "Use Bold to create a color highlight on the text"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#ffffff",
+        "info": "Default color of the body content text"
+      },
+      {
+        "type": "color",
+        "id": "highlight_color",
+        "label": "Highlight Color",
+        "default": "#FF00FF",
+        "info": "Color for the highlighted text on the title"
+      },
+      {
+        "type": "textarea",
+        "id": "body_content",
+        "label": "Body content"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button Style",
+        "options": [
+          {
+            "value": "btn-primary",
+            "label": "Black"
+          },
+          {
+            "value": "btn-secondary",
+            "label": "Blue"
+          },
+          {
+            "value": "btn-white",
+            "label": "White"
+          }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "id": "empty_cart_image",
+        "label": "Background image (Desktop)",
+        "info": "Size: 980x734px"
+      },
+      {
+        "type": "image_picker",
+        "id": "empty_cart_image_mobile",
+        "label": "Background image (Mobile)",
+        "info": "Size: 748x748px"
+      },
+      {
+        "type": "header",
+        "content": "Cart Promotions"
       },
       {
         "id": "promo_text",
