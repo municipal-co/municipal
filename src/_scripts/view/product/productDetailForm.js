@@ -102,8 +102,7 @@ export default class ProductDetailForm {
     this.$pdpDrawerToggler       = $(selectors.pdpOptionDrawerToggler, this.$container);
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
     this.$bisButton              = $(selectors.bisButton);
-    this.$swatchSlider           = $(selectors.swatchesSlider, this.$container);
-    this.$swatchSlide            = $(selectors.swatchSlide, this.$container);
+    this.$swatchSlider           = $(selectors.swatchesSlider);
     /* eslint-enable */
 
     this.optionDrawers = this._setUpOptionDrawers();
@@ -176,32 +175,37 @@ export default class ProductDetailForm {
   initSwatchesSlider() {
     let currentSlide = 0;
 
-    this.$swatchSlide.each((index, el) => {
-      if($(el).find('input[type=radio]:checked').length) {
-        currentSlide = index;
-        return false;
-      }
-    })
+    this.$swatchSlider.each((i, slider) => {
+      const $slider = $(slider);
+      const $swatchSlides = $(selectors.swatchSlide, $slider);
 
-    this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
-      slideClass: 'swiper-slide',
-      slidesPerView: 4.4,
-      watchOverflow: true,
-      slidesOffsetBefore: 30,
-      slidesOffsetAfter: 30,
-      spaceBetween: 8,
-      initialSlide: currentSlide,
-      threshold: 10,
-      navigation: {
-        prevEl: '[data-arrow-prev]',
-        nextEl: '[data-arrow-next]'
-      },
-      breakpoints: {
-        1024: {
-          slidesPerGroup: 4,
+      $swatchSlides.each((index, el) => {
+        if($(el).find('input[type=radio]:checked').length) {
+          currentSlide = index;
+          return false;
         }
-      }
-    });
+      })
+
+      this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
+        slideClass: 'swiper-slide',
+        slidesPerView: 4.4,
+        watchOverflow: true,
+        slidesOffsetBefore: 30,
+        slidesOffsetAfter: 30,
+        spaceBetween: 8,
+        initialSlide: currentSlide,
+        threshold: 10,
+        navigation: {
+          prevEl: '[data-arrow-prev]',
+          nextEl: '[data-arrow-next]'
+        },
+        breakpoints: {
+          1024: {
+            slidesPerGroup: 4,
+          }
+        }
+      });
+    })
   }
 
   /**
