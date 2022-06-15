@@ -8,7 +8,7 @@
   font-family: $font-family-heading-medium;
   font-size: 18px;
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
 }
 
 .bundle-option__ui {
@@ -87,7 +87,7 @@
   font-size: 18px;
   font-family: $font-family-heading-medium;
   line-height: 1;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
 .bundle-item__drawer {
@@ -227,6 +227,10 @@
 
   .product-option__drawer-btn {
     margin-bottom: 20px;
+  }
+
+  .product-option__header {
+    display: none;
   }
 }
 
