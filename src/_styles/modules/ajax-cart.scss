@@ -825,15 +825,15 @@ body.ajax-cart-open {
   bottom: 0;
   left: 0;
   z-index: $zindex-ajax-cart-backdrop;
-  background-color: $ajax-cart-backdrop-color;
-  opacity: 0;
+  background-color: transparent;
   pointer-events: none;
-  transition: all $transition-duration-slide $transition-timing-function-slide-out;
+  transition: background-color $transition-duration-slide $transition-timing-function-slide-out;
 
   &.is-visible {
-    opacity: $ajax-cart-backdrop-opacity;
+    background-color: $ajax-cart-backdrop-color;
     pointer-events: auto;
-    transition: all $transition-duration-slide $transition-timing-function-slide-in;
+    transition: background-color $transition-duration-slide $transition-timing-function-slide-in;
+    background-color: rgba(0,0,0,.8);
   }
 }
 

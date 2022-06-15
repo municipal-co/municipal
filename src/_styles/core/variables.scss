@@ -1092,8 +1092,7 @@ $drawer-bg: $white;
 $drawer-border-color: darken($drawer-bg, 5%);
 $drawer-padding-vertical: $grid-gutter-width;
 $drawer-padding-horizontal: $grid-gutter-width;
-$drawer-backdrop-color: #888;
-$drawer-backdrop-opacity: 0.6;
+$drawer-backdrop-color: rgba(0,0,0,.8);
 $drawer-header-font-size: $h5-font-size;
 $drawer-header-border-color: $black;
 
@@ -1107,7 +1106,6 @@ $ajax-cart-padding-horizontal: 80px;
 $ajax-cart-padding-vertical-mobile: 15px;
 $ajax-cart-padding-horizontal-mobile: 15px;
 $ajax-cart-backdrop-color: $drawer-backdrop-color;
-$ajax-cart-backdrop-opacity: $drawer-backdrop-opacity;
 
 
 // Page Hero
