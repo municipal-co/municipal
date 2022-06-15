@@ -295,7 +295,9 @@ export default class ProductBundles {
   updateATCstate() {
     const $visibleProducts = this.$bundleProducts.filter(':visible');
     let totalPrice = 0;
+    let finalPrice = 0;
     const discountPercentage = $(`${selectors.bundleOption}:checked`).data('discount-value');
+
     if($visibleProducts.length > 0) {
       let soldOut = false;
       let unavailable = false;
@@ -311,11 +313,10 @@ export default class ProductBundles {
       })
 
       const savingAmount = totalPrice * discountPercentage / 100;
-      const finalPrice = totalPrice - savingAmount;
+      finalPrice = totalPrice - savingAmount;
 
       $(selectors.bundleSavings).text(`You Saved ${Currency.formatMoney(savingAmount, theme.moneyFormat).replace('.00', '')}`).show();
       $(selectors.addToCartPrice).text(Currency.formatMoney(finalPrice, theme.moneyFormat).replace('.00', ''));
-
 
       if(unavailable) {
         $(selectors.productAddToCart).prop('disabled', true);
@@ -331,7 +332,7 @@ export default class ProductBundles {
         $(selectors.addToCartPrice).show();
       }
     } else {
-      const finalPrice = this.$bundleProducts.eq(0).find(selectors.productFullPrice).data('item-full-price');
+      finalPrice = this.$bundleProducts.eq(0).find(selectors.productFullPrice).data('item-full-price');
       const productOptions = this.getActiveOptions($(selectors.mainProductOptionsContainer));
       $(selectors.bundleSavings).hide();
       $(selectors.addToCartPrice).text(Currency.formatMoney(finalPrice, theme.moneyFormat).replace('.00', ''));
@@ -359,5 +360,9 @@ export default class ProductBundles {
         $(selectors.addToCartPrice).show();
       }
     }
+
+    $('[data-purchase-amount]').attr('data-purchase-amount', finalPrice);
+    window.KlarnaOnsiteService = window.KlarnaOnsiteService || [];
+    window.KlarnaOnsiteService.push({eventName: 'refresh-placements'});
   }
 }
