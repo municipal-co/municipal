@@ -33,6 +33,10 @@ body.ajax-cart-open {
   @include media-breakpoint-up('xs') {
     max-width: $ajax-cart-width;
   }
+
+  @include media-breakpoint-up('lg') {
+    max-width: $ajax-cart-width-lg;
+  }
 }
 
 // Ensure that the cart takes up the entire screen at all times
@@ -54,11 +58,11 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__shipping-bar-container {
-  padding: 36px 40px 50px;
+  padding: 36px 40px 25px;
   position: relative;
 
   @include media-breakpoint-down('xs') {
-    padding: 25px 20px 25px;
+    padding: 24px 20px 12px;
   }
 }
 
@@ -198,29 +202,27 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__empty {
-  margin-bottom: 70px;
-  padding-right: 40px;
-  padding-left: 40px;
+  padding: 25px 40px 70px;
 
   @include media-breakpoint-down('xs') {
-    padding-right: 20px;
-    padding-left: 20px;
+    padding: 12px 20px 70px;
   }
 }
 
 .ajax-cart__empty-lining {
   padding: 24px 70px;
-  min-height: 371px;
+  aspect-ratio: 4/3;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 10px;
 
   @include media-breakpoint-down('xs') {
     padding: 16px 18px;
-    min-height: 374px
+    aspect-ratio: 1/1;
   }
 }
 
@@ -303,6 +305,14 @@ body.ajax-cart-open {
     min-height: 131px;
   }
 
+  @include media-breakpoint-up('lg') {
+    padding: 20px 13px;
+  }
+
+  @include media-breakpoint-up('xl') {
+    padding: 20px 30px;
+  }
+
   &:last-child {
     margin-bottom: 70px;
   }
@@ -348,6 +358,10 @@ body.ajax-cart-open {
 
   @include media-breakpoint-down('xs') {
     width: calc(100% - 100px);
+  }
+
+  @include media-breakpoint-up('xl') {
+    padding-left: 35px;
   }
 }
 
@@ -406,6 +420,8 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__item-remove {
+  padding-right: 0;
+  padding-left: 10px;
   font-size: 11px;
   line-height: 1;
   border: none;
@@ -765,7 +781,6 @@ body.ajax-cart-open {
     font-size: 12px;
     line-height: 18px;
     @include media-breakpoint-down('xs') {
-      padding: 13px 16px;
       font-size: 10px;
       line-height: 16px;
     }
@@ -825,15 +840,15 @@ body.ajax-cart-open {
   bottom: 0;
   left: 0;
   z-index: $zindex-ajax-cart-backdrop;
-  background-color: $ajax-cart-backdrop-color;
-  opacity: 0;
+  background-color: transparent;
   pointer-events: none;
-  transition: all $transition-duration-slide $transition-timing-function-slide-out;
+  transition: background-color $transition-duration-slide $transition-timing-function-slide-out;
 
   &.is-visible {
-    opacity: $ajax-cart-backdrop-opacity;
+    background-color: $ajax-cart-backdrop-color;
     pointer-events: auto;
-    transition: all $transition-duration-slide $transition-timing-function-slide-in;
+    transition: background-color $transition-duration-slide $transition-timing-function-slide-in;
+    background-color: rgba(0,0,0,.8);
   }
 }
 
