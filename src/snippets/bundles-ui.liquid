@@ -10,19 +10,20 @@
           </span>
           <span class="bundle-option__descriptor"> {{bundle.quantity}} pack </span>
         </div>
-        {% if bundle.discount_value != '0' and bundle.discount_value != blank %}
-          <div class="bundle-option__center">
-            save {{ bundle.discount_value }}%
-          </div>
-        {% endif %}
 
         <div class="bundle-option__price">
-          {% unless bundle.discount_value == '0' or bundle.discount_value == blank %}
-            {% assign discount_value = 100 | minus: bundle.discount_value %}
-            {% assign discount_value = current_variant.price | times: discount_value | divided_by: 100 %}
-            <span class="bundle-option__discount-price"> {{ discount_value | times: bundle.quantity | money_without_trailing_zeros }} </span>
-          {% endunless %}
-          <div class="bundle-option__full-price">{{ current_variant.price | times: bundle.quantity | money_without_trailing_zeros }}</div>
+          {% if bundle.discount_value == '0' or bundle.discount_value == blank %}
+            {% if product.price_varies %}
+              <span class="bundle-option__price">{{ product.price_min | money_without_trailing_zeros }} - {{ product.price_max | money_without_trailing_zeros}}</span>
+            {% else %}
+              <span class="bundle-option__price">{{ product.price | money_without_trailing_zeros }}</span>
+            {% endif %}
+          {% else %}
+            <div class="bundle-option__discount">
+              save {{ bundle.discount_value }}%
+            </div>
+          {% endif %}
+
         </div>
       </div>
     </label>
