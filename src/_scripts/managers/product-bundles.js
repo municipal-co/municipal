@@ -1,7 +1,7 @@
 import $ from 'jquery';
+import Swiper from 'swiper';
 import * as Image from '../core/image'
 import * as Currency from '../core/currency';
-import cartAPI, * as CartAPI from '../core/cartAPI';
 
 const selectors = {
   mainProductOptionsContainer: '[data-product-detail-options]',
@@ -23,6 +23,7 @@ const selectors = {
   sizeDrawerInput: '[data-size-drawer-input]',
   productOption: '[data-product-option]',
   bundleSavings: '[data-bundle-savings]',
+  swatchSlider: '[data-swatch-slider]',
 }
 
 const classes = {
@@ -42,6 +43,7 @@ export default class ProductBundles {
     this.$bundleEditToggle = $(selectors.bundleEditToggle);
     this.$sizeDrawerToggler = $(selectors.sizeDrawerToggler, this.$bundleProducts);
     this.$sizeDrawerInput = $(selectors.sizeDrawerInput, this.$bundleProducts);
+    this.productSliders = [];
 
     this.$bundleOptions.on('change', this.onBundleOptionChange.bind(this));
     this.$bundleEditToggle.on('click', this.toggleBundleDrawer.bind(this));
@@ -49,6 +51,55 @@ export default class ProductBundles {
     this.$bundleProducts.on('change', this.onProductSelectedChange.bind(this));
     this.$sizeDrawerToggler.on('click', this.openCustomSizeDrawer.bind(this));
     this.$sizeDrawerInput.on('change', this.updateActiveSelection.bind(this));
+
+    this.initProductSwatchSliders();
+  }
+
+  initProductSwatchSliders() {
+    this.$bundleProducts.each((i, product) => {
+      const $productContainer = $(product);
+
+      const $swatchSlider = $(selectors.swatchSlider, $productContainer);
+      const currentSlide = $('[data-product-option]:checked', $swatchSlider).parent().index();
+
+      const swatchSlider = new Swiper($swatchSlider.get(0), {
+        slideClass: 'swiper-slide',
+        slidesPerView: 4.4,
+        watchOverflow: true,
+        slidesOffsetBefore: 15,
+        slidesOffsetAfter: 15,
+        spaceBetween: 8,
+        initialSlide: currentSlide,
+        threshold: 10,
+        navigation: {
+          prevEl: '[data-arrow-prev]',
+          nextEl: '[data-arrow-next]'
+        },
+        breakpoints: {
+          1024: {
+            slidesPerGroup: 4,
+          }
+        }
+      });
+
+
+      this.productSliders.push({
+        product: $productContainer,
+        slider: swatchSlider
+      })
+    })
+  }
+
+  getSliderFromContainer($productContainer) {
+    let slider;
+
+    this.productSliders.forEach((productSlider) => {
+      if(productSlider.product.get(0) === $productContainer.get(0)) {
+        slider = productSlider.slider;
+      }
+    })
+
+    return slider;
   }
 
   updateVariant(evt) {
@@ -115,6 +166,8 @@ export default class ProductBundles {
     const $container = $this.parents(selectors.bundleProduct);
     const $drawer = $container.find(selectors.productDrawer);
 
+    const slider = this.getSliderFromContainer($container);
+
     if($container.hasClass(classes.open)) {
       $container.removeClass(classes.open);
       $drawer.css('height', 0);
@@ -123,6 +176,10 @@ export default class ProductBundles {
 
       $container.addClass(classes.open);
       $drawer.css('height', drawerHeight);
+
+      setTimeout(() => {
+        slider.update();
+      }, 150)
     }
 
   }
