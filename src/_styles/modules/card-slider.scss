@@ -71,10 +71,27 @@
   width: calc(100% + 100px);
   margin-left: -50px;
   overflow: hidden;
+  position: relative;
   @include media-breakpoint-down('md') {
     width: calc(100% + 60px);
     margin-left: -30px;
   }
+}
+
+.card-slider__arrow {
+  width: 5%;
+  display: block;
+  z-index: 2;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  cursor: pointer;
+}
+
+.card-slider__arrow--next {
+  right: 0;
+  left: unset;
 }
 
 @import '../components/card/link-card.scss';

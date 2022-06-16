@@ -30,6 +30,10 @@ export default class LinkCardSlider extends BaseSection {
         loadPrevNext: true,
         loadPrevNextAmount: 2,
       },
+      navigation: {
+        nextEl: '[data-arrow-next]',
+        prevEl: '[data-arrow-prev]'
+      },
       breakpoints: {
         530: {
           slidesPerView: 2.3,

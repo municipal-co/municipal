@@ -1,37 +1,45 @@
-{%- assign current_variant = product.selected_or_first_available_variant -%}
-{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
 
-<div data-section-id="{{ section.id }}" data-section-type="product" itemscope itemtype="http://schema.org/Product">
-  <div class="layout-content-wrapper">
 
-    <meta itemprop="name" content="{{ product.title }}{% unless product.has_only_default_variant %} - {{ current_variant.title }}{% endunless %}">
-    <meta itemprop="url" content="{{ shop.url }}{{ current_variant.url }}">
-    <meta itemprop="brand" content="{{ product.vendor }}">
-    <meta itemprop="image" content="{{ featured_image | img_url: '600x600' }}">
-    <meta itemprop="description" content="{{ product.description | strip_html | escape }}">
+<div data-section-id="{{section.id}}" data-section-type="product">
+  <div class="container-fluid">
+    <div class="row product-container">
+      {% render 'sticky-image',
+        object: product,
+        metafields: product.metafields.custom_fields,
+        collection: collection %}
 
-    {% include 'product-sticky-bar' %}
+      <div class="product-detail col-lg-10" data-product-detail>
+        {% render 'product-detail-new'
+          product: product,
+          metafields: product.metafields.custom_fields,
+          enable_bundles: true
+        %}
 
-    {%- comment %} images, title, price, etc. {% endcomment -%}
-    {% include 'product-detail',
-                product: product,
-                current_variant: current_variant,
-                show_share_buttons: section.settings.show_share_buttons,
-                enable_bundles: true,
-    %}
+        {% render 'pdp-content-slider'
+          metafields: product.metafields.custom_fields,
+          prefix: 'value_props',
+          bg_prefix: 'vp'
+        %}
 
-    {% include 'product-overview' %}
-    {% include 'product-features' %}
-    {% include 'style-tips' %}
-    {% unless product.type == "Gift Card" %}
-      {% include 'yotpo-reviews' %}
-    {% endunless %}
-    {% include 'complete-the-look' %}
-    {% include 'back-in-stock-drawer' %}
+        {% include 'shop-the-look'
+          s: product.metafields.custom_fields,
+          type: 'metafields'
+        %}
+
+        {% render 'value-proposition' %}
+
+        {% include 'pdp-drawer-buttons' %}
+
+        {% render 'pdp-content-slider'
+          metafields: product.metafields.custom_fields,
+          prefix: 'questions_slider',
+          bg_prefix: 'qs'
+        %}
+      </div>
+
+    </div>
   </div>
 </div>
-
-{% include 'klaviyo-product-tracking-script' %}
 
 {% schema %}
   {
@@ -42,40 +50,6 @@
         "id": "enable_klarna",
         "label": "Enable Klarna Messaging",
         "info": "Displays the klarna messaging below the price of the product."
-      },
-      {
-        "type": "header",
-        "content": "Back in stock settings"
-      },
-      {
-        "type": "text",
-        "id": "bis_notify_text",
-        "label": "Notify Text",
-        "default": "Get notified when the [[product]] [[color]] is back in size [[size]]",
-        "info": "Define the verbiage for the body, use [[product]] to render the product tile, [[color]] for the variant color and [[size]] for the variant size (the latest will get updated depending on the customer selection)"
-      },
-      {
-        "type": "textarea",
-        "id": "bis_success_message",
-        "label": "Success Message",
-        "default": "Thanks for subscribing, you'll be notified when the product gets back!"
-      },
-      {
-        "type": "textarea",
-        "id": "bis_error_message",
-        "label": "Error Message",
-        "default": "We got an error when trying to subscribe you, please try again later",
-        "info": "Generic message to let the user know that there was an error"
-      },
-      {
-        "type": "url",
-        "id": "bis_tos_link",
-        "label": "TOS link"
-      },
-      {
-        "type": "url",
-        "id": "bis_privacy_link",
-        "label": "Privacy Policy link"
       },
       {
         "type": "header",
