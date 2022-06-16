@@ -101,8 +101,8 @@ export default class ProductDetailForm {
     this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
     this.$pdpDrawerToggler       = $(selectors.pdpOptionDrawerToggler, this.$container);
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
-    this.$bisButton              = $(selectors.bisButton);
-    this.$swatchSlider           = $(selectors.swatchesSlider);
+    this.$bisButton              = $(selectors.bisButton, this.$container);
+    this.$swatchSlider           = $(selectors.swatchesSlider, this.$container);
     /* eslint-enable */
 
     this.optionDrawers = this._setUpOptionDrawers();
