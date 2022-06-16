@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
+import Swiper from 'swiper';
 import Drawer from '../../ui/drawer';
 import Variants from './variants';
 import ProductBundles from '../../managers/product-bundles'
@@ -31,6 +32,9 @@ const selectors = {
   dot: '.dot',
   klarnaOnsiteMessagingPrice: '[data-purchase-amount]',
   bisButton: '[data-bis-button]',
+  // Color Slider
+  swatchesSlider: '[data-swatch-slider]',
+  swatchSlide: '[data-swatch-slide]',
   // Size drawer toggler
   pdpOptionDrawerToggler: '[data-pdp-drawer-toggler]',
   pdpOptionDrawer: '[data-pdp-option-drawer]',
@@ -99,7 +103,8 @@ export default class ProductDetailForm {
     this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
     this.$pdpDrawerToggler       = $(selectors.pdpOptionDrawerToggler, this.$container);
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
-    this.$bisButton              = $(selectors.bisButton);
+    this.$bisButton              = $(selectors.bisButton, this.$container);
+    this.$swatchSlider           = $(selectors.swatchesSlider, this.$container);
     /* eslint-enable */
 
     this.optionDrawers = this._setUpOptionDrawers();
@@ -125,6 +130,10 @@ export default class ProductDetailForm {
     this.checkVariantsAvailability(this.variants.currentVariant);
     // this.updateBadge(this.variants.currentVariant);
     this.productColorValidation();
+
+    if(this.$swatchSlider.length){
+      this.initSwatchesSlider();
+    }
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant);
     this.validateSizeAvailability();
@@ -161,6 +170,42 @@ export default class ProductDetailForm {
         }
       }
     }
+  }
+
+  initSwatchesSlider() {
+    let currentSlide = 0;
+
+    this.$swatchSlider.each((i, slider) => {
+      const $slider = $(slider);
+      const $swatchSlides = $(selectors.swatchSlide, $slider);
+
+      $swatchSlides.each((index, el) => {
+        if($(el).find('input[type=radio]:checked').length) {
+          currentSlide = index;
+          return false;
+        }
+      })
+
+      this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
+        slideClass: 'swiper-slide',
+        slidesPerView: 4.4,
+        watchOverflow: true,
+        slidesOffsetBefore: 30,
+        slidesOffsetAfter: 30,
+        spaceBetween: 8,
+        initialSlide: currentSlide,
+        threshold: 10,
+        navigation: {
+          prevEl: '[data-arrow-prev]',
+          nextEl: '[data-arrow-next]'
+        },
+        breakpoints: {
+          1024: {
+            slidesPerGroup: 4,
+          }
+        }
+      });
+    })
   }
 
   /**
@@ -462,7 +507,7 @@ export default class ProductDetailForm {
     });
 
     colorsToHide.forEach((color) => {
-      $(`${selectors.singleOptionSelector}[value="${color}"]`).parent().hide();
+      $(`${selectors.singleOptionSelector}[value="${color}"]`).parent().removeAttr('swiper-slide').hide();
     })
 
     soldOutColors.forEach((colorObject) => {
