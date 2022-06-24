@@ -42,7 +42,8 @@
   flex-direction: row-reverse;
 }
 
-.bundle__full-price {
+.bundle__price,
+.bundle__discount {
   input[type=radio]:checked ~ .bundle__option & {
     color: $green;
   }
@@ -133,6 +134,14 @@
   font-family: $font-family-sans-serif;
   font-weight: $font-weight-semi-bold;
   margin-bottom: 5px;
+}
+
+.bundle-product__variant-price {
+  @extend .bundle-product__option;
+  font-size: large-vw(11px, 15px);
+  .bundle-product__compare-at-price {
+    color: $core-grey-2;
+  }
 }
 
 .bundle-product__sold-out-badge {

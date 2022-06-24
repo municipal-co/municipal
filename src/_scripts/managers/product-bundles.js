@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import * as imageUtils from '../core/image';
+import * as Currency from '../core/currency';
 
 const selectors = {
   bundleOptionsContainer: '[data-bundle-options-container]',
@@ -12,9 +13,13 @@ const selectors = {
   bundleProductId: '[data-bundle-product-id]',
   bundleProductSoldout: '[data-bundle-product-sold-out-badge]',
   productAddToCart: '[data-add-to-cart]',
+  productAddToCartText: '[data-add-to-cart-text]',
+  productAddtoCartPrice: '[data-add-to-cart-price]',
   klarnaMessagingPrice: '[data-purchase-amount]',
   bundleDiscountPrice: '[data-bundle-discount-price]',
-  bundleFullPrice: '[data-bundle-full-price]',
+  bundleFullPrice: '[data-bundle-current-price]',
+  bundleItemPrice: '[data-bundle-discount-price]',
+  bundleItemComparePrice: '[data-bundle-compare-price]',
 }
 
 const classes = {
@@ -36,29 +41,34 @@ export default class ProductBundles {
     this.$bundleProducts.on('change', this.onProductSelectedChange.bind(this));
 
     $(selectors.bundleOptionsContainer).removeClass(classes.optionsDisabled);
+    this.bundleDiscountValue = 0;
   }
 
   onBundleOptionChange(evt) {
     const $this = $(evt.currentTarget);
     const selectedQty = $this.val();
-
+    this.bundleDiscountValue = $this.data('bundle-discount');
     this.updateKlarnaPrice($this.parent());
+
+    this.$bundleProducts.each((index, el) => {
+      const $productParent = $(el).parent();
+      if(index + 1 <= selectedQty) {
+        $productParent.addClass(classes.visible);
+      } else {
+        $productParent.removeClass(classes.visible);
+      }
+    })
 
     if(selectedQty > 1) {
       this.$bundleProductsContainer.show();
       this.$bundleProducts.first().prop('checked', true);
-      this.$bundleProducts.each((index, el) => {
-        const $productParent = $(el).parent();
-        if(index + 1 <= selectedQty) {
-          $productParent.addClass(classes.visible);
-        } else {
-          $productParent.removeClass(classes.visible);
-        }
-      })
     } else {
       this.$bundleProductsContainer.hide();
       this.$bundleProducts.prop('checked', false);
+      this.bundleDiscountValue = 0;
     }
+
+    this.updateTotalPrice(true);
   }
 
   updateKlarnaPrice($container) {
@@ -118,12 +128,23 @@ export default class ProductBundles {
 
     if(variant.available) {
       $(selectors.bundleProductSoldout, $selectedOption).removeClass(classes.visible);
-      $(selectors.productAddToCart).text(theme.strings.addToCart);
+      $(selectors.productAddToCartText).text(theme.strings.addToCart);
     } else {
       $(selectors.bundleProductSoldout, $selectedOption).addClass(classes.visible);
     }
+
+    if(variant.compare_at_price > variant.price) {
+      $(selectors.bundleFullPrice, $selectedOption).text(Currency.formatMoney(variant.compare_at_price, window.theme.moneyFormat).replace('.00', ''));
+      $(selectors.bundleDiscountPrice, $selectedOption).text(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
+      $(selectors.bundleDiscountPrice, $selectedOption).attr('data-variant-price', variant.price);
+    } else {
+      $(selectors.bundleFullPrice, $selectedOption).text('');
+      $(selectors.bundleDiscountPrice, $selectedOption).text(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
+      $(selectors.bundleDiscountPrice, $selectedOption).attr('data-variant-price', variant.price);
+    }
     this.updateKlarnaPrice();
     this.checkProductsAvailabilty();
+    this.updateTotalPrice();
   }
 
   checkProductsAvailabilty() {
@@ -134,7 +155,8 @@ export default class ProductBundles {
     })
     activeProducts.each((index, el) => {
       if($(selectors.bundleProductSoldout, $(el).parent()).is(':visible')) {
-        $(selectors.productAddToCart).prop('disabled', true).text(theme.strings.soldOut);
+        $(selectors.productAddToCart).prop('disabled', true)
+        $(selectors.productAddToCartText).text(theme.strings.soldOut);
       }
     })
   }
@@ -153,5 +175,22 @@ export default class ProductBundles {
         }
       }
     }
+  }
+
+  updateTotalPrice() {
+    let totalPrice = 0;
+    this.$bundleProducts.each((i, product) => {
+      const $product = $(product).parent();
+
+      if($product.hasClass('is-visible')) {
+        console.log('who is active?');
+        totalPrice += $product.find(selectors.bundleDiscountPrice).data('variant-price');
+      };
+    })
+
+    const discountPercentage = (100 - this.bundleDiscountValue) / 100;
+    totalPrice *= discountPercentage;
+
+    $(selectors.productAddtoCartPrice).text(Currency.formatMoney(totalPrice, theme.moneyFormat).replace('.00', ''));
   }
 }

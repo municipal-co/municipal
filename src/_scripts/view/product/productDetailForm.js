@@ -187,7 +187,7 @@ export default class ProductDetailForm {
       this.$priceWrapper.removeClass(classes.hide);
     } else {
       this.$addToCartBtn.prop('disabled', true).show();;
-      this.$addToCartBtnText.html(theme.strings.unavailable);
+      this.$addToCartBtnText.text(theme.strings.unavailable);
       this.$priceWrapper.addClass(classes.hide);
       this.$bisButton.hide();
       return;
@@ -195,12 +195,12 @@ export default class ProductDetailForm {
 
     if (variant.available) {
       this.$addToCartBtn.prop('disabled', false);
-      this.$addToCartBtnText.html(theme.strings.addToCart);
+      this.$addToCartBtnText.text(theme.strings.addToCart);
       this.$addToCartBtn.show();
       this.$bisButton.hide();
     } else {
       this.$addToCartBtn.prop('disabled', true);
-      this.$addToCartBtnText.html(theme.strings.soldOut);
+      this.$addToCartBtnText.text(theme.strings.soldOut);
       if(this.productSingleObject.metafields.enable_sold_out === 1 || variant.metafields.enable_sold_out === 1) {
         this.$addToCartBtn.show();
         this.$bisButton.hide();
@@ -533,7 +533,7 @@ export default class ProductDetailForm {
 
   _disablePurchase() {
     this.$addToCartBtn.prop('disabled', true).show();
-    this.$addToCartBtnText.html(theme.strings.unavailable);
+    this.$addToCartBtnText.text(theme.strings.unavailable);
     this.$priceWrapper.addClass(classes.hide);
     this.$bisButton.hide();
     $(selectors.dotsContainer, this.$container).not('.dots--color').addClass('dots--disabled');
