@@ -30,14 +30,12 @@
 // Product option type: swatches
 .product-option__swatch {
   display: flex;
-  flex-wrap: nowrap;
-  overflow: auto hidden;
   margin: 0 -30px;
-  padding: 0 30px;
-  gap: 8px;
 
   .product-option__single-selector {
-    min-width: calc( 100% / 4.25);
+    display: block;
+    margin-bottom: 0;
+    max-width: calc(100% / 4.25);
   }
 
   .product-option__ui {
@@ -96,6 +94,32 @@
 .product-option__selected-option {
   font-family: $font-family-heading-medium;
 }
+
+.product-option__arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.product-option__arrow {
+  width: 40px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.product-option__arrow-next {
+  right: 0;
+  left: unset;
+}
+
 // Product option type: drawer
 .product-option__drawer-btn {
   border-color: $color-dots-border;
