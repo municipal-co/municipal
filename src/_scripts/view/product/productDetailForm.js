@@ -7,6 +7,7 @@ import Variants from './variants';
 import ProductBundles from '../../managers/product-bundles'
 
 const selectors = {
+  optionsContainer: '[data-product-detail-options]',
   addToCart: '[data-add-to-cart]',
   addToCartText: '[data-add-to-cart-text]',
   comparePrice: '[data-compare-price]',
@@ -86,6 +87,7 @@ export default class ProductDetailForm {
     /* eslint-disable */
     /* temporarily disable to allow long lines for element descriptions */
     this.$container              = this.settings.$container; // Scoping element for all DOM lookups
+    this.$detailOptions          = $(selectors.optionsContainer, this.$container);
     this.$quantitySelect         = $(selectors.quantitySelect, this.$container); // Quantity dropdown
     this.$fullDetailsLink        = $(selectors.fullDetailsLink, this.$container); // Inside quickview, link that points back to the full product
     this.$addToCartBtn           = $(selectors.addToCart, this.$container);
@@ -95,8 +97,8 @@ export default class ProductDetailForm {
     this.$productPrice           = $(selectors.productPrice, this.$container);
     this.$comparePrice           = $(selectors.comparePrice, this.$container);
     this.$compareEls             = this.$comparePrice.add($(selectors.comparePriceText, this.$container));
-    this.$singleOptionSelectors  = $(selectors.singleOptionSelector, this.$container); // Dropdowns for each variant option containing all values for that option
-    this.$variantOptionValueList = $(selectors.variantOptionValueList, this.$container); // Alternate UI that takes the place of a single option selector (could be swatches, dots, buttons, whatever..)
+    this.$singleOptionSelectors  = $(selectors.singleOptionSelector, this.$detailOptions); // Dropdowns for each variant option containing all values for that option
+    this.$variantOptionValueList = $(selectors.variantOptionValueList, this.$detailOptions); // Alternate UI that takes the place of a single option selector (could be swatches, dots, buttons, whatever..)
     this.$shippingModalTrigger   = $(selectors.shippingModalTrigger, this.$container);
     this.$shippingModal          = $(selectors.shippingModal); // Don't wrap this on container, the modal is outside
     this.$pdpDrawerToggler       = $(selectors.pdpOptionDrawerToggler, this.$container);
@@ -109,7 +111,7 @@ export default class ProductDetailForm {
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());
 
     this.variants = new Variants({
-      $container: this.$container,
+      $container: this.$detailOptions,
       enableHistoryState: this.settings.enableHistoryState,
       singleOptionSelector: selectors.singleOptionSelector,
       originalSelectorId: selectors.originalSelectorId,
@@ -121,7 +123,7 @@ export default class ProductDetailForm {
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
     this.$pdpDrawerToggler.on(this.events.CLICK, this._toggleOptionDrawer.bind(this));
     Utils.chosenSelects(this.$container);
-    this.productBundles = new ProductBundles(this.$container);
+    this.productBundles = new ProductBundles(this.$container, this.productSingleObject);
     this.$singleOptionSelectors.on(this.events.CHANGE, this.onOptionChange.bind(this));
     this.$bisButton.on(this.events.CLICK, this.onBisButtonClick.bind(this));
 
@@ -158,12 +160,10 @@ export default class ProductDetailForm {
     const optionName = $this.data('option-name');
 
     this.updateSelectedOptionLabel(optionIndex, optionValue, optionName);
-    if($this.parents(selectors.pdpOptionDrawer)){
+    if($this.parents(selectors.pdpOptionDrawer).length > 0){
       const $currentDrawer = $this.parents(selectors.pdpOptionDrawer);
 
       for(let i = 0; i <= this.optionDrawers.length - 1; i++) {
-        console.log(this.optionDrawers[i]);
-        console.log($currentDrawer.data('drawer-id'));
         if( this.optionDrawers[i].id === $currentDrawer.data('drawer-id')) {
           this.optionDrawers[i].drawer.hide();
           break;
@@ -331,9 +331,9 @@ export default class ProductDetailForm {
   updateSelectedOptionLabel(index, value, name) {
     if(name === 'size' || name === 'Size') {
 
-      $(`[data-selected-option=${index}]`).text(`Selected ${name}: ${value}`);
+      $(`[data-selected-option=${index}]`, this.$detailOptions).text(`Selected ${name}: ${value}`);
     } else {
-      $(`[data-selected-option=${index}]`).text(value);
+      $(`[data-selected-option=${index}]`, this.$detailOptions).text(value);
       this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
     }
   }
@@ -356,7 +356,7 @@ export default class ProductDetailForm {
       $currentOption = $(`[data-product-option=${colorIndex}]:checked`).parent();
     }
 
-    const $selectedSize = $(`[data-product-option=${sizeIndex}]:checked`);
+    const $selectedSize = $(`[data-product-option=${sizeIndex}]:checked`, this.$detailOptions);
 
     if($currentOption.is('.is-bis')) {
       $(`[data-selected-option=${sizeIndex}]`).text('Notify me when back');

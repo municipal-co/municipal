@@ -55,6 +55,8 @@ export default class OptionDrawer extends BaseSection {
       variant.lowInventory = variant.inventory_quantity <= window.settings.lowInventoryThreshold;
       if(variant.optionValue === data.activeOption) {
         variant.selected = true;
+      } else {
+        variant.selected = false;
       }
       return variant;
     })

@@ -42,7 +42,7 @@
           {%- assign printed_variant = variant[option_index] -%}
           <label class="product-option__single-selector swiper-slide" data-swatch-slide>
             <input type="radio"
-                  name="{{option_index}}"
+                  name="{{- option_prefix -}}{{option_index}}"
                   value="{{variant[option_index]}}"
                   class="hide"
                   data-option-name="{{option_downcase}}"
@@ -101,7 +101,7 @@
                 <label class="product-option__single-selector">
                   <input
                     type="radio"
-                    name="{{option_index}}"
+                    name="{{- option_prefix -}}{{option_index}}"
                     value="{{option_value}}"
                     data-option-name="{{ option_downcase }}"
                     data-product-option="{{ option_index }}"
@@ -162,7 +162,7 @@
     <div class="selector-wrapper form-group product-option__select">
       <select
         class="form-control"
-        name="{{option_index}}"
+        name="{{- option_prefix -}}{{option_index}}"
         data-option-name="{{ print_option }}"
         data-product-option="{{ option_index }}"
         data-option-value="{{option_value | downcase}}"
