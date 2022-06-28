@@ -179,16 +179,23 @@ export default class ProductBundles {
 
   updateTotalPrice() {
     let totalPrice = 0;
+
     this.$bundleProducts.each((i, product) => {
       const $product = $(product).parent();
 
       if($product.hasClass('is-visible')) {
-        console.log('who is active?');
-        totalPrice += $product.find(selectors.bundleDiscountPrice).data('variant-price');
+        totalPrice += Number.parseInt($product.find(selectors.bundleDiscountPrice).attr('data-variant-price'));
       };
     })
 
+    if(totalPrice === 0) {
+      totalPrice = Number.parseInt(this.$bundleProducts.eq(0).parent().find(selectors.bundleDiscountPrice).attr('data-variant-price'));
+    }
+
+    console.log(totalPrice);
+
     const discountPercentage = (100 - this.bundleDiscountValue) / 100;
+
     totalPrice *= discountPercentage;
 
     $(selectors.productAddtoCartPrice).text(Currency.formatMoney(totalPrice, theme.moneyFormat).replace('.00', ''));
