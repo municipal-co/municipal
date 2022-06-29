@@ -102,13 +102,8 @@
 
                     {% if i.quantity == 1 %}
                       <div class="bundle__price">
-                        {% if product.price_varies %}
-                          <span class="bundle__price-min">{{product.price_min | money_without_trailing_zeros }}</span>
-                          -
-                          <span class="bundle_price-max">{{product.price_max | money_without_trailing_zeros }}</span>
-                        {% else %}
-                          <span class="bundle__full-price">{{product.price | money_without_trailing_zeros }}</span>
-                        {% endif %}
+
+                        <span class="bundle__full-price" data-product-price>{{current_variant.price | money_without_trailing_zeros }}</span>
                       </div>
                     {% else %}
                       <span class="bundle__discount">
