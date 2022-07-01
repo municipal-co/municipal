@@ -192,12 +192,13 @@ export default class ProductBundles {
       totalPrice = Number.parseInt(this.$bundleProducts.eq(0).parent().find(selectors.bundleDiscountPrice).attr('data-variant-price'));
     }
 
-    console.log(totalPrice);
 
     const discountPercentage = (100 - this.bundleDiscountValue) / 100;
 
     totalPrice *= discountPercentage;
 
-    $(selectors.productAddtoCartPrice).text(Currency.formatMoney(totalPrice, theme.moneyFormat).replace('.00', ''));
+    if(!Number.isNaN(totalPrice) && totalPrice !== 0) {
+      $(selectors.productAddtoCartPrice).text(Currency.formatMoney(totalPrice, theme.moneyFormat).replace('.00', ''));
+    }
   }
 }
