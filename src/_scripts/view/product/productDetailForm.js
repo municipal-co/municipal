@@ -11,6 +11,7 @@ const selectors = {
   comparePriceText: '[data-compare-text]',
   originalSelectorId: '[data-product-select]',
   priceWrapper: '[data-price-wrapper]',
+  addToCartPrice: '[data-add-to-cart-price]',
   productJson: '[data-product-json]',
   productPrice: '[data-product-price]',
   singleOptionSelector: '[data-single-option-selector]',
@@ -85,6 +86,7 @@ export default class ProductDetailForm {
     this.$fullDetailsLink        = $(selectors.fullDetailsLink, this.$container); // Inside quickview, link that points back to the full product
     this.$addToCartBtn           = $(selectors.addToCart, this.$container);
     this.$addToCartBtnText       = $(selectors.addToCartText, this.$container); // Text inside the add to cart button
+    this.$addToCartPrice         = $(selectors.addToCartPrice, this.$container);
     this.$priceWrapper           = $(selectors.priceWrapper, this.$container); // Contains all price elements
     this.$productPrice           = $(selectors.productPrice, this.$container);
     this.$comparePrice           = $(selectors.comparePrice, this.$container);
@@ -233,6 +235,7 @@ export default class ProductDetailForm {
   updateProductPrices(variant) {
     if (variant) {
       this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
+      this.$addToCartPrice.html(Currency.formatMoney(variant.price, window.moneyFormat).replace('.00', ''));
 
       if (variant.compare_at_price > variant.price) {
         this.$comparePrice.html(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat).replace('.00', ''));

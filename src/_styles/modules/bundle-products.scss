@@ -41,27 +41,16 @@
   display: flex;
 }
 
-.bundle__price,
-.bundle__discount {
+.bundle__price {
   input[type=radio]:checked ~ .bundle__option & {
     color: $green;
   }
 }
 
 .bundle__discount-price {
-  ~ .bundle__full-price {
+    color: $core-grey-2;
     margin-right: 5px;
     text-decoration: line-through;
-
-    input[type=radio]:checked ~ .bundle__option & {
-      color: $white !important;
-    }
-  }
-
-
-  input[type=radio]:checked ~ .bundle__option & {
-    color: $green;
-  }
 }
 
 .bundle-products {
