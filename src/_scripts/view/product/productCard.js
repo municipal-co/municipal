@@ -54,10 +54,10 @@ export default class ProductCard {
 
     this.singleProductJson = JSON.parse($(selectors.singleProductJson, this.$container).html());
 
-    this.gallerySlider = this.initGallery();
-    this.initSwatchSlider();
     this.setSizeDrawerData();
     this.updateProductOption();
+    this.gallerySlider = this.initGallery();
+    this.initSwatchSlider();
   }
 
   setSizeDrawerData() {
@@ -78,7 +78,7 @@ export default class ProductCard {
       slidesPerView: 1,
       effect: 'fade',
       threshold: 10,
-      slideClass: 'swiper-slide',
+      lazy: true,
       pagination: {
         style: 'bullets',
         clickable: true,
@@ -132,7 +132,7 @@ export default class ProductCard {
 
     this.$colorTitle.text(selectedColor);
 
-    this.cardGalleryUpdate(selectedColor);
+    this.cardGalleryUpdate(selectedColor.toLowerCase());
   }
 
   cardGalleryUpdate(selectedColor) {
