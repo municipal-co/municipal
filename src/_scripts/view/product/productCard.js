@@ -15,6 +15,7 @@ const selectors = {
   productPrice: '[data-product-price]',
   cardPrice: '[data-product-price]',
   cardComparePrice: '[data-compare-price]',
+  productUrl: '[data-product-url]',
 };
 
 const classes = {
@@ -46,6 +47,7 @@ export default class ProductCard {
     this.$optionDdrawerOpen = $(selectors.addToCartButton, this.$container);
     this.$productPrice = $(selectors.cardPrice, this.$container);
     this.$comparePrice = $(selectors.cardComparePrice, this.$container);
+    this.$productUrl = $(selectors.productUrl, this.$container);
 
     this.$singleOptionSelector.on('change', this.onOptionChange.bind(this));
     this.$optionDdrawerOpen.on('click', this.openOptionDrawer.bind(this));
@@ -153,6 +155,7 @@ export default class ProductCard {
     this.drawerData.variants = this.getOptionVariants(options);
 
     this.updateCardPrice(this.drawerData.variants[0]);
+    this.updateCardUrl(this.drawerData.variants[0]);
   }
 
   getSelectedOptions() {
@@ -203,6 +206,13 @@ export default class ProductCard {
     };
 
     this.$productPrice.html(Currency.formatMoney(variant.price, theme.moneyFormat).replace('.00', ''));
+  }
+
+  updateCardUrl(variant) {
+    this.$productUrl.each((i, url) => {
+      const currentUrl = $(url).data('product-url');
+      url.href = currentUrl + `?variant=${variant.id}`;
+    })
   }
 
   openOptionDrawer() {
