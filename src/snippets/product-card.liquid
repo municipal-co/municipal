@@ -5,18 +5,9 @@
 
   Usage:
 
-  {% include 'product-card',
+  {% render 'product-card',
         card_product: { product } - required
-        variant: { product.variant } - optional - if not blank, product card will render an individual variant's data
-        unavailable_variant: { product.variant } - optional - overrides the featured image to display the sold out featured image
-        quick_view: { boolean } - optional, defaults to false
-        show_swatches: { boolean } - optional, defaults to true
-        show_reviews: { boolean } - optional, defaults to false
-        show_sizes: { boolean } - optional, defaults to false
-        show_colors: { boolean } - optional, defaults to false
-        show_tag: { bool } - optional, defaults to false
-        color: { string } - optional
-        title_tag: { string } - optional - defaults to 'h3'
+        color: { string } - optional - selects the default color to be selected on the card
   %}
 
 {% endcomment -%}
@@ -24,204 +15,126 @@
 {% comment %} Defaults {% endcomment %}
 {% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 
-{% assign card_classes = blank %}
+{% assign current_variant = product.variants[0] %}
 
-{% if quick_view == blank %}
-  {% assign quick_view = false %}
-{% endif %}
-
-{% if render_json == blank %}
-  {% assign render_json = true %}
-{% endif %}
-
-{% if lazy_load_img == blank %}
-  {% assign lazy_load_img = true %}
-{% endif %}
-
-{% if show_swatches == blank %}
-  {% assign show_swatches = true %}
-{% endif %}
-
-{% if show_sizes == blank %}
-  {% assign show_sizes = false %}
-{% endif %}
-
-{% if show_reviews == blank %}
-  {% assign show_reviews = false %}
-{% endif %}
-
-{% if title_tag == blank %}
-  {% assign title_tag = 'h3' %}
-{% endif %}
-
-{% if reverse_card == true %}
-  {% assign card_classes = "card--reverse" %}
-{% endif %}
-
-{% if cart_product.metafields.custom-fields.hide_colors %}
-  {% assign hidden_colors_list = cart_product.metafields.custom-fields.hide_colors | split: ',' %}
-  {% assign hidden_colors_count = hidden_colors_list | size %}
-{% endif %}
-
-{%- comment -%}
-Locate Current Available color and its array position
-{%- endcomment -%}
-{% for option in card_product.options_with_value %}
-  {% if option.name == 'color' or option.name == 'Color' %}
-    {% assign color_index = forloop.index %}
+{% for variant in card_product.variants %}
+  {% if variant.title contains color %}
+    {% assign current_variant = variant %}
+    {% break %}
   {% endif %}
-
-  {% assign product_current_variant = card_product.first_available_variant %}
-  {% assign product_current_color = current_color | default: product_curent_variant.options[color_index] %}
 {% endfor %}
 
-{% comment %} End Defaults {% endcomment %}
+{% for option in card_product.options_with_values %}
+  {% if option.name == 'color' or option.name == 'Color' %}
+    {% assign color_index = 'option' | append: forloop.index %}
+  {% endif %}
+  {% if option.name == 'size' or option.name == 'Size' %}
+    {% assign size_index = 'option' | append: forloop.index %}
+  {% endif %}
+{% endfor %}
 
-{% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We don't want to display them in the gallery. {% endcomment %}
+{% capture card_images %}
+  {%- for image in card_product.images -%}
+    {% assign alt_downcase = image.alt | downcase %}
+    {% if alt_downcase contains 'front' or alt_downcase contains 'back' %}
+      {% assign alt_pieces = image.alt | split: '|' %}
+      <a class="product-card__gallery-slide
+          {% if alt_pieces[1] contains current_variant[color_index] %}swiper-slide{% endif %}"
+          href="{{card_product.url}}?variant={{current_variant.id}}" data-product-url="{{card_product.url}}"
+          data-gallery-slide
+          data-image-selector="{{ alt_pieces[1] }}">
 
-{% assign featured_image = card_product.selected_or_first_available_variant.image | default: card_product.featured_image %}
-{% if variant != blank %}
-  {% assign featured_image = variant.featured_image %}
-{% endif %}
+        <img
+            src="{{image | image_url: width: '400', format: 'pjpg'}}"
+            class="product-card__image"
+            width="400"
+            height="auto"
+            alt="{{ alt_pieces[0] }}"
+            loading="lazy">
+      </a>
+    {% endif %}
+  {%- endfor -%}
+{% endcapture %}
 
-{% comment %} This will override the featured image to display the sold out featured image {% endcomment %}
-{% if unavailable_variant != blank %}
-  {% assign featured_image = unavailable_variant.featured_image %}
-{% endif %}
-
-{% if card_product %}
-
-  {% assign product_image_dimension = '760x' %}
-  {% assign product_image_dimension_tablet = '400x' %}
-  {% assign product_image_dimension_mobile = '150x' %}
-  {% assign product_url = variant.url | default: unavailable_variant.url | default: card_product.url | within: collection %}
-
-  <div id="product-card-{{ card_product.id }}" class="product-card {{ card_classes }}" data-product-card
-  {% unless auto_update_image == false and variant == blank %}
-    data-product-merged
-  {% endunless %}
-  >
-    <div class="product-card__contents" data-product-card-contents>
-      <div class="product-card__gallery">
-        <a href="{{ product_url }}">
-          <div class="product-card__gallery-image" data-product-card-gallery>
-            <img src="{{ image_loading_placeholder }}" data-src="{{featured_image | img_url: product_image_dimension }}"
-            data-srcset="
-            {{featured_image | img_url: product_image_dimension_mobile }},
-            {{featured_image | img_url: product_image_dimension_tablet }} 768w,
-            {{featured_image | img_url: product_image_dimension }} 992w"
-            alt="{{ featured_image.alt }}"
-            class="animate"
-            data-animate-image-in
-            data-sizes="auto"
-            data-object-fit="cover"
-            data-product-card-image
-            {% if lazy_load_img %} data-product-card-main-lazy {% endif %}>
-            <div class="product-card__gallery-placeholder"></div>
-          </div>
-
-          {% if show_sizes %}
-            {%- capture sizes_html -%}
-            {% render 'product-dots-sizes'
-                        dots_product: card_product,
-                        current_color: product_current_color %}
-            {%- endcapture -%}
-
-            {% if sizes_html != blank %}
-              <div class="product-card__sizes-container">
-                <div class="variant-message" data-variant-message>
-                  Quick Add to Cart
-                </div>
-                {{ sizes_html }}
-              </div>
-            {% endif %}
-          {% endif %}
-        </a>
-      </div>
-      <div class="product-card__info">
-
-        {% if show_tag %}
-          {% capture tag_html %}
-            {% if card_product != blank %}
-              {% if variant.metafields.custom_fields['badge'] != blank %}
-                <span class="badge">{{ variant.metafields.custom_fields['badge'] }}</span>
-              {% elsif unavailable_variant.metafields.custom_fields['badge'] != blank %}
-                <span class="badge">{{ unavailable_variant.metafields.custom_fields['badge'] }}</span>
-              {% elsif card_product.metafields.custom_fields['badge'] %}
-                <span class="badge">{{ card_product.metafields.custom_fields['badge'] }}</span>
-              {% else %}
-                {% for tag in card_product.tags %}
-                  {% if tag contains 'Badge:' or tag contains 'badge:' %}
-                    <span class="badge">{{ tag | remove: 'Badge:' | remove: 'badge:' }}</span>
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
-            {% endif %}
-          {% endcapture %}
-
-          <div class="product-card__badge-row">
-            {% if tag_html != blank %}
-              {{ tag_html }}
-              {% else %}
-              <span class="badge" aria-hidden style="visibility: hidden;">-</span>
-            {% endif %}
-          </div>
-        {% endif %}
-
-        <{{title_tag}} class="product-card__info-title">
-          <a href="{{ product_url }}">{{ card_product.title }}</a>
-        </{{title_tag}}>
-
-        {% if show_colors %}
-          {% capture color_html %}
-            {% include 'product-colors-counter', product: card_product, current_color: product_current_color, hidden_colors: hidden_colors_count %}
-          {% endcapture %}
-
-          {% if color_html != blank %}
-            <div class="product-card__info-color">
-              {{ color_html }}
-            </div>
-          {% endif %}
-        {% endif %}
-
-        <div class="product-card__info-price">
-          {% if variant != blank %}
-            {% if variant.compare_at_price > variant.price %}
-              <s>{{ variant.compare_at_price | money }}</s>
-              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-            {% endif %}
-
-            {{ variant.price | money }}
-          {% else %}
-            {% if card_product.compare_at_price > card_product.price %}
-              <s>{{ card_product.compare_at_price | money }}</s>
-              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
-            {% endif %}
-
-            {% if card_product.price_varies %}
-              {%- assign price = card_product.price | money -%}
-              {{ 'products.product.from_text_html' | t: price: price }}
-            {% else %}
-              {{ card_product.price | money }}
-            {% endif %}
-          {% endif %}
-
+{% if card_images == blank %}
+  {% assign printed_images = blank %}
+  {% capture card_images %}
+    {% for variant in card_product.variants %}
+      {% unless printed_images contains variant.image %}
+        {% assign alt_pieces = image.alt | split: '|' %}
+        <div class="product-card__gallery-slide
+          {% if variant == current_variant %}
+            swiper-slide
+          {% endif %}"
+          data-gallery-slide
+          data-image-selector="{{ alt_pieces[1] }}">
+          <img
+            src="{{variant.image | image_url: width: '400', format: 'pjpg'}}"
+            class="product-card__image"
+            width="400"
+            height="auto"
+            alt="{{ alt_pieces[0] }}"
+            loading="lazy">
         </div>
+        {% assign printed_images = printed_images | append: variant.image %}
+      {% else %}
+        {% continue %}
+      {% endunless %}
+    {% endfor %}
+  {% endcapture %}
+{% endif %}
 
-        {% if show_reviews %}
-          {% comment %} Add your review provider markup here {% endcomment %}
-        {% endif %}
-
+{% if card_product != blank %}
+  <div id="product-card-{{ card_product.id }}" class="product-card {{ card_classes }}" data-product-card>
+    <div class="product-card__gallery swiper-container" data-gallery-slider>
+      <div class="swiper-wrapper">
+        {{ card_images }}
       </div>
+      <div class="swiper-pagination product-card__gallery-pagination"></div>
+    </div>
+    <form target="/cart/add" class="product-card__content text-center">
+      <a href="{{card_product.url}}?variant={{current_variant.id}}" class="product-card__url" data-product-url="{{card_product.url}}"></a>
+      {% render 'product-form-options'
+        product: card_product,
+        print_option: 'color',
+        type:'swatch',
+        current_variant: current_variant
+      %}
+      <span class="product-card__color-title" data-color-title data-color-index="{{color_index}}">
+        {{ current_variant[color_index] }}
+      </span>
+
+      <h4 class="product-card__title">
+        {{ card_product.title }}
+      </h4>
+
+      <div class="product-card__price-container">
+        <s class="product-card__compare-price" data-compare-price>
+          {% if current_variant.compare_at_price > current_variant.price %}
+            {{ current_variant.compare_at_price | money_without_trailing_zeros }}
+          {% endif %}
+        </s>
+        <span class="product-price" data-product-price>
+          {{ current_variant.price | money_without_trailing_zeros }}
+        </span>
+      </div>
+
+      <input type="hidden" data-option-name="Size"
+            data-single-option-selector
+            data-drawer-field
+            data-product-option="{{size_index}}"
+            data-option-index="{{size_index}}"
+            product-title="{{product.title}}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="id">
+    </form>
+
+    <div class="product-card__add-to-cart-container">
+      <button class="product-card__add-to-cart btn-link" data-option-drawer-trigger>Add it now</button>
     </div>
 
-    {% if render_json == true %}
-      <script type="application/json" data-product-json>
-        {% include 'product-json' %}
-      </script>
-    {% endif %}
-
+    <script type="application/json" data-product-json>
+      {% render 'product-json' with product: card_product %}
+    </script>
   </div>
-
 {% endif %}

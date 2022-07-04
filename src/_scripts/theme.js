@@ -72,6 +72,7 @@ import ShopTheLook from './sections/shop-the-look';
 import OptionDrawer from './sections/optionDrawer';
 import Hero from './sections/hero';
 import FeaturedCategories from './sections/featuredCategories';
+import ProductCardSlider from './sections/productCardSlider';
 
 
 // Managers
@@ -140,6 +141,7 @@ Breakpoints.initialize();
   sectionManager.register('option-selector-drawer', OptionDrawer);
   sectionManager.register('hero', Hero);
   sectionManager.register('featured-categories', FeaturedCategories);
+  sectionManager.register('product-card-slider', ProductCardSlider);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
