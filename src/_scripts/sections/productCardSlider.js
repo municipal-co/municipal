@@ -5,11 +5,7 @@ import ProductCard from '../view/product/productCard';
 
 const selectors = {
   cardSlider: '[data-card-slider]',
-  cards: '[data-cards]',
-};
-
-const classes = {
-  slide: 'swiper-slide',
+  cards: '[data-card-slide]',
 };
 
 export default class ProductCardSlider extends BaseSection {
@@ -18,8 +14,6 @@ export default class ProductCardSlider extends BaseSection {
 
     this.$cardSlider = $(selectors.cardSlider, this.$container);
     this.$cards = $(selectors.cards, this.$container);
-
-    this.cards = [];
 
     this.initCardSlider();
     this.initCards();
@@ -53,7 +47,13 @@ export default class ProductCardSlider extends BaseSection {
 
   initCards() {
     this.$cards.each((i, card) => {
-      this.cards.push(new ProductCard(card));
+      new ProductCard(card)
     })
+  }
+
+  onBlockSelect(evt) {
+    const $card = $(evt.target);
+
+    this.cardSlider.slideTo($card.index());
   }
 }

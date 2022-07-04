@@ -38,20 +38,17 @@
     {% assign alt_downcase = image.alt | downcase %}
     {% if alt_downcase contains 'front' or alt_downcase contains 'back' %}
       {% assign alt_pieces = image.alt | split: '|' %}
-      <a class="product-card__gallery-slide
+      <div class="product-card__gallery-slide
           {% if alt_pieces[1] contains current_variant[color_index] %}swiper-slide{% endif %}"
           href="{{card_product.url}}?variant={{current_variant.id}}" data-product-url="{{card_product.url}}"
           data-gallery-slide
-          data-image-selector="{{ alt_pieces[1] }}">
+          data-image-selector="{{ alt_pieces[1] | downcase }}">
 
         <img
-            src="{{image | image_url: width: '400', format: 'pjpg'}}"
-            class="product-card__image"
-            width="400"
-            height="auto"
-            alt="{{ alt_pieces[0] }}"
-            loading="lazy">
-      </a>
+            data-src="{{image | image_url: width: '400', format: 'pjpg'}}"
+            class="product-card__image swiper-lazy"
+            alt="{{ alt_pieces[0] }}">
+      </div>
     {% endif %}
   {%- endfor -%}
 {% endcapture %}
