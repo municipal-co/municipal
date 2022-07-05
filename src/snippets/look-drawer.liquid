@@ -11,19 +11,6 @@
     </div>
 
     <div class="drawer__body-contents look-drawer__body">
-      <div class="look-drawer__image-container frame frame--4x5">
-        {% capture look_image %}
-        {% render 'cf-image' image: look.look_image , size: '700x', format: 'pjpg', tag_alt: look.look_image.alt, tag_class: 'lazyload look-drawer__image frame__inner' %}
-        {% endcapture %}
-        {{ look_image | replace: 'src=', 'data-src=' }}
-
-        {% if look.card_text != blank %}
-          <div class="look-drawer__image-text">
-            {{ look.card_text }}
-          </div>
-        {% endif %}
-      </div>
-
       {% capture products_ui %}
         {% for i in (1..6) %}
           {% assign product_key = 'product_' | append: forloop.index %}
