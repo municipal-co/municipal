@@ -72,6 +72,7 @@
   "cart": {
     "general": {
       "title": "Carrito de compra",
+      "contents_title": "Artículos",
       "remove": "Quitar",
       "note": "Instrucciones especiales para el vendedor",
       "subtotal": "Subtotal",
