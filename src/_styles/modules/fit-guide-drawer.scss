@@ -1,5 +1,6 @@
 .fit-guide__drawer {
-  height: 100vh;
+  top: 50px;
+  height: calc(100vh - 50px);
   overflow: auto;
   border: 0;
   width: 100%;
@@ -10,6 +11,7 @@
   }
 
   @include media-breakpoint-up('lg') {
+    height: 100vh;
     width: calc(10/24*100%);
     transform: translateX(100%);
   }

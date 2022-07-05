@@ -155,6 +155,7 @@
 
   @include media-breakpoint-down('md') {
     width: 100%;
+    max-height: calc(100% - 50px);
     height: auto;
     top: auto;
     bottom: 0;
@@ -166,6 +167,7 @@
       transform: translateY(0);
     }
   }
+
 
   .drawer__close .icon {
     width: 20px;
