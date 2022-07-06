@@ -810,6 +810,14 @@ body.ajax-cart-open {
   text-transform: uppercase;
   min-height: initial;
   background-color: $blue;
+  transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
+  transform: scale(1);
+
+  @include media-breakpoint-up('lg'){
+    &:hover {
+      transform: scale(0.96);
+    }
+  }
 }
 
 .ajax-cart__continue-shopping-btn {
