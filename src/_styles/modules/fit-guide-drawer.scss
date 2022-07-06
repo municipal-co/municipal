@@ -11,8 +11,8 @@
   }
 
   @include media-breakpoint-up('lg') {
+    top: 0;
     height: 100vh;
-    width: calc(10/24*100%);
     transform: translateX(100%);
   }
 }

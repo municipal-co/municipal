@@ -1,7 +1,4 @@
 .features-detail__drawer {
-  @include media-breakpoint-up('lg') {
-    max-width: calc(100% / 24 * 10);
-  }
 }
 
 .drawer__header.features-detail__header {

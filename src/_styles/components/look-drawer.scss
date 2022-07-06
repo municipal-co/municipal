@@ -1,7 +1,6 @@
 .look-drawer {
-  @include media-breakpoint-up ('lg') {
-    width: calc(100% / 24 * 10);
-  }
+  overflow: auto;
+  height: 100%;
   background-color: $bg-white;
 }
 
