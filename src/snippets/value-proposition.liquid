@@ -20,23 +20,26 @@
     {{ s.vp_body_content }}
   </div>
 
-  <div id="value-prop-{{video_id}}" class="value-prop__media-container frame frame--1x1" data-video-player data-video-id="{{video_id}}" data-video-type="vimeo" data-embed-color="#ffffff" data-background="{{s.vp_background_video}}">
-    <div class="video-player__cover value-prop__cover frame__inner" data-video-player-cover>
-      {% if s.vp_overlay_image != blank %}
-        {% render 'cf-image'
-          image: s.vp_overlay_image,
-          size: '500x',
-          format: 'pjpg',
-          print: 'tag',
-          tag_class: 'video-player__cover-still value-prop__media frame__inner'
-        %}
-      {% endif %}
-      <div class="value-prop__play-btn">
-        {% render 'icon-play-full-color' %}
+  {% if s.vp_video_id != blank %}
+    <div id="value-prop-{{video_id}}" class="value-prop__media-container frame frame--1x1" data-video-player data-video-id="{{video_id}}" data-video-type="vimeo" data-embed-color="#ffffff" data-background="{{s.vp_background_video}}">
+      <div class="video-player__cover value-prop__cover frame__inner" data-video-player-cover>
+        {% if s.vp_overlay_image != blank %}
+          {% render 'cf-image'
+            image: s.vp_overlay_image,
+            size: '500x',
+            format: 'pjpg',
+            print: 'tag',
+            tag_class: 'video-player__cover-still value-prop__media frame__inner'
+          %}
+        {% endif %}
+        <div class="value-prop__play-btn">
+          {% render 'icon-play-full-color' %}
+        </div>
       </div>
+      {% if s.vp_video_url != blank %}
+        <div class="video-player__embed frame__inner value-prop__video" data-video-player-embed></div>
+      {% endif %}
     </div>
-    {% if s.vp_video_url != blank %}
-      <div class="video-player__embed frame__inner value-prop__video" data-video-player-embed></div>
-    {% endif %}
-  </div>
+  {% endif %}
+
 </div>
