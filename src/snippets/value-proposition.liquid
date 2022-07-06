@@ -16,7 +16,9 @@
       %}
     </div>
   {% endif %}
-  <p class="value-prop__body-content">We needed a beanie that <b class="sub__highligted-tex">looks as good as it performs.</b> Say hello to your new lightweight accessory that's ready to complete your look for every activity.</p>
+  <div class="value-prop__body-content">
+    {{ s.vp_body_content }}
+  </div>
 
   <div id="value-prop-{{video_id}}" class="value-prop__media-container frame frame--1x1" data-video-player data-video-id="{{video_id}}" data-video-type="vimeo" data-embed-color="#ffffff" data-background="{{s.vp_background_video}}">
     <div class="video-player__cover value-prop__cover frame__inner" data-video-player-cover>
