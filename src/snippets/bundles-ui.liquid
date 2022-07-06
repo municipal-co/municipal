@@ -30,8 +30,14 @@
   {% endfor %}
 
   <div class="bundle-items" data-bundle-products style="display:none;">
+    {% assign max_items = 0 %}
+    {% for i in product.metafields.custom_fields["bundle_options"] %}
+      {% if i.quantity > max_items %}
+        {% assign max_items = i.quantity %}
+      {% endif %}
+    {% endfor %}
     <span class="bundle-items__title">Edit color and size:</span>
-    {% for i in (1..product.metafields.custom_fields["bundle_options"].size) %}
+    {% for i in (1..max_items) %}
     {% assign current_variant = product.selected_or_first_available_variant %}
 
       <div class="bundle-item__drawer" data-bundle-product style="display:none;">
