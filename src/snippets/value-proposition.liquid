@@ -20,8 +20,8 @@
     {{ s.vp_body_content }}
   </div>
 
-  {% if s.vp_video_id != blank %}
-    <div id="value-prop-{{video_id}}" class="value-prop__media-container frame frame--1x1" data-video-player data-video-id="{{video_id}}" data-video-type="vimeo" data-embed-color="#ffffff" data-background="{{s.vp_background_video}}">
+  {% if video_id != blank or s.vp_overlay_image != blank %}
+    <div id="value-prop-{{product.id}}" class="value-prop__media-container frame frame--1x1 {% unless video_id != blank %} no-video {% endunless %}" data-video-player data-video-id="{{video_id}}" data-video-type="vimeo" data-embed-color="#ffffff" data-background="{{s.vp_background_video}}">
       <div class="video-player__cover value-prop__cover frame__inner" data-video-player-cover>
         {% if s.vp_overlay_image != blank %}
           {% render 'cf-image'
@@ -32,11 +32,13 @@
             tag_class: 'video-player__cover-still value-prop__media frame__inner'
           %}
         {% endif %}
-        <div class="value-prop__play-btn">
-          {% render 'icon-play-full-color' %}
-        </div>
+        {% if video_id != blank %}
+          <div class="value-prop__play-btn">
+            {% render 'icon-play-full-color' %}
+          </div>
+        {% endif %}
       </div>
-      {% if s.vp_video_url != blank %}
+      {% if video_id != blank %}
         <div class="video-player__embed frame__inner value-prop__video" data-video-player-embed></div>
       {% endif %}
     </div>
