@@ -5,7 +5,7 @@
   display: block;
   overflow: hidden;
   @include media-breakpoint-up('lg') {
-    max-width: calc(100% - 550px);
+    max-width: calc(100% - 575px);
   }
 
   @include media-breakpoint-down('sm') {
