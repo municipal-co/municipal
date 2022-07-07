@@ -335,8 +335,10 @@ export default class ProductDetailForm {
     if(name === 'size' || name === 'Size') {
 
       $(`[data-selected-option=${index}]`, this.$detailOptions).text(`Selected ${name}: ${value}`);
-    } else {
+    } else if ( name === 'amount' || name === 'Amount' ) {
       $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${value}</span>`);
+    } else {
+      $(`[data-selected-option=${index}]`, this.$detailOptions).text(value);
       this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
     }
   }
