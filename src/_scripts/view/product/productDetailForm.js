@@ -1,7 +1,7 @@
 import $ from 'jquery';
+import Swiper from 'swiper';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
-import Swiper from 'swiper';
 import Drawer from '../../ui/drawer';
 import Variants from './variants';
 import ProductBundles from '../../managers/product-bundles'
@@ -128,14 +128,13 @@ export default class ProductDetailForm {
     this.$bisButton.on(this.events.CLICK, this.onBisButtonClick.bind(this));
 
     this.checkVariantsAvailability(this.variants.currentVariant);
-    // this.updateBadge(this.variants.currentVariant);
     this.productColorValidation();
 
     if(this.$swatchSlider.length){
       this.initSwatchesSlider();
     }
     this.updateAddToCartState(this.variants.currentVariant);
-    this.updateProductPrices(this.variants.currentVariant);
+    this.updateProductPrices(this.variants.currentVariant, true);
     this.validateSizeAvailability();
   }
 
@@ -286,8 +285,12 @@ export default class ProductDetailForm {
    *
    * @param {Object} variant - Shopify variant object
    */
-  updateProductPrices(variant) {
-    if (variant) {
+  updateProductPrices(variant, firstCheck) {
+    if(firstCheck && this.productSingleObject.type == 'Gift Card') {
+      this.$atcPrice.hide();
+    }
+
+    if (variant ) {
       this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
       this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
 
@@ -333,7 +336,7 @@ export default class ProductDetailForm {
 
       $(`[data-selected-option=${index}]`, this.$detailOptions).text(`Selected ${name}: ${value}`);
     } else {
-      $(`[data-selected-option=${index}]`, this.$detailOptions).text(value);
+      $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${value}</span>`);
       this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
     }
   }
@@ -426,7 +429,7 @@ export default class ProductDetailForm {
           $uiContainer.find('[data-option-availability]').html(Utils.getPropByString(window, 'theme.strings.available') || 'Available');
           const $quantityContainer = $uiContainer.find('[data-low-quantity]');
 
-          if(variant.inventory_quantity <= this.settings.lowQuantityThreshold) {
+          if(variant.inventory_quantity <= this.settings.lowQuantityThreshold && variant.inventory_quantity > 0) {
             const quantityTemplate = $quantityContainer.data('message-template');
             $quantityContainer.html(quantityTemplate.replace('[quantity]', variant.inventory_quantity));
             $quantityContainer.show();
