@@ -16,8 +16,10 @@
     <div class="product-gallery__wrapper swiper-wrapper">
       {% for image in product.images %}
       {% assign image_alt_pieces = image.alt | split: '|' %}
+      {% assign img_color_downcase = image_alt_pieces[1] | downcase %}
+      {% assign variant_color_downcase = current_variant[option_index] | downcase %}
         {% if has_color_index %}
-          <div class="product-gallery__slide {% if image_alt_pieces[1] == current_variant[option_index] %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}">
+          <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}">
         {% else %}
           <div class="product-gallery__slide swiper-slide" data-slide>
         {% endif %}

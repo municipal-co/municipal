@@ -58,7 +58,7 @@ export default class productGallery extends BaseSection {
 
         this.$slides.forEach((slide, index) => {
           slide.classList.remove(classes.gallerySlide);
-          if(slide.dataset.colorIdentifier === colorName) {
+          if(slide.dataset.colorIdentifier.toLowerCase() === colorName.toLowerCase()) {
             slide.classList.add(classes.gallerySlide);
           }
         })
