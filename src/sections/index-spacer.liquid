@@ -2,6 +2,7 @@
   {% include 'spacer',
               id: section.id,
               height_name: section.settings.height_name,
+              height_custom_spacing: section.settings.height_custom_spacing,
               height_px: section.settings.height_px,
               height_px_tablet: section.settings.height_px_tablet,
               height_px_mobile: section.settings.height_px_mobile,
@@ -24,7 +25,14 @@
           { "value": "huge", "label": "Huge" }
         ],
         "default":   "medium",
-        "info": "This height will be overridden by heights set below"
+        "info": "Choose from a predefined list of spacing sizes."
+      },
+      {
+        "type": "checkbox",
+        "id": "height_custom_spacing",
+        "label": "Enable Custom Spacing",
+        "info": "This will override any predefined spacing above.",
+        "default": false
       },
       {
         "type": "range",

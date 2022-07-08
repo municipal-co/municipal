@@ -8,7 +8,8 @@
   {% include 'spacer',
               id: { string } - optional - required if you want to use pixel values for spacer height
               height_name: { string } - optional, spacer modifier suffix (see spacer.scss)
-              height_px: { number } - optional 
+              height_custom_spacing: { boolean } - optional
+              height_px: { number } - optional
               height_px_tablet: { number } - optional
               height_px_mobile: { number } - optional
   %}
@@ -20,7 +21,7 @@
 
 {% endcomment -%}
 
-{% if id != blank %}
+{% if id != blank and height_custom_spacing %}
   <style type="text/css">
     {% if height_px != blank %}
       #spacer-{{ id }} {
