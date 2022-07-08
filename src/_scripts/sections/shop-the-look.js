@@ -42,7 +42,7 @@ export default class ShopTheLook extends BaseSection {
 
   initLooksSlider() {
     const looksSliderOptions = {
-      slidesPerView: 1.5,
+      slidesPerView: 1.15,
       loop: false,
       spaceBetween: 15,
       slidesOffsetBefore: 30,
@@ -120,6 +120,7 @@ export default class ShopTheLook extends BaseSection {
       const slider = drawer.drawerObject.$el.find(selectors.lookDrawerSlider);
       const swiperSlider = new Swiper(slider, {
         centeredSlides: true,
+        loop: true,
         slidesPerView: 1.5,
         spaceBetween: 15,
         threshold: 20,
