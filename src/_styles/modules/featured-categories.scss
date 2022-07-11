@@ -15,12 +15,15 @@
   display: inline-block;
   font-size: 14px;
   color: $white;
+  background-color: transparent;
   padding: 10px 30px;
   line-height: 1;
-
+  transition: $transition-timing-function-in-out-ui $transition-duration-fast;
+  transition-property: color, background-color;
   &:hover,
   &:focus {
-    color:$white;
+    color:$black;
+    background-color: $white;
   }
 }
 
