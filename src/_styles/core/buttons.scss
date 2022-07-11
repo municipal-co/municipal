@@ -120,23 +120,28 @@ fieldset:disabled a.btn {
 
 // Make a button look and behave like a link
 .btn-link {
+  position: relative;
   color: $link-color;
   text-decoration: none;
   background: none;
   border: none;
   display: inline-block;
-  border-bottom: 2px solid $black;
   border-radius: 0;
   padding: 0;
   line-height: 1.5;
 
-  @include hover {
-    color: $blue;
-    text-decoration: none;
-    border-color: $blue;
-    .btn__ui .icon {
-      fill: $blue;
-    }
+  &:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 100%;
+    width: 100%;
+    border-bottom: 2px solid currentColor;
+    transition: border-bottom-width $transition-timing-function-in-out-ui $transition-duration-fast;
+  }
+
+  &:hover:before {
+    border-bottom-width: 4px;
   }
 
   &:focus,

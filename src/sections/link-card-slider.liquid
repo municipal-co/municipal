@@ -38,9 +38,9 @@
           {% assign bs = block.settings %}
           {% capture card_text_html %}
           {% if bs.cta_label != blank%}
-            <span class="link-card__cta-label">
+            <a href="{{bs.cta_url}}" class="btn-link link-card__cta-label">
               {{ bs.cta_label }}
-            </span>
+            </a>
           {% endif %}
             {% if bs.corner_small_text != blank  %}
               <div class="link-card__corner-label">
