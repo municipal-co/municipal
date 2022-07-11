@@ -131,8 +131,9 @@
             {%- comment -%}Get the largest amount of items out of the metafield options{%- endcomment -%}
             {% assign max_items = 0 %}
             {% for i in product.metafields.custom_fields["bundle_options"] %}
-              {% if i.quantity > max_items %}
-                {% assign max_items = i.quantity %}
+              {% assign current_qty = i.quantity | plus: 0%}
+              {% if current_qty > max_items %}
+                {% assign max_items = current_qty %}
               {% endif %}
             {% endfor %}
             <span class="product__selector-header">{{ section.settings.bundle_product_title }}</span>
