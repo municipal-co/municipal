@@ -317,6 +317,21 @@
 
 .product__atc-btn {
   text-transform: uppercase;
+  transition: transform $transition-timing-function-in-out-ui $transition-duration-fast;
+  span {
+    transition: transform $transition-timing-function-in-out-ui $transition-duration-fast;
+  }
+
+  &:not([disabled]):hover {
+    background-color: $blue;
+    transform: scale(0.98);
+    border-color: $blue;
+
+    span {
+      display: inline-block;
+      transform: scale(1.02);
+    }
+  }
 }
 
 .product__atc-price:before {
