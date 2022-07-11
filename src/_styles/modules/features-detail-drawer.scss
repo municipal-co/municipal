@@ -1,4 +1,5 @@
 .features-detail__drawer {
+  height: 100%;
 }
 
 .drawer__header.features-detail__header {
@@ -25,7 +26,7 @@
   padding: 0 30px 30px;
 }
 
-.features-detail__gallery-image {
+.features-detail__image {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,8 +36,12 @@
   object-position: center;
 }
 
-.features-detail__gallery-pagination {
-  position: relative;
+.features-detail__slider-pagination {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  justify-content: center;
+  bottom: unset;
 }
 
 .features-detail__body-content {
