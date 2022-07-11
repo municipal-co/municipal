@@ -315,6 +315,10 @@
   }
 }
 
+.product__atc-btn {
+  text-transform: uppercase;
+}
+
 .product__atc-price:before {
   content: '- ';
 }

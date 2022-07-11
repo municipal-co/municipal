@@ -59,6 +59,7 @@
   margin: 12px 0;
   color: $white;
   font-size: 40px;
+  text-transform: uppercase;
   @include media-breakpoint-down('md') {
     font-size: 32px;
   }
