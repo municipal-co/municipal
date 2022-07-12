@@ -29,6 +29,12 @@
     top: 50%;
     transform: translateY(-50%);
     width: 30px;
+    transition: right $transition-timing-function-base $transition-duration-base;
+  }
+  @include media-breakpoint-up('lg') {
+    &:hover .icon {
+      right: 15px;
+    }
   }
 }
 
