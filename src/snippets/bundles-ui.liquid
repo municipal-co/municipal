@@ -32,8 +32,9 @@
   <div class="bundle-items" data-bundle-products style="display:none;">
     {% assign max_items = 0 %}
     {% for i in product.metafields.custom_fields["bundle_options"] %}
-      {% if i.quantity > max_items %}
-        {% assign max_items = i.quantity %}
+      {% assign current_qty = i.quantity | plus: 0 %}
+      {% if current_qty > max_items %}
+        {% assign max_items = current_qty %}
       {% endif %}
     {% endfor %}
     <span class="bundle-items__title">Edit color and size:</span>

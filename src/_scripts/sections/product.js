@@ -33,19 +33,24 @@ export default class ProductSection extends BaseSection {
     this.$featuresDrawerSlider = $(selectors.featuresDrawerSlider);
 
     // drawers
-    this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
-    this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
     this.galleries = [];
 
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
     this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
-    this.initFitGuideGalleries();
 
     new VideoPlayer(selectors.videoPlayer);
 
-    this.initFeaturesSlider();
+    if($(selectors.fitGuideDrawer)) {
+      this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
+      this.initFitGuideGalleries();
+    }
+
+    if($(selectors.featuresDrawer).length) {
+      this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
+      this.initFeaturesSlider();
+    }
   }
 
   toggleFitGuideModal() {
