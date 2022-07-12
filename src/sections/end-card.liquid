@@ -1,0 +1,152 @@
+{% assign text_color = section.settings.text_color %}
+{% assign bgcolor = section.settings.bgcolor %}
+{% assign image = section.settings.image %}
+{% assign cta_text = section.settings.cta_text %}
+{% assign cta_url = section.settings.cta_url %}
+{% assign button_style = section.settings.button_style %}
+
+{%- capture profiles -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == "profile" -%}
+      {% if block.settings.name != blank or block.settings.handle != blank %}
+      <div class="profile" {{ block.shopify_attributes }}>
+        {% if block.settings.name != blank -%}<span class="profile__name">{{ block.settings.name }}</span>{% endif %}
+        {% if block.settings.handle != blank %}<a class="profile__handle" href="{{ block.settings.url }}" target="_blank" rel="noopener nofollow">{{ block.settings.handle }}</a>{% endif %}
+      </div>
+      {% endif %}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<style>
+  #endcard-{{ section.id }} {
+    background-color: {{ bgcolor }};
+  }
+
+  #endcard-{{ section.id }} .profile__name,
+  #endcard-{{ section.id }} .profile__handle {
+    color: {{ text_color }};
+  }
+
+  #endcard-{{ section.id }} .profile:not(:last-child):after {
+    background-color: {{ text_color }};
+  }
+</style>
+
+<div id="endcard-{{ section.id }}" data-section-id="{{ section.id }}" class="endcard" data-section-type="endcard">
+  {%- if  image != blank -%}
+    <img class="endcard__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
+  {%- endif -%}
+  <div class="endcard__columns">
+    <div class="endcard__column">
+      {% if profiles != blank %}
+        <div class="profiles">
+          {{ profiles }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="endcard__column">
+      {%- if cta_text != blank and cta_url != blank -%}
+      <a href="{{ cta_url }}" class="endcard__cta btn {{ button_style }}">
+        {{ cta_text }}
+      </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "End Card",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Displayed above profiles and CTA button"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text",
+      "default": "View More Content"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "btn-primary",
+          "label": "Black"
+        },
+       {
+         "value": "btn-secondary",
+         "label": "Blue"
+       },
+       {
+         "value": "btn-white",
+         "label": "White"
+       }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Profile",
+      "type": "profile",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Social Handle"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "End Card",
+      "category": "Misc"
+    }
+  ]
+}
+{% endschema %}
