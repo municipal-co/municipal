@@ -49,6 +49,12 @@
     border-radius: 5px;
     cursor: pointer;
 
+    @include media-breakpoint-up('lg') {
+      &:hover {
+        border-color: $core-grey-2;
+      }
+    }
+
     &:before {
       content: "";
       display: block;
