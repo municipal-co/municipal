@@ -38,6 +38,20 @@
   line-height: 1;
   border: 2px solid $white;
   color: $white;
+  z-index: 2;
+  transition: $transition-timing-function-in-out-ui $transition-duration-fast;
+  transition-property: color, background-color;
+
+  &:hover {
+    color: $white;
+  }
+
+  @include media-breakpoint-up('lg') {
+    &:hover {
+      color: $black;
+      background-color: $white;
+    }
+  }
 }
 
 .link-card__bottom-text {

@@ -54,6 +54,21 @@
   }
 }
 
+.sticky-image__badge {
+  transition: $transition-timing-function-base $transition-duration-fast;
+  transition-property: color, background-color;
+
+  &:hover {
+    color: $white;
+  }
+
+  @include media-breakpoint-up('lg') {
+    &:hover {
+      background-color: $white;
+      color: $black;
+    }
+  }
+}
 
 .sticky-image__title {
   margin: 12px 0;

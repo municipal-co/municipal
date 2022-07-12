@@ -53,10 +53,10 @@
               <div class="link-card__image-container frame {{s.card_aspect_ratio}}">
                 <a class="link-card__link" href="{{bs.cta_url}}" aria-title="{{bs.cta_label | default: bs.cta_ada_label }}"></a>
                 <img data-src="{{bs.card_image | img_url: '600x' }}" alt="{{bs.card_image.alt}}" class="frame__inner swiper-lazy link-card__image">
-                {% if bs.category != blank %}
-                  <div class="link-card__category">
-                    {{ bs.category }}
-                  </div>
+                {% if bs.category_url != blank and bs.category_label != blank%}
+                  <a href="{{bs.category_url}}" class="link-card__category">
+                    {{ bs.category_label }}
+                  </a>
                 {% endif %}
                 {% if card_text_html != blank %}
                   <div class="link-card__bottom-text">
@@ -183,10 +183,16 @@
           "label": "Image"
         },
         {
+          "type": "url",
+          "id": "category_url",
+          "label": "Category URL",
+          "info": "Optional - Must be populated with the category Label or else the tag will not show"
+        },
+        {
           "type": "text",
-          "id": "category",
-          "label": "Card category",
-          "info": "Optional"
+          "id": "category_label",
+          "label": "Category Label",
+          "info": "Optional - Must be populated with the category URL or else the tag will not show"
         },
         {
           "type": "text",

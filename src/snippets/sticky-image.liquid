@@ -9,9 +9,9 @@
 
       <div class="sticky-image__info-container">
         {% if collection != blank %}
-          <div class="badge badge--white">
+          <a href="{{collection.url}}" class="badge sticky-image__badge" title="Go to collection {{ collection.title }}">
             {{ collection.title }}
-          </div>
+          </a>
         {% endif %}
         <h1 class="sticky-image__title">
           {{ object.title }}
