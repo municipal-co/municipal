@@ -126,10 +126,12 @@
 // Product option type: drawer
 .product-option__drawer-btn {
   border-color: $color-dots-border;
-
+  &.is-active {
+    border-color: $black;
+  }
   &:hover,
   &:focus {
-    border-color: $color-dots-border;
+    border-color: $core-grey-2;
   }
   .btn__ui {
     display: inline-block;
