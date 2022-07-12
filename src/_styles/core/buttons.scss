@@ -70,26 +70,6 @@ button.focus {
       height: 30px;
     }
   }
-
-  &.btn--underlined {
-    background-color: transparent;
-    border-radius: 0;
-    font-weight: $font-weight-normal;
-    padding: 0 0 5px;
-    color: $black;
-    &:focus {
-      box-shadow: none;
-    }
-    &::before {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      height: 4px;
-      width: 100%;
-      background-color: $black;
-    }
-  }
 }
 
 // Future-proof disabling of clicks on `<a>` elements
@@ -119,7 +99,8 @@ fieldset:disabled a.btn {
 //
 
 // Make a button look and behave like a link
-.btn-link {
+.btn-link,
+.btn--underlined {
   position: relative;
   color: $link-color;
   text-decoration: none;
@@ -129,19 +110,24 @@ fieldset:disabled a.btn {
   border-radius: 0;
   padding: 0;
   line-height: 1.5;
+  border-bottom: 2px solid currentColor;
 
   &:before {
     content: "";
     position: absolute;
     display: block;
     top: 100%;
-    width: 100%;
-    border-bottom: 2px solid currentColor;
-    transition: border-bottom-width $transition-timing-function-in-out-ui $transition-duration-fast;
+    left: 0;
+    right: 0;
+    width: 0%;
+    margin: auto;
+    border-bottom: 4px solid currentColor;
+    transition: width $transition-timing-function-in-out-ui $transition-duration-fast;
   }
 
   &:hover:before {
     border-bottom-width: 4px;
+    width: 100%;
   }
 
   &:focus,
