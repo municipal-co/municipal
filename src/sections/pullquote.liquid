@@ -1,0 +1,76 @@
+{% assign quote = section.settings.quote %}
+{% assign color = section.settings.color %}
+{% assign gradient = section.settings.gradient %}
+{% assign cite = section.settings.cite.src %}
+{% assign bgcolor = section.settings.bgcolor %}
+
+{%- if quote != blank -%}
+<style>
+  #pullquote-{{ section.id }} {
+    background-color: {{ bgcolor }}; /* returns rgba(0,0,0,0) if set to "None" (i.e. transparent) */
+  }
+  #pullquote-{{ section.id }} .pullquote__quote {
+    {%- if gradient == blank -%}
+    color: {{ color }};
+    {%- endif -%}
+    {%- if gradient != blank -%}
+    background: {{ gradient }};
+    -webkit-background-clip: text;
+       -moz-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+       -moz-text-fill-color: transparent;
+    color: transparent;
+    {%- endif -%}
+  }
+</style>
+<div id="pullquote-{{ section.id }}" data-section-id="{{ section.id }}" class="pullquote" data-section-type="pullquote"">
+  <div class="pullquote__lining container-fluid-max">
+    <blockquote class="pullquote__quote h1">{{ quote }}</blockquote>
+    {%- if cite != blank -%}
+    <img data-src="{{ cite | img_url: 'master' }}" alt="{{ cite.alt }}" class="pullquote__cite lazyload">
+    {%- endif -%}
+  </div>
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Pullquote",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color_background",
+      "id": "gradient",
+      "label": "Text Gradient",
+      "info": "Using a gradient will replace any Text Color set above."
+    },
+    {
+      "type": "image_picker",
+      "id": "cite",
+      "label": "Cite"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Section Background Color",
+      "info": "Add a background color to the entire section."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pullquote",
+      "category": "Misc"
+    }
+  ]
+}
+{% endschema %}
