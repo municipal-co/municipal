@@ -87,34 +87,37 @@ export default class ProductSection extends BaseSection {
   }
 
   initFeaturesSlider() {
-    const featuresSlider = new Swiper(this.$featuresDrawerSlider, {
-      watchOverflow: true,
-      preloadImages: false,
-      arrows: false,
-      observer: true,
-      observeParents: true,
-      loop: true,
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true,
-      },
-      pagination: {
-        el: '.features-detail__slider-pagination',
-        type: 'bullets',
-        clickable: true,
-      },
-      lazy: {
-        loadPrevNext: true,
-      },
-      init: false
-    });
+    if(this.$featuresDrawerSlider.length) {
+      const featuresSlider = new Swiper(this.$featuresDrawerSlider, {
+        watchOverflow: true,
+        preloadImages: false,
+        arrows: false,
+        observer: true,
+        observeParents: true,
+        loop: true,
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true,
+        },
+        pagination: {
+          el: '.features-detail__slider-pagination',
+          type: 'bullets',
+          clickable: true,
+        },
+        lazy: {
+          loadPrevNext: true,
+        },
+        init: false
+      });
 
-    featuresSlider.on('slideChange', function() {
-      const sliderWidth = featuresSlider.width;
-      $(selectors.sliderPagination, this.$featuresDrawerSlider).css('top', sliderWidth + 20);
-    })
+      featuresSlider.on('slideChange', function() {
+        const sliderWidth = featuresSlider.width;
+        $(selectors.sliderPagination, this.$featuresDrawerSlider).css('top', sliderWidth + 20);
+      })
 
-    featuresSlider.init();
+      featuresSlider.init();
+    }
+
   }
 
   onToggleVariant(e) {
