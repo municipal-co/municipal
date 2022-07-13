@@ -34,23 +34,25 @@
 </style>
 
 <div id="endcard-{{ section.id }}" data-section-id="{{ section.id }}" class="endcard" data-section-type="endcard">
-  {%- if  image != blank -%}
-    <img class="endcard__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
-  {%- endif -%}
-  <div class="endcard__columns">
-    <div class="endcard__column">
-      {% if profiles != blank %}
-        <div class="profiles">
-          {{ profiles }}
-        </div>
-      {% endif %}
-    </div>
-    <div class="endcard__column">
-      {%- if cta_text != blank and cta_url != blank -%}
-      <a href="{{ cta_url }}" class="endcard__cta btn {{ button_style }}">
-        {{ cta_text }}
-      </a>
-      {%- endif -%}
+  <div class="container-fluid-max">
+    {%- if  image != blank -%}
+      <img class="endcard__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
+    {%- endif -%}
+    <div class="endcard__columns">
+      <div class="endcard__column">
+        {% if profiles != blank %}
+          <div class="profiles">
+            {{ profiles }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="endcard__column">
+        {%- if cta_text != blank and cta_url != blank -%}
+        <a href="{{ cta_url }}" class="endcard__cta btn {{ button_style }}">
+          {{ cta_text }}
+        </a>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </div>
