@@ -28,6 +28,7 @@ const selectors = {
 
 const classes = {
   open: 'is-open',
+  active: 'is-active',
 }
 
 export default class ProductBundles {
@@ -346,7 +347,8 @@ export default class ProductBundles {
     $this.attr('data-option-value', $this.val());
     $this.attr('value', $this.val());
 
-    $sizeButtonToggler.text(`Selected size: ${$this.val()}`);
+    $sizeButtonToggler.html(`Selected Size: <span class="product-option__drawer-btn-value">${$this.val()}</span>`);
+    $sizeButtonToggler.parent().addClass(classes.active);
   }
 
   updateATCstate() {
