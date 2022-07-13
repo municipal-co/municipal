@@ -1,22 +1,29 @@
 import $ from 'jquery';
-import CartAPI from '../../core/cartAPI';
+import Swiper from 'swiper';
+import * as Currency from '../../core/currency';
 
 const selectors = {
   el: '[data-product-card]',
-  gallery: '[data-product-card-gallery]',
-  productCardImg: '[data-product-card-image]',
-  mainLazyImg: '[data-product-card-main-lazy]',
-  altLazyImg: '[data-product-card-alt-lazy]',
-  productJson: '[data-product-json]',
-  variantMessage: '[data-variant-message]',
-  dot: '[data-dot]',
-  variantOptionList: '[data-variant-option-value-list]'
+  gallerySlider: '[data-gallery-slider]',
+  gallerySlide: '[data-gallery-slide]',
+  swatchSlider: '[data-swatch-slider]',
+  colorTitle: '[data-color-title]',
+  singleOptionSelector: '[data-single-option-selector]',
+  singleProductJson: '[data-product-json]',
+  drawerField: '[data-drawer-field]',
+  addToCartButton: '[data-option-drawer-trigger]',
+  productPrice: '[data-product-price]',
+  cardPrice: '[data-product-price]',
+  cardComparePrice: '[data-compare-price]',
+  productUrl: '[data-product-url]',
 };
 
 const classes = {
-  mainLoaded: 'is-loaded',
-  altLoaded: 'alt-loaded', // added to the product card once the alt image is loaded to avoid a flash of white while loading
-  active: 'is-active'
+  swiperInitialized: 'swiper-container-initialized',
+};
+
+const events = {
+  openDrawer: 'option-drawer:open',
 };
 
 const $window = $(window);
@@ -31,192 +38,194 @@ export default class ProductCard {
     this.name = 'productCard';
     this.namespace = `.${this.name}`;
 
-    this.events = {
-      MOUSEENTER: `mouseenter${this.namespace}`,
-      MOUSELEAVE: `mouseleave${this.namespace}`,
-      CLICK: `click${this.namespace}`,
-      ADD_SUCCESS: `addSuccess${this.namespace}`,
-      ADD_FAIL: `addFail${this.namespace}`,
-      UPDATE_AND_OPEN: 'updateAndOpen'
+    this.$container = $(el);
+    this.$gallerySlider = $(selectors.gallerySlider, this.$container);
+    this.$slides = $(selectors.gallerySlide, this.$container);
+    this.$colorTitle = $(selectors.colorTitle, this.$container);
+    this.$singleOptionSelector = $(selectors.singleOptionSelector, this.$container);
+    this.$drawerField = $(selectors.drawerField, this.$container);
+    this.$optionDdrawerOpen = $(selectors.addToCartButton, this.$container);
+    this.$productPrice = $(selectors.cardPrice, this.$container);
+    this.$comparePrice = $(selectors.cardComparePrice, this.$container);
+    this.$productUrl = $(selectors.productUrl, this.$container);
+
+    this.$singleOptionSelector.on('change', this.onOptionChange.bind(this));
+    this.$optionDdrawerOpen.on('click', this.openOptionDrawer.bind(this));
+
+    this.singleProductJson = JSON.parse($(selectors.singleProductJson, this.$container).html());
+
+    this.setSizeDrawerData();
+    this.updateProductOption();
+    this.gallerySlider = this.initGallery();
+    this.initSwatchSlider();
+  }
+
+  setSizeDrawerData() {
+    this.drawerData = {
+      optionIndex: this.$drawerField.data('option-index'),
+      printOption: this.$drawerField.data('option-name'),
+      dataField: this.$drawerField,
+      productTitle: this.$drawerField
+    }
+  }
+
+  initGallery() {
+    if(this.$gallerySlider.hasClass(classes.swiperInitialized)) {
+      this.gallerySlider.destroy();
+    }
+
+    const gallerySettings = {
+      slidesPerView: 1,
+      effect: 'fade',
+      threshold: 10,
+      lazy: true,
+      pagination: {
+        style: 'bullets',
+        clickable: true,
+        el: '.swiper-pagination',
+      }
+    }
+
+    const gallerySlider = new Swiper(this.$gallerySlider.get(0), gallerySettings);
+
+    return gallerySlider;
+  }
+
+  initSwatchSlider() {
+    const $selectedColor = $(selectors.singleOptionSelector+':checked', this.$container);
+    let swatchIndex = 0
+    if($selectedColor.length) {
+      swatchIndex = $selectedColor.parent().index();
+    }
+
+    const swatchSliderSettings = {
+      slidesPerView: 4.5,
+      spaceBetween: 10,
+      threshold: 10,
+      initialSlide: swatchIndex,
+      nested: true,
+      navigation: {
+        enabled: true,
+        prevEl: '[data-arrow-prev]',
+        nextEl: '[data-arrow-next]',
+      }
+    }
+
+    this.swatchSlider = new Swiper($(selectors.swatchSlider, this.$container).get(0), swatchSliderSettings);
+  }
+
+  onOptionChange(evt) {
+    const $this = $(evt.currentTarget);
+
+    if($this.data('option-name') === 'color') {
+      this.updateColor.call(this, $this);
+      this.updateProductOption.call(this, $this);
+    } else if($this.data('option-name') === 'Size' || $this.data('option-name') === 'size' ) {
+      this.updateSize.call(this);
+    } else {
+      this.updateProductOption.call(this, $this);
+    }
+  }
+
+  updateColor($this) {
+    const selectedColor = $this.val();
+
+    this.$colorTitle.text(selectedColor);
+
+    this.cardGalleryUpdate(selectedColor.toLowerCase());
+  }
+
+  cardGalleryUpdate(selectedColor) {
+    this.$slides.each((i, slide) => {
+      const $slide = $(slide);
+
+      if($slide.data('image-selector') === selectedColor) {
+        $slide.addClass('swiper-slide');
+      } else {
+        $slide.removeClass('swiper-slide');
+      }
+    })
+
+    this.initGallery();
+  }
+
+  updateProductOption() {
+    const options = this.getSelectedOptions();
+
+    this.drawerData.variants = this.getOptionVariants(options);
+
+    this.updateCardPrice(this.drawerData.variants[0]);
+    this.updateCardUrl(this.drawerData.variants[0]);
+  }
+
+  getSelectedOptions() {
+    const options = [];
+
+    for(let i = 1; i <= 3; i++) {
+      const optionIndex = 'option'+i;
+      const optionValue = $(`[data-product-option=${optionIndex}]`, this.$container).filter((index, el) => {
+        const $el = $(el);
+        if(($el.is('[type=radio]') && $el.is(':checked')) || (!$el.is('[type=radio]') && $el.val() !== '')) {
+          return true;
+        }
+      });
+      if(optionValue.length) {
+        options.push(optionValue.val());
+      }
+    }
+
+    return options;
+  }
+
+  getOptionVariants(options) {
+    const selectedVariants = this.singleProductJson.variants.filter((variant) => {
+      let validCount = 0;
+      options.forEach((option, index) => {
+        const optionIndex = `option${index+1}`;
+
+        if (variant[optionIndex] === option) {
+          validCount++;
+        }
+      })
+
+      if (validCount === options.length) {
+        return true;
+      }
+    })
+
+    return selectedVariants;
+  }
+
+  updateCardPrice(variant) {
+    if(variant.compare_at_price > variant.price) {
+      this.$comparePrice.html(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat).replace('.00', ''));
+      this.$comparePrice.show();
+    } else {
+      this.$comparePrice.html('');
+      this.$comparePrice.hide();
     };
 
-    this.$el = $(el);
-    this.$dot = $(selectors.dot, this.$el);
-
-    this.productData = null;
-    const $productJson = $(selectors.productJson, this.$el);
-
-    if ($productJson.length) {
-      try {
-        this.productData = JSON.parse($productJson.html());
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    this.$variantMessage = $(selectors.variantMessage, this.$el);
-    this.lowInventoryThreshold = $(selectors.variantOptionList).data('low-inventory-threshold');
-
-    if (this.$el === undefined || !this.$el.is(selectors.el)) {
-      console.warn(`[${this.name}] - Element matching ${selectors.el} required to initialize.`);
-      return;
-    }
-
-    this.$productCardImg = $(selectors.productCardImg, this.$el);
-    this.$mainLazyImg = $(selectors.mainLazyImg, this.$el);
-    this.$altLazyImg = $(selectors.altLazyImg, this.$el);
-    this.timeout = false;
-
-    // Unveil plugin to lazy load main product card images
-    this.$productCardImg.unveil(200, function() {
-      const $cardImg = $(this);
-
-      $cardImg.on('load', () => {
-        $cardImg.closest(selectors.gallery).addClass(classes.mainLoaded);
-        $cardImg.addClass('in');
-      });
-    });
-
-    if (!this.$mainLazyImg.length) {
-      this.$productCardImg.trigger('unveil');
-      this.$productCardImg.closest(selectors.gallery).addClass(classes.mainLoaded);
-      this.$productCardImg.addClass('in');
-    }
-
-    if (this.$altLazyImg.length) {
-      this.$el.one(this.events.MOUSEENTER, this.onMouseenter.bind(this));
-    }
-
-    $('body').on('updateVariant', this.onVariantUpdate.bind(this));
-    this.$dot.on(this.events.MOUSEENTER, this.onDotMouseenter.bind(this));
-    this.$dot.on(this.events.MOUSELEAVE, this.onDotMouseleave.bind(this));
-    this.$dot.on(this.events.CLICK, this.onDotClick.bind(this));
-    this.$variantMessage.on(this.events.CLICK, this.onTitleClick.bind(this));
-
-    this.updateTitleVariant.call(this);
+    this.$productPrice.html(Currency.formatMoney(variant.price, theme.moneyFormat).replace('.00', ''));
   }
 
-  onTitleClick(e) {
-    e.preventDefault();
-    const $el = $(e.currentTarget);
-    const currentVariant = $el.data('variant-id');
-    if (currentVariant !== '') {
-      CartAPI.addItemFromID(currentVariant)
-      .then((data) => {
-        const event = $.Event( this.events.UPDATE_AND_OPEN, { cart: data });
-        $window.trigger(event);
-      })
-      .fail((data) => {
-        alert(data.message);
-      })
-    }
+  updateCardUrl(variant) {
+    this.$productUrl.each((i, url) => {
+      const currentUrl = $(url).data('product-url');
+      url.href = currentUrl + `?variant=${variant.id}`;
+    })
   }
 
-  updateTitleVariant(currentVariant = null) {
-    if (currentVariant === null) {
-      currentVariant = this.$dot.not('[disabled]').eq(0).data('variant-id');
-    }
-
-    this.$variantMessage.data('variant-id', currentVariant);
+  openOptionDrawer() {
+    $(document).trigger($.Event(events.openDrawer, {optionDrawerData: this.drawerData}));
   }
 
-  onVariantUpdate(e) {
-    if (this.productData) {
-      const currentOption = e.variantSelected;
-      const colorIndex = this.productData.options.indexOf('Color') + 1;
+  updateSize() {
+    const options = this.getSelectedOptions();
 
-      if (this.$el.is('[data-product-merged]')) {
-        let imageUpdated = false;
-        this.productData.variants.forEach((el) => {
-          const lowcaseColor = el[`option${colorIndex}`].toLowerCase();
-          const lowcaseVariant = currentOption.toLowerCase();
-          if (lowcaseColor === lowcaseVariant && !imageUpdated) {
-            const featuredImage = el.featured_image.src;
-            const variantUrl = el.url;
-            $(selectors.mainLazyImg, this.$el).attr('src', featuredImage);
-            $('a', this.$el).attr('href', variantUrl);
-            imageUpdated = true;
-          }
-        });
+    const currentVariants = this.getOptionVariants(options);
 
-        if (!imageUpdated) {
-          const defaultImage = this.productData.featured_image;
-          const defaultUrl = this.productData.url;
+    this.$drawerField.val('');
 
-          $(selectors.mainLazyImg, this.$el).attr('src', defaultImage);
-          $('a', this.$el).attr('href', defaultUrl);
-        }
-      }
-    }
-  }
-
-  onDotClick(e) {
-    e.preventDefault()
-    const $el = $(e.currentTarget);
-    const variantId = $el.data('variant-id');
-    if (!$el.is('[disabled]')) {
-      CartAPI.addItemFromID(variantId)
-      .then((data) => {
-        const event = $.Event( this.events.UPDATE_AND_OPEN, { cart: data });
-        $window.trigger(event);
-      })
-      .fail((data) => {
-        alert(data.message);
-      })
-    }
-  }
-
-  onDotMouseenter(e) {
-    const $el = $(e.currentTarget);
-    const variantId = $el.data('variant-id');
-    const self = this;
-    clearTimeout(this.timeout);
-
-    $el.addClass(classes.active);
-
-    if (this.productData) {
-      $.each(this.productData.variants, function(index, variant) {
-        if (variant.id === variantId) {
-          const availability = variant.available;
-          const inventoryQuantity = variant.inventory_quantity;
-          self.updateTitleVariant(variantId);
-          if (availability === false) {
-            self.$variantMessage.text('Out of Stock');
-            self.updateTitleVariant('');
-          } else if (inventoryQuantity <= self.lowInventoryThreshold) {
-            self.$variantMessage.text(`Only ${inventoryQuantity} Left`);
-          } else {
-            self.$variantMessage.text('Quick Add to Cart');
-          }
-        }
-      });
-    }
-  }
-
-  onDotMouseleave(e) {
-    const $el = $(e.currentTarget);
-    $el.removeClass(classes.active);
-    this.timeout = setTimeout(() => {
-      this.resetBarTitle()
-    }, 500);
-  }
-
-  onMouseenter() {
-    if (this.$altLazyImg.length === 0) return;
-
-    this.$altLazyImg.on('load', () => {
-      this.$el.addClass(classes.altLoaded);
-    });
-
-    this.$altLazyImg.attr('src', this.$altLazyImg.data('src'));
-    this.$altLazyImg.removeAttr('data-src');
-  }
-
-  resetBarTitle() {
-    this.$variantMessage.text('Quick Add to Cart');
-  }
-
-  destroy() {
-    this.$el.off(this.events.MOUSEENTER);
+    $window.trigger($.Event('add_one_from_variant_id', {variantID: currentVariants[0].id}));
   }
 }
