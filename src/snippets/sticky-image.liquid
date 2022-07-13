@@ -2,8 +2,8 @@
     <div class="sticky-image__background-container">
       {% if metafields.si_desktop_image != blank or metafields.si_mobile_image != blank %}
         <picture class="sticky-image__background-image">
-          <source media="(min-width: 992px)" data-srcset="{% render "cf-image", image: metafields.si_desktop_image, size: '1200x', format: 'pjpg', print: 'url' %}">
-          <img data-src="{% render "cf-image", image: metafields.si_mobile_image, size: '600x', format: 'pjpg', print: 'url' %}" alt="{{metafields.si_image_alt}}" class="lazyload">
+          <source media="(min-width: 992px)" data-srcset="{% render "cf-image", image: metafields.si_desktop_image, print: 'url' %}">
+          <img data-src="{% render "cf-image", image: metafields.si_mobile_image, print: 'url' %}" alt="{{metafields.si_image_alt}}" class="lazyload">
         </picture>
       {% endif %}
 

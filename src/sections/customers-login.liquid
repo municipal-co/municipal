@@ -14,20 +14,20 @@
           {{ 'customer.recover_password.success' | t }}
         </div>
         <div id="CustomerLoginForm">
-          <h1 class="h5">{{ 'customer.login.title' | t }}</h1>
+          <h1 class="h2">{{ 'customer.login.title' | t }}</h1>
 
-          <div class="h6">{{ 'customer.login.subtitle' | t }}</div>
+          <div class="p2">{{ 'customer.login.subtitle' | t }}</div>
 
           {% include 'customer-login-form' %}
         </div>
 
         <div id="RecoverPasswordForm" class="hide">
-          <h5>{{ 'customer.recover_password.title' | t }}</h5>
+          <h2 class="customer-drawer__title">{{ 'customer.recover_password.title' | t }}</h2>
 
           {% if section.settings.recover_subtitle != blank %}
-            <div class="h6">{{ section.settings.recover_subtitle }}</div>
+            <div class="p2">{{ section.settings.recover_subtitle }}</div>
           {% else %}
-            <div class="h6">{{ 'customer.recover_password.subtext' | t }}</div>
+            <div class="p2">{{ 'customer.recover_password.subtext' | t }}</div>
           {% endif %}
 
           {% include 'customer-recover-password-form' %}

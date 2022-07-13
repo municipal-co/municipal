@@ -1,4 +1,4 @@
-<div class="drawer drawer--right customers-drawer" data-customers-drawer data-section-id="{{ section.id }}" data-section-type="customers-drawer">
+<div class="drawer" data-customers-drawer data-section-id="{{ section.id }}" data-section-type="customers-drawer">
   <div class="drawer__inner">
     <div class="drawer__header">
       <a href="#" class="drawer__close" data-drawer-close>
@@ -13,15 +13,15 @@
           <div class="col-20 col-lg-18 offset-2 offset-lg-3">
             <div id="CustomerLoginForm">
               {% if section.settings.title != blank %}
-                <div class="h5">{{ section.settings.title }}</div>
+                <div class="h2 customer-drawer__title">{{ section.settings.title }}</div>
               {% else %}
-                <div class="h5">{{ 'customer.login.title' | t | newline_to_br }}</div>
+                <div class="h2 customer-drawer__title">{{ 'customer.login.title' | t | newline_to_br }}</div>
               {% endif %}
 
               {% if section.settings.subtitle != blank %}
-                <div class="h6">{{ section.settings.subtitle }}</div>
+                <div class="p2">{{ section.settings.subtitle }}</div>
               {% else %}
-                <div class="h6">{{ 'customer.login.subtitle' | t }}</div>
+                <div class="p2">{{ 'customer.login.subtitle' | t }}</div>
               {% endif %}
 
               {% include 'customer-login-form',
@@ -31,27 +31,27 @@
 
             <div id="RecoverPasswordForm" class="hide">
               {% if section.settings.title != blank %}
-                <div class="h5">{{ section.settings.recover_title }}</div>
+                <div class="h2 customer-drawer__title">{{ section.settings.recover_title }}</div>
               {% else %}
-                <div class="h5">{{ 'customer.recover_password.title' | t | newline_to_br }}</div>
+                <div class="h2 customer-drawer__title">{{ 'customer.recover_password.title' | t | newline_to_br }}</div>
               {% endif %}
 
               {% if section.settings.recover_subtitle != blank %}
-                <div class="h6">{{ section.settings.recover_subtitle }}</div>
+                <div class="p2">{{ section.settings.recover_subtitle }}</div>
               {% else %}
-                <div class="h6">{{ 'customer.recover_password.subtext' | t }}</div>
+                <div class="p2">{{ 'customer.recover_password.subtext' | t }}</div>
               {% endif %}
 
               {% include 'customer-recover-password-form' %}
             </div>
 
             <div id="CustomerRegisterForm" class="hide">
-              <div class="h5">{{ 'customer.register.title' | t | newline_to_br }}</div>
+              <div class="h2 customer-drawer__title">{{ 'customer.register.title' | t | newline_to_br }}</div>
 
               {% if section.settings.register_subtitle != blank %}
-                <div class="h5">{{ section.settings.register_subtitle }}</div>
+                <div class="p2">{{ section.settings.register_subtitle }}</div>
               {% else %}
-                <div class="h6">{{ 'customer.register.subtitle' | t }}</div>
+                <div class="p2">{{ 'customer.register.subtitle' | t }}</div>
               {% endif %}
 
               {% include 'customer-register-form',

@@ -23,10 +23,25 @@ body.ajax-cart-open {
   transform: translateX(100%);
   transition: all $transition-duration-slide $transition-timing-function-slide-out;
 
+  @include media-breakpoint-down('md') {
+    width: 100%;
+    max-height: calc(100% - 50px);
+    height: auto;
+    top: auto;
+    bottom: 0;
+    transform: translateY(100%);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+
   &.is-open {
     pointer-events: auto;
     transform: translateX(0%);
     transition: all $transition-duration-slide $transition-timing-function-slide-in;
+
+    @include media-breakpoint-down('md') {
+      transform: translateY(0);
+    }
   }
 
   // Ensure that the cart is full width on screen sizes below this
@@ -40,10 +55,12 @@ body.ajax-cart-open {
 }
 
 // Ensure that the cart takes up the entire screen at all times
-.ajax-cart-container,
-.ajax-cart,
-.ajax-cart-form {
-  height: 100%;
+@include media-breakpoint-up('lg'){
+  .ajax-cart-container,
+  .ajax-cart,
+  .ajax-cart-form {
+    height: 100%;
+  }
 }
 
 .ajax-cart-form {
