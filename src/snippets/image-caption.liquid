@@ -1,0 +1,9 @@
+{% assign image = s.image %}
+{% assign caption = s.caption %}
+
+{%- if  image != blank -%}
+  <img class="image-caption__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
+{%- endif -%}
+{% if caption != blank %}
+  <p class="image-caption__text">{{ caption }}</p>
+{% endif %}

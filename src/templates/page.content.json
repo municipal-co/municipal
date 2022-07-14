@@ -1,0 +1,11 @@
+{
+  "name": "Content",
+  "sections": {
+    "template": {
+      "type": "empty-section"
+    }
+  },
+  "order": [
+    "template"
+  ]
+}
