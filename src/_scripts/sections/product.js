@@ -47,7 +47,7 @@ export default class ProductSection extends BaseSection {
       this.initFitGuideGalleries();
     }
 
-    if($(selectors.featuresDrawer).length) {
+    if(this.$featuresDrawerToggler.length) {
       this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
       this.initFeaturesSlider();
     }
@@ -71,7 +71,7 @@ export default class ProductSection extends BaseSection {
         arrows: false,
         observer: true,
         observeParents: true,
-        loop: true,
+        loop: false,
         pagination: {
           el: '.fit-guide__gallery-pagination',
           type: 'bullets',
