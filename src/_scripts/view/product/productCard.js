@@ -64,8 +64,8 @@ export default class ProductCard {
     this.drawerData = {
       optionIndex: this.$drawerField.data('option-index'),
       printOption: this.$drawerField.data('option-name'),
-      dataField: this.$drawerField,
-      productTitle: this.$drawerField
+      productTitle: this.$drawerField.data('product-title'),
+      addToCart: true,
     }
   }
 

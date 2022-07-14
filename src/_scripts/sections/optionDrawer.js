@@ -92,9 +92,17 @@ export default class OptionDrawer extends BaseSection {
     $(document).trigger($.Event('back-in-stock:open', {productData}));
   }
 
+  // eslint-disable-next-line consistent-return
   onSelectorChange(evt) {
     const $this = $(evt.currentTarget);
     const optionValue = $this.data('option-value');
+    const variantId = $this.data('variant-id');
+
+    if(this.drawerData.addToCart === true ){
+      $(window).trigger($.Event('add_one_from_variant_id', {variantID: variantId}));
+      this.drawer.hide();
+      return false;
+    }
 
     if(!this.drawerData.dataField) {
       console.error(`[${this.namespace}] - Data field is undefined, this is required to return the value of the selection for future usage`);
