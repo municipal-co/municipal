@@ -73,8 +73,11 @@
 .sticky-image__title {
   margin: 12px 0;
   color: $white;
-  font-size: 40px;
+  font-size: 50px;
   text-transform: uppercase;
+  @include media-breakpoint-up('xxl') {
+    width: 50%;
+  }
   @include media-breakpoint-down('md') {
     font-size: 32px;
   }
@@ -85,4 +88,8 @@
   font-family: $font-family-heading-medium;
   color: $white;
   margin-top: 0;
+
+  @include media-breakpoint-down('md') {
+    font-size: 16px;
+  }
 }
