@@ -22,7 +22,7 @@
 
 {% endcomment -%}
 
-{% if id != blank and height_custom_spacing %}
+{% if id != blank %}
   <style type="text/css">
     {% if height_px != blank %}
       #spacer-{{ id }} {
@@ -45,6 +45,7 @@
         }
       }
     {% endif %}
+
     #spacer-{{ id }} {
       background-color: {{ bgcolor }};
     }
