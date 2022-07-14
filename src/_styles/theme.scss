@@ -74,8 +74,14 @@
 @import 'components/newsletter-form';
 @import 'components/load-more';
 @import 'components/badge.scss';
-@import 'components/sticker.scss';
 @import 'components/blink-box.scss';
+@import 'components/sticker.scss';
+@import 'components/lead-content.scss';
+@import 'components/pullquote.scss';
+@import 'components/end-card.scss';
+@import 'components/profiles.scss';
+@import 'components/image-caption.scss';
+@import 'components/heading-media.scss';
 
 /**
  * MODULES
@@ -117,15 +123,15 @@
 @import 'modules/back-in-stock.scss';
 @import 'modules/search-drawer.scss';
 @import 'modules/bundle-products.scss';
-@import 'modules/featured-categories';
-/* New modules */
+@import 'modules/featured-categories.scss';
+@import 'modules/shop-the-look.scss';
+@import 'modules/card-slider.scss';
 @import 'modules/sticky-image.scss';
+@import 'modules/value-proposition.scss';
 @import 'modules/pdp-drawer-buttons.scss';
 @import 'modules/features-detail-drawer.scss';
 @import 'modules/pdp-content-slider.scss';
-@import 'modules/value-proposition.scss';
-@import 'modules/card-slider.scss';
-@import 'modules/shop-the-look.scss';
+
 
 /**
  * Templates

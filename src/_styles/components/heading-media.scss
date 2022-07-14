@@ -1,0 +1,44 @@
+// -------------------------
+// Heading + Media
+// -------------------------
+.heading-media {
+  padding: 60px;
+
+  @include media-breakpoint-down('md') {
+    padding: 30px;
+  }
+}
+
+.heading-media__columns {
+  @include media-breakpoint-up('md') {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.heading-media__column {
+  @include media-breakpoint-up('md') {
+    width: 50%;
+  }
+
+  &:last-child {
+    margin-top: 60px;
+
+    @include media-breakpoint-up('md') {
+      margin-top: 0;
+      margin-left: 60px;
+    }
+  }
+}
+
+.heading-media__title {
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+
+.heading-media__cta {
+  margin-top: 30px;
+  @include media-breakpoint-up('md') {
+
+  }
+}

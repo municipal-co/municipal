@@ -8,9 +8,11 @@
   {% include 'spacer',
               id: { string } - optional - required if you want to use pixel values for spacer height
               height_name: { string } - optional, spacer modifier suffix (see spacer.scss)
-              height_px: { number } - optional 
+              height_custom_spacing: { boolean } - optional
+              height_px: { number } - optional
               height_px_tablet: { number } - optional
               height_px_mobile: { number } - optional
+              bgcolor: { color } - optional
   %}
 
   Use the `height_name` argument to give the spacer a base height.
@@ -42,7 +44,11 @@
           height: {{ height_px_mobile | append: 'px' }};
         }
       }
-    {% endif %}    
+    {% endif %}
+
+    #spacer-{{ id }} {
+      background-color: {{ bgcolor }};
+    }
   </style>
 {% endif %}
 
