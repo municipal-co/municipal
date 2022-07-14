@@ -9,10 +9,13 @@
       color: {{ s.highlight_color }};
     }
   </style>
-  <picture class="hero__bg">
-    <source data-srcset="{{ s.image | img_url: '1440x' }}" media="(min-width: 1024px)">
-    <img data-src="{{ s.image_mobile | default: s.image | img_url: '800x' }}" alt="{{s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload">
-  </picture>
+  {% unless s.image_mobile == blank and s.image == blank %}
+    <picture class="hero__bg">
+      <source data-srcset="{{ s.image | img_url: 'master' }}" media="(min-width: 1024px)">
+      <img data-src="{{ s.image_mobile | default: s.image | img_url: '1200x' }}" alt="{{s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload">
+    </picture>
+  {% endunless %}
+
 
   {% if s.desktop_video_webm != blank or s.desktop_video_mp4 != blank or s.mobile_video_webm != blank or s.mobile_video_mp4 != blank %}
     <div class="hero__video-container">
