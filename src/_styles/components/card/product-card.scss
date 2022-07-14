@@ -120,6 +120,11 @@
   line-height: 1.5;
   font-family: $font-family-heading-large;
   margin: 8px 0;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .product-card__price-container {
