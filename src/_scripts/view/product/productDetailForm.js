@@ -187,7 +187,7 @@ export default class ProductDetailForm {
 
       this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
         slideClass: 'swiper-slide',
-        slidesPerView: 4.4,
+        slidesPerView: 4.7,
         watchOverflow: true,
         slidesOffsetBefore: 30,
         slidesOffsetAfter: 30,
