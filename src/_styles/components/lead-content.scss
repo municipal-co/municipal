@@ -1,0 +1,37 @@
+// -------------------------
+// Lead Content
+// -------------------------
+.lead-content {
+  padding: 60px;
+
+  @include media-breakpoint-down('md') {
+    padding: 30px;
+  }
+}
+
+.lead-content__image {
+  margin-bottom: 30px;
+  max-width: 100%;
+
+  @include media-breakpoint-up('md') {
+    margin-bottom: 60px;
+  }
+}
+
+.lead-content__title {
+  margin-bottom: 60px;
+  text-transform: uppercase;
+
+  @include media-breakpoint-up('md') {
+    margin-bottom: 110px;
+  }
+}
+
+.lead-content__main-content {
+  margin: 0 auto;
+  max-width: 872px;
+
+  & img {
+    max-width: 100%;
+  }
+}

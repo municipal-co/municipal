@@ -1,0 +1,60 @@
+// -------------------------
+// Pull Quote
+// -------------------------
+.pullquote {
+  padding: 60px;
+  width: 100%;
+  min-height: 660px;
+  display: flex;
+
+  @include media-breakpoint-down('md') {
+    min-height: 600px;
+    padding: 30px;
+  }
+}
+
+.pullquote__lining {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pullquote__quote {
+  margin: 0;
+  padding-left: 16px;
+  text-indent: -16px;
+  quotes: "“" "”" "‘" "’";
+  text-align: center;
+  text-transform: uppercase;
+
+  @include media-breakpoint-up('lg') {
+    padding-left: 24px;
+    text-indent: -24px;
+  }
+  @include media-breakpoint-up('xl'){
+    padding-left: 36px;
+    text-indent: -36px;
+  }
+
+  &::before {
+    content: open-quote;
+  }
+
+  &::after {
+    content: close-quote;
+  }
+
+  @supports ( hanging-punctuation: first) {
+    & {
+      text-indent: 0;
+      hanging-punctuation: first;
+    }
+  }
+}
+
+.pullquote__cite {
+  margin-top: 16px;
+  margin-left: auto;
+  max-width: 100%;
+}

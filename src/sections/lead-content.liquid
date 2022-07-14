@@ -1,0 +1,132 @@
+{% assign text_color = section.settings.text_color %}
+{% assign highlight_color = section.settings.highlight_color %}
+{% assign bgcolor = section.settings.bgcolor %}
+{% assign image = section.settings.image %}
+{% assign title_tag = section.settings.title_tag %}
+{% assign title = section.settings.title %}
+
+<style>
+  #lead-content-{{ section.id }} {
+    background-color: {{ bgcolor }};
+  }
+
+  #lead-content-{{ section.id }} .lead-content__title,
+  #lead-content-{{ section.id }} .lead-content__main-content {
+    color: {{ text_color }};
+  }
+
+  #lead-content-{{ section.id }} .highlight-text {
+    color: {{ highlight_color }};
+  }
+
+  @media (max-width: 991.98px ) {
+    #lead-content-{{ section.id }} .lead-content__image {
+      width: calc( {{ image.width }}px / 2);
+    }
+  }
+</style>
+
+<div id="lead-content-{{ section.id }}" data-section-id="{{ section.id }}" class="lead-content" data-section-type="lead-content">
+  <div class="container-fluid-max">
+    {%- if  image != blank -%}
+      <img class="lead-content__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
+    {%- endif -%}
+    {% if title != blank %}
+      <{{ title_tag }} class="lead-content__title h1">
+        {{ title | replace: '<strong>', '<span class="highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}
+      </{{ title_tag }}>
+    {% endif %}
+    <div class="lead-content__main-content">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Lead Content",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight Color",
+      "default": "#FF00FF",
+      "info": "Color for the highlighted text on the title of the module"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Post Date",
+      "info": "400px x any height (Double for retina)"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "h1"
+        },
+        {
+          "value": "h2",
+          "label": "h2"
+        },
+        {
+          "value": "h3",
+          "label": "h3"
+        },
+        {
+          "value": "h4",
+          "label": "h4"
+        },
+        {
+          "value": "h5",
+          "label": "h5"
+        },
+        {
+          "value": "h6",
+          "label": "h6"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "info": "Use Bold to create a color highlight on the text"
+    },
+    {
+      "type": "header",
+      "content": "Main Content",
+      "info": "Use the Content editor of the page where this template is assigned"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lead Content",
+      "category": "Misc"
+    }
+  ]
+}
+{% endschema %}

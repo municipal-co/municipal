@@ -1,0 +1,21 @@
+// -------------------------
+// Image + Caption
+// -------------------------
+.image-caption {
+  padding: 30px;
+
+  @include media-breakpoint-up('md') {
+    padding: 60px;
+  }
+}
+.image-caption__image {
+  margin: 0 auto;
+  max-width: 100%;
+  display: block;;
+}
+
+.image-caption__text {
+  margin-top: 20px;
+  margin-bottom: 0;
+  text-align: center;
+}
