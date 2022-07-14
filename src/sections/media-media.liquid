@@ -1,0 +1,98 @@
+{% assign text_color = section.settings.text_color %}
+{% assign highlight_color = section.settings.highlight_color %}
+{% assign bgcolor = section.settings.bgcolor %}
+
+<style>
+  {% if bgcolor != blank %}
+  #heading-media-{{ section.id }} {
+    background-color: {{ bgcolor }};
+  }
+  {% endif %}
+
+  #heading-media-{{ section.id }} .heading-media__title,
+  #heading-media-{{ section.id }} .image-caption__text {
+    color: {{ text_color }};
+  }
+</style>
+
+<div id="heading-media-{{ section.id }}" data-section-id="{{ section.id }}" class="heading-media" data-section-type="heading-media">
+  <div class="container-fluid-max">
+    <div class="heading-media__columns">
+      <div class="heading-media__column">
+
+        {% include 'image-caption'
+          id: section.id,
+          s.image: section.settings.image_1,
+          s.caption: section.settings.caption_1
+        %}
+
+      </div>
+      <div class="heading-media__column">
+
+        {% include 'image-caption'
+          id: section.id,
+          s.image: section.settings.image_2,
+          s.caption: section.settings.caption_2
+        %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "2 Col - Media + Media",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Content - 1st Column"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image"
+    },
+    {
+      "type": "textarea",
+      "id": "caption_1",
+      "label": "Caption"
+    },
+    {
+      "type": "header",
+      "content": "Content - 2nd Column"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image"
+    },
+    {
+      "type": "textarea",
+      "id": "caption_2",
+      "label": "Caption"
+    }
+  ],
+  "presets": [
+    {
+      "name": "2 Col - Media + Media",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}
