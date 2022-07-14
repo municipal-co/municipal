@@ -4,12 +4,15 @@
     <div class="swiper-wrapper">
       {%- for detail in metafields["product_details"] -%}
         <div class="swiper-slide">
-          <div class="frame frame--1x1">
-            {% capture image_tag %}
-              {% render 'cf-image' with image: detail['image'], print: "tag", tag_class:"swiper-lazy features-detail__image" %}
-            {% endcapture %}
-            {{ image_tag | replace: 'src=', 'data-src='}}
-          </div>
+          {% if detail['image'] != blank%}
+            <div class="frame frame--1x1">
+              {% capture image_tag %}
+                {% render 'cf-image' with image: detail['image'], print: "tag", tag_class:"swiper-lazy features-detail__image" %}
+              {% endcapture %}
+              {{ image_tag | replace: 'src=', 'data-src='}}
+            </div>
+          {% endif %}
+
           <div class="features-detail__body-content">
             {{ detail['body_content'] }}
           </div>
