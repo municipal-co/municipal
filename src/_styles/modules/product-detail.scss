@@ -138,6 +138,10 @@
   &:hover,
   &:focus {
     border-color: $core-grey-2;
+    transform: scale(1) !important;
+    span {
+      transform: scale(1) !important;
+    }
   }
   .btn__ui {
     display: inline-block;
@@ -159,6 +163,10 @@
 
 .product-option__drawer-btn-value {
   color: $blue;
+
+  .product-option__drawer-btn:active & {
+    color: $white;
+  }
 }
 
 .product-option__drawer {
@@ -325,19 +333,13 @@
 
 .product__atc-btn {
   text-transform: uppercase;
-  transition: transform $transition-timing-function-in-out-ui $transition-duration-fast;
-  span {
-    transition: transform $transition-timing-function-in-out-ui $transition-duration-fast;
-  }
 
   &:not([disabled]):hover {
     background-color: $blue;
-    transform: scale(0.98);
     border-color: $blue;
 
     span {
       display: inline-block;
-      transform: scale(1.02);
     }
   }
 }

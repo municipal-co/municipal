@@ -528,8 +528,7 @@ $btn-border-radius: 50px !default;
 $btn-border-radius-lg: 50px !default;
 $btn-border-radius-sm: 50px !default;
 
-$btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !default;
+$btn-transition: all 0.15 ease-in-out !default;
 
 // Forms
 
