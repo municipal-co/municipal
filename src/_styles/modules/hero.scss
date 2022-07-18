@@ -3,7 +3,7 @@
   position: relative;
   display: flex;
   padding: 60px;
-  aspect-ratio: 19/9;
+  aspect-ratio: 1440/660;
 
   @include media-breakpoint-down('md') {
     padding: 30px;
