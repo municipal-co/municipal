@@ -25,7 +25,7 @@ export default class HeaderSection extends BaseSection {
         nextEl: selectors.nextArrow,
         prevEl: selectors.prevArrow,
       },
-      spaceBetween: 20,
+      spaceBetween: 10,
       slidesOffsetBefore: 20,
       slidesOffsetAfter: 20,
       threshold: 20,
