@@ -13,7 +13,6 @@
 
   @include media-breakpoint-up('lg') {
     height: 100%;
-    max-width: calc(100% / 24 * 10);
     transform: translateX(100%);
     left: unset;
     bottom: unset;
@@ -34,6 +33,7 @@
   padding: 0;
   border: none;
   line-height: 1;
+  line-height: 0;
 
   .icon-close {
     width: 20px;
@@ -46,7 +46,6 @@
 }
 
 .bis__title {
-  font-size: 24px;
   font-family: $font-family-heading-large;
 }
 
