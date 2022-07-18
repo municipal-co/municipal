@@ -12,7 +12,7 @@
   {% unless s.image_mobile == blank and s.image == blank %}
     <picture class="hero__bg">
       <source data-srcset="{{ s.image | img_url: 'master' }}" media="(min-width: 1024px)">
-      <img data-src="{{ s.image_mobile | default: s.image | img_url: '1200x' }}" alt="{{s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload">
+      <img data-src="{{ s.image_mobile | default: s.image | image_url }}" alt="{{s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload">
     </picture>
   {% endunless %}
 

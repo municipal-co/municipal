@@ -1,9 +1,9 @@
 .hero {
   width: 100%;
-  min-height: 660px;
   position: relative;
   display: flex;
   padding: 60px;
+  aspect-ratio: 19/9;
 
   @include media-breakpoint-down('md') {
     padding: 30px;
