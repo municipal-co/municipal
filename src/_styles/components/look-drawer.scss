@@ -11,21 +11,7 @@
 
 .look-drawer__header-title {
   font-family: $font-family-heading-large;
-  font-size: 24px;
   line-height: 1;
-}
-
-.look-drawer__icon-close {
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
 }
 
 .look-drawer__body {
