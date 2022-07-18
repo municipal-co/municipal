@@ -21,20 +21,25 @@ export default class ProductCardSlider extends BaseSection {
 
   initCardSlider() {
     const sliderSettings = {
-      slidesPerView: 1.2,
+      slidesPerView: 1.3,
       threshold: 20,
       spaceBetween: 20,
       watchOverflow: true,
       slidesOffsetBefore: 30,
       slidesOffsetAfter: 30,
       breakpoints: {
-        768: {
+        530: {
           slidesPerView: 2.3,
           slidesOffsetBefore: 30,
           slidesOffsetAfter: 30,
-          spaceBetween: 20,
         },
-        1100: {
+        992: {
+          slidesPerView: 3.3,
+          spaceBetween: 20,
+          slidesOffsetBefore: 50,
+          slidesOffsetAfter: 50,
+        },
+        1400: {
           slidesPerView: 4.3,
           slidesOffsetBefore: 50,
           slidesOffsetAfter: 50,
