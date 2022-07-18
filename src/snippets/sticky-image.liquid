@@ -14,7 +14,7 @@
           </a>
         {% endif %}
         <h1 class="sticky-image__title">
-          {{ object.title }}
+          {{ object.title | replace: '-', '&#8288;-&#8288;'}}
         </h1>
 
         {% if object.price != blank %}
