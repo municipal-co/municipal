@@ -25,14 +25,16 @@ export default class Hero extends BaseSection{
       mobile_webm: this.$backgroundVideo.data('mobile-video-webm'),
     }
 
-    this.$backgroundVideo.on('play', this.onPlayVideo.bind(this));
-    this.$backgroundVideo.on('pause', this.onPauseVideo.bind(this));
-    this.$backgroundVideo.on('canplay', this.startVideo.bind(this));
-    this.matchMedia = window.matchMedia('(max-width: 992px)');
+    if(this.$backgroundVideo.length) {
+      this.$backgroundVideo.on('play', this.onPlayVideo.bind(this));
+      this.$backgroundVideo.on('pause', this.onPauseVideo.bind(this));
+      this.$backgroundVideo.on('canplay', this.startVideo.bind(this));
+      this.matchMedia = window.matchMedia('(max-width: 992px)');
 
-    this.matchMedia.addEventListener('change', this.onBreakpointChange.bind(this));
+      this.matchMedia.addEventListener('change', this.onBreakpointChange.bind(this));
 
-    this.onBreakpointChange(this.matchMedia);
+      this.onBreakpointChange(this.matchMedia);
+    }
   }
 
   onPlayVideo() {

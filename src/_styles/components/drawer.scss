@@ -11,7 +11,7 @@
   background: $drawer-bg;
   border: 1px solid $drawer-border-color;
   pointer-events: none;
-  overflow: scroll;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   transform: translateX(100%);
   transition: all $transition-duration-base $transition-timing-function-base;
@@ -73,13 +73,17 @@
     padding: 30px;
 
     .drawer__close {
+      all: unset;
       position: absolute;
-      top: 45%;
+      top: 50%;
       right: 30px;
       transform: translatey(-50%);
       z-index: 3;
+      cursor: pointer;
+
       .icon-close {
         width: 20px;
+        height: auto;
       }
 
       &:hover .icon {
@@ -104,7 +108,7 @@
   }
 
   .drawer__body-contents {
-
+    padding-bottom: 20px;
     .drawer__body--flush & {
       padding-left: $drawer-padding-horizontal;
       padding-right: $drawer-padding-horizontal;

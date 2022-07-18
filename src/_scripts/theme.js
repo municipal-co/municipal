@@ -73,6 +73,7 @@ import ContentSlider from './sections/contentSlider';
 import BisDrawer from './sections/bisDrawer';
 import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
+import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 
 
 // Managers
@@ -142,6 +143,7 @@ Breakpoints.initialize();
   sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
+  sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

@@ -37,8 +37,14 @@
         {% for block in section.blocks %}
           {% assign bs = block.settings %}
           {% capture card_text_html %}
-          {% if bs.cta_label != blank%}
-            <a href="{{bs.cta_url}}" class="btn-link link-card__cta-label">
+          {% if bs.cta_label != blank or bs.enable_mkt_link == true %}
+            <a href="{{bs.cta_url}}"
+               class="btn-link link-card__cta-label"
+               {% if bs.enable_mkt_link == true %}
+                data-toggle-mkt-drawer
+                data-product-name="{{bs.mkt_product_name}}"
+                data-variable_key="{{bs.variable_key}}"
+              {% endif %}>
               {{ bs.cta_label }}
             </a>
           {% endif %}
@@ -51,10 +57,30 @@
           <div class="swiper-slide" data-slide {{block.shopify_attributes}}>
             <div class="link-card">
               <div class="link-card__image-container frame {{s.card_aspect_ratio}}">
-                <a class="link-card__link" href="{{bs.cta_url}}" aria-title="{{bs.cta_label | default: bs.cta_ada_label }}"></a>
-                <img data-src="{{bs.card_image | img_url: '600x' }}" alt="{{bs.card_image.alt}}" class="frame__inner swiper-lazy link-card__image">
-                {% if bs.category_url != blank and bs.category_label != blank%}
-                  <a href="{{bs.category_url}}" class="link-card__category">
+                {% if bs.cta_url != blank or bs.enable_mkt_link == true %}
+                  <a class="link-card__link"
+                     href="{{bs.cta_url | default: 'javascript:void(0);'}}"
+                     aria-title="{{bs.cta_label | default: bs.cta_ada_label }}"
+                     {% if bs.enable_mkt_link == true %}
+                      data-toggle-mkt-drawer
+                      data-product-name="{{bs.mkt_product_name}}"
+                      data-variable_key="{{bs.variable_key}}"
+                     {% endif %}></a>
+                {% endif %}
+
+                <img data-src="{{bs.card_image | img_url: '600x' }}"
+                     alt="{{bs.card_image.alt}}"
+                     class="frame__inner swiper-lazy link-card__image"
+                     data-image>
+                {% if bs.category_url != blank and bs.category_label != blank or bs.enable_mkt_link == true %}
+                  <a href="{{bs.category_url | default: 'javascript:void(0);'}}"
+                     class="link-card__category"
+                     {% if bs.enable_mkt_link == true %}
+                      data-toggle-mkt-drawer
+                      data-product-name="{{bs.mkt_product_name}}"
+                      data-variable_key="{{bs.variable_key}}"
+                     {% endif %}
+                     >
                     {{ bs.category_label }}
                   </a>
                 {% endif %}
@@ -227,6 +253,24 @@
           "id": "bottom_text",
           "label": "Bottom card text",
           "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit corrupti earum, magnam ad maxime id"
+        },
+        {
+          "type": "header",
+          "content": "MKT Subscription Form",
+          "info": "Settings to enable marketing subscription drawer"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_mkt_link",
+          "label": "Enable Mkt Link",
+          "default": false,
+          "info": "Enables link to allow marketing subscriptions. Replaces any link set above for the card"
+        },
+        {
+          "type": "text",
+          "id": "mkt_product_name",
+          "label": "Product Name",
+          "info": "Value to be used as a reference to replace on the drawer if placeholder is placed. See MKT Subscription Drawer settings for details"
         }
       ]
     }
