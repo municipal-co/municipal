@@ -23,6 +23,7 @@ export default class productGallery extends BaseSection {
     this.gallerySettings = {
       slidesToShow: 1,
       autoplay: false,
+      watchOverflow: true,
       zoom: {
         maxRatio: 5,
         minRatio: 1,

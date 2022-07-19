@@ -1,3 +1,5 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+
 <div class="bundle-options">
   <span class="bundle-options__title">{{section.settings.bundle_quantity_title}}</span>
   {% for bundle in product.metafields.custom_fields["bundle_options"] %}
@@ -13,11 +15,8 @@
 
         <div class="bundle-option__price">
           {% if bundle.discount_value == '0' or bundle.discount_value == blank %}
-            {% if product.price_varies %}
-              <span class="bundle-option__price">{{ product.price_min | money_without_trailing_zeros }} - {{ product.price_max | money_without_trailing_zeros}}</span>
-            {% else %}
-              <span class="bundle-option__price">{{ product.price | money_without_trailing_zeros }}</span>
-            {% endif %}
+            <span class="bundle-option__compare-price {% unless current_variant.compare_at_price > current_variant.price %}hide{% endunless %}"  data-compare-price>{{current_variant.compare_at_price | money_without_trailing_zeros }}</span>
+            <span class="bundle-option__price" data-product-price>{{ current_variant.price | money_without_trailing_zeros }}</span>
           {% else %}
             <div class="bundle-option__discount">
               save {{ bundle.discount_value }}%
@@ -39,8 +38,6 @@
     {% endfor %}
     <span class="bundle-items__title">Edit color and size:</span>
     {% for i in (1..max_items) %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
-
       <div class="bundle-item__drawer" data-bundle-product style="display:none;">
         <div class="bundle-item__drawer-head">
           <input type="hidden" value="{{ current_variant.id }}" data-bundle-product-id>

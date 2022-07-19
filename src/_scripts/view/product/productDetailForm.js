@@ -291,11 +291,11 @@ export default class ProductDetailForm {
     }
 
     if (variant ) {
-      this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
-      this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
+      this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
+      this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
 
       if (variant.compare_at_price > variant.price) {
-        this.$comparePrice.html(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat));
+        this.$comparePrice.html(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat).replace('.00', ''));
         this.$compareEls.removeClass(classes.hide);
       }
       else {
