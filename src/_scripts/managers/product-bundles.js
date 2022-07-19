@@ -107,6 +107,7 @@ export default class ProductBundles {
     this.$bundleProducts.not(':visible').each((index, productContainer) => {
       const $productContainer = $(productContainer);
       $productContainer.find(selectors.bundleProductImage).attr('src', evt.variant.featured_image.src);
+      $productContainer.find(selectors.bundleProductImage).attr('data-src', evt.variant.featured_image.src);
       $productContainer.find(selectors.bundleProductId).val(evt.variant.id);
       $productContainer.find(selectors.productFullPrice).attr('data-item-full-price', evt.variant.price).text(Currency.formatMoney(evt.variant.price, theme.moneyFormat).replace('.00', ''));
 
@@ -361,7 +362,6 @@ export default class ProductBundles {
       let soldOut = false;
       let unavailable = false;
       $visibleProducts.each((i, product) => {
-        console.log($(selectors.productFullPrice, product));
         totalPrice += Number.parseInt($(selectors.productFullPrice, product).attr('data-item-full-price'));
         if( $(selectors.productSoldOutMessage, $(product)).is(':visible') ) {
           if($(selectors.productSoldOutMessage, $(product)).text() === 'Unavailable') {
