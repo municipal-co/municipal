@@ -8,6 +8,7 @@
   @include media-breakpoint-down('md') {
     padding: 30px;
     min-height: 600px;
+    aspect-ratio: unset;
   }
 }
 
