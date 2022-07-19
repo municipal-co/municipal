@@ -4,7 +4,8 @@ import BaseSection from '../../sections/base';
 
 const selectors = {
   productGallery: '[data-product-gallery-slideshow]',
-  gallerySlide: '[data-slide]'
+  gallerySlide: '[data-slide]',
+  zoomToggler: '[data-zoom-toggler]',
 };
 
 const classes = {
@@ -19,6 +20,7 @@ export default class productGallery extends BaseSection {
     const self = this;
     this.$container = document.querySelector(selectors.productGallery)
     this.$slides = this.$container.querySelectorAll(selectors.gallerySlide);
+    this.$zoomToggler = this.$container.querySelectorAll(selectors.zoomToggler);
     this.currentColor = '';
     this.gallerySettings = {
       slidesToShow: 1,
@@ -47,8 +49,13 @@ export default class productGallery extends BaseSection {
     }
 
     this.slider = new Swiper(this.$container, this.gallerySettings);
-    // this.slider.on('slideChange', this.onSlideChange.bind(this));
+    this.slider.on('slideChange', this.onSlideChange.bind(this));
     this.slider.init();
+
+    this.$zoomToggler.forEach((toggler) => {
+      toggler.addEventListener('click', this.toggleSliderZoom.bind(this));
+    })
+
   }
 
   onVariantChange(variant) {
@@ -62,7 +69,11 @@ export default class productGallery extends BaseSection {
     if(colorIndex !== undefined) {
       if(this.currentColor !== variant[colorIndex]) {
         this.currentColor = variant[colorIndex];
-        this.slider.destroy();
+
+        if(this.slider && !this.slider.destroyed) {
+          this.slider.destroy();
+        }
+
         const colorName = variant[colorIndex];
 
         this.$slides.forEach((slide, index) => {
@@ -75,37 +86,20 @@ export default class productGallery extends BaseSection {
 
       // Update variant images here
       this.slider = new Swiper(this.$container, this.gallerySettings);
+      this.slider.init();
+    }
+  }
+
+  toggleSliderZoom() {
+    if(this.slider && !this.slider.destroyed) {
+      this.slider.zoom.toggle();
     }
   }
 
   onSlideChange() {
-    console.log(this.slider.slides[this.slider.activeIndex]);
-
-    this.initZoom(this.slider.slides[this.slider.activeIndex]);
-  }
-
-  initZoom(slide) {
-    $(slide).zoom({
-      url: $(slide).data('image-url'),
-      on: 'click',
-      target: '.product-gallery__zoom-container',
-      touch: false,
-      escToClose: true,
-      magnify: 1,
-      duration: 300,
-      callback: () => {
-        slide.classList.add(classes.zoomReady);
-
-      },
-      onZoomIn: () => {
-        slide.classList.add(classes.zoomedIn);
-        document.querySelector('[data-zoom-container]').classList.add(classes.zoomedIn);
-      },
-      onZoomOut: () => {
-        slide.classList.remove(classes.zoomedIn);
-        document.querySelector('[data-zoom-container]').classList.remove(classes.zoomedIn);
-      }
-    })
+    if(this.slider.zoom.enabled) {
+      this.slider.zoom.out();
+    }
   }
 
   destroy() {

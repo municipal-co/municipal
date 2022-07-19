@@ -22,6 +22,10 @@
         {% else %}
           <div class="product-gallery__slide swiper-slide" data-slide>
         {% endif %}
+          <div class="product-gallery__zoom-toggler" data-zoom-toggler>
+            {% render 'icon-zoom-in' %}
+            {% render 'icon-zoom-out' %}
+          </div>
           <div class="swiper-zoom-container">
             <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
             <span class="swiper-lazy-preloader"></span>
