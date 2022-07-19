@@ -148,6 +148,7 @@ export default class ProductDetailForm {
     this.updateFullDetailsLink(variant);
     this.checkVariantsAvailability(variant);
     this.updateKlarnaPricing(variant);
+    this.productColorValidation();
 
     this.settings.onVariantChange(variant);
   }
@@ -446,6 +447,8 @@ export default class ProductDetailForm {
 
           if(variant.metafields.enable_bis === 1) {
             $uiContainer.find(selectors.bisButton).show().attr('data-variant-id', variant.id);
+          } else {
+            $uiContainer.find(selectors.bisButton).hide();
           }
         }
       }
@@ -490,7 +493,6 @@ export default class ProductDetailForm {
     }
 
     const optionPosition = `option${colorOption[0].position}`;
-
     colorOption[0].values.forEach((color) => {
       const colorState = this._validateColorAvailability(color, optionPosition);
       if(colorState.hideColor) {
@@ -514,7 +516,7 @@ export default class ProductDetailForm {
     })
 
     soldOutColors.forEach((colorObject) => {
-      if(colorObject.enableBis) {
+      if(colorObject.enableBis === 1) {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.bis);
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message">Back<br>Soon</span>');
       } else {
