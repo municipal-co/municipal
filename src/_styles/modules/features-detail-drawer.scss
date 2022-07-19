@@ -47,8 +47,19 @@
 .features-detail__body-content {
   margin: 70px 0;
 
+  h1,h2, h3, h4, h5, h6 {
+    font-family: 'Sequel Sans Medium Title', sans-serif;
+    font-size: 32px;
+    margin-bottom: 0.8rem;
+
+    @include media-breakpoint-down('md') {
+      font-size: 26px;
+    }
+  }
+
   p {
-    @extend .p2;
+    font-size: 18px;
+    line-height: 1.6;
   }
 
   :last-child {
