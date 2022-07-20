@@ -27,7 +27,7 @@ export default class productGallery extends BaseSection {
       autoplay: false,
       watchOverflow: true,
       zoom: {
-        maxRatio: 5,
+        maxRatio: 3,
         minRatio: 1,
         toggle: true,
       },
