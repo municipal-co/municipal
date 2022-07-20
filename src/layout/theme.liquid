@@ -1,7 +1,3 @@
-{% comment %} Changing this will turn on / off the fixed header behavior {% endcomment %}
-{% assign FIXED_HEADER = true %}
-{% assign HIDE_ON_SCROLL = true %}
-
 <!doctype html>
 <!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
@@ -83,13 +79,6 @@
   {% if settings.section_negative_threshold == true %}
     {% assign section_animation_threshold = settings.section_load_threshold | times: '-1' %}
   {% endif %}
-  window.animationSettings = {
-    sectionAnimationThreshold: {{ section_animation_threshold | default: settings.section_load_threshold | json }},
-    backgroundAnimationThreshold: {
-      top: {{ settings.background_top_threshold | times: 0.01 }},
-      bottom: {{ settings.background_bottom_threshold | times: 0.01 }}
-    }
-  }
 
   window.settings = {
     lowInventoryThreshold: {{ settings.low_inventory_threshold | default: 0 | json }}
@@ -117,9 +106,6 @@
 {% capture body_class %}
   template-{{ template.name | handle }}
   {% if template.suffix != blank %} template-{{ template.name | append: '-' | append: template.suffix | handle }} {% endif %}
-  {% if FIXED_HEADER == true %} site-fixed-header {% endif %}
-  {% if HIDE_ON_SCROLL == true %} header-hide-on-scroll {% endif %}
-
   {% if canonical_url contains 'search-results' %}search-results-page{% endif %}
 {% endcapture %}
 
@@ -140,8 +126,6 @@
 
     <main role="main" id="MainContent">
       <div class="layout-main-content">
-
-        {% include 'search-drawer' %}
         {{ content_for_layout }}
       </div>
     </main>

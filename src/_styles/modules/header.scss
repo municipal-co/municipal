@@ -3,48 +3,21 @@
 // -------------------------
 
 // Fix sticky behavior so it only considers the sticky bar
-#shopify-section-header-logo-center {
-  position: absolute;
-  width: 100%;
-  top: 0;
-}
-
 .header {
   position: relative;
   z-index: $zindex-header;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: $header-height-small;
+  height: 50px;
   background-color: $header-bg;
   color: $header-text-color;
-  backface-visibility: hidden;
-  transition: height $transition-duration-dropdown $transition-timing-function-out;
-
-  @media (min-width: $header-bp-min) {
-    height: large-vw($header-height-small, $header-height-base);
-  }
-
-  // If the fixed header behavior is turned on...
-  .site-fixed-header & {
-    position: absolute;
-  }
 
   &.is-fixed {
     position: fixed;
-  }
-
-  &.is-scrolling {
-    @include media-breakpoint-up('lg') {
-      height: large-vw(50px, 80px);
-
-      .header-logo {
-        width: large-vw(200px, 320px);
-      }
-    }
+    width: 100%;
+    top: 0;
   }
 
   @include media-breakpoint-up('lg') {
+    height: 70px;
     &.hide-on-scroll {
       transform: translateY(-110%);
       transition: all $transition-duration-dropdown $transition-timing-function-in;
@@ -71,26 +44,6 @@
   @include media-breakpoint-down('md') {
     padding: 0 20px;
   }
-
-  // uncomment this line to make dropdowns only go as large as the grid container width
-  // position: relative;
-
-  // > .row {
-  //   @media (min-width: $header-bp-min) {
-  //     display: flex;
-  //     align-items: center;
-  //   }
-  // }
-
-  .header-dropdown > & {
-    .row {
-      width: 100%;
-      flex-grow: 1;
-      // @media (min-width: $header-bp-min) {
-      //   align-items: flex-start;
-      // }
-    }
-  }
 }
 
 .header-logo {
@@ -103,8 +56,15 @@
 }
 
 .header-logo__image {
-  width: 100%;
   transform: translateZ(0); // Prevent bluriness from scaling
+  display: block;
+  margin: auto;
+  width: 80%;
+
+  @include media-breakpoint-up('lg') {
+    width: unset;
+    max-height: 32px;
+  }
 }
 
 .header-nav {
@@ -174,7 +134,15 @@
 
 .header-nav__menu-item {
   display: inline-block;
-  margin: 0 23px;
+  cursor: pointer;
+
+  & + & {
+    margin-left: 34px;
+
+    @include media-breakpoint-down('md') {
+      margin-left: 10px;
+    }
+  }
 
   &:first-child {
     margin-left: 0;
@@ -184,48 +152,23 @@
     margin-right: 0;
   }
 
-
-  &.header-nav__menu-item--search {
+  .icon {
+    width: 30px;
     color: $white;
-    cursor: pointer;
 
-    .icon {
-      width: large-vw(30px, 30px);
-      height: large-vw(30px, 30px);
-      margin: 0;
+    @include media-breakpoint-down('md') {
+      width: 20px;
     }
   }
 
-  &.header-nav__menu-item--search.search-is-open {
+  &.header-nav__menu-item--search.search-is-open .icon {
     color: $gray-dark;
   }
 
-  > a {
-    padding: 27px 4px; // use vertical padding to match the height of the header
-    font-size: large-vw(16px, 25px);
-    font-weight: bold;
-    color: $white;
-
-    @include media-breakpoint-down('md') {
-      font-size: 16px;
-      line-height: 0;
-      padding: 0;
-    }
-  }
-
-  svg.icon {
-    height: large-vw(30px, 50px);
-    width: large-vw(30px, 50px);
-    margin-right: 15px;
-    @include media-breakpoint-down('md') {
-      width: 28px;
-      height: 28px;
-    }
-  }
-  // Cart Icon + Quantity
   .hamburger {
     width: auto;
     padding: 15px 2px;
+    line-height: 0;
     display: inline-block;
     cursor: pointer;
     background-color: transparent;
@@ -235,16 +178,19 @@
     color: $white;
     box-shadow: none;
 
+    @include media-breakpoint-down('md') {
+      margin-bottom: 7px;
+    }
+
     .hamburger-box {
-      width: 55px;
-      height: 24px;
-      display: inline-block;
       position: relative;
-      margin-bottom: -2px;
+      display: inline-block;
+      width: 35px;
+      vertical-align: middle;
       margin-right: 10px;
 
       @include media-breakpoint-down('md') {
-        width: 40px;
+        width: 25px;
       }
     }
 
@@ -260,24 +206,29 @@
         transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
       }
     }
+
+    .hamburger-text {
+      font-size: 15px;
+      line-height: 1;
+      font-family: $font-family-base;
+      text-transform: uppercase;
+    }
   }
 
   .hamburger-inner {
     display: block;
     top: 50%;
-    margin-top: -2px;
 
     &,
     &::before,
     &::after {
-      width: 50px;
+      width: 100%;
       height: 6px;
       position: absolute;
       background: transparent;
 
       @include media-breakpoint-down('md') {
         height: 4px;
-        width: 30px;
       }
     }
 
@@ -292,7 +243,7 @@
       transition: top 0.075s 0.20s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 
       @include media-breakpoint-down('md') {
-        top: -8px
+        top: -6px
       }
     }
 
@@ -301,7 +252,7 @@
       transition: bottom 0.075s 0.20s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 
       @include media-breakpoint-down('md') {
-        bottom: -8px
+        bottom: -6px
       }
     }
   }
@@ -310,18 +261,36 @@
 .header-cart__badge {
   display: inline-block;
   position: relative;
-
-  &.has-items {
-
-  }
 }
 
 .header-cart__badge-count {
-  color: $green;
+  display: none;
+  position: absolute;
+  top:10px;
+  right: -6px;
+  min-width: 20px;
+  color: $black;
+  font-size: 11px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  font-family: $font-family-heading-large;
+  background-color: $green;
+
+  &.has-items {
+    display: block;
+  }
+
+  @include media-breakpoint-down('md') {
+    top: 0;
+  }
+}
+
+.header__filler {
   display: none;
 
-  .has-items & {
-    display: inline;
+  .is-fixed ~ & {
+    display: block;
   }
 }
 
@@ -338,22 +307,6 @@
   opacity: 0;
   box-shadow: $header-dropdown-box-shadow;
   transition: opacity $transition-duration-dropdown $transition-timing-function-dropdown-out;
-
-  // If the header has a transparent background, you'll need this :before element to make sure that things look good when the dropdown opens
-  // &:before {
-  //   content: "";
-  //   position: absolute;
-  //   left: 0;
-  //   right: 0;
-  //   top: 0;
-  //   height: $header-height-small;
-  //   background: $white;
-  //   transform: translateY(-100%);
-
-  //   @media (min-width: $header-bp-min) {
-  //     height: $header-height-base;
-  //   }
-  // }
 
   &.is-open,
   &.is-forced-open {

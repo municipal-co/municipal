@@ -1,17 +1,17 @@
 import $ from 'jquery';
 import { throttle } from 'throttle-debounce';
 import BaseSection from './base';
-import DropdownManager from '../managers/dropdown';
 
 const $window = $(window);
-const $body   = $(document.body);
 
 const selectors = {
   header: '[data-header]',
   dropdownTrigger: '[data-dropdown-trigger][data-block]',
   toggle: '[data-search-drawer-toggle]',
+  searchInput: '[data-search-input]',
   searchDrawer: '[data-search-drawer]',
-  closeSearchDrawer: '[data-drawer-close]'
+  closeSearchDrawer: '[data-drawer-close]',
+  headerFiller: '[data-header-filler]',
 };
 
 const classes = {
@@ -30,88 +30,72 @@ export default class HeaderSection extends BaseSection {
 
     this.$toggleSearchDrawer = $(selectors.toggle, this.$container);
     this.$closeSearchDrawer = $(selectors.closeSearchDrawer, this.$container);
+    this.$searchInput = $(selectors.searchInput, this.$container);
     this.$searchDrawer  = $(selectors.searchDrawer, this.$container);
 
-    this.$container.on(this.events.MOUSELEAVE, this.onMouseLeave.bind(this));
     this.initialPosition = 0;
+    this.headerHeight = this.$el.height();
+    this.headerOffset = this.$el.offset().top;
 
-    // Register each dropdown trigger
-    $(selectors.dropdownTrigger, this.$container).each((i, trigger) => {
-      DropdownManager.register($(trigger));
-    });
 
-    // We pass in the fixed behavior as a class on the body of the site
-    if ($body.hasClass(classes.siteHasFixedHeader)) {
-      $window.on(this.events.SCROLL, throttle(50, this.onScroll.bind(this)));
-      this.onScroll(); // hit this one time on init to make sure everything is good
-    }
+    $window.on(this.events.SCROLL, throttle(50, this.onScroll.bind(this)));
 
     this.$toggleSearchDrawer.on('click', this.onToggleSearchDrawer.bind(this));
     this.$closeSearchDrawer.on('click', this.onCloseSearchDrawer.bind(this));
     $window.on('toggleMobileMenu', this.onCloseSearchDrawer.bind(this));
-  }
+    $window.on('resize', throttle(50, this.compensateHeaderSpace.bind(this)));
 
-  scrollCheck() {
-    // Do measurements outside of rAF.
-    const scrollTop = $window.scrollTop();
-    const actualOffset = this.$container.offset().top;
-
-    // Do DOM updates inside.
-    requestAnimationFrame(() => {
-      if (scrollTop < actualOffset) {
-        this.$el.removeClass(classes.headerFixed);
-        this.$el.removeClass(classes.headerScroll);
-        this.$el.removeClass(classes.showOnScroll);
-        this.$el.removeClass(classes.hideOnScroll);
-      }
-      else if(scrollTop > actualOffset){
-        this.$el.addClass(classes.headerFixed);
-        this.$el.addClass(classes.headerScroll);
-      }
-    });
-  }
-
-  positionCheck() {
-   const scrollTop = $window.scrollTop();
-   const lastInitialPosition = this.initialPosition;
-
-   // Do DOM updates inside.
-    if (this.$el.hasClass(classes.headerScroll)) {
-      requestAnimationFrame(() => {
-        if (scrollTop > lastInitialPosition) {
-          $body.removeClass('showing-header');
-          this.$el.removeClass(classes.showOnScroll);
-          this.$el.addClass(classes.hideOnScroll);
-          this.initialPosition = scrollTop;
-        }
-        else if(scrollTop < lastInitialPosition){
-          $body.addClass('showing-header');
-          this.$el.addClass(classes.showOnScroll);
-          this.$el.removeClass(classes.hideOnScroll);
-          this.initialPosition = scrollTop;
-          $window.trigger("showing-header");
-        }
-      });
-    }
+    this.onScroll();
+    this.compensateHeaderSpace();
   }
 
   onScroll() {
-    this.scrollCheck();
+    const currentScroll =  $window.scrollTop();
 
-    if ($body.hasClass('header-hide-on-scroll')) {
-      this.positionCheck();
+    this.setScrollDirection(currentScroll);
+
+    if(currentScroll >= this.headerOffset) {
+      this.$el.addClass(classes.headerFixed);
+    } else {
+      this.$el.removeClass(classes.headerFixed);
+    }
+
+    if(currentScroll > (this.headerHeight + this.headerOffset)) {
+      this.updateHeaderVisibility();
     }
   }
 
-  onMouseLeave() {
-    DropdownManager.closeAllDropdowns();
+  setScrollDirection(currentScroll) {
+    if(currentScroll < this.initialPosition - 10) {
+      this.scrollDirection = 'up';
+      this.initialPosition = currentScroll;
+    } else if(currentScroll > this.initialPosition + 10) {
+      this.scrollDirection = 'down';
+      this.initialPosition = currentScroll;
+    }
+  }
+
+  updateHeaderVisibility() {
+    if(!this.$el.hasClass(classes.showOnScroll) && this.scrollDirection === 'up') {
+      this.$el.addClass(classes.showOnScroll);
+      this.$el.removeClass(classes.hideOnScroll);
+    }
+
+    if(!this.$el.hasClass(classes.hideOnScroll) && this.scrollDirection === 'down') {
+      this.$el.addClass(classes.hideOnScroll);
+      this.$el.removeClass(classes.showOnScroll);
+    }
   }
 
   onToggleSearchDrawer(e) {
     e.preventDefault();
     this.$searchDrawer.toggleClass('is-visible');
     this.$toggleSearchDrawer.toggleClass('search-is-open');
-    $window.trigger('toggleSearchDrawer');
+    this.$searchInput.trigger('focus');
+
+    if(this.$searchDrawer.hasClass('is-visible')) {
+      $window.trigger('toggleSearchDrawer');
+    }
   }
 
   onCloseSearchDrawer(e) {
@@ -120,21 +104,7 @@ export default class HeaderSection extends BaseSection {
     this.$toggleSearchDrawer.removeClass('search-is-open');
   }
 
-  onBlockSelect(e) {
-    const dropdown = DropdownManager.getDropdownByBlockId(e.detail.blockId);
-
-    // Bypass dropdown manager since we're inside the theme editor
-    if (dropdown) {
-      dropdown.forceOpen();
-    }
-  }
-
-  onBlockDeselect(e) {
-    const dropdown = DropdownManager.getDropdownByBlockId(e.detail.blockId);
-
-    // Bypass dropdown manager since we're inside the theme editor
-    if (dropdown) {
-      dropdown.forceClose();
-    }
+  compensateHeaderSpace() {
+    $(selectors.headerFiller).height(this.$el.outerHeight());
   }
 }
