@@ -62,6 +62,9 @@ export default class HeaderSection extends BaseSection {
 
     if(currentScroll > (this.headerHeight + this.headerOffset)) {
       this.updateHeaderVisibility();
+    } else {
+      this.scrollDirection = 'up';
+      this.updateHeaderVisibility();
     }
   }
 
