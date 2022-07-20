@@ -4,24 +4,13 @@
   background-color: $bg-white;
 }
 
-.drawer__header.look-drawer__header {
-  padding: 30px 40px;
-  margin-bottom: 18px;
-}
-
-.look-drawer__header-title {
-  font-family: $font-family-heading-large;
-  line-height: 1;
-}
-
 .look-drawer__body {
-  padding: 0 40px;
+  padding: 0 30px 30px;
 }
 
 .look-drawer__slider {
-  margin-top: 30px;
-  width: calc( 100% + 80px);
-  margin-left: -40px;
+  width: calc( 100% + 60px);
+  margin-left: -30px;
   overflow: hidden;
 }
 

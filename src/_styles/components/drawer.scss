@@ -78,6 +78,7 @@
       right: 30px;
       transform: translatey(-50%);
       z-index: 3;
+      line-height: 0;
       cursor: pointer;
 
       .icon-close {
@@ -107,7 +108,7 @@
   }
 
   .drawer__body-contents {
-    padding-bottom: 20px;
+    padding: 0 30px 30px;
     .drawer__body--flush & {
       padding-left: $drawer-padding-horizontal;
       padding-right: $drawer-padding-horizontal;
