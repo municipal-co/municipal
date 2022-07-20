@@ -16,12 +16,13 @@
         <h1 class="sticky-image__title">
           {{ object.title | replace: '-', '&#8288;-&#8288;'}}
         </h1>
-
-        {% if object.price != blank %}
-          <div class="sticky-image__price" data-price>
-            {% render 'product-detail-price', product: object %}
-          </div>
-        {% endif %}
+        {% unless product.type == 'Gift Card' %}
+          {% if object.price != blank %}
+            <div class="sticky-image__price" data-price>
+              {% render 'product-detail-price', product: object %}
+            </div>
+          {% endif %}
+        {% endunless %}
       </div>
     </div>
   </div>
