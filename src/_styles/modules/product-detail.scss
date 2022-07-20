@@ -137,7 +137,7 @@
   }
   &:hover,
   &:focus {
-    border-color: $core-grey-2;
+    border-color: $core-grey-3;
     transform: scale(1) !important;
     span {
       transform: scale(1) !important;
@@ -207,12 +207,19 @@
   .product-option__ui {
     width: 100%;
     border-radius: 10px;
-    border: 1.5px solid transparent;
+    border: 2px solid transparent;
     background-color: $bg-white;
     display: flex;
-    padding: 30px 20px;
+    padding: 20px;
     align-items: center;
     cursor: pointer;
+
+    @include media-breakpoint-up('lg') {
+      &:hover,
+      &:focus {
+        border-color: $core-grey-2;
+      }
+    }
   }
 
   .product-option__ui-group-corner {
@@ -258,7 +265,7 @@
   }
 
   input[type="radio"]:checked ~ .product-option__ui {
-    border: 1.4px solid $black;
+    border: 2px solid $black;
 
     .product-option__ui-checkmark {
       background-color: $blue;
