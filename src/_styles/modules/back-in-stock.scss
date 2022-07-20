@@ -28,23 +28,6 @@
   margin-bottom: 0;
 }
 
-.bis__close {
-  background: none;
-  padding: 0;
-  border: none;
-  line-height: 1;
-  line-height: 0;
-
-  .icon-close {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
 .bis__title {
   font-family: $font-family-heading-large;
 }
