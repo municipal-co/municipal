@@ -48,8 +48,7 @@
   @include media-breakpoint-down('md') {
     &:not(.drawer--mobile-menu) {
       width: 100%;
-      max-height: calc(100% - 50px);
-      height: auto;
+      height: calc(100% - 50px);
       top: auto;
       bottom: 0;
       transform: translateY(100%);
