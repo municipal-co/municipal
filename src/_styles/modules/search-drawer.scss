@@ -39,7 +39,7 @@
   z-index: 2;
 
   @include media-breakpoint-down('md') {
-    right: 20px;
+    display: none;
   }
 
   .icon-close {
