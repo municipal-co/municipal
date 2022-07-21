@@ -1,87 +1,21 @@
-.customers-drawer {
-  width: 30%;
-  max-width: 561px;
-  border: none;
-  bottom: 0;
-
-  @include media-breakpoint-down('lg') {
-    width: 40%;
-  }
-
-  @include media-breakpoint-down('md') {
-    width: 90%;
-  }
-
-  .drawer__header {
-    background-color: $black;
-    padding: large-vw(9px, 35px) large-vw(20px, 40px);
-    margin-bottom: large-vw(30px, 60px);
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-
-    @include media-breakpoint-down('md') {
-      padding: 9px 20px;
-      margin-bottom: 30px;
-    }
-
-    .drawer__close {
-      color: $white;
-      top: 50%;
-      transform: translateY(-50%);
-      right: large-vw(20px, 40px);
-      svg {
-        width: large-vw(20px, 50px);
-        height: large-vw(20px, 50px);
-
-        @include media-breakpoint-down('md') {
-          width: 20px;
-          height: 20px;
-        }
-      }
-
-      @include media-breakpoint-down('md') {
-        right: 20px;
-      }
-    }
-  }
-  .drawer__header-title {
-    @extend .h4;
-    opacity: 1;
-    margin-bottom: 0;
-    color: $white;
-    font-size: large-vw(16px, 30px);
-    text-transform: none;
-    font-weight: $font-weight-normal;
-    @include media-breakpoint-down('md') {
-      font-size: 16px;
-    }
-  }
-
+.customer-drawer__title {
+  margin-bottom: 30px;
 }
 
-.form-group__small-text--container {
-  line-height: 1;
-  margin-top: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
+.custom-control-label {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.register-form__back-message {
+  font-size: 20px;
+  text-align: center;
 }
 
 .form-group__small-text {
-  font-size: 12px;
-  font-weight: bold;
-
+  font-size: 20px;
+  line-height: 1.5;
   a {
-    text-decoration: underline;
-  }
-}
-.register-form__back-message {
-  text-align: center;
-  color: #aaabad;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 2px solid #aaabad;
-  a {
-    color: $blue;
+    line-height: 1;
   }
 }

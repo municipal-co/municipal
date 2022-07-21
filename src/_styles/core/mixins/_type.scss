@@ -141,10 +141,6 @@
     font-size: 16px;
     line-height: 23px;
   }
-  @include media-breakpoint-up('xl') {
-    font-size: 20px;
-    line-height: 29px;
-  }
 }
 
 // RTE styling for long form content

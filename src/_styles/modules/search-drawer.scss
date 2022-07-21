@@ -1,86 +1,66 @@
 .search-drawer {
-  .drawer {
-    width: 100%;
-    max-width: 100%;
-    z-index: 100;
-    max-height: initial;
-    overflow: hidden;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  transform: translateY(-100%);
+  background-color: $white;
+  transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
 
-    &.drawer--top {
-      top: 0;
-      transform: translateY(-100%);
+  &.is-visible {
+    transform: translateY(0);
+  }
+}
 
-      //This has an important to prevent the transform give by js
-      @include media-breakpoint-down('md') {
-        transform: none !important;
-        position: static;
-        pointer-events: auto;
-      }
-    }
+.search-icon.search-drawer__search-icon {
+  left: 40px;
+  line-height: 0;
+
+  @include media-breakpoint-down('md') {
+    left: 20px;
   }
 
-  .drawer__body {
-    position: relative;
-  }
-
-  .minimal-input-box {
-    input {
-      margin: 0;
-    }
-
-    .search-icon {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: large-vw(22px, 54px);
-
-      @include media-breakpoint-down('md') {
-        left: 22px;
-      }
-    }
-  }
-
-  .drawer__close {
-    position: absolute;
-    right: large-vw(20px, 30px);
-    z-index: 10;
-    top: 50%;
-    right: 2rem;
-    transform: translateY(-50%);
+  svg.icon-search {
+    width: 35px;
+    height: auto;
 
     @include media-breakpoint-down('md') {
-      display: none;
-    }
-
-    .icon {
-      width: large-vw(35px, 40px);
-      height: large-vw(35px, 40px);
+      width: 20px;
     }
   }
 }
 
-.header{
-  .search-drawer {
+.search-drawer__close {
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  line-height: 0;
+  cursor: pointer;
+  z-index: 2;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+
+  .icon-close {
+    width: 30px;
+    height: auto;
+
     @include media-breakpoint-down('md') {
-      display: none;
+      width: 20px;
     }
   }
+}
 
-  .search-drawer .drawer.is-visible {
-    transform: translateY(100%);
-    position: absolute;
-    top: 0;
-  }
+.minimal-input-box__input--search {
+  font-size: 25px;
+  margin-bottom: 0;
+  height: 70px;
+  padding-left: 90px;
 
-  &.is-fixed.hide-on-scroll {
-    .search-drawer .drawer.is-visible {
-      transform: translateY(large-vw(50px, 80px));
-    }
-  }
-
-  &.is-fixed.show-on-scroll {
-    .search-drawer .drawer.is-visible {
-      transform: translateY(large-vw(50px, 80px));
-    }
+  @include media-breakpoint-down('md') {
+    padding-left: 50px;
+    font-size: 20px;
+    height: 50px;
   }
 }

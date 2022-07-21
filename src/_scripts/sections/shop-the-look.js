@@ -42,7 +42,7 @@ export default class ShopTheLook extends BaseSection {
 
   initLooksSlider() {
     const looksSliderOptions = {
-      slidesPerView: 1.5,
+      slidesPerView: 1.15,
       loop: false,
       spaceBetween: 15,
       slidesOffsetBefore: 30,
@@ -119,7 +119,9 @@ export default class ShopTheLook extends BaseSection {
     this.drawerList.forEach((drawer, i) => {
       const slider = drawer.drawerObject.$el.find(selectors.lookDrawerSlider);
       const swiperSlider = new Swiper(slider, {
+        initialSlide: 1,
         centeredSlides: true,
+        loop: false,
         slidesPerView: 1.5,
         spaceBetween: 15,
         threshold: 20,
@@ -190,7 +192,9 @@ export default class ShopTheLook extends BaseSection {
       const $option = $(option);
 
       if($option.data('option-text') === fieldOptionIndex) {
-        $option.text(`Selected ${$option.data('print-option')}: ${$field.val() === 'OS' ? 'Only Size' : $field.val()}`);
+        const fieldValue = $field.val() === 'OS' ? 'Only Size' : $field.val();
+        $option.html(`Selected ${$option.data('print-option')}: <span class="product-option__drawer-btn-value">${fieldValue}</span>`);
+        $option.parent().addClass('is-active');
       }
     })
 

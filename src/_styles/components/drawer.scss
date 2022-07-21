@@ -7,11 +7,11 @@
   top: 0;
   right: 0;
   width: 100%;
-  max-height: 100%;
+  height: 100%;
   background: $drawer-bg;
   border: 1px solid $drawer-border-color;
   pointer-events: none;
-  overflow: scroll;
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   transform: translateX(100%);
   transition: all $transition-duration-base $transition-timing-function-base;
@@ -45,23 +45,45 @@
     max-width: $drawer-max-width;
   }
 
+  @include media-breakpoint-down('md') {
+    &:not(.drawer--mobile-menu) {
+      width: 100%;
+      height: calc(100% - 50px);
+      top: auto;
+      bottom: 0;
+      transform: translateY(100%);
+      border-top-right-radius: 15px;
+      border-top-left-radius: 15px;
+    }
+
+    &.is-visible {
+      transform: translateY(0);
+    }
+  }
+
   .drawer__inner {
     padding: $drawer-padding-vertical $drawer-padding-horizontal;
   }
 
   .drawer__header {
     position: relative;
-    margin-bottom: 20px;
-    padding: 30px 0 $headings-margin-bottom;
+    margin-bottom: 0;
     padding: 30px;
 
     .drawer__close {
+      all: unset;
       position: absolute;
-      top: 45%;
+      top: 50%;
       right: 30px;
       transform: translatey(-50%);
-
       z-index: 3;
+      line-height: 0;
+      cursor: pointer;
+
+      .icon-close {
+        width: 20px;
+        height: auto;
+      }
 
       &:hover .icon {
         fill: currentColor;
@@ -85,7 +107,7 @@
   }
 
   .drawer__body-contents {
-
+    padding: 0 30px 30px;
     .drawer__body--flush & {
       padding-left: $drawer-padding-horizontal;
       padding-right: $drawer-padding-horizontal;

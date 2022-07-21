@@ -1,29 +1,16 @@
 <div class="drawer look-drawer" data-drawer data-drawer-id="{{ look.look_id }}">
   <div class="drawer__inner">
     <div class="drawer__header look-drawer__header">
-      <div class="look-drawer__header-title">
-        Shop This look
+      <div class="drawer__header-title look-drawer__header-title">
+        Shop This Look
       </div>
-      <button class="look-drawer__icon-close icon-close" data-drawer-close>
+      <button class="drawer__close icon-close" data-drawer-close>
         {% render 'icon-close' %}
         <div class="sr-only">Close Look Drawer</div>
       </button>
     </div>
 
     <div class="drawer__body-contents look-drawer__body">
-      <div class="look-drawer__image-container frame frame--4x5">
-        {% capture look_image %}
-        {% render 'cf-image' image: look.look_image , size: '700x', format: 'pjpg', tag_alt: look.look_image.alt, tag_class: 'lazyload look-drawer__image frame__inner' %}
-        {% endcapture %}
-        {{ look_image | replace: 'src=', 'data-src=' }}
-
-        {% if look.card_text != blank %}
-          <div class="look-drawer__image-text">
-            {{ look.card_text }}
-          </div>
-        {% endif %}
-      </div>
-
       {% capture products_ui %}
         {% for i in (1..6) %}
           {% assign product_key = 'product_' | append: forloop.index %}
@@ -39,7 +26,7 @@
             {% endfor %}
             <div class="swiper-slide" data-slide>
               <div class="look-drawer__product-card-image-container frame frame--1x1">
-                <img data-src="{{ current_variant.image | img_url: '500x' }}" alt="{{ current_variant.image.alt }}" class="swiper-lazy look-drawer__product-card-image frame__inner">
+                <img data-src="{{ current_variant.image | img_url: 'x700' }}" alt="{{ current_variant.image.alt }}" class="swiper-lazy look-drawer__product-card-image frame__inner">
               </div>
 
               <span class="look-drawer__product-card-color">
@@ -86,7 +73,7 @@
                 </button>
 
                 <button class="btn btn-primary btn-block" data-add-to-cart-button disabled>
-                  Add To Bag
+                  ADD TO BAG
                   <span class="look-drawer__product-card-price" data-product-price>
                     {{ current_product.price | money_without_trailing_zeros }}
                   </span>

@@ -3,6 +3,10 @@
   #featured-categories-{{section.id}} .category-capsule--highlighted {
     border-color: {{s.highlight_color}};
   }
+  #featured-categories-{{section.id}} .category-capsule--highlighted:hover {
+    background-color: {{s.highlight_color}};
+    color: {{s.text_color}};
+  }
 </style>
 <div class="" id="featured-categories-{{section.id}}" data-section-type="featured-categories">
   <div class="featured-categories swiper-container" data-slideshow>
@@ -28,8 +32,14 @@
    {
      "type": "color",
      "id": "highlight_color",
-     "label": "Highlight Color",
+     "label": "Highlighted Item Border Color",
      "default": "#ff00ff"
+   },
+   {
+     "type": "color",
+     "id": "text_color",
+     "label": "Highlighted Item Text Color",
+     "default": "#000000"
    }
   ],
   "blocks": [

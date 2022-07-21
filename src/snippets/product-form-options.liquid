@@ -40,22 +40,24 @@
             {%- continue -%}
           {%- endif -%}
           {%- assign printed_variant = variant[option_index] -%}
-          <label class="product-option__single-selector swiper-slide" data-swatch-slide>
-            <input type="radio"
-                  name="{{- option_prefix -}}{{option_index}}"
-                  value="{{variant[option_index]}}"
-                  class="hide"
-                  data-option-name="{{option_downcase}}"
-                  data-product-option="{{ option_index }}"
-                  data-option-value="{{variant[option_index] | downcase}}"
-                  {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
-                  data-index="{{ option_index }}"
-                  data-single-option-selector>
+          {% unless variant.available == false and variant.metafields.custom_fields['enable_notify_me'] != 1 and variant.metafields.custom_fields['enable_sold_out'] != 1 %}
+            <label class="product-option__single-selector swiper-slide" data-swatch-slide>
+              <input type="radio"
+                    name="{{- option_prefix -}}{{option_index}}"
+                    value="{{variant[option_index]}}"
+                    class="hide"
+                    data-option-name="{{option_downcase}}"
+                    data-product-option="{{ option_index }}"
+                    data-option-value="{{variant[option_index] | downcase}}"
+                    {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
+                    data-index="{{ option_index }}"
+                    data-single-option-selector>
 
-            <div class="product-option__ui">
-              <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
-            </div>
-          </label>
+              <div class="product-option__ui">
+                <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+              </div>
+            </label>
+          {% endunless %}
         {% endfor %}
       </div>
       <div class="product-option__arrows">
@@ -103,7 +105,7 @@
                     type="radio"
                     name="{{- option_prefix -}}{{option_index}}"
                     value="{{option_value}}"
-                    data-option-name="{{ option_downcase }}"
+                    data-option-name="{{ option.name }}"
                     data-product-option="{{ option_index }}"
                     data-option-value="{{option_value | downcase}}"
                     class="hide"

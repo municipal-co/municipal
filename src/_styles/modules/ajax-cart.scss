@@ -23,10 +23,25 @@ body.ajax-cart-open {
   transform: translateX(100%);
   transition: all $transition-duration-slide $transition-timing-function-slide-out;
 
+  @include media-breakpoint-down('md') {
+    width: 100%;
+    max-height: calc(100% - 50px);
+    height: auto;
+    top: auto;
+    bottom: 0;
+    transform: translateY(100%);
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+
   &.is-open {
     pointer-events: auto;
     transform: translateX(0%);
     transition: all $transition-duration-slide $transition-timing-function-slide-in;
+
+    @include media-breakpoint-down('md') {
+      transform: translateY(0);
+    }
   }
 
   // Ensure that the cart is full width on screen sizes below this
@@ -40,10 +55,12 @@ body.ajax-cart-open {
 }
 
 // Ensure that the cart takes up the entire screen at all times
-.ajax-cart-container,
-.ajax-cart,
-.ajax-cart-form {
-  height: 100%;
+@include media-breakpoint-up('lg'){
+  .ajax-cart-container,
+  .ajax-cart,
+  .ajax-cart-form {
+    height: 100%;
+  }
 }
 
 .ajax-cart-form {
@@ -420,25 +437,20 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__item-remove {
+  @extend .btn-link;
   padding-right: 0;
-  padding-left: 10px;
+  margin-left: 10px;
   font-size: 11px;
-  line-height: 1;
+  line-height: 1.5;
   border: none;
   background-color: transparent;
   color: $black;
+  border-bottom: 2px solid currentColor;
 
   @include media-breakpoint-down('xs') {
     font-size: 9px;
-  }
-
-  &:after {
-    content:"";
-    margin-top: 3px;
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: currentColor;
+    margin-top: 10px;
+    margin-left: 0;
   }
 
   &:focus {
@@ -459,6 +471,7 @@ body.ajax-cart-open {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .ajax-cart__item-price {
@@ -810,26 +823,24 @@ body.ajax-cart-open {
   text-transform: uppercase;
   min-height: initial;
   background-color: $blue;
+  transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
+  transform: scale(1);
+
+  @include media-breakpoint-up('lg'){
+    &:hover {
+      transform: scale(0.96);
+    }
+  }
 }
 
 .ajax-cart__continue-shopping-btn {
   position: relative;
   width: auto;
   font-size: 12px;
-  line-height: 1;
-  border-bottom: none;
+  line-height: 1.5;
 
   &:hover {
     color: $black;
-  }
-
-  &:after {
-    content:"";
-    margin-top: 4px;
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: currentColor;
   }
 }
 

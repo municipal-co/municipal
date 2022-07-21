@@ -12,13 +12,4 @@ $yotpo-icon-star-empty:  'yotpo-empty-star.svg';
 @import 'yotpo/rating-stars';
 @import 'yotpo/reviews';
 
-.reviews__drawer {
-  @include media-breakpoint-up('lg') {
-    width: calc( 100% / 24 * 10);
-  }
-}
 
-.reviews__drawer-header {
-  font-size: 24px;
-  font-family: $font-family-heading-medium;
-}

@@ -4,7 +4,9 @@ import BaseSection from './base';
 
 const selectors = {
   slider: '[data-slider]',
-  slide: '[data-slide]'
+  slide: '[data-slide]',
+  mktDrawerTrigger: '[data-toggle-mkt-drawer]',
+  image: '[data-image]',
 };
 
 export default class LinkCardSlider extends BaseSection {
@@ -14,8 +16,10 @@ export default class LinkCardSlider extends BaseSection {
 
     this.$slider = $(selectors.slider, this.$container);
     this.$slides = $(selectors.slide, this.$container);
+    this.$mktDrawerTrigger = $(selectors.mktDrawerTrigger, this.$container);
 
     this.initSliders();
+    this.$mktDrawerTrigger.on('click', this.toggleMktDrawer.bind(this));
   };
 
   initSliders() {
@@ -25,6 +29,7 @@ export default class LinkCardSlider extends BaseSection {
       slidesOffsetBefore: 30,
       slidesOffsetAfter: 30,
       watchOverflow: true,
+      threshold: 10,
       lazy: {
         enabled: true,
         loadPrevNext: true,
@@ -50,6 +55,25 @@ export default class LinkCardSlider extends BaseSection {
         }
       }
     });
+  }
+
+  toggleMktDrawer(e) {
+    e.preventDefault();
+
+    const $link = $(e.currentTarget);
+    const drawerData = this.buildDrawerData($link);
+
+    $(window).trigger($.Event('marketing-drawer:open', {drawerData}));
+  }
+
+  buildDrawerData($link) {
+    const image = $(selectors.image, $link.parents(selectors.slide)).attr('src');
+    const data = {
+      productName: $link.data('product-name'),
+      image: image,
+    }
+
+    return data;
   }
 
   onBlockSelect(evt) {

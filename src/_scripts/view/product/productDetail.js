@@ -1,10 +1,13 @@
 import $ from 'jquery';
+import * as Currency from '../../core/currency';
 import ProductDetailForm from './productDetailForm';
 import ProductGallery from './productDetailGalleries';
 
 const selectors = {
   productDetailForm: '[data-product-detail-form]',
   productGallery: '[data-product-gallery]',
+  stickyPrice: '[data-sticky-image] [data-product-price]',
+  stickyComparePrice: '[data-sticky-image] [data-compare-price]'
 };
 
 export default class ProductDetail {
@@ -42,5 +45,12 @@ export default class ProductDetail {
 
   onVariantChange(variant) {
     this.gallery.onVariantChange(variant);
+    if(variant.compare_at_price > variant.price) {
+      $(selectors.stickyComparePrice).text(Currency.formatMoney(variant.compare_at_price, window.moneyFormat).replace('.00', '')).removeClass('hide');
+    } else {
+      $(selectors.stickyComparePrice).addClass('hide').text('');
+    }
+
+    $(selectors.stickyPrice).text(Currency.formatMoney(variant.price, window.moneyFormat).replace('.00', ''))
   }
 }

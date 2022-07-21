@@ -29,6 +29,13 @@
     top: 50%;
     transform: translateY(-50%);
     width: 30px;
+    transition: right $transition-timing-function-base $transition-duration-base;
+    color: $black;
+  }
+  @include media-breakpoint-up('lg') {
+    &:hover .icon {
+      right: 15px;
+    }
   }
 }
 
@@ -38,4 +45,5 @@
   font-size: 26px;
   font-family: $font-family-heading-large;
   letter-spacing: unset;
+  color: $black;
 }
