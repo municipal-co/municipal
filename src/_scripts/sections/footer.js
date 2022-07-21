@@ -3,12 +3,10 @@ import BaseSection from './base';
 import AJAXKlaviyoForm from '../lib/ajaxKlaviyoForm';
 
 const selectors = {
-  newsletterForm: '[data-newsletter-form]',
-  newsletterFormMessage: '.newsletter-form-message',
-  newsletterInput: '.minimal-input-box__input',
-  subscriptionModal: '[data-footer-subscription-modal]',
-  formResultMessage: '[data-form-result-message]',
-  modalBackdrop: '.modal-backdrop'
+  newsletterForm: '[data-footer-signup]',
+  newsletterFormMessage: '[data-footer-signup-message]',
+  newsletterControls: '[data-footer-signup-controls]',
+  newsletterInput: '[data-footer-signup-input]',
 };
 
 export default class FooterSection extends BaseSection {
@@ -22,29 +20,24 @@ export default class FooterSection extends BaseSection {
     const options = {
       onSubscribeSuccess() {
         const successMessage = $(selectors.newsletterFormMessage, $form).data('message-success');
-        $(selectors.formResultMessage).text(successMessage);
-
-        $(selectors.subscriptionModal).modal('show');
+        $(selectors.newsletterFormMessage, $form).text(successMessage).show();
+        $(selectors.newsletterControls, $form).hide();
         $(selectors.newsletterInput, $form).val('');
-
-        setTimeout(function(){
-          $(selectors.modalBackdrop).addClass('footer-backdrop');
-        }, 200);
       },
       onSubscribeFail() {
         const successFail = $(selectors.newsletterFormMessage, $form).data('message-fail');
-        $(selectors.newsletterInput, $form).val(successFail);
+        $(selectors.newsletterFormMessage, $form).text(successFail).show();
 
         setTimeout(function(){
-          $(selectors.newsletterInput, $form).val('');
+          $(selectors.newsletterFormMessage, $form).hide().text('');
         }, 3000);
       },
       onSubmitFail() {
         const successFail = $(selectors.newsletterFormMessage, $form).data('message-fail');
-        $(selectors.newsletterInput, $form).val(successFail);
+        $(selectors.newsletterFormMessage, $form).text(successFail).show();
 
         setTimeout(function(){
-          $(selectors.newsletterInput, $form).val('');
+          $(selectors.newsletterFormMessage, $form).hide().text('');
         }, 3000);
       }
     };
