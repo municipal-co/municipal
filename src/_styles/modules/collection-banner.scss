@@ -91,6 +91,8 @@
   }
 
   .collection-banner__title {
+    margin-bottom: 26px;
+
     @include media-breakpoint-down('md') {
       margin-bottom: 18px;
     }
@@ -102,12 +104,14 @@
     color: $white;
   }
 
-  .collection-banner__content {
-    font-family: $font-family-sans-serif;
-    font-weight: $font-weight-semi-bold;
-    font-size: .9em;
-    line-height: 1.5em;
-    margin-bottom: large-vw(60px, 155px);
+  .collection-banner__content p {
+    font-family: $font-family-base;
+    font-size: 20px;
+    font-weight: normal;
+
+    @include media-breakpoint-up('lg') {
+      font-size: 25px;
+    }
   }
 
   .collection-banner__video {

@@ -1,23 +1,12 @@
-<div data-section-id="drawer-{{ section.id }}" class="search-drawer">
+<div class="search-drawer" data-search-drawer>
+  <div class="search-drawer__close" data-drawer-close>
+    {% include 'icon-close' %}
+  </div>
 
-  <div class="drawer drawer--top" data-search-drawer>
-
-    <div class="drawer__inner">
-      <div class="drawer__body">
-        <a href="#" class="drawer__close" data-drawer-close>
-          {% include 'icon-close' %}
-        </a>
-        
-        <div class="drawer__body-contents">
-          <div class="minimal-input-box">
-            <div class="search-icon">
-              {% include 'icon-search' %}
-            </div>
-
-            <input type="text" name="q" placeholder="Search" class="minimal-input-box__input minimal-input-box__input--search" autocomplete="off" data-search-input />
-          </div>  
-        </div>
-      </div>
+  <div class="search__form minimal-input-box">
+    <div class="search-icon search-drawer__search-icon">
+      {% include 'icon-search' %}
     </div>
+    <input type="text" name="q" placeholder="Search" class="minimal-input-box__input minimal-input-box__input--search" autocomplete="off" data-search-input>
   </div>
 </div>

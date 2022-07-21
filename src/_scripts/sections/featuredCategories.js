@@ -25,11 +25,17 @@ export default class HeaderSection extends BaseSection {
         nextEl: selectors.nextArrow,
         prevEl: selectors.prevArrow,
       },
-      spaceBetween: 20,
-      slidesOffsetBefore: 40,
-      slidesOffsetAfter: 40,
+      spaceBetween: 10,
+      slidesOffsetBefore: 20,
+      slidesOffsetAfter: 20,
       threshold: 20,
       watchOverflow: true,
+      breakpoints: {
+        992: {
+          slidesOffsetAfter: 40,
+          slidesOffsetBefore: 40,
+        }
+      }
     })
   }
 

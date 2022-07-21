@@ -16,20 +16,6 @@
   }
 }
 
-.layout-wrapper {
-
-  // If we have a fixed header, make enough room at the top of the page for it.
-  .site-fixed-header & {
-    position: relative;
-    padding-top: $header-height-small;
-
-    @include media-breakpoint-up('lg') {
-      padding-top: large-vw(50px, 120px);
-    }
-  }
-
-}
-
 .layout-main-content {
   flex-direction: column;
 }

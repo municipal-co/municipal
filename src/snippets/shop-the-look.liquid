@@ -25,59 +25,59 @@
   {% assign look_ids = look_ids | split: ', ' %}
 {% endif %}
 
-<div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
-  <div class="shop-the-look__looks-container" data-looks-container>
-    <div class="shop-the-look__slider swiper-wrapper" data-slider>
-      {% for id in look_ids %}
-        {% for look in page_looks %}
-          {% if look.look_id == id %}
-            {% assign current_look = look %}
-            {% break %}
-          {% endif %}
-        {% endfor %}
+{% if look_ids != blank %}
+  <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
+    <div class="shop-the-look__looks-container" data-looks-container>
+      <div class="shop-the-look__slider swiper-wrapper" data-slider>
+        {% for id in look_ids %}
+          {% for look in page_looks %}
+            {% if look.look_id == id %}
+              {% assign current_look = look %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
 
-        {% if current_look != blank %}
-          <div class="shop-the-look__slide swiper-slide" data-slide>
-            <div class="look-card" data-look-drawer-open="{{current_look.look_id}}">
-              <div class="look-card__image-container frame frame--4x5">
-                {% capture card_image %}
-                  {% render 'cf-image',
-                            image: current_look.look_image,
-                            tag_alt: current_look.look_image.alt,
-                            size: '500x',
-                            format: 'pjpg',
-                            tag_class: "look-card__image lazyload frame__inner" %}
-                {% endcapture %}
+          {% if current_look != blank %}
+            <div class="shop-the-look__slide swiper-slide" data-slide>
+              <div class="look-card" data-look-drawer-open="{{current_look.look_id}}">
+                <div class="look-card__image-container frame frame--4x5">
+                  {% capture card_image %}
+                    {% render 'cf-image',
+                              image: current_look.look_image,
+                              tag_alt: current_look.look_image.alt,
+                              tag_class: "look-card__image lazyload frame__inner" %}
+                  {% endcapture %}
 
-                {{ card_image | replace:"src=", "data-src=" }}
-              </div>
-              <div class="look-card__text-container">
-                {% if current_look.card_text != blank %}
-                  <div class="look-card__text">
-                    {{ current_look.card_text}}
-                  </div>
-                {% endif %}
+                  {{ card_image | replace:"src=", "data-src=" }}
+                </div>
+                <div class="look-card__text-container">
+                  {% if current_look.card_text != blank %}
+                    <div class="look-card__text">
+                      {{ current_look.card_text}}
+                    </div>
+                  {% endif %}
 
-                {% if current_look.button_label != blank %}
-                  <span class="look-card__btn">
-                    {{ current_look.button_label }}
-                  </span>
-                {% endif %}
+                  {% if current_look.button_label != blank %}
+                    <span class="btn-link look-card__btn">
+                      {{ current_look.button_label }}
+                    </span>
+                  {% endif %}
+                </div>
               </div>
             </div>
-          </div>
 
-          {% capture new_look_drawer %}
-            {% render 'look-drawer' with look: current_look %}
-          {% endcapture %}
-          {% assign look_drawers = look_drawers | append: new_look_drawer %}
-        {% endif %}
-        {% assign  current_look = blank %}
-      {% endfor %}
+            {% capture new_look_drawer %}
+              {% render 'look-drawer' with look: current_look %}
+            {% endcapture %}
+            {% assign look_drawers = look_drawers | append: new_look_drawer %}
+          {% endif %}
+          {% assign  current_look = blank %}
+        {% endfor %}
+      </div>
+      <div class="shop-the-look__arrow shop-the-look__arrow--prev" data-arrow-prev></div>
+      <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
     </div>
-    <div class="shop-the-look__arrow shop-the-look__arrow--prev" data-arrow-prev></div>
-    <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
-  </div>
 
-  {{ look_drawers }}
-</div>
+    {{ look_drawers }}
+  </div>
+{% endif %}

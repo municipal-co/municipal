@@ -11,7 +11,8 @@
             print_option: 'color'
             current_variant: current_variant
           %}
-        {%- elsif option == "size" or option == "Size" -%}
+        {%- elsif option == "size" or option == "Size" or option == 'amount' or option == 'Amount' -%}
+          {% assign option_downcase = option | downcase %}
           {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
           <div class="btn-container text-center">
             <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
@@ -21,7 +22,7 @@
           {%- render 'product-form-options',
             product: product,
             type: 'drawer',
-            print_option: 'size'
+            print_option: option_downcase
             current_variant: current_variant
           -%}
         {%- else -%}
@@ -49,11 +50,10 @@
       {% render 'bundles-ui',
       current_variant: current_variant %}
     {% endif %}
-
     <button
       type="submit"
       name="add"
-      class="btn btn-primary btn-block add-to-cart"
+      class="btn btn-primary btn-block product__atc-btn"
       data-add-to-cart>
         <span data-add-to-cart-text>
           {% if current_variant.available %}
@@ -62,7 +62,7 @@
             {{ 'products.product.sold_out' | t }}
           {% endif %}
         </span>
-        <span class="product__atc-price" data-add-to-cart-price></span>
+        <span class="product__atc-price" data-add-to-cart-price style="display:none;"></span>
     </button>
     {% unless product.type == "Gift Card" or product.tags contains 'klarna-hide' %}
     <klarna-placement

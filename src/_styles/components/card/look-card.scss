@@ -36,12 +36,14 @@
   bottom: 16px;
   color: $white;
   font-size: 15px;
-  line-height: 1.13;
+  line-height: 1.5;
   width: 100%;
   padding: 0 20px;
   z-index: 2;
 }
 
 .look-card__btn {
-  text-decoration: underline;
+  margin-left: auto;
+  color: $white;
+  display: inline-block;
 }

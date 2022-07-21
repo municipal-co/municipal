@@ -16,7 +16,8 @@ const selectors = {
   videoPlayer: '[data-video-player]',
   featuresDrawer: '[data-features-drawer]',
   featuresDrawerToggler: '[data-features-toggler]',
-  featuresDrawerGallery: '[data-features-gallery]'
+  featuresDrawerSlider: '[data-features-slider]',
+  sliderPagination: '[data-slider-pagination]',
 };
 
 export default class ProductSection extends BaseSection {
@@ -29,22 +30,27 @@ export default class ProductSection extends BaseSection {
     this.$mobileProductFormContainer = $(selectors.mobileProductFormContainer);
     this.$fitGuideGalleryIndexcontainer = $(selectors.fitGuideGalleryIndex);
     this.$featuresDrawerToggler = $(selectors.featuresDrawerToggler);
-    this.$featuresDrawerGallery = $(selectors.featuresDrawerGallery);
+    this.$featuresDrawerSlider = $(selectors.featuresDrawerSlider);
 
     // drawers
-    this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
-    this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
     this.galleries = [];
 
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
     $('body').on('updateVariant', this.onToggleVariant.bind(this));
     this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
-    this.initFitGuideGalleries();
 
     new VideoPlayer(selectors.videoPlayer);
 
-    this.initFeaturesGalleries();
+    if($(selectors.fitGuideDrawer)) {
+      this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
+      this.initFitGuideGalleries();
+    }
+
+    if(this.$featuresDrawerToggler.length) {
+      this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
+      this.initFeaturesSlider();
+    }
   }
 
   toggleFitGuideModal() {
@@ -65,7 +71,7 @@ export default class ProductSection extends BaseSection {
         arrows: false,
         observer: true,
         observeParents: true,
-        loop: true,
+        loop: false,
         pagination: {
           el: '.fit-guide__gallery-pagination',
           type: 'bullets',
@@ -80,25 +86,38 @@ export default class ProductSection extends BaseSection {
     });
   }
 
-  initFeaturesGalleries() {
-    this.$featuresDrawerGallery.each(function(index, gallery) {
-      new Swiper($(gallery), {
+  initFeaturesSlider() {
+    if(this.$featuresDrawerSlider.length) {
+      const featuresSlider = new Swiper(this.$featuresDrawerSlider, {
         watchOverflow: true,
         preloadImages: false,
         arrows: false,
         observer: true,
         observeParents: true,
         loop: true,
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true,
+        },
         pagination: {
-          el: '.features-detail__gallery-pagination',
+          el: '.features-detail__slider-pagination',
           type: 'bullets',
           clickable: true,
         },
         lazy: {
           loadPrevNext: true,
-        }
+        },
+        init: false
+      });
+
+      featuresSlider.on('slideChange', function() {
+        const sliderWidth = featuresSlider.width;
+        $(selectors.sliderPagination, this.$featuresDrawerSlider).css('top', sliderWidth + 20);
       })
-    })
+
+      featuresSlider.init();
+    }
+
   }
 
   onToggleVariant(e) {

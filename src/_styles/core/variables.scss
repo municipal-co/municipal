@@ -528,8 +528,7 @@ $btn-border-radius: 50px !default;
 $btn-border-radius-lg: 50px !default;
 $btn-border-radius-sm: 50px !default;
 
-$btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !default;
+$btn-transition: all 0.15 ease-in-out !default;
 
 // Forms
 
@@ -1081,7 +1080,7 @@ $minimal-input-height-large: 60px;
 
 // Drawer
 
-$drawer-max-width: 1360px;
+$drawer-max-width: 575px;
 $drawer-bg: $white;
 $drawer-border-color: darken($drawer-bg, 5%);
 $drawer-padding-vertical: $grid-gutter-width;
@@ -1092,8 +1091,8 @@ $drawer-header-border-color: $black;
 
 // AJAX Cart
 
-$ajax-cart-width: 576px;
-$ajax-cart-width-lg: 41.66667%;
+$ajax-cart-width: 100%;
+$ajax-cart-width-lg: 575px;
 $ajax-cart-bg: $bg-white;
 $ajax-cart-border-color: darken($ajax-cart-bg, 5%);
 $ajax-cart-padding-vertical: 40px;
