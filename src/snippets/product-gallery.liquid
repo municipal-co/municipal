@@ -1,4 +1,3 @@
-{% assign photo_main_dimension  = '600x' %}
 {% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% for option in product.options %}
@@ -16,16 +15,28 @@
     <div class="product-gallery__wrapper swiper-wrapper">
       {% for image in product.images %}
       {% assign image_alt_pieces = image.alt | split: '|' %}
+      {% assign img_color_downcase = image_alt_pieces[1] | downcase %}
+      {% assign variant_color_downcase = current_variant[option_index] | downcase %}
         {% if has_color_index %}
-          <div class="product-gallery__slide {% if image_alt_pieces[1] == current_variant[option_index] %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}">
+          <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}">
         {% else %}
           <div class="product-gallery__slide swiper-slide" data-slide>
         {% endif %}
-          <img data-src="{{ image | img_url: photo_main_dimension }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
-          <span class="swiper-lazy-preloader"></span>
+          <div class="product-gallery__zoom-toggler" data-zoom-toggler>
+            {% render 'icon-zoom-in' %}
+            {% render 'icon-zoom-out' %}
+          </div>
+          <div class="swiper-zoom-container">
+            <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
+            <span class="swiper-lazy-preloader"></span>
+          </div>
         </div>
       {% endfor %}
     </div>
     <div class="swiper-pagination product-gallery__pagination"></div>
+  </div>
+
+  <div class="product-gallery__zoom-container" data-zoom-container>
+
   </div>
 </div>

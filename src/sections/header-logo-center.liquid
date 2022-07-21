@@ -11,7 +11,7 @@
                 <span class="hamburger-inner">
                 </span>
               </span>
-              <span class="hide-on-mobile">Shop</span>
+              <span class="hamburger-text hide-on-mobile">Menu</span>
             </a>
           </div>
 
@@ -21,7 +21,7 @@
 
           <div>
             {% if settings.search_form == "findify" %}
-              <div title="Toggle Search" data-search-drawer-toggle class="header-nav__menu-item header-nav__menu-item--search hide-on-mobile">
+              <div title="Toggle Search" data-search-drawer-toggle class="header-nav__menu-item header-nav__menu-item--search">
                 {% include 'icon-search' %}
               </div>
             {% endif %}
@@ -29,18 +29,17 @@
             {% if shop.customer_accounts_enabled %}
               <div class="header-nav__menu-item hide-on-mobile">
                 {% if customer %}
-                  <a href="/account" title="Account">Account</a>
+                  <a href="/account" title="Account">{% include 'icon-account' %}</a>
                 {% else %}
-                  <a href="/account/login" data-customers-drawer-toggle title="Login or register">Sign In</a>
+                  <a href="/account/login" data-customers-drawer-toggle title="Login or register">{% include 'icon-account' %}</a>
                 {% endif %}
               </div>
             {% endif %}
 
             <div class="header-nav__menu-item">
               <a href="/cart" data-ajax-cart-trigger>
-                <div class="header-cart__badge{% if cart.item_count > 0 %} has-items{% endif %}" data-cart-badge>
-                  Bag
-
+                <div class="header-cart__badge" data-cart-badge>
+                  {% include 'icon-bag' %}
                   <span class="header-cart__badge-count" data-cart-badge-count></span>
                 </div>
               </a>
@@ -54,6 +53,7 @@
       {% include 'search-drawer' %}
     {% endif %}
   </header>
+  <div class="header__filler" data-header-filler></div>
 </div>
 
 

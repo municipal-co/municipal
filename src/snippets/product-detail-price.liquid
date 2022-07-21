@@ -21,13 +21,13 @@
   {% if product.compare_at_price_max > product.price %}
     <s class="product__compare-at-price {% unless current_variant.compare_at_price > current_variant.price %}hide{% endunless %}" data-compare-price>
       {%- if current_variant.compare_at_price > current_variant.price -%}
-        {{- current_variant.compare_at_price | money -}}
+        {{- current_variant.compare_at_price | money_without_trailing_zeros -}}
       {%- endif -%}
     </s>
     <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
   {% endif %}
 
   <span data-product-price>
-    {{ current_variant.price | money }}
+    {{ current_variant.price | money_without_trailing_zeros }}
   </span>
 </div>

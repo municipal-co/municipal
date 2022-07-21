@@ -24,7 +24,12 @@ button.focus {
   padding: 12px 32px;
   border-radius: 90px;
   position: relative;
-  @include transition($btn-transition);
+  transition: $transition-duration-fast $transition-timing-function-in-out-ui;
+  transition-property: background-color transform;
+  span {
+    transform: scale(1);
+    transition: transform $transition-duration-fast $transition-timing-function-in-out-ui;
+  }
 
   @include media-breakpoint-up('md') {
     font-size: 16px;
@@ -33,19 +38,24 @@ button.focus {
   }
 
   @include media-breakpoint-up('lg') {
-    font-size: 19px;
     line-height: 1;
     padding: 15px 53px;
-  }
 
-  @include hover {
-    color: $body-color;
-    text-decoration: none;
-
-    .btn__ui {
-      color: $white;
+    &:not([disabled]):hover {
+      color: $body-color;
+      text-decoration: none;
+      transform: scale(0.98);
+      span {
+        transform: scale(1.02);
+        display: inline-block;
+      }
+      .btn__ui {
+        color: $white;
+        transform: scale(1.02);
+      }
     }
   }
+
 
   // Disabled comes first so active can properly restyle
   &.disabled,
@@ -69,26 +79,6 @@ button.focus {
       fill: currentColor;
       width: 30px;
       height: 30px;
-    }
-  }
-
-  &.btn--underlined {
-    background-color: transparent;
-    border-radius: 0;
-    font-weight: $font-weight-normal;
-    padding: 0 0 5px;
-    color: $black;
-    &:focus {
-      box-shadow: none;
-    }
-    &::before {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      height: 4px;
-      width: 100%;
-      background-color: $black;
     }
   }
 }
@@ -120,24 +110,35 @@ fieldset:disabled a.btn {
 //
 
 // Make a button look and behave like a link
-.btn-link {
+.btn-link,
+.btn--underlined {
+  position: relative;
   color: $link-color;
   text-decoration: none;
   background: none;
   border: none;
   display: inline-block;
-  border-bottom: 2px solid $black;
   border-radius: 0;
   padding: 0;
   line-height: 1.5;
+  border-bottom: 2px solid currentColor;
 
-  @include hover {
-    color: $blue;
-    text-decoration: none;
-    border-color: $blue;
-    .btn__ui .icon {
-      fill: $blue;
-    }
+  &:before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 0%;
+    margin: auto;
+    border-bottom: 4px solid currentColor;
+    transition: width $transition-timing-function-in-out-ui $transition-duration-fast;
+  }
+
+  &:hover:before {
+    border-bottom-width: 4px;
+    width: 100%;
   }
 
   &:focus,
@@ -196,8 +197,9 @@ input[type='button'] {
   border-color: $black;
 
   &:hover {
-    background-color: $black;
-    border-color: $black;
+    background-color: $blue;
+    border-color: $blue;
+    color: $white !important;
   }
 
   &.disabled,

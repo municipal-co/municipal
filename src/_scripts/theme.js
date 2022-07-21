@@ -18,10 +18,6 @@ import * as A11Y from './core/a11y';
 import * as Animations from './core/animations';
 import * as Breakpoints from './core/breakpoints';
 
-// Managers
-import BackgroundAnimationManager from './managers/backgroundAnimationManager';
-import SectionBlockAnimation from './managers/sectionBlockAnimation';
-
 // UI - Import all to enable data API
 import './ui/drawer';
 import './ui/overlay';
@@ -73,6 +69,7 @@ import OptionDrawer from './sections/optionDrawer';
 import Hero from './sections/hero';
 import FeaturedCategories from './sections/featuredCategories';
 import ProductCardSlider from './sections/productCardSlider';
+import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 
 
 // Managers
@@ -142,6 +139,7 @@ Breakpoints.initialize();
   sectionManager.register('hero', Hero);
   sectionManager.register('featured-categories', FeaturedCategories);
   sectionManager.register('product-card-slider', ProductCardSlider);
+  sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));
@@ -175,52 +173,6 @@ Breakpoints.initialize();
       'supports-cookies'
     );
   }
-
-  // Initializes background color watcher.
-  const $animatedBackgrounds = $('[data-animated-background]');
-  new BackgroundAnimationManager($animatedBackgrounds);
-
-  new SectionBlockAnimation();
-
-
-  // // Initializes Images Animation Watcher
-  // const $images = $('[data-animate-image-in]');
-  // const imagesAnimationCallback = function(entries, observer) {
-  //   const self = this;
-
-  //   entries.forEach((entry) => {
-  //     if (entry.intersectionRatio > 0.1) {
-  //       const $image = $(entry.target);
-  //       $image.addClass('in');
-  //       self.intersectionObserver.unobserve(entry.target);
-  //     }
-  //   });
-  // };
-  // window.imagesAnimationManager = new IntersectionManager($images, imagesAnimationCallback);
-
-  // // Initializes Titles Animation Watcher
-  // const $textItems = $('h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6');
-  // const textIntersectionSettings = {
-  //   root: null,
-  //   threshold: 0.1,
-  //   rootMargin: '-10% 0% -20%'
-  // }
-
-  // $textItems.each((index, el) => {
-  //   $(el).addClass('text-animate');
-  // });
-
-  // const textAnimationCallback = function(entries, observer) {
-  //   const self = this;
-  //   entries.forEach((entry) => {
-  //     if (entry.intersectionRatio > 0.1) {
-  //       const $title = $(entry.target);
-  //       $title.addClass('in');
-  //       self.intersectionObserver.unobserve(entry.target);
-  //     }
-  //   })
-  // }
-  // window.titlesAnimationManager = new IntersectionManager($textItems, textAnimationCallback, textIntersectionSettings);
 
   // Chosen JS plugin for select boxes
   Utils.chosenSelects();

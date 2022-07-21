@@ -1,0 +1,89 @@
+<div class="mkt-subscription-container" data-section-type="mkt-subscription-drawer" data-section-id="{{section.id}}">
+  <div class="drawer mkt-subscription__container" data-drawer>
+    <div class="drawer__inner mkt-subscription__inner">
+      <div class="drawer__header mkt-subscription__header">
+        <div class="drawer__header-title mkt-subscription__title">
+          Notify
+        </div>
+        <button class="drawer__close mkt-subscription__close" data-drawer-close>
+          {% render 'icon-close' %}
+        </button>
+      </div>
+      <div class="drawer__body-contents mkt-subscription__body">
+        <div class="mkt-subscription__image-container frame frame--1x1">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+               data-image class="mkt-subscription__image frame__inner">
+        </div>
+        {% if section.settings.notify_text != blank %}
+          <div class="mkt-subscription__body-info">
+            {{ section.settings.notify_text | replace: '[[product]]', '<span class="highlighted" data-product-name>product</span>'}}
+          </div>
+        {% endif %}
+
+        <form action="/" class="mkt-subscription__form"
+              data-form
+              data-list-id="Jgkkps"
+              data-success-message="{{section.settings.success_message}}"
+              data-error-message="{{section.settings.error_message}}">
+          <div class="minimal-input-box">
+            <input class="mkt-subscription__input minimal-input-box__input"
+                   name="email"
+                   placeholder="What's your email?"
+                   type="email"
+                   required
+                   data-input>
+            <button class="mkt-subscription__submit minimal-input-box__submit" type="submit">
+              {% render 'icon-arrow' %}
+              <span class="icon-fallback-text">Submit</span>
+            </button>
+          </div>
+        </form>
+        <div class="mkt-subscription__response-message" data-response-message>
+        </div>
+        {% if section.settings.footer != blank %}
+          <div class="mkt-subscription__footer-info">
+            {{section.settings.footer}}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+ "name": "MKT Subscription",
+ "settings": [
+    {
+      "type": "header",
+      "content": "Subscription drawer settings"
+    },
+    {
+      "type": "text",
+      "id": "notify_text",
+      "label": "Notify Text",
+      "default": "Get notified when [[product]] launches",
+      "info": "Define the verbiage for the body, use [[product]] to render the product tile, updates depending on the customer selected option"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thanks for subscribing, you'll be notified when this product launches!"
+    },
+    {
+      "type": "textarea",
+      "id": "error_message",
+      "label": "Error Message",
+      "default": "We got an error when trying to subscribe you, please try again later",
+      "info": "Generic message to let the user know that there was an error"
+    },
+    {
+      "type": "richtext",
+      "id": "footer",
+      "label": "Footer message",
+      "info": "Can be used to display a disclaimer text regarding subscribing to our list"
+    }
+  ]
+}
+{% endschema %}

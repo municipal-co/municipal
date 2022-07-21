@@ -1,7 +1,7 @@
 import $ from 'jquery';
+import Swiper from 'swiper';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
-import Swiper from 'swiper';
 import Drawer from '../../ui/drawer';
 import Variants from './variants';
 import ProductBundles from '../../managers/product-bundles'
@@ -128,14 +128,13 @@ export default class ProductDetailForm {
     this.$bisButton.on(this.events.CLICK, this.onBisButtonClick.bind(this));
 
     this.checkVariantsAvailability(this.variants.currentVariant);
-    // this.updateBadge(this.variants.currentVariant);
     this.productColorValidation();
 
     if(this.$swatchSlider.length){
       this.initSwatchesSlider();
     }
     this.updateAddToCartState(this.variants.currentVariant);
-    this.updateProductPrices(this.variants.currentVariant);
+    this.updateProductPrices(this.variants.currentVariant, true);
     this.validateSizeAvailability();
   }
 
@@ -149,6 +148,7 @@ export default class ProductDetailForm {
     this.updateFullDetailsLink(variant);
     this.checkVariantsAvailability(variant);
     this.updateKlarnaPricing(variant);
+    this.productColorValidation();
 
     this.settings.onVariantChange(variant);
   }
@@ -188,7 +188,7 @@ export default class ProductDetailForm {
 
       this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
         slideClass: 'swiper-slide',
-        slidesPerView: 4.4,
+        slidesPerView: 4.7,
         watchOverflow: true,
         slidesOffsetBefore: 30,
         slidesOffsetAfter: 30,
@@ -286,13 +286,17 @@ export default class ProductDetailForm {
    *
    * @param {Object} variant - Shopify variant object
    */
-  updateProductPrices(variant) {
-    if (variant) {
-      this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
-      this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat));
+  updateProductPrices(variant, firstCheck) {
+    if(firstCheck && this.productSingleObject.type == 'Gift Card') {
+      this.$atcPrice.hide();
+    }
+
+    if (variant ) {
+      this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
+      this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
 
       if (variant.compare_at_price > variant.price) {
-        this.$comparePrice.html(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat));
+        this.$comparePrice.html(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat).replace('.00', ''));
         this.$compareEls.removeClass(classes.hide);
       }
       else {
@@ -329,9 +333,9 @@ export default class ProductDetailForm {
   }
 
   updateSelectedOptionLabel(index, value, name) {
-    if(name === 'size' || name === 'Size') {
-
-      $(`[data-selected-option=${index}]`, this.$detailOptions).text(`Selected ${name}: ${value}`);
+    if(name === 'size' || name === 'Size' || name === 'amount' || name === 'Amount' ) {
+      $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${value}</span>`);
+      $(`[data-selected-option=${index}]`, this.$detailOptions).parent().addClass('is-active');
     } else {
       $(`[data-selected-option=${index}]`, this.$detailOptions).text(value);
       this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
@@ -426,7 +430,7 @@ export default class ProductDetailForm {
           $uiContainer.find('[data-option-availability]').html(Utils.getPropByString(window, 'theme.strings.available') || 'Available');
           const $quantityContainer = $uiContainer.find('[data-low-quantity]');
 
-          if(variant.inventory_quantity <= this.settings.lowQuantityThreshold) {
+          if(variant.inventory_quantity <= this.settings.lowQuantityThreshold && variant.inventory_quantity > 0) {
             const quantityTemplate = $quantityContainer.data('message-template');
             $quantityContainer.html(quantityTemplate.replace('[quantity]', variant.inventory_quantity));
             $quantityContainer.show();
@@ -443,6 +447,8 @@ export default class ProductDetailForm {
 
           if(variant.metafields.enable_bis === 1) {
             $uiContainer.find(selectors.bisButton).show().attr('data-variant-id', variant.id);
+          } else {
+            $uiContainer.find(selectors.bisButton).hide();
           }
         }
       }
@@ -528,7 +534,6 @@ export default class ProductDetailForm {
     }
 
     const optionPosition = `option${colorOption[0].position}`;
-
     colorOption[0].values.forEach((color) => {
       const colorState = this._validateColorAvailability(color, optionPosition);
       if(colorState.hideColor) {
@@ -552,7 +557,7 @@ export default class ProductDetailForm {
     })
 
     soldOutColors.forEach((colorObject) => {
-      if(colorObject.enableBis) {
+      if(colorObject.enableBis === 1) {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.bis);
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message">Back<br>Soon</span>');
       } else {

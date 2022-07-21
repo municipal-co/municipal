@@ -4,6 +4,8 @@
 }
 
 .reviews__drawer-header {
+  font-size: 24px;
+  font-family: $font-family-heading-medium;
   margin-bottom: 0;
 }
 
@@ -400,8 +402,8 @@
         background-color: $white;
       }
     }
-    .socialize-wrappe {
-      display: none;
+    .socialize-wrapper {
+      display: none !important;
     }
 
     .connect-wrapper {
@@ -445,6 +447,17 @@
     }
   }
   //End review form
+
+  // Success message
+  .yotpo-icon-heart {
+    display: none !important;
+  }
+
+  .yotpo-thankyou-content,
+  .yotpo-thankyou-footer {
+    display: none !important;
+  }
+  // End of Success Message
 
   //Yotpo Pagination
     .yotpo-page-element {

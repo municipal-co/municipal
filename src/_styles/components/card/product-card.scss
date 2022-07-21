@@ -61,14 +61,12 @@
   overflow: hidden;
   position: relative;
   display: none;
-  opacity: 0 !important;
+  opacity: 0;
+  transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
 
-  &.swiper-slide {
+  &.is-active {
     display: block;
-  }
-
-  &.swiper-slide-active {
-    opacity: 1 !important;
+    opacity: 1;
   }
 
   &:before {
@@ -78,7 +76,7 @@
     padding-bottom: 100%;
   }
 
-  img {
+  .product-card__image {
     position: absolute;
     top: 0;
     left: 0;
@@ -120,6 +118,11 @@
   line-height: 1.5;
   font-family: $font-family-heading-large;
   margin: 8px 0;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .product-card__price-container {

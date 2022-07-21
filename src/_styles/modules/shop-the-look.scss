@@ -49,8 +49,16 @@
   z-index: 2;
   cursor: pointer;
 
+  #shop-the-look-pdp & {
+    width: 40px;
+  }
+
   @include media-breakpoint-up('xl') {
     width: 120px;
+
+    #shop-the-look-pdp & {
+      width: 60px;
+    }
   }
 }
 

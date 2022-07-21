@@ -36,18 +36,21 @@
 {% capture card_images %}
   {%- for image in card_product.images -%}
     {% assign alt_downcase = image.alt | downcase %}
-    {% if alt_downcase contains 'front' or alt_downcase contains 'back' %}
+    {% if alt_downcase contains 'front' %}
       {% assign alt_pieces = image.alt | split: '|' %}
       <div class="product-card__gallery-slide
-          {% if alt_pieces[1] contains current_variant[color_index] %}swiper-slide{% endif %}"
+          {% if alt_pieces[1] == current_variant[color_index] %}is-active{% endif %}"
           href="{{card_product.url}}?variant={{current_variant.id}}" data-product-url="{{card_product.url}}"
           data-gallery-slide
           data-image-selector="{{ alt_pieces[1] | downcase }}">
 
         <img
-            data-src="{{image | image_url: width: '400', format: 'pjpg'}}"
-            class="product-card__image swiper-lazy"
-            alt="{{ alt_pieces[0] }}">
+            src="{{image | image_url: width: '400', format: 'pjpg'}}"
+            width="400px"
+            height="auto"
+            class="product-card__image"
+            alt="{{ alt_pieces[0] }}"
+            loading="lazy">
       </div>
     {% endif %}
   {%- endfor -%}
@@ -61,9 +64,8 @@
         {% assign alt_pieces = image.alt | split: '|' %}
         <div class="product-card__gallery-slide
           {% if variant == current_variant %}
-            swiper-slide
+            is-active
           {% endif %}"
-          data-gallery-slide
           data-image-selector="{{ alt_pieces[1] }}">
           <img
             src="{{variant.image | image_url: width: '400', format: 'pjpg'}}"
@@ -83,12 +85,9 @@
 
 {% if card_product != blank %}
   <div id="product-card-{{ card_product.id }}" class="product-card {{ card_classes }}" data-product-card>
-    <div class="product-card__gallery swiper-container" data-gallery-slider>
-      <div class="swiper-wrapper">
-        {{ card_images }}
-      </div>
-      <div class="swiper-pagination product-card__gallery-pagination"></div>
-    </div>
+    <a href="{{card_product.url}}?variant={{current_variant.id}}" class="product-card__gallery" data-gallery-slider data-product-url="{{card_product.url}}?variant={{current_variant.id}}">
+      {{ card_images }}
+    </a>
     <form target="/cart/add" class="product-card__content text-center">
       <a href="{{card_product.url}}?variant={{current_variant.id}}" class="product-card__url" data-product-url="{{card_product.url}}"></a>
       {% render 'product-form-options'
@@ -121,7 +120,7 @@
             data-drawer-field
             data-product-option="{{size_index}}"
             data-option-index="{{size_index}}"
-            product-title="{{product.title}}">
+            data-product-title="{{card_product.title}}">
       <input type="hidden" name="quantity" value="1">
       <input type="hidden" name="id">
     </form>

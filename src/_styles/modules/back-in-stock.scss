@@ -13,7 +13,6 @@
 
   @include media-breakpoint-up('lg') {
     height: 100%;
-    max-width: calc(100% / 24 * 10);
     transform: translateX(100%);
     left: unset;
     bottom: unset;
@@ -29,24 +28,7 @@
   margin-bottom: 0;
 }
 
-.bis__close {
-  background: none;
-  padding: 0;
-  border: none;
-  line-height: 1;
-
-  .icon-close {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-
 .bis__title {
-  font-size: 24px;
   font-family: $font-family-heading-large;
 }
 
@@ -112,7 +94,6 @@
   width: 35px;
   left: calc(100% - 55px);
   color: $black;
-  opacity: 0.25;
 
   &:hover {
     width: 45px;

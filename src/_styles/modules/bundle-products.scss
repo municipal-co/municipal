@@ -60,6 +60,12 @@
   line-height: 1;
 }
 
+.bundle-option__compare-price {
+  text-decoration: line-through;
+  margin-right: 5px;
+  color: $core-grey-2;
+}
+
 .bundle-option__price {
   display: flex;
   font-size: 18px;

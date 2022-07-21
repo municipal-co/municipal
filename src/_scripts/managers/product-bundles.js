@@ -28,6 +28,7 @@ const selectors = {
 
 const classes = {
   open: 'is-open',
+  active: 'is-active',
 }
 
 export default class ProductBundles {
@@ -103,9 +104,10 @@ export default class ProductBundles {
   }
 
   updateVariant(evt) {
-    this.$bundleProducts.each((index, productContainer) => {
+    this.$bundleProducts.not(':visible').each((index, productContainer) => {
       const $productContainer = $(productContainer);
       $productContainer.find(selectors.bundleProductImage).attr('src', evt.variant.featured_image.src);
+      $productContainer.find(selectors.bundleProductImage).attr('data-src', evt.variant.featured_image.src);
       $productContainer.find(selectors.bundleProductId).val(evt.variant.id);
       $productContainer.find(selectors.productFullPrice).attr('data-item-full-price', evt.variant.price).text(Currency.formatMoney(evt.variant.price, theme.moneyFormat).replace('.00', ''));
 
@@ -346,7 +348,8 @@ export default class ProductBundles {
     $this.attr('data-option-value', $this.val());
     $this.attr('value', $this.val());
 
-    $sizeButtonToggler.text(`Selected size: ${$this.val()}`);
+    $sizeButtonToggler.html(`Selected Size: <span class="product-option__drawer-btn-value">${$this.val()}</span>`);
+    $sizeButtonToggler.parent().addClass(classes.active);
   }
 
   updateATCstate() {
@@ -359,7 +362,7 @@ export default class ProductBundles {
       let soldOut = false;
       let unavailable = false;
       $visibleProducts.each((i, product) => {
-        totalPrice += $(selectors.productFullPrice).data('item-full-price');
+        totalPrice += Number.parseInt($(selectors.productFullPrice, product).attr('data-item-full-price'));
         if( $(selectors.productSoldOutMessage, $(product)).is(':visible') ) {
           if($(selectors.productSoldOutMessage, $(product)).text() === 'Unavailable') {
             unavailable = true;

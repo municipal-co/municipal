@@ -1,5 +1,6 @@
 .fit-guide__drawer {
-  height: 100vh;
+  top: 50px;
+  height: calc(100vh - 50px);
   overflow: auto;
   border: 0;
   width: 100%;
@@ -10,59 +11,19 @@
   }
 
   @include media-breakpoint-up('lg') {
-    width: calc(10/24*100%);
+    top: 0;
+    height: 100vh;
     transform: translateX(100%);
-  }
-}
-
-.fit-guide__header {
-  padding: 20px 80px 20px 40px !important;
-  margin-bottom: 0 !important;
-  border: 0 !important;
-  align-items: center;
-}
-
-.fit-guide__close {
-  color: $black;
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  line-height: 0;
-
-  .icon-close {
-    width: 20px !important;
-    height: 20px !important;
-  }
-  &:hover {
-    color: $black;
-    .icon-close {
-      fill: currentColor;
-    }
-  }
-  .icon-close {
-    width: large-vw(20px, 40px);
-    height: large-vw(20px, 40px);
-
-    @include media-breakpoint-down('md') {
-      width: 20px;
-      height: 20px;
-    }
   }
 }
 
 .fit-guide__header-title {
   font-family: $font-family-heading-medium;
   color: $black;
-  font-size: 24px;
-
-  @include media-breakpoint-down('md') {
-    font-size: 16px;
-  }
 }
 
 .fit-guide__body {
-  padding: 15px 40px 40px;
+  padding: 0 30px 30px;
 }
 
 .fit-guide__gallery-container {

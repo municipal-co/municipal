@@ -19,7 +19,7 @@ const selectors = {
 };
 
 const classes = {
-  swiperInitialized: 'swiper-container-initialized',
+  active: 'is-active',
 };
 
 const events = {
@@ -56,7 +56,6 @@ export default class ProductCard {
 
     this.setSizeDrawerData();
     this.updateProductOption();
-    this.gallerySlider = this.initGallery();
     this.initSwatchSlider();
   }
 
@@ -64,31 +63,9 @@ export default class ProductCard {
     this.drawerData = {
       optionIndex: this.$drawerField.data('option-index'),
       printOption: this.$drawerField.data('option-name'),
-      dataField: this.$drawerField,
-      productTitle: this.$drawerField
+      productTitle: this.$drawerField.data('product-title'),
+      addToCart: true,
     }
-  }
-
-  initGallery() {
-    if(this.$gallerySlider.hasClass(classes.swiperInitialized)) {
-      this.gallerySlider.destroy();
-    }
-
-    const gallerySettings = {
-      slidesPerView: 1,
-      effect: 'fade',
-      threshold: 10,
-      lazy: true,
-      pagination: {
-        style: 'bullets',
-        clickable: true,
-        el: '.swiper-pagination',
-      }
-    }
-
-    const gallerySlider = new Swiper(this.$gallerySlider.get(0), gallerySettings);
-
-    return gallerySlider;
   }
 
   initSwatchSlider() {
@@ -104,6 +81,7 @@ export default class ProductCard {
       threshold: 10,
       initialSlide: swatchIndex,
       nested: true,
+      watchOverflow: true,
       navigation: {
         enabled: true,
         prevEl: '[data-arrow-prev]',
@@ -140,13 +118,11 @@ export default class ProductCard {
       const $slide = $(slide);
 
       if($slide.data('image-selector') === selectedColor) {
-        $slide.addClass('swiper-slide');
+        $slide.addClass(classes.active);
       } else {
-        $slide.removeClass('swiper-slide');
+        $slide.removeClass(classes.active);
       }
     })
-
-    this.initGallery();
   }
 
   updateProductOption() {
