@@ -2,6 +2,10 @@
   position: relative;
   padding: 35px 0px;
 
+  &#vp {
+    padding-top: 0;
+  }
+
   &:before,
   &:after {
     content: "";

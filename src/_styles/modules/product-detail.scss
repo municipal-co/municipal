@@ -1,12 +1,15 @@
 // --------------------------------------------------------
 // Product Detail
 // --------------------------------------------------------
-
 .product-detail {
   padding: 30px 30px 0;
   background-color: $bg-white;
   @include media-breakpoint-up('lg') {
     max-width: 575px;
+  }
+
+  .shopify-product-form {
+    margin-bottom: 30px;
   }
 }
 
