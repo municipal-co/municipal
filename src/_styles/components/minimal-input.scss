@@ -74,7 +74,7 @@
   text-align: right;
   cursor: pointer;
   width: 20px;
-  left: 90%;
+  left: calc(100% - 50px);
   top: 50%;
   padding: 0;
   transform: translateY(-50%);
@@ -89,20 +89,9 @@
     width: 20px;
   }
 
-  @include media-breakpoint-down('sm') {
-    left: 90%;
-  }
-
-  @include media-breakpoint-down('xs') {
-    left: 86%;
-  }
-
   &:hover,
   &.hover {
-    width: large-vw(30px, 70px);
-    @include media-breakpoint-down('md') {
-      width: 30px;
-    }
+    width: 30px;
   }
 
   &:focus,

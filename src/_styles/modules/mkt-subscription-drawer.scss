@@ -18,9 +18,11 @@
   font-size: 25px;
   margin-bottom: 20px;
   font-family: $font-family-base;
+  font-weight: 600;
 
-  @include media-breakpoint-down(md) {
-    font-size: 25px;
+  @include media-breakpoint-down('md') {
+    font-size: 24px;
+    line-height: 38;
   }
 
   .highlighted {
@@ -38,12 +40,18 @@
   padding: 30px;
   text-align: center;
   font-family: $font-family-base;
-  font-weight: bold;
+  font-weight: normal;
+  line-height: 1.5;
   font-size: 20px;
   display: none;
 
   .submitted ~ & {
     display: block;
+  }
+
+  @include media-breakpoint-down('md') {
+    font-size: 16px;
+    line-height: 26px;
   }
 }
 
@@ -80,10 +88,10 @@
   }
 
   p {
-    font-size: 14px;
+    font-size: 10px;
     font-family: $font-family-base;
     line-height: 1.5;
-    text-align: center;
+    text-align: left;
     margin-bottom: 0;
   }
 }

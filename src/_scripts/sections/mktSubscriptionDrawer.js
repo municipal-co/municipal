@@ -52,6 +52,7 @@ export default class MktSubscriptionDrawer extends BaseSection {
     this.updateImage(drawerData);
     this.updateProduct(drawerData);
     this.drawer.show();
+    this.$form.removeClass(classes.submitted);
   }
 
   updateImage(drawerData) {
