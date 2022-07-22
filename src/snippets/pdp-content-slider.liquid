@@ -27,7 +27,7 @@
                 </div>
               {% endif %}
               {% if slide.title != blank %}
-                <span class="font-weight-bold content-slider__title">{{ slide.title }}</span>
+                <span class="content-slider__title">{{ slide.title }}</span>
               {% endif %}
               {% if slide.body_content != blank %}
                   {{ slide.body_content | replace: '<strong>', '<strong class="content-slider__highlighted-text">' | replace: '<p>', '<p class="content-slider__body-content">' | replace: '<a', '<a class="btn-link"' }}
