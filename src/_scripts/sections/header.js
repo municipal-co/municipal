@@ -94,10 +94,9 @@ export default class HeaderSection extends BaseSection {
     e.preventDefault();
     this.$searchDrawer.toggleClass('is-visible');
     this.$toggleSearchDrawer.toggleClass('search-is-open');
-    this.$searchInput.trigger('focus');
 
     if(this.$searchDrawer.hasClass('is-visible')) {
-      $window.trigger('toggleSearchDrawer');
+      this.$searchInput.trigger('focus');
     }
   }
 
