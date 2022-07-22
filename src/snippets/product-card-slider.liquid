@@ -1,0 +1,78 @@
+{% if type == 'metafields' %}
+  {% assign id = prefix | append: section.id %}
+  {% assign bg_color = metafields.pcs_background_color %}
+  {% assign text_color = metafields.pcs_text_color %}
+  {% assign title_tag = 'h2' %}
+  {% assign title = metafields.pcs_title %}
+{% else %}
+  {% assign s = section.settings %}
+  {% assign id = 'link-card-slider-' | append: section.id %}
+  {% assign bg_color = s.bg_color %}
+  {% assign text_color = s.text_color %}
+  {% assign title_tag = s.title_tag %}
+  {% assign title = s.title %}
+  {% assign heading_copy = s.heading_copy %}
+  {% assign heading_cta_title = s.heading_cta_title %}
+  {% assign heading_cta_url = s.heading_cta_url %}
+{% endif %}
+
+<div id="{{id}}" class="card-slider {% if suffix != blank %} card-slider--{{suffix}} {% endif %}" data-section-type="product-card-slider" data-section-id="{{section.id}}">
+  <style>
+    #{{id}} {
+      background-color: {{ bg_color }};
+      color: {{ text_color }};
+    }
+
+    #{{id}} .product-card__add-to-cart {
+      color: {{ text_color }};
+      border-color: {{ text_color }};
+    }
+
+  </style>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card-slider__heading">
+        <div class="card-slider__info-container">
+          {% if title != blank %}
+            <{{title_tag}} class="card-slider__title h2">{{ title }}</{{title_tag}}>
+          {% endif %}
+
+          {% if heading_copy %}
+          <p class="card-slider__copy p3">
+            {{ heading_copy }}
+          </p>
+          {% endif %}
+        </div>
+        {% if heading_cta_title != blank and heading_cta_url != blank %}
+          <div class="card-slider__cta-container">
+            <a class="btn-link card-slider__button" href="{{heading_cta_url}}">{{heading_cta_title}}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row card-slider__slider" data-card-slider {% if suffix != blank %}data-slider-suffix="{{suffix}}"{% endif %}>
+      <div class="swiper-wrapper">
+        {% if type == 'metafields' %}
+          {% for card in metafields.pcs_products %}
+            <div class="swiper-slide" data-card-slide>
+              {% render 'product-card'
+                card_product: all_products[card.product],
+                color: card.selected_color
+              %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for block in section.blocks %}
+            {% assign bs = block.settings %}
+            <div class="swiper-slide" data-card-slide {{block.shopify_attributes}}>
+              {% render 'product-card'
+                card_product: all_products[bs.card_product],
+                color: bs.selected_color
+              %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ export default class ProductCardSlider extends BaseSection {
 
     this.$cardSlider = $(selectors.cardSlider, this.$container);
     this.$cards = $(selectors.cards, this.$container);
+    this.suffix = this.$cardSlider.data('slider-suffix') || '';
 
     this.initCardSlider();
     this.initCards();
@@ -45,6 +46,11 @@ export default class ProductCardSlider extends BaseSection {
           slidesOffsetAfter: 50,
         }
       }
+    }
+
+    if(this.suffix === 'pdp') {
+      sliderSettings.slidesPerView = 1.8;
+      sliderSettings.breakpoints = {};
     }
 
     this.cardSlider = new Swiper(this.$cardSlider.get(0), sliderSettings);

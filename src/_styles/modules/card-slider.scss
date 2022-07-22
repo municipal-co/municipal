@@ -4,6 +4,12 @@
   @include media-breakpoint-down('md') {
     padding: 60px 30px;
   }
+
+  &.card-slider--pdp {
+    width: calc(100% + 60px);
+    padding: 40px 30px;
+    margin-left: -30px;
+  }
 }
 
 .card-slider__heading {
@@ -27,6 +33,12 @@
 .card-slider__title {
   margin-bottom: 13px;
   line-height: 1;
+
+  .card-slider--pdp & {
+    font-size: 28px;
+    line-height: 1;
+    max-width: 368px;
+  }
 }
 
 .card-slider__copy {
@@ -71,6 +83,11 @@
   overflow: hidden;
   position: relative;
   @include media-breakpoint-down('md') {
+    width: calc(100% + 60px);
+    margin-left: -30px;
+  }
+
+  .card-slider--pdp & {
     width: calc(100% + 60px);
     margin-left: -30px;
   }
