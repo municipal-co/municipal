@@ -28,6 +28,10 @@ export default class ProductCardSlider extends BaseSection {
       watchOverflow: true,
       slidesOffsetBefore: 30,
       slidesOffsetAfter: 30,
+      navigation: {
+        nextEl: '[data-arrow-next]',
+        prevEl: '[data-arrow-prev]'
+      },
       breakpoints: {
         530: {
           slidesPerView: 2.3,
@@ -49,7 +53,7 @@ export default class ProductCardSlider extends BaseSection {
     }
 
     if(this.suffix === 'pdp') {
-      sliderSettings.slidesPerView = 1.8;
+      sliderSettings.slidesPerView = 1.15;
       sliderSettings.breakpoints = {};
     }
 

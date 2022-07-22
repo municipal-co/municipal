@@ -1,7 +1,7 @@
 {% if type == 'metafields' %}
   {% assign id = prefix | append: section.id %}
-  {% assign bg_color = metafields.pcs_background_color %}
-  {% assign text_color = metafields.pcs_text_color %}
+  {% assign bg_color = "#393d49" %}
+  {% assign text_color = "#ffffff" %}
   {% assign title_tag = 'h2' %}
   {% assign title = metafields.pcs_title %}
 {% else %}
@@ -73,6 +73,8 @@
           {% endfor %}
         {% endif %}
       </div>
+      <div class="card-slider__arrow card-slider__arrow--prev" data-arrow-prev></div>
+      <div class="card-slider__arrow card-slider__arrow--next" data-arrow-next></div>
     </div>
   </div>
 </div>
