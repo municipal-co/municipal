@@ -1,5 +1,3 @@
-{% assign footer_menu_html_desktop = '' %}
-
 {% comment %} Newsletter messaging {% endcomment %}
 {% assign message_already_subscribed = section.settings.subscribe_already_subscribed_text %}
 {% if message_already_subscribed == blank %}
@@ -13,173 +11,175 @@
 
 {% assign message_fail = 'general.newsletter.subscribe_fail' | t %}
 
+{% comment %} SOCIAL Capture {% endcomment %}
+{%- capture social_list_items -%}
+{%- assign social_accounts = 'Instagram, Twitter, Facebook, Pinterest, Snapchat, YouTube' | split: ', ' -%}
+{%- for social in social_accounts -%}
+  {%- assign social_handle = social | handleize -%}
+  {%- capture social_enabled_handle %}social_{{ social_handle }}_enabled{%- endcapture -%}
+  {%- capture social_link %}social_{{ social_handle }}_link{%- endcapture -%}
+  {%- capture social_icon %}icon-{{ social_handle }}{%- endcapture -%}
+  {%- if settings[social_link] != blank and section.settings[social_enabled_handle] %}
+      <li class="footer-menu__list-item">
+        <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}" target="_blank"> {{ social }}</a>
+      </li>
+  {%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+
+{% capture social_menu %}
+{% if social_list_items != blank %}
+  <div class="footer-menu">
+    {%- if section.settings.social_menu_title != blank %}
+    <h2 class="footer-menu__title h6">{{ section.settings.social_menu_title }}</h2>
+    {%- endif %}
+    <ul class="footer-menu__list">
+      {{ social_list_items }}
+    </ul>
+  </div>
+{% endif %}
+{% endcapture %}
+
 {% comment %} MENU Capture {% endcomment %}
-{% for i in (1..3) %}
+{% assign footer_menus = "" %}
+
+{% for i in (1..4) %}
   {% assign menu_setting_handle = 'footer_linklist_' | append: i %}
   {% assign menu_title_setting_handle = 'footer_linklist_title_' | append: i %}
   {% assign linklist_handle = section.settings[menu_setting_handle] %}
-  {% if linklist_handle and linklists[linklist_handle].links.size > 0 %}
+  {% capture footer_menus_html %}
+    {% if forloop.first %}
+    <div class="footer-aside">
+    {% endif %}
 
-    {% capture desktop_html %}
+    {% if forloop.index == 3 %}
+    </div>
+    <div class="footer-aside footer-aside--last">
+    {% endif %}
+
+    {% unless forloop.last %}
+      {% if linklist_handle and linklists[linklist_handle].links.size > 0 %}
       <div class="footer-menu">
         <h2 class="footer-menu__title h6">{{ section.settings[menu_title_setting_handle] }}</h2>
         {% if linklist_handle and linklists[linklist_handle].links.size > 0 %}
-          <ul class="footer-menu__list">
-            {% for link in linklists[linklist_handle].links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {% endfor %}
-          </ul>
+        <ul class="footer-menu__list">
+          {% for link in linklists[linklist_handle].links %}
+          <li class="footer-menu__list-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
         {% endif %}
       </div>
-    {% endcapture %}
+      {% endif %}
+    {% else %}
+    {{ social_menu }}
+    {% endunless %}
 
-    {% assign footer_menu_html_desktop = footer_menu_html_desktop | append: desktop_html %}
-  {% endif %}
+    {% if forloop.last %}
+    </div>
+    {% endif %}
+  {% endcapture %}
+
+    {% assign footer_menus = footer_menus | append: footer_menus_html %}
 {% endfor %}
 
+{% comment %} Marquee {% endcomment %}
+{% assign marquee = section.settings.marquee %}
+{% assign highlight_color = section.settings.highlight_color %}
 
-{% comment %} SOCIAL Capture {% endcomment %}
-{% capture social_list_items %}
-  {%- assign social_accounts = 'Instagram, Twitter, Facebook, Pinterest, Snapchat, YouTube' | split: ', ' -%}
-  {% for social in social_accounts %}
-    {% assign social_handle = social | handleize %}
-    {% capture social_enabled_handle %}social_{{ social_handle }}_enabled{% endcapture %}
-    {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
-    {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
-    {% if settings[social_link] != blank and section.settings[social_enabled_handle] %}
-      <li>
-        <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}" target="_blank"> {{ social }}
-        </a>
-      </li>
-    {% endif %}
+{% capture marquee_capture %}
+<div class="footer-banner">
+  {% for i in (1..6) %}
+  <div class="footer-banner__text">{{ marquee | replace: '<strong>', '<span class="highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}&nbsp;</div>
   {% endfor %}
+</div>
 {% endcapture %}
 
-
-{% capture social_menu %}
-  {% if social_list_items != blank %}
-    <div class="footer-menu col-lg-4">
-      {% if section.settings.social_menu_title != blank %}
-        <h2 class="footer-menu__title h6">{{ section.settings.social_menu_title }}</h2>
-      {% endif %}
-
-      <ul class="footer-menu__list footer-social-list">
-        {{ social_list_items }}
-      </ul>
-    </div>
-  {% endif %}
-{% endcapture %}
-
-
-{% capture payment_menu %}
-  <div class="footer-menu col-lg-5">
-    <h2 class="footer-menu__title h6">Payment</h2>
-
-    <div class="payment-methods-container">
-      {% for type in shop.enabled_payment_types %}
-        <div class="payment-icon">
-          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-{% endcapture %}
+<style>
+  .footer-banner__text .highlight-text {
+    color: {{ highlight_color }};
+  }
+</style>
 
 <footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer">
-  <div class="container-fluid">
-    <div class="row no-gutters justify-content-center row-adjusted">
+  <div class="container-fluid-max footer-grid">
+    <div class="footer-main">
+      {% if section.settings.marketing_morsel != blank %}
+        <div class="marketing-morsel p3">{{ section.settings.marketing_morsel }}</div>
+      {% endif %}
 
-      {% comment %} Footer Block - Contact {% endcomment %}
-      <div class="col-lg-22 col-20">
-        <div class="footer-block footer-block--newsletter">
+      {% if settings.klaviyo_list_id == blank %}
+        <div class="alert alert-danger small">A valid newsletter form action URL is required for this section.  Please go to <strong>General Settings -> Mailing List</strong> in the theme editor to add this information</div>
+      {% endif %}
 
-          {% if settings.klaviyo_list_id == blank %}
-            <div class="alert alert-danger small">A valid newsletter form action URL is required for this section.  Please go to <strong>General Settings -> Mailing List</strong> in the theme editor to add this information</div>
-          {% endif %}
+      <div class="footer-signup">
+        {% if section.settings.subscribe_text %}
+          <h2 class="footer-signup__title h4">{{ section.settings.subscribe_text }}</h2>
+        {% endif %}
 
-          {% if section.settings.subscribe_text %}
-            <h2 class="newsletter-text h4">{{ section.settings.subscribe_text }}</h2>
-          {% endif %}
+        <form action="{{ settings.newsletter_form_action }}"
+          method="post"
+          data-footer-signup
+          data-list-id="{{ settings.klaviyo_list_id }}">
 
-          <form action="{{ settings.newsletter_form_action }}"
-            method="post"
-            data-newsletter-form
-            data-list-id="{{ settings.klaviyo_list_id }}">
-
-            <div class="newsletter-form-contents" data-form-contents>
-              <div class="newsletter-form-inputs">
-                <div class="form-group">
-                  <div class="minimal-input-box">
-                    <input type="email" class="minimal-input-box__input" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ section.settings.placeholder_text }}" required="required"/>
-
-                    <button type="submit" class="minimal-input-box__submit">
-                      {% include 'icon-arrow' %}
-                      <span class="icon-fallback-text">Submit</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="newsletter-form-message"
-                 data-form-message
-                 data-message-success="{{ message_success | strip | escape }}"
-                 data-message-already-subscribed="{{ message_already_subscribed | strip | escape }}"
-                 data-message-fail="{{ message_fail | strip | escape }}"></div>
-            </div>
-          </form>
-
-          <div class="modal fade" id="footer-subscription-modal" tabindex="-1" role="dialog" aria-label="Subscription Message" data-footer-subscription-modal>
-            <div class="modal-dialog modal-md" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    {% include 'icon-close' %}
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="modal-inner-container">
-                    <span class="modal-title h5" data-form-result-message></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="footer-signup__message"
+              data-footer-signup-message
+              data-message-success="{{ message_success | strip | escape }}"
+              data-message-already-subscribed="{{ message_already_subscribed | strip | escape }}"
+              data-message-fail="{{ message_fail | strip | escape }}"></div>
+          <div class="newsletter-form-inputs" data-footer-signup-controls>
+            <input type="email" class="footer-signup__input" data-footer-signup-input value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ section.settings.placeholder_text }}" required="required"/>
+            <button type="submit" class="btn btn-white">Sign Me Up</button>
           </div>
-        </div>
-      </div>
-
-      {% comment %} Footer Block - Menus {% endcomment %}
-      <div class="col-lg-22 col-20">
-        <div class="footer-block">
-          {{ footer_menu_html_desktop }}
-
-          {% if social_list_items %}
-            {{ social_menu }}
-          {% endif %}
-
-          {{ payment_menu }}
-        </div>
+        </form>
       </div>
     </div>
 
-    {% assign year = 'now' | date: "%Y" %}
-    {% if section.settings.copyright_text != blank %}
-      <div class="copyright-container">
-        <small>{{ section.settings.copyright_text | replace: '$year$', year | replace: '$shop$', shop.name }}</small>
-      </div>
-    {% endif %}
+    {{ footer_menus }}
   </div>
-
-  {% if section.settings.small_image != blank %}
-    <div class="small-image-container">
-      <img src="{{section.settings.small_image | image_url }}" alt="">
-    </div>
+  {% if marquee_capture != blank %}
+    {{ marquee_capture }}
   {% endif %}
+  <div class="footer-colophon">
+    <div class="container-fluid-max">
+      {% assign year = 'now' | date: "%Y" %}
+      {% if section.settings.copyright_text != blank %}
+        <div class="copyright-container">{{ section.settings.copyright_text | replace: '$year$', year | replace: '$shop$', shop.name }}</div>
+      {% endif %}
+    </div>
+  </div>
 </footer>
-
 
 {% schema %}
   {
     "name": "Footer",
     "settings": [
+      {
+        "type": "header",
+        "content": "Mailing List"
+      },
+      {
+        "type": "text",
+        "id": "marketing_morsel",
+        "label": "Marketing Morsel",
+        "info": "Resides above the signup title (i.e. pulsing dot)"
+      },
+      {
+        "type": "textarea",
+        "id": "subscribe_text",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "placeholder_text",
+        "label": "Placeholder Text",
+        "default": "Enter your email"
+      },
+      {
+        "type": "textarea",
+        "id": "subscribe_success_text",
+        "label": "Success Message",
+        "info": "Displays when someone signs up successfully.  Leave blank for a generic message."
+      },
       {
         "type": "header",
         "content": "Menus"
@@ -255,33 +255,20 @@
       },
       {
         "type": "header",
-        "content": "Small Image"
+        "content": "Marquee"
       },
       {
-        "type": "image_picker",
-        "id": "small_image",
-        "label": "Small Image"
+        "type": "color",
+        "id": "highlight_color",
+        "label": "Highlight Color",
+        "default": "#FF00FF",
+        "info": "Color for the highlighted text on the title of the module"
       },
       {
-        "type": "header",
-        "content": "Mailing List"
-      },
-      {
-        "type": "textarea",
-        "id": "subscribe_text",
-        "label": "Text"
-      },
-      {
-        "type": "text",
-        "id": "placeholder_text",
-        "label": "Placeholder Text",
-        "default": "Enter your email"
-      },
-      {
-        "type": "textarea",
-        "id": "subscribe_success_text",
-        "label": "Success Message",
-        "info": "Displays when someone signs up successfully.  Leave blank for a generic message."
+        "type": "richtext",
+        "id": "marquee",
+        "label": "Marquee",
+        "info": "Use Bold to create a color highlight on the text"
       },
       {
         "type": "header",
