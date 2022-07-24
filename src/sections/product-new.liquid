@@ -20,19 +20,26 @@
           bg_prefix: 'vp'
         %}
 
-        {% include 'shop-the-look'
+        {% render 'shop-the-look'
           s: product.metafields.custom_fields,
           type: 'metafields'
         %}
 
         {% render 'value-proposition' %}
 
-        {% include 'pdp-drawer-buttons' %}
+        {% render 'pdp-drawer-buttons' %}
 
         {% render 'pdp-content-slider'
           metafields: product.metafields.custom_fields,
           prefix: 'questions_slider',
           bg_prefix: 'qs'
+        %}
+
+        {% render 'product-card-slider'
+          type: 'metafields',
+          metafields: product.metafields.custom_fields,
+          prefix: 'product-card-slider-',
+          suffix: 'pdp',
         %}
       </div>
 

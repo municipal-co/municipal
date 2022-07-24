@@ -38,10 +38,6 @@
   cursor: pointer;
   z-index: 2;
 
-  @include media-breakpoint-down('md') {
-    display: none;
-  }
-
   .icon-close {
     width: 30px;
     height: auto;
@@ -50,6 +46,10 @@
       width: 20px;
     }
   }
+}
+
+.findify-mobile-close-button {
+  display: none !important;
 }
 
 .minimal-input-box__input--search {

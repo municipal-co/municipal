@@ -167,6 +167,7 @@ export default class ShopTheLook extends BaseSection {
     })
 
     eventData.productTitle = productData.title;
+    eventData.printOption = printOption;
 
     $productForm.find(selectors.productOption).each((index, option) => {
       const $this = $(option);
