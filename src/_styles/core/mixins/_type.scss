@@ -7,6 +7,7 @@
   font-family: 'Sequel Sans Title', sans-serif;
   font-size: 32px;
   line-height: 1;
+  text-transform: uppercase;
   @include media-breakpoint-up('lg') {
     font-size: 50px;
   }
@@ -19,6 +20,7 @@
   font-family: 'Sequel Sans title', sans-serif;
   font-size: 28px;
   line-height: 1;
+  text-transform: uppercase;
   @include media-breakpoint-up('lg'){
     font-size: 44px;
   }
@@ -96,7 +98,7 @@
   font-size: 17px;
   line-height: 27px;
   @include media-breakpoint-up('lg') {
-    font-size: 27px;
+    font-size: 23px;
     line-height: 37px;
   }
   @include media-breakpoint-up('xl') {

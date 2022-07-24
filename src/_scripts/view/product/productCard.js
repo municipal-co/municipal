@@ -82,6 +82,7 @@ export default class ProductCard {
       initialSlide: swatchIndex,
       nested: true,
       watchOverflow: true,
+      centerInsufficientSlides: true,
       navigation: {
         enabled: true,
         prevEl: '[data-arrow-prev]',
