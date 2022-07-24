@@ -3,12 +3,12 @@
 // -------------------------
 
 .template-register .layout-content-wrapper {
-  padding: 30px 0;
+  padding: 60px 0;
 }
 .template-register {
   overflow-x: hidden;
 
-  .custom-control-label, h5, h6, #RecoverPassword {
+  .custom-control-label, h5, h6 {
     opacity: 1;
     transform: translateX(0);
   }

@@ -1,99 +1,85 @@
+{%- comment %}
+
+  Customer New Address Form
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'customer-new-address-form' %}
+
+{% endcomment -%}
+
 {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
 
 {% form 'customer_address', customer.new_address %}
-  <div class="row">
-  
-    <div class="col-md-11">
-      <div class="form-group form-group__account-address">
-        <label for="AddressFirstNameNew">
-          {{ 'customer.addresses.first_name' | t }}*
-        </label>
 
-        <input type="text"
-          name="address[first_name]"
-          id="AddressFirstNameNew"
-          class="form-control account-form__field"
-          value="{{ form.first_name }}"
-          required
-          autocapitalize="words">
-      </div>                      
-    </div>
-
-    <div class="col-md-11 offset-md-2">
-      <div class="form-group form-group__account-address">
-        <label for="AddressLastNameNew">
-          {{ 'customer.addresses.last_name' | t }}*
-        </label>
-
-        <input type="text"
-          name="address[last_name]"
-          id="AddressLastNameNew"
-          class="form-control account-form__field"
-          value="{{ form.last_name }}"
-          required
-          autocapitalize="words">
-      </div>                      
-    </div>
+  <div class="form-group">
+    <input type="text"
+      name="address[first_name]"
+      id="AddressFirstNameNew"
+      class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.first_name' | t }}"
+      value="{{ form.first_name }}"
+      required
+      autocapitalize="words">
   </div>
 
-  <div class="form-group form-group__account-address">
-    <label for="AddressCompanyNew">
-      {{ 'customer.addresses.company' | t }}
-    </label>
+  <div class="form-group">
+    <input type="text"
+      name="address[last_name]"
+      id="AddressLastNameNew"
+      class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.last_name' | t }}"
+      value="{{ form.last_name }}"
+      required
+      autocapitalize="words">
+  </div>
 
+  <div class="form-group">
     <input type="text"
       name="address[company]"
       id="AddressCompanyNew"
       class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.company' | t }}"
       value="{{ form.company }}"
       autocapitalize="words">
   </div>
 
-  <div class="form-group form-group__account-address">
-    <label for="AddressAddress1New">
-      {{ 'customer.addresses.address1' | t }}*
-    </label>
-
+  <div class="form-group">
     <input type="text"
       name="address[address1]"
       id="AddressAddress1New"
       class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.address1' | t }}"
       value="{{ form.address1 }}"
       required
       autocapitalize="words">
   </div>
 
-  <div class="form-group form-group__account-address">
-    <label for="AddressAddress2New">
-      {{ 'customer.addresses.address2' | t }}
-    </label>
+  <div class="form-group">
     <input type="text"
       name="address[address2]"
       id="AddressAddress2New"
       class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.address2' | t }}"
       value="{{ form.address2 }}"
       autocapitalize="words">
-  </div>      
+  </div>
 
-  <div class="form-group form-group__account-address">
-    <label for="AddressCityNew">
-      {{ 'customer.addresses.city' | t }}*
-    </label>
+  <div class="form-group">
     <input type="text"
       name="address[city]"
       id="AddressCityNew"
       class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.city' | t }}"
       value="{{ form.city }}"
       required
       autocapitalize="words">
   </div>
 
   <div class="row">
-    <div class="col-md-7">
-      <div class="form-group form-group__account-address">
-        <label for="AddressCountryNew">
-          {{ 'customer.addresses.country' | t }}*
-        </label>
+    <div class="col-md pr-md-2">
+      <div class="form-group">
         <select
           name="address[country]"
           id="AddressCountryNew"
@@ -106,32 +92,31 @@
       </div>
     </div>
 
-    <div class="col-md-7 offset-md-1">
-      <div class="form-group form-group__account-address">
-        <label for="AddressProvinceNew">
-          {{ 'customer.addresses.state' | t }}*
-        </label>
+    <div class="col-md px-md-1">
+      <div class="form-group">
+        {% assign form_country_handle = form.country | handle %}
+        {% assign state_label = 'customer.addresses.state' | t %}
+
         <span id="AddressProvinceContainerNew">
-          <input type="text"
+          <select
             name="address[province]"
             id="AddressProvinceNew"
             class="form-control account-form__field"
             required
-            data-default="{{ form.province }}"
-          >
+            data-default="{{ form.province }}">
+          </select>
+          {% include 'icon-caret-down' %}
         </span>
       </div>
     </div>
 
-    <div class="col-md-7 offset-md-1">
-      <div class="form-group form-group__account-address">
-        <label for="AddressZipNew">
-          {{ 'customer.addresses.zip' | t }}*
-        </label>
+    <div class="col-md pl-md-2">
+      <div class="form-group">
         <input type="text"
           name="address[zip]"
           id="AddressZipNew"
           class="form-control account-form__field"
+          placeholder="{{ 'customer.addresses.zip' | t }}"
           value="{{ form.zip }}"
           required
           autocapitalize="characters">
@@ -139,14 +124,12 @@
     </div>
   </div>
 
-  <div class="form-group form-group__account-address">
-    <label for="AddressPhoneNew">
-      {{ 'customer.addresses.phone' | t }}*
-    </label>
+  <div class="form-group">
     <input type="tel"
       name="address[phone]"
       id="AddressPhoneNew"
       class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.phone' | t }}"
       value="{{ form.phone }}"
       required
       pattern="[0-9\-]*">
@@ -162,19 +145,15 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <div class="row">
-      <div class="col-md-12">
-        <input type="submit" class="btn btn-block btn-primary" value="{{ 'customer.addresses.save' | t }}">
-      </div>
+  <div class="form-group form-group__button text-center">
+    <div class="mb-2">
+      <input type="submit" class="btn btn-primary" value="{{ 'customer.addresses.save' | t }}">
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <button type="button" class="btn btn-block btn-link" data-address-new-toggle>
-          {{ 'customer.addresses.cancel' | t }}
-        </button>
-      </div>
-    </div>
+  </div>
+  <div class="form-group text-center">
+    <button type="button" class="btn btn-link" data-address-new-toggle>
+      {{ 'customer.addresses.cancel' | t }}
+    </button>
   </div>
 
   <script>

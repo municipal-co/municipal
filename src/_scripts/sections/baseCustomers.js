@@ -1,30 +1,24 @@
 import $ from 'jquery';
 import BaseSection from './base';
+import Drawer from '../ui/drawer';
 
 const selectors = {
-  sidebar: '[data-account-sidebar]'
+  accountMenuToggleButton: '[data-account-menu-drawer-toggler]',
+  accountMenuDrawer: '[data-account-menu-drawer]'
 };
 
 export default class BaseCustomersSection extends BaseSection {
   constructor(container, name) {
     super(container, name);
 
-    this.$sideBarSelect = $(selectors.sidebar).find('select');
-
-    this.$sideBarSelect.on('change', this.onSidebarSelectChange.bind(this));
+    $(selectors.accountMenuToggleButton).on('click', this.toggleAccountMenuModal.bind(this));
+    if ($(selectors.accountMenuDrawer)) {
+      this.accountMenuDrawer = new Drawer($(selectors.accountMenuDrawer));
+    }
   }
 
-  onSidebarSelectChange(e) {
-    const value = $(e.currentTarget).val();
-    const link = document.createElement('a');
-
-    link.href = value;
-
-    // If it's linking to a hash on the same page, don't do anything
-    // if (link.host === window.location.host && link.pathname === window.location.pathname) {
-    //   return;
-    // }
-
-    window.location = value;
+  toggleAccountMenuModal() {
+    $('body').addClass('drawer-open');
+    this.accountMenuDrawer.show();
   }
 }

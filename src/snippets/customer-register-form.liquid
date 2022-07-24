@@ -57,7 +57,9 @@
       placeholder="{{ 'customer.register.password' | t }}"
       data-password-field
       >
-    <span class="form-password__condition">({{ 'customer.register.password_condition' | t }})</span>
+    <div class="text-center">
+      <span class="form-password__condition">({{ 'customer.register.password_condition' | t }})</span>
+    </div>
   </div>
 
   <div class="form-group">
@@ -68,20 +70,10 @@
       placeholder="{{ 'customer.register.password_confirm' | t }}"
       data-password-validate
     >
-    <span data-password-validation-error-message class="form-password__error-message"></span>
-  </div>
-
-  <div class="form-group form-group__button text-center">
-    <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn-primary">
-    <small class="form-group__small-text--container">
-      <span class="form-group__small-text">By creating an account you agree with our <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></span>
-    </small>
-  </div>
-
-  <div class="form-group form-group__checkboxes">
-    <div class="custom-control custom-checkbox">
+    <span data-password-validation-error-message class="form-password__error-message p4"></span>
+    <div class="mt-1 custom-control custom-checkbox">
       <input class="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing" checked>
-      <label class="custom-control-label h6 in" for="AcceptsMarketing">
+      <label class="custom-control-label p4" for="AcceptsMarketing">
         {% if marketing_checkbox_label != blank %}
           {{ marketing_checkbox_label }}
         {% else %}
@@ -89,11 +81,19 @@
         {% endif %}
       </label>
     </div>
-
-    {% if show_cancel_button %}
-      <div class="register-form__back-message">
-        Already have an account? <a data-hide-register-form href="/account/login">Sign In</a>
-      </div>
-    {% endif %}
   </div>
+
+  <div class="form-group form-group__button text-center">
+    <div class="mb-2">
+      <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn-primary">
+    </div>
+  </div>
+
+  <div class="form-group">
+    {% if show_cancel_button %}
+    <div class="mb-3 p5 text-center">Already have an account? <a data-hide-register-form href="/account/login">Sign In</a></div>
+    {% endif %}
+    <div class="p5 text-center">By creating an account you agree with our <br> <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></div>
+  </div>
+
 {% endform %}
