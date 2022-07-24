@@ -143,6 +143,12 @@
   }
 }
 
+@mixin p5 {
+  font-family: 'SequelSans Body', sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+}
+
 // RTE styling for long form content
 @mixin article-content {
   margin-bottom: $grid-gutter-width;
