@@ -142,13 +142,13 @@
       "title": "My Account",
       "details": "Account Details",
       "view_addresses": "View Addresses",
-      "addresses": "Shipping Addresses",
+      "addresses": "Shipping \n Addresses",
       "return": "Return to Account Details",
-      "account_details": "Account Details",
+      "account_details": "Account \n Details",
       "add_new_address": "Add New Address",
       "email": "Email",
       "password": "Password",
-      "order_history": "Order History"
+      "order_history": "Order \n History"
     },
     "activate_account": {
       "title": "Activate Account",
@@ -159,11 +159,11 @@
       "cancel": "Decline Invitation"
     },
     "addresses": {
-      "title": "Shipping Addresses",
+      "title": "Shipping \n Addresses",
       "default": "Default",
       "default_address": "Default",
-      "add_new": "Add New Address",
-      "edit_address": "Edit Address",
+      "add_new": "Add New \n Address",
+      "edit_address": "Edit \n Address",
       "first_name": "First Name",
       "last_name": "Last Name",
       "company": "Company",
@@ -187,19 +187,19 @@
     },
     "login": {
       "main_title": "Login or Create an Account",
-      "title": "Sign in:",
+      "title": "Sign in",
       "subtitle": "For quick checkout and account history.",
       "email": "Email address",
       "password": "Password",
-      "forgot_password": "Forgot password?",
+      "forgot_password": "Forgot your password?",
       "create_account": "Create account",
-      "sign_in": "Sign In",
+      "sign_in": "Sign Me Up",
       "cancel": "Return to Store",
       "guest_title": "Continue as a guest",
       "guest_continue": "Continue"
     },
     "orders": {
-      "title": "Order History",
+      "title": "Order \n History",
       "order_number": "Order #",
       "date": "Date",
       "paid_status": "Paid Status",
@@ -246,7 +246,7 @@
       "see_order_status": "See Order Status"
     },
     "recover_password": {
-      "title": "Reset your password",
+      "title": "Reset \n password",
       "email": "Email",
       "submit": "Submit",
       "cancel": "Cancel",
@@ -262,7 +262,7 @@
       "submit": "Reset Password"
     },
     "register": {
-      "title": "Create Account:",
+      "title": "Create \n Account",
       "subtitle": "Sign up for quick checkout order history, account status and more.",
       "first_name": "First Name",
       "last_name": "Last Name",
@@ -270,9 +270,9 @@
       "password": "Password",
       "password_condition": "must be at least 6 characters with 1 symbol",
       "password_confirm": "Confirm Password",
-      "news_checkbox": "Keep me up to date on news and exclusive offers",
+      "news_checkbox": "Email me with news and offers.",
       "terms_checkbox": "I accept the Privacy Policy and agree to the Terms & Conditions",
-      "submit": "Sign Up",
+      "submit": "Sign Me Up",
       "cancel": "Cancel"
     }
   },
