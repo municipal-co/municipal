@@ -6,6 +6,7 @@ const selectors = {
   videoPlayer: '[data-video-player]',
   videoCover: '[data-video-player-cover]',
   videoModal: '[data-video-modal]',
+  videoModalInline: '[data-video-modal-inline]',
   videoPlay: '[data-video-play]'
 };
 
@@ -16,12 +17,20 @@ export default class VideoSection extends BaseSection {
     this.$videoCover = $(selectors.videoCover, this.$container);
     this.videoTarget = this.$videoCover.data('target');
     this.$modal = $(this.videoTarget);
+    this.modalInline = $(selectors.videoModalInline).length ? true : false;
+
 
     if ($(selectors.videoPlayer).length) {
       this.player = new VideoPlayer($(selectors.videoPlayer, this.$modal));
     }
 
     this.$modal.on('show.bs.modal', this.playVideo.bind(this));
+
+    if ( this.modalInline ) {
+      this.$modal.on('shown.bs.modal', function() {
+        $('body').removeClass('modal-open');
+      });
+    }
     this.$modal.on('hide.bs.modal', this.stopVideo.bind(this));
 
     this.$videoCover.on('mouseenter', this.onVideoEnter.bind(this));
@@ -30,7 +39,10 @@ export default class VideoSection extends BaseSection {
 
   onVideoClick(e) {
     e.preventDefault();
-    this.$modal.modal('show');
+    this.$modal.modal({
+      show: true,
+      backdrop: this.modalInline ? false : true
+    });
   }
 
   playVideo(e) {
@@ -47,7 +59,8 @@ export default class VideoSection extends BaseSection {
     let x;
     let y;
 
-    if (screenWidth > 991) {
+    if (screenWidth > 991.98) {
+
       this.$videoCover.mousemove(function(event) {
         const offset = $(this).offset();
         const buttonWidth = $(selectors.videoPlay, this.$videoCover).width();
