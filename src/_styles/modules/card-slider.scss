@@ -30,6 +30,12 @@
       max-width: 100%;
     }
   }
+
+  .shop-the-look {
+    .swiper-slide {
+      max-width: unset;
+    }
+  }
 }
 
 .card-slider__heading {
