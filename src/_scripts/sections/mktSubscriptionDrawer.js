@@ -73,14 +73,16 @@ export default class MktSubscriptionDrawer extends BaseSection {
   onFormSubmit(e) {
     e.preventDefault();
 
+    const fieldName = `Notify - ${this.productName}`;
+
     const formData = {
       g: this.listId,
-      $fields: `$source, email, ${this.productName}`,
+      $fields: `$source, email, ${fieldName}`,
       email: this.$input.val(),
       $source: 'Marketing Form Drawer'
     }
 
-    formData[this.productName] = true;
+    formData[fieldName] = true;
 
     $.ajax({
       async: true,
