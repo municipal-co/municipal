@@ -92,8 +92,8 @@ body.ajax-cart-open {
 
   @include media-breakpoint-down('xs') {
     padding-left: 16px;
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 14px;
+    line-height: 18px;
   }
 
   &:before {
@@ -111,7 +111,7 @@ body.ajax-cart-open {
     @include media-breakpoint-down('xs') {
       width: 8px;
       height: 8px;
-      top: 3px;
+      top: 5px;
     }
   }
 
@@ -193,6 +193,10 @@ body.ajax-cart-open {
     pointer-events: auto;
     cursor: $cursor-disabled;
   }
+}
+
+.ajax-cart-inner {
+  margin-top: 10px;
 }
 
 .ajax-cart__close {
@@ -281,9 +285,9 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__list-title {
-  padding: 0 40px;
-  font-size: 15px;
-  line-height: 17px;
+  padding: 0 20px;
+  font-size: 14px;
+  line-height: 14px;
 
   @include media-breakpoint-down('xs') {
     padding: 0 20px;
@@ -427,8 +431,8 @@ body.ajax-cart-open {
   overflow: hidden;
 
   @include media-breakpoint-down('xs') {
-    font-size: 11px;
-    line-height: 13px;
+    font-size: 14px;
+    line-height: 18px;
   }
 
   .ajax-cart__item--sold-out &{
@@ -448,7 +452,7 @@ body.ajax-cart-open {
   border-bottom: 2px solid currentColor;
 
   @include media-breakpoint-down('xs') {
-    font-size: 9px;
+    font-size: 12px;
     margin-top: 10px;
     margin-left: 0;
   }
@@ -477,7 +481,8 @@ body.ajax-cart-open {
 .ajax-cart__item-price {
   font-size: 13px;
   @include media-breakpoint-down('xs') {
-    font-size: 10px;
+    margin: 10px 0 5px;
+    font-size: 12px;
   }
 }
 
@@ -508,8 +513,8 @@ body.ajax-cart-open {
   }
 
   @include media-breakpoint-down('xs') {
-    font-size: 8px;
-    line-height: 11px;
+    font-size: 10px;
+    line-height: 14px;
   }
 }
 
@@ -712,12 +717,12 @@ body.ajax-cart-open {
     }
 
     @include media-breakpoint-down('xs') {
-      font-size: 14px;
-      width: 30px;
-      line-height: 28px;
+      font-size: 18px;
+      width: 31px;
+      line-height: 32px;
       margin-top: -1px;
       padding: 0;
-      height: 28px;
+      height: 27px;
     }
   }
 
@@ -741,9 +746,9 @@ body.ajax-cart-open {
     font-size: 13px;
 
     @include media-breakpoint-down('xs') {
-      font-size: 10px;
+      font-size: 12px;
       width: 30px;
-      line-height: 28px;
+      line-height: 31px;
     }
   }
 }
@@ -794,7 +799,7 @@ body.ajax-cart-open {
     font-size: 12px;
     line-height: 18px;
     @include media-breakpoint-down('xs') {
-      font-size: 10px;
+      font-size: 13px;
       line-height: 16px;
     }
   }
