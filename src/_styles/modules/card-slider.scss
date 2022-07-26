@@ -16,6 +16,9 @@
     @include media-breakpoint-down('sm') {
       max-width: calc(100%/2.3);
     }
+    @include media-breakpoint-down('xs') {
+      max-width: unset;
+    }
   }
 
   &.card-slider--pdp {
