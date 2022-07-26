@@ -37,17 +37,18 @@
         placeholder="{{ 'customer.login.password' | t }}"
         class="form-control account-form__field{% if form.errors contains 'password' %} is-invalid{% endif %}"">
     </div>
-
   {% endif %}
 
-  <div class="form-group form-group__button">
+  <div class="mb-0 form-group form-group__button text-center">
     <input type="submit" class="btn btn-primary" value="{{ 'customer.login.sign_in' | t }}">
   </div>
 
   {% if form.password_needed %}
     <div class="form-group text-center">
-      <a href="#recover" {% if is_drawer %}data-recover-password{% endif %} id="RecoverPassword" class="p2 btn-link btn">{{ 'customer.login.forgot_password' | t }}</a>
-      <a href="/account/register" data-register-form class="btn btn--small btn-link">{{ 'customer.login.create_account' | t }}</a>
+      <div class="mb-2">
+        <a href="#recover" {% if is_drawer %}data-recover-password{% endif %} id="RecoverPassword" class="recover-password-link p4"><small>{{ 'customer.login.forgot_password' | t }}</small></a>
+      </div>
+      <a href="/account/register" data-register-form class="btn btn-link">{{ 'customer.login.create_account' | t }}</a>
     </div>
   {% endif %}
 

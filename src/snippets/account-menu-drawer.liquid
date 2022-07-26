@@ -1,0 +1,27 @@
+<div class="drawer account-menu__drawer col-lg-10" data-account-menu-drawer>
+  <div class="drawer__inner account-menu__inner">
+    <div class="drawer__header account-menu__header">
+      <div class="drawer__header-title account-menu__header-title">
+        Account
+      </div>
+      <a href="javascript:void(0);"class="drawer__close account-menu__close" data-drawer-close>
+        {% render 'icon-close' %}
+        <span class="sr-only">Close Account Menu</span>
+      </a>
+    </div>
+    <div class="drawer__body-contents account-menu__body">
+      <ul class="account-sidebar__menu">
+          <li class="p2{% if template.name == 'account' and template.suffix == blank %} is-active{% endif %}">
+            <a href="/account">{{ 'customer.account.account_details' | t }}</a>
+          </li>
+          <li class="p2{% if template.name == 'account' and template.suffix == 'orders' %} is-active{% endif %}">
+            <a href="/account?view=orders">{{ 'customer.orders.title' | t }}</a>
+          </li>
+          <li class="p2{% if template.name == 'addresses' %} is-active{% endif %}">
+            <a href="/account/addresses">{{ 'customer.account.addresses' | t }}</a>
+          </li>
+          <li class="p2">{{ 'layout.customer.log_out' | t | customer_logout_link }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

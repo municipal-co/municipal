@@ -5,9 +5,9 @@
 // Not scoped to a specific account page
 
 .account-block {
-  margin-bottom: large-vw(60px, 120px);
+  margin-bottom: 30px;
 
-  @include media-breakpoint-down('md') {
+  @include media-breakpoint-up('md') {
     margin-bottom: 60px;
   }
 
@@ -20,10 +20,20 @@
   }
 }
 
+.account-block__title {
+  text-transform: uppercase;
+}
+
 .account-block__content {
+  margin: 30px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  @include p3;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 table.order-detail-totals {
@@ -34,11 +44,11 @@ table.order-detail-totals {
 }
 
 .account-sidebar {
+  padding: 60px 30px 30px;
   background-color: $gray-lighter;
-  padding: large-vw(60px, 140px) large-vw(40px, 80px);
 
-  @include media-breakpoint-down('md') {
-    padding: 60px 40px;
+  @include media-breakpoint-up('md') {
+    padding: 60px;
   }
 }
 
@@ -46,10 +56,15 @@ table.order-detail-totals {
   height: 100%;
 
   select {
-    border: 0;
-    border-bottom: 4px solid $black;
-    border-radius: 0;
     background-color: $white;
+    border: 1px solid $color-dots-border;
+
+    @include media-breakpoint-up('lg') {
+      min-height: 70px;
+      padding: 23px 53px;
+    }
+
+    border-radius: 0;
     width: 100%;
     @extend .p2;
     line-height: 1;
@@ -61,12 +76,13 @@ table.order-detail-totals {
 }
 
 .account-sidebar__title {
-  text-transform: capitalize;
-  margin-bottom: large-vw(20px, 28px);
+  text-transform: uppercase;
+  margin-bottom: 45px;
   font-weight: $font-weight-normal;
 
   @include media-breakpoint-down('md') {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    text-align: center;
   }
 }
 
@@ -74,64 +90,61 @@ table.order-detail-totals {
   @include list-unstyled;
 
   li {
+    margin: 21px 0;
+    font-weight: $font-weight-bold;
     text-transform: none;
-    font-weight: $font-weight-normal;
-    line-height: large-vw(40px, 70px);
-    margin-bottom: 0;
+    line-height: 1;
 
     a {
       vertical-align: middle;
     }
 
-    @include media-breakpoint-up('lg') {
-      &::before {
+      &::after {
         content: '';
         padding-right: 0px;
         width: auto;
-        height: large-vw(30px, 50px);
+        height: 45px;
         transition: all 150ms ease-in-out;
         background-image: url('hover-arrow--black.svg');
         background-size: contain;
         background-position: left;
         background-repeat: no-repeat;
         vertical-align: middle;
-
-        @include media-breakpoint-down('md') {
-          height: 30px;
-        }
       }
 
       &.is-active,
       &:hover {
-        &::before {
-          padding-right: large-vw(30px, 50px);
-          margin-right: large-vw(0, 45px);
+        &::after {
+          padding-left: 18px;
+          margin-left: 15px;
+        }
+      }
 
-          @include media-breakpoint-down('md') {
-            padding-right: 30px;
+      @include media-breakpoint-up('lg') {
+        &.is-active,
+        &:hover {
+          &::after {
+            padding-left: 30px;
+            margin-left: 25px;
           }
         }
       }
-    }
   }
 }
 
 .account-content {
-  padding: large-vw(60px, 140px) large-vw(40px, 80px);
+  padding: 60px 30px;
 
-  @include media-breakpoint-down('md') {
-    padding: 60px 40px;
-  }
-
-  .btn.btn-primary {
-    font-size: large-vw(18px, 28px);
+  @include media-breakpoint-up('md') {
+    padding: 60px;
   }
 }
 
 .account__title {
-  border-bottom: 8px solid $black;
-  font-weight: $font-weight-normal;
-  padding-bottom: 15px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  @include h5;
+
   &.account__title--addresses {
     margin-bottom: large-vw(50px, 100px);
 
@@ -146,41 +159,49 @@ table.order-detail-totals {
 }
 
 .account__customer-address {
-  display: block;
-  font-weight: $font-weight-semi-bold;
-  font-size: large-vw(20px,35px);
-  line-height: large-vw(32px,65px);
-  margin-bottom: 80px;
-
-  @include media-breakpoint-down('md') {
-    font-size: 20px;
-    line-height: 1.5;
-    margin-bottom: 40px;
-  }
+  margin: 30px 0;
+  @include p3;
 
   &:first-child {
-    margin-top: 15px;
+    margin-top: 0;
   }
 }
 
 .address-btn {
-  font-weight: bold !important;
-  width: auto;
+  margin-left: 20px;
 
-  &:first-of-type {
-    margin-right: 20px;
-    @include media-breakpoint-down(md) {
-      margin-right: 15px;
-    }
+  @include media-breakpoint-down(md) {
+    margin-right: 15px;
+  }
+
+  &:first-child {
+    margin-left: 0;
   }
 }
 
 .account-address__title {
-  font-size: large-vw(10px, 15px);
-  color: $cyan;
   margin-bottom: 0;
+  font-size: 14px;
+  color: $blue;
 
   @include media-breakpoint-down('md') {
     font-size: 10px;
+  }
+}
+
+.orders-table {
+  th:first-child,
+  td:first-child {
+    padding-left: 0;
+  }
+  th:last-child,
+  td:last-child {
+    padding-right: 0;
+  }
+}
+
+.orders-table--mobile {
+  th {
+    padding-left: 0;
   }
 }
