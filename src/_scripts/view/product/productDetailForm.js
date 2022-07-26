@@ -516,7 +516,7 @@ export default class ProductDetailForm {
     })
 
     soldOutColors.forEach((colorObject) => {
-      if(colorObject.enableBis === 1) {
+      if(colorObject.enableBis) {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.bis);
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message">Back<br>Soon</span>');
       } else {
