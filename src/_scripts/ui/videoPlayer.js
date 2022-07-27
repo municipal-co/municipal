@@ -69,7 +69,7 @@ export default class VideoPlayer {
     this.id         = this.$el.data('video-id');
     this.background = this.$el.data('background');
     this.embedColor = this.$el.data('embed-color') || '000';
-    this.muted      = this.$el.data('muted');
+    this.muted      = this.$el.data('muted') || 0;
 
     this.playInterval = false;
     this.pauseInterval = false;

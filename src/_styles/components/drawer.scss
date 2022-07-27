@@ -96,6 +96,10 @@
     padding: 0;
     font-family: $headings-font-family;
     font-size: 20px;
+
+    span {
+      text-transform: capitalize;
+    }
   }
 
   .drawer__body {

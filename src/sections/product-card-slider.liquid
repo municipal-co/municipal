@@ -1,54 +1,7 @@
-{% assign s = section.settings %}
-
-<div id="link-card-slider-{{section.id}}" class="card-slider" data-section-type="product-card-slider" data-section-id="{{section.id}}">
-  <style>
-    #link-card-slider-{{section.id}} {
-      background-color: {{s.bg_color}};
-      color: {{s.text_color}};
-    }
-
-    #link-card-slider-{{section.id}} .product-card__add-to-cart {
-      color: {{ s.text_color }};
-      border-color: {{ s.text_color }};
-    }
-
-  </style>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="card-slider__heading">
-        <div class="card-slider__info-container">
-          {% if s.title != blank %}
-            <{{s.title_tag}} class="card-slider__title h2">{{ s.title }}</{{s.title_tag}}>
-          {% endif %}
-
-          {% if s.heading_copy %}
-          <p class="card-slider__copy p3">
-            {{ s.heading_copy }}
-          </p>
-          {% endif %}
-        </div>
-        {% if s.heading_cta_title != blank and s.heading_cta_url != blank %}
-          <div class="card-slider__cta-container">
-            <a class="btn-link card-slider__button" href="{{s.heading_cta_url}}">{{s.heading_cta_title}}</a>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-    <div class="row card-slider__slider" data-card-slider>
-      <div class="swiper-wrapper">
-        {% for block in section.blocks %}
-          {% assign bs = block.settings %}
-          <div class="swiper-slide" data-card-slide {{block.shopify_attributes}}>
-            {% render 'product-card'
-              card_product: all_products[bs.card_product],
-              color: bs.selected_color
-            %}
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-</div>
+{% render 'product-card-slider'
+  type: 'section',
+  section: section
+%}
 
 {% schema %}
 {

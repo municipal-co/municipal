@@ -7,17 +7,17 @@
 {% paginate customer.addresses by 20 %}
 
   <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-addresses">
-    <div class="container-fluid">
+    <div class="container-fluid-max">
 
       <div class="row">
 
         {{ sidebar_html }}
 
-        <div class="account-content{% if sidebar_html != blank %} col-md-15{% endif %}">
+        <div class="account-content{% if sidebar_html != blank %} col-md-12 col-lg-15{% endif %}">
 
           {% comment %} START - Hidden Address Forms! {% endcomment %}
           <div id="AddressNewForm" class="hide" data-address-new-form>
-            <h4 class="account__title account__title--addresses">{{ 'customer.addresses.add_new' | t | newline_to_br  }}</h4>
+            <h2 class="account__title">{{ 'customer.addresses.add_new' | t | newline_to_br  }}</h2>
 
             {% include 'customer-new-address-form' %}
           </div>
@@ -25,7 +25,7 @@
           {% if customer.addresses.size > 0 %}
             {% for address in customer.addresses %}
               <div id="EditAddress_{{ address.id }}" class="hide" data-address-edit-form>
-                <h4 class="account__title account__title--addresses">{{ 'customer.addresses.edit_address' | t | newline_to_br  }}</h4>
+                <h2 class="account__title">{{ 'customer.addresses.edit_address' | t | newline_to_br  }}</h2>
 
                 {% include 'customer-edit-address-form', address: address %}
               </div>
@@ -35,7 +35,7 @@
 
           <div data-address-main-content>
 
-            <h4 class="account__title">{{ 'customer.addresses.title' | t }}</h4>
+            <h2 class="account__title">{{ 'customer.addresses.title' | t | newline_to_br }}</h2>
 
             {% if customer.addresses.size > 0 %}
 

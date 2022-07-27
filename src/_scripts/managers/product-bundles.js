@@ -247,7 +247,7 @@ export default class ProductBundles {
     const currentVariants = this.productSingleObject.variants.filter((variant) => {
       let appearances = 0;
       currentOptions.forEach((option) => {
-        if(variant.name.indexOf(option) > -1) {
+        if(variant.option1 === option || variant.option2 === option || variant.option3 === option) {
           appearances++;
         }
       })

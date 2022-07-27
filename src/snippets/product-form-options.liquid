@@ -40,7 +40,7 @@
             {%- continue -%}
           {%- endif -%}
           {%- assign printed_variant = variant[option_index] -%}
-          {% unless variant.available == false and variant.metafields.custom_fields['enable_notify_me'] != 1 and variant.metafields.custom_fields['enable_sold_out'] != 1 %}
+          {% if variant[option_index] == current_variant[option_index] or variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or variant.metafields.custom_fields['enable_sold_out'] == 1 %}
             <label class="product-option__single-selector swiper-slide" data-swatch-slide>
               <input type="radio"
                     name="{{- option_prefix -}}{{option_index}}"
@@ -57,7 +57,7 @@
                 <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
               </div>
             </label>
-          {% endunless %}
+          {% endif %}
         {% endfor %}
       </div>
       <div class="product-option__arrows">

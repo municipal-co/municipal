@@ -1,11 +1,14 @@
+{% assign inline_modal = section.settings.inline_modal %}
+{% assign spacing = section.settings.spacing %}
+{% assign bgcolor = section.settings.bgcolor %}
 {% assign title_color = section.settings.title_color %}
-{% assign background_color = section.settings.background_color %}
 
 {% assign eyebrow_icon = section.settings.eyebrow_icon %}
 {% assign eyebrow = section.settings.eyebrow %}
 {% assign title = section.settings.title %}
 
 {% assign video_cover = section.settings.video_cover %}
+{% assign video_cover_mobile = section.settings.video_cover_mobile %}
 {% assign video_url = section.settings.video_url %}
 {% assign video_id = video_url.id %}
 
@@ -35,87 +38,95 @@
   </div>
 {% endcapture %}
 
+{% if bgcolor != "" %}
 <style>
-  {% if content_for_header contains 'designMode' or content_for_header contains 'preview_host' or content_for_header contains 'designModeScript' %}
-    [data-section-id="{{section.id}}"] {
-      background-color: {{background_color}};
-    }
-  {% endif %}
+  #video-section-{{ section.id }} {
+    background-color: {{ bgcolor }};
+  }
 </style>
+{% endif %}
 
-<div data-section-id="{{ section.id }}" class="video-section" data-section-type="video" data-animated-background="{{ background_color }}">
+<div id="video-section-{{ section.id }}" data-section-id="{{ section.id }}" class="video-section{% if spacing %} video-section--slim{% endif %}{% if inline_modal %} video-section--inline-modal{% endif %}{% if video_cover_mobile %} video-section--mobile-cover{% endif %}" data-section-type="video" data-animated-background="{{ bgcolor }}">
   <div class="container-fluid">
 
-    <div class="row justify-content-center row-adjusted">
-      {% if eyebrow_icon != blank %}
-        <div class="video-section__eyebrow-icon frame frame--4x3">
-          {% render 'image_tag'
-                    image: eyebrow_icon,
-                    object_fit: "cover"
-          %}
-        </div>
-      {% endif %}
+    {% if eyebrow_icon != blank %}
+      <div class="video-section__eyebrow-icon frame frame--4x3">
+        {% render 'image_tag'
+                  image: eyebrow_icon,
+                  object_fit: "cover"
+        %}
+      </div>
+    {% endif %}
 
-      <div class="col-lg-22 col-20">
 
-        {% if header_position == 'top' %}
-          {{ video_header }}
-        {% endif %}
+    {% if header_position == 'top' %}
+      {{ video_header }}
+    {% endif %}
 
-        {% if video_url != blank %}
-          <div class="video-section__video-cover frame frame--16x9" data-toggle="modal" data-video-player-cover data-target="#video-modal-{{ section.id }}">
+    {% if video_url != blank %}
+      <div class="video-section__video-cover" data-toggle="modal" data-video-player-cover data-target="#video-modal-{{ section.id }}">
+        {% if video_cover != blank %}
+          <div class="video-section__video-cover-desktop">
             {% render 'image_tag'
                       image: video_cover,
                       object_fit: 'cover'
             %}
-
-            <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#video-modal-{{ section.id }}" data-video-play>
-              {% include 'icon-play-full-color' %}
-            </button>
-
-            <div class="visual-play-button">
-              {% include 'icon-play-full-color' %}
-            </div>
           </div>
         {% endif %}
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="modal modal--video fade" id="video-modal-{{ section.id }}" data-video-modal>
-  <span class="video-eyebrow d-lg-none d-block">Video</span>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    {% include 'icon-close' %}
-  </button>
+        {% if video_cover_mobile != blank %}
+          <div class="video-section__video-cover-mobile">
+            {% render 'image_tag'
+                      image: video_cover_mobile,
+                      object_fit: 'cover'
+            %}
+          </div>
+          {% endif %}
 
-  {% if cta_title != blank and cta_url != blank%}
-    <a class="btn btn-link product-link d-lg-block d-none"href="{{ cta_url }}">
-      {{ cta_title }}
-      <span class="btn__ui">
-        {% include 'icon-arrow' %}
-      </span>
-    </a>
-  {% endif %}
+        <button type="button" class="modal-video-player__play-button" data-toggle="modal" data-target="#video-modal-{{ section.id }}" data-video-play>
+          {% include 'icon-play-full-color' %}
+        </button>
 
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div id="video-player-{{ video_id }}" class="index-video-player frame frame--16x9" data-video-player data-video-id="{{ video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
-          <div class="video-player__embed" data-video-player-embed></div>
+        <div class="visual-play-button">
+          {% include 'icon-play-full-color' %}
         </div>
+      </div>
+    {% endif %}
+  </div>
 
-        {% if cta_title != blank and cta_url != blank%}
-          <a class="btn btn-link product-link d-lg-none d-block"href="{{ cta_url }}">
-            {{ cta_title }}
-            <span class="btn__ui">
-              {% include 'icon-arrow' %}
-            </span>
-          </a>
-        {% endif %}
-        {% if header_position == 'bottom' %}
-          {{ video_header }}
-        {% endif %}
+  <div class="modal modal--video fade" id="video-modal-{{ section.id }}" data-video-modal{% if inline_modal %} data-video-modal-inline{% endif %}>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      {% include 'icon-close' %}
+    </button>
+
+    {% if cta_title != blank and cta_url != blank%}
+      <a class="btn btn-link product-link d-lg-block d-none"href="{{ cta_url }}">
+        {{ cta_title }}
+        <span class="btn__ui">
+          {% include 'icon-arrow' %}
+        </span>
+      </a>
+    {% endif %}
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div id="video-player-{{ video_id }}" class="index-video-player frame frame--16x9" data-video-player data-video-id="{{ video_id }}" data-video-type="youtube" data-background="false" data-embed-color="ffffff">
+            <div class="video-player__embed" data-video-player-embed></div>
+          </div>
+
+          {% if cta_title != blank and cta_url != blank%}
+            <a class="btn btn-link product-link d-lg-none d-block"href="{{ cta_url }}">
+              {{ cta_title }}
+              <span class="btn__ui">
+                {% include 'icon-arrow' %}
+              </span>
+            </a>
+          {% endif %}
+          {% if header_position == 'bottom' %}
+            {{ video_header }}
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
@@ -129,7 +140,29 @@
     "settings": [
       {
         "type": "header",
-        "content": "Section Content"
+        "content": "Layout"
+      },
+      {
+        "type": "checkbox",
+        "id": "inline_modal",
+        "label": "Contain video modal within section container",
+        "info": "Keeps modal and overlay inside this section. Unchecked allows modal to overlay entire page.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "spacing",
+        "label": "Remove spacing around video",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "bgcolor",
+        "label": "Background Color"
+      },
+      {
+        "type": "header",
+        "content": "Content"
       },
       {
         "type": "image_picker",
@@ -201,7 +234,14 @@
       {
         "type": "image_picker",
         "id": "video_cover",
-        "label": "Video Image"
+        "label": "Video Image - Desktop",
+        "info": "16:9 ratio"
+      },
+      {
+        "type": "image_picker",
+        "id": "video_cover_mobile",
+        "label": "Video Image - Mobile",
+        "info": "4:5 ratio"
       },
       {
          "id": "video_url",
@@ -241,29 +281,6 @@
           {"label": "Core-Grey-3", "value": "core-grey-3"}
         ],
         "default": "white"
-      },
-      {
-        "type": "select",
-        "id": "background_color",
-        "label": "Background Color",
-        "options": [
-          {"label": "Primary-White", "value": "#ffffff"},
-          {"label": "Primary-Black", "value": "#121212"},
-          {"label": "Utility-Army", "value": "#2D402A"},
-          {"label": "Utility-Blush", "value": "#DFBFC0"},
-          {"label": "Utility-Crimson", "value": "#3F2727"},
-          {"label": "Utility-Navy", "value": "#0A3055"},
-          {"label": "Utility-Tan", "value": "#B9B093"},
-          {"label": "Sport-Magenta", "value": "#FF00FF"},
-          {"label": "Sport-Orange", "value": "#FF4500"},
-          {"label": "Sport-Yellow", "value": "#FFEA06"},
-          {"label": "Sport-Green", "value": "#BEFF00"},
-          {"label": "Sport-Blue", "value": "#0036EB"},
-          {"label": "Core-Grey-1", "value": "#f1f1f1"},
-          {"label": "Core-Grey-2", "value": "#B1B7C2"},
-          {"label": "Core-Grey-3", "value": "#393D49"}
-        ],
-        "default": "#f1f1f1"
       }
     ],
     "presets": [{
@@ -273,8 +290,3 @@
     }]
   }
 {% endschema %}
-
-
-
-
-

@@ -7,7 +7,7 @@
 .form-control {
   display: block;
   width: 100%;
-  height: $input-height;
+  height: auto;
   padding: $input-padding-y $input-padding-x;
   font-family: $input-font-family;
   @include font-size($input-font-size);
@@ -53,18 +53,17 @@
   }
 
   &.account-form__field {
-    font-size: 0.8rem;
-    border-radius: 0;
+    padding: 18px;
+    font-size: 16px;
     border: none;
-    border-bottom: 4px solid $black;
-    padding: 15px 0;
-    font-weight: $font-weight-bold;
+    border-radius: 0;
+    background-color: $bg-white;
     color: $black;
     &:focus {
       box-shadow: none;
     }
     &::placeholder {
-      color: $account_gray;
+      color: $black;
     }
   }
 }
@@ -186,16 +185,10 @@ textarea.form-control {
 
 .form-group {
   margin-bottom: $form-group-margin-bottom;
+  position: relative;
 
   &.form-group__button {
-    margin-top: 40px;
-    input {
-      width: 100%;
-    }
-  }
-
-  &.form-group__checkboxes {
-    margin: 30px 0;
+    margin-top: 60px;
   }
 
   .form-button__inline {
@@ -221,15 +214,13 @@ textarea.form-control {
 
   .form-password__condition  {
     display: block;
-    font-size: $font-size-base * 0.5;
-    padding-top: 25px;
-    font-weight: $font-weight-semi-bold;
-    margin-bottom: -25px;
+    padding-top: 5px;
+    @include p5;
   }
 
   .form-password__error-message {
     color: $red;
-    font-size: $font-size-xs;
+    font-size: $font-size-base * 0.5;
     opacity: 0;
     transition: opacity 0.3s ease;
     &.show {
@@ -262,17 +253,62 @@ textarea.form-control {
     }
   }
 
-  .chosen-single {
-    border: none;
-    border-radius: 0;
-    border-bottom: 4px solid $black;
-    padding: 15px 0;
-    font-weight: $font-weight-bold;
-    div b {
-      display: none;
+  .chosen-container-single {
+    .chosen-single {
+      padding: 18px 46px 18px 18px;
+      border: none;
+      border-radius: 0;
+      background-color: $bg-white;
+      box-shadow: none;
+      font-size: 16px;
+
+      div,
+      div b {
+        display: none;
+      }
+
+      span {
+        margin-right: 40px;
+      }
     }
-    span {
-      margin-right: 40px;
+
+    &.chosen-with-drop {
+      .chosen-single {
+        background-color: $bg-white;
+      }
+    }
+
+    & + .icon {
+      width: 15px;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      z-index: 1;
+      transform: translateY(-50%);
+      pointer-events: none;
+
+      @include media-breakpoint-up('md') {
+        width: 20px;
+      }
+    }
+  }
+
+  .chosen-container .chosen-results li {
+    padding: 16px;
+    font-size: 16px;
+    line-height: 1.7;
+
+    &.active-result {
+      background-color: $white;
+
+      &:hover {
+        background-color: $bg-white;
+      }
+    }
+
+    &.result-selected {
+      background-color: $bg-white;
     }
   }
 }

@@ -1,66 +1,63 @@
 <div class="drawer" data-customers-drawer data-section-id="{{ section.id }}" data-section-type="customers-drawer">
   <div class="drawer__inner">
     <div class="drawer__header">
-      <a href="#" class="drawer__close" data-drawer-close>
-        {% include 'icon-close' %}
-        <span class="sr-only">Close</span>
-      </a>
-      <div class="drawer__header-title h5 in">{{ section.settings.header }}</div>
+      <div class="drawer__header-title mkt-subscription__title">
+        {{ section.settings.header }}
+      </div>
+      <button class="drawer__close mkt-subscription__close" data-drawer-close>
+        {% render 'icon-close' %}
+      </button>
     </div>
     <div class="drawer__body">
       <div class="drawer__body-contents">
-        <div class="row">
-          <div class="col-20 col-lg-18 offset-2 offset-lg-3">
-            <div id="CustomerLoginForm">
-              {% if section.settings.title != blank %}
-                <div class="h2 customer-drawer__title">{{ section.settings.title }}</div>
-              {% else %}
-                <div class="h2 customer-drawer__title">{{ 'customer.login.title' | t | newline_to_br }}</div>
-              {% endif %}
+        <div id="CustomerLoginForm">
+          {% if section.settings.title != blank %}
+            <div class="customer-drawer__title h6">{{ section.settings.title }}</div>
+          {% else %}
+            <div class="customer-drawer__title h6">{{ 'customer.login.title' | t | newline_to_br }}</div>
+          {% endif %}
 
-              {% if section.settings.subtitle != blank %}
-                <div class="p2">{{ section.settings.subtitle }}</div>
-              {% else %}
-                <div class="p2">{{ 'customer.login.subtitle' | t }}</div>
-              {% endif %}
+          {% if section.settings.subtitle != blank %}
+            <div class="mb-3 p4">{{ section.settings.subtitle }}</div>
+          {% else %}
+            <div class="mb-3 p4">{{ 'customer.login.subtitle' | t }}</div>
+          {% endif %}
 
-              {% include 'customer-login-form',
-                          is_drawer: true
-              %}
-            </div>
+          {% include 'customer-login-form',
+                      is_drawer: true
+          %}
+        </div>
 
-            <div id="RecoverPasswordForm" class="hide">
-              {% if section.settings.title != blank %}
-                <div class="h2 customer-drawer__title">{{ section.settings.recover_title }}</div>
-              {% else %}
-                <div class="h2 customer-drawer__title">{{ 'customer.recover_password.title' | t | newline_to_br }}</div>
-              {% endif %}
+        <div id="RecoverPasswordForm" class="hide">
+          {% if section.settings.title != blank %}
+            <div class="customer-drawer__title h6">{{ section.settings.recover_title }}</div>
+          {% else %}
+            <div class="customer-drawer__title h6">{{ 'customer.recover_password.title' | t | newline_to_br }}</div>
+          {% endif %}
 
-              {% if section.settings.recover_subtitle != blank %}
-                <div class="p2">{{ section.settings.recover_subtitle }}</div>
-              {% else %}
-                <div class="p2">{{ 'customer.recover_password.subtext' | t }}</div>
-              {% endif %}
+          {% if section.settings.recover_subtitle != blank %}
+            <div class="mb-3 p4">{{ section.settings.recover_subtitle }}</div>
+          {% else %}
+            <div class="mb-3 p4">{{ 'customer.recover_password.subtext' | t }}</div>
+          {% endif %}
 
-              {% include 'customer-recover-password-form' %}
-            </div>
+          {% include 'customer-recover-password-form' %}
+        </div>
 
-            <div id="CustomerRegisterForm" class="hide">
-              <div class="h2 customer-drawer__title">{{ 'customer.register.title' | t | newline_to_br }}</div>
+        <div id="CustomerRegisterForm" class="hide">
+          <div class="customer-drawer__title h6">{{ 'customer.register.title' | t | newline_to_br }}</div>
 
-              {% if section.settings.register_subtitle != blank %}
-                <div class="p2">{{ section.settings.register_subtitle }}</div>
-              {% else %}
-                <div class="p2">{{ 'customer.register.subtitle' | t }}</div>
-              {% endif %}
+          {% if section.settings.register_subtitle != blank %}
+            <div class="mb-3 p4">{{ section.settings.register_subtitle }}</div>
+          {% else %}
+            <div class="mb-3 p4">{{ 'customer.register.subtitle' | t }}</div>
+          {% endif %}
 
-              {% include 'customer-register-form',
-                          marketing_checkbox_label: section.settings.confirmation_marketing,
-                          terms_checkbox_label: section.settings.confirmation_terms,
-                          show_cancel_button: true
-              %}
-            </div>
-          </div>
+          {% include 'customer-register-form',
+                      marketing_checkbox_label: section.settings.confirmation_marketing,
+                      terms_checkbox_label: section.settings.confirmation_terms,
+                      show_cancel_button: true
+          %}
         </div>
       </div>
     </div>
