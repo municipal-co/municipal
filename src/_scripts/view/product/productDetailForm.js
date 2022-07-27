@@ -291,7 +291,7 @@ export default class ProductDetailForm {
       this.$atcPrice.hide();
     }
 
-    if (variant ) {
+    if (variant) {
       this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
       this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
 
@@ -357,7 +357,7 @@ export default class ProductDetailForm {
     })
 
     if(typeof currentOption === 'undefined') {
-      $currentOption = $(`[data-product-option=${colorIndex}]:checked`).parent();
+      $currentOption = $(`[data-product-option=${colorIndex}]:checked`, this.$detailOptions).parent();
     }
 
     const $selectedSize = $(`[data-product-option=${sizeIndex}]:checked`, this.$detailOptions);
