@@ -20,9 +20,6 @@ import * as Breakpoints from './core/breakpoints';
 
 // UI - Import all to enable data API
 import './ui/drawer';
-import './ui/overlay';
-import './ui/slideup';
-import './ui/tabs';
 import './ui/quantityAdjuster';
 import './ui/passwordValidation';
 
@@ -38,12 +35,7 @@ import PencilBannerSection from './sections/pencilBanner';
 import CollectionSection from './sections/collection';
 import BlogSection from './sections/blog';
 import ArticleSection from './sections/article';
-import NewsletterModalSection from './sections/newsletterModal';
-import NewsletterSlideupSection from './sections/newsletterSlideup';
-import SlideshowSection from './sections/slideshow';
-import SwatchesSection from './sections/swatches';
 import VideoSection from './sections/video';
-import CMSPageSection from './sections/cmsPage';
 import CustomersLoginSection from './sections/customersLogin';
 import CustomersRegisterSection from './sections/customersRegister';
 import CustomersAccountSection from './sections/customersAccount';
@@ -52,15 +44,7 @@ import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
 import CustomersDrawerSection from './sections/customersDrawer';
 import CustomersResetPasswordSection from './sections/customersResetPassword';
-import HeroSection from './sections/heroSection';
-import ProductOverview from './sections/productOverview';
-import ProductFeatures from './sections/productFeatures';
-import ProductStyleTips from './sections/productStyleTips';
-import CompleteTheLook from './sections/completeTheLook';
-import CollectionBanner from './sections/collectionBanner';
-import SearchResults from './sections/search';
 import YotpoReviews from './sections/yotpoReviews';
-import FouroFour from './sections/fourofour';
 import FeaturedCategory from './sections/featuredCategories'
 import ShopTheLook from './sections/shop-the-look';
 import OptionDrawer from './sections/optionDrawer';
@@ -73,14 +57,14 @@ import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 
 
 // Managers
-import QuickViewManager from './managers/quickView';
+// import QuickViewManager from './managers/quickView';
 
 // Models
 import ProductCard from './view/product/productCard';
 
 // Templates
 import './templates/pageStyles';
-import './templates/pageComponents';
+// import './templates/pageComponents';
 
 // Do this ASAP
 Animations.initialize();
@@ -102,12 +86,7 @@ Breakpoints.initialize();
   sectionManager.register('collection', CollectionSection);
   sectionManager.register('blog', BlogSection);
   sectionManager.register('article', ArticleSection);
-  sectionManager.register('newsletter-modal', NewsletterModalSection);
-  sectionManager.register('newsletter-slideup', NewsletterSlideupSection);
-  sectionManager.register('slideshow', SlideshowSection);
-  sectionManager.register('swatches', SwatchesSection);
   sectionManager.register('video', VideoSection);
-  sectionManager.register('cms-page', CMSPageSection);
   sectionManager.register('customers-login', CustomersLoginSection);
   sectionManager.register('customers-register', CustomersRegisterSection);
   sectionManager.register('customers-account', CustomersAccountSection);
@@ -122,15 +101,7 @@ Breakpoints.initialize();
     'customers-reset-password',
     CustomersResetPasswordSection
   );
-  sectionManager.register('hero', HeroSection);
-  sectionManager.register('product-overview', ProductOverview);
-  sectionManager.register('product-features', ProductFeatures);
-  sectionManager.register('style-tips', ProductStyleTips);
-  sectionManager.register('collection-banner', CollectionBanner);
-  sectionManager.register('complete-the-look', CompleteTheLook);
-  sectionManager.register('search', SearchResults);
   sectionManager.register('yotpo-reviews', YotpoReviews);
-  sectionManager.register('fourofour', FouroFour);
   sectionManager.register('featured-categories', FeaturedCategory);
   sectionManager.register('shop-the-look', ShopTheLook);
   sectionManager.register('option-selector-drawer', OptionDrawer);
@@ -215,12 +186,6 @@ Breakpoints.initialize();
     if (bg) {
       e.target.style.backgroundImage = 'url(' + bg + ')';
     }
-  });
-
-  // Quickview stuff
-  $body.on('click', '[data-quick-view-trigger]', function(e) {
-    e.preventDefault();
-    QuickViewManager.onQuickViewTriggerClick($(this));
   });
 
   window.getSiteSettingsJson = function() {
