@@ -18,9 +18,13 @@
     "cssnano": "^5.1.12",
     "cssnano-preset-default": "^5.2.12",
     "del": "^7.0.0",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "expose-loader": "^4.0.0",
     "fancy-log": "^2.0.0",
-    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-cheerio": "^1.0.0",
@@ -35,6 +39,8 @@
     "postcss": "^8.4.14",
     "read-config": "^2.0.0",
     "sass": "^1.54.0",
+    "stylelint": "^14.9.1",
+    "stylelint-config-twbs-bootstrap": "^5.0.0",
     "url": "^0.11.0",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^4.0.0",
@@ -48,6 +54,7 @@
     "bootstrap": "^4.3.1",
     "browserify-shim": "^3.8.15",
     "chosen-js": "^1.8.3",
+    "gulp": "^4.0.2",
     "handlebars": "^4.7.7",
     "imagesloaded": "^4.1.4",
     "jquery": "^3.6.0",
@@ -71,7 +78,9 @@
   "scripts": {
     "watch": "gulp watch",
     "build": "gulp build",
-    "deploy": "NODE_ENV=production gulp deploy"
+    "deploy": "NODE_ENV=production gulp deploy",
+    "eslint": "eslint src/_scripts/**/*.js",
+    "stylelint": "stylelint src/_styles/**/*.scss"
   },
   "repository": {
     "type": "git",
