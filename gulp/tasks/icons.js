@@ -34,9 +34,9 @@ const processSvg = ($, file) => {
 
 const icons = () => {
   return src('./src/icons/*.svg')
-  .pipe(cheerio(processSvg))
-  .pipe(gulpExtReplace('.liquid'))
-  .pipe(dest('./dist/snippets/'))
+    .pipe(cheerio(processSvg))
+    .pipe(gulpExtReplace('.liquid'))
+    .pipe(dest('./dist/snippets/'))
 };
 
 export default icons;

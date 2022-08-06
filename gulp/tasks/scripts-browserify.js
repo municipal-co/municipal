@@ -3,49 +3,36 @@ import size from 'gulp-size';
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import babelify from 'babelify';
-import watchify from 'watchify';
 import log from 'fancy-log';
 import mergeStream from 'merge-stream';
 import yargs from 'yargs';
 
 const {dest} = gulp;
 const argv = yargs(process.argv.slice('2')).argv;
+
 const browserifyThis = (file) => {
 
-  const config = Object.assign({}, watchify.args, {debug:false, entries:file.source, entryName: file.name})
+  const config = Object.assign({}, {debug:false, entries:file.source, entryName: file.name})
 
   log(`Bundling ${file.name}`);
   const bundle = () => {
-       b.bundle()
+    return b.bundle()
       .on('error', (error) => {
         log.error(error);
-      })
-      .on('file', () => {
-
       })
       .pipe(source(file.name))
       .pipe(dest('./dist/assets/'))
       .pipe(size({showFiles: true, title: 'Size of file:'}))
-      .on('finish', () => {
-        log(`Bundled ${file.name}`)
-      })
   }
 
   let b = browserify(config)
-      .transform(babelify, {
-      presets: ['@babel/preset-env'],
-      ignore: [
-        "./node_modules/",
-        "../../node_modules"
-      ]
-    })
-    .transform('browserify-shim', { global:true });
-
-    if(argv._ === 'bundle' || argv._ === 'deploy'){
-      b = watchify(b);
-
-      b.on('update', bundle);
-    }
+    .transform(babelify, {
+    presets: ['@babel/preset-env'],
+    ignore: [
+      "./node_modules/",
+      "../../node_modules"
+    ]
+  })
 
   return bundle();
 
@@ -67,8 +54,8 @@ const scripts = () => {
     }
   ];
 
-  return mergeStream.apply(files.map((file) => {
-    browserifyThis(file);
+  return mergeStream(files.map((file) => {
+    return browserifyThis(file);
   }));
 
 }

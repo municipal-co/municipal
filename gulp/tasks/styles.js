@@ -35,7 +35,7 @@ const styles = () => {
   .pipe(postcss(postCssPlugins))
   .pipe(sourcemaps.write('.'))
   .pipe(size({showFiles: true, title:'Syles: Size of file: '}))
-  .pipe(dest('dist/assets/'))
+  .pipe(dest('dist/assets/'));
 };
 
 export default styles;

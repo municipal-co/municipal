@@ -81,76 +81,69 @@ task('tk_deploy', () => {
 })
 
 task('styles', styles);
-task('scripts', async () => {
-  await scripts();
-});
+task('scripts', scripts);
 task('files', files);
 task('icons', icons);
 
-task('watch', () => {
-  return new Promise( async(resolve, reject) => {
+task('watch', async() => {
+  let config;
 
-    let config;
+  if(typeof argv.environment == 'string' || typeof argv.e == 'string') {
+    config = themeConfig[argv.e || argv.environment];
+  } else {
+    config = themeConfig['development'];
+  }
 
-    if(typeof argv.environment == 'string' || typeof argv.e == 'string') {
-      config = themeConfig[argv.e || argv.environment];
-    } else {
-      config = themeConfig['development'];
-    }
+  if(typeof config == 'undefined') {
+    reject('No development environment was found, check your config.yml has at least one "development" environment');
+  }
 
-    if(typeof config == 'undefined') {
-      reject('No development environment was found, check your config.yml has at least one "development" environment');
-    }
+  const fileWatcher = watch(['src/templates/**/**', 'src/snippets/**', 'src/sections/**', 'src/layout/**', 'src/config/**', 'src/locales/**'], series("files"));
+  watch(['./src/_styles/**/*.scss', './src/_styles/**/*.css'], series("styles"))
+  watch('./src/icons/**/*', series("icons"));
+  watch('./src/_scripts/**/*.js', series("scripts"));
 
-    const fileWatcher = watch(['src/templates/**/**', 'src/snippets/**', 'src/sections/**', 'src/layout/**', 'src/config/**', 'src/locales/**'], series("files"));
-    watch(['./src/_styles/**/*.scss', './src/_styles/**/*.css'], series("styles"))
-    watch('./src/icons/**/*', series("icons"));
-    watch('./src/_scripts/**/*.js', series("scripts"));
+  fileWatcher.on('unlink', function(currPath) {
+    const pathFromSrc = path.relative(path.resolve('src'), currPath);
 
-    fileWatcher.on('unlink', function(currPath) {
-      const pathFromSrc = path.relative(path.resolve('src'), currPath);
+    var destFilePath = path.resolve('dist', pathFromSrc);
 
-      var destFilePath = path.resolve('dist', pathFromSrc);
-
-      deleteSync(destFilePath);
-    })
-
-    if(!argv.open || !argv.open == 'false' ) {
-      browserSync.init({
-        open: 'tunnel',
-        files: ['./deploy.log'],
-        proxy: {
-          target: `https://${config.store}/?preview_theme_id=${config.theme_id}`,
-          middleware: (req, res, next) => {
-            const prefix = req.url.indexOf('?') > -1 ? '&' : '?';
-            req.url += prefix + '_fd=0';
-            next();
-          }
-        },
-        snippetOptions: {
-          rule: {
-              match: /<\/body>/u,
-              fn: function(snippet, match) {
-                  return snippet + match;
-              }
-          }
-        }
-      })
-    }
-
-    try {
-      await themekit.command('watch', {
-        env: argv.e || argv.environment || 'development',
-        dir: 'dist/',
-        notify: './deploy.log',
-        'no-theme-kit-access-notifier': true,
-      })
-    } catch (error) {
-      reject(error);
-    }
-
-    resolve();
+    deleteSync(destFilePath);
   })
+
+  if(!argv.open || !argv.open == 'false' ) {
+    browserSync.init({
+      open: 'tunnel',
+      files: ['./deploy.log'],
+      proxy: {
+        target: `https://${config.store}/?preview_theme_id=${config.theme_id}`,
+        middleware: (req, res, next) => {
+          const prefix = req.url.indexOf('?') > -1 ? '&' : '?';
+          req.url += prefix + '_fd=0';
+          next();
+        }
+      },
+      snippetOptions: {
+        rule: {
+            match: /<\/body>/u,
+            fn: function(snippet, match) {
+                return snippet + match;
+            }
+        }
+      }
+    })
+  }
+
+  try {
+    await themekit.command('watch', {
+      env: argv.e || argv.environment || 'development',
+      dir: 'dist/',
+      notify: './deploy.log',
+      'no-theme-kit-access-notifier': true,
+    })
+  } catch (error) {
+    reject(error);
+  }
 })
 
 task('build', series('clear', "styles", "scripts", "files", "icons"));
