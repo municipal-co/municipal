@@ -1,101 +1,74 @@
 {
-  "name": "Z-Theme",
-  "description": "A shopify starter theme for Zehner",
-  "version": "0.1.0",
+  "name": "municipal-theme",
+  "description": "Municipal base development theme",
+  "version": "2.0.0",
   "license": "UNLICENSED",
+  "type": "module",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "@shopify/slate-tools": "0.3.3",
-    "ansi-colors": "^3.2.4",
-    "autoprefixer": "^9.4.9",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-polyfill": "^6.26.0",
-    "babel-register": "^6.26.0",
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/register": "^7.18.9",
+    "@fullhuman/postcss-purgecss": "^4.1.3",
+    "autoprefixer": "^10.4.8",
+    "babel-loader": "^8.2.5",
+    "babel-preset-es2015": "^6.24.1",
     "babelify": "^10.0.0",
-    "browserify": "^16.2.3",
-    "browserify-shim": "^3.8.14",
-    "cssnano": "^4.1.10",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^6.3.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-prettier": "^3.1.1",
-    "fancy-log": "^1.3.3",
+    "browser-sync": "^2.27.10",
+    "browserify": "^17.0.0",
+    "cssnano": "^5.1.12",
+    "cssnano-preset-default": "^5.2.12",
+    "del": "^7.0.0",
+    "expose-loader": "^4.0.0",
+    "fancy-log": "^2.0.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
-    "gulp-debug": "^4.0.0",
-    "gulp-eslint": "^5.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-minify": "^3.1.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-size": "^3.0.0",
-    "gulp-stylelint": "^8.0.0",
-    "gulp-watch": "^5.0.1",
-    "merge-stream": "^1.0.1",
+    "gulp-cheerio": "^1.0.0",
+    "gulp-ext-replace": "^0.3.0",
+    "gulp-flatten": "^0.4.0",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-size": "^4.0.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "merge-stream": "^2.0.0",
     "path": "^0.12.7",
-    "prettier": "^1.18.2",
-    "pretty-hrtime": "^1.0.3",
-    "run-sequence": "^2.2.1",
-    "stylelint": "^9.10.1",
-    "stylelint-config-standard": "^18.2.0",
-    "stylelint-config-twbs-bootstrap": "^0.3.0",
-    "uglifyify": "^4.0.4",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.9.0",
-    "yargs": "^13.2.2"
+    "postcss": "^8.4.14",
+    "read-config": "^2.0.0",
+    "sass": "^1.54.0",
+    "url": "^0.11.0",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^4.0.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "yargs": "^17.5.1"
   },
   "dependencies": {
-    "@shopify/slate": "^0.14.0",
     "@shopify/themekit": "^1.1.9",
     "@vimeo/player": "^2.8.2",
     "bootstrap": "^4.3.1",
     "chosen-js": "^1.8.3",
-    "handlebars": "^4.1.0",
+    "handlebars": "^4.7.7",
     "imagesloaded": "^4.1.4",
-    "instafeed.js": "^1.4.1",
     "jquery": "^3.2.1",
     "jquery-unveil": "^1.3.2",
-    "jquery-zoom": "^1.7.20",
-    "js-cookie": "^2.2.0",
+    "js-cookie": "^3.0.1",
     "lazysizes": "^5.2.0",
-    "objectFitPolyfill": "^2.3.0",
     "swiper": "^5.4.5",
     "throttle-debounce": "^2.1.0"
   },
   "scripts": {
-    "start": "npm i -g @shopify/slate && npm i",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "hooks": "cp gitHooks.sh ./.git/hooks/post-checkout && chmod +x ./.git/hooks/post-checkout",
-    "start-dev": "gulp start --watch --e development",
-    "build": "gulp build --e production"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
-  "browser": {
-    "jquery": "./node_modules/jquery/dist/jquery.js"
-  },
-  "browserify-shim": {
-    "jquery": "$",
-    "jquery-zoom": {
-      "depends": [
-        "$"
-      ]
-    }
+    "watch": "gulp watch",
+    "build": "gulp build",
+    "deploy": "NODE_ENV=production gulp deploy"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zehnergroup/z-theme.git"
+    "url": "git@github.com:municipal-co/municipal.git"
   },
   "keywords": [],
-  "author": "Zehner",
+  "author": "",
   "bugs": {
-    "url": "https://github.com/zehnergroup/z-theme/issues"
+    "url": "https://github.com/municipal-co/municipal/issues"
   },
-  "homepage": "https://github.com/zehnergroup/z-theme"
+  "homepage": "https://www.municipal.com"
 }
