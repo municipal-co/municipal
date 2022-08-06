@@ -5,11 +5,11 @@
 @mixin font-face($font-family, $file-name, $font-weight: normal, $font-style: normal) {
   @font-face {
     font-family: $font-family;
-      src: url("{{ \'#{$file-name}.eot\' | asset_url }}?#iefix");
-      src: url("{{ \'#{$file-name}.eot\' | asset_url }}?#iefix") format('embedded-opentype'),
-           url("{{ \'#{$file-name}.woff\' | asset_url }}") format('woff'),
-           url("{{ \'#{$file-name}.ttf\' | asset_url }}") format('truetype'),
-           url("{{ \'#{$file-name}.svg\' | asset_url }}##{$file-name}") format('svg');
+      src: url("#{$file-name}.eot?#iefix");
+      src: url("#{$file-name}.eot?#iefix") format('embedded-opentype'),
+           url("#{$file-name}.woff") format('woff'),
+           url("#{$file-name}.ttf") format('truetype'),
+           url("#{$file-name}.svg##{$file-name}") format('svg');
     font-weight: $font-weight;
     font-style: $font-style;
   }
@@ -17,7 +17,7 @@
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
     @font-face {
       font-family: $font-family;
-        src: url("{{ \'#{$file-name}.svg\' | asset_url }}##{$file-name}") format('svg');
+        src: url("#{$file-name}.svg##{$file-name}") format('svg');
     }
   }
 }
