@@ -1,9 +1,7 @@
 // jQuery
 import $ from 'jquery';
-import 'jquery-zoom';
 import 'chosen-js';
 import 'jquery-unveil';
-import 'objectFitPolyfill';
 import 'lazysizes';
 
 
