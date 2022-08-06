@@ -498,7 +498,7 @@ body.ajax-cart-open {
 }
 
 .ajax-cart__item-options {
-  @include list-unstyled
+  @include list-unstyled;
   font-family: $font-family-sans-serif;
   letter-spacing: normal;
   font-size: 10px;
