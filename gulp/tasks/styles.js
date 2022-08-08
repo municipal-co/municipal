@@ -29,7 +29,7 @@ const styles = () => {
     })
   ]
 
-  return src(`src/_styles/theme.scss`)
+  return src(['src/_styles/theme.scss', 'src/_styles/checkout.scss'])
   .pipe(sourcemaps.init())
   .pipe(sass())
   .pipe(postcss(postCssPlugins))
