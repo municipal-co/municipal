@@ -65,7 +65,7 @@ export default class BisDrawer extends BaseSection {
       }
       if(optionLabelLowcase === 'size') {
         if(option.value === 'OS') {
-          this.$bisVariantSize.text('Only Size');
+          this.$bisVariantSize.text('One Size');
         } else {
           this.$bisVariantSize.text(option.value);
         }
