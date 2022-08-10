@@ -609,7 +609,7 @@ export default class ProductDetailForm {
       productData: {
         variantId: selectedVariant[0].id,
         productTitle: this.productSingleObject.title,
-        productImage: selectedVariant[0].featured_image.src,
+        image: selectedVariant[0].featured_image.src,
         productOptions: []
       }
     }
