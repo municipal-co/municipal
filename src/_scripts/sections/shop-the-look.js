@@ -191,9 +191,8 @@ export default class ShopTheLook extends BaseSection {
 
     $form.find('[data-option-text]').each((index, option) => {
       const $option = $(option);
-
       if($option.data('option-text') === fieldOptionIndex) {
-        const fieldValue = $field.val() === 'OS' ? 'Only Size' : $field.val();
+        const fieldValue = $field.val() === 'OS' ? 'One Size' : $field.val();
         $option.html(`Selected ${$option.data('print-option')}: <span class="product-option__drawer-btn-value">${fieldValue}</span>`);
         $option.parent().addClass('is-active');
       }

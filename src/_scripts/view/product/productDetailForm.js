@@ -334,7 +334,8 @@ export default class ProductDetailForm {
 
   updateSelectedOptionLabel(index, value, name) {
     if(name === 'size' || name === 'Size' || name === 'amount' || name === 'Amount' ) {
-      $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${value}</span>`);
+      const updatedValue = value === 'OS' ? 'One Size' : value;
+      $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${updatedValue}</span>`);
       $(`[data-selected-option=${index}]`, this.$detailOptions).parent().addClass('is-active');
     } else {
       $(`[data-selected-option=${index}]`, this.$detailOptions).text(value);
@@ -369,8 +370,9 @@ export default class ProductDetailForm {
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', true);
       this._disablePurchase(true)
     } else if($selectedSize.length) {
+      const optionValue = $selectedSize.val() === 'OS' ? 'One Size' : $selectedSize.val();
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', false);
-      $(`[data-selected-option=${sizeIndex}]`).text(`Selected Size: ${$selectedSize.val()}`);
+      $(`[data-selected-option=${sizeIndex}]`).html(`Selected Size: <span class="product-option__drawer-btn-value">${optionValue}</span>`);
     } else {
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', false);
       $(`[data-selected-option=${sizeIndex}]`).text('Select Size');
