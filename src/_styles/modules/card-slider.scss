@@ -87,14 +87,13 @@
 }
 
 .card-slider__button {
-  color: $white;
   font-size: 18px;
   line-height: 1.5;
-  color: currentColor;
+  color: currentcolor;
   display: inline-block;
 
   &:hover {
-    color: currentColor;
+    color: currentcolor;
   }
 
   @include media-breakpoint-down('md') {
@@ -135,6 +134,4 @@
   left: unset;
 }
 
-@import '../components/card/link-card.scss';
-
-
+@import '../components/card/link-card';

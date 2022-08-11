@@ -16,7 +16,8 @@
   {% assign heading_cta_url = s.heading_cta_url %}
 {% endif %}
 
-<div id="{{id}}" class="card-slider {% if suffix != blank %} card-slider--{{suffix}} {% endif %}" data-section-type="product-card-slider" data-section-id="{{section.id}}">
+
+<div id="{{id}}" class="card-slider {{modifier_class}}" data-section-type="product-card-slider" data-section-id="{{section.id}}">
   <style>
     #{{id}} {
       background-color: {{ bg_color }};
@@ -50,7 +51,7 @@
         {% endif %}
       </div>
     </div>
-    <div class="row card-slider__slider" data-card-slider {% if suffix != blank %}data-slider-suffix="{{suffix}}"{% endif %}>
+    <div class="row card-slider__slider" data-card-slider {% if modifier_class != blank %}data-slider-suffix="{{modifier_class}}"{% endif %}>
       <div class="swiper-wrapper">
         {% if type == 'metafields' %}
           {% for card in metafields.pcs_products %}
