@@ -8,9 +8,10 @@
       {% endif %}
 
       <div class="sticky-image__info-container">
-        {% if collection != blank %}
-          <a href="{{collection.url}}" class="badge sticky-image__badge" title="Go to collection {{ collection.title }}">
-            {{ collection.title }}
+        {% if product.metafields.custom_fields.si_product_category != blank %}
+          {%- assign default_collection = collections[product.metafields.custom_fields.si_product_category] -%}
+          <a href="{{default_collection.url}}" class="badge sticky-image__badge" title="Go to collection {{ default_collection.title }}">
+            {{ default_collection.title }}
           </a>
         {% endif %}
         <h1 class="sticky-image__title">

@@ -52,7 +52,7 @@ export default class ProductCardSlider extends BaseSection {
       }
     }
 
-    if(this.suffix === 'pdp') {
+    if(this.suffix === 'card-slider--pdp') {
       sliderSettings.slidesPerView = 1.15;
       sliderSettings.breakpoints = {};
     }

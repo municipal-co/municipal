@@ -1,52 +1,41 @@
-const config = require('../config');
-const gulp = require('gulp');
-const path = require('path');
-const sass = require('gulp-sass');
-const rename = require('gulp-rename');
-const size = require('gulp-size');
-const postcss = require('gulp-postcss');
-const debug = require('gulp-debug');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const mergeStream = require('merge-stream');
-const colors = require('ansi-colors');
-const log = require('fancy-log');
+import gulp from 'gulp';
+const { src, dest, task } = gulp;
+import postcss from 'gulp-postcss';
+import sourcemaps from 'gulp-sourcemaps';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import size from 'gulp-size';
 
-const sassOptions = {
-  outputStyle: 'nested', // libsass doesn't support expanded yet
-  precision: 10,
-  errLogToConsole: true // else watch breaks
+const sass = gulpSass(dartSass);
+
+// Postcss plugins
+import purgecss from '@fullhuman/postcss-purgecss';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+import defaultPreset from 'cssnano-preset-default';
+
+const styles = () => {
+  const postCssPlugins = [
+    purgecss({
+      content: ['src/**/*.liquid', 'src/_scripts/**/*.js'],
+      enabled: true,
+      safelist: {
+        greedy: [/swiper/, /yotpo/, /chosen/],
+      },
+    }),
+    cssnano({
+      preset: defaultPreset(),
+      plugins: [autoprefixer],
+    })
+  ]
+
+  return src(['src/_styles/theme.scss', 'src/_styles/checkout.scss'])
+  .pipe(sourcemaps.init())
+  .pipe(sass())
+  .pipe(postcss(postCssPlugins))
+  .pipe(sourcemaps.write('.'))
+  .pipe(size({showFiles: true, title:'Syles: Size of file: '}))
+  .pipe(dest('dist/assets/'));
 };
 
-const postcssPlugins = [
-  autoprefixer(), // Browsers pulled from .browserslistrc
-  cssnano({
-    discardUnused: true, // don't discard unused at-rules (@keyframes for example that aren't used)
-    zindex: false, // don't optimize z-index stacking... very dangerous
-    autoprefixer: false // don't remove unnecessary prefixes. we're setting this above
-  })
-];
-
-const stylePipeline = (src) => {
-  const paths = {
-    src: path.join(config.root.src, config.tasks.styles.src, src),
-    dest: path.join(config.root.src, config.tasks.styles.dest)
-  };
-
-  return gulp.src(paths.src)
-    .pipe(sass(sassOptions))
-    .on('error', function(error) {
-      log.error(`${colors.bold.red('SCSS Compilation Error')}: ${error.message}`);
-      this.emit('end');
-    })
-    .pipe(postcss(postcssPlugins))
-    .pipe(rename(function(path) {
-      path.extname = ".css.liquid";
-    }))
-    .pipe(gulp.dest(paths.dest))
-    .pipe(debug())
-    .pipe(size({ showFiles: true, title: 'CSS: size of' }));
-}
-
-// Run stylepipeline for each entry point file
-gulp.task('styles', () => mergeStream.apply(gulp, config.tasks.styles.files.map(stylePipeline)));
+export default styles;
