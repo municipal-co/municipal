@@ -39,8 +39,8 @@
           {%- if printed_variant == variant[option_index] -%}
             {%- continue -%}
           {%- endif -%}
-          {%- assign printed_variant = variant[option_index] -%}
           {% if variant[option_index] == current_variant[option_index] or variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or variant.metafields.custom_fields['enable_sold_out'] == 1 %}
+            {%- assign printed_variant = variant[option_index] -%}
             <label class="product-option__single-selector swiper-slide" data-swatch-slide>
               <input type="radio"
                     name="{{- option_prefix -}}{{option_index}}"
