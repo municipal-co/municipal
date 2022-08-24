@@ -67,7 +67,7 @@
             {% assign bs = block.settings %}
             <div class="swiper-slide" data-card-slide {{block.shopify_attributes}}>
               {% render 'product-card'
-                card_product: all_products[bs.card_product],
+                card_product: bs.card_product,
                 color: bs.selected_color
               %}
             </div>

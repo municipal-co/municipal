@@ -208,7 +208,7 @@
               <ul class="ajax-cart__item-options">
                 {{#unless has_only_default_variant}}
                   {{#if variant_title}}
-                    <li>{{ variant_title }}</li>
+                    <li class="ajax-cart__item-option">{{ variant_title }}</li>
                   {{/if}}
                 {{/unless}}
                 {{#if available}}
@@ -224,41 +224,37 @@
                   </li>
                 {{/unless}}
               </ul>
-              {{#if available}}
-                <div class="ajax-item__footer">
-                  {{#if discounts}}
-                    <div class="ajax-cart__item-price">
-                      <s class="ajax-cart__compare-at-price">
-                        {{ original_price }}
-                      </s>
-                      <span class="ajax-cart__discounted-price">
-                        {{ price }}
-                      </span>
-                    </div>
-                  {{else}}
-                    <div class="ajax-cart__item-price">
+              <div class="ajax-item__footer">
+                {{#if discounts}}
+                  <div class="ajax-cart__item-price">
+                    <s class="ajax-cart__compare-at-price">
+                      {{ original_price }}
+                    </s>
+                    <span class="ajax-cart__discounted-price">
                       {{ price }}
-                    </div>
-                  {{/if }}
-                  <div class="ajax-item__item-controls">
-                    {{#if available}}
-                      {{#unless is_free_gift}}
-                      <div class="ajax-item__quantity-adjuster" data-quantity-adjuster>
-                        <button class="quantity-adjuster__decrement" data-decrement>-</button>
-                        <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
-                        <span class="quantity-adjuster__label">{{ quantity }} </span>
-                        <button class="quantity-adjuster__increment" data-increment>+</button>
-                      </div>
-                      {{/unless}}
-                    {{/if}}
-                    <button class="ajax-cart__item-remove" data-ajax-cart-item-remove>
-                      {% endraw %}
-                      {{ 'cart.general.remove' | t }}
-                      {% raw %}
-                    </button>
+                    </span>
                   </div>
+                {{else}}
+                  <div class="ajax-cart__item-price">
+                    {{ price }}
+                  </div>
+                {{/if }}
+                <div class="ajax-item__item-controls">
+                    {{#unless is_free_gift}}
+                    <div class="ajax-item__quantity-adjuster" data-quantity-adjuster>
+                      <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                      <input class="quantity-adjuster__input" type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" {{#unless available}}disabled{{/unless}} />
+                      <span class="quantity-adjuster__label">{{ quantity }} </span>
+                      <button class="quantity-adjuster__increment" data-increment>+</button>
+                    </div>
+                    {{/unless}}
+                  <button class="ajax-cart__item-remove" data-ajax-cart-item-remove>
+                    {% endraw %}
+                    {{ 'cart.general.remove' | t }}
+                    {% raw %}
+                  </button>
                 </div>
-              {{/if}}
+              </div>
             </div>
           </li>
         {{/each}}

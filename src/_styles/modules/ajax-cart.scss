@@ -357,7 +357,7 @@ body.ajax-cart-open {
   }
 
   .ajax-cart__item--sold-out & {
-    opacity: 0.5;
+    opacity: 0.4;
   }
 }
 
@@ -435,8 +435,8 @@ body.ajax-cart-open {
     line-height: 18px;
   }
 
-  .ajax-cart__item--sold-out &{
-    opacity: 0.5;
+  .ajax-cart__item--sold-out & {
+    opacity: 0.4;
   }
 }
 
@@ -484,6 +484,10 @@ body.ajax-cart-open {
     margin: 10px 0 5px;
     font-size: 12px;
   }
+
+  .ajax-cart__item--sold-out & {
+    opacity: 0.4;
+  }
 }
 
 .ajax-cart__discounted-price--free {
@@ -508,16 +512,17 @@ body.ajax-cart-open {
     margin-top: 3px;
   }
 
-  .ajax-cart__item--sold-out & > * {
-    opacity: 0.5;
-  }
-
   @include media-breakpoint-down('xs') {
     font-size: 10px;
     line-height: 14px;
   }
 }
 
+.ajax-cart__item-option {
+  .ajax-cart__item--sold-out & {
+    opacity: 0.4;
+  }
+}
 
 
 
@@ -683,10 +688,6 @@ body.ajax-cart-open {
     font-size: 8px;
     line-height: 11px;
   }
-
-  .ajax-cart__item--sold-out & {
-    opacity: 1;
-  }
 }
 
 .ajax-item__quantity-adjuster {
@@ -697,6 +698,10 @@ body.ajax-cart-open {
 
   @include media-breakpoint-down('xs') {
     height: 28px;
+  }
+
+  .ajax-cart__item--sold-out & {
+    opacity: 0.4;
   }
 
   button.quantity-adjuster__decrement,
