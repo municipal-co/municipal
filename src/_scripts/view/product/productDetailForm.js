@@ -174,7 +174,6 @@ export default class ProductDetailForm {
 
   initSwatchesSlider() {
     let currentSlide = 0;
-
     this.$swatchSlider.each((i, slider) => {
       const $slider = $(slider);
       const $swatchSlides = $(selectors.swatchSlide, $slider);
@@ -187,23 +186,18 @@ export default class ProductDetailForm {
       })
 
       this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
-        slideClass: 'swiper-slide',
+        slide: selectors.swatchSlide,
         slidesPerView: 4.7,
+        spaceBetween: 8,
+        threshold: 10,
+        initialSlide: $swatchSlides.length <= 4 ? false : currentSlide,
         watchOverflow: true,
         slidesOffsetBefore: 30,
         slidesOffsetAfter: 30,
-        spaceBetween: 8,
-        initialSlide: currentSlide,
-        threshold: 10,
         navigation: {
           prevEl: '[data-arrow-prev]',
           nextEl: '[data-arrow-next]'
         },
-        breakpoints: {
-          1024: {
-            slidesPerGroup: 4,
-          }
-        }
       });
     })
   }
@@ -287,7 +281,7 @@ export default class ProductDetailForm {
    * @param {Object} variant - Shopify variant object
    */
   updateProductPrices(variant, firstCheck) {
-    if(firstCheck && this.productSingleObject.type == 'Gift Card') {
+    if(firstCheck && this.productSingleObject.type === 'Gift Card') {
       this.$atcPrice.hide();
     }
 
