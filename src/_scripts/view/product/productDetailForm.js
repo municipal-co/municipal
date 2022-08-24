@@ -160,16 +160,6 @@ export default class ProductDetailForm {
     const optionName = $this.data('option-name');
 
     this.updateSelectedOptionLabel(optionIndex, optionValue, optionName);
-    if($this.parents(selectors.pdpOptionDrawer).length > 0){
-      const $currentDrawer = $this.parents(selectors.pdpOptionDrawer);
-
-      for(let i = 0; i <= this.optionDrawers.length - 1; i++) {
-        if( this.optionDrawers[i].id === $currentDrawer.data('drawer-id')) {
-          this.optionDrawers[i].drawer.hide();
-          break;
-        }
-      }
-    }
   }
 
   initSwatchesSlider() {
@@ -361,7 +351,7 @@ export default class ProductDetailForm {
       $currentOption = $(`[data-product-option=${colorIndex}]:checked`, this.$detailOptions).parent();
     }
 
-    const $selectedSize = $(`[data-product-option=${sizeIndex}]:checked`, this.$detailOptions);
+    const $selectedSize = $(`[data-product-option=${sizeIndex}]`, this.$detailOptions);
 
     if($currentOption.is('.is-bis')) {
       $(`[data-selected-option=${sizeIndex}]`).text('Notify me when back');
@@ -455,7 +445,6 @@ export default class ProductDetailForm {
         }
       }
     })
-
   }
 
   /**
@@ -588,15 +577,53 @@ export default class ProductDetailForm {
 
   _toggleOptionDrawer(evt) {
     const $this = $(evt.currentTarget);
-    const drawerId = $this.data('drawer-id');
 
-    const drawerObject = this.optionDrawers.filter((drawerItem) => {
-      if( drawerItem.id === drawerId) {
-        return true;
+    const optionDrawerData = this._buildDrawerData($this, $this.parent('form'));
+
+    $(window).trigger($.Event('option-drawer:open', {optionDrawerData}));
+  }
+
+  _buildDrawerData($toggleButton, $productForm) {
+    const otherOptions = [];
+
+    for(let i = 1; i <= 3; i++) {
+      const optionPosition = `option${i}`;
+      const $selector = $(`${selectors.singleOptionSelector}[data-index=${optionPosition}]`);
+
+      if(optionPosition === $toggleButton.data('index')) {
+        continue;
       }
+
+      if($selector.length) {
+        otherOptions.push({
+          value: $selector.is('select') ? $selector.val() : $selector.filter(':checked').val(),
+          position: optionPosition
+        })
+      }
+    }
+
+    const filteredVariants = this.productSingleObject.variants.filter((variant) => {
+      let shouldReturn = true;
+
+      otherOptions.forEach((option) => {
+        if(variant[option.position] !== option.value ) {
+          shouldReturn = false;
+        }
+      })
+
+      return shouldReturn;
     })
 
-    drawerObject[0].drawer.toggle();
+    const drawerData = {
+      optionIndex: $toggleButton.data('index'),
+      printOption: $toggleButton.data('option-name'),
+      dataField: $toggleButton.siblings(selectors.singleOptionSelector),
+      productTitle: this.productSingleObject.title,
+      activeOption: $toggleButton.siblings(selectors.singleOptionSelector).not('default').val(),
+      variants: filteredVariants
+    }
+
+    return drawerData;
   }
 
   onBisButtonClick(evt) {
