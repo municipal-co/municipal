@@ -113,6 +113,7 @@
 
   .write-question-review-buttons-container {
     width: 100%;
+    font-weight: normal !important;
     background-color: $bg-white;
     text-align: center;
     padding-bottom: 30px;
@@ -358,6 +359,13 @@
     font-size: 17px;
     color: $black;
     line-height: 1.5;
+
+    a {
+      font-family: $font-family-base;
+      font-size: 17px;
+      color: $black;
+      line-height: 1.5;
+    }
   }
 
   .yotpo-read-more {
