@@ -115,6 +115,7 @@ task('watch', async() => {
     browserSync.init({
       open: 'tunnel',
       files: ['./deploy.log'],
+      reloadDelay: 2500,
       proxy: {
         target: `https://${config.store}/?preview_theme_id=${config.theme_id}`,
         middleware: (req, res, next) => {
