@@ -16,10 +16,17 @@
           {% assign product_key = 'product_' | append: forloop.index %}
           {% assign color_key = 'product_' | append: forloop.index | append: '_color'%}
           {% assign current_product = all_products[look[product_key]] %}
+          {% assign color_index = blank %}
+
+          {% for option in current_product.options %}
+            {% if option == 'color' or option == 'Color' %}
+              {% assign color_index = 'option' | append: forloop.index %}
+            {% endif %}
+          {% endfor %}
 
           {% if current_product != blank %}
             {% for variant in current_product.variants %}
-              {%- if variant.title contains look[color_key] -%}
+              {%- if variant[color_index] == look[color_key] -%}
                 {% assign current_variant = variant %}
                 {% break %}
               {%- endif -%}
