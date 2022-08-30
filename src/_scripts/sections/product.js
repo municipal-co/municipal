@@ -36,7 +36,6 @@ export default class ProductSection extends BaseSection {
     this.galleries = [];
 
     $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
-    $('body').on('updateVariant', this.onToggleVariant.bind(this));
     this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
 
@@ -118,85 +117,5 @@ export default class ProductSection extends BaseSection {
       featuresSlider.init();
     }
 
-  }
-
-  onToggleVariant(e) {
-    const variant = e.variantSelected;
-
-    const $optionToEnable = $(`[data-fit-guide-toggle-tab="${variant}"]`);
-
-    if ($optionToEnable.length > 0 && !$optionToEnable.hasClass(classes.active)) {
-      $(selectors.fitGuideTabsDots, $optionToEnable.parent()).removeClass(classes.active);
-      $optionToEnable.addClass(classes.active);
-    }
-  }
-
-  observerCallback(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.intersectionRatio < 0.1) {
-        this.$stickyBar.addClass(classes.visible);
-        this.dettachAddToCartForm();
-      }
-
-      if (entry.intersectionRatio > 0.4) {
-        this.$stickyBar.removeClass(classes.visible);
-        this.attachAddToCartForm();
-      }
-    })
-  }
-
-  dettachAddToCartForm() {
-    const formHeight = this.$productForm.height();
-
-    this.$productFormContainer.css('min-height', formHeight);
-    this.$productForm.detach().appendTo(this.$mobileProductFormContainer);
-  }
-
-  attachAddToCartForm() {
-    this.$productFormContainer.css('min-height', null);
-    this.$productForm.detach().appendTo(this.$productFormContainer);
-  }
-
-  onBuyNowClick(event) {
-    event.preventDefault();
-    const screenWidth = $(window).width();
-    const breakpointMinWidth = Breakpoints.getBreakpointMinWidth('md');
-    if (screenWidth <= breakpointMinWidth) {
-      this.addToCartFormDrawer.show();
-      $('body').addClass('drawer-open');
-    } else {
-      $('html, body').animate({
-        scrollTop: 0
-      }, 300);
-    }
-  }
-
-  sectionScrollerClick(event) {
-    event.preventDefault();
-    const target = $(event.currentTarget).attr('href');
-    const targetOffset = $(target).offset().top;
-    const stickyBarOffset = this.$stickyBar.outerHeight();
-
-    $('html, body').animate({
-      scrollTop: targetOffset - stickyBarOffset
-    }, 300);
-  }
-
-  onModuleInView(event) {
-    this.updateScrollerLinks(event.selector);
-  }
-
-  updateScrollerLinks(target) {
-    $(selectors.sectionScroller).each((index, el) => {
-      if ($(el).attr('href') === target) {
-        $(el).addClass(classes.active).siblings().removeClass(classes.active);
-      }
-    })
-  }
-
-  toggleCollectionDrawer(event) {
-    event.preventDefault();
-    $('body').toggleClass('drawer-open');
-    this.productsDrawer.toggle();
   }
 }
