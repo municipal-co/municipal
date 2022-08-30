@@ -1,12 +1,8 @@
 
 #yotpo-star-reviews.yotpo.yotpo-rating-stars {
-  margin: 0;
+  margin: 0 !important;
   min-height: 26px; // initial height
   pointer-events: none;
-
-  @include media-breakpoint-down('md') {
-    margin: 10px 0 0;
-  }
 
   &.bottomLine .yotpo-icon.yotpo-icon-half-star,
   &.bottomLine .yotpo-icon.yotpo-icon-star,
