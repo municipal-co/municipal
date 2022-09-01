@@ -78,6 +78,47 @@
           }
           {% unless forloop.last %},{% endunless %}
         {% endfor %}
+        {% for merged_product in product.metafields.custom_fields.merge_product.value %}
+          , {%- comment -%}Adds missing trailing coma needed to continue the list{%- endcomment -%}
+          {% for variant in merged_product.variants %}
+            {
+              "available": {{ variant.available }},
+              "barcode": {{ variant.barcode | json }},
+              "compare_at_price": {{ variant.compare_at_price | json }},
+              "featured_image": {
+                {% if variant.image %}
+                  "id": {{ variant.image.id }},
+                  "product_id": {{ product.id }},
+                  "position": {{ variant.image.position }},
+                  "alt:": {{ variant.image.alt | json }},
+                  "width": {{ variant.image.width }},
+                  "height": {{ variant.image.height }},
+                  "src": {{ variant.image.src | json }}
+                {% endif %}
+              },
+              "id": {{ variant.id }},
+              "inventory_management": {{ variant.inventory_management | json }},
+              "inventory_quantity": {{ variant.inventory_quantity }},
+              "name": {{ product.title | append: ' - ' | append: variant.title | json }},
+              "options": {{ product.options | json }},
+              "option1": {{ variant.option1 | json }},
+              "option2": {{ variant.option2 | json }},
+              "option3": {{ variant.option3 | json }},
+              "price": {{ variant.price }},
+              "requires_shipping": {{ variant.requires_shipping }},
+              "sku": {{ variant.sku | json }},
+              "taxable": {{ variant.taxable | json }},
+              "title": {{ variant.title | json }},
+              "weight": {{ variant.weight }},
+              "url": {{ variant.url | within: collection | json }},
+              "metafields": {
+                "enable_bis": {{ variant.metafields.custom_fields["enable_notify_me"] | default: 0 | json}}
+                ,"enable_sold_out": {{ variant.metafields.custom_fields["enable_sold_out"] | default: 0 | json}}
+              }
+            }
+            {% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        {% endfor %}
       ],
       "images": [
         {% for image in product.images %}
@@ -93,14 +134,26 @@
       ],
       "options_with_values": [
         {% for option in product.options_with_values %}
+          {% assign option_position = option.position %}
           {
             "name": {{ option.name | json }},
-            "position": {{ forloop.index }},
+            "position": {{ option.position }},
             "values": [
               {% for v in option.values %}
                 {{ v | json }}
                 {% unless forloop.last %},{% endunless %}
               {% endfor %}
+              {% for merged_product in product.metafields.custom_fields.merge_product.value %}
+                {% for option in merged_product.options_with_values %}
+                  {% if option.position == option_position %}
+                    ,  {%- comment -%}Compensates for missing trailing comma{%- endcomment -%}
+                    {% for v in option.values %}
+                      {{ v | json }}
+                      {% unless forloop.last %} , {% endunless %}
+                    {% endfor %}
+                  {% endif %}
+                {% endfor %}
+              {% endfor%}
             ]
           }
           {% unless forloop.last %},{% endunless %}
