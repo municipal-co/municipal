@@ -1,6 +1,7 @@
 {% assign text_color = section.settings.text_color %}
 {% assign highlight_color = section.settings.highlight_color %}
 {% assign bgcolor = section.settings.bgcolor %}
+{% assign text_alignment = section.settings.text_alignment %}
 {% assign image = section.settings.image %}
 {% assign title_tag = section.settings.title_tag %}
 {% assign title = section.settings.title %}
@@ -27,7 +28,7 @@
 </style>
 
 <div id="lead-content-{{ section.id }}" data-section-id="{{ section.id }}" class="lead-content" data-section-type="lead-content">
-  <div class="container-fluid-max">
+  <div class="container-fluid-max {%- if text_alignment == "center" %} text-center{%- endif -%}">
     {%- if  image != blank -%}
       <img class="lead-content__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
     {%- endif -%}
@@ -67,6 +68,22 @@
       "type": "color",
       "id": "bgcolor",
       "label": "Background Color"
+    },
+    {
+     "type": "select",
+     "id": "text_alignment",
+     "label": "Text Alignment",
+     "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
     },
     {
       "type": "header",

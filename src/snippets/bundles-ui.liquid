@@ -79,7 +79,8 @@
                 type: 'swatch',
                 print_option: 'color',
                 current_variant: product.selected_or_first_available_variant,
-                option_prefix: option_prefix
+                option_prefix: option_prefix,
+                merge_products: product.metafields.custom_fields.merge_product.value
               %}
             {% elsif option == 'size' or option == 'Size' %}
             {% assign option_index = 'option' | append: forloop.index %}

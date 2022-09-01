@@ -168,7 +168,13 @@ export default class Variants {
       return;
     }
 
-    const newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + variant.id;
+    let newurl;
+
+    if(variant.url) {
+      newurl = window.location.protocol + '//' + window.location.host + variant.url;
+    } else {
+      newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + variant.id;
+    }
     window.history.replaceState({ path: newurl }, '', newurl);
   }
 
