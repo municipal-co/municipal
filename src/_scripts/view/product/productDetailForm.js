@@ -26,7 +26,6 @@ const selectors = {
   shippingModal: '[data-shipping-modal]',
   shippingModalTrigger: '[data-shipping-modal-trigger]',
   badge: '[data-badge]',
-  badgesData: '[data-badges-json]',
   dotsColorContainer: '.dots--color',
   dotsContainer: '.dots',
   dot: '.dot',

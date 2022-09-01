@@ -81,14 +81,6 @@
     <script type="application/json" data-product-json>
       {%- render 'product-json', product: product -%}
     </script>
-    <script type="application/json" data-badges-json>
-      {
-        "default": {{ product_default_badge | json }},
-      {%- for variant in product.variants -%}
-        "{{ variant.id }}": {{ variant.metafields.custom_fields['badge'] | json }} {%- unless forloop.last %} ,{%- endunless -%}
-      {%- endfor -%}
-      }
-    </script>
   {%- endunless -%}
 
   {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
