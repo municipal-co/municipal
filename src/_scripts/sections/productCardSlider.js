@@ -29,8 +29,8 @@ export default class ProductCardSlider extends BaseSection {
       slidesOffsetBefore: 30,
       slidesOffsetAfter: 30,
       navigation: {
-        nextEl: '[data-arrow-next]',
-        prevEl: '[data-arrow-prev]'
+        nextEl: '[data-slider-arrow-next]',
+        prevEl: '[data-slider-arrow-prev]'
       },
       breakpoints: {
         530: {
