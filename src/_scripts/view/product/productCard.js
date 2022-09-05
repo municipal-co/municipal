@@ -188,7 +188,7 @@ export default class ProductCard {
   updateCardUrl(variant) {
     this.$productUrl.each((i, url) => {
       const currentUrl = $(url).data('product-url');
-      url.href = currentUrl + `?variant=${variant.id}`;
+      url.href = variant.url ? variant.url : (currentUrl + `?variant=${variant.id}`);
     })
   }
 

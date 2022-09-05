@@ -56,6 +56,31 @@
       </div>
     {% endif %}
   {%- endfor -%}
+
+  {%- for merged_product in card_product.metafields.custom_fields.merge_product.value -%}
+    {% for image in merged_product.images %}
+      {% assign alt_downcase = image.alt | downcase %}
+      {% if alt_downcase contains 'front' %}
+        {% assign alt_pieces = image.alt | split: '|' %}
+        {% assign image_color_downcase = alt_pieces[1] | downcase %}
+        {% assign variant_color_downcase = current_variant[color_index] | downcase %}
+        <div class="product-card__gallery-slide
+            {% if image_color_downcase == variant_color_downcase %}is-active{% endif %}"
+            href="{{merged_product.url}}?variant={{current_variant.id}}" data-product-url="{{merged_product.url}}"
+            data-gallery-slide
+            data-image-selector="{{ alt_pieces[1] | downcase }}">
+
+          <img
+              src="{{image | image_url }}"
+              width="400px"
+              height="auto"
+              class="product-card__image"
+              alt="{{ alt_pieces[0] }}"
+              loading="lazy">
+        </div>
+      {% endif %}
+    {% endfor %}
+  {%- endfor -%}
 {% endcapture %}
 
 {% if card_images == blank %}
@@ -82,6 +107,29 @@
         {% continue %}
       {% endunless %}
     {% endfor %}
+    {%- for merged_product in card_product.metafields.custom_fields.merge_product.value -%}
+      {% for variant in merged_product.variants %}
+      {% unless printed_images contains variant.image %}
+        {% assign alt_pieces = image.alt | split: '|' %}
+          <div class="product-card__gallery-slide
+            {% if variant == current_variant %}
+              is-active
+            {% endif %}"
+            data-image-selector="{{ alt_pieces[1] }}">
+            <img
+              src="{{variant.image | image_url: width: '400', format: 'pjpg'}}"
+              class="product-card__image"
+              width="400"
+              height="auto"
+              alt="{{ alt_pieces[0] }}"
+              loading="lazy">
+          </div>
+          {% assign printed_images = printed_images | append: variant.image %}
+        {% else %}
+          {% continue %}
+      {% endunless %}
+      {% endfor %}
+    {% endfor %}
   {% endcapture %}
 {% endif %}
 
@@ -97,6 +145,7 @@
         print_option: 'color',
         type:'swatch',
         current_variant: current_variant
+        merge_products: card_product.metafields.custom_fields.merge_product.value
       %}
       <span class="product-card__color-title" data-color-title data-color-index="{{color_index}}">
         {{ current_variant[color_index] }}
