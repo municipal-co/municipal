@@ -19,11 +19,7 @@
             <div class="swiper-slide" data-slide>
               {% if slide.image != blank %}
                 <div class="content-slider__image-container">
-                  <img class="content-slider__img" src="{% render "cf-image" with
-                    image: slide.image,
-                    print: 'url',
-                    format: 'pjpg',
-                    size:'100x'%}" alt="{{slide.image_alt}}">
+                  <img class="content-slider__img" src="{{ slide.image }}" alt="{{slide.image_alt}}">
                 </div>
               {% endif %}
               {% if slide.title != blank %}
