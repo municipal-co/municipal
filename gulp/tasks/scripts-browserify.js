@@ -17,8 +17,9 @@ const browserifyThis = (file) => {
   log(`Bundling ${file.name}`);
   const bundle = () => {
     return b.bundle()
-      .on('error', (error) => {
-        log.error(error);
+      .on('error', function(error) {
+        log.error(error.message);
+        this.emit('end');
       })
       .pipe(source(file.name))
       .pipe(dest('./dist/assets/'))
