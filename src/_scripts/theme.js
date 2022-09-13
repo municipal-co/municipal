@@ -62,7 +62,9 @@ import ProductCard from './view/product/productCard';
 
 // Templates
 import './templates/pageStyles';
-// import './templates/pageComponents';
+
+// Views
+import Navigation from './view/navigation/navigation'
 
 // Do this ASAP
 Animations.initialize();
@@ -76,6 +78,7 @@ Breakpoints.initialize();
 
   sectionManager.register('header', HeaderSection);
   sectionManager.register('footer', FooterSection);
+  sectionManager.register('navigation', Navigation);
   sectionManager.register('mobile-menu', MobileMenuSection);
   sectionManager.register('product', ProductSection);
   sectionManager.register('cart', CartSection);

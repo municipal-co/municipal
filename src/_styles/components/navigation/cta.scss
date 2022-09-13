@@ -1,0 +1,46 @@
+.cta {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  background-color: $core-grey-2;
+  line-height: 1;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.cta--top-space {
+  margin-top: 30px;
+}
+
+.cta--bottom-space {
+  margin-bottom: 30px;
+}
+
+.cta__label {
+  font-family: $font-family-heading-large;
+  font-size: 16px;
+  color: $black;
+}
+
+.cta__icon {
+  margin-left: auto;
+  right: 0;
+  transition: right $transition-duration-base $transition-timing-function-in-out-ui;
+  position: relative;
+
+  .cta:hover & {
+    right: -5px;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    mask-image: url('./icon-arrow-yotpo.svg');
+    mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    background-color: currentcolor;
+    width: 20px;
+    height: 20px;
+  }
+}
