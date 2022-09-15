@@ -79,6 +79,7 @@
             "card_title": {{ s.card_title | json }},
             "card_body": {{ s.card_body | json }},
             "image": {{ s.image | img_url: 'master' | json }},
+            "image_alt": {{ s.image.alt | json }},
             "url": {{ s.url | json }}
           }
           {%- when 'info_card' -%}
@@ -88,6 +89,7 @@
           "settings": {
             "title": {{ s.title | json }},
             "image": {{ s.image | img_url: 'master' | json }},
+            "image_alt": {{ s.image.alt | json }},
             "card_body": {{ s.body | json }},
             "label_1": {{ s.cta_label_1 | json }},
             "url_1": {{ s.cta_url_1 | json }},
@@ -177,7 +179,7 @@
           "id": "highlight_badge_1",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -210,7 +212,7 @@
           "id": "highlight_badge_2",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -243,7 +245,7 @@
           "id": "highlight_badge_3",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -276,7 +278,7 @@
           "id": "highlight_badge_4",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -309,7 +311,7 @@
           "id": "highlight_badge_5",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -342,7 +344,7 @@
           "id": "highlight_badge_6",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -375,7 +377,7 @@
           "id": "highlight_badge_7",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -408,7 +410,7 @@
           "id": "highlight_badge_8",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -441,7 +443,7 @@
           "id": "highlight_badge_9",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -474,7 +476,7 @@
           "id": "highlight_badge_10",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -507,7 +509,7 @@
           "id": "highlight_badge_11",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -540,7 +542,7 @@
           "id": "highlight_badge_12",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -620,7 +622,7 @@
           "id": "highlight_badge_1",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -653,7 +655,7 @@
           "id": "highlight_badge_2",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -686,7 +688,7 @@
           "id": "highlight_badge_3",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -719,7 +721,7 @@
           "id": "highlight_badge_4",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -752,7 +754,7 @@
           "id": "highlight_badge_5",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -785,7 +787,7 @@
           "id": "highlight_badge_6",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -818,7 +820,7 @@
           "id": "highlight_badge_7",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -851,7 +853,7 @@
           "id": "highlight_badge_8",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -884,7 +886,7 @@
           "id": "highlight_badge_9",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -917,7 +919,7 @@
           "id": "highlight_badge_10",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -950,7 +952,7 @@
           "id": "highlight_badge_11",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -983,7 +985,7 @@
           "id": "highlight_badge_12",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
@@ -1053,7 +1055,7 @@
           "id": "highlight_badge",
           "label": "Highlight Badge",
           "default": "NEW",
-          "info": "Badge displayed in yellow before the title when the option *Highlight the card?* is enabled"
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
         },
         {
           "type": "text",
