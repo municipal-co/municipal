@@ -7,10 +7,10 @@ const CardBlock = ((props) => {
   const header = settings.title && <h2 className='card-block__header'> {settings.title} </h2>;
   let editorBlockData = ''
   if(Shopify.designMode) {
-    editorBlockData = `{"id":"${props.block.id}", "type":"${props.block.type}"}`
+    editorBlockData = `{"id":"${props.id}", "type":"${props.block.type}"}`
   }
   return (
-    <a href={settings.url} id={props.block.id} className={['card-block',
+    <a href={settings.url} id={props.id} className={['card-block',
       settings.highlight_card ? 'card-block--highlight' : '',
       settings.top_space ? 'card-block--top-space' : '',
       settings.bottom_space ? 'card-block--bottom-space' : ''].join(' ')}

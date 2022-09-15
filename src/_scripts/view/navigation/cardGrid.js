@@ -20,9 +20,12 @@ const CardGrid = ((props) => {
     )
   })
   const sectionTitle = props.block.settings.section_title ? <div className="card-grid__title">{props.block.settings.section_title}</div> : '';
-
+  let editorBlockData = ''
+  if(Shopify.designMode) {
+    editorBlockData = `{"id":"${props.id}", "type":"${props.block.type}"}`
+  }
   return (
-    <div className='card-grid'>
+    <div className='card-grid' data-shopify-editor-block={editorBlockData}>
       { sectionTitle }
 
       <div className="card-grid__grid">
