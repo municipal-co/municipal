@@ -1,36 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import CardGrid from "./cardGrid";
 import Cta from "./cta";
 
-export default class NavigationBlocks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeBlocks: []
-    }
 
-    this.getActiveBlocks = this.getActiveBlocks.bind(this);
-  }
+const NavigationBlocks = ((props) => {
 
-  componentDidUpdate(prevProps, prevState) {
-    const activeBlocks = this.getActiveBlocks();
-    if(this.props.currentMenu !== prevProps.currentMenu) {
-      this.setState({
-        activeBlocks: activeBlocks
-      })
-    }
-  }
-
-  getActiveBlocks() {
-    const activeBlocks = this.props.components.filter(component => {
-      return component.category == this.props.currentMenu
-    })
+  const getActiveBlocks = () => {
+    const activeBlocks = props.components.filter(component => component.category == props.currentMenu)
 
     return activeBlocks;
   }
 
-  render() {
-    const blocks = this.state.activeBlocks.map( block => {
+  const buildComponentBlocks = () => {
+    const blocks = getActiveBlocks().map( block => {
       switch (block.type) {
         case 'card_grid':
           return <CardGrid key={block.id} block={block} />
@@ -40,10 +22,14 @@ export default class NavigationBlocks extends React.Component {
           return false;
       }
     })
-    return (
-      <ul className="navigation-blocks">
-        {blocks}
-      </ul>
-    )
+    return blocks;
   }
-}
+
+  return (
+    <ul className="navigation-blocks">
+      {buildComponentBlocks()}
+    </ul>
+  )
+})
+
+export default NavigationBlocks;

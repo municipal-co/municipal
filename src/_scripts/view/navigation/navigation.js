@@ -1,81 +1,89 @@
 // eslint-disable-next-line max-classes-per-file
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import BaseSection from '../../sections/base';
 
-import NavigationMenu from './navigationCategories';
+import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
 
-class MainNav extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = Object.assign({}, this.props)
-
-    this.getCategories = this.getCategories.bind(this);
-    this.setCurrentCategory = this.setCurrentCategory.bind(this);
+const MainNav = ((props) => {
+  const getComponents = (evt) => {
+    return JSON.parse(document.querySelector('[data-navigation-json]').innerHTML);
   }
 
-  getCategories() {
-    const categories = [];
+  const openNavigation = (evt) => {
+    if(evt.detail.sectionId !== props.id) {
+      return;
+    }
 
-    this.state.data.map( component => {
-      if(categories.indexOf(component.category) == -1) {
-        categories.push(component.category);
+    setIsOpen(true);
+  }
+
+  const closeNavigation = (evt) => {
+    if(evt.detail.sectionId !== props.id) {
+      return;
+    }
+
+    setIsOpen(false);
+  }
+
+  const getCategories = () => {
+    const newCategories = [];
+
+    components.map( component => {
+      if(newCategories.indexOf(component.category) == -1 && component.category != '') {
+        newCategories.push(component.category);
       }
     })
 
-    return categories;
+    return newCategories;
   }
 
-  componentDidMount() {
-    const categories = this.getCategories()
-
-    this.setState({
-      currentMenu: categories[0]
-    })
+  const updateCurrentMenu = (evt) =>{
+    if(evt) {
+      setCurrentMenu(evt.target.innerText);
+    } else {
+      setCurrentMenu(getCurrentMenu());
+    }
   }
 
-  setCurrentCategory(evt) {
-    evt.preventDefault();
-    const category = evt.target.innerText
-    this.setState({
-      currentMenu: category
-    })
-  }
+  const [isOpen, setIsOpen] = useState(false);
+  const [components, setComponents] = useState(getComponents() || {});
+  const [categories, setCategories] = useState(getCategories());
+  const [currentMenu, setCurrentMenu] = useState(categories[0]);
 
-  render() {
-    const categoryList = this.getCategories()
-    return (
-      <div>
-        <NavigationMenu
-          categories={categoryList}
-          data={this.state.data}
-          clickCallback={this.setCurrentCategory}
-          currentMenu={this.state.currentMenu}
-        />
-        <NavigationBlocks
-          components={this.state.data}
-          currentMenu={this.state.currentMenu}
-        />
-      </div>
-    )
-  }
-}
+  useEffect(() => document.addEventListener('shopify:section:load', (evt) => {
+    if(evt.detail.sectionId == id) {
+      setComponents(getComponents());
+      updateCurrentMenu();
+    }
+  }));
+  useEffect(() => document.addEventListener('shopify:section.select', openNavigation), [isOpen]);
+  useEffect(() => document.addEventListener('shopify:section.unselect', closeNavigation), [isOpen]);
 
-MainNav.defaultProps = {
-  isOpen: false,
-  currentMenu: '',
-  data: JSON.parse(document.querySelector('[data-navigation-json]').innerHTML)
-}
-
+  return (
+    <div className={`main-navigation ${ isOpen ? '':'hidden'}`}>
+      <NavigationCategories
+        key="NavigationCategories"
+        categories={categories}
+        clickCallback={updateCurrentMenu}
+        currentMenu={currentMenu}
+      />
+      <NavigationBlocks
+        key="NavigationBlocks"
+        components={components}
+        currentMenu={currentMenu}
+      />
+    </div>
+  )
+})
 export default class Navigation extends BaseSection {
   constructor(container) {
     super(container, 'navigation');
     this.navigationHolder = document.getElementById('main_navigation');
 
     const root = ReactDOM.createRoot(this.navigationHolder)
-    root.render(<MainNav/>);
+    root.render(<MainNav id={this.navigationHolder.dataset.sectionId}/>);
   }
 }
 
