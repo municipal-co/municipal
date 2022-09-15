@@ -3,15 +3,19 @@ import React from "react";
 const CardBlock = ((props) => {
   const settings = props.block.settings;
 
-  const hihglighted_badge = settings.highlight_badge && <b classname="card-block__highlight-badge">{settings.highlight_badge}</b>
-  const header = settings.title && <div className='card-block__title'> {settings.title} </div>;
-
+  const hihglighted_badge = settings.highlight_badge && <b className="card-block__highlight-badge">{settings.highlight_badge}</b>
+  const header = settings.title && <h2 className='card-block__header'> {settings.title} </h2>;
+  let editorBlockData = ''
+  if(Shopify.designMode) {
+    editorBlockData = `{"id":"${props.block.id}", "type":"${props.block.type}"}`
+  }
   return (
-    <a href={settings.url} id={props.block.id} className={`card-block
-      ${settings.highlight_card && 'card-block--highlight'}
-      ${settings.top_space && 'card-block--top-space'}
-      ${settings.bottom_space && 'card-block--bottom-space'}
-      `}>
+    <a href={settings.url} id={props.block.id} className={['card-block',
+      settings.highlight_card ? 'card-block--highlight' : '',
+      settings.top_space ? 'card-block--top-space' : '',
+      settings.bottom_space ? 'card-block--bottom-space' : ''].join(' ')}
+      data-shopify-editor-block={editorBlockData}
+      >
       { header }
       <div className="card-block__content">
         <div className="card-block__image-container frame frame--16x9">
@@ -22,6 +26,7 @@ const CardBlock = ((props) => {
             { settings.highlight_card && hihglighted_badge }
             { settings.card_title && settings.card_title }
           </div>
+          {settings.card_body && <div className="card-block__description"> { settings.card_body } </div>}
         </div>
       </div>
     </a>
