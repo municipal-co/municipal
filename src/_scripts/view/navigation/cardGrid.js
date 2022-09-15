@@ -19,7 +19,7 @@ const CardGrid = ((props) => {
       </a>
     )
   })
-  const sectionTitle = props.block.settings.sectionTitle ? `<div className="card-grid__title>${sectionTitle}</div>` : '';
+  const sectionTitle = props.block.settings.section_title ? <div className="card-grid__title">{props.block.settings.section_title}</div> : '';
 
   return (
     <div className='card-grid'>
