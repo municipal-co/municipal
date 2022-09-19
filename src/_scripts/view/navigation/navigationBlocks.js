@@ -30,10 +30,19 @@ const NavigationBlocks = ((props) => {
     return blocks;
   }
 
+  const buildComponentsReferences = () => {
+    const references = props.components.map( component => {
+      return <div key={component.id+"editor"} data-shopify-editor-block={`{"id":"${component.id}", "type": "${component.type}"}`}></div>
+    })
+
+    return references;
+  }
+
   return (
-    <ul className="navigation-blocks">
+    <div className="navigation-blocks">
       {buildComponentBlocks()}
-    </ul>
+      {Shopify.designMode ? buildComponentsReferences() : ''}
+    </div>
   )
 })
 

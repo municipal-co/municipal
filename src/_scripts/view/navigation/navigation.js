@@ -7,6 +7,14 @@ import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
 
 const MainNav = ((props) => {
+
+  const updateModuleData = (evt) => {
+    if(evt.detail.sectionId == props.id) {
+      setComponents(getComponents());
+      updateCurrentMenu();
+    }
+  }
+
   const getComponents = (evt) => {
     return JSON.parse(document.querySelector('[data-navigation-json]').innerHTML);
   }
@@ -39,11 +47,23 @@ const MainNav = ((props) => {
     return newCategories;
   }
 
-  const updateCurrentMenu = (evt) =>{
+  const updateCurrentMenu = (evt) => {
     if(evt) {
       setCurrentMenu(evt.target.innerText);
     } else {
-      setCurrentMenu(getCurrentMenu());
+      setCurrentMenu(categories[0]);
+    }
+  }
+
+  const updateSelectedBlock = (evt) => {
+    if(evt.detail.sectionId == props.id && selectedBlock != evt.detail.blockId) {
+      const currentBlock = components.filter(component => {
+        return component.id == evt.detail.blockId
+      })
+      if(currentBlock.length) {
+        setSelectedBlock(evt.detail.blockId);
+        setCurrentMenu(currentBlock[0].category);
+      }
     }
   }
 
@@ -51,15 +71,22 @@ const MainNav = ((props) => {
   const [components, setComponents] = useState(getComponents() || {});
   const [categories, setCategories] = useState(getCategories());
   const [currentMenu, setCurrentMenu] = useState(categories[0]);
+  const [selectedBlock, setSelectedBlock] = useState('');
 
-  useEffect(() => document.addEventListener('shopify:section:load', (evt) => {
-    if(evt.detail.sectionId == id) {
-      setComponents(getComponents());
-      updateCurrentMenu();
-    }
-  }));
-  useEffect(() => document.addEventListener('shopify:section.select', openNavigation), [isOpen]);
-  useEffect(() => document.addEventListener('shopify:section.unselect', closeNavigation), [isOpen]);
+  //Component will render
+  useEffect(() => {
+    document.addEventListener('shopify:section:load', updateModuleData);
+    document.addEventListener('shopify:section.select', openNavigation);
+    document.addEventListener('shopify:section.unselect', closeNavigation);
+    document.addEventListener('shopify:block:select', updateSelectedBlock);
+
+    return (() => {
+      document.removeEventListener('shopify:section:load', updateModuleData);
+      document.removeEventListener('shopify:section:select', openNavigation);
+      document.removeEventListener('shopify:section:unselect', closeNavigation);
+      document.removeEventListener('shopify:block:select', updateSelectedBlock);
+    })
+  }, [])
 
   return (
     <div className={`main-navigation ${ isOpen ? '':'hidden'}`}>
