@@ -87,6 +87,7 @@
           "id": {{ block.id | json }},
           "category": {{ s.category | json }},
           "settings": {
+            "header": {{ s.header | json }},
             "title": {{ s.title | json }},
             "image": {{ s.image | img_url: 'master' | json }},
             "image_alt": {{ s.image.alt | json }},
@@ -1093,6 +1094,13 @@
           "info": "Defines the group on the navigation where this item is going to be rendered, this is *required* otherwise the module will not display"
         },
         {
+          "type": "text",
+          "id": "header",
+          "label": "Section Header",
+          "default": "Section Header",
+          "info": "Title placed on top of the card, used as a section divider"
+        },
+        {
         "type": "image_picker",
         "id": "image",
         "label": "Image",
@@ -1100,7 +1108,7 @@
         },
         {
           "type": "text",
-          "id": "tilte",
+          "id": "title",
           "label": "Title",
           "default": "Info Card Title"
         },

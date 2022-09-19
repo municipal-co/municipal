@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CardGrid from "./cardGrid";
 import Cta from "./cta";
 import CardBlock from "./cardBlock";
+import InfoCard from "./infoCard";
 
 const NavigationBlocks = ((props) => {
 
@@ -20,6 +21,8 @@ const NavigationBlocks = ((props) => {
           return <Cta key={block.id} id={block.id} block={block} />
         case 'card_block':
           return <CardBlock key={block.id} id={block.id} block={block} />
+        case 'info_card':
+          return <InfoCard key={block.id} id={block.id} block={block} />
         default:
           return false;
       }
