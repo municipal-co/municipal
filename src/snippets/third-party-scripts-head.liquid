@@ -39,3 +39,11 @@
 
 <!-- Event snippet for Purchase Conversion conversion page -->
 <script>gtag("event","conversion",{send_to:"AW-10812993036/9dTwCN-NxosDEIzchKQo",transaction_id:""})</script>
+
+<!-- Site Retargeting Pixel (DSP) -->
+<script src="https://secure.adnxs.com/seg?add=31471266&t=1" type="text/javascript" defer></script>
+
+<!-- Pixel Tracker - Universal Pixel (Flip) -->
+{% assign template_type = template | split: '.' | first | split: '/' | last %}
+<script src="https://tracker.pixeltracker.co/pixel.js"></script>
+<script>FLPIXEL.fire("975023b2-5a8e-4a2f-b9be-554b742d6e98", {"category": "pagevisit","subcategory": "{{ template_type }}"});</script>
