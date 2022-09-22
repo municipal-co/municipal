@@ -14,15 +14,16 @@ const NavigationBlocks = ((props) => {
 
   const buildComponentBlocks = () => {
     const blocks = getActiveBlocks().map( block => {
+      const isActiveBlock = block.id == props.currentBlock;
       switch (block.type) {
         case 'card_grid':
-          return <CardGrid key={block.id} id={block.id} block={block} />
+          return <CardGrid key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
         case 'cta':
-          return <Cta key={block.id} id={block.id} block={block} />
+          return <Cta key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
         case 'card_block':
-          return <CardBlock key={block.id} id={block.id} block={block} />
+          return <CardBlock key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
         case 'info_card':
-          return <InfoCard key={block.id} id={block.id} block={block} />
+          return <InfoCard key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
         default:
           return false;
       }
@@ -30,18 +31,9 @@ const NavigationBlocks = ((props) => {
     return blocks;
   }
 
-  const buildComponentsReferences = () => {
-    const references = props.components.map( component => {
-      return <div key={component.id+"editor"} data-shopify-editor-block={`{"id":"${component.id}", "type": "${component.type}"}`}></div>
-    })
-
-    return references;
-  }
-
   return (
     <div className="navigation-blocks">
       {buildComponentBlocks()}
-      {Shopify.designMode ? buildComponentsReferences() : ''}
     </div>
   )
 })

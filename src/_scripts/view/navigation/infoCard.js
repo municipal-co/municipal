@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 
 const InfoCard = ((props) => {
   const settings = props.block.settings;
@@ -7,6 +7,7 @@ const InfoCard = ((props) => {
   let button2;
   let editorBlockData;
   let cardBody;
+  const element = useRef(null);
 
   if(settings.image) {
     image = (<div className="info-card__image-container frame frame--1x1">
@@ -30,8 +31,14 @@ const InfoCard = ((props) => {
     editorBlockData = `{"id":"${props.id}", "type":"${props.block.type}"}`
   }
 
+  { useRef, useEffect }useEffect(() => {
+    if(props.activeBlock && element.current) {
+      element.current.scrollIntoView({behavior: "smooth", block: "center"})
+    }
+  });
+
   return (
-    <div id={props.id} className="info-card__container" data-shopify-editor-block={editorBlockData}>
+    <div id={props.id} className="info-card__container" data-shopify-editor-block={editorBlockData} ref={element}>
       {settings.header ? <h2 className="info-card__header">{settings.header}</h2> : '' }
       <div className="info-card">
         {image}

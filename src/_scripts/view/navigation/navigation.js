@@ -1,17 +1,28 @@
-// eslint-disable-next-line max-classes-per-file
-import React, {useState, useEffect} from 'react';
-import ReactDOM from 'react-dom/client';
-import BaseSection from '../../sections/base';
+import React, {useState, useEffect, useRef} from 'react';
 
 import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
 
 const MainNav = ((props) => {
 
+  const getComponentData = () => {
+    const components = getComponents();
+    const categories = getCategories(components);
+    const currentMenu = data ? data.currentMenu : categories[0];
+
+    const componentData = {
+      components,
+      categories,
+      currentMenu,
+      currentBlock: ''
+    }
+
+    return componentData ;
+  }
+
   const updateModuleData = (evt) => {
-    if(evt.detail.sectionId == props.id) {
-      setComponents(getComponents());
-      updateCurrentMenu();
+    if(evt.detail.sectionId == id) {
+      setData(getComponentData());
     }
   }
 
@@ -20,7 +31,7 @@ const MainNav = ((props) => {
   }
 
   const openNavigation = (evt) => {
-    if(evt.detail.sectionId !== props.id) {
+    if(evt.detail.sectionId !== id) {
       return;
     }
 
@@ -28,89 +39,98 @@ const MainNav = ((props) => {
   }
 
   const closeNavigation = (evt) => {
-    if(evt.detail.sectionId !== props.id) {
+    if(evt.detail.sectionId !== id) {
       return;
     }
 
     setIsOpen(false);
   }
 
-  const getCategories = () => {
+  const getCategories = (components) => {
     const newCategories = [];
-
     components.map( component => {
       if(newCategories.indexOf(component.category) == -1 && component.category != '') {
         newCategories.push(component.category);
       }
     })
-
     return newCategories;
   }
 
   const updateCurrentMenu = (evt) => {
     if(evt) {
-      setCurrentMenu(evt.target.innerText);
+      setData(Object.assign({}, data, {currentMenu: evt.target.innerText}));
     } else {
-      setCurrentMenu(categories[0]);
+      setData(Object.assign({}, data, {currentMenu: categories[0]}));
     }
   }
 
   const updateSelectedBlock = (evt) => {
-    if(evt.detail.sectionId == props.id && selectedBlock != evt.detail.blockId) {
-      const currentBlock = components.filter(component => {
+    if(evt.detail.sectionId == id) {
+      const components = getComponents();
+      const activeBlock = components.find(component => {
         return component.id == evt.detail.blockId
       })
-      if(currentBlock.length) {
-        setSelectedBlock(evt.detail.blockId);
-        setCurrentMenu(currentBlock[0].category);
+
+      if(activeBlock) {
+        const categories = getCategories(components);
+        const currentMenu = activeBlock.category;
+        const currentBlock = activeBlock.id;
+
+        setData(Object.assign({}, data, {
+          components,
+          categories,
+          currentMenu,
+          currentBlock
+        }))
       }
     }
   }
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [components, setComponents] = useState(getComponents() || {});
-  const [categories, setCategories] = useState(getCategories());
-  const [currentMenu, setCurrentMenu] = useState(categories[0]);
-  const [selectedBlock, setSelectedBlock] = useState('');
+  const toggleNavigation = () => {
+    setIsOpen(!isOpen);
+  }
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState(getComponentData());
+  const navBody = useRef(null);
+
+  const id = document.querySelector('[data-navigation-json]').dataset.sectionId
   //Component will render
   useEffect(() => {
     document.addEventListener('shopify:section:load', updateModuleData);
-    document.addEventListener('shopify:section.select', openNavigation);
-    document.addEventListener('shopify:section.unselect', closeNavigation);
+    document.addEventListener('shopify:section:select', openNavigation);
+    document.addEventListener('shopify:section:deselect', closeNavigation);
     document.addEventListener('shopify:block:select', updateSelectedBlock);
-
-    return (() => {
+    document.addEventListener('navigation:toggle', toggleNavigation);
+    return () => {
       document.removeEventListener('shopify:section:load', updateModuleData);
       document.removeEventListener('shopify:section:select', openNavigation);
-      document.removeEventListener('shopify:section:unselect', closeNavigation);
+      document.removeEventListener('shopify:section:deselect', closeNavigation);
       document.removeEventListener('shopify:block:select', updateSelectedBlock);
-    })
+      document.removeEventListener('navigation:toggle', toggleNavigation);
+    }
   }, [])
 
   return (
-    <div className={`main-navigation ${ isOpen ? '':'hidden'}`}>
-      <NavigationCategories
-        key="NavigationCategories"
-        categories={categories}
-        clickCallback={updateCurrentMenu}
-        currentMenu={currentMenu}
-      />
-      <NavigationBlocks
-        key="NavigationBlocks"
-        components={components}
-        currentMenu={currentMenu}
-      />
+    <div className={`navigation ${isOpen ? 'is-visible' : ''}`}>
+      <div className="navigation-body" ref={navBody}>
+        <NavigationCategories
+          key="NavigationCategories"
+          categories={data.categories}
+          clickCallback={updateCurrentMenu}
+          currentMenu={data.currentMenu}
+        />
+        <NavigationBlocks
+          key="NavigationBlocks"
+          components={data.components}
+          currentMenu={data.currentMenu}
+          currentBlock={data.currentBlock}
+        />
+      </div>
+      <div className="navigation-backdrop" onClick={() => setIsOpen(false)}></div>
     </div>
   )
 })
-export default class Navigation extends BaseSection {
-  constructor(container) {
-    super(container, 'navigation');
-    this.navigationHolder = document.getElementById('main_navigation');
 
-    const root = ReactDOM.createRoot(this.navigationHolder)
-    root.render(<MainNav id={this.navigationHolder.dataset.sectionId}/>);
-  }
-}
+export default MainNav;
 

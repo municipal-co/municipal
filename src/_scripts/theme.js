@@ -3,6 +3,8 @@ import $ from 'jquery';
 import 'chosen-js';
 import 'jquery-unveil';
 import 'lazysizes';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 
 // Bootstrap JS
@@ -25,7 +27,6 @@ import './ui/passwordValidation';
 import SectionManager from './sections/sectionManager';
 import HeaderSection from './sections/header';
 import FooterSection from './sections/footer';
-import MobileMenuSection from './sections/mobileMenu';
 import ProductSection from './sections/product';
 import CartSection from './sections/cart';
 import AJAXCartSection from './sections/ajaxCart';
@@ -53,10 +54,6 @@ import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
 import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 
-
-// Managers
-// import QuickViewManager from './managers/quickView';
-
 // Models
 import ProductCard from './view/product/productCard';
 
@@ -64,7 +61,7 @@ import ProductCard from './view/product/productCard';
 import './templates/pageStyles';
 
 // Views
-import Navigation from './view/navigation/navigation'
+import MainNav from './view/navigation/navigation';
 
 // Do this ASAP
 Animations.initialize();
@@ -78,8 +75,6 @@ Breakpoints.initialize();
 
   sectionManager.register('header', HeaderSection);
   sectionManager.register('footer', FooterSection);
-  sectionManager.register('navigation', Navigation);
-  sectionManager.register('mobile-menu', MobileMenuSection);
   sectionManager.register('product', ProductSection);
   sectionManager.register('cart', CartSection);
   sectionManager.register('ajax-cart', AJAXCartSection);
@@ -112,6 +107,12 @@ Breakpoints.initialize();
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
+
+  // Register Mobile navigation
+  const navigationHolder = document.getElementById('main_navigation')
+  const navigationRoot = ReactDOM.createRoot(navigationHolder);
+  navigationRoot.render(<MainNav/>);
+
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

@@ -1,6 +1,10 @@
-<div id="main_navigation" data-section-type="navigation" data-section-id="{{section.id}}"></div>
-
-<script type="application/json" data-navigation-json>
+{% if request.design_mode %}
+  {% for block in section.blocks %}
+    <div {{ block.shopify_attributes }} class="{{block.id}}"></div>
+  {% endfor %}
+{% endif %}
+<!-- <div id="main_navigation" data-section-type="navigation" data-section-id="{{section.id}}"></div> -->
+<script type="application/json" data-navigation-json data-section-id="{{section.id}}">
   [
     {%- for block in section.blocks -%}
       {%- assign s = block.settings -%}
