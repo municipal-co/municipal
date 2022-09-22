@@ -12,6 +12,7 @@ const selectors = {
   searchDrawer: '[data-search-drawer]',
   closeSearchDrawer: '[data-drawer-close]',
   headerFiller: '[data-header-filler]',
+  menuToggler: '[data-mobile-menu-toggle]',
 };
 
 const classes = {
@@ -32,6 +33,7 @@ export default class HeaderSection extends BaseSection {
     this.$closeSearchDrawer = $(selectors.closeSearchDrawer, this.$container);
     this.$searchInput = $(selectors.searchInput, this.$container);
     this.$searchDrawer  = $(selectors.searchDrawer, this.$container);
+    this.$menuToggler= $(selectors.menuToggler, this.$container);
 
     this.initialPosition = 0;
     this.headerHeight = this.$el.height();
@@ -44,7 +46,7 @@ export default class HeaderSection extends BaseSection {
     this.$closeSearchDrawer.on('click', this.onCloseSearchDrawer.bind(this));
     $window.on('toggleMobileMenu', this.onCloseSearchDrawer.bind(this));
     $window.on('resize', throttle(50, this.compensateHeaderSpace.bind(this)));
-
+    this.$menuToggler.on('click', this.toggleMenu.bind(this));
     this.onScroll();
     this.compensateHeaderSpace();
   }
@@ -98,6 +100,11 @@ export default class HeaderSection extends BaseSection {
     if(this.$searchDrawer.hasClass('is-visible')) {
       this.$searchInput.trigger('focus');
     }
+  }
+
+  toggleMenu(e) {
+    e.preventDefault();
+    document.dispatchEvent(new CustomEvent('navigation:toggle'));
   }
 
   onCloseSearchDrawer(e) {
