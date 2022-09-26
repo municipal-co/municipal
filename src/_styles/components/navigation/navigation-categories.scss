@@ -1,0 +1,65 @@
+.navigation-categories {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 40px;
+  width: calc(100% + 80px);
+  padding: 0 40px;
+  left: -40px;
+}
+
+.navigation-categories__button {
+  all: unset;
+  display: block;
+  width: auto;
+  padding: 10px 20px;
+  border-radius: 90px;
+  font-size: 10px;
+  font-family: $font-family-heading-medium;
+  color: $white;
+  line-height: 1;
+  transition: $transition-duration-base $transition-timing-function-in-out-ui;
+  transition-property: color, background-color;
+  flex-shrink: 0;
+}
+
+.navigation-categories__button--active {
+  color: $black;
+  background-color: $green;
+}
+
+.navigation-areas-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+  justify-content: space-between;
+  z-index: 1;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+}
+
+.navigation-area--next,
+.navigation-area--prev {
+  background: linear-gradient(90deg, hsla(0%, 0%, 100%, .3), transparent);
+  width: 30px;
+  height: 100%;
+  opacity: 0;
+  transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
+  pointer-events: all;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.navigation-area--next {
+  transform: scale(-1);
+  margin-left: auto;
+}

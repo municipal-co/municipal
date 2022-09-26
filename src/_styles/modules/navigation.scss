@@ -20,6 +20,7 @@
   background-color: $black;
   transform: translateX(-100%);
   overflow-y: auto;
+  overflow-x: hidden;
   transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
 
   @include media-breakpoint-down('md') {
