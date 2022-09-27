@@ -13,6 +13,12 @@
   width: calc(100% + 80px);
   left: -40px;
   padding: 0 40px;
+
+  @include media-breakpoint-down('md') {
+    width: calc(100% + 60px);
+    left: -30px;
+    padding: 0 30px;
+  }
 }
 
 .navigation-carousel__image-container {
@@ -53,7 +59,10 @@
   position: absolute;
   pointer-events: none;
   top: 0;
-  left: 0;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
 }
 
 .navigation-carousel__arrow--next,

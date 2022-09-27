@@ -55,6 +55,10 @@
   justify-content: center;
   gap: 20px;
 
+  @include media-breakpoint-down('md') {
+    flex-direction: column;
+  }
+
   .btn {
     font-family: $font-family-heading-medium;
     font-size: 12px;

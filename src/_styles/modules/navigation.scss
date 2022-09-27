@@ -25,6 +25,7 @@
 
   @include media-breakpoint-down('md') {
     width: 450px;
+    padding: 20px 30px;
   }
 
   .is-visible & {
