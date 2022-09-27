@@ -3,6 +3,7 @@ import CardGrid from "./cardGrid";
 import Cta from "./cta";
 import CardBlock from "./cardBlock";
 import InfoCard from "./infoCard";
+import Carousel from './carousel';
 
 const NavigationBlocks = ((props) => {
 
@@ -24,6 +25,8 @@ const NavigationBlocks = ((props) => {
           return <CardBlock key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
         case 'info_card':
           return <InfoCard key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
+        case 'carousel':
+          return <Carousel key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
         default:
           return false;
       }

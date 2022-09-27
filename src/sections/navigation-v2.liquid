@@ -31,7 +31,7 @@
                   {
                     "title": {{ s[title_handle] | json }},
                     "image": {{ s[image_handle] | img_url: 'master' | json }},
-                    "image_alt" {{ s[image_handle].alt | json }},
+                    "image_alt": {{ s[image_handle].alt | json }},
                     "highlight_card": {{ s[highlight_handle] | json }},
                     "highlight_badge": {{ s[highlight_badge_handle] | json }},
                     "url": {{ s[url_handle] | json }}
