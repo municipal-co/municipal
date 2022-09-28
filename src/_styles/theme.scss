@@ -166,6 +166,7 @@ body {
 
   // Prevents window scroll on drawer open
   &.drawer-open {
+    position: relative;
     overflow: hidden !important;
   }
 }
