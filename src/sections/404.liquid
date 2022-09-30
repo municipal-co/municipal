@@ -9,35 +9,26 @@
               {{ section.settings.title }}
             </h1>
           {% endif %}
-    
+
           {% if section.settings.content != blank %}
-              <div class="four04__admin-subtitle">{{ section.settings.content }}</div>
+            <div class="four04__admin-subtitle">{{ section.settings.content }}
+            </div>
           {% endif %}
 
-          <div class="four04__seach-section">
-            <form action="/search" method="get" role="search" data-search-form>
-              <div class="minimal-input-box">
-    
-                <div class="search-icon">{% include 'icon-search' %}</div>
-                <input type="hidden" name="type" value="product" />
-                <input type="text" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input minimal-input-box__input--search" autocomplete="off" value="{{ search.terms }}" data-search-input>
-    
-                <div class="search-autocomplete-container" style="display: none;" data-autocomplete-container>
-                  <ul>
-                    <li class="autocomplete-item loader"></li>
-                    <li class="autocomplete-item loader"></li>
-                    <li class="autocomplete-item loader"></li>
-                  </ul>
-                </div>
-    
-                <button type="submit" class="minimal-input-box__submit minimal-input-box__submit--search">
+          <div class="four04__search-section">
+            <form action="/pages/search-results" method="get" role="search" data-search-form>
+              <div class="form-group">
+                {% include 'icon-search' %}
+                <input type="text" name="Q" placeholder="{{ 'general.search.placeholder' | t }}" class="four04__search-input" autocomplete="off" value="{{ search.terms }}" data-search-input>
+
+                <button type="submit" class="four04__search-submit">
                   {% include 'icon-arrow' %}
-                  <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+                  <span class="icon-fallback-text">{{ 'general.search.submit' | t }}
+                  </span>
                 </button>
               </div>
             </form>
           </div>
-
         </div>
       </div>
     </div>
@@ -45,12 +36,12 @@
 </div>
 
 <style>
-.four04 {
-  background-image: url('{{ section.settings.background-image | img_url: "1080x1080" }}');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+  .four04 {
+    background-image: url('{{ section.settings.background-image | img_url: "1080x1080" }}');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 </style>
 
 {% schema %}
@@ -61,13 +52,11 @@
         "id": "title",
         "type": "text",
         "label": "404 page title"
-      },
-      {
+      }, {
         "id": "content",
         "type": "richtext",
         "label": "Content"
-      },
-      {
+      }, {
         "type": "image_picker",
         "id": "background-image",
         "label": "Background image"
