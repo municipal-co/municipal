@@ -1,0 +1,52 @@
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  z-index: 10000;
+
+  &.is-visible {
+    pointer-events: all;
+  }
+}
+
+.navigation-body {
+  height: 100%;
+  width: 570px;
+  max-width: 100%;
+  padding: 20px 40px;
+  background-color: $black;
+  transform: translateX(-100%);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
+
+  @include media-breakpoint-down('md') {
+    width: 450px;
+    padding: 20px 30px;
+  }
+
+  .is-visible & {
+    transform: translateX(0);
+  }
+}
+
+.navigation-backdrop {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $black;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
+  cursor: pointer;
+
+  .is-visible & {
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,1192 @@
+{% if request.design_mode %}
+  {% for block in section.blocks %}
+    <div {{ block.shopify_attributes }} class="{{block.id}}"></div>
+  {% endfor %}
+{% endif %}
+<!-- <div id="main_navigation" data-section-type="navigation" data-section-id="{{section.id}}"></div> -->
+<script type="application/json" data-navigation-json data-section-id="{{section.id}}">
+  [
+    {%- for block in section.blocks -%}
+      {%- assign s = block.settings -%}
+      {
+        {%- case block.type -%}
+          {%- when 'carousel' -%}
+          "type": {{ block.type | json }},
+          "id": {{ block.id | json }},
+          "category": {{ s.category | json }},
+          "settings": {
+            "aspect_ratio": {{ s.aspect_ratio | json }},
+            "section_title": {{ s.title | json }},
+            "cards": [
+              {%- for i in (1..12) -%}
+                {%- assign image_handle = "image_" | append: i -%}
+                {%- assign highlight_handle = "highlight_" | append: i -%}
+                {%- assign highlight_badge_handle = "highlight_badge_" | append: i -%}
+                {%- assign title_handle = "card_title_" | append: i -%}
+                {%- assign url_handle = "url_" | append: i -%}
+                {%- if s[image_handle] == blank -%}
+                  {%- continue -%}
+                {%- else -%}
+                  {%- unless forloop.first -%},{%- endunless -%}
+                  {
+                    "title": {{ s[title_handle] | json }},
+                    "image": {{ s[image_handle] | img_url: 'master' | json }},
+                    "image_alt": {{ s[image_handle].alt | json }},
+                    "highlight_card": {{ s[highlight_handle] | json }},
+                    "highlight_badge": {{ s[highlight_badge_handle] | json }},
+                    "url": {{ s[url_handle] | json }}
+                  }
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          }
+          {%- when 'card_grid' -%}
+          "type": {{ block.type | json }},
+          "id": {{ block.id | json }},
+          "category": {{ s.category | json }},
+          "settings": {
+            "aspect_ratio": {{ s.aspect_ratio | json }},
+            "section_title": {{ s.title | json }},
+            "cards": [
+              {%- for i in (1..12) -%}
+                {%- assign image_handle = "image_" | append: i -%}
+                {%- assign highlight_handle = "highlight_" | append: i -%}
+                {%- assign highlight_badge_handle = "highlight_badge_" | append: i -%}
+                {%- assign title_handle = "card_title_" | append: i -%}
+                {%- assign url_handle = "url_" | append: i -%}
+                {%- if s[image_handle] == blank -%}
+                  {%- continue -%}
+                {%- else -%}
+                  {%- unless forloop.first -%},{%- endunless -%}
+                  {
+                    "title": {{ s[title_handle] | json }},
+                    "image": {{ s[image_handle] | img_url: 'master' | json }},
+                    "image_alt": {{ s[image_handle].alt | json }},
+                    "highlight_card": {{ s[highlight_handle] | json }},
+                    "highlight_badge": {{ s[highlight_badge_handle] | json }},
+                    "url": {{ s[url_handle] | json }}
+                  }
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          }
+          {%- when 'card_block' -%}
+          "type": {{ block.type | json }},
+          "id": {{ block.id | json }},
+          "category": {{ s.category | json }},
+          "settings": {
+            "title": {{ s.title | json }},
+            "top_space": {{ s.top_space | json }},
+            "bottom_space": {{ s.bottom_space | json }},
+            "highlight_card": {{ s.highlight | json }},
+            "highlight_badge": {{ s.highlight_badge | json }},
+            "card_title": {{ s.card_title | json }},
+            "card_body": {{ s.card_body | json }},
+            "image": {{ s.image | img_url: 'master' | json }},
+            "image_alt": {{ s.image.alt | json }},
+            "url": {{ s.url | json }}
+          }
+          {%- when 'info_card' -%}
+          "type": {{ block.type | json }},
+          "id": {{ block.id | json }},
+          "category": {{ s.category | json }},
+          "settings": {
+            "header": {{ s.header | json }},
+            "title": {{ s.title | json }},
+            "image": {{ s.image | img_url: 'master' | json }},
+            "image_alt": {{ s.image.alt | json }},
+            "card_body": {{ s.body | json }},
+            "label_1": {{ s.cta_label_1 | json }},
+            "url_1": {{ s.cta_url_1 | json }},
+            "label_2": {{ s.cta_label_2 | json }},
+            "url_2": {{ s.cta_url_2 | json }}
+          }
+        {%- when 'cta' -%}
+          "type": {{ block.type | json }},
+          "id": {{ block.id | json }},
+          "category": {{ s.category | json }},
+          "settings": {
+            "label": {{ s.title | json }},
+            "new_tab": {{ s.new_tab | default: false | json }},
+            "url": {{ s.url | json }},
+            "top_space": {{ s.top_space | json }},
+            "bottom_space": {{ s.bottom_space | json }}
+          }
+        {%- endcase -%}
+      } {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+
+</script>
+
+{% schema %}
+{
+ "name": "Main navigation",
+ "settings": [],
+ "blocks": [
+    {
+      "type": "carousel",
+      "name": "Carousel",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "First Category",
+          "info": "Defines the group on the navigation where this item is going to be rendered, this is *required* otherwise the module will not display"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Cards Aspect Ratio",
+          "options": [
+            {
+              "value": "frame--1x1",
+              "label": "1/1"
+            },
+            {
+              "value": "frame--3x4",
+              "label": "3/4"
+            },
+            {
+              "value": "frame--16x9",
+              "label": "16/9"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Main Header",
+          "default": "Carousel Module"
+        },
+        {
+          "type": "header",
+          "content": "Cards Content"
+        },
+        {
+          "type": "header",
+          "content": "Card 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_1",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_1",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_1",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_1",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_2",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_2",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_2",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_2",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_3",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_3",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_3",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_3",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_4",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_4",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_4",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_4",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 5"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_5",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_5",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_5",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_5",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_5",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 6"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_6",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_6",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_6",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_6",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_6",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 7"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_7",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_7",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_7",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_7",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_7",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 8"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_8",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_8",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_8",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_8",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_8",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 9"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_9",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_9",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_9",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_9",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_9",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 10"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_10",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_10",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_10",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_10",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_10",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 11"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_11",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_11",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_11",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_11",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_11",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 12"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_12",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_12",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_12",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_12",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_12",
+          "label": "URL"
+        }
+      ]
+    },
+    {
+      "type": "card_grid",
+      "name": "Card Grid",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "First Category",
+          "info": "Defines the group on the navigation where this item is going to be rendered, this is *required* otherwise the module will not display"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Grid Title",
+          "default": "Grid Module",
+          "info": "Text to be placed on top of the grid of elements"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio",
+          "label": "Cards Aspect Ratio",
+          "options": [
+            {
+              "value": "frame--1x1",
+              "label": "1/1"
+            },
+            {
+              "value": "frame--3x4",
+              "label": "3/4"
+            },
+            {
+              "value": "frame--16x9",
+              "label": "16/9"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "content"
+        },
+        {
+          "type": "header",
+          "content": "Card 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_1",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_1",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_1",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_1",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_2",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_2",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_2",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_2",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_3",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_3",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_3",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_3",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_4",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_4",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_4",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_4",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 5"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_5",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_5",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_5",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_5",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_5",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 6"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_6",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_6",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_6",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_6",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_6",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 7"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_7",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_7",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_7",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_7",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_7",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 8"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_8",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_8",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_8",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_8",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_8",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 9"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_9",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_9",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_9",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_9",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_9",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 10"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_10",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_10",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_10",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_10",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_10",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 11"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_11",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_11",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_11",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_11",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_11",
+          "label": "URL"
+        },
+        {
+          "type": "header",
+          "content": "Card 12"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_12",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge_12",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title_12",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_12",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url_12",
+          "label": "URL"
+        }
+      ]
+    },
+    {
+      "type": "card_block",
+      "name": "Card Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "First Category",
+          "info": "Defines the group on the navigation where this item is going to be rendered, this is *required* otherwise the module will not display"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Header",
+          "info": "Text to be placed on top of the card as a group divider"
+        },
+        {
+          "type": "checkbox",
+          "id": "top_space",
+          "label": "Has top space?",
+          "default": false,
+          "info": "Adds spacing at the top of the module to generate a visual division between sections"
+        },
+        {
+          "type": "checkbox",
+          "id": "bottom_space",
+          "label": "Has bottom space?",
+          "default": false,
+          "info": "Adds spacing at the bottom of the module to generate a visual division between sections"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight the card?",
+          "default": false,
+          "info": "Adds a green border around the card and show the highlight badge before the title"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "highlight_badge",
+          "label": "Highlight Badge",
+          "default": "NEW",
+          "info": "Badge displayed in green before the title when the option *Highlight the card?* is enabled"
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "textarea",
+          "id": "card_body",
+          "label": "Body content",
+          "info": "Card body content, displayed below the title and the new tag if enabled."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    },
+    {
+      "type": "info_card",
+      "name": "Info Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "First Category",
+          "info": "Defines the group on the navigation where this item is going to be rendered, this is *required* otherwise the module will not display"
+        },
+        {
+          "type": "text",
+          "id": "header",
+          "label": "Section Header",
+          "default": "Section Header",
+          "info": "Title placed on top of the card, used as a section divider"
+        },
+        {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "Required size: 95 x 95px, this asset is not using shopify to process the image so be mindful about the size. If not populated the image will not display"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Info Card Title"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Card body content",
+          "info": "Use bold style to generate the highlighted text"
+        },
+        {
+          "type": "text",
+          "id": "cta_label_1",
+          "label": "Button 1 Label"
+        },
+        {
+          "type": "url",
+          "id": "cta_url_1",
+          "label": "Button 1 URL"
+        },
+        {
+          "type": "text",
+          "id": "cta_label_2",
+          "label": "Button 2 Label"
+        },
+        {
+          "type": "url",
+          "id": "cta_url_2",
+          "label": "Button 2 URL"
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "name": "CTA",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category",
+          "default": "First Category",
+          "info": "Defines the group on the navigation where this item is going to be rendered, this is *required* otherwise the module will not display"
+        },
+        {
+          "type": "checkbox",
+          "id": "new_tab",
+          "label": "Open link in new tab?"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Label",
+          "default": "CTA"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "top_space",
+          "label": "Has top space?",
+          "default": false,
+          "info": "Adds spacing at the top of the module to generate a visual division between sections"
+        },
+        {
+          "type": "checkbox",
+          "id": "bottom_space",
+          "label": "Has bottom space?",
+          "default": false,
+          "info": "Adds spacing at the bottom of the module to generate a visual division between sections"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

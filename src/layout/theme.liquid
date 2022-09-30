@@ -111,16 +111,14 @@
 
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
-  {% comment %} If you don't need swatch functionality, remove this section along with the associated JS {% endcomment %}
-  {% section 'swatches' %}
   {% section 'pencil-banner' %}
   {% section 'mobile-menu' %}
-
 
   <div class="layout-wrapper">
 
     {% comment %} Select the appropriate 'header-*' section for the theme you are building and remove the files for the others {% endcomment %}
     {% section 'header-logo-center' %}
+    {% section 'navigation-v2' %}
 
     <main role="main" id="MainContent">
       <div class="layout-main-content">
