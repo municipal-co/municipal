@@ -52,6 +52,7 @@ import BisDrawer from './sections/bisDrawer';
 import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
 import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
+import FourOFour from './sections/fourofour';
 
 
 // Managers
@@ -77,6 +78,7 @@ Breakpoints.initialize();
   sectionManager.register('header', HeaderSection);
   sectionManager.register('footer', FooterSection);
   sectionManager.register('mobile-menu', MobileMenuSection);
+  sectionManager.register('fourofour', FourOFour);
   sectionManager.register('product', ProductSection);
   sectionManager.register('cart', CartSection);
   sectionManager.register('ajax-cart', AJAXCartSection);

@@ -1,11 +1,24 @@
-.four04__content {
-  margin-top: large-vw(240px, 240px);
-  margin-bottom: large-vw(260px, 260px);
-  @include media-breakpoint-down('md') {
-    margin-top: 240px;
-    margin-bottom: 260px;
+.four04 {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 100vh;
+
+  &:before {
+    content:'';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
   }
+}
+
+.four04__content {
   text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .four04__title {
@@ -15,27 +28,92 @@
 .four04__admin-subtitle p {
   @extend .p2;
   color: $white;
-  & a {
+  a {
     color: $white;
     text-decoration: underline;
-  }
-  & a:hover {
-    color: $white;
+    &:hover {
+      color: $white;
+    }
   }
 }
 
-.four04:before {
-	content:'';
-	position: absolute;
-  top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background-color: rgba(0,0,0,0.7);
+.four04__search-section {
+  .icon-search {
+    position: absolute;
+    width: 30px !important;
+    height: auto !important;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+
+    @include media-breakpoint-down('md') {
+      width: 25px !important;
+    }
+
+    @include media-breakpoint-down('sm') {
+      width: 20px !important;
+      left: 10px;
+    }
+  }
+
+  .four04__search-input {
+    width: 100%;
+    border-radius: 9999px;
+    color: $black;
+    padding: 10px 60px;
+    border: none;
+    text-align: left;
+    font-size: 25px;
+    font-family: $font-family-base;
+    font-weight: bold;
+
+    &:focus {
+      outline: none;
+    }
+
+    @include media-breakpoint-down('md') {
+      font-size: 20px;
+    }
+
+    @include media-breakpoint-down('sm') {
+      font-size: 16px;
+      padding: 10px 50px 10px 40px;
+    }
+
+    &::placeholder {
+      color: $black;
+    }
+  }
+
+  .four04__search-submit {
+    position: absolute;
+    top: 50%;
+    left: calc(100% - 50px);
+    border: none;
+    background-color: transparent;
+    transform: translateY(-50%);
+    width: 20px;
+    padding: 0;
+    overflow: hidden;
+    transition: width $transition-duration-base $transition-timing-function-in-out-ui;
+
+    &:hover {
+      width: 30px;
+    }
+
+    .icon-arrow {
+      width: 30px;
+      height: auto;
+      float: right;
+    }
+
+    @include media-breakpoint-down('sm') {
+      left: calc(100% - 40px);
+    }
+  }
 }
 
 .four04__input-seach {
   margin-top: 40px;
   margin-bottom: 0;
 }
-
