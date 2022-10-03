@@ -76,7 +76,6 @@ Breakpoints.initialize();
 
   sectionManager.register('header', HeaderSection);
   sectionManager.register('footer', FooterSection);
-  sectionManager.register('mobile-menu', MobileMenuSection);
   sectionManager.register('fourofour', FourOFour);
   sectionManager.register('product', ProductSection);
   sectionManager.register('cart', CartSection);
