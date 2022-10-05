@@ -836,8 +836,11 @@ body.ajax-cart-open {
   transition: transform $transition-duration-base $transition-timing-function-in-out-ui;
   transform: scale(1);
 
-  @include media-breakpoint-up('lg'){
-    &:hover {
+  &:hover {
+    @at-root .btn#{&} {
+      color: $white;
+    }
+    @include media-breakpoint-up('lg'){
       transform: scale(0.96);
     }
   }
