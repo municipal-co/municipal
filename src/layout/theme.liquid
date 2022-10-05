@@ -149,6 +149,15 @@
   {% comment %}{% section 'newsletter-slideup' %}{% endcomment %}
   {% comment %} Findify Integraion {% endcomment %}
   {% include 'findify-tagging' %}
+
+  <script type="application/json" data-theme-settings-json>
+    {
+      "lowInventoryThreshold": {{ settings.low_inventory_threshold | json }}
+      {%- if filter_url != blank -%}
+        ,"filterUrl": {{ filter_url | json }}
+      {%- endif -%}
+    }
+  </script>
   {% comment %} End Findify Integraion {% endcomment %}
   <!-- CRITEO START -->
   {% include 'criteo-tracking' %}
