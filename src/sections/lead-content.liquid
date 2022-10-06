@@ -5,6 +5,9 @@
 {% assign image = section.settings.image %}
 {% assign title_tag = section.settings.title_tag %}
 {% assign title = section.settings.title %}
+{% assign cta_text = section.settings.cta_text %}
+{% assign cta_url = section.settings.cta_url %}
+{% assign button_style = section.settings.button_style %}
 
 <style>
   #lead-content-{{ section.id }} {
@@ -40,6 +43,11 @@
     <div class="lead-content__main-content">
       {{ page.content }}
     </div>
+    {% if cta_text != blank and cta_url != blank%}
+      <a href="{{cta_url}}" class="btn {{ button_style }} lead-content__btn">
+        {{ cta_text }}
+      </a>
+    {% endif %}
   </div>
 </div>
 
@@ -137,6 +145,35 @@
       "type": "header",
       "content": "Main Content",
       "info": "Use the Content editor of the page where this template is assigned"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Link"
+    },
+    {
+     "type": "select",
+     "id": "button_style",
+     "label": "Button Style",
+     "options": [
+       {
+         "value": "btn-primary",
+         "label": "Black"
+       },
+       {
+         "value": "btn-secondary",
+         "label": "Blue"
+       },
+       {
+         "value": "btn-white",
+         "label": "White"
+       }
+     ]
     }
   ],
   "presets": [
