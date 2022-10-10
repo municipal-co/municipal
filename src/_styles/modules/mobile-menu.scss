@@ -282,6 +282,11 @@
   @include media-breakpoint-up('xl') {
     margin-right: 32px;
     width: calc(50% - 16px);
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+
     &:first-child {
       .mobile-menu__featured-links--odd & {
         width: 100%;
