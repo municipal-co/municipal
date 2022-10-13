@@ -139,7 +139,8 @@
       {{ card_images }}
     </a>
     <form target="/cart/add" class="product-card__content text-center">
-      <a href="{{card_product.url}}?variant={{current_variant.id}}" class="product-card__url" data-product-url="{{card_product.url}}"></a>
+      <a href="{{card_product.url}}?variant={{current_variant.id}}" class="product-card__url" data-product-url="{{card_product.url}}"
+      {%- if request.design_mode %}style="display: none;"{%- endif -%}></a>
       {% render 'product-form-options'
         product: card_product,
         print_option: 'color',
@@ -147,7 +148,7 @@
         current_variant: current_variant
         merge_products: card_product.metafields.custom_fields.merge_product.value
       %}
-      <span class="product-card__color-title" data-color-title data-color-index="{{color_index}}">
+      <span class="product-card__color-title {%- if request.design_mode %} swiper-no-swiping{%- endif -%}" data-color-title data-color-index="{{color_index}}">
         {{ current_variant[color_index] }}
       </span>
 
