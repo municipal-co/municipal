@@ -65,11 +65,6 @@
                 </div>
               </div>
             </div>
-
-            {% capture new_look_drawer %}
-              {% render 'look-drawer' with look: current_look %}
-            {% endcapture %}
-            {% assign look_drawers = look_drawers | append: new_look_drawer %}
           {% endif %}
           {% assign  current_look = blank %}
         {% endfor %}
@@ -78,6 +73,22 @@
       <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
     </div>
 
-    {{ look_drawers }}
+    <div class="drawer look-drawer" data-drawer data-drawer-id="{{ s.id | default: 'look-drawer'}}">
+      <div class="drawer__inner">
+        <div class="drawer__header look-drawer__header">
+          <div class="drawer__header-title look-drawer__header-title">
+            Shop This Look
+          </div>
+          <button class="drawer__close icon-close" data-drawer-close>
+            {% render 'icon-close' %}
+            <div class="sr-only">Close Look Drawer</div>
+          </button>
+        </div>
+
+        <div class="drawer__body-contents look-drawer__body" data-body-content>
+
+        </div>
+      </div>
+    </div>
   </div>
 {% endif %}

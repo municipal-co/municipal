@@ -6,8 +6,9 @@ import BaseSection from './base';
 
 const selectors = {
   looksContainer: '[data-looks-container]',
-  lookDrawers: '[data-drawer]',
+  lookDrawer: '[data-drawer]',
   lookDrawerOpen: '[data-look-drawer-open]',
+  lookDrawerContent: '[data-body-content]',
   lookDrawerSlider: '[data-product-slider]',
   sizeDrawerToggler: '[data-size-drawer-toggler]',
   productForm: '[data-product-form]',
@@ -22,22 +23,19 @@ const selectors = {
 export default class ShopTheLook extends BaseSection {
   constructor(container) {
     super(container, 'shopTheLook');
-
-    this.drawerList = [];
-
+    this.looks = [];
+    this.$drawer = $(selectors.lookDrawer, this.$container);
     this.$looksContainer = $(selectors.looksContainer, this.$container);
     this.$looksDrawers = $(selectors.lookDrawers, this.$container);
+    this.$bodyContent = $(selectors.lookDrawerContent, this.$container);
     this.$lookDrawerOpen = $(selectors.lookDrawerOpen, this.$container);
-    this.$sizeDrawerOpen = $(selectors.sizeDrawerToggler, this.$container);
-    this.$productForms = $(selectors.productForm, this.$container);
+    this.drawer = new Drawer(this.$drawer);
 
     this.$lookDrawerOpen.on('click', this.openDrawer.bind(this));
-    this.$sizeDrawerOpen.on('click', this.openSizeDrawer.bind(this));
-    this.$productForms.on('change', selectors.productOption, this.updateFormState.bind(this));
+    this.$container.on('click', selectors.sizeDrawerToggler, this.openSizeDrawer.bind(this));
+    this.$container.on('change', selectors.productOption, this.updateFormState.bind(this));
 
     this.initLooksSlider();
-    this.initLooksDrawers();
-    this.initDrawerSlider();
   };
 
   initLooksSlider() {
@@ -80,62 +78,53 @@ export default class ShopTheLook extends BaseSection {
     this.looksSlider = new Swiper(this.$looksContainer, looksSliderOptions);
   }
 
-  initLooksDrawers() {
-    this.$looksDrawers.each((i, drawer) => {
-      const $this = $(drawer);
-      const id = $this.data('drawer-id');
-
-      const drawerObject = new Drawer($this);
-
-      this.drawerList.push({
-        drawerObject,
-        id
-      })
-    })
-  }
-
   openDrawer(evt) {
     const $this = $(evt.currentTarget)
-    const drawerId = $this.data('look-drawer-open');
+    const lookId = $this.data('look-drawer-open');
+    const self = this;
+    const selectedLook = this.looks.find(item => {
+      return item.lookId == lookId;
+    })
 
-    const drawer = this.getDrawerById(drawerId);
+    self.$bodyContent.html('<span class="look-drawer__loader"></span>');
 
-    drawer.show();
-  }
+    if(selectedLook){
+      self.$bodyContent.html(selectedLook.data);
+      self.initDrawerSlider();
+    } else {
+      $.get(`/pages/looks?view=getLook&look=${lookId}`, (data) => {
+        this.looks.push({
+          lookId,
+          data
+        })
+        self.$bodyContent.html(data);
+        self.initDrawerSlider();
+      })
+    }
 
-  getDrawerById(id) {
-    let currentDrawer = null;
 
-    this.drawerList.forEach(drawer => {
-      if(drawer.id === id) {
-        currentDrawer = drawer.drawerObject;
-      }
-    });
+    this.drawer.show();
 
-    return currentDrawer;
   }
 
   initDrawerSlider() {
-    this.drawerList.forEach((drawer, i) => {
-      const slider = drawer.drawerObject.$el.find(selectors.lookDrawerSlider);
-      const swiperSlider = new Swiper(slider, {
-        initialSlide: 1,
-        centeredSlides: true,
-        loop: false,
-        slidesPerView: 1.5,
-        spaceBetween: 15,
-        threshold: 20,
-        navigation: {
-          prevEl: '[data-arrow-prev]',
-          nextEl: '[data-arrow-next]'
-        },
-        lazy: {
-          enabled: true,
-          loadPrevNextAmount: 3,
-          checkInView: true,
-        },
-      })
-      this.drawerList[i].slider = swiperSlider;
+    const slider = this.$drawer.find(selectors.lookDrawerSlider);
+    new Swiper(slider, {
+      initialSlide: 1,
+      centeredSlides: true,
+      loop: false,
+      slidesPerView: 1.5,
+      spaceBetween: 15,
+      threshold: 20,
+      navigation: {
+        prevEl: '[data-arrow-prev]',
+        nextEl: '[data-arrow-next]'
+      },
+      lazy: {
+        enabled: true,
+        loadPrevNextAmount: 3,
+        checkInView: true,
+      },
     })
   }
 

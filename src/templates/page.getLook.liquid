@@ -1,18 +1,16 @@
-<div class="drawer look-drawer" data-drawer data-drawer-id="{{ look.look_id }}">
-  <div class="drawer__inner">
-    <div class="drawer__header look-drawer__header">
-      <div class="drawer__header-title look-drawer__header-title">
-        Shop This Look
-      </div>
-      <button class="drawer__close icon-close" data-drawer-close>
-        {% render 'icon-close' %}
-        <div class="sr-only">Close Look Drawer</div>
-      </button>
-    </div>
-
-    <div class="drawer__body-contents look-drawer__body">
-      {% capture products_ui %}
+{% layout none %}
+{%- capture look_id -%}
+  {%- render 'get-url-param'
+    key: 'look'
+  -%}
+{%- endcapture -%}
+{% assign look_id = look_id | strip %}
+{% if look_id != blank %}
+  {% for look in page.metafields.custom_fields.complete_the_look %}
+    {% if look.look_id == look_id %}
+    {% capture products_ui %}
         {% for i in (1..6) %}
+          {% assign current_product = blank %}
           {% assign product_key = 'product_' | append: forloop.index %}
           {% assign color_key = 'product_' | append: forloop.index | append: '_color'%}
           {% assign current_product = all_products[look[product_key]] %}
@@ -108,6 +106,6 @@
           <div class="look-drawer__arrow look-drawer__arrow--next" data-arrow-next></div>
         </div>
       {% endif %}
-    </div>
-  </div>
-</div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
