@@ -1,0 +1,262 @@
+<div id="shop-the-look-{{section.id}}" class="card-slider">
+  {% assign s = section.settings %}
+  <style>
+    #shop-the-look-{{section.id}} {
+      background-color: {{s.bg_color}};
+    }
+    #shop-the-look-{{section.id}} .card-slider__heading {
+      color: {{s.text_color}};
+    }
+  </style>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card-slider__heading">
+        <div class="card-slider__info-container">
+          {% if s.title != blank %}
+            <{{s.title_tag}} class="card-slider__title h2">{{ s.title }}</{{s.title_tag}}>
+          {% endif %}
+
+          {% if s.heading_copy %}
+          <p class="card-slider__copy p3">
+            {{ s.heading_copy }}
+          </p>
+          {% endif %}
+        </div>
+
+        {% if s.heading_cta_title != blank and s.heading_cta_url != blank %}
+          <div class="card-slider__cta-container">
+            <a class="btn-link card-slider__button" href="{{s.heading_cta_url}}">{{s.heading_cta_title}}</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div id="shop-the-look-{{section.id}}" class="shop-the-look" data-section-type="shop-the-look-editor" data-section-id="shop-the-look-editor">
+    <div class="shop-the-look__looks-container" data-looks-container>
+      <div class="shop-the-look__slider swiper-wrapper" data-slider>
+        {% for block in section.blocks %}
+          <div class="shop-the-look__slide swiper-slide" data-slide data-look-drawer-open {{ block.shopify_attributes }}>
+            <div class="look-card">
+              <div class="look-card__image-container frame frame--4x5">
+                <img src="{{block.settings.look_image | img_url: 'master'}}" alt="{{block.settings.look_image.alt}}" class="look-card__image lazyload frame__inner">
+              </div>
+              <div class="look-card__text-container">
+                {% if block.settings.card_text != blank %}
+                  <div class="look-card__text">
+                    {{ block.settings.card_text}}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.button_label != blank %}
+                  <span class="btn-link look-card__btn">
+                    {{ block.settings.button_label }}
+                  </span>
+                {% endif %}
+              </div>
+              <template data-modal-content>
+                {% render 'look-drawer-content' with s: block.settings %}
+              </template>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="shop-the-look__arrow shop-the-look__arrow--prev" data-arrow-prev></div>
+      <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
+    </div>
+  <div class="drawer look-drawer" data-drawer data-drawer-id="{{ section.id }}">
+    <div class="drawer__inner">
+      <div class="drawer__header look-drawer__header">
+        <div class="drawer__header-title look-drawer__header-title">
+          Shop This Look
+        </div>
+        <button class="drawer__close icon-close" data-drawer-close>
+          {% render 'icon-close' %}
+          <div class="sr-only">Close Look Drawer</div>
+        </button>
+      </div>
+
+      <div class="drawer__body-contents look-drawer__body" data-body-content>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+{% schema %}
+  {
+  "name": "Looks Slider (Editor)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#393d49"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Section Title Tag",
+      "options": [{
+          "value": "h1",
+          "label": "h1"
+        },
+        {
+          "value": "h2",
+          "label": "h2"
+        },
+        {
+          "value": "h3",
+          "label": "h3"
+        },
+        {
+          "value": "h4",
+          "label": "h4"
+        },
+        {
+          "value": "h5",
+          "label": "h5"
+        },
+        {
+          "value": "h6",
+          "label": "h6"
+        }
+      ],
+      "default": "h2",
+      "info": "This will not change the text styling (font size)"
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Main Title"
+    },
+    {
+      "type": "textarea",
+      "id": "heading_copy",
+      "label": "Heading Copy",
+      "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse et explicabo iste deserunt corrupti sed perspiciatis hic. "
+    },
+    {
+      "type": "text",
+      "id": "heading_cta_title",
+      "label": "Heading CTA Title",
+      "default": "CTA Title"
+    },
+    {
+      "type": "url",
+      "id": "heading_cta_url",
+      "label": "Heading CTA URL"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Look",
+      "type": "look",
+      "settings": [
+        {
+          "type": "text",
+          "id": "card_text",
+          "label": "Card Text"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label"
+        },
+        {
+          "type": "image_picker",
+          "id": "look_image",
+          "label": "Look Image"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product 1",
+          "info": "Product to be displayed as part of the look"
+        },
+        {
+        "type": "text",
+        "id": "product_color_1",
+        "label": "Product 1 Color"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product 2",
+          "info": "Product to be displayed as part of the look"
+        },
+        {
+        "type": "text",
+        "id": "product_color_2",
+        "label": "Product 2 Color"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product 3",
+          "info": "Product to be displayed as part of the look"
+        },
+        {
+        "type": "text",
+        "id": "product_color_3",
+        "label": "Product 3 Color"
+        },
+        {
+          "type": "product",
+          "id": "product_4",
+          "label": "Product 4",
+          "info": "Product to be displayed as part of the look"
+        },
+        {
+        "type": "text",
+        "id": "product_color_4",
+        "label": "Product 4 Color"
+        },
+        {
+          "type": "product",
+          "id": "product_5",
+          "label": "Product 5",
+          "info": "Product to be displayed as part of the look"
+        },
+        {
+        "type": "text",
+        "id": "product_color_5",
+        "label": "Product 5 Color"
+        },
+        {
+          "type": "product",
+          "id": "product_6",
+          "label": "Product 6",
+          "info": "Product to be displayed as part of the look"
+        },
+        {
+        "type": "text",
+        "id": "product_color_6",
+        "label": "Product 6 Color"
+        }
+      ]
+    }
+  ],
+  "presets":  [
+    {
+      "name": "Looks Slider (Editor)"
+    }
+  ]
+}
+{% endschema %}

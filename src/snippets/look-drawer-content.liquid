@@ -1,0 +1,103 @@
+
+{%- capture products_ui -%}
+  {%- for i in (1..6) -%}
+    {%- assign current_product = blank -%}
+    {% assign current_variant = blank %}
+    {%- assign product_handle  = 'product_' | append: i -%}
+    {%- assign color_handle  = 'product_color_' | append: i -%}
+    {%- assign current_product = s[product_handle] -%}
+    {%- for option in current_product.options -%}
+      {%- if option == 'color' or option == 'Color' -%}
+        {%- assign color_index = 'option' | append: forloop.index -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if current_product != blank -%}
+      {%- for variant in current_product.variants -%}
+        {%- if variant[color_index] == s[color_handle] -%}
+          {%- assign current_variant = variant -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {% if current_variant == blank %}
+        {% assign current_variant = current_product.selected_or_first_available_variant %}
+      {% endif %}
+
+      <div class="swiper-slide" data-slide>
+        <div class="look-drawer__product-card-image-container frame frame--1x1">
+          <img data-src="{{ current_variant.image | img_url: 'x700' }}" alt="{{ current_variant.image.alt }}" class="swiper-lazy look-drawer__product-card-image frame__inner">
+        </div>
+
+        <span class="look-drawer__product-card-color">
+          {%- for option in current_product.options_with_values -%}
+            {%- if option.name == 'color' or option.name == "Color" -%}
+              {%- assign color_key = 'option' | append: forloop.index -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ current_variant[color_key] }}
+        </span>
+
+
+        <div class="look-drawer__product-card-title h6">
+          {{ current_product.title }}
+        </div>
+
+        <form class="look-drawer__product-card-form" action="/cart/add.js" data-product-form>
+          <input type="hidden" name="{{color_key}}" value="{{current_variant[color_key]}}" data-product-option>
+
+          {%- for option in current_product.options -%}
+          {%- assign option_downcase = option | downcase -%}
+            {%- if option_downcase == 'size' -%}
+              {%- assign size_key = 'option' | append: forloop.index -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          <input type="hidden" name="{{size_key}}" data-product-option="{{size_key}}">
+
+          <button class="btn btn-outline-primary btn-block product-option__drawer-btn"
+                  type="button"
+                  data-current-color="{{ current_variant[color_key] }}"
+                  data-color-index="{{ color_key }}"
+                  data-print-option="Size"
+                  data-print-option-key="{{size_key}}"
+                  data-size-drawer-toggler>
+            <span class="button__text" data-option-text="{{size_key}}" data-print-option="Size">
+              Select Size
+            </span>
+
+            <div class="btn__ui">
+              {%- render 'icon-caret-down' -%}
+            </div>
+          </button>
+
+          <button class="btn btn-primary btn-block" data-add-to-cart-button disabled>
+            ADD TO BAG
+            <span class="look-drawer__product-card-price" data-product-price>
+              {{ current_variant.price | money_without_trailing_zeros }}
+            </span>
+          </button>
+
+          <input type="hidden" name="id" data-product-id>
+
+          <script type="application/json" data-product-json>
+            {%- render 'product-json' product: current_product -%}
+          </script>
+
+          <a class="look-drawer__product-card-link btn btn-link" href="{{ current_product.url }}?variant={{current_variant.id}}" data-product-url="{{ current_product.url }}">View this product</a>
+      </div>
+      </form>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if products_ui != blank -%}
+  <div class="look-drawer__slider" data-product-slider>
+    <div class="swiper-wrapper">
+      {{ products_ui }}
+    </div>
+    <div class="look-drawer__arrow look-drawer__arrow--prev" data-arrow-prev></div>
+    <div class="look-drawer__arrow look-drawer__arrow--next" data-arrow-next></div>
+  </div>
+{%- endif -%}
