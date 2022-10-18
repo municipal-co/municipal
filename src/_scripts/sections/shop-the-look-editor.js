@@ -92,7 +92,6 @@ export default class ShopTheLookEditor extends BaseSection {
   initDrawerSlider() {
     const slider = this.$drawer.find(selectors.lookDrawerSlider);
     new Swiper(slider, {
-      initialSlide: 1,
       centeredSlides: true,
       loop: false,
       slidesPerView: 1.5,
@@ -105,7 +104,6 @@ export default class ShopTheLookEditor extends BaseSection {
       lazy: {
         enabled: true,
         loadPrevNextAmount: 3,
-        checkInView: true,
       },
     })
   }
