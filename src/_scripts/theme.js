@@ -45,6 +45,7 @@ import CustomersResetPasswordSection from './sections/customersResetPassword';
 import YotpoReviews from './sections/yotpoReviews';
 import FeaturedCategory from './sections/featuredCategories'
 import ShopTheLook from './sections/shop-the-look';
+import ShopTheLookEditor from './sections/shop-the-look-editor';
 import OptionDrawer from './sections/optionDrawer';
 import LinkCardSlider from './sections/linkCardSlider';
 import ContentSlider from './sections/contentSlider';
@@ -104,6 +105,7 @@ Breakpoints.initialize();
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('featured-categories', FeaturedCategory);
   sectionManager.register('shop-the-look', ShopTheLook);
+  sectionManager.register('shop-the-look-editor', ShopTheLookEditor);
   sectionManager.register('option-selector-drawer', OptionDrawer);
   sectionManager.register('link-card-slider', LinkCardSlider);
   sectionManager.register('content-slider', ContentSlider);
