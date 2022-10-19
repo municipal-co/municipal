@@ -1,6 +1,6 @@
 {% assign slides_array = blocks | where: 'type', prefix %}
 
-{% if slides_array != blank %}
+{% if slides_array != blank and metafields[prefix] == blank %}
   {%- assign type = 'blocks' -%}
 {% endif %}
 
