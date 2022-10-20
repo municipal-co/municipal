@@ -32,6 +32,7 @@ export default class OptionDrawer extends BaseSection {
 
   openDrawer(evt) {
     this.drawerData = evt.optionDrawerData;
+
     if(!this.drawerData.optionIndex) {
       console.error(`[${this.namespace}] - openDrawer(): drawerData.optionIndex is needed for this method to work`);
       return;
