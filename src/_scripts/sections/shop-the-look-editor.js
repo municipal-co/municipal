@@ -119,6 +119,9 @@ export default class ShopTheLookEditor extends BaseSection {
   buildSizeDrawerData($togglerButton, $productForm) {
     const eventData = {};
     const productData = JSON.parse($productForm.find(selectors.productData).html());
+    eventData.showSizing = productData.metafields.enable_fit_guide;
+    eventData.fitTipsTitle = productData.metafields.fit_tips_title;
+    eventData.fitTipsContent = productData.metafields.fit_tips_content;
     const currentColor = $togglerButton.data('current-color');
     const colorIndex = $togglerButton.data('color-index');
     const printOption = $togglerButton.data('print-option');
