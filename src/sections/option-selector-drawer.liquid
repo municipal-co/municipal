@@ -76,10 +76,19 @@
                 </div>
         </label>
         {{/each}}
-
-        {{#if show_sizing }}
+        {{#if fitTipsContent }}
+          <div class="blink-box blink-box--dark">
+            {{#if fitTipsTitle}}
+              <h6 class="blink-box__title">{{fitTipsTitle}}</h6>
+            {{/if}}
+            <div class="blink-box__content">
+              {{{ fitTipsContent }}}
+            </div>
+          </div>
+        {{/if}}
+        {{#if showSizing }}
           <div class="btn-container text-center">
-            <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
+            <a href="{{ productUrl }}" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
           </div>
         {{/if}}
       </div>

@@ -148,8 +148,11 @@ export default class ShopTheLook extends BaseSection {
   }
 
   buildSizeDrawerData($togglerButton, $productForm) {
-    const eventData = {};
     const productData = JSON.parse($productForm.find(selectors.productData).html());
+    const eventData = {};
+    eventData.showSizing = productData.metafields.enable_fit_guide;
+    eventData.fitTipsTitle = productData.metafields.fit_tips_title;
+    eventData.fitTipsContent = productData.metafields.fit_tips_content;
     const currentColor = $togglerButton.data('current-color');
     const colorIndex = $togglerButton.data('color-index');
     const printOption = $togglerButton.data('print-option');
@@ -166,6 +169,7 @@ export default class ShopTheLook extends BaseSection {
       }
     })
 
+    eventData.productUrl = `${productData.url}?variant=${eventData.variants[0].id}#fitGuide`;
     eventData.productTitle = productData.title;
     eventData.printOption = printOption;
 
