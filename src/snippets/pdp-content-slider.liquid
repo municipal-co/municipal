@@ -59,7 +59,11 @@
                 <span class="content-slider__title">{{ slide.title }}</span>
               {% endif %}
               {% if slide.body_content != blank %}
+                {% if type == 'blocks' %}
                   {{ slide.body_content | replace: '<em>', '<em class="content-slider__highlighted-text">' | replace: '<p>', '<p class="content-slider__body-content">' | replace: '<a', '<a class="btn-link"' }}
+                {%- else -%}
+                  {{ slide.body_content | replace: '<strong>' , '<strong class="content-slider__highlighted-text">' | replace: '<em>', '<em class="content-slider__highlighted-text">' | replace: '<p>', '<p class="content-slider__body-content">' | replace: '<a', '<a class="btn-link"' }}
+                {% endif %}
               {% endif %}
               {% if slide_buttons != blank %}
                 <div class="content-slider__button-container">
