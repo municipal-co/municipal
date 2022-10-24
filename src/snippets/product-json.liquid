@@ -74,6 +74,7 @@
             "metafields": {
               "enable_bis": {{ variant.metafields.custom_fields["enable_notify_me"] | default: 0 | json}}
               ,"enable_sold_out": {{ variant.metafields.custom_fields["enable_sold_out"] | default: 0 | json}}
+              ,"enable_final_sale": {{ variant.metafields.custom_fields["enable_final_sale"] | default: false }}
             }
           }
           {% unless forloop.last %},{% endunless %}
@@ -114,6 +115,7 @@
               "metafields": {
                 "enable_bis": {{ variant.metafields.custom_fields["enable_notify_me"] | default: 0 | json}}
                 ,"enable_sold_out": {{ variant.metafields.custom_fields["enable_sold_out"] | default: 0 | json}}
+                ,"enable_final_sale": {{ variant.metafields.custom_fields["enable_final_sale"] | json }}
               }
             }
             {% unless forloop.last %},{% endunless %}
