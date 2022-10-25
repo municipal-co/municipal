@@ -42,6 +42,10 @@ class CartAPI {
       item.original_price = Currency.formatMoney(item.original_price, theme.moneyFormat);
       item.original_price = Currency.stripZeroCents(item.original_price);
 
+      if(item.properties !== undefined && item.properties["Final Sale"] !== undefined) {
+        item.final_sale = item.properties["Final Sale"];
+      }
+
       // Adjust the item's variant options to add "name" and "value" properties
       if (item.hasOwnProperty('product')) {
         const product = item.product;
