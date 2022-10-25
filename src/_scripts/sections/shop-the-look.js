@@ -16,7 +16,8 @@ const selectors = {
   productOption: '[data-product-option]',
   productPrice: '[data-product-price]',
   productId: '[data-product-id]',
-  addToCartButton: '[data-add-to-cart-button]'
+  addToCartButton: '[data-add-to-cart-button]',
+  finalSaleField: '[data-final-sale-message]',
 };
 
 export default class ShopTheLook extends BaseSection {
@@ -215,7 +216,13 @@ export default class ShopTheLook extends BaseSection {
     $form.find(selectors.productId).val(currentVariant.id);
     $form.find(selectors.variantPrice).text(Currency.formatMoney(currentVariant.price, window.moneyFormat).replace('.00', ''));
 
-    if(currentVariant != '') {
+    if(currentVariant.metafields.enable_final_sale === true) {
+      $form.find(selectors.finalSaleField).attr('name', 'properties[Final Sale]');
+    } else {
+      $form.find(selectors.finalSaleField).removeAttr('name');
+    }
+
+    if(currentVariant !== '') {
       $form.find(selectors.addToCartButton).prop('disabled', false);
     }
   }

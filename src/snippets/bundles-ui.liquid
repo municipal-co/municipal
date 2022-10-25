@@ -84,6 +84,7 @@
               %}
             {% elsif option == 'size' or option == 'Size' %}
             {% assign option_index = 'option' | append: forloop.index %}
+            <input type="hidden" value="{{settings.final_sale_message}}" data-final-sale-message {% if product.selected_or_first_available_variant.metafields.custom_fields.enable_final_sale == true %} name="properties[Final Sale]" {% endif %}>
             <input type="hidden"
                    name="{{option_prefix}}_option-{{forloop.index}}"
                    data-product-option="{{option_index}}"
