@@ -6,24 +6,29 @@
           <img data-src="{% render "cf-image", image: metafields.si_mobile_image, print: 'url' %}" alt="{{metafields.si_image_alt}}" class="lazyload">
         </picture>
       {% endif %}
-
-      <div class="sticky-image__info-container">
-        {% if product.metafields.custom_fields.si_product_category != blank %}
-          {%- assign default_collection = collections[product.metafields.custom_fields.si_product_category] -%}
-          <a href="{{default_collection.url}}" class="badge sticky-image__badge" title="Go to collection {{ default_collection.title }}">
-            {{ default_collection.title }}
-          </a>
-        {% endif %}
-        <h1 class="sticky-image__title">
-          {{ object.title | replace: '-', '&#8288;-&#8288;'}}
-        </h1>
-        {% unless product.type == 'Gift Card' %}
-          {% if object.price != blank %}
-            <div class="sticky-image__price" data-price>
-              {% render 'product-detail-price', product: object %}
-            </div>
-          {% endif %}
-        {% endunless %}
+      <div class="sticky-image__caption">
+        Faking this caption at the moment
+        {{ metafields.si_image_caption }}
       </div>
+      {% if metafields.si_image_caption != blank %}
+      {% endif %}
+    </div>
+    <div class="sticky-image__info-container">
+      {% if product.metafields.custom_fields.si_product_category != blank %}
+        {%- assign default_collection = collections[product.metafields.custom_fields.si_product_category] -%}
+        <a href="{{default_collection.url}}" class="badge sticky-image__badge" title="Go to collection {{ default_collection.title }}">
+          {{ default_collection.title }}
+        </a>
+      {% endif %}
+      <h1 class="sticky-image__title">
+        {{ object.title | replace: '-', '&#8288;-&#8288;'}}
+      </h1>
+      {% unless product.type == 'Gift Card' %}
+        {% if object.price != blank %}
+          <div class="sticky-image__price" data-price>
+            {% render 'product-detail-price', product: object %}
+          </div>
+        {% endif %}
+      {% endunless %}
     </div>
   </div>
