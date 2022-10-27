@@ -238,6 +238,11 @@
   .product-option__header {
     display: none;
   }
+
+  .swiper-scrollbar.product-option__scrollbar {
+    width: calc(100% - 30px);
+    left: 15px;
+  }
 }
 
 .bundle-savings {

@@ -36,6 +36,7 @@
 // Product option type: swatches
 .product-option__swatch {
   display: flex;
+  flex-direction: column;
   margin: 0 -30px;
 
   .product-option__single-selector {
@@ -130,6 +131,27 @@
 .product-option__arrow-next {
   right: 0;
   left: unset;
+}
+
+.swiper-scrollbar.product-option__scrollbar {
+  position: relative;
+  height: 6px;
+  background-color: transparent;
+  margin-top: 15px;
+  display: block;
+  left: 30px;
+  width: calc(100% - 60px);
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+
+  .swiper-scrollbar-drag {
+    background-color: rgba($black, 0.2);
+    &:hover {
+      background-color: rgba($black, 0.3);
+    }
+  }
 }
 
 // Product option type: drawer
