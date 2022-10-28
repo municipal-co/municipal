@@ -17,6 +17,10 @@
 .sticky-image__background-container {
   @include media-breakpoint-down('md') {
     position: relative;
+
+    &.hide-mobile {
+      display: none;
+    }
   }
 }
 
@@ -30,7 +34,6 @@
   @include media-breakpoint-down('md') {
     position: relative;
     display: block;
-    aspect-ratio: 428/500;
   }
 
   img {
