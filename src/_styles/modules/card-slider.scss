@@ -21,6 +21,27 @@
     }
   }
 
+  .swiper-scrollbar.card-slider__scrollbar {
+    height: 6px;
+    position: relative;
+    background-color: transparent;
+    margin-top: 15px;
+    width: calc(100% - 100px);
+    left: 50px;
+
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+
+    .swiper-scrollbar-drag {
+      background: rgba($black, 0.2);
+      &:hover {
+        background: rgba($black, 0.3);
+      }
+    }
+
+  }
+
   &.card-slider--pdp {
     width: calc(100% + 60px);
     padding: 40px 30px 60px;
@@ -28,6 +49,19 @@
 
     .swiper-slide {
       max-width: 100%;
+    }
+
+    .swiper-scrollbar.card-slider__scrollbar {
+      width: calc(100% - 60px);
+      left: 30px;
+
+      .swiper-scrollbar-drag {
+        background: rgba($white, 0.2);
+
+        &:hover {
+          background: rgba($white, 0.3);
+        }
+      }
     }
   }
 

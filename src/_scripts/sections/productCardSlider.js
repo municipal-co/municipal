@@ -6,6 +6,7 @@ import ProductCard from '../view/product/productCard';
 const selectors = {
   cardSlider: '[data-card-slider]',
   cards: '[data-card-slide]',
+  scrollBar: '[data-scrollbar]',
 };
 
 export default class ProductCardSlider extends BaseSection {
@@ -15,7 +16,7 @@ export default class ProductCardSlider extends BaseSection {
     this.$cardSlider = $(selectors.cardSlider, this.$container);
     this.$cards = $(selectors.cards, this.$container);
     this.suffix = this.$cardSlider.data('slider-suffix') || '';
-
+    this.$scrollBar = $(selectors.scrollBar, this.$container);
     this.initCardSlider();
     this.initCards();
   }
@@ -28,6 +29,10 @@ export default class ProductCardSlider extends BaseSection {
       watchOverflow: true,
       slidesOffsetBefore: 30,
       slidesOffsetAfter: 30,
+      scrollbar: {
+        el: this.$scrollBar.get(0),
+        draggable: true,
+      },
       navigation: {
         nextEl: '[data-slider-arrow-next]',
         prevEl: '[data-slider-arrow-prev]'
