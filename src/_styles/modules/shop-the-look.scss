@@ -67,6 +67,38 @@
   right: 0;
 }
 
+.swiper-scrollbar.shop-the-look__scrollbar {
+  position: relative;
+  width: calc(100% - 100px);
+  left: 50px;
+  height: 6px;
+  margin-top: 15px;
+  background: transparent;
+  #shop-the-look-pdp & {
+    width: calc(100% - 30px);
+    left: 30px;
+  }
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+
+  .swiper-scrollbar-drag {
+    background: rgba($white, 0.2);
+
+    &:hover {
+      background: rgba($white, 0.3);
+    }
+
+    #shop-the-look-pdp & {
+      background: rgba($black, 0.2);
+
+      &:hover {
+        background: rgba($black, 0.3);
+      }
+    }
+  }
+}
+
 @import "../components/card/look-card.scss";
 @import "../components/look-drawer.scss";
 @import "../components/card/look-drawer-card.scss";
