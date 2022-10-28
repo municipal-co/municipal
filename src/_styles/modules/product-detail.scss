@@ -21,7 +21,6 @@
 
 .product-option__header {
   display: flex;
-  justify-content: space-between;
   margin-bottom: 15px;
 }
 
@@ -106,6 +105,8 @@
 
 .product-option__selected-option {
   font-family: $font-family-heading-medium;
+  color: $blue;
+  margin-left: 5px;
 }
 
 .product-option__arrows {
