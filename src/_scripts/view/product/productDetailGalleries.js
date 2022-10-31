@@ -6,6 +6,8 @@ const selectors = {
   productGallery: '[data-product-gallery-slideshow]',
   gallerySlide: '[data-slide]',
   zoomToggler: '[data-zoom-toggler]',
+  nextArrow: '[data-arrow-next]',
+  prevArrow: '[data-arrow-prev]'
 };
 
 const classes = {
@@ -17,15 +19,20 @@ const classes = {
 export default class productGallery extends BaseSection {
   constructor(container) {
     super(container, 'productGallery');
-    const self = this;
     this.$container = document.querySelector(selectors.productGallery)
     this.$slides = this.$container.querySelectorAll(selectors.gallerySlide);
     this.$zoomToggler = this.$container.querySelectorAll(selectors.zoomToggler);
+    this.$nextArrow = this.$container.closest('.product-gallery').querySelector('[data-arrow-next]');
+    this.$prevArrow = this.$container.closest('.product-gallery').querySelector(selectors.prevArrow);
+
     this.currentColor = '';
     this.gallerySettings = {
-      slidesToShow: 1,
+      slidesPerView: 1.1,
       autoplay: false,
       watchOverflow: true,
+      centeredSlides: true,
+      effect: 'slide',
+      spaceBetween: 10,
       zoom: {
         maxRatio: 3,
         minRatio: 1,
@@ -39,12 +46,18 @@ export default class productGallery extends BaseSection {
         loadPrevNext: true,
         loadPrevNextAmount: 2
       },
-      fadeEffect: {
-        crossFade: true,
+      navigation: {
+        nextEl: this.$nextArrow,
+        prevEl: this.$prevArrow,
+        enabled: true,
       },
       loop: true,
       threshold: 40,
-      effect: 'fade',
+      breakpoints: {
+        992: {
+          slidesPerView: 1,
+        }
+      },
       init: false,
     }
 

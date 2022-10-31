@@ -50,6 +50,10 @@ export default class ShopTheLook extends BaseSection {
       slidesOffsetAfter: 30,
       threshold: 10,
       watchOverflow: true,
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        draggable: true,
+      },
       navigation: {
         nextEl: '[data-arrow-next]',
         prevEl: '[data-arrow-prev]'

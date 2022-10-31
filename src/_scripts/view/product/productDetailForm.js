@@ -180,6 +180,7 @@ export default class ProductDetailForm {
     this.$swatchSlider.each((i, slider) => {
       const $slider = $(slider);
       const $swatchSlides = $(selectors.swatchSlide, $slider);
+      const $scrollbar = $('.swiper-scrollbar', $slider);
 
       $swatchSlides.each((index, el) => {
         if($(el).find('input[type=radio]:checked').length) {
@@ -197,6 +198,10 @@ export default class ProductDetailForm {
         watchOverflow: true,
         slidesOffsetBefore: 30,
         slidesOffsetAfter: 30,
+        scrollbar: $swatchSlides.length <= 4 ? false : {
+          el: '.swiper-scrollbar',
+          draggable: true,
+        },
         navigation: {
           prevEl: '[data-arrow-prev]',
           nextEl: '[data-arrow-next]'

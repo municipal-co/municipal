@@ -73,6 +73,7 @@ export default class ProductCard {
 
   initSwatchSlider() {
     const $selectedColor = $(selectors.singleOptionSelector+':checked', this.$container);
+    const $scrollbar = $('.swiper-scrollbar', this.$container);
     let swatchIndex = 0
     if($selectedColor.length) {
       swatchIndex = $selectedColor.parent().index();
@@ -86,6 +87,10 @@ export default class ProductCard {
       nested: true,
       watchOverflow: true,
       centerInsufficientSlides: true,
+      scrollbar: {
+        el: $scrollbar.get(0),
+        draggable: true,
+      },
       navigation: {
         enabled: true,
         prevEl: '[data-arrow-prev]',
