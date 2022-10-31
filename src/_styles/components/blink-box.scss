@@ -3,7 +3,8 @@
   padding: 30px;
 
   &.blink-box--dark {
-    background-color: $black;
+    border-radius: 10px;
+    background-color: $core-grey-3;
   }
 }
 
@@ -57,6 +58,5 @@
   }
   li {
     line-height: 1.5;
-    font-weight: bold;
   }
 }
