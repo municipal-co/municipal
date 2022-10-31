@@ -22,22 +22,22 @@
   }
 
   .swiper-scrollbar.card-slider__scrollbar {
-    height: 6px;
     position: relative;
+    display: block;
+    height: 6px;
     background-color: transparent;
     margin-top: 15px;
     width: calc(100% - 100px);
     left: 50px;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
 
     @include media-breakpoint-down(md) {
       display: none;
     }
 
     .swiper-scrollbar-drag {
-      background: rgba($black, 0.2);
-      &:hover {
-        background: rgba($black, 0.3);
-      }
+      background-color: rgb(195, 194, 193);
     }
 
   }
@@ -54,14 +54,12 @@
     .swiper-scrollbar.card-slider__scrollbar {
       width: calc(100% - 60px);
       left: 30px;
+    }
+  }
 
-      .swiper-scrollbar-drag {
-        background: rgba($white, 0.2);
-
-        &:hover {
-          background: rgba($white, 0.3);
-        }
-      }
+  .card-slider__slider:hover {
+    .swiper-scrollbar.card-slider__scrollbar {
+      opacity: 1;
     }
   }
 

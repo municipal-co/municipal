@@ -37,6 +37,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 -30px;
+  padding-bottom: 15px;
 
   .product-option__single-selector {
     display: block;
@@ -134,24 +135,29 @@
   left: unset;
 }
 
+
 .swiper-scrollbar.product-option__scrollbar {
-  position: relative;
+  position: absolute;
+  bottom: 0;
   height: 6px;
   background-color: transparent;
-  margin-top: 15px;
   display: block;
   left: 30px;
   width: calc(100% - 60px);
+  opacity: 0;
+  transition: 150ms ease-in-out;
+  transition-property: opacity, height;
+
+  .product-option:hover & {
+    opacity: 1;
+  }
 
   @include media-breakpoint-down('md') {
     display: none;
   }
 
   .swiper-scrollbar-drag {
-    background-color: rgba($black, 0.2);
-    &:hover {
-      background-color: rgba($black, 0.3);
-    }
+    background-color: rgb(195, 194, 193);
   }
 }
 
