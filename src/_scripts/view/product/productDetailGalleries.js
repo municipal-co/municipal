@@ -33,6 +33,7 @@ export default class productGallery extends BaseSection {
       centeredSlides: true,
       effect: 'slide',
       spaceBetween: 10,
+      autoHeight: true,
       zoom: {
         maxRatio: 3,
         minRatio: 1,
