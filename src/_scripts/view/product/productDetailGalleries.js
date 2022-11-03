@@ -27,7 +27,7 @@ export default class productGallery extends BaseSection {
 
     this.currentColor = '';
     this.gallerySettings = {
-      slidesPerView: 1.1,
+      slidesPerView: 1.2,
       autoplay: false,
       watchOverflow: true,
       centeredSlides: true,
