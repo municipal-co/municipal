@@ -61,10 +61,10 @@ export default class ProductBundles {
       const $productContainer = $(product);
 
       const $swatchSlider = $(selectors.swatchSlider, $productContainer);
+      const $slides = $('.swiper-slide', $swatchSlider);
       const currentSlide = $('[data-product-option]:checked', $swatchSlider).parent().index();
 
       const swatchSlider = new Swiper($swatchSlider.get(0), {
-        slideClass: 'swiper-slide',
         slidesPerView: 4.4,
         watchOverflow: true,
         slidesOffsetBefore: 15,
@@ -72,14 +72,14 @@ export default class ProductBundles {
         spaceBetween: 8,
         initialSlide: currentSlide,
         threshold: 10,
+        scrollbar: $slides.length <= 4 ? false :{
+          el: '.swiper-scrollbar',
+          draggable: true,
+          snapOnRelease: false,
+        },
         navigation: {
           prevEl: '[data-arrow-prev]',
           nextEl: '[data-arrow-next]'
-        },
-        breakpoints: {
-          1024: {
-            slidesPerGroup: 4,
-          }
         }
       });
 
