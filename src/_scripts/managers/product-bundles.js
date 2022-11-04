@@ -247,6 +247,8 @@ export default class ProductBundles {
       productTitle: $inputField.data('product-title'),
       activeOption: $inputField.attr('data-option-value'),
       dataField: $inputField,
+      showSizing: true,
+      productUrl: 'javascript:void(0);',
     }
 
     const currentOptions = this.getActiveOptions($productContainer, optionDrawerData.optionIndex);

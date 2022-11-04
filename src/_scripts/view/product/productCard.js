@@ -65,6 +65,9 @@ export default class ProductCard {
       printOption: this.$drawerField.data('option-name'),
       productTitle: this.$drawerField.data('product-title'),
       addToCart: true,
+      fitTipsTitle: this.singleProductJson.metafields.fit_tips_title,
+      fitTipsContent: this.singleProductJson.metafields.fit_tips_content,
+      showSizing: this.singleProductJson.metafields.enable_fit_guide,
     }
   }
 
@@ -135,6 +138,7 @@ export default class ProductCard {
     const options = this.getSelectedOptions();
 
     this.drawerData.variants = this.getOptionVariants(options);
+    this.drawerData.productUrl = `${this.singleProductJson.url}?variant=${this.drawerData.variants[0].id}#fitGuide`;
 
     this.updateCardPrice(this.drawerData.variants[0]);
     this.updateCardUrl(this.drawerData.variants[0]);

@@ -165,6 +165,9 @@
         "_": 0 {% comment %} Add an extra field here to ensure we don't have a dangling comma {% endcomment %}
         , "enable_bis": {{ product.metafields.custom_fields['enable_notify_me'] | default: 0 | json }}
         , "enable_sold_out": {{ product.metafields.custom_fields['enable_sold_out'] | default: 0 | json }}
+        , "enable_fit_guide": {% if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 %} true {% else %} false {% endif %}
+        , "fit_tips_title": {{ product.metafields.custom_fields['fg_tips_title'] | default: '' | json }}
+        , "fit_tips_content": {{ product.metafields.custom_fields['fg_tips_content'] | default: '' | json }}
       }
     }
 
