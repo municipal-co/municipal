@@ -24,6 +24,7 @@ const selectors = {
   productOption: '[data-product-option]',
   bundleSavings: '[data-bundle-savings]',
   swatchSlider: '[data-swatch-slider]',
+  finalSaleMessage: '[data-final-sale-message]',
 }
 
 const classes = {
@@ -117,6 +118,12 @@ export default class ProductBundles {
       } else {
         $productContainer.find(selectors.productPriceContainer).hide();
         $productContainer.find(selectors.productSoldOutMessage).show();
+      }
+
+      if(evt.variant.metafields.enable_final_sale === true) {
+        $productContainer.find(selectors.finalSaleMessage).attr('name', 'properties[Final Sale]');
+      } else {
+        $productContainer.find(selectors.finalSaleMessage).removeAttr('name')
       }
 
       if(evt.variant.compare_at_price > evt.variant.price) {
@@ -319,6 +326,12 @@ export default class ProductBundles {
     $this.find(selectors.bundleProductId).val(variant.id);
 
     $this.find(selectors.productFullPrice).text(Currency.formatMoney(variant.price, theme.moneyFormat).replace('.00', '')).attr('data-item-full-price', variant.price);
+
+    if(variant.metafields.enable_final_sale === true) {
+      $this.find(selectors.finalSaleMessage).attr('name', 'properties[Final Sale]');
+    } else {
+      $this.find(selectors.finalSaleMessage).removeAttr('name');
+    }
 
     if(variant.compare_at_price > variant.price) {
       $this.find(selectors.proudctComparePrice).text(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat));

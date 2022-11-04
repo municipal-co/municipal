@@ -55,12 +55,15 @@
       <div class="swiper-wrapper">
         {% if type == 'metafields' %}
           {% for card in metafields.pcs_products %}
-            <div class="swiper-slide" data-card-slide>
-              {% render 'product-card'
-                card_product: all_products[card.product],
-                color: card.selected_color
-              %}
-            </div>
+          {% assign current_product = all_products[card.product] %}
+            {% if current_product != blank %}
+              <div class="swiper-slide" data-card-slide>
+                {% render 'product-card'
+                  card_product: current_product,
+                  color: card.selected_color
+                %}
+              </div>
+            {% endif %}
           {% endfor %}
         {% else %}
           {% for block in section.blocks %}

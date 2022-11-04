@@ -31,6 +31,8 @@ const selectors = {
   dot: '.dot',
   klarnaOnsiteMessagingPrice: '[data-purchase-amount]',
   bisButton: '[data-bis-button]',
+  // Final sale messaging
+  finalSaleMessaging: '[data-final-sale-message]',
   // Color Slider
   swatchesSlider: '[data-swatch-slider]',
   swatchSlide: '[data-swatch-slide]',
@@ -104,6 +106,7 @@ export default class ProductDetailForm {
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
     this.$bisButton              = $(selectors.bisButton, this.$container);
     this.$swatchSlider           = $(selectors.swatchesSlider, this.$container);
+    this.$finalSaleMessaging     = $(selectors.finalSaleMessaging, this.$container);
     /* eslint-enable */
 
     this.optionDrawers = this._setUpOptionDrawers();
@@ -148,8 +151,9 @@ export default class ProductDetailForm {
     this.checkVariantsAvailability(variant);
     this.updateKlarnaPricing(variant);
     this.productColorValidation();
-
+    this.finalSaleValidation(variant);
     this.settings.onVariantChange(variant);
+
   }
 
   onOptionChange(evt) {
@@ -523,6 +527,19 @@ export default class ProductDetailForm {
         $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).parent().addClass(classes.soldOut);
       }
     })
+  }
+
+  finalSaleValidation(variant) {
+    if(this.$finalSaleMessaging.length === 0) {
+      return false;
+    }
+
+    if(variant.metafields.enable_final_sale === true) {
+      this.$finalSaleMessaging.attr('name', 'properties[Final Sale]')
+    } else {
+      this.$finalSaleMessaging.removeAttr('name');
+    }
+
   }
 
   _validateColorAvailability(color, optionPosition) {

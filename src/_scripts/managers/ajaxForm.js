@@ -61,7 +61,7 @@ class AJAXFormManager {
 
   addToCartByVariantID(e) {
     if (e.variantID) {
-      CartAPI.addItemFromID(e.variantID)
+      CartAPI.addItemFromID(e.variantID, e.properties)
         .then((data) => {
           const event = $.Event(this.events.ADD_SUCCESS, { cart: data });
           $window.trigger(event);

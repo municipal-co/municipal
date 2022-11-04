@@ -223,6 +223,11 @@
                     <span class="ajax-cart__sold-out-notice">This item is currently sold out.</span>
                   </li>
                 {{/unless}}
+                {{#if final_sale}}
+                <li class="ajax-item__sold-out-info-container">
+                  <span class="ajax-cart__sold-out-notice">Final Sale: {{final_sale}}</span>
+                </li>
+                {{/if}}
               </ul>
               <div class="ajax-item__footer">
                 {{#if discounts}}

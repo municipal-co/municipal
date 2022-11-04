@@ -28,9 +28,12 @@
                   data-product-option="{{ option }}"
                   data-option-value="{{ optionValue }}"
                   data-variant-id="{{id}}"
+                  {{#if enableFinalSale}}
+                    data-final-sale-message="{% endraw %}{{settings.final_sale_message}}{% raw %}"
+                  {{/if}}
                   class="hide"
                   {{#if selected}}
-                  checked="checked"
+                    checked="checked"
                   {{/if}}
                   {{#unless available}}
                     disabled
