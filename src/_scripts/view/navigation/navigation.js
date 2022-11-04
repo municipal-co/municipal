@@ -31,15 +31,20 @@ const MainNav = ((props) => {
   }
 
   const openNavigation = (evt) => {
-    if(evt.detail.sectionId !== id) {
+    if(evt?.detail.sectionId && evt?.detail?.sectionId !== id) {
       return;
     }
 
     setIsOpen(true);
+    document.dispatchEvent(new CustomEvent('drawer:open'));
   }
 
   const closeNavigation = (evt) => {
-    if(evt.detail.sectionId !== id) {
+    if(evt?.detail?.sectionId && evt?.detail?.sectionId !== id) {
+      return;
+    }
+
+    if(evt?.detail?.target === 'navigation') {
       return;
     }
 
@@ -88,6 +93,9 @@ const MainNav = ((props) => {
 
   const toggleNavigation = () => {
     setIsOpen((isOpen) => !isOpen);
+    if(!isOpen) {
+      document.dispatchEvent(new CustomEvent('drawer:open', {detail: {target:'navigation'}}))
+    }
   }
 
   const updateHeaderOffset = () => {
@@ -117,6 +125,7 @@ const MainNav = ((props) => {
     document.addEventListener('shopify:block:select', updateSelectedBlock);
     document.addEventListener('navigation:toggle', toggleNavigation);
     document.addEventListener('breakpointChange', updateHeaderOffset);
+    document.addEventListener('drawer:open', closeNavigation)
     return () => {
       document.removeEventListener('shopify:section:load', updateModuleData);
       document.removeEventListener('shopify:section:select', openNavigation);
@@ -124,6 +133,7 @@ const MainNav = ((props) => {
       document.removeEventListener('shopify:block:select', updateSelectedBlock);
       document.removeEventListener('navigation:toggle', toggleNavigation);
       document.removeEventListener('breakpointChange', updateHeaderOffset);
+      document.removeEventListener('drawer:open', closeNavigation)
     }
   }, [])
 
