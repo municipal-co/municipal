@@ -448,6 +448,7 @@ export default class AJAXCart {
     }
 
     this.$el.addClass(classes.cartOpen);
+    document.dispatchEvent(new CustomEvent('drawer:open'));
   }
 
   /**

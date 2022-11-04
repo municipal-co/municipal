@@ -49,6 +49,8 @@ export default class HeaderSection extends BaseSection {
     this.$menuToggler.on('click', this.toggleMenu.bind(this));
     this.onScroll();
     this.compensateHeaderSpace();
+
+    document.addEventListener('drawer:open', this.onCloseSearchDrawer.bind(this));
   }
 
   onScroll() {
@@ -100,6 +102,8 @@ export default class HeaderSection extends BaseSection {
     if(this.$searchDrawer.hasClass('is-visible')) {
       this.$searchInput.trigger('focus');
     }
+
+    document.dispatchEvent(new CustomEvent('drawer:open', {detail: {target: 'search-bar'}}));
   }
 
   toggleMenu(e) {
@@ -109,6 +113,10 @@ export default class HeaderSection extends BaseSection {
 
   onCloseSearchDrawer(e) {
     e.preventDefault();
+    if(e?.detail?.target === 'search-bar') {
+      return;
+    }
+
     this.$searchDrawer.removeClass('is-visible');
     this.$toggleSearchDrawer.removeClass('search-is-open');
   }
