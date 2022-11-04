@@ -270,4 +270,5 @@ body {
 .findify-components--cards--product__image .findify-components-common--image.findify-components-common--image__aspect .findify-components-common--image__image {
   width: 100%;
   height: 100%;
+  object-fit: cover !important;
 }
