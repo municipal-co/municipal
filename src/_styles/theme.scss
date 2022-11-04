@@ -259,3 +259,20 @@ body {
     display: none;
   }
 }
+
+// Findify card updates
+.findify-components--cards--product__image .findify-components-common--image.findify-components-common--image__aspect {
+  padding-bottom: 125% !important;
+}
+
+.findify-components--cards--product__image .findify-components-common--image.findify-components-common--image__aspect .findify-components-common--image__image {
+  object-fit: contain !important;
+}
+
+.findify-components--cards--product__content {
+  margin-top: -3.5% !important;
+}
+
+.findify-search-full-wrapper .findify-swiper-second-container {
+  margin-top:0 !important;
+}
