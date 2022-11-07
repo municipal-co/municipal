@@ -22,16 +22,20 @@
           bg_prefix: 'vp'
         %}
 
-        {% if section.settings.stl_title != blank %}
+        {% capture shop_the_look %}
+          {% render 'shop-the-look'
+            s: product.metafields.custom_fields,
+            type: 'metafields'
+          %}
+        {% endcapture %}
+
+        {% if section.settings.stl_title != blank and shop_the_look != blank %}
           <{{section.settings.stl_title_tag}} class="shop-the-look__title">
             {{ section.settings.stl_title }}
           </{{section.settings.stl_title_tag}}>
         {% endif %}
 
-        {% render 'shop-the-look'
-          s: product.metafields.custom_fields,
-          type: 'metafields'
-        %}
+        {{ shop_the_look }}
 
         {% render 'value-proposition' %}
 
