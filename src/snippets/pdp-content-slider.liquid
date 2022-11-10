@@ -10,10 +10,12 @@
 
             {% capture slide_buttons %}
               {% for i in (1..2) %}
+                {% assign has_link = false %}
+                {% assign link = blank %}
                 {%- assign button_text_handle = "button_text_" | append: i -%}
                 {%- assign button_url_handle = "button_url_" | append: i -%}
                 {%- assign enable_email_button_handle = "enable_email_button_" | append: i -%}
-                {% if slide[button_text_url] != blank or slide[enable_email_button_handle] == true %}
+                {% if slide[button_url_handle] != blank or slide[enable_email_button_handle] == true %}
                   {% assign has_link = true %}
                 {% endif %}
                 {%- if slide[button_text_handle] != blank and has_link == true -%}
