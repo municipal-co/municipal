@@ -50,7 +50,7 @@ export function getBreakpointMinWidth(key) {
  */
 export function getBreakpointMinWidthKeyForWidth(w) {
   const width = w || $window.width();
-  
+
   let foundKey;
 
   $.each(breakpointMinWidths, (k, bpMinWidth) => {
@@ -73,7 +73,12 @@ export function onResize() {
     if ((newWindowWidth >= bpMinWidth && cachedWindowWidth < bpMinWidth) || (cachedWindowWidth >= bpMinWidth && newWindowWidth < bpMinWidth)) {
       const bpMinWidthKey = getBreakpointMinWidthKeyForWidth(newWindowWidth);
       const e = $.Event(events.BREAKPOINT_CHANGE, { bpMinWidthKey });
+      const vanillaEvent = new CustomEvent(events.BREAKPOINT_CHANGE, {detail: {
+        bpMinWidthKey,
+        bpMinWidth
+      }})
       $window.trigger(e);
+      document.dispatchEvent(vanillaEvent);
       return false;
     }
   });

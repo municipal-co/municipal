@@ -3,6 +3,8 @@ import $ from 'jquery';
 import 'chosen-js';
 import 'jquery-unveil';
 import 'lazysizes';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 
 // Bootstrap JS
@@ -25,7 +27,6 @@ import './ui/passwordValidation';
 import SectionManager from './sections/sectionManager';
 import HeaderSection from './sections/header';
 import FooterSection from './sections/footer';
-import MobileMenuSection from './sections/mobileMenu';
 import ProductSection from './sections/product';
 import CartSection from './sections/cart';
 import AJAXCartSection from './sections/ajaxCart';
@@ -54,16 +55,14 @@ import ProductCardSlider from './sections/productCardSlider';
 import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 import FourOFour from './sections/fourofour';
 
-
-// Managers
-// import QuickViewManager from './managers/quickView';
-
 // Models
 import ProductCard from './view/product/productCard';
 
 // Templates
 import './templates/pageStyles';
-// import './templates/pageComponents';
+
+// Views
+import MainNav from './view/navigation/navigation';
 
 // Do this ASAP
 Animations.initialize();
@@ -77,7 +76,6 @@ Breakpoints.initialize();
 
   sectionManager.register('header', HeaderSection);
   sectionManager.register('footer', FooterSection);
-  sectionManager.register('mobile-menu', MobileMenuSection);
   sectionManager.register('fourofour', FourOFour);
   sectionManager.register('product', ProductSection);
   sectionManager.register('cart', CartSection);
@@ -111,6 +109,12 @@ Breakpoints.initialize();
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
+
+  // Register Mobile navigation
+  const navigationHolder = document.getElementById('main_navigation')
+  const navigationRoot = ReactDOM.createRoot(navigationHolder);
+  navigationRoot.render(<MainNav/>);
+
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

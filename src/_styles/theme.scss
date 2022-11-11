@@ -82,7 +82,12 @@
 @import 'components/profiles.scss';
 @import 'components/image-caption.scss';
 @import 'components/heading-media.scss';
-
+@import 'components/navigation/cta.scss';
+@import 'components/navigation/card-grid.scss';
+@import 'components/navigation/card-block.scss';
+@import 'components/navigation/info-card.scss';
+@import 'components/navigation/navigation-categories.scss';
+@import 'components/navigation/navigation-carousel.scss';
 /**
  * MODULES
  * ---------------------------------------
@@ -95,7 +100,7 @@
 @import 'modules/pencil-banner';
 @import 'modules/ajax-cart';
 @import 'modules/product-detail';
-@import 'modules/mobile-menu';
+@import 'modules/navigation';
 @import 'modules/hero';
 @import 'modules/product-overview';
 @import 'modules/product-features';
@@ -161,6 +166,7 @@ body {
 
   // Prevents window scroll on drawer open
   &.drawer-open {
+    position: relative;
     overflow: hidden !important;
   }
 }

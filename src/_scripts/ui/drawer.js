@@ -138,6 +138,7 @@ export default class Drawer {
   show() {
     const e = $.Event(this.events.SHOW);
     this.$el.trigger(e);
+    document.dispatchEvent(new CustomEvent('drawer:open'));
 
     if (this.stateIsOpen) return;
 
