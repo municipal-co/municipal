@@ -1,55 +1,37 @@
 {% assign slides_array = blocks | where: 'type', prefix %}
 
-{% if slides_array != blank and metafields[prefix] == blank %}
-  {%- assign type = 'blocks' -%}
-{% endif %}
-
-{% if metafields[prefix] != blank %}
-  {% assign slides_array = metafields[prefix] %}
-{% endif %}
-
 {% if slides_array != blank %}
   <div id="{{bg_prefix}}" class="content-slider__container">
     <div class="content-slider" data-section-type="content-slider">
       <div class="swiper-container" data-slideshow>
         <div class="swiper-wrapper">
           {% for block in slides_array %}
-            {% if type == 'blocks' %}
-              {%- assign slide = block.settings -%}
-            {% else %}
-              {% assign slide = block %}
-            {% endif %}
+            {%- assign slide = block.settings -%}
 
             {% capture slide_buttons %}
-              {% if type == 'blocks' %}
-                {% for i in (1..2) %}
-                  {%- assign button_text_handle = "button_text_" | append: i -%}
-                  {%- assign button_url_handle = "button_url_" | append: i -%}
-                  {%- if slide[button_text_handle] != blank and slide[button_url_handle] != blank -%}
-                    <a href="{{slide[button_url_handle]}}" class="btn btn-white content-slider__button">
-                      {{slide[button_text_handle]}}
-                    </a>
-                  {%- endif -%}
-                {% endfor %}
-              {% else %}
-                {% if slide.button_1 != blank %}
-                  {{ slide.button_1 | replace: "<a", "<a class='btn btn-white content-slider__button'"}}
+              {% for i in (1..2) %}
+                {% assign has_link = false %}
+                {% assign link = blank %}
+                {%- assign button_text_handle = "button_text_" | append: i -%}
+                {%- assign button_url_handle = "button_url_" | append: i -%}
+                {%- assign enable_email_button_handle = "enable_email_button_" | append: i -%}
+                {% if slide[button_url_handle] != blank or slide[enable_email_button_handle] == true %}
+                  {% assign has_link = true %}
                 {% endif %}
-
-                {% if slide.button_2 != blank %}
-                  {{ slide.button_2 | replace: "<a", "<a class='btn btn-white content-slider__button'"}}
-                {% endif %}
-              {% endif %}
+                {%- if slide[button_text_handle] != blank and has_link == true -%}
+                  {% if slide[enable_email_button_handle] == true %}
+                    {% assign link = 'mailto:hello@municipal.com?subject=Product Question - ' | append: product.title %}
+                  {% endif %}
+                  <a href="{{ link | default: slide[button_url_handle] }}" class="btn btn-white content-slider__button">
+                    {{slide[button_text_handle]}}
+                  </a>
+                {%- endif -%}
+              {% endfor %}
             {% endcapture %}
 
             <div class="swiper-slide" data-slide>
-              {%- if type == 'blocks' -%}
-                {% assign image = slide.image | img_url: 'master' %}
-                {% assign image_alt = slide.image.alt %}
-              {%- else -%}
-                 {% assign image = slide.image %}
-                 {% assign image_alt = slide.image_alt %}
-              {%- endif -%}
+              {% assign image = slide.image | img_url: 'master' %}
+              {% assign image_alt = slide.image.alt %}
               {% unless image == blank or image contains 'no-image' %}
                 <div class="content-slider__image-container">
                   <img class="content-slider__img" src="{{ image }}" alt="{{image_alt}}">
@@ -59,11 +41,7 @@
                 <span class="content-slider__title">{{ slide.title }}</span>
               {% endif %}
               {% if slide.body_content != blank %}
-                {% if type == 'blocks' %}
-                  {{ slide.body_content | replace: '<em>', '<em class="content-slider__highlighted-text">' | replace: '<p>', '<p class="content-slider__body-content">' | replace: '<a', '<a class="btn-link"' }}
-                {%- else -%}
-                  {{ slide.body_content | replace: '<strong>' , '<strong class="content-slider__highlighted-text">' | replace: '<em>', '<em class="content-slider__highlighted-text">' | replace: '<p>', '<p class="content-slider__body-content">' | replace: '<a', '<a class="btn-link"' }}
-                {% endif %}
+                {{ slide.body_content | replace: '<em>', '<em class="content-slider__highlighted-text">' | replace: '<p>', '<p class="content-slider__body-content">' | replace: '<a', '<a class="btn-link"' }}
               {% endif %}
               {% if slide_buttons != blank %}
                 <div class="content-slider__button-container">
