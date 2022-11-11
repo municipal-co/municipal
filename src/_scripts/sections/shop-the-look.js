@@ -124,7 +124,6 @@ export default class ShopTheLook extends BaseSection {
     this.drawerList.forEach((drawer, i) => {
       const slider = drawer.drawerObject.$el.find(selectors.lookDrawerSlider);
       const swiperSlider = new Swiper(slider, {
-        initialSlide: 1,
         centeredSlides: true,
         loop: false,
         slidesPerView: 1.5,
