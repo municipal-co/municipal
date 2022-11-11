@@ -16,7 +16,8 @@ const selectors = {
   productOption: '[data-product-option]',
   productPrice: '[data-product-price]',
   productId: '[data-product-id]',
-  addToCartButton: '[data-add-to-cart-button]'
+  addToCartButton: '[data-add-to-cart-button]',
+  finalSaleField: '[data-final-sale-message]',
 };
 
 export default class ShopTheLook extends BaseSection {
@@ -49,6 +50,10 @@ export default class ShopTheLook extends BaseSection {
       slidesOffsetAfter: 30,
       threshold: 10,
       watchOverflow: true,
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        draggable: true,
+      },
       navigation: {
         nextEl: '[data-arrow-next]',
         prevEl: '[data-arrow-prev]'
@@ -148,8 +153,11 @@ export default class ShopTheLook extends BaseSection {
   }
 
   buildSizeDrawerData($togglerButton, $productForm) {
-    const eventData = {};
     const productData = JSON.parse($productForm.find(selectors.productData).html());
+    const eventData = {};
+    eventData.showSizing = productData.metafields.enable_fit_guide;
+    eventData.fitTipsTitle = productData.metafields.fit_tips_title;
+    eventData.fitTipsContent = productData.metafields.fit_tips_content;
     const currentColor = $togglerButton.data('current-color');
     const colorIndex = $togglerButton.data('color-index');
     const printOption = $togglerButton.data('print-option');
@@ -166,6 +174,7 @@ export default class ShopTheLook extends BaseSection {
       }
     })
 
+    eventData.productUrl = `${productData.url}?variant=${eventData.variants[0].id}#fitGuide`;
     eventData.productTitle = productData.title;
     eventData.printOption = printOption;
 
@@ -213,7 +222,13 @@ export default class ShopTheLook extends BaseSection {
     $form.find(selectors.productId).val(currentVariant.id);
     $form.find(selectors.variantPrice).text(Currency.formatMoney(currentVariant.price, window.moneyFormat).replace('.00', ''));
 
-    if(currentVariant != '') {
+    if(currentVariant.metafields.enable_final_sale === true) {
+      $form.find(selectors.finalSaleField).attr('name', 'properties[Final Sale]');
+    } else {
+      $form.find(selectors.finalSaleField).removeAttr('name');
+    }
+
+    if(currentVariant !== '') {
       $form.find(selectors.addToCartButton).prop('disabled', false);
     }
   }

@@ -35,15 +35,19 @@ export default class ProductSection extends BaseSection {
     // drawers
     this.galleries = [];
 
-    $(selectors.fitGuideToggleButton).on('click', this.toggleFitGuideModal.bind(this));
+    $(document).on('click', selectors.fitGuideToggleButton, this.toggleFitGuideModal.bind(this));
     this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
 
 
     new VideoPlayer(selectors.videoPlayer);
 
-    if($(selectors.fitGuideDrawer)) {
+    if($(selectors.fitGuideDrawer).length) {
       this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
       this.initFitGuideGalleries();
+      if(document.location.hash === '#fitGuide') {
+        this.fitGuideDrawer.show();
+        history.replaceState(null, '', document.location.href.replace('#fitGuide', ''));
+      }
     }
 
     if(this.$featuresDrawerToggler.length) {

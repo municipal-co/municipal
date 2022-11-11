@@ -8,8 +8,9 @@
           {%- render 'product-form-options',
             product: product,
             type: 'swatch',
-            print_option: 'color'
-            current_variant: current_variant
+            print_option: 'color',
+            current_variant: current_variant,
+            merge_products: product.metafields.custom_fields.merge_product.value
           %}
         {%- elsif option == "size" or option == "Size" or option == 'amount' or option == 'Amount' -%}
           {% assign option_downcase = option | downcase %}
@@ -42,6 +43,14 @@
           {% unless variant.available %} disabled="disabled"{% endunless %}
           value="{{variant.id}}"> {{ variant.title }}</option>
         {% endfor %}
+        {% for merge_product in product.metafields.custom_fields.merge_product.value %}
+          {% for variant in merge_product.variants %}
+            <option
+            {% if variant == current_variant %} selected{% endif %}
+            {% unless variant.available %} disabled="disabled"{% endunless %}
+            value="{{variant.id}}"> {{ variant.title }}</option>
+          {% endfor %}
+        {% endfor %}
       </select>
       <input type="hidden" name="quantity" value="1">
     </div>
@@ -50,6 +59,7 @@
       {% render 'bundles-ui',
       current_variant: current_variant %}
     {% endif %}
+    <input type="hidden" value="{{settings.final_sale_message}}" data-final-sale-message {% if current_variant.metafields.custom_fields.enable_final_sale == true %} name="properties[Final Sale]" {% endif %}>
     <button
       type="submit"
       name="add"
@@ -80,14 +90,6 @@
   {%- unless product == blank -%}
     <script type="application/json" data-product-json>
       {%- render 'product-json', product: product -%}
-    </script>
-    <script type="application/json" data-badges-json>
-      {
-        "default": {{ product_default_badge | json }},
-      {%- for variant in product.variants -%}
-        "{{ variant.id }}": {{ variant.metafields.custom_fields['badge'] | json }} {%- unless forloop.last %} ,{%- endunless -%}
-      {%- endfor -%}
-      }
     </script>
   {%- endunless -%}
 

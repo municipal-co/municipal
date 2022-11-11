@@ -6,18 +6,19 @@ const selectors = {
   slider: '[data-slider]',
   slide: '[data-slide]',
   mktDrawerTrigger: '[data-toggle-mkt-drawer]',
+  scrollBar: '[data-scrollbar]',
   image: '[data-image]',
 };
 
 export default class LinkCardSlider extends BaseSection {
   constructor(container) {
-    super(container, 'footer');
+    super(container, 'linkCardSlider');
     this.newsletterForm = $(selectors.newsletterForm, this.$container);
 
     this.$slider = $(selectors.slider, this.$container);
     this.$slides = $(selectors.slide, this.$container);
+    this.$scrollBar = $(selectors.scrollBar, this.$container);
     this.$mktDrawerTrigger = $(selectors.mktDrawerTrigger, this.$container);
-
     this.initSliders();
     this.$mktDrawerTrigger.on('click', this.toggleMktDrawer.bind(this));
   };
@@ -30,6 +31,10 @@ export default class LinkCardSlider extends BaseSection {
       slidesOffsetAfter: 30,
       watchOverflow: true,
       threshold: 10,
+      scrollbar: this.$slides.length <= 4 ? false : {
+        el: this.$scrollBar.get(0),
+        draggable: true,
+      },
       lazy: {
         enabled: true,
         loadPrevNext: true,

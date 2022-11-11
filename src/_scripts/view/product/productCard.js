@@ -65,11 +65,15 @@ export default class ProductCard {
       printOption: this.$drawerField.data('option-name'),
       productTitle: this.$drawerField.data('product-title'),
       addToCart: true,
+      fitTipsTitle: this.singleProductJson.metafields.fit_tips_title,
+      fitTipsContent: this.singleProductJson.metafields.fit_tips_content,
+      showSizing: this.singleProductJson.metafields.enable_fit_guide,
     }
   }
 
   initSwatchSlider() {
     const $selectedColor = $(selectors.singleOptionSelector+':checked', this.$container);
+    const $scrollbar = $('.swiper-scrollbar', this.$container);
     let swatchIndex = 0
     if($selectedColor.length) {
       swatchIndex = $selectedColor.parent().index();
@@ -83,6 +87,10 @@ export default class ProductCard {
       nested: true,
       watchOverflow: true,
       centerInsufficientSlides: true,
+      scrollbar: {
+        el: $scrollbar.get(0),
+        draggable: true,
+      },
       navigation: {
         enabled: true,
         prevEl: '[data-arrow-prev]',
@@ -130,6 +138,7 @@ export default class ProductCard {
     const options = this.getSelectedOptions();
 
     this.drawerData.variants = this.getOptionVariants(options);
+    this.drawerData.productUrl = `${this.singleProductJson.url}?variant=${this.drawerData.variants[0].id}#fitGuide`;
 
     this.updateCardPrice(this.drawerData.variants[0]);
     this.updateCardUrl(this.drawerData.variants[0]);
@@ -188,7 +197,7 @@ export default class ProductCard {
   updateCardUrl(variant) {
     this.$productUrl.each((i, url) => {
       const currentUrl = $(url).data('product-url');
-      url.href = currentUrl + `?variant=${variant.id}`;
+      url.href = variant.url ? variant.url : (currentUrl + `?variant=${variant.id}`);
     })
   }
 

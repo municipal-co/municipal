@@ -78,13 +78,13 @@
                     {% render 'icon-caret-down' %}
                   </div>
                 </button>
-
                 <button class="btn btn-primary btn-block" data-add-to-cart-button disabled>
                   ADD TO BAG
                   <span class="look-drawer__product-card-price" data-product-price>
-                    {{ current_product.price | money_without_trailing_zeros }}
+                    {{ current_variant.price | money_without_trailing_zeros }}
                   </span>
                 </button>
+                <input type="hidden" value="{{settings.final_sale_message}}" data-final-sale-message {% if current_variant.metafields.custom_fields.enable_final_sale == true %} name="properties[Final Sale]" {% endif %}>
 
                 <input type="hidden" name="id" data-product-id>
 

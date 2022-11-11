@@ -32,6 +32,7 @@ export default class OptionDrawer extends BaseSection {
 
   openDrawer(evt) {
     this.drawerData = evt.optionDrawerData;
+
     if(!this.drawerData.optionIndex) {
       console.error(`[${this.namespace}] - openDrawer(): drawerData.optionIndex is needed for this method to work`);
       return;
@@ -53,6 +54,7 @@ export default class OptionDrawer extends BaseSection {
       variant.optionValue = variant[data.optionIndex];
       variant.optionDowncase = variant.optionValue.toLowerCase();
       variant.lowInventory = variant.inventory_quantity <= window.settings.lowInventoryThreshold;
+      variant.enableFinalSale = variant.metafields.enable_final_sale;
       if(variant.optionValue === data.activeOption) {
         variant.selected = true;
       } else {
@@ -97,9 +99,13 @@ export default class OptionDrawer extends BaseSection {
     const $this = $(evt.currentTarget);
     const optionValue = $this.data('option-value');
     const variantId = $this.data('variant-id');
-
+    const properties = {};
+    const finalSaleMessage = $this.data('final-sale-message');
     if(this.drawerData.addToCart === true ){
-      $(window).trigger($.Event('add_one_from_variant_id', {variantID: variantId}));
+      if(finalSaleMessage !== undefined && finalSaleMessage !== '') {
+        properties['Final Sale'] = finalSaleMessage
+      };
+      $(window).trigger($.Event('add_one_from_variant_id', {variantID: variantId, properties: properties}));
       this.drawer.hide();
       return false;
     }

@@ -28,9 +28,12 @@
                   data-product-option="{{ option }}"
                   data-option-value="{{ optionValue }}"
                   data-variant-id="{{id}}"
+                  {{#if enableFinalSale}}
+                    data-final-sale-message="{% endraw %}{{settings.final_sale_message}}{% raw %}"
+                  {{/if}}
                   class="hide"
                   {{#if selected}}
-                  checked="checked"
+                    checked="checked"
                   {{/if}}
                   {{#unless available}}
                     disabled
@@ -76,10 +79,19 @@
                 </div>
         </label>
         {{/each}}
-
-        {{#if show_sizing }}
-          <div class="btn-container text-center">
-            <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
+        {{#if fitTipsContent }}
+          <div class="blink-box blink-box--dark">
+            {{#if fitTipsTitle}}
+              <h6 class="blink-box__title">{{fitTipsTitle}}</h6>
+            {{/if}}
+            <div class="blink-box__content">
+              {{{ fitTipsContent }}}
+            </div>
+          </div>
+        {{/if}}
+        {{#if showSizing }}
+          <div class="btn-container text-center" style="margin-top: 10px;">
+            <a href="{{ productUrl }}" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
           </div>
         {{/if}}
       </div>

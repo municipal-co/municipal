@@ -4,6 +4,7 @@
   overflow: auto;
   border: 0;
   width: 100%;
+  z-index: 999999;
   @include media-breakpoint-down('md') {
     transform: translateY(100%);
     border-top-right-radius: 15px;

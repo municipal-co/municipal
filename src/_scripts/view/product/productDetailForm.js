@@ -26,12 +26,13 @@ const selectors = {
   shippingModal: '[data-shipping-modal]',
   shippingModalTrigger: '[data-shipping-modal-trigger]',
   badge: '[data-badge]',
-  badgesData: '[data-badges-json]',
   dotsColorContainer: '.dots--color',
   dotsContainer: '.dots',
   dot: '.dot',
   klarnaOnsiteMessagingPrice: '[data-purchase-amount]',
   bisButton: '[data-bis-button]',
+  // Final sale messaging
+  finalSaleMessaging: '[data-final-sale-message]',
   // Color Slider
   swatchesSlider: '[data-swatch-slider]',
   swatchSlide: '[data-swatch-slide]',
@@ -105,6 +106,7 @@ export default class ProductDetailForm {
     this.$pdpOptionDrawers       = $(selectors.pdpOptionDrawer, this.$container);
     this.$bisButton              = $(selectors.bisButton, this.$container);
     this.$swatchSlider           = $(selectors.swatchesSlider, this.$container);
+    this.$finalSaleMessaging     = $(selectors.finalSaleMessaging, this.$container);
     /* eslint-enable */
 
     this.optionDrawers = this._setUpOptionDrawers();
@@ -149,8 +151,9 @@ export default class ProductDetailForm {
     this.checkVariantsAvailability(variant);
     this.updateKlarnaPricing(variant);
     this.productColorValidation();
-
+    this.finalSaleValidation(variant);
     this.settings.onVariantChange(variant);
+
   }
 
   onOptionChange(evt) {
@@ -177,6 +180,7 @@ export default class ProductDetailForm {
     this.$swatchSlider.each((i, slider) => {
       const $slider = $(slider);
       const $swatchSlides = $(selectors.swatchSlide, $slider);
+      const $scrollbar = $('.swiper-scrollbar', $slider);
 
       $swatchSlides.each((index, el) => {
         if($(el).find('input[type=radio]:checked').length) {
@@ -194,6 +198,10 @@ export default class ProductDetailForm {
         watchOverflow: true,
         slidesOffsetBefore: 30,
         slidesOffsetAfter: 30,
+        scrollbar: $swatchSlides.length <= 4 ? false : {
+          el: '.swiper-scrollbar',
+          draggable: true,
+        },
         navigation: {
           prevEl: '[data-arrow-prev]',
           nextEl: '[data-arrow-next]'
@@ -513,12 +521,25 @@ export default class ProductDetailForm {
 
     soldOutColors.forEach((colorObject) => {
       if(colorObject.enableBis) {
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.bis);
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).siblings('.product-option__ui').append('<span class="product-option__bis-message">Back<br>Soon</span>');
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).parent().addClass(classes.bis);
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).siblings('.product-option__ui').append('<span class="product-option__bis-message">Back<br>Soon</span>');
       } else {
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`).parent().addClass(classes.soldOut);
+        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).parent().addClass(classes.soldOut);
       }
     })
+  }
+
+  finalSaleValidation(variant) {
+    if(this.$finalSaleMessaging.length === 0) {
+      return false;
+    }
+
+    if(variant.metafields.enable_final_sale === true) {
+      this.$finalSaleMessaging.attr('name', 'properties[Final Sale]')
+    } else {
+      this.$finalSaleMessaging.removeAttr('name');
+    }
+
   }
 
   _validateColorAvailability(color, optionPosition) {

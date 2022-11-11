@@ -11,7 +11,7 @@
 {% endif %}
 
 <div class="product-gallery">
-  <div class="product-gallery swiper-container" data-product-gallery-slideshow>
+  <div class="swiper-container" data-product-gallery-slideshow>
     <div class="product-gallery__wrapper swiper-wrapper">
       {% for image in product.images %}
       {% assign image_alt_pieces = image.alt | split: '|' %}
@@ -32,8 +32,37 @@
           </div>
         </div>
       {% endfor %}
+      {% for merge_product in product.metafields.custom_fields.merge_product.value %}
+        {% for image in merge_product.images %}
+          {% assign image_alt_pieces = image.alt | split: '|' %}
+          {% assign img_color_downcase = image_alt_pieces[1] | downcase %}
+          {% assign variant_color_downcase = current_variant[option_index] | downcase %}
+          {% if has_color_index %}
+            <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}">
+          {% else %}
+            <div class="product-gallery__slide swiper-slide" data-slide>
+          {% endif %}
+            <div class="product-gallery__zoom-toggler" data-zoom-toggler>
+              {% render 'icon-zoom-in' %}
+              {% render 'icon-zoom-out' %}
+            </div>
+            <div class="swiper-zoom-container">
+              <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
+              <span class="swiper-lazy-preloader"></span>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
     </div>
     <div class="swiper-pagination product-gallery__pagination"></div>
+  </div>
+  <div class="product-gallery__arrows-container">
+    <div class="product-gallery__arrow" data-arrow-prev aria-label="Scroll to prev slide">
+      {% render 'icon-caret' %}
+    </div>
+    <div class="product-gallery__arrow" data-arrow-next aria-label="Scroll to next slide">
+      {% render 'icon-caret' %}
+    </div>
   </div>
 
   <div class="product-gallery__zoom-container" data-zoom-container>

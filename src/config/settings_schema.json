@@ -135,6 +135,17 @@
         "type": "richtext",
         "id": "shipping_body_6",
         "label": "Shipping body - Block 6"
+      },
+      {
+        "type": "header",
+        "content": "Final sale message",
+        "info": "To enable final sale go to variant level metafields and enable the checkbox \"Enable final sale\" on the variant(s) that will show this message"
+      },
+      {
+        "type": "textarea",
+        "id": "final_sale_message",
+        "label": "Message",
+        "default": "This product cannot be returned after purchase"
       }
     ]
   },

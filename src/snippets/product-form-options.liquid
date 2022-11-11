@@ -59,7 +59,34 @@
             </label>
           {% endif %}
         {% endfor %}
+        {% for merge_product in merge_products %}
+          {% for variant in merge_product.variants %}
+            {%- if printed_variant == variant[option_index] -%}
+              {%- continue -%}
+            {%- endif -%}
+            {% if variant[option_index] == current_variant[option_index] or variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or variant.metafields.custom_fields['enable_sold_out'] == 1 %}
+              {%- assign printed_variant = variant[option_index] -%}
+              <label class="product-option__single-selector swiper-slide" data-swatch-slide>
+                <input type="radio"
+                      name="{{- option_prefix -}}{{option_index}}"
+                      value="{{variant[option_index]}}"
+                      class="hide"
+                      data-option-name="{{option_downcase}}"
+                      data-product-option="{{ option_index }}"
+                      data-option-value="{{variant[option_index] | downcase}}"
+                      {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
+                      data-index="{{ option_index }}"
+                      data-single-option-selector>
+
+                <div class="product-option__ui">
+                  <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+                </div>
+              </label>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
       </div>
+      <div class="swiper-scrollbar product-option__scrollbar"></div>
       <div class="product-option__arrows">
         <div class="product-option__arrow product-option__arrow-prev" data-arrow-prev></div>
         <div class="product-option__arrow product-option__arrow-next" data-arrow-next></div>

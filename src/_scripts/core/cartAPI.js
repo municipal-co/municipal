@@ -42,6 +42,10 @@ class CartAPI {
       item.original_price = Currency.formatMoney(item.original_price, theme.moneyFormat);
       item.original_price = Currency.stripZeroCents(item.original_price);
 
+      if(item.properties !== undefined && item.properties["Final Sale"] !== undefined) {
+        item.final_sale = item.properties["Final Sale"];
+      }
+
       // Adjust the item's variant options to add "name" and "value" properties
       if (item.hasOwnProperty('product')) {
         const product = item.product;
@@ -294,6 +298,7 @@ class CartAPI {
 
     $activeBundleSelectors.each((index, el) => {
       const productId = $(el).find('[data-bundle-product-id]').val();
+      const finalSaleMessage = $(el).find('[name="properties[Final Sale]"]');
       let productFound = false;
 
       itemsObject.forEach((item) => {
@@ -304,12 +309,18 @@ class CartAPI {
       });
 
       if(productFound === false ){
+        const properties = {
+          _bundleId: bundleId
+        }
+
+        if(finalSaleMessage !== undefined) {
+          properties['Final Sale'] = finalSaleMessage.val()
+        }
+
         itemsObject.push({
           id: productId,
           quantity: 1,
-          properties: {
-            _bundleId: bundleId
-          }
+          properties: properties
         })
       };
     })

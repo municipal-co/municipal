@@ -305,7 +305,6 @@ export default class AJAXCart {
    */
   onChangeFail(data) {
     console.warn(`[${this.name}] - onChangeFail`);
-    console.warn(`[${this.name}] - ${data.message}`);
   }
 
   /**

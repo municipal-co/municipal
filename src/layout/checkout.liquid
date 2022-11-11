@@ -27,6 +27,13 @@
     <script type="application/javascript" async src="https://sdk.postscript.io/integrations/sdk-min.js"></script>
     <!-- End Postscript SMS consent -->
 
+    <!-- Site Retargeting Pixel (DSP) -->
+    <script src="https://secure.adnxs.com/seg?add=31471266&t=1" type="text/javascript" defer></script>
+
+    <!-- Pixel Tracker - Universal Pixel (Flip) -->
+    <script src="https://tracker.pixeltracker.co/pixel.js"></script>
+    <script>FLPIXEL.fire("975023b2-5a8e-4a2f-b9be-554b742d6e98", {"category": "pagevisit","subcategory": "checkout"});</script>
+
   </head>
   <body>
     {{ skip_to_content_link }}
@@ -64,6 +71,9 @@
       </div>
     </div>
     {{ tracking_code }}
+
+    <!-- Artsai Conversion Pixel for [lead] - Podcast -->
+    <img src="https://data.adxcel-ec2.com/pixel/?ad_log=referer&action=lead&pixid=91d19b51-2e3c-47e3-95ed-e1e5c729f473" width="1" height="1" border="0">
   </body>
 </html>
 

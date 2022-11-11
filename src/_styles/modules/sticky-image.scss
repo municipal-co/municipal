@@ -8,16 +8,19 @@
     max-width: calc(100% - 575px);
   }
 
-  @include media-breakpoint-down('sm') {
+  @include media-breakpoint-down('md') {
     position: relative;
     height: auto;
   }
 }
 
 .sticky-image__background-container {
-  @include media-breakpoint-down('sm') {
-    padding-bottom: 120%;
-    width: 100%;
+  @include media-breakpoint-down('md') {
+    position: relative;
+
+    &.hide-mobile {
+      display: none;
+    }
   }
 }
 
@@ -28,10 +31,9 @@
   left: 0;
   top: 0;
 
-  @include media-breakpoint-down('sm') {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+  @include media-breakpoint-down('md') {
+    position: relative;
+    display: block;
   }
 
   img {
@@ -42,29 +44,45 @@
   }
 }
 
+.sticky-image__caption {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  color: $white;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, rgba(18, 18, 18, 0.6) 100%);
+  text-align: center;
+  padding: 30px 20px 20px;
+  font-size: 16px;
+}
+
 .sticky-image__info-container {
   position: absolute;
   width: 100%;
   top: 0;
   left: 0;
   padding: 60px;
-  background: linear-gradient(0deg, rgba(18,18,18,0) 0%, rgba(18,18,18,0.45) 100%);
-  @include media-breakpoint-down('sm') {
+  background: linear-gradient(0deg, rgba(18,18,18,0) 0%, rgba(18,18,18,0.60) 100%);
+  @include media-breakpoint-down('md') {
+    position: relative;
     padding: 30px;
+    background: $bg-white;
   }
 }
 
 .sticky-image__badge {
-  transition: $transition-timing-function-base $transition-duration-fast;
-  transition-property: color, background-color;
-
+  transition: 150ms ease-in-out;
+  transition-property: background-color, color;
   &:hover {
-    color: $white;
+    background-color: $white;
+    color: $black;
   }
-
-  @include media-breakpoint-up('lg') {
+  @include media-breakpoint-down('md') {
+    border-color: $black;
+    color: $black;
     &:hover {
-      background-color: $white;
+      border-color: $black;
+      background-color: transparent;
       color: $black;
     }
   }
@@ -80,6 +98,7 @@
   }
   @include media-breakpoint-down('md') {
     font-size: 32px;
+    color: $black;
   }
 }
 
@@ -91,5 +110,6 @@
 
   @include media-breakpoint-down('md') {
     font-size: 16px;
+    color: $black;
   }
 }

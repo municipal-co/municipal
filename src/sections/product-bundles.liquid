@@ -16,10 +16,17 @@
         %}
 
         {% render 'pdp-content-slider'
+          blocks: section.blocks,
           metafields: product.metafields.custom_fields,
           prefix: 'value_props',
           bg_prefix: 'vp'
         %}
+
+        {% if section.settings.stl_title != blank %}
+          <{{section.settings.stl_title_tag}} class="shop-the-look__title">
+            {{ section.settings.stl_title }}
+          </{{section.settings.stl_title_tag}}>
+        {% endif %}
 
         {% render 'shop-the-look'
           s: product.metafields.custom_fields,
@@ -31,6 +38,7 @@
         {% render 'pdp-drawer-buttons' %}
 
         {% render 'pdp-content-slider'
+          blocks: section.blocks,
           metafields: product.metafields.custom_fields,
           prefix: 'questions_slider',
           bg_prefix: 'qs'
@@ -74,6 +82,133 @@
         "id": "bundle_product_title",
         "label": "Product Option Title",
         "default": "Edit color and size below: "
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Value Prop Slide",
+        "type": "value_props",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "body_content",
+            "label": "Body Content"
+          },
+          {
+            "type": "url",
+            "id": "button_url_1",
+            "label": "Button 1 Link"
+          },
+          {
+            "type": "text",
+            "id": "button_text_1",
+            "label": "Button 1 Text"
+          },
+          {
+            "type": "url",
+            "id": "button_url_2",
+            "label": "Button 2 Link"
+          },
+          {
+            "type": "text",
+            "id": "button_text_2",
+            "label": "Button 2 Text"
+          },
+          {
+            "type": "header",
+            "content": "Shop the look"
+          },
+          {
+            "type": "text",
+            "id": "stl_title",
+            "label": "Module Title",
+            "default": "Shop the look"
+          },
+          {
+            "type": "select",
+            "id": "stl_title_tag",
+            "label": "title tag",
+            "default": "h2",
+            "options": [
+              {
+                "value": "h1",
+                "label": "h1"
+              },
+              {
+                "value": "h2",
+                "label": "h2"
+              },
+              {
+                "value": "h3",
+                "label": "h3"
+              },
+              {
+                "value": "h4",
+                "label": "h4"
+              },
+              {
+                "value": "h5",
+                "label": "h5"
+              },
+              {
+                "value": "h6",
+                "label": "h6"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Question Slide",
+        "limit": 1,
+        "type": "questions_slider",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "body_content",
+            "label": "Body Content"
+          },
+          {
+            "type": "url",
+            "id": "button_url_1",
+            "label": "Button 1 Link"
+          },
+          {
+            "type": "text",
+            "id": "button_text_1",
+            "label": "Button 1 Label"
+          },
+          {
+            "type": "url",
+            "id": "button_url_2",
+            "label": "Button 2 Link"
+          },
+          {
+            "type": "text",
+            "id": "button_text_2",
+            "label": "Button 2 Label"
+          }
+        ]
       }
     ]
   }

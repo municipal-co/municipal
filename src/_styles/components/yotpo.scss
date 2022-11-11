@@ -6,7 +6,7 @@
 
 // These variables should be defined in variables.scss.liquid but need to default to `false` in order for our conditional logic to work
 $yotpo-icon-star: 'yotpo-full-star.svg';
-$yotpo-icon-star-half: 'yotpo-empty-star.svg';
+$yotpo-icon-star-half: 'yotpo-half-star.svg';
 $yotpo-icon-star-empty:  'yotpo-empty-star.svg';
 
 @import 'yotpo/rating-stars';

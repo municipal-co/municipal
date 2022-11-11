@@ -1,29 +1,33 @@
   <div class="sticky-image col-lg-24" data-sticky-image>
-    <div class="sticky-image__background-container">
+    <div class="sticky-image__background-container {% if metafields.si_mobile_image == blank %}hide-mobile{% endif %}">
       {% if metafields.si_desktop_image != blank or metafields.si_mobile_image != blank %}
         <picture class="sticky-image__background-image">
           <source media="(min-width: 992px)" data-srcset="{% render "cf-image", image: metafields.si_desktop_image, print: 'url' %}">
           <img data-src="{% render "cf-image", image: metafields.si_mobile_image, print: 'url' %}" alt="{{metafields.si_image_alt}}" class="lazyload">
         </picture>
       {% endif %}
-
-      <div class="sticky-image__info-container">
-        {% if product.metafields.custom_fields.si_product_category != blank %}
-          {%- assign default_collection = collections[product.metafields.custom_fields.si_product_category] -%}
-          <a href="{{default_collection.url}}" class="badge sticky-image__badge" title="Go to collection {{ default_collection.title }}">
-            {{ default_collection.title }}
-          </a>
+      {% if metafields.si_image_caption != blank %}
+        <div class="sticky-image__caption">
+          {{ metafields.si_image_caption }}
+        </div>
+      {% endif %}
+    </div>
+    <div class="sticky-image__info-container">
+      {% if product.metafields.custom_fields.si_product_category != blank %}
+        {%- assign default_collection = collections[product.metafields.custom_fields.si_product_category] -%}
+        <a href="{{default_collection.url}}" class="badge sticky-image__badge" title="Go to collection {{ default_collection.title }}">
+          {{ default_collection.title }}
+        </a>
+      {% endif %}
+      <h1 class="sticky-image__title">
+        {{ object.title | replace: '-', '&#8288;-&#8288;'}}
+      </h1>
+      {% unless product.type == 'Gift Card' %}
+        {% if object.price != blank %}
+          <div class="sticky-image__price" data-price>
+            {% render 'product-detail-price', product: object %}
+          </div>
         {% endif %}
-        <h1 class="sticky-image__title">
-          {{ object.title | replace: '-', '&#8288;-&#8288;'}}
-        </h1>
-        {% unless product.type == 'Gift Card' %}
-          {% if object.price != blank %}
-            <div class="sticky-image__price" data-price>
-              {% render 'product-detail-price', product: object %}
-            </div>
-          {% endif %}
-        {% endunless %}
-      </div>
+      {% endunless %}
     </div>
   </div>
