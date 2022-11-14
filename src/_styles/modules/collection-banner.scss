@@ -1,18 +1,9 @@
 .collection-banner {
-  background-color: $black;
+  background-color: $bg-white;
   padding-top: large-vw(35px, 120px);
 
   @include media-breakpoint-down('md') {
-    padding-top: 35px
-  }
-
-  &.light {
-    background-color: $bg-white;
-
-    .collection-banner__title,
-    .collection-banner__content {
-      color: $black;
-    }
+    padding-top: 35px;
   }
 
   &.findify-collection-banner {
@@ -101,7 +92,7 @@
   .collection-banner__title,
   .collection-banner__content {
     text-align: center;
-    color: $white;
+    color: $black;
   }
 
   .collection-banner__content p {
