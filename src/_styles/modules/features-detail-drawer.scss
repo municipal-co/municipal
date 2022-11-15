@@ -41,6 +41,11 @@
   width: 100%;
   justify-content: center;
   bottom: unset;
+
+  .swiper-container-horizontal > & {
+    z-index: 1;
+  }
+
   .swiper-pagination-bullet {
     border-radius: 1.5px !important;
   }
