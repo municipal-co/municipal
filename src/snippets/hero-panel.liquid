@@ -51,9 +51,11 @@
       </p>
     {% endif %}
     {% if s.cta_text != blank and s.cta_url != blank%}
+    <div>
       <a href="{{s.cta_url}}" class="btn {{ s.button_style }} hero__btn">
         {{ s.cta_text }}
       </a>
+    </div>
     {% endif %}
   </div>
 </div>
