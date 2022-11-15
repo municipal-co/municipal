@@ -41,6 +41,9 @@
   width: 100%;
   justify-content: center;
   bottom: unset;
+  .swiper-pagination-bullet {
+    border-radius: 1.5px !important;
+  }
 }
 
 .features-detail__body-content {
