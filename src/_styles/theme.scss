@@ -273,8 +273,24 @@ body {
   object-fit: cover !important;
 }
 
-.findify-components--cards--product__image .findify-components-common--image.findify-components-common--image__aspect .findify-components-common--image__image {
+.findify-components--cards--product__image .findify-components-common--image.findify-components-common--image__aspect img.findify-components-common--image__image {
   width: 100%;
   height: 100%;
   object-fit: cover !important;
+}
+.findify-search-full-wrapper .findify-components--cards-product__color-ball {
+  border-radius: 3px !important;
+}
+
+.findify-components--cards-product__color-item {
+  padding: 0px !important;
+}
+
+.findify-product-color-swatches-wrapper .findify-components--cards-product__color-item_active {
+  border: 1px solid #121212 !important;
+  border-radius: 4px !important;
+}
+
+.findify-components--cards-product__color-item {
+  border-radius: 3px !important;
 }
