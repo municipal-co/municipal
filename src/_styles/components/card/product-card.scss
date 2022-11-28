@@ -127,6 +127,10 @@
   font-family: $font-family-heading-medium;
   line-height: 15px;
   display: block;
+
+  &.product-card__color-title--findify {
+    text-transform: capitalize;
+  }
 }
 
 .product-card__title {
@@ -145,6 +149,10 @@
   font-size: 15px;
   line-height: 17px;
   font-family: $font-family-heading-medium;
+
+  s {
+    margin-right: 5px;
+  }
 }
 
 .product-card__add-to-cart-container {

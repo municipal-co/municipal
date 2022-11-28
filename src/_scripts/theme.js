@@ -31,7 +31,6 @@ import ProductSection from './sections/product';
 import CartSection from './sections/cart';
 import AJAXCartSection from './sections/ajaxCart';
 import PencilBannerSection from './sections/pencilBanner';
-import CollectionSection from './sections/collection';
 import BlogSection from './sections/blog';
 import ArticleSection from './sections/article';
 import VideoSection from './sections/video';
@@ -63,6 +62,7 @@ import './templates/pageStyles';
 
 // Views
 import MainNav from './view/navigation/navigation';
+import Collection from './templates/collection';
 
 // Do this ASAP
 Animations.initialize();
@@ -81,7 +81,6 @@ Breakpoints.initialize();
   sectionManager.register('cart', CartSection);
   sectionManager.register('ajax-cart', AJAXCartSection);
   sectionManager.register('pencil-banner', PencilBannerSection);
-  sectionManager.register('collection', CollectionSection);
   sectionManager.register('blog', BlogSection);
   sectionManager.register('article', ArticleSection);
   sectionManager.register('video', VideoSection);
@@ -115,6 +114,11 @@ Breakpoints.initialize();
   const navigationRoot = ReactDOM.createRoot(navigationHolder);
   navigationRoot.render(<MainNav/>);
 
+  const collectionHolder = document.getElementById('collection');
+  if(collectionHolder) {
+    const collectionRoot = ReactDOM.createRoot(collectionHolder);
+    collectionRoot.render(<Collection/>);
+  }
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

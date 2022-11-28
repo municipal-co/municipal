@@ -3,191 +3,53 @@
 // -------------------------
 .collection-template-container {
   background-color: $bg-white;
-}
-.showing-header {
-  .collection-filter-bar.is-fixed {
-    @include media-breakpoint-up('lg') {
-      transform: translateY(100%);
-      transition: all $transition-duration-dropdown $transition-timing-function-out;
-    }
-  }
+  min-height: 600px;
 }
 
-.collection-filter-bar {
-  display: flex;
-  align-items: center;
-  padding: large-vw(3px ,5px) large-vw(25px, 40px);
-  border-bottom: 4px solid $black;
-  margin-bottom: 80px;
-  z-index: 2101;
-
-  .collection-filter-bar__filter-toggler {
-    padding-top: 0;
-    padding-bottom: 0;
-    font-size: large-vw(20px ,30px);
-
-    @include media-breakpoint-down('md') {
-      font-size: 20px;
-    }
-  }
+.collection__body {
+  position: relative;
 }
 
-.collection-filter-bar__grouping {
-  width: 50%;
-
-  .breadcrumbs__crumb {
-    font-size: large-vw( 16px, 30px);
-    font-weight: $font-weight-bold;
-
-    @include media-breakpoint-down('md') {
-      font-size: 16px;
-    }
-  }
-
-  &--breadcrumb {
-    @include media-breakpoint-down('md') {
-      display: none;
-    }
-  }
-
-  &--filters {
-    text-align: right;
-    justify-self: flex-end;
-
-    @include media-breakpoint-down('md') {
-      width: 100%;
-    }
-  }
-
-  .collection-filter-bar__filter-toggler {
-    @extend .p2;
-
-    .icon-filters {
-      fill: $black;
-      width: large-vw(15px, 50px);
-      height: large-vw(15px, 50px);
-      margin-right: 5px;
-
-      @include media-breakpoint-down('md') {
-        width: 20px;
-        height: 20px;
-      }
-    }
-
-    &:hover .icon-filters {
-      fill: $black;
-    }
-  }
-}
-
-.filters-drawer {
+.collection__loading-container {
+  position: absolute;
+  width: 100%;
   height: 100%;
-  border: 0;
-  overflow-x: hidden;
+  display: flex;
+  background-color: rgba($bg-white, 0.7);
+  z-index: 99;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease-in-out;
+  pointer-events: none;
 
-  @include media-breakpoint-up('lg') {
-    max-width: 560px;
-  }
-
-  .drawer__header {
-    position: relative;
-    background-color: $black;
-    padding: large-vw(17px, 45px) large-vw(20px, 40px);
-    color: $white;
-    margin-bottom: 0;
-
-    @include media-breakpoint-down('md') {
-      padding: 17px 20px;
-    }
-
-    .drawer__close {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: $white;
-    }
-
-    .icon-close {
-      width: large-vw(30px, 50px);
-      height: large-vw(30px, 50px);
-
-      @include media-breakpoint-down('md') {
-        width: 30px;
-        height: 30px;
-      }
-    }
-
-    .drawer__header-title {
-      font-size: large-vw(16px, 30px);
-      text-transform: none;
-      font-weight: $font-weight-normal;
-      opacity: 1 !important;
-      transform: unset !important;
-
-      @include media-breakpoint-down('md') {
-        font-size: 16px;
-      }
-    }
-  }
-
-  .drawer__body {
-    padding: large-vw(35px, 47px) large-vw(35px, 80px);
-
-    @include media-breakpoint-down('md') {
-      padding: 35px 35px;
-    }
-  }
-
-  .collection-filter__group-header {
-    display: inline-block;
-    margin-bottom: large-vw(28px, 30px);
-    font-weight: $font-weight-normal;
-
-    @include media-breakpoint-down('md') {
-      margin-bottom: 28px;
-    }
-  }
-
-  .collection-filter__group {
-    margin-bottom: 60px;
-  }
-
-  .custom-control-label {
-    font-weight: $font-weight-bold;
-
-    &:before,
-    &:after {
-      top: 2px;
-    }
-  }
-
-  .collection-filter__reset {
-    font-size: large-vw(10px, 20px);
-
-    @include media-breakpoint-down('md') {
-      font-size: 10px;
-    }
-
-    .icon-close {
-      fill: $black;
-      width: large-vw(16px, 30px);
-      height: large-vw(16px, 30px);
-
-      @include media-breakpoint-down('md') {
-        width: 16px;
-        height: 16px;
-      }
-    }
-
-    &:hover .icon-close {
-      fill: $black;
-    }
+  .is-loading & {
+    opacity: 1;
+    pointer-events: all;
   }
 }
 
-.template-collection {
-  .product-card__info-title {
-    text-transform: none;
+.collection__loading-spinner {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 2px solid $gray-light;
+  border-bottom-color: $gray;
+  animation: 1s linear infinite spinner;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
+
+
+
+@import 'components/findify-filters.scss';
+@import 'components/card/promo-card.scss';

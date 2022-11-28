@@ -44,7 +44,7 @@ $content-grid-item-vertical-spacing-loose: $grid-gutter-width * 2;
   flex: 1;
   flex-basis: percentage(1/2);
   max-width: percentage(1/2);
-  margin-bottom: large-vw(65px, 160px);
+  margin-bottom: 50px;
   padding: 0 9px;
 
   @include media-breakpoint-down('md') {

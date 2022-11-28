@@ -1,0 +1,45 @@
+import React, { useEffect, useRef } from "react";
+import ProductCard from "../global/productCard";
+import PromoCard from "../global/promoCard";
+
+const ProductGrid = ((props) => {
+  const buildItemList = () => {
+    const items = props.collectionItems.items.map(product => {
+      product.type = 'product';
+
+      return product;
+    });
+
+    props.collectionItems.promos.forEach(promo => {
+      promo.cards[0].type = 'promo';
+      items.splice(promo.position - 1, 0, promo.cards[0])
+    })
+
+    return items;
+  }
+
+  const buildItemsUI = () => {
+    const itemList = buildItemList();
+
+    const items = itemList.map(item => {
+
+      if(item.type == 'product') {
+        return (<div key={item.id} className="content-grid__item"><ProductCard  data={item} /></div>)
+      } else {
+        return (<div key={item.id} className="content-grid__item"><PromoCard  data={item} /></div>)
+      }
+    })
+
+    return items;
+  }
+
+  return (
+    <div className={`collection__grid ${props.filtersOpen ? 'col-lg-18' : 'col-lg-24'}`}>
+      <div className={`row content-grid content-grid--1-col content-grid--sm-1-col content-grid--md-2-col ${props.filtersOpen ? 'content-grid--lg-2-col content-grid--xl-3-col' : 'content-grid--lg-3-col content-grid--xl-4-col'}`}>
+        { buildItemsUI() }
+      </div>
+    </div>
+  )
+})
+
+export default ProductGrid;
