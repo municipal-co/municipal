@@ -41,7 +41,9 @@ const Collection = ((props) => {
   const toggleFilter = () => {
     setFiltersOpen((isOpen) => {
     const action = !isOpen ? 'add' : 'remove';
-    document.querySelector('body').classList[action]('modal-open')
+    if(window.innerWidth <= 991) {
+      document.querySelector('body').classList[action]('modal-open')
+    }
 
     return !isOpen
     });
