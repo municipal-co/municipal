@@ -71,16 +71,16 @@
   margin-top: 20px;
   padding-top: 20px;
 
+  &:nth-child(2) {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 20px;
+  }
+
   @include media-breakpoint-down('md') {
     padding: 20px 20px 0;
-
-    &:nth-child(2) {
-      margin-top: 0;
-    }
-
-    &:last-child {
-      padding-bottom: 20px;
-    }
   }
 }
 

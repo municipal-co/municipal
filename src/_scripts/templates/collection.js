@@ -66,14 +66,34 @@ const Collection = ((props) => {
 
   return(
     <>
-      <FindifyHeader key="collection_header" onSelectChange={onSelectChange} currentFilters={activeFilters.current} currentSort={sort[0]} toggleFilter={toggleFilter}/>
+      <FindifyHeader
+        key="collection_header"
+        onSelectChange={onSelectChange}
+        currentFilters={activeFilters.current}
+        currentSort={sort[0]}
+        toggleFilter={toggleFilter}
+        setCurrentFilters={setCurrentFilters}
+        filtersOpen={filtersOpen}/>
+
       <div key="collection_body" className={`collection__body row ${isLoading ? 'is-loading' : ''}`}>
         <div key="spinner" className="collection__loading-container">
           <div className="collection__loading-spinner"></div>
         </div>
 
-        <FindifyFilters key="collection_filters" setCurrentFilters={setCurrentFilters} isLoading={isLoading} setIsLoading={setIsLoading} currentFilters={activeFilters.current} filters={filters} filtersOpen={filtersOpen} toggleFilter={toggleFilter} />
-        <ProductGrid key="collection_items" collectionItems={collectionItems} filtersOpen={filtersOpen}/>
+        <FindifyFilters
+          key="collection_filters"
+          setCurrentFilters={setCurrentFilters}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          currentFilters={activeFilters.current}
+          filters={filters}
+          filtersOpen={filtersOpen}
+          toggleFilter={toggleFilter} />
+
+        <ProductGrid
+          key="collection_items"
+          collectionItems={collectionItems}
+          filtersOpen={filtersOpen}/>
       </div>
     </>
   )

@@ -134,7 +134,7 @@ const FindifyFilters = ((props) => {
           <div className="filter__body">
             { filter.values.map((value) => {
               return (<label key={value.value} className="filter__option">
-                <input type="checkbox" name={value.name} value={value.value} data-type={filter.type} onChange={updateFilters} checked={value.selected}/>
+                <input type="checkbox" name={value.name} value={value.value} data-type={filter.type} onChange={updateFilters} checked={value.selected || false}/>
                 <span className="filter__checkbox-ui"></span>
                 <span className="filter__label">{ filter.type == 'range' ? processName( value.value ) : value.value }</span>
                 <div className="filter__count">({value.count})</div>
@@ -171,7 +171,7 @@ const FindifyFilters = ((props) => {
 
   return (
     <>
-      <div className={`findify__filters ${props.filtersOpen ? "is-open" : ''} col-lg-6`}>
+      <div className={`findify__filters ${props.filtersOpen ? "is-open" : ''} col-lg-8 col-xl-6`}>
         <div className="findify__filters-mobile-header">
           <h4 className="findify__filters-mobile-title">Filters</h4>
           <button className="findify__filters-close-button" onClick={props.toggleFilter}>

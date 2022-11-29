@@ -1,0 +1,151 @@
+.findify-header {
+  display: flex;
+  margin-top: 40px;
+  margin-bottom: 20px;
+
+  @include media-breakpoint-down('md') {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    gap: 10px;
+  }
+
+  .icon-close {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    mask: url('./icon-close.svg') no-repeat center;
+    mask-size: contain;
+    display: inline-block;
+    background-color: $gray;
+    transform: translateY(-50%);
+  }
+}
+
+.findify-header__sort-container,
+.findify-header__filter-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  @include media-breakpoint-down('md') {
+    width: 50%;
+  }
+}
+
+.findify-header__filter-toggle-btn {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  gap: 5px;
+  color: $black;
+  align-items: center;
+  text-transform: uppercase;
+
+  @include media-breakpoint-down('md') {
+    font-size: 16px;
+    height: 40px;
+    width: 100%;
+    border: 2px solid $black;
+    text-transform: none;
+    justify-content: center;
+  }
+}
+
+.findify-header__clear-filters-btn,
+.findify-header__close-filters-btn {
+  font-size: 14px;
+  padding: 0;
+  line-height: 1;
+  color: $core-grey-3;
+  border: none;
+  background: transparent;
+  text-transform: uppercase;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+}
+
+.findify-header__close-filters-btn {
+  position: relative;
+  margin-left: auto;
+  padding-right: 17px;
+  margin-right: 20px;
+
+  .icon-close {
+    background: currentcolor;
+  }
+}
+
+.findify-header__filter-icon {
+  width: 18px;
+  height: 18px;
+  background-color: currentcolor;
+  mask: url('./icon-filters.svg') no-repeat center;
+  mask-size: contain;
+  display: inline-block;
+}
+
+.findify-header__filter-list {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+}
+
+.findify-header__remove-filter {
+  position: relative;
+  border: none;
+  background: none;
+  font-size: 15px;
+  line-height: 15px;
+  padding-right: 17px;
+
+  .swatch {
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    display: inline-block;
+  }
+
+  .icon-close {
+    width: 12px;
+    height: 12px;
+    background-color: $gray;
+  }
+}
+
+.findify-header__sort-container {
+  margin-left: auto;
+  gap: 10px;
+}
+
+.findify-header__sort-label {
+  font-size: 14px;
+  display: block;
+  line-height: 1;
+  margin-bottom: 0;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+}
+
+.findify-header__sort-select {
+  font-size: 16px;
+  height: 40px;
+  border: 2px solid $black;
+  padding: 0 40px 0 11px;
+  background: transparent;
+
+  @include media-breakpoint-down('md') {
+    width: 100%;
+    text-align: center;
+  }
+}
