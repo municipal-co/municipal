@@ -252,6 +252,32 @@
   margin-left: 5px;
 }
 
+.findify__filters-apply-btn-container {
+  margin-top: 20px;
+  padding: 20px;
+  border-top: 3px solid $black;
+
+  @include media-breakpoint-up('lg') {
+    display: none;
+  }
+}
+
+.findify__filters-apply-btn {
+  padding: 15px 20px;
+  min-height: unset;
+
+  .icon-arrow {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    mask: url('./hover-arrow.svg') no-repeat center;
+    mask-size: contain;
+    background-color: currentcolor;
+    margin-left: 10px;
+    margin-bottom: -5px;
+  }
+}
+
 .findify__filters-backdrop {
   @include media-breakpoint-down('md') {
     background-color: rgba($black, 0.8);
