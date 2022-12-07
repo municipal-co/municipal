@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import ProductCard from "../global/productCard";
 import PromoCard from "../global/promoCard";
+import FindifyPagination from "./findifyPagination";
 
 const ProductGrid = ((props) => {
+
   const buildItemList = () => {
     const items = props.collectionItems.items.map(product => {
       product.type = 'product';
@@ -33,11 +35,21 @@ const ProductGrid = ((props) => {
     return items;
   }
 
+  // TO-DO: Notify about the issue on the pagination not showing results when hidden on frontend.
+
   return (
     <div className={`collection__grid ${props.filtersOpen ? 'col-lg-16 col-xl-18' : 'col-24'}`}>
       <div className={`row content-grid content-grid--1-col content-grid--sm-1-col content-grid--md-2-col ${props.filtersOpen ? 'content-grid--lg-2-col content-grid--xl-3-col' : 'content-grid--lg-3-col content-grid--xl-4-col'}`}>
         { buildItemsUI() }
       </div>
+
+      <FindifyPagination
+          key="findify_pagination"
+          currentPage={props.currentPage}
+          itemsPerPage={props.itemsPerPage}
+          itemCount={props.itemCount}
+          setRequestParams={props.setRequestParams}
+        />
     </div>
   )
 })

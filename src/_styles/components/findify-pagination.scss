@@ -1,0 +1,46 @@
+.findify-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 40px;
+}
+
+.pagination-item {
+  background: transparent;
+  min-width: 20px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  font-size: 14px;
+  line-height: 30px;
+  position: relative;
+  text-align: center;
+
+  &:hover,
+  &:focus {
+    color: $blue;
+  }
+
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-bottom: 2px solid currentcolor;
+    transition: width $transition-duration-base $transition-timing-function-in-out-ui;
+  }
+  &[disabled] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.pagination-item--current {
+  &:before {
+    width: 100%;
+  }
+}
