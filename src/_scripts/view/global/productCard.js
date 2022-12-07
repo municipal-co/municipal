@@ -7,8 +7,12 @@ const productCard = ((props) => {
     let data = props.data;
 
     data.variants.map(variant => {
-      variant.color = variant.custom_fields.old_colors;
-      variant.size = typeof(variant.size) == 'string' ? variant.size : variant.size[0];
+      if(variant.color) {
+        variant.color = variant.custom_fields.old_colors;
+      }
+      if(variant.size) {
+        variant.size = typeof(variant.size) == 'string' ? variant.size : variant.size[0];
+      }
 
       return variant;
     })
@@ -52,13 +56,14 @@ const productCard = ((props) => {
   const getColorList = (productObject, variantOption) => {
     const colors = [];
     const colorList = [];
-
     productObject.variants.forEach(variant => {
-      if(colorList.indexOf(variant[variantOption][0]) > -1) {
-        return;
-      } else {
-        colors.push(variant);
-        colorList.push(variant[variantOption][0]);
+      if(variant[variantOption] !== undefined) {
+        if(colorList.indexOf(variant[variantOption][0]) > -1) {
+          return;
+        } else {
+          colors.push(variant);
+          colorList.push(variant[variantOption][0]);
+        }
       }
     })
 
