@@ -1,23 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { processName, buildUrlSearchParams } from "./utils";
 
 const FindifyFilters = ((props) => {
   let newFilters = props.currentFilters;
   const [filterList, setFilterList] = useState([]);
 
-  const processName = (name) => {
-    const underscorePosition = name.indexOf('_');
-    switch (underscorePosition) {
-      case 0:
-        return `$ ${name.replace('_', '')}`
-      case name.length - 1:
-        return `$ ${name.replace('_', ' & Up')}`
-      default:
-        return `$ ${name.replace('_', ' - $')}`
-    }
-  }
-
   const updateFilters = (evt) => {
-
     if(props.isLoading) {
       return;
     }
@@ -47,15 +35,21 @@ const FindifyFilters = ((props) => {
     } else {
       const currentValue = currentFilter.values.find((obj) => obj.value == value);
       const currentValueIndex = currentFilter.values.indexOf(currentValue);
-      if(newFilters[currentFilterIndex].values.length > 1) {
-        newFilters[currentFilterIndex].values.splice(currentValueIndex, 1);
-      } else {
-        newFilters.splice(currentFilterIndex, 1);
-      }
+      newFilters[currentFilterIndex].values.splice(currentValueIndex, 1);
     }
 
-    props.setIsLoading(true);
-    props.setCurrentFilters(newFilters);
+
+
+    props.setRequestParams((requestParams) => {
+      const newParams = {
+        ...requestParams,
+        filters: newFilters,
+        page: 1,
+      }
+
+      history.pushState(newParams, null, document.location.pathname.replace('/collections/', '') + '?' + buildUrlSearchParams(newParams).toString())
+      return newParams;
+    })
   }
 
   const buildFilterValue = (value, type = 'range') => {
@@ -99,7 +93,17 @@ const FindifyFilters = ((props) => {
       })
     }
 
-    props.setCurrentFilters(newFilters);
+    props.setRequestParams((requestParams) => {
+      const newParams = {
+        ...requestParams,
+        filters: newFilters,
+        page: 1
+      }
+
+      history.pushState(newParams, null, document.location.pathname.replace('/collections/', '') + '?' + buildUrlSearchParams(newParams).toString())
+
+      return newParams;
+    })
   }
 
   const toggleFilter = (evt) => {
@@ -181,6 +185,12 @@ const FindifyFilters = ((props) => {
           </button>
         </div>
         {buildFiltersDom()}
+        <div className="findify__filters-apply-btn-container">
+          <button className="findify__filters-apply-btn btn btn--primary btn-block" onClick={props.toggleFilter}>
+            See results
+            <span className="icon-arrow"></span>
+          </button>
+        </div>
       </div>
       <div className="findify__filters-backdrop" onClick={props.toggleFilter}></div>
     </>
