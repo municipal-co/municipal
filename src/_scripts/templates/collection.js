@@ -153,9 +153,9 @@ const Collection = ((props) => {
         setRequestParams={setRequestParams}
         filtersOpen={filtersOpen}/>
 
-      <div key="collection_body" className={`collection__body row ${isLoading ? 'is-loading' : ''}`}>
-        <div key="spinner" className="collection__loading-container">
-          <div className="collection__loading-spinner"></div>
+      <div key="collection_body" className={`findify__body row ${isLoading ? 'is-loading' : ''}`}>
+        <div key="spinner" className="findify__loading-container">
+          <div className="findify__loading-spinner"></div>
         </div>
 
         <FindifyFilters
