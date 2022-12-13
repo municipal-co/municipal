@@ -179,11 +179,29 @@ const productCard = ((props) => {
     document.dispatchEvent(event);
   }
 
+  const markCurrentCard = (e) => {
+    const cardId = card.current.id;
+    history.replaceState(history.state, null, document.location.pathname + document.location.search + `#${cardId}`)
+  }
+
   let productData = processData();
   productData.options = ['color', 'size'];
   const [productColors, setProductColors] = useState(getColorList(productData, 'color'));
   const [currentVariant, setCurrentVariant] = useState(getCurrentVariant())
   const swatchSlider = useRef();
+  const card = useRef();
+
+  useEffect(() => {
+    if(props.scrollIntoView == true) {
+      card.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center'
+      })
+
+      history.replaceState(history.state, null, document.location.pathname + document.location.search);
+    }
+  }, [])
 
   useEffect(() => {
     initSwiper();
@@ -193,12 +211,13 @@ const productCard = ((props) => {
     productData = processData();
     setProductColors(getColorList(productData, 'color'));
     setCurrentVariant(getCurrentVariant(productData.selected_variant_id));
+
   }, [props.data])
 
 
   return (
-    currentVariant && <div id={`product-card-${currentVariant.id}`} className="product-card">
-        <a href={currentVariant.product_url} className="product-card__gallery">
+    currentVariant && <div id={`product-card-${props?.data?.id}`} className="product-card" ref={card}>
+        <a href={currentVariant.product_url} className="product-card__gallery" onClick={markCurrentCard}>
           <div className="product-card__gallery-slide is-active">
             <img className="product-card__image" src={currentVariant.image_url} loading='lazy' />
           </div>

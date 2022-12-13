@@ -63,6 +63,7 @@ import './templates/pageStyles';
 // Views
 import MainNav from './view/navigation/navigation';
 import Collection from './templates/collection';
+import Search from './templates/search';
 
 // Do this ASAP
 Animations.initialize();
@@ -118,6 +119,12 @@ Breakpoints.initialize();
   if(collectionHolder) {
     const collectionRoot = ReactDOM.createRoot(collectionHolder);
     collectionRoot.render(<Collection/>);
+  }
+
+  const searchHolder = document.getElementById('search-container');
+  if(searchHolder) {
+    const searchRoot = ReactDOM.createRoot(searchHolder);
+    searchRoot.render(<Search/>)
   }
 
   $('.in-page-link').on('click', (evt) => {

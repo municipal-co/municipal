@@ -20,13 +20,17 @@ const ProductGrid = ((props) => {
     return items;
   }
 
+  const checkScrollIntoView = (item) => {
+    return document.location.hash.indexOf(item.id) > -1
+  }
+
   const buildItemsUI = () => {
     const itemList = buildItemList();
 
     const items = itemList.map(item => {
-
+      const scrollIntoView = checkScrollIntoView(item);
       if(item.type == 'product') {
-        return (<div key={item.id} className="content-grid__item"><ProductCard  data={item} /></div>)
+        return (<div key={item.id} className="content-grid__item"><ProductCard  data={item} scrollIntoView={scrollIntoView}/></div>)
       } else {
         return (<div key={item.id} className="content-grid__item"><PromoCard  data={item} /></div>)
       }
@@ -34,8 +38,6 @@ const ProductGrid = ((props) => {
 
     return items;
   }
-
-  // TO-DO: Notify about the issue on the pagination not showing results when hidden on frontend.
 
   return (
     <div className={`collection__grid ${props.filtersOpen ? 'col-lg-16 col-xl-18' : 'col-24'}`}>
