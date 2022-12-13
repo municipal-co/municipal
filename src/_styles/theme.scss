@@ -103,20 +103,16 @@
 @import 'modules/hero';
 @import 'modules/product-overview';
 @import 'modules/product-features';
-@import 'modules/collection-section';
 @import 'modules/collection-banner';
 @import 'modules/style-tips';
 @import 'modules/complete-the-look';
 @import 'modules/product-sticky-bar';
-@import 'modules/collection-drawer';
 @import 'modules/two-up-instagram';
 @import 'modules/product-shipping-modal';
-@import 'modules/collection-grid';
 @import 'modules/section-image-plus-caption';
 @import 'modules/richtext-section';
 @import 'modules/tiled-image';
 @import 'modules/video-section';
-@import 'modules/collection-grid';
 @import 'modules/scrolling-text';
 @import 'modules/text-plus-signature';
 @import 'modules/newsletter-popup';
@@ -147,7 +143,7 @@
  *
  */
 @import 'templates/cart.scss';
-@import 'templates/collection.scss';
+@import 'templates/findify-template.scss';
 @import 'templates/404.scss';
 @import 'templates/gift-card.scss';
 @import 'templates/customer.scss';
