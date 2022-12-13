@@ -3,61 +3,9 @@ import sdkClient from '../lib/findifyApi';
 import FindifyFilters from '../view/findify/findifyFilters';
 import FindifyHeader from '../view/findify/findifyHeader';
 import ProductGrid from '../view/findify/productGrid';
+import { calcOffset, getUrlFilters, getURLSort } from '../view/findify/utils';
 
 const Collection = ((props) => {
-  const getURLSort = () => {
-    let sortData = [];
-    const queryParams = new URLSearchParams(document.location.search);
-    if(queryParams.has('sort')){
-      sortData = queryParams.get('sort').split(':');
-    }
-
-    return sortData;
-  }
-
-  const getUrlFilters = () => {
-    const filterList = [];
-
-    for(const [param, value] of urlParams.entries()) {
-      if(param.indexOf('filter') > -1) {
-        const valueList = value.split(',');
-        // Text filters
-        if(param.indexOf('price') == -1  ){
-          console.log(param);
-          filterList.push({
-            name: `${param.indexOf('gender') > -1 ? 'custom_fields.Gender' : param.replace('filter-', '')}`,
-            type: 'text',
-            values: valueList.map(value => {
-                return {value};
-              })
-
-          })
-        } else {
-          // Range filter
-          const valueList = value.split(',');
-          filterList.push({
-            name: param.replace('filter-', ''),
-            type: "range",
-            values: valueList.map(value => {
-              const underscorePosition = value.indexOf('_');
-              const valuePieces = value.split('_');
-              switch(underscorePosition) {
-                case 0:
-                  return {to: `${valuePieces[1]}`}
-                case value.length -1 :
-                  return {from: `${valuePieces[0]}`}
-                default:
-                  return {from: `${valuePieces[0]}`, to: `${valuePieces[1]}`}
-              }
-            })
-          })
-        }
-      }
-    }
-
-    return filterList;
-  }
-
   const requestCollectionData = async () => {
     return await sdkClient.send({
         type: 'smart-collection',
@@ -68,9 +16,6 @@ const Collection = ((props) => {
         return response;
       });
   }
-
-
-  const calcOffset = (limit, page) => limit * (page - 1);
 
   const toggleFilter = () => {
     setFiltersOpen((isOpen) => {
@@ -98,8 +43,6 @@ const Collection = ((props) => {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [collectionItems, setCollectionItems] = useState({items: [], promos:[]});
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(urlParams.get('page') || 1);
-
   const [requestParams, setRequestParams] = useState({
     slot: document.location.pathname,
     limit: itemCount,
@@ -108,6 +51,8 @@ const Collection = ((props) => {
     filters: getUrlFilters(),
     page: urlParams.get('page') || 1
   })
+  const templateHeader = useRef();
+
 
   const fetchData = async () => {
     const result = await requestCollectionData();
@@ -135,16 +80,25 @@ const Collection = ((props) => {
     setIsLoading(true);
     fetchData();
 
+
+    if(templateHeader.current && window.scrollY > templateHeader.current.getBoundingClientRect().top + window.scrollY && !document.location.hash) {
+      window.scrollTo({
+        top: templateHeader.current.getBoundingClientRect().top + window.scrollY - 90,
+        behavior: 'smooth'
+      })
+    }
+
     window.onpopstate = (evt) => {
       managePopState(evt.state)
     };
+
     return () =>{
       window.onpopstate = null;
     }
   }, [requestParams])
 
   return(
-    <>
+    <div ref={templateHeader}>
       <FindifyHeader
         key="collection_header"
         currentFilters={activeFilters.current}
@@ -178,7 +132,7 @@ const Collection = ((props) => {
           setRequestParams={setRequestParams}
           />
       </div>
-    </>
+    </div>
   )
 })
 
