@@ -34,8 +34,14 @@ class CartAPI {
     cart.total_price = Currency.formatMoney(cart.total_price, theme.moneyFormat);
     cart.total_price = Currency.stripZeroCents(cart.total_price);
     cart.items.map((item) => {
+      const itemVariant = item.product.variants.find(variant => {
+        return variant.id === item.id;
+      })
       if (item.image) {
         item.image = Image.getSizedImageUrl(item.image, '200x');
+      }
+      if(itemVariant && itemVariant.compare_at_price > itemVariant.price) {
+        item.compare_price = Currency.formatMoney(itemVariant.compare_at_price)
       }
       item.price = Currency.formatMoney(item.price, theme.moneyFormat);
       item.price = Currency.stripZeroCents(item.price);
