@@ -278,19 +278,23 @@ body {
   height: 100%;
   object-fit: cover !important;
 }
-.findify-search-full-wrapper .findify-components--cards-product__color-ball {
-  border-radius: 3px !important;
-}
 
 .findify-components--cards-product__color-item {
-  padding: 0px !important;
+  padding: 0 !important;
+  border: 2px solid transparent !important;
+  border-radius: 7px !important;
+  &:hover {
+    @include media-breakpoint-up('md') {
+      border-color: $core-grey-2 !important;
+    }
+  }
+}
+
+.findify-search-full-wrapper .findify-components--cards-product__color-ball {
+  border-radius: 7px !important;
 }
 
 .findify-product-color-swatches-wrapper .findify-components--cards-product__color-item_active {
-  border: 1px solid #121212 !important;
-  border-radius: 4px !important;
-}
-
-.findify-components--cards-product__color-item {
-  border-radius: 3px !important;
+  border-color: #121212 !important;
+  border-radius: 7px !important;
 }
