@@ -92,6 +92,7 @@ const MainNav = ((props) => {
   }
 
   const toggleNavigation = () => {
+    updateHeaderOffset()
     setIsOpen((isOpen) => !isOpen);
     if(!isOpen) {
       document.dispatchEvent(new CustomEvent('drawer:open', {detail: {target:'navigation'}}))
@@ -99,9 +100,10 @@ const MainNav = ((props) => {
   }
 
   const updateHeaderOffset = () => {
+    const spaceTop = header.offsetHeight + header.getBoundingClientRect().top;
     setStyles({
-      top: header.offsetHeight,
-      height: `calc(100% - ${header.offsetHeight}px)`
+      top: spaceTop,
+      height: `calc(100% - ${spaceTop}px)`
     })
   }
 
