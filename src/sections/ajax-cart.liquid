@@ -241,7 +241,14 @@
                   </div>
                 {{else}}
                   <div class="ajax-cart__item-price">
-                    {{ price }}
+                    {{#if compare_price }}
+                      <s class="ajax-cart__compare-at-price">
+                        {{ compare_price }}
+                      </s>
+                    {{/if}}
+                    <span class="ajax-cart__item-price">
+                      {{ price }}
+                    </span>
                   </div>
                 {{/if }}
                 <div class="ajax-item__item-controls">
