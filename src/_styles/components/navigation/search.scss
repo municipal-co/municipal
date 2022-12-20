@@ -1,0 +1,144 @@
+.navigation-search {
+  position: relative;
+  display: flex;
+  margin-bottom: 40px;
+  width: 100%;
+
+  .icon-search {
+    color: $white;
+    display: block;
+    position: absolute;
+    left: 12px;
+    top: 17px;
+    width: 20px;
+    height: 20px;
+    mask: url('./icon-search.svg') no-repeat center;
+    mask-size: contain;
+    background-color: currentcolor;
+    pointer-events: none;
+  }
+}
+
+.navigation-search__input {
+  background-color: $core-grey-3;
+  width: 100%;
+  color: $white;
+  border: none;
+  height: 51px;
+  padding-left: 45px;
+  padding-right: 10px;
+  font-size: 19px;
+
+  &::placeholder {
+    color: $white;
+  }
+
+  &::-webkit-search-cancel-button {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    mask: url('./icon-close.svg') no-repeat center;
+    mask-size: contain;
+    background-color: $white;
+    cursor: pointer;
+  }
+
+  @include media-breakpoint-down('md') {
+    font-size: 16px;
+  }
+}
+
+.navigation-search__submit-btn {
+  position: absolute;
+  opacity: 0;
+  right: 0;
+  top: 0;
+  padding-right: 15px;
+  pointer-events: none;
+  font-size: 16px;
+  border: none;
+  height: 50px;
+  background-color: $core-grey-3;
+  color: $white;
+
+  &:focus {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.autocomplete__close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: $white;
+  background: none;
+  border: none;
+
+  @include media-breakpoint-down('md') {
+    right: 30px;
+  }
+
+  .icon-close {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: currentcolor;
+    mask: url('./icon-close.svg') no-repeat center;
+    mask-size: contain;
+  }
+}
+
+.autocomplete-container {
+  position: fixed;
+  right: 0;
+  width: calc(100% - 570px);
+  padding: 15px;
+  overflow-y: auto;
+  background-color: $black;
+  overflow-y: auto;
+
+  @include media-breakpoint-down('md') {
+    width: 450px;
+    max-width: 100%;
+    right: unset;
+    left: 0;
+    padding: 15px 30px;
+  }
+}
+
+.autocomplete__heading {
+  font-size: 15px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  margin-top: 0;
+  color: $white;
+}
+
+.autocomplete__recommended-queries {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 20px;
+  margin-bottom: 25px;
+
+  li {
+    list-style: none;
+    line-height: 1;
+  }
+}
+
+.autocomplete__grid {
+  margin: 0 -10px;
+  padding: 0;
+
+  .content-grid__item {
+    list-style: none;
+  }
+
+  .product-card__add-to-cart {
+    color: $white;
+  }
+}

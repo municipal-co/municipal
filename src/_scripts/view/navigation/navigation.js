@@ -2,6 +2,8 @@ import React, {useState, useEffect, useRef} from 'react';
 
 import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
+import NavigationSearch from './search';
+import AutocompleteSearch from './autocompleteSearch';
 
 const MainNav = ((props) => {
 
@@ -14,7 +16,8 @@ const MainNav = ((props) => {
       components,
       categories,
       currentMenu,
-      currentBlock: ''
+      currentBlock: '',
+      enableSearch: document.querySelector('[data-navigation-json]').dataset.enableSearch == 'true',
     }
 
     return componentData ;
@@ -48,6 +51,7 @@ const MainNav = ((props) => {
       return;
     }
 
+    setSearchActive(false);
     setIsOpen(false);
   }
 
@@ -92,30 +96,41 @@ const MainNav = ((props) => {
   }
 
   const toggleNavigation = () => {
-    setIsOpen((isOpen) => !isOpen);
+    setIsOpen((isOpen) => {
+        if(isOpen) {
+          setSearchActive(false);
+        }
+        updateHeaderOffset();
+        return !isOpen
+      }
+    );
     if(!isOpen) {
       document.dispatchEvent(new CustomEvent('drawer:open', {detail: {target:'navigation'}}))
     }
   }
 
   const updateHeaderOffset = () => {
+    const spaceTop = header.offsetHeight + header.getBoundingClientRect().top;
     setStyles({
-      top: header.offsetHeight,
-      height: `calc(100% - ${header.offsetHeight}px)`
+      top: spaceTop,
+      height: `calc(100% - ${spaceTop}px)`
     })
   }
 
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState(getComponentData());
+  const [searchActive, setSearchActive] = useState(false);
   const element = useRef();
   const navBody = useRef();
   const header = document.querySelector('[data-header]');
   const [styles, setStyles] = useState({
-    top: header.offsetHeight,
-    height: `calc(100% - ${header.offsetHeight}px)`
+    top: header.offsetHeight + header.getBoundingClientRect().top,
+    height: `calc(100% - ${header.offsetHeight + header.getBoundingClientRect().top}px)`
   });
   const id = document.querySelector('[data-navigation-json]').dataset.sectionId;
   const toggleButton = document.querySelector('[data-mobile-menu-toggle]');
+  const searchFormContainer = useRef();
+  const [searchQuery, setSearchQuery] = useState('');
 
   //Component will render
   useEffect(() => {
@@ -146,6 +161,14 @@ const MainNav = ((props) => {
   return (
     <div className={`navigation ${isOpen ? 'is-visible' : ''}`} ref={element} style={styles}>
       <div className="navigation-body" ref={navBody}>
+        {data.enableSearch &&
+          <div className='search-form-container' ref={searchFormContainer}>
+            <NavigationSearch
+              setSearchActive={setSearchActive}
+              setSearchQuery={setSearchQuery}
+            />
+          </div>
+        }
         <NavigationCategories
           key="NavigationCategories"
           categories={data.categories}
@@ -159,10 +182,16 @@ const MainNav = ((props) => {
           currentBlock={data.currentBlock}
         />
       </div>
+      <AutocompleteSearch
+        searchQuery={searchQuery}
+        setSearchActive={setSearchActive}
+        searchActive={searchActive}
+        searchFormContainer={searchFormContainer}
+        navigationContainer={element}
+      />
       <div className="navigation-backdrop" onClick={() => setIsOpen(false)}></div>
     </div>
   )
 })
 
 export default MainNav;
-
