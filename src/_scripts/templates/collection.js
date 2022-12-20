@@ -28,13 +28,6 @@ const Collection = ((props) => {
     });
   }
 
-  const updatePage = (page) => {
-    const parameters = new URLSearchParams(document.location.search);
-    parameters.set('page', page);
-    history.pushState({property:'page', value: page}, null, document.location.pathname.replace('/collections/', '') + '?' + parameters.toString())
-    setPage(page);
-  }
-
   const urlParams = new URLSearchParams(document.location.search);
   const activeFilters = useRef([]);
   const itemCount = window.collectionLimit;
@@ -74,6 +67,7 @@ const Collection = ((props) => {
 
   useEffect(() => {
     history.replaceState(requestParams, null, document.location.href)
+    history.scrollRestoration = 'manual';
   },[])
 
   useEffect(() => {

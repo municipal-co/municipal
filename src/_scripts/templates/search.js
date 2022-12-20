@@ -4,7 +4,7 @@ import FindifyHeader from "../view/findify/findifyHeader";
 import FindifyTotalCount from "../view/findify/findifyTotalCount";
 import FindifyFilters from "../view/findify/findifyFilters";
 import ProductGrid from "../view/findify/productGrid";
-import { calcOffset, getUrlFilters, getURLSort, toggleFilter } from "../view/findify/utils";
+import { calcOffset, getUrlFilters, getURLSort } from "../view/findify/utils";
 
 const Search = (props) => {
   const requestSearchData = async () => {
@@ -65,16 +65,13 @@ const Search = (props) => {
   }
 
   const managePopState = (state) => {
-    setRequestParams((oldState) => {
-      return {...oldState,
-        state
-      }
-    });
+    setRequestParams(state);
   }
 
   useEffect(() => {
     history.replaceState(requestParams, null, document.location.href);
-  })
+    history.scrollRestoration = 'manual';
+  }, [])
 
   useEffect(() => {
     setIsLoading(true);

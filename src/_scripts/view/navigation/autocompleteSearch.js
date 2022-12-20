@@ -35,7 +35,6 @@ const AutocompleteSearch = (props) => {
 
   const updateContainerOffset = () => {
     const breakpointMinWidth = getBreakpointMinWidth('md');
-    console.log(window.innerWidth < breakpointMinWidth);
     setTimeout(() => {
       if(window.innerWidth < breakpointMinWidth) {
         // mobile
