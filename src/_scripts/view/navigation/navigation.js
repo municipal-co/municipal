@@ -140,7 +140,7 @@ const MainNav = ((props) => {
     document.addEventListener('shopify:block:select', updateSelectedBlock);
     document.addEventListener('navigation:toggle', toggleNavigation);
     document.addEventListener('breakpointChange', updateHeaderOffset);
-    document.addEventListener('drawer:open', closeNavigation)
+    document.addEventListener('drawer:open-header-drawer', closeNavigation);
     return () => {
       document.removeEventListener('shopify:section:load', updateModuleData);
       document.removeEventListener('shopify:section:select', openNavigation);
@@ -148,7 +148,7 @@ const MainNav = ((props) => {
       document.removeEventListener('shopify:block:select', updateSelectedBlock);
       document.removeEventListener('navigation:toggle', toggleNavigation);
       document.removeEventListener('breakpointChange', updateHeaderOffset);
-      document.removeEventListener('drawer:open', closeNavigation)
+      document.removeEventListener('drawer:open-header-drawer', closeNavigation);
     }
   }, [])
 

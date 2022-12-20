@@ -295,6 +295,7 @@ export default class AJAXCart {
    */
   onChangeSuccess(cart) {
     this.render(cart).open();
+    document.dispatchEvent(new CustomEvent('drawer:open-header-drawer'))
   }
 
   /**
@@ -429,6 +430,9 @@ export default class AJAXCart {
    *
    */
   toggleVisibility() {
+    if(!this.stateIsOpen) {
+      document.dispatchEvent(new CustomEvent('drawer:open-header-drawer'));
+    }
     return this.stateIsOpen ? this.close() : this.open();
   }
 
