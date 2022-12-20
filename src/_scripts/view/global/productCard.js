@@ -180,8 +180,10 @@ const productCard = ((props) => {
   }
 
   const markCurrentCard = (e) => {
-    const cardId = card.current.id;
-    history.replaceState(history.state, null, document.location.pathname + document.location.search + `#${cardId}`)
+    if(document.location.href.indexOf('/collections/') > -1 || document.location.href.indexOf('/search') > -1) {
+      const cardId = card.current.id;
+      history.replaceState(history.state, null, document.location.pathname + document.location.search + `#${cardId}`)
+    }
   }
 
   let productData = processData();
@@ -228,7 +230,7 @@ const productCard = ((props) => {
               <div className="swiper-wrapper">
                 {productColors.map(color => buildColorSwatch(color))}
               </div>
-              <div className="swiper-scrollbar"></div>
+              <div className="swiper-scrollbar product-option__scrollbar"></div>
             </div>
           </div>
           <div className="product-card__color-title product-card__color-title--findify">
