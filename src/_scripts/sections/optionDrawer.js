@@ -26,6 +26,7 @@ export default class OptionDrawer extends BaseSection {
     this.drawer = new Drawer(this.$container);
 
     $(window).on(EVENTS.OPEN, this.openDrawer.bind(this));
+    document.addEventListener(EVENTS.OPEN, this.openDrawer.bind(this));
     this.$container.on('click', selectors.bisToggler, this.openBackInStockDrawer.bind(this));
     this.$container.on('change', selectors.optionSelector, this.onSelectorChange.bind(this));
   };

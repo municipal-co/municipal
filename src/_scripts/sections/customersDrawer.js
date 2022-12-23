@@ -54,6 +54,7 @@ export default class CustomersDrawerSection extends BaseSection {
     event.preventDefault();
     $('body').toggleClass('drawer-open');
     this.customersDrawer.toggle();
+    document.dispatchEvent(new CustomEvent('drawer:open-header-drawer'))
   }
 
   toggleRecoverPasswordForm(event) {

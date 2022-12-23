@@ -2,6 +2,8 @@ import React, {useState, useEffect, useRef} from 'react';
 
 import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
+import NavigationSearch from './search';
+import AutocompleteSearch from './autocompleteSearch';
 
 const MainNav = ((props) => {
 
@@ -14,7 +16,8 @@ const MainNav = ((props) => {
       components,
       categories,
       currentMenu,
-      currentBlock: ''
+      currentBlock: '',
+      enableSearch: document.querySelector('[data-navigation-json]').dataset.enableSearch == 'true',
     }
 
     return componentData ;
@@ -48,6 +51,7 @@ const MainNav = ((props) => {
       return;
     }
 
+    setSearchActive(false);
     setIsOpen(false);
   }
 
@@ -92,8 +96,14 @@ const MainNav = ((props) => {
   }
 
   const toggleNavigation = () => {
-    updateHeaderOffset()
-    setIsOpen((isOpen) => !isOpen);
+    setIsOpen((isOpen) => {
+        if(isOpen) {
+          setSearchActive(false);
+        }
+        updateHeaderOffset();
+        return !isOpen
+      }
+    );
     if(!isOpen) {
       document.dispatchEvent(new CustomEvent('drawer:open', {detail: {target:'navigation'}}))
     }
@@ -103,21 +113,33 @@ const MainNav = ((props) => {
     const spaceTop = header.offsetHeight + header.getBoundingClientRect().top;
     setStyles({
       top: spaceTop,
-      height: `calc(100% - ${spaceTop}px)`
+      height: `calc(100% - ${spaceTop}px)`,
     })
+  }
+
+  const onBackdropClick = () => {
+    if(searchActive) {
+      setSearchActive(false);
+    } else {
+      setIsOpen(false);
+    }
   }
 
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState(getComponentData());
+  const [searchActive, setSearchActive] = useState(false);
   const element = useRef();
   const navBody = useRef();
   const header = document.querySelector('[data-header]');
   const [styles, setStyles] = useState({
-    top: header.offsetHeight,
-    height: `calc(100% - ${header.offsetHeight}px)`
+    top: header.offsetHeight + header.getBoundingClientRect().top,
+    height: `calc(100% - ${header.offsetHeight + header.getBoundingClientRect().top}px)`,
+    overflowY: 'auto'
   });
   const id = document.querySelector('[data-navigation-json]').dataset.sectionId;
   const toggleButton = document.querySelector('[data-mobile-menu-toggle]');
+  const searchFormContainer = useRef();
+  const [searchQuery, setSearchQuery] = useState('');
 
   //Component will render
   useEffect(() => {
@@ -127,7 +149,7 @@ const MainNav = ((props) => {
     document.addEventListener('shopify:block:select', updateSelectedBlock);
     document.addEventListener('navigation:toggle', toggleNavigation);
     document.addEventListener('breakpointChange', updateHeaderOffset);
-    document.addEventListener('drawer:open', closeNavigation)
+    document.addEventListener('drawer:open-header-drawer', closeNavigation);
     return () => {
       document.removeEventListener('shopify:section:load', updateModuleData);
       document.removeEventListener('shopify:section:select', openNavigation);
@@ -135,7 +157,7 @@ const MainNav = ((props) => {
       document.removeEventListener('shopify:block:select', updateSelectedBlock);
       document.removeEventListener('navigation:toggle', toggleNavigation);
       document.removeEventListener('breakpointChange', updateHeaderOffset);
-      document.removeEventListener('drawer:open', closeNavigation)
+      document.removeEventListener('drawer:open-header-drawer', closeNavigation);
     }
   }, [])
 
@@ -147,24 +169,42 @@ const MainNav = ((props) => {
 
   return (
     <div className={`navigation ${isOpen ? 'is-visible' : ''}`} ref={element} style={styles}>
-      <div className="navigation-body" ref={navBody}>
-        <NavigationCategories
-          key="NavigationCategories"
-          categories={data.categories}
-          clickCallback={updateCurrentMenu}
-          currentMenu={data.currentMenu}
-        />
-        <NavigationBlocks
-          key="NavigationBlocks"
-          components={data.components}
-          currentMenu={data.currentMenu}
-          currentBlock={data.currentBlock}
-        />
+      <div className="navigation-body" ref={navBody} style={{overflowY: searchActive ? 'hidden' : 'auto'}}>
+        {data.enableSearch &&
+          <div className='search-form-container' ref={searchFormContainer}>
+            <NavigationSearch
+              searchActive={searchActive}
+              setSearchActive={setSearchActive}
+              setSearchQuery={setSearchQuery}
+            />
+          </div>
+        }
+        <div className='navigation-body__container' style={{opacity: searchActive ? 0.1 : 1}}>
+          <NavigationCategories
+            key="NavigationCategories"
+            categories={data.categories}
+            clickCallback={updateCurrentMenu}
+            currentMenu={data.currentMenu}
+          />
+          <NavigationBlocks
+            key="NavigationBlocks"
+            components={data.components}
+            currentMenu={data.currentMenu}
+            currentBlock={data.currentBlock}
+          />
+        </div>
       </div>
-      <div className="navigation-backdrop" onClick={() => setIsOpen(false)}></div>
+      <AutocompleteSearch
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        setSearchActive={setSearchActive}
+        searchActive={searchActive}
+        searchFormContainer={searchFormContainer}
+        navigationContainer={element}
+      />
+      <div className={`navigation-backdrop ${searchActive ? 'search-open' : ''}`} onClick={(() => onBackdropClick())}></div>
     </div>
   )
 })
 
 export default MainNav;
-
