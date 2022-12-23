@@ -41,7 +41,7 @@ const ProductGrid = ((props) => {
 
   return (
     <div className={`collection__grid ${props.filtersOpen ? 'col-lg-16 col-xl-18' : 'col-24'}`}>
-      <div className={`row content-grid content-grid--1-col content-grid--sm-1-col content-grid--md-2-col ${props.filtersOpen ? 'content-grid--lg-2-col content-grid--xl-3-col' : 'content-grid--lg-3-col content-grid--xl-4-col'}`}>
+      <div className={`row content-grid content-grid--1-col content-grid--md-2-col ${props.filtersOpen ? 'content-grid--lg-2-col content-grid--xl-3-col' : 'content-grid--lg-3-col content-grid--xl-4-col'}`}>
         { buildItemsUI() }
       </div>
 

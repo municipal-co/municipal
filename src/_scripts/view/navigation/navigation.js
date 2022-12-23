@@ -113,8 +113,16 @@ const MainNav = ((props) => {
     const spaceTop = header.offsetHeight + header.getBoundingClientRect().top;
     setStyles({
       top: spaceTop,
-      height: `calc(100% - ${spaceTop}px)`
+      height: `calc(100% - ${spaceTop}px)`,
     })
+  }
+
+  const onBackdropClick = () => {
+    if(searchActive) {
+      setSearchActive(false);
+    } else {
+      setIsOpen(false);
+    }
   }
 
   const [isOpen, setIsOpen] = useState(false);
@@ -125,7 +133,8 @@ const MainNav = ((props) => {
   const header = document.querySelector('[data-header]');
   const [styles, setStyles] = useState({
     top: header.offsetHeight + header.getBoundingClientRect().top,
-    height: `calc(100% - ${header.offsetHeight + header.getBoundingClientRect().top}px)`
+    height: `calc(100% - ${header.offsetHeight + header.getBoundingClientRect().top}px)`,
+    overflowY: 'auto'
   });
   const id = document.querySelector('[data-navigation-json]').dataset.sectionId;
   const toggleButton = document.querySelector('[data-mobile-menu-toggle]');
@@ -160,36 +169,40 @@ const MainNav = ((props) => {
 
   return (
     <div className={`navigation ${isOpen ? 'is-visible' : ''}`} ref={element} style={styles}>
-      <div className="navigation-body" ref={navBody}>
+      <div className="navigation-body" ref={navBody} style={{overflowY: searchActive ? 'hidden' : 'auto'}}>
         {data.enableSearch &&
           <div className='search-form-container' ref={searchFormContainer}>
             <NavigationSearch
+              searchActive={searchActive}
               setSearchActive={setSearchActive}
               setSearchQuery={setSearchQuery}
             />
           </div>
         }
-        <NavigationCategories
-          key="NavigationCategories"
-          categories={data.categories}
-          clickCallback={updateCurrentMenu}
-          currentMenu={data.currentMenu}
-        />
-        <NavigationBlocks
-          key="NavigationBlocks"
-          components={data.components}
-          currentMenu={data.currentMenu}
-          currentBlock={data.currentBlock}
-        />
+        <div className='navigation-body__container' style={{opacity: searchActive ? 0.1 : 1}}>
+          <NavigationCategories
+            key="NavigationCategories"
+            categories={data.categories}
+            clickCallback={updateCurrentMenu}
+            currentMenu={data.currentMenu}
+          />
+          <NavigationBlocks
+            key="NavigationBlocks"
+            components={data.components}
+            currentMenu={data.currentMenu}
+            currentBlock={data.currentBlock}
+          />
+        </div>
       </div>
       <AutocompleteSearch
         searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         setSearchActive={setSearchActive}
         searchActive={searchActive}
         searchFormContainer={searchFormContainer}
         navigationContainer={element}
       />
-      <div className="navigation-backdrop" onClick={() => setIsOpen(false)}></div>
+      <div className={`navigation-backdrop ${searchActive ? 'search-open' : ''}`} onClick={(() => onBackdropClick())}></div>
     </div>
   )
 })

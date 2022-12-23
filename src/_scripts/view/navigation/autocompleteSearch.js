@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import sdkClient from "../../lib/findifyApi";
 import ProductCard from "../global/productCard";
 import { getBreakpointMinWidth } from "../../core/breakpoints";
+import swiper from "swiper";
+import NavigationSearch from "./search";
 
 const AutocompleteSearch = (props) => {
   const searchContainer = useRef();
@@ -54,6 +56,21 @@ const AutocompleteSearch = (props) => {
 
   }
 
+  const initRecommendationsSlider = () => {
+    new swiper(recommendationSlider.current,
+      {
+        slidesPerView: "auto",
+        spaceBetween: 10,
+        threshold: 10,
+        watchOverflow: true,
+        observeParents: true,
+        observer: true,
+        slidesOffsetAfter: 30,
+        slidesOffsetBefore: 30,
+    })
+  }
+
+  const recommendationSlider = useRef()
   useEffect(() => {
     document.addEventListener('breakpointChange', updateContainerOffset);
 
@@ -64,31 +81,50 @@ const AutocompleteSearch = (props) => {
 
   useEffect(() => {
     fetchData();
+    initRecommendationsSlider();
   }, [props.searchQuery])
 
   useEffect(() => {
     updateContainerOffset();
   }, [props.navigationContainer.current, props.searchFormContainer.current, props.searchActive])
 
+  useEffect(() => {
+    searchContainer.current.scrollTo({
+      top: 0
+    })
+  }, [props.searchActive])
+
   return (
-    <div className="autocomplete-container" ref={searchContainer} style={{"display": `${props.searchActive ? 'block' : 'none'}`}}>
-      <button className="autocomplete__close" onClick={()=>{props.setSearchActive(false)}}>
-        <div className="sr-only">Close Autocomplete Window</div>
-        <div className="icon-close"></div>
-      </button>
+    <div className={`autocomplete-container ${props.searchActive ? 'is-open' : ''}`} ref={searchContainer}>
+      <div className="autocomplete__mobile-header">
+        <div className="autocomplete__title">Search</div>
+        <div className="autocomplete__close-button">
+          <div className="autocomplete__close" ref={searchContainer} onClick={() => { props.setSearchActive(false)}}>
+            <div className="sr-only">Close Autocomplete</div>
+            <div className="icon-close"></div>
+          </div>
+        </div>
+      </div>
+      <NavigationSearch
+        searchActive={props.searchActive}
+        setSearchActive={props.setSearchActive}
+        setSearchQuery={props.setSearchQuery}
+      />
       <div className="autocomplete__recommendations">
         <h3 className="autocomplete__heading">
           {props.searchQuery == '' ?
             "Trending Searches" : "Search Suggestions"
           }
         </h3>
-        <ul className="autocomplete__recommended-queries">
-          {data.recommendations.map((recommendation) => {
-            return (<li key={recommendation.value}>
-              <a href={`/search/?q=${recommendation.value}`} className="category-capsule"> {recommendation.value} </a>
-            </li>)
-          })}
-        </ul>
+        <div className="autocomplete__slider swiper-container" ref={recommendationSlider}>
+          <ul className="autocomplete__recommended-queries swiper-wrapper">
+            {data.recommendations.map((recommendation) => {
+              return (<li key={recommendation.value} className="swiper-slide">
+                <a href={`/search/?q=${recommendation.value}`} className="autocomplete__recommended-query"> {recommendation.value} </a>
+              </li>)
+            })}
+          </ul>
+        </div>
       </div>
 
       <div className="autocomplete__results">
@@ -98,7 +134,7 @@ const AutocompleteSearch = (props) => {
           }
 
         </h3>
-        <ul className="autocomplete__grid content-grid content-grid--sm-1-col content-grid--md-1-col content-grid--lg-2-col content-grid--xl-3-col">
+        <ul className="autocomplete__grid content-grid content-grid--1-col content-grid--md-2-col content-grid--lg-1-col">
           {data.items.map((product) => {
               return (<li key={product.id} className="content-grid__item">
                 {<ProductCard
