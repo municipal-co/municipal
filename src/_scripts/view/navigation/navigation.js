@@ -109,7 +109,7 @@ const MainNav = ((props) => {
     const spaceTop = header.offsetHeight + header.getBoundingClientRect().top;
     setStyles({
       top: spaceTop,
-      height: `calc(100% - ${spaceTop}px)`,
+      height: `calc(100% - ${spaceTop}px)`
     })
   }
 
