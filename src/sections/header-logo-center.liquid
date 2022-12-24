@@ -20,16 +20,12 @@
           </div>
 
           <div>
-            {% if shop.customer_accounts_enabled %}
-              <div class="header-nav__menu-item hide-on-mobile">
-                {% if customer %}
-                  <a href="/account" title="Account">{% include 'icon-account' %}</a>
-                {% else %}
-                  <a href="/account/login" data-customers-drawer-toggle title="Login or register">{% include 'icon-account' %}</a>
-                {% endif %}
+            {% if settings.enable_search %}
+              <div class="header-nav__menu-item" data-search-open-button>
+                {% include 'icon-search' %}
+                <span class="sr-only">Open search</span>
               </div>
             {% endif %}
-
             <div class="header-nav__menu-item">
               <a href="/cart" data-ajax-cart-trigger>
                 <div class="header-cart__badge" data-cart-badge>
