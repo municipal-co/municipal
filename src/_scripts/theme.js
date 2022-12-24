@@ -40,7 +40,6 @@ import CustomersAccountSection from './sections/customersAccount';
 import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
-import CustomersDrawerSection from './sections/customersDrawer';
 import CustomersResetPasswordSection from './sections/customersResetPassword';
 import YotpoReviews from './sections/yotpoReviews';
 import FeaturedCategories from './sections/featuredCategories';
@@ -65,6 +64,7 @@ import './templates/pageStyles';
 import MainNav from './view/navigation/navigation';
 import Collection from './templates/collection';
 import Search from './templates/search';
+import AutocompleteSearch from './view/navigation/autocompleteSearch';
 
 // Do this ASAP
 Animations.initialize();
@@ -95,7 +95,6 @@ Breakpoints.initialize();
   );
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
-  sectionManager.register('customers-drawer', CustomersDrawerSection);
   sectionManager.register(
     'customers-reset-password',
     CustomersResetPasswordSection
@@ -127,6 +126,12 @@ Breakpoints.initialize();
   if(searchHolder) {
     const searchRoot = ReactDOM.createRoot(searchHolder);
     searchRoot.render(<Search/>)
+  }
+
+  const autocompleteHolder = document.getElementById('autocomplete-wrapper');
+  if(autocompleteHolder) {
+    const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
+    autocompleteRoot.render(<AutocompleteSearch/>)
   }
 
   $('.in-page-link').on('click', (evt) => {

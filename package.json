@@ -65,7 +65,7 @@
     "lazysizes": "^5.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swiper": "^5.4.5",
+    "swiper": "^8.4.5",
     "throttle-debounce": "^2.1.0"
   },
   "browserify": {

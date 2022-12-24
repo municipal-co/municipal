@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 
 import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
-import NavigationSearch from './search';
+import NavigationSearch from './autocompleteSearchBox';
 import AutocompleteSearch from './autocompleteSearch';
 
 const MainNav = ((props) => {
@@ -51,7 +51,6 @@ const MainNav = ((props) => {
       return;
     }
 
-    setSearchActive(false);
     setIsOpen(false);
   }
 
@@ -97,9 +96,6 @@ const MainNav = ((props) => {
 
   const toggleNavigation = () => {
     setIsOpen((isOpen) => {
-        if(isOpen) {
-          setSearchActive(false);
-        }
         updateHeaderOffset();
         return !isOpen
       }
@@ -117,17 +113,8 @@ const MainNav = ((props) => {
     })
   }
 
-  const onBackdropClick = () => {
-    if(searchActive) {
-      setSearchActive(false);
-    } else {
-      setIsOpen(false);
-    }
-  }
-
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState(getComponentData());
-  const [searchActive, setSearchActive] = useState(false);
   const element = useRef();
   const navBody = useRef();
   const header = document.querySelector('[data-header]');
@@ -139,7 +126,6 @@ const MainNav = ((props) => {
   const id = document.querySelector('[data-navigation-json]').dataset.sectionId;
   const toggleButton = document.querySelector('[data-mobile-menu-toggle]');
   const searchFormContainer = useRef();
-  const [searchQuery, setSearchQuery] = useState('');
 
   //Component will render
   useEffect(() => {
@@ -169,17 +155,8 @@ const MainNav = ((props) => {
 
   return (
     <div className={`navigation ${isOpen ? 'is-visible' : ''}`} ref={element} style={styles}>
-      <div className="navigation-body" ref={navBody} style={{overflowY: searchActive ? 'hidden' : 'auto'}}>
-        {data.enableSearch &&
-          <div className='search-form-container' ref={searchFormContainer}>
-            <NavigationSearch
-              searchActive={searchActive}
-              setSearchActive={setSearchActive}
-              setSearchQuery={setSearchQuery}
-            />
-          </div>
-        }
-        <div className='navigation-body__container' style={{opacity: searchActive ? 0.1 : 1}}>
+      <div className="navigation-body" ref={navBody}>
+        <div className='navigation-body__container'>
           <NavigationCategories
             key="NavigationCategories"
             categories={data.categories}
@@ -194,15 +171,8 @@ const MainNav = ((props) => {
           />
         </div>
       </div>
-      <AutocompleteSearch
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        setSearchActive={setSearchActive}
-        searchActive={searchActive}
-        searchFormContainer={searchFormContainer}
-        navigationContainer={element}
-      />
-      <div className={`navigation-backdrop ${searchActive ? 'search-open' : ''}`} onClick={(() => onBackdropClick())}></div>
+
+      <div className={`navigation-backdrop`} onClick={(() => closeNavigation())}></div>
     </div>
   )
 })
