@@ -58,9 +58,10 @@ const productCard = ((props) => {
     const colorList = [];
     productObject.variants.forEach(variant => {
       if(variant[variantOption] !== undefined) {
-        if(colorList.indexOf(variant[variantOption][0]) > -1) {
-          return;
-        } else {
+        if(typeof variant[variantOption] === 'string' && colorList.indexOf(variant[variantOption]) === -1) {
+          colors.push(variant);
+          colorList.push(variant[variantOption]);
+        } else if(typeof variant[variantOption] === 'object' && colorList.indexOf(variant[variantOption][0]) === -1) {
           colors.push(variant);
           colorList.push(variant[variantOption][0]);
         }
