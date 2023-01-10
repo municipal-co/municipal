@@ -306,6 +306,53 @@ input[type='button'] {
   }
 }
 
+// Mobile buttons
+@include media-breakpoint-down('md') {
+  .btn-primary-m {
+    background-color: $black;
+    border-color: $black;
+    color: $white !important;
+
+    &:hover {
+      background-color: $black;
+      border-color: $black;
+      color: $white !important;
+    }
+
+    &.disabled,
+    &:disabled {
+      background-color: $black;
+      border-color: $black;
+    }
+  }
+  .btn-secondary-m {
+    background-color: $blue;
+    border-color: $blue;
+    color: $white !important;
+
+    &:hover {
+      background-color: $blue;
+      border-color: $blue;
+    }
+
+    &.disabled,
+    &[disabled] {
+      background-color: $blue;
+      border-color: $blue;
+    }
+  }
+  .btn-white-m {
+    background-color: $white;
+    color: $black;
+
+    &:hover {
+      .btn__ui .icon {
+        fill: $black;
+      }
+    }
+  }
+}
+
 
 // New styles
 

@@ -71,6 +71,20 @@
         "info": "Color for the highlighted text on the title of the module"
       },
       {
+        "type": "color",
+        "id": "text_color_m",
+        "label": "Text Color Mobile",
+        "default": "#000000",
+        "info": "Default color of the body content text"
+      },
+      {
+        "type": "color",
+        "id": "highlight_color_m",
+        "label": "Highlight Color Mobile",
+        "default": "#FF00FF",
+        "info": "Color for the highlighted text on the title of the module"
+      },
+      {
         "type": "textarea",
         "id": "body_content",
         "label": "Body content"
@@ -85,25 +99,44 @@
         "id": "cta_url",
         "label": "CTA Link"
       },
-     {
-       "type": "select",
-       "id": "button_style",
-       "label": "Button Style",
-       "options": [
-         {
-           "value": "btn-primary",
-           "label": "Black"
-         },
-        {
-          "value": "btn-secondary",
-          "label": "Blue"
-        },
-        {
-          "value": "btn-white",
-          "label": "White"
-        }
-       ]
-     },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button Style",
+        "options": [
+          {
+            "value": "btn-primary",
+            "label": "Black"
+          },
+          {
+            "value": "btn-secondary",
+            "label": "Blue"
+          },
+          {
+            "value": "btn-white",
+            "label": "White"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "button_style_m",
+        "label": "Button Style Mobile",
+        "options": [
+          {
+            "value": "btn-primary-m",
+            "label": "Black"
+          },
+          {
+            "value": "btn-secondary-m",
+            "label": "Blue"
+          },
+          {
+            "value": "btn-white-m",
+            "label": "White"
+          }
+        ]
+      },
       {
         "type": "header",
         "content": "Layout"
@@ -138,6 +171,40 @@
           },
           {
             "value": "hero--horizontal-center",
+            "label": "Center"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "vertical_position_m",
+        "label": "Text Vertical Position Mobile",
+        "options": [
+          {
+            "value": "hero--vertical-top-m",
+            "label": "Top"
+          },
+          {
+            "value": "hero--vertical-center-m",
+            "label": "Center"
+          },
+          {
+            "value": "hero--vertical-bottom-m",
+            "label": "Bottom"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "horizontal_position_m",
+        "label": "Text Horizontal Position Mobile",
+        "options": [
+          {
+            "value": "hero--horizontal-left-m",
+            "label": "Left"
+          },
+          {
+            "value": "hero--horizontal-center-m",
             "label": "Center"
           }
         ]
