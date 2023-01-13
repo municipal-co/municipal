@@ -7,7 +7,7 @@ const FindifyTotalCount = (props) => {
   }, [props.count])
 
   return(
-    <p>
+    <p className="findify-result-summary">
       Showing {props.count} results {props.query && `for "${props.query}"`}
     </p>
   )

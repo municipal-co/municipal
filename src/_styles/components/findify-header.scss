@@ -1,10 +1,22 @@
-.findify-header {
-  display: flex;
-  margin-top: 40px;
-  margin-bottom: 20px;
+.findify-result-summary {
+  margin-top: -10px;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
 
   @include media-breakpoint-down('md') {
-    margin-top: 20px;
+    font-size: 12px;
+  }
+}
+
+.findify-header {
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  @include media-breakpoint-down('md') {
+    margin-top: 40px;
     margin-bottom: 40px;
     gap: 10px;
   }
@@ -39,7 +51,7 @@
   font-size: 14px;
   line-height: 1;
   display: flex;
-  gap: 5px;
+  gap: 10px;
   color: $black;
   align-items: center;
   text-transform: uppercase;
@@ -52,41 +64,131 @@
     text-transform: none;
     justify-content: center;
   }
+
+  @include media-breakpoint-down('sm') {
+    font-size: 12px;
+  }
 }
 
-.findify-header__clear-filters-btn,
-.findify-header__close-filters-btn {
-  font-size: 14px;
-  padding: 0;
+.findify-header__clear-filters-btn {
+  margin-left: auto;
+  margin-right: 50px;
+  font-size: 11px;
+  padding: 6px 12px;
   line-height: 1;
-  color: $core-grey-3;
-  border: none;
+  letter-spacing: -0.2px;
+  color: $core-grey-2;
+  border: 2px solid $core-grey-2;
+  border-radius: 500px;
   background: transparent;
-  text-transform: uppercase;
 
   @include media-breakpoint-down('md') {
     display: none;
   }
 }
 
-.findify-header__close-filters-btn {
-  position: relative;
-  margin-left: auto;
-  padding-right: 17px;
-  margin-right: 20px;
+.findify-header__filter-icon {
+  display: inline-block;
+}
 
-  .icon-close {
-    background: currentcolor;
+.icon-filter {
+  width: 20px;
+  height: 18px;
+  position: relative;
+
+  @include media-breakpoint-down('sm') {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:before,
+  &:after {
+    content: '';
+    width: 20px;
+    height: 3px;
+    display: block;
+    background-color: $black;
+    position: absolute;
+    transition: all 0.15s ease-in-out;
+
+    @include media-breakpoint-down('sm') {
+      width: 16px;
+      height: 2px;
+    }
+  }
+
+  &:before {
+    top: 3px;
+    @include media-breakpoint-up('md') {
+      @at-root .findify-header__filter-container.is-open & {
+        top: 8px;
+        transform: rotate(-135deg);
+      }
+    }
+  }
+
+  &:after {
+    bottom: 3px;
+
+    @include media-breakpoint-up('md') {
+      @at-root .findify-header__filter-container.is-open & {
+        bottom: 7px;
+        transform: rotate(-45deg);
+      }
+    }
   }
 }
 
-.findify-header__filter-icon {
-  width: 18px;
-  height: 18px;
-  background-color: currentcolor;
-  mask: url('./icon-filters.svg') no-repeat center;
-  mask-size: contain;
-  display: inline-block;
+.icon-filter__dots {
+  &:before,
+  &:after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    display: block;
+    position: absolute;
+    background-color: $black;
+    border-radius: 500px;
+    opacity: 1;
+    transition: all 0.15s ease-in-out;
+
+    @include media-breakpoint-down('sm') {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  &:before {
+    top: 1px;
+    right: 0;
+
+    @include media-breakpoint-up('md') {
+      @at-root .findify-header__filter-container.is-open & {
+        top: 6px;
+        right: 6px;
+        opacity: 0;
+      }
+    }
+  }
+
+  &:after {
+    bottom: 1px;
+    left: 0;
+
+    @include media-breakpoint-up('md') {
+      @at-root .findify-header__filter-container.is-open & {
+        bottom: 5px;
+        left: 7px;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.findify-header__filter-count {
+  @include media-breakpoint-up('lg') {
+    display: none;
+  }
 }
 
 .findify-header__filter-list {
@@ -138,14 +240,34 @@
 }
 
 .findify-header__sort-select {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 1;
   height: 40px;
   border: 2px solid $black;
-  padding: 0 40px 0 11px;
+  padding: 0 50px 0 11px;
+  appearance: none;
   background: transparent;
+  background-image: url('./icon-caret.svg');
+  background-position: center right 20px;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  color: $black;
+
+  &:focus-visible {
+    outline: none;
+    border-color: $blue;
+  }
+
+  @include media-breakpoint-up('lg') {
+    min-width: 290px;
+  }
 
   @include media-breakpoint-down('md') {
     width: 100%;
     text-align: center;
+  }
+
+  @include media-breakpoint-down('sm') {
+    font-size: 12px;
   }
 }

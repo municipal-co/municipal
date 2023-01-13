@@ -16,6 +16,11 @@ $content-grid-item-vertical-spacing-loose: $grid-gutter-width * 2;
   margin-right: large-vw(-9, -20px);
   margin-bottom: -#{$content-grid-item-vertical-spacing}; // Cancel the bottom margin
 
+  @include media-breakpoint-down('sm') {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   &--centered {
     justify-content: center;
   }
@@ -49,6 +54,10 @@ $content-grid-item-vertical-spacing-loose: $grid-gutter-width * 2;
 
   @include media-breakpoint-down('md') {
     margin-bottom: 65px;
+  }
+
+  @include media-breakpoint-down('sm') {
+    padding: 0;
   }
 
   @include media-breakpoint-up('lg') {

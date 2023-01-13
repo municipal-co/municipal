@@ -128,7 +128,7 @@ const FindifyFilters = ((props) => {
         <div key={filter.name} className={`filter ${filter.isOpen == true ? 'is-open' : ''}`}>
           <div className="filter__header">
             <h6 className="filter__title">
-              {filter.name.replace('custom_fields.', '')}
+              {filter.name.replace('custom_fields.', '')}:
             </h6>
             <button className="filter__toggle" onClick={toggleFilter} data-filter-name={filter.name}>
               <span className="sr-only">{`${filter.isOpen ? 'Close' : 'Open' } Filter Group`}</span>

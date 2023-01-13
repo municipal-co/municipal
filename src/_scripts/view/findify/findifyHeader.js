@@ -118,26 +118,20 @@ const FindifyHeader = ((props) => {
 
   return (
     <div className="findify-header">
-      <div className={`findify-header__filter-container ${props.filtersOpen? 'col-lg-8 col-xl-6' : ''}`}>
+      <div className={`findify-header__filter-container ${props.filtersOpen? 'col-lg-8 col-xl-6 is-open' : ''}`}>
         <button className="findify-header__filter-toggle-btn" onClick={props.toggleFilter}>
-          <div className="findify-header__filter-icon icon-filter"></div>
-          <div className="findify-header__filter-title">Filters {activeFilterCount > 0 && <span className="findify-header__filter-count">({activeFilterCount})</span>}</div>
+          <div className="findify-header__filter-icon icon-filter">
+            <span className="icon-filter__dots"></span>
+          </div>
+          <div className="findify-header__filter-title">Filters  {activeFilterCount > 0 && <span className="findify-header__filter-count">({activeFilterCount})</span>}</div>
         </button>
         { props.filtersOpen && buildActiveFilterCount() > 0 &&
           <button className="findify-header__clear-filters-btn" onClick={clearFilters}>
-            (Clear all<span className="sr-only"> filters</span>)
-          </button>
-        }
-        {
-          props.filtersOpen &&
-          <button className="findify-header__close-filters-btn" onClick={props.toggleFilter}>
-            <span aria-hidden>Hide</span>
-            <span className="sr-only">Close filters</span>
-            <div className="icon-close"></div>
+            Clear <span className="sr-only">Filter</span> Results
           </button>
         }
       </div>
-      <div className="findify-header__filter-list">
+      <div className="findify-header__filter-list d-none">
         {buildFilterList()}
       </div>
       <div className="findify-header__sort-container">
@@ -155,4 +149,3 @@ const FindifyHeader = ((props) => {
 })
 
 export default FindifyHeader;
-

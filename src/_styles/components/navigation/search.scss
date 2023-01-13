@@ -99,7 +99,7 @@
   border: 2px solid $white;
 
   &::placeholder {
-    color: $black;
+    color: $core-grey-2;
   }
 
   &::-webkit-search-cancel-button {
@@ -142,7 +142,7 @@
 }
 
 .autocomplete__heading {
-  font-size: 20px;
+  font-size: 13px;
   text-transform: uppercase;
   margin-bottom: 20px;
   margin-top: 0;
@@ -181,7 +181,8 @@
   border-color: $black;
 
   &:hover {
-    color: $black;
+    color: $white;
+    background-color: $black;
   }
 }
 
