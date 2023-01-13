@@ -29,10 +29,8 @@ const browserifyThis = (file) => {
   let b = browserify(config)
     .transform(babelify, {
     presets: ['@babel/preset-env', '@babel/preset-react'],
-    ignore: [
-      "./node_modules/",
-      "../../node_modules"
-    ]
+    global: true,
+    exclude: "/\/node_modules\/(?!@findify\/)/"
   })
 
   return bundle();

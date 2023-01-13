@@ -1,0 +1,73 @@
+.navigation-form__header {
+  color: $white;
+  margin-bottom: 10px;
+
+  &.navigation-form__header--inner {
+    margin-top: 40px;
+  }
+}
+
+.navigation-form__title {
+  font-size: 20px;
+  line-height: 1;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-family: $font-family-heading-large;
+}
+
+.navigation-form__subtitle {
+  font-size: 14px;
+  margin-bottom: 0;
+  color: #d6d8dc;
+}
+
+.navigation-form__checkbox-container {
+  color: $white;
+
+  input[type=checkbox] {
+    display: block !important;
+  }
+
+  label {
+    cursor: pointer;
+  }
+}
+
+.navigation-form__footer {
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 36px;
+
+  a {
+    color: currentcolor;
+    text-decoration: underline;
+  }
+
+  .p5 {
+    color: $core-grey-2;
+  }
+
+  .btn-link {
+    color: $white;
+  }
+
+  .btn--small {
+    font-size: 14px;
+    border-bottom: 0;
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.navigation-form__button {
+  padding: 10px 53px;
+  margin-bottom: 20px;
+}
+
+.navigation-form__link-button {
+  margin-top: 30px;
+  font-size: 14px;
+}
