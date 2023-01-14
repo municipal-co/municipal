@@ -61,6 +61,7 @@
     background-color: rgba($black, 0.4);
     transition: $transition-duration-base $transition-timing-function-in-out-ui;
     transition-property: height width background-color;
+    border-radius: 999px !important;
     &.swiper-pagination-bullet-active {
       height: 10px;
       width: 10px;

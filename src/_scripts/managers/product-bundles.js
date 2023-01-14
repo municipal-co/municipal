@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, {Scrollbar, Navigation} from 'swiper';
 import * as Image from '../core/image'
 import * as Currency from '../core/currency';
 
@@ -66,6 +66,7 @@ export default class ProductBundles {
       const currentSlide = $('[data-product-option]:checked', $swatchSlider).parent().index();
 
       const swatchSlider = new Swiper($swatchSlider.get(0), {
+        modules: [Scrollbar, Navigation],
         slidesPerView: 4.4,
         watchOverflow: true,
         slidesOffsetBefore: 15,

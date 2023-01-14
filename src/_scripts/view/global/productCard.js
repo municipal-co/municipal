@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Swiper, {Navigation, Scrollbar} from "swiper";
+import Swiper, {Scrollbar} from "swiper";
 
 const productCard = ((props) => {
 
@@ -95,7 +95,7 @@ const productCard = ((props) => {
 
   const initSwiper = () => {
     new Swiper(swatchSlider.current, {
-      module: [Navigation, Scrollbar],
+      modules: [Scrollbar],
       slidesPerView: 4.5,
       spaceBetween: 10,
       threshold: 10,
@@ -106,11 +106,6 @@ const productCard = ((props) => {
       scrollbar: {
         el: '.swiper-scrollbar',
         draggable: true,
-      },
-      navigation: {
-        enabled: true,
-        prevEl: '[data-arrow-prev]',
-        nextEl: '[data-arrow-next]',
       }
     })
   }
@@ -227,7 +222,7 @@ const productCard = ((props) => {
         </a>
         <form action="/cart/add" className="product-card__content text-center">
           <div className="product-option">
-            <div className="product-option__swatch swiper-container" ref={swatchSlider}>
+            <div className="product-option__swatch swiper" ref={swatchSlider}>
               <div className="swiper-wrapper">
                 {productColors.map(color => buildColorSwatch(color))}
               </div>
