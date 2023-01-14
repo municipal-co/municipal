@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from "react";
-import Swiper from "swiper";
+import Swiper, { FreeMode, Navigation } from "swiper";
 const Carousel = ((props) => {
   const s = props.block.settings;
   const aspectRatio = s.aspect_ratio;
@@ -8,6 +8,7 @@ const Carousel = ((props) => {
 
   useEffect(() => {
     new Swiper(slider.current, {
+      modules: [FreeMode, Navigation],
       slide: '.swiper-slide',
       slidesPerView: aspectRatio == 'frame--16x9' ? 1.2 : 2.1,
       threshold: 20,
@@ -53,7 +54,7 @@ const Carousel = ((props) => {
   return(
     <div className="navigation-carousel">
      { sectionTitle }
-      <div className={`navigation-carousel__slider swiper-container`} ref={slider}>
+      <div className={`navigation-carousel__slider swiper swiper-container`} ref={slider}>
         <div className="swiper-wrapper">
           { cards }
         </div>

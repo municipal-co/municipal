@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Scrollbar, Navigation } from 'swiper';
 import * as Currency from '../../core/currency';
 
 const selectors = {
@@ -80,6 +80,7 @@ export default class ProductCard {
     }
 
     const swatchSliderSettings = {
+      modules: [ Navigation, Scrollbar ],
       slidesPerView: 4.5,
       spaceBetween: 10,
       threshold: 10,

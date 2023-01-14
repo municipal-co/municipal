@@ -99,7 +99,7 @@ const AutocompleteSearch = (props) => {
                 "Popular Searches" : "Search Suggestions"
               }
             </h3>
-            <div className="autocomplete__slider swiper-container">
+            <div className="autocomplete__slider swiper swiper-container">
               <Swiper
                 tag="ul"
                 slidesPerView="auto"

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Scrollbar, Navigation } from 'swiper';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
 import Drawer from '../../ui/drawer';
@@ -190,11 +190,12 @@ export default class ProductDetailForm {
       })
 
       this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
+        modules: [Scrollbar, Navigation],
         slide: selectors.swatchSlide,
         slidesPerView: 4.7,
         spaceBetween: 8,
         threshold: 10,
-        initialSlide: $swatchSlides.length <= 4 ? false : currentSlide,
+        initialSlide: $swatchSlides.length <= 4 ? 0 : currentSlide,
         watchOverflow: true,
         slidesOffsetBefore: 30,
         slidesOffsetAfter: 30,
