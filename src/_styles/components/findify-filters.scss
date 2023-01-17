@@ -5,7 +5,7 @@
 
   &.is-open {
     max-width: unset;
-    padding-right: 20px;
+    padding-right: 50px;
     display: block;
   }
 
@@ -35,7 +35,7 @@
 }
 
 .findify__filters-mobile-header {
-  padding: 20px;
+  padding: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,14 +51,14 @@
     display: block;
     width: 20px;
     height: 20px;
-    background-color: currentcolor;
+    background-color: $black;
     mask: url('./icon-close.svg') no-repeat center;
     mask-size: contain;
   }
 }
 
 .findify__filters-mobile-title {
-  font-size: 24px;
+  font-size: 20px;
   color: $black;
   margin-bottom: 0;
 }
@@ -83,7 +83,8 @@
   }
 
   @include media-breakpoint-down('md') {
-    padding: 20px 20px 0;
+    margin-right: 30px;
+    margin-left: 30px;
   }
 }
 
@@ -96,7 +97,7 @@
 .filter__title {
   margin-bottom: 0;
   font-size: 14px;
-  font-weight: normal;
+  font-weight: 700;
   font-family: $font-family-heading-small;
   text-transform: uppercase;
   line-height: 1;
@@ -160,20 +161,20 @@
   display: flex;
   font-size: 14px;
   font-family: $font-family-heading-medium;
-  line-height: 1.5;
+  line-height: 22px;
   margin-top: 15px;
   margin-bottom: 0;
   cursor: pointer;
 
   &:first-child {
-    margin-top: 20px;
+    margin-top: 30px;
   }
 
   input[type="checkbox"] {
     appearance: none;
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     margin-left: 2px;
     border: 2px solid $black;
     margin-right: 20px;
@@ -185,7 +186,7 @@
         content:"";
         display: block;
         position: absolute;
-        width: 11px;
+        width: 13px;
         height: 6px;
         border-bottom: 2px solid $white;
         border-left: 2px solid $white;
@@ -250,6 +251,7 @@
   background: none;
   font-size: 14px;
   font-family: $font-family-heading-medium;
+  color: $black;
   padding: 0;
   width: 40px;
   margin-left: 5px;

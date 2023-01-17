@@ -52,6 +52,15 @@ const FindifyFilters = ((props) => {
     })
   }
 
+  const clearFilters = () => {
+    props.setRequestParams((requestParams) => {
+      return {
+        ...requestParams,
+        filters: []
+      }
+    })
+  }
+
   const buildFilterValue = (value, type = 'range') => {
     if(type == 'range') {
       const underscorePosition = value.indexOf('_');
@@ -128,7 +137,7 @@ const FindifyFilters = ((props) => {
         <div key={filter.name} className={`filter ${filter.isOpen == true ? 'is-open' : ''}`}>
           <div className="filter__header">
             <h6 className="filter__title">
-              {filter.name.replace('custom_fields.', '')}
+              {filter.name.replace('custom_fields.', '')}:
             </h6>
             <button className="filter__toggle" onClick={toggleFilter} data-filter-name={filter.name}>
               <span className="sr-only">{`${filter.isOpen ? 'Close' : 'Open' } Filter Group`}</span>
@@ -178,6 +187,10 @@ const FindifyFilters = ((props) => {
       <div className={`findify__filters ${props.filtersOpen ? "is-open" : ''} col-lg-8 col-xl-6`}>
         <div className="findify__filters-mobile-header">
           <h4 className="findify__filters-mobile-title">Filters</h4>
+          {props.currentFilters?.length > 0 &&
+            <button className="findify-header__clear-filters-btn" onClick={clearFilters}>
+              Clear <span className="sr-only">Filter</span> Results
+            </button>}
           <button className="findify__filters-close-button" onClick={props.toggleFilter}>
             <div className="findify__filter-icon-close">
               <span className="sr-only">Close Filters</span>

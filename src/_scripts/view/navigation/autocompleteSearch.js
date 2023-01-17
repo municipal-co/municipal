@@ -96,10 +96,10 @@ const AutocompleteSearch = (props) => {
           <div className="autocomplete__recommendations">
             <h3 className="autocomplete__heading">
               {searchQuery == '' ?
-                "Trending Searches" : "Search Suggestions"
+                "Popular Searches" : "Search Suggestions"
               }
             </h3>
-            <div className="autocomplete__slider swiper-container">
+            <div className="autocomplete__slider swiper swiper-container">
               <Swiper
                 tag="ul"
                 slidesPerView="auto"

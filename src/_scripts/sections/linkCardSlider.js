@@ -1,5 +1,5 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
-import Swiper from 'swiper';
+import Swiper, { Navigation, Scrollbar, Lazy } from 'swiper';
 import BaseSection from './base';
 
 const selectors = {
@@ -24,7 +24,8 @@ export default class LinkCardSlider extends BaseSection {
   };
 
   initSliders() {
-    this.slider = new Swiper(this.$slider, {
+    this.slider = new Swiper(this.$slider.get(0), {
+      modules: [ Navigation, Scrollbar, Lazy ],
       slidesPerView: 1.3,
       spaceBetween: 20,
       slidesOffsetBefore: 30,

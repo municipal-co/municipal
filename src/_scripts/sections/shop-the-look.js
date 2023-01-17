@@ -1,5 +1,5 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
-import Swiper from 'swiper';
+import Swiper, { Scrollbar, Navigation, Lazy } from 'swiper';
 import * as Currency from '../core/currency'
 import Drawer from '../ui/drawer'
 import BaseSection from './base';
@@ -43,6 +43,7 @@ export default class ShopTheLook extends BaseSection {
 
   initLooksSlider() {
     const looksSliderOptions = {
+      modules: [Scrollbar, Navigation],
       slidesPerView: 1.15,
       loop: false,
       spaceBetween: 15,
@@ -82,7 +83,7 @@ export default class ShopTheLook extends BaseSection {
       }
     }
 
-    this.looksSlider = new Swiper(this.$looksContainer, looksSliderOptions);
+    this.looksSlider = new Swiper(this.$looksContainer.get(0), looksSliderOptions);
   }
 
   initLooksDrawers() {
@@ -123,7 +124,8 @@ export default class ShopTheLook extends BaseSection {
   initDrawerSlider() {
     this.drawerList.forEach((drawer, i) => {
       const slider = drawer.drawerObject.$el.find(selectors.lookDrawerSlider);
-      const swiperSlider = new Swiper(slider, {
+      const swiperSlider = new Swiper(slider.get(0), {
+        modules: [ Navigation, Lazy ],
         centeredSlides: true,
         loop: false,
         slidesPerView: 1.5,

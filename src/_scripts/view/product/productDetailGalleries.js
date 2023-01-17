@@ -1,5 +1,4 @@
-import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Navigation, Pagination, Scrollbar, Zoom, Lazy } from 'swiper';
 import BaseSection from '../../sections/base';
 
 const selectors = {
@@ -27,13 +26,13 @@ export default class productGallery extends BaseSection {
 
     this.currentColor = '';
     this.gallerySettings = {
+      modules: [Navigation, Pagination, Scrollbar, Zoom, Lazy],
       slidesPerView: 1.2,
       autoplay: false,
       watchOverflow: true,
       centeredSlides: true,
       effect: 'slide',
       spaceBetween: 10,
-      autoHeight: true,
       zoom: {
         maxRatio: 3,
         minRatio: 1,

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Navigation } from 'swiper';
 import BaseSection from './base';
 
 const selectors = {
@@ -13,6 +13,7 @@ export default class SlideshowSection extends BaseSection {
     this.$slideshow = $(selectors.slideshow, this.$container);
 
     const swiperOptions = {
+      modules: [Navigation],
       loop: true,
       speed: 500,
       slidesPerView: Number.parseInt(this.$slideshow.data('slides-to-show')) || 1,
