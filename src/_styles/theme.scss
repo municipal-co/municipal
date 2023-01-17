@@ -4,8 +4,8 @@
  * Import these up here to allow overrides down below
  *
  */
-@import 'vendor/swiper.scss';
-@import 'vendor/chosen.scss';
+ @import 'vendor/chosen.scss';
+ @import 'vendor/swiper.scss';
 
 /**
  * CORE
@@ -55,7 +55,6 @@
 @import 'components/chosen';
 @import 'components/content';
 @import 'components/card';
-@import 'components/quick-view';
 @import 'components/docs';
 @import 'components/banner';
 @import 'components/minimal-input';
@@ -82,6 +81,7 @@
 @import 'components/profiles.scss';
 @import 'components/image-caption.scss';
 @import 'components/heading-media.scss';
+@import 'components/navigation/search.scss';
 @import 'components/navigation/cta.scss';
 @import 'components/navigation/card-grid.scss';
 @import 'components/navigation/card-block.scss';
@@ -104,29 +104,23 @@
 @import 'modules/hero';
 @import 'modules/product-overview';
 @import 'modules/product-features';
-@import 'modules/collection-section';
 @import 'modules/collection-banner';
 @import 'modules/style-tips';
 @import 'modules/complete-the-look';
 @import 'modules/product-sticky-bar';
-@import 'modules/collection-drawer';
 @import 'modules/two-up-instagram';
 @import 'modules/product-shipping-modal';
-@import 'modules/collection-grid';
 @import 'modules/section-image-plus-caption';
 @import 'modules/richtext-section';
 @import 'modules/tiled-image';
 @import 'modules/video-section';
-@import 'modules/collection-grid';
 @import 'modules/scrolling-text';
 @import 'modules/text-plus-signature';
 @import 'modules/newsletter-popup';
 @import 'modules/contact';
-@import 'modules/customers-drawer';
 @import 'modules/fit-guide-drawer';
 @import 'modules/product-upsell.scss';
 @import 'modules/back-in-stock.scss';
-@import 'modules/search-drawer.scss';
 @import 'modules/bundle-products.scss';
 @import 'modules/featured-categories.scss';
 @import 'modules/shop-the-look.scss';
@@ -148,13 +142,12 @@
  *
  */
 @import 'templates/cart.scss';
-@import 'templates/collection.scss';
+@import 'templates/findify-template.scss';
 @import 'templates/404.scss';
 @import 'templates/gift-card.scss';
 @import 'templates/customer.scss';
 @import 'templates/challenge.scss';
 @import 'templates/password.scss';
-@import 'templates/search.scss';
 @import 'templates/about-us.scss';
 
 

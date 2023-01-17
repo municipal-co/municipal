@@ -11,7 +11,7 @@
 {% endif %}
 
 <div class="product-gallery">
-  <div class="swiper-container" data-product-gallery-slideshow>
+  <div class="swiper" data-product-gallery-slideshow>
     <div class="product-gallery__wrapper swiper-wrapper">
       {% for image in product.images %}
       {% assign image_alt_pieces = image.alt | split: '|' %}

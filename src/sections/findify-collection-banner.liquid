@@ -4,12 +4,8 @@
   {% assign entity = collection %}
 {% endif %}
 
-{% assign banner_icon  = entity.metafields.custom_fields["banner_icon"] %}
 {% assign banner_copy = entity.metafields.custom_fields["banner_copy"] %}
-{% assign banner_video_bg = entity.metafields.custom_fields["banner_video_background"] %}
-{% assign banner_video_url = entity.metafields.custom_fields["banner_video_url"] %}
-{% assign banner_light_bg = entity.metafields.custom_fields["banner_light_background"] %}
-{% assign title_tag = entity.metafields.custom_fields["title_tag"] %}
+{% assign banner_light_bg = entity.metafields.custom_fields["banner_light_background"] | default: 1 %}
 {% assign banner_image = entity.metafields.custom_fields["banner_image"] %}
 {% assign banner_image_mobile = entity.metafields.custom_fields["banner_image_mobile"] | default: banner_image %}
 {% assign collection_classes = '' %}
@@ -25,7 +21,7 @@
 {% endif %}
 
 {% if title_tag == blank %}
-  {% assign title_tag = 'h2' %}
+  {% assign title_tag = 'h1' %}
 {% endif %}
 
 <div class="collection-banner findify-collection-banner layout-content-wrapper {{ collection_classes }}" data-section-id="{{ section.id }}" data-section-type="collection-banner">

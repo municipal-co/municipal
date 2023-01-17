@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Swiper from "swiper";
+import Swiper, { FreeMode, Navigation } from "swiper";
 
  const NavigationCategories = ((props) => {
   const element = useRef();
@@ -10,6 +10,7 @@ import Swiper from "swiper";
     const activeIndex = Array.from(slideWrapper.current.children).indexOf(activeElement);
 
     let swiper = new Swiper(element.current, {
+      modules: [FreeMode, Navigation],
       slide: '.swiper-slide',
       slidesPerView: "auto",
       slideToClickedSlide: true,
@@ -41,7 +42,7 @@ import Swiper from "swiper";
   }
 
   return (
-    <div className="navigation-categories swiper-container" ref={element}>
+    <div className="navigation-categories swiper swiper-container" ref={element}>
       <div className="swiper-wrapper" ref={slideWrapper}>
         {buildButtons()}
       </div>

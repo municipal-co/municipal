@@ -4,7 +4,7 @@
   {% endfor %}
 {% endif %}
 <!-- <div id="main_navigation" data-section-type="navigation" data-section-id="{{section.id}}"></div> -->
-<script type="application/json" data-navigation-json data-section-id="{{section.id}}">
+<script type="application/json" data-navigation-json data-section-id="{{section.id}}" data-enable-search="{{settings.enable_search}}">
   [
     {%- for block in section.blocks -%}
       {%- assign s = block.settings -%}
