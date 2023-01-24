@@ -2,6 +2,8 @@ import React, {useState, useEffect, useRef} from 'react';
 
 import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
+import NavigationSearch from './autocompleteSearchBox';
+import AutocompleteSearch from './autocompleteSearch';
 
 const MainNav = ((props) => {
 
@@ -14,7 +16,8 @@ const MainNav = ((props) => {
       components,
       categories,
       currentMenu,
-      currentBlock: ''
+      currentBlock: '',
+      enableSearch: document.querySelector('[data-navigation-json]').dataset.enableSearch == 'true',
     }
 
     return componentData ;
@@ -92,8 +95,11 @@ const MainNav = ((props) => {
   }
 
   const toggleNavigation = () => {
-    updateHeaderOffset()
-    setIsOpen((isOpen) => !isOpen);
+    setIsOpen((isOpen) => {
+        updateHeaderOffset();
+        return !isOpen
+      }
+    );
     if(!isOpen) {
       document.dispatchEvent(new CustomEvent('drawer:open', {detail: {target:'navigation'}}))
     }
@@ -113,11 +119,13 @@ const MainNav = ((props) => {
   const navBody = useRef();
   const header = document.querySelector('[data-header]');
   const [styles, setStyles] = useState({
-    top: header.offsetHeight,
-    height: `calc(100% - ${header.offsetHeight}px)`
+    top: header.offsetHeight + header.getBoundingClientRect().top,
+    height: `calc(100% - ${header.offsetHeight + header.getBoundingClientRect().top}px)`,
+    overflowY: 'auto'
   });
   const id = document.querySelector('[data-navigation-json]').dataset.sectionId;
   const toggleButton = document.querySelector('[data-mobile-menu-toggle]');
+  const searchFormContainer = useRef();
 
   //Component will render
   useEffect(() => {
@@ -127,7 +135,7 @@ const MainNav = ((props) => {
     document.addEventListener('shopify:block:select', updateSelectedBlock);
     document.addEventListener('navigation:toggle', toggleNavigation);
     document.addEventListener('breakpointChange', updateHeaderOffset);
-    document.addEventListener('drawer:open', closeNavigation)
+    document.addEventListener('drawer:open-header-drawer', closeNavigation);
     return () => {
       document.removeEventListener('shopify:section:load', updateModuleData);
       document.removeEventListener('shopify:section:select', openNavigation);
@@ -135,7 +143,7 @@ const MainNav = ((props) => {
       document.removeEventListener('shopify:block:select', updateSelectedBlock);
       document.removeEventListener('navigation:toggle', toggleNavigation);
       document.removeEventListener('breakpointChange', updateHeaderOffset);
-      document.removeEventListener('drawer:open', closeNavigation)
+      document.removeEventListener('drawer:open-header-drawer', closeNavigation);
     }
   }, [])
 
@@ -148,23 +156,25 @@ const MainNav = ((props) => {
   return (
     <div className={`navigation ${isOpen ? 'is-visible' : ''}`} ref={element} style={styles}>
       <div className="navigation-body" ref={navBody}>
-        <NavigationCategories
-          key="NavigationCategories"
-          categories={data.categories}
-          clickCallback={updateCurrentMenu}
-          currentMenu={data.currentMenu}
-        />
-        <NavigationBlocks
-          key="NavigationBlocks"
-          components={data.components}
-          currentMenu={data.currentMenu}
-          currentBlock={data.currentBlock}
-        />
+        <div className='navigation-body__container'>
+          <NavigationCategories
+            key="NavigationCategories"
+            categories={data.categories}
+            clickCallback={updateCurrentMenu}
+            currentMenu={data.currentMenu}
+          />
+          <NavigationBlocks
+            key="NavigationBlocks"
+            components={data.components}
+            currentMenu={data.currentMenu}
+            currentBlock={data.currentBlock}
+          />
+        </div>
       </div>
-      <div className="navigation-backdrop" onClick={() => setIsOpen(false)}></div>
+
+      <div className={`navigation-backdrop`} onClick={(() => closeNavigation())}></div>
     </div>
   )
 })
 
 export default MainNav;
-

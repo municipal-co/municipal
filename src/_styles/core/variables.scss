@@ -823,16 +823,16 @@ $zindex-sticky: 1500 !default;
 $zindex-fixed: 2000 !default;
 $zindex-header: 2100 !default;
 $zindex-pencil-banner: 2101 !default;
-$zindex-drawer-backdrop: 2200 !default;
-$zindex-drawer: 2201 !default;
-$zindex-ajax-cart-backdrop: 2300 !default;
-$zindex-ajax-cart: 2301 !default;
+$zindex-drawer-backdrop: 2400 !default;
+$zindex-drawer: 2500 !default;
+$zindex-ajax-cart-backdrop: 2400 !default;
+$zindex-ajax-cart: 2500 !default;
 $zindex-overlay: 2400 !default;
 $zindex-modal-backdrop: 2500 !default;
 $zindex-modal: 3000 !default;
 $zindex-popover: 3500 !default;
 $zindex-tooltip: 4000 !default;
-$z-index-skip-to-content: 9999 !default; // really high to be safe of app markup
+$z-index-skip-to-content: 99999 !default; // really high to be safe of app markup
 
 // Transition Variables
 //

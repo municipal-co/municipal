@@ -3,7 +3,7 @@
 {% if slides_array != blank %}
   <div id="{{bg_prefix}}" class="content-slider__container">
     <div class="content-slider" data-section-type="content-slider">
-      <div class="swiper-container" data-slideshow>
+      <div class="swiper" data-slideshow>
         <div class="swiper-wrapper">
           {% for block in slides_array %}
             {%- assign slide = block.settings -%}

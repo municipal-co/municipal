@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Scrollbar, Navigation } from 'swiper';
 import BaseSection from './base';
 import ProductCard from '../view/product/productCard';
 
@@ -23,6 +23,7 @@ export default class ProductCardSlider extends BaseSection {
 
   initCardSlider() {
     const sliderSettings = {
+      modules: [Scrollbar, Navigation],
       slidesPerView: 1.3,
       threshold: 20,
       spaceBetween: 20,

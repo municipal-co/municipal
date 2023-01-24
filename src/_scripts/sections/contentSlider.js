@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Pagination, EffectFade } from 'swiper';
 import BaseSection from './base';
 
 const selectors = {
@@ -14,6 +14,7 @@ export default class ContentSlider extends BaseSection {
     this.$slides = $(selectors.slide, this.$slideshow);
 
     this.sliderSettings = {
+      modules: [ Pagination, EffectFade ],
       slidesToShow: 1,
       autoplay: false,
       autoHeight: true,
@@ -25,7 +26,7 @@ export default class ContentSlider extends BaseSection {
       fadeEffect: {
         crossFade: true
       },
-      threshold: 40,
+      threshold: 20,
       loop: true,
     }
 
@@ -35,7 +36,7 @@ export default class ContentSlider extends BaseSection {
   }
 
   initSliders() {
-    this.Slideshow = new Swiper(this.$slideshow, this.sliderSettings);
+    this.Slideshow = new Swiper(this.$slideshow.get(0), this.sliderSettings);
   }
 
 

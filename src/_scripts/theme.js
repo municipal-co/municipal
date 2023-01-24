@@ -31,7 +31,6 @@ import ProductSection from './sections/product';
 import CartSection from './sections/cart';
 import AJAXCartSection from './sections/ajaxCart';
 import PencilBannerSection from './sections/pencilBanner';
-import CollectionSection from './sections/collection';
 import BlogSection from './sections/blog';
 import ArticleSection from './sections/article';
 import VideoSection from './sections/video';
@@ -41,7 +40,6 @@ import CustomersAccountSection from './sections/customersAccount';
 import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
-import CustomersDrawerSection from './sections/customersDrawer';
 import CustomersResetPasswordSection from './sections/customersResetPassword';
 import YotpoReviews from './sections/yotpoReviews';
 import FeaturedCategory from './sections/featuredCategories'
@@ -63,6 +61,9 @@ import './templates/pageStyles';
 
 // Views
 import MainNav from './view/navigation/navigation';
+import Collection from './templates/collection';
+import Search from './templates/search';
+import AutocompleteSearch from './view/navigation/autocompleteSearch';
 
 // Do this ASAP
 Animations.initialize();
@@ -81,7 +82,6 @@ Breakpoints.initialize();
   sectionManager.register('cart', CartSection);
   sectionManager.register('ajax-cart', AJAXCartSection);
   sectionManager.register('pencil-banner', PencilBannerSection);
-  sectionManager.register('collection', CollectionSection);
   sectionManager.register('blog', BlogSection);
   sectionManager.register('article', ArticleSection);
   sectionManager.register('video', VideoSection);
@@ -94,7 +94,6 @@ Breakpoints.initialize();
   );
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
-  sectionManager.register('customers-drawer', CustomersDrawerSection);
   sectionManager.register(
     'customers-reset-password',
     CustomersResetPasswordSection
@@ -115,6 +114,23 @@ Breakpoints.initialize();
   const navigationRoot = ReactDOM.createRoot(navigationHolder);
   navigationRoot.render(<MainNav/>);
 
+  const collectionHolder = document.getElementById('collection');
+  if(collectionHolder) {
+    const collectionRoot = ReactDOM.createRoot(collectionHolder);
+    collectionRoot.render(<Collection/>);
+  }
+
+  const searchHolder = document.getElementById('search-container');
+  if(searchHolder) {
+    const searchRoot = ReactDOM.createRoot(searchHolder);
+    searchRoot.render(<Search/>)
+  }
+
+  const autocompleteHolder = document.getElementById('autocomplete-wrapper');
+  if(autocompleteHolder) {
+    const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
+    autocompleteRoot.render(<AutocompleteSearch/>)
+  }
 
   $('.in-page-link').on('click', (evt) => {
     A11Y.pageLinkFocus($(evt.currentTarget.hash));

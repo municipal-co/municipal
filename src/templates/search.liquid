@@ -1,1 +1,23 @@
-{% section 'search' %}
+<div class="collection-banner findify-collection-banner light layout-content-wrapper">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-xl-22 col-lg-22 col-md-20 col-sm-22 col-22 collection-banner-inner-wrapper">
+        <div>
+          <h2 class="collection-banner__title text-left h1">Search <br class="d-block d-sm-none"> Results</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="findify-template-container container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-22 col-md-20 col-lg-22 col-xl-22" data-search-template id="search-container">
+
+    </div>
+  </div>
+</div>
+
+<script>
+  window.searchLimit = {{ collection.metafields.custom_fields.collection_limit | default: 10 }};
+</script>
