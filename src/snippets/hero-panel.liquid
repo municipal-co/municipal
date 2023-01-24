@@ -1,4 +1,4 @@
-<div id="hero-{{id}}" class="hero container-fluid {{s.vertical_position}} {{s.horizontal_position}}" data-section-id="{{section.id}}" data-section-type="hero">
+<div id="hero-{{id}}" class="hero container-fluid {{s.vertical_position}} {{s.horizontal_position}} {{s.horizontal_position_m}} {{s.vertical_position_m}}" data-section-id="{{section.id}}" data-section-type="hero">
   <style>
     #hero-{{id}} .hero__text,
     #hero-{{id}} .hero__title {
@@ -8,11 +8,25 @@
     #hero-{{id}} .hero__highlight-text {
       color: {{ s.highlight_color }};
     }
+
+    @media (max-width: 992px) {
+      #hero-{{id}} .hero__text,
+      #hero-{{id}} .hero__title {
+        color: {{s.text_color_m}};
+      }
+
+      #hero-{{id}} .hero__highlight-text {
+        color: {{ s.highlight_color_m }};
+      }
+    }
   </style>
   {% unless s.image_mobile == blank and s.image == blank %}
     <picture class="hero__bg">
-      <source data-srcset="{{ s.image | img_url: 'master' }}" media="(min-width: 1024px)">
-      <img data-src="{{ s.image_mobile | default: s.image | image_url }}" alt="{{s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload">
+      {% assign mobile_image = s.image_mobile | default: s.image %}
+      {% assign mobile_image_title = mobile_image | replace:'files/', '' %}
+      {% assign desktop_image_title = s.image | replace: 'files/', '' %}
+      <source data-srcset="{{ s.image | img_url: 'master' }}" media="(min-width: 992px)">
+      <img src="{{ mobile_image | default: s.image | img_url: 'master' }}" alt="{{ s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload" loading="lazy" width="1920" height="1080">
     </picture>
   {% endunless %}
 
@@ -52,7 +66,7 @@
     {% endif %}
     {% if s.cta_text != blank and s.cta_url != blank%}
     <div>
-      <a href="{{s.cta_url}}" class="btn {{ s.button_style }} hero__btn">
+      <a href="{{s.cta_url}}" class="btn {{ s.button_style }} {{ s.button_style_m }} hero__btn">
         {{ s.cta_text }}
       </a>
     </div>

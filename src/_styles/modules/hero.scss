@@ -94,7 +94,6 @@
 
 .hero--vertical-center {
   align-items: center;
-
 }
 
 .hero--vertical-bottom {
@@ -108,5 +107,29 @@
 .hero--horizontal-center {
   justify-content: center;
   text-align: center;
+}
+
+@include media-breakpoint-down('md') {
+  .hero--vertical-top-m {
+    align-items: flex-start;
+  }
+
+  .hero--vertical-center-m {
+    align-items: center;
+  }
+
+  .hero--vertical-bottom-m {
+    align-items: flex-end;
+  }
+
+  .hero--horizontal-left-m {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .hero--horizontal-center-m {
+    justify-content: center;
+    text-align: center;
+  }
 }
 
