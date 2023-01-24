@@ -166,7 +166,7 @@
 
       &:before {
         content: "";
-        background-color: $bg-white;
+        background-color: $white;
         background-image: url($yotpo-icon-star);
         background-repeat: no-repeat;
         background-position: center;
@@ -225,7 +225,7 @@
 
       &:before {
         content: "";
-        background-image: url($yotpo-icon-star-empty);
+        background-image: url($yotpo-icon-star-empty) !important;
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
