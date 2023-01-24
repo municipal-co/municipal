@@ -5,19 +5,13 @@
 {% endif %}
 
 {% assign banner_copy = entity.metafields.custom_fields["banner_copy"] %}
-{% assign banner_light_bg = entity.metafields.custom_fields["banner_light_background"] | default: 1 %}
-{% assign banner_image = entity.metafields.custom_fields["banner_image"] %}
-{% assign banner_image_mobile = entity.metafields.custom_fields["banner_image_mobile"] | default: banner_image %}
+{% assign title_tag = entity.metafields.custom_fields["title_tag"] %}
 {% assign collection_classes = '' %}
 
 {% if entity.metafields.custom_fields["banner_title"] != blank %}
   {% assign banner_title = entity.metafields.custom_fields["banner_title"] %}
 {% else %}
   {% assign banner_title = entity.title %}
-{% endif %}
-
-{% if banner_video_url == blank and banner_video_bg == blank %}
-  {% assign collection_classes = collection_classes | append:  'no-video'%}
 {% endif %}
 
 {% if title_tag == blank %}
@@ -28,45 +22,12 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-xl-22 col-lg-22 col-md-20 col-sm-22 col-22 collection-banner-inner-wrapper">
-
         <div>
-          {% comment %}handwritten svg placeholder{% endcomment %}
-          {% if banner_image != blank or banner_image_mobile != blank %}
-            <div class="collection-banner__image hidden-on-mobile">
-              {% render 'image_tag'
-                          image: banner_image,
-                          object_fit: "contain",
-                          image_alt: banner_title
-              %}
-            </div>
-            <div class="collection-banner__image hidden-on-desktop">
-              {% render 'image_tag'
-                          image: banner_image_mobile,
-                          object_fit: "contain",
-                          image_alt: banner_title
-              %}
-            </div>
-          {% endif %}
-
           <{{title_tag}} class="collection-banner__title text-left h1">{{ banner_title }}</{{title_tag}}>
           {% if banner_copy != blank %}
             <div class="collection-banner__content text-left p2">{{ banner_copy }}</div>
           {% endif %}
         </div>
-
-        {% if banner_video_url != blank and banner_video_bg != blank %}
-          {% assign yt_video_id = banner_video_url | remove: "https://www.youtube.com/watch?v=" %}
-
-          <div class="collection-banner__video">
-            <div id="video-player-{{ yt_video_id }}" class="video-player" data-video-player data-video-id="{{ yt_video_id }}" data-video-type="youtube" data-background="true" data-embed-color="#000000">
-              <div class="video-player__cover" data-video-player-cover>
-                <div class="video-player__cover-still lazyload" data-background="{{ banner_video_bg }}"></div>
-              </div>
-              <div class="video-player__embed" data-video-player-embed></div>
-            </div>
-          </div>
-        {% endif %}
-
       </div>
     </div>
   </div>
