@@ -83,7 +83,21 @@
     &:focus {
       border-color: $white;
     }
+    &.has-error {
+      border-color: $red;
+    }
   }
+}
+
+.navigation-form__error-message {
+  display: none;
+  color: $red;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-family: $font-family-heading-medium;
+  text-align: center;
+  line-height: 1;
 }
 
 select.form-control {

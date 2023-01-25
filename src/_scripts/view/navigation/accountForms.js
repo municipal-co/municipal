@@ -1,8 +1,33 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const AccountForms = () => {
 
   const [form, setForm] = useState('sign-in');
+  const mainPassword = useRef();
+  const repeatPassword = useRef();
+  const passwordError = useRef();
+
+  const validatePasswords = () => {
+    const password = mainPassword.current.value;
+    const passwordMatches = password.match(/^(?=.*[\w])(?=.*[!@#$%^&*\-\.])[\w!@#$%^&*\-\.]{6,}$/);
+    if(!passwordMatches) {
+      mainPassword.current.classList.add('has-error');
+      passwordError.current.innerText = 'Password must be at least 6 characters with 1 symbol';
+      passwordError.current.style.display = 'block';
+    } else {
+      if(mainPassword.current.value !== repeatPassword.current.value) {
+        passwordError.current.innerText = 'Password don\'t match';
+        passwordError.current.style.display = 'block';
+        mainPassword.current.classList.add('has-error');
+        repeatPassword.current.classList.add('has-error');
+      } else {
+        passwordError.current.innerText = '';
+        passwordError.current.style.display = 'none';
+        mainPassword.current.classList.remove('has-error');
+        repeatPassword.current.classList.remove('has-error');
+      }
+    }
+  }
 
   return(
     <div className="navigation-form">
@@ -14,7 +39,7 @@ const AccountForms = () => {
               Quick checkout and history
             </p>
           </div>
-          <form method="post" action="/account/login" accept-charset="UTF-8" data-login-with-shop="true">
+          <form method="post" action="/account/login" acceptCharset="UTF-8" data-login-with-shop="true">
             <input type="hidden" name="form_type" value="customer_login"/>
             <input type="hidden" name="utf8" value="✓"/>
             <div className="navigation-form__fields">
@@ -34,7 +59,7 @@ const AccountForms = () => {
         </div>
       }
       {form == 'reset-password' &&
-        <div className="navigation-form__recover">
+        <div className="navigation-form__recover" ref={passwordError}>
           <div className="navigation-form__header">
             <h6 className="navigation-form__title">Reset Password:</h6>
             <p className="navigation-form__subtitle">
@@ -44,9 +69,8 @@ const AccountForms = () => {
           <form method="post" action="/account/recover" acceptCharset="UTF-8" onSubmit={() => {window.Shopify.recaptchaV3.addToken(this, "recover_customer_password")}}>
             <input type="hidden" name="form_type" value="recover_customer_password"/>
             <input type="hidden" name="utf8" value="✓"/>
-            <input type="hidden" name="return_to" id="redirect_url" value=""/>
             <div className="form-group">
-              <input type="email" className="form-control navigation-form__field" autoComplete="off" spellCheck="false" placeholder="Email"/>
+              <input type="email" className="form-control navigation-form__field" name="email" autoComplete="off" spellCheck="false" autoCapitalize="off" placeholder="Email" />
             </div>
             <div className="navigation-form__footer text-center">
                 <button type="submit" className="btn btn-white navigation-form__button">Submit</button>
@@ -63,7 +87,7 @@ const AccountForms = () => {
               Sign up for quick checkout order history, account status and more.
             </p>
           </div>
-          <form method="post" action="/account" id="create_customer" accept-charset="UTF-8" data-login-with-shop="true" onSubmit={() => {window.Shopify.recaptchaV3.addToken(this, "create_customer")} }>
+          <form method="post" action="/account" id="create_customer" acceptCharset="UTF-8" data-login-with-shop="true" onSubmit={() => {window.Shopify.recaptchaV3.addToken(this, "create_customer")} }>
             <input type="hidden" name="form_type" value="create_customer" />
             <input type="hidden" name="utf8" value="✓" />
             <div className="form-group">
@@ -75,7 +99,7 @@ const AccountForms = () => {
             </div>
 
             <div className="form-group">
-              <input type="email" name="customer[email]" id="Email" className="form-control navigation-form__field" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Email" />
+              <input type="email" name="customer[email]" id="Email" className="form-control navigation-form__field" spellCheck="false" autoComplete="off" autoCapitalize="off" placeholder="Email" />
             </div>
 
             <div className="navigation-form__header navigation-form__header--inner">
@@ -86,17 +110,20 @@ const AccountForms = () => {
             </div>
 
             <div className="form-group">
-              <input type="password" name="customer[password]" id="CreatePassword" className="form-control navigation-form__field" placeholder="Password" data-password-field="" />
+              <input type="password" name="customer[password]" id="CreatePassword" className="form-control navigation-form__field" placeholder="Password" data-password-field="" onKeyUp={validatePasswords} onBlur={validatePasswords} ref={mainPassword} />
             </div>
 
             <div className="form-group">
-              <input type="password" name="customer[password_confirmation]" id="CustomerPasswordConfirmation" className="form-control navigation-form__field" placeholder="Confirm Password" data-password-validate="" />
+              <input type="password" name="customer[password_confirmation]" id="CustomerPasswordConfirmation" className="form-control navigation-form__field" placeholder="Confirm Password" data-password-validate="" onKeyUp={validatePasswords} onBlur={validatePasswords} ref={repeatPassword}/>
+            </div>
+            <div className="navigation-form__error-message" ref={passwordError}>
+
             </div>
 
             <div className="form-group">
               <div className="custom-control custom-checkbox navigation-form__checkbox-container">
-                <input className="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing" />
-                <label className="custom-control-label p4" htmlFor="AcceptsMarketing">
+                <input className="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="NavAcceptsMarketing" />
+                <label className="custom-control-label p4" htmlFor="NavAcceptsMarketing">
                   Email me with news and offers.
                 </label>
               </div>
