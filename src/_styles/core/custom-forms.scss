@@ -108,6 +108,8 @@
 // Tweak just a few things for checkboxes.
 
 .custom-checkbox {
+  line-height: 0;
+
   .custom-control-label::before {
     @include border-radius($custom-checkbox-indicator-border-radius);
   }

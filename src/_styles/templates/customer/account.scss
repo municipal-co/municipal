@@ -4,6 +4,47 @@
 
 // Not scoped to a specific account page
 
+.account__layout {
+  min-height: 831px;
+  padding: 60px 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+
+  @include media-breakpoint-down('md') {
+    height: auto;
+    padding: 0;
+    background-image: none !important;
+  }
+}
+
+.account__info-container {
+  width: 100%;
+  max-width: 578px;
+  padding: 70px 100px;
+  background-color: $white;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.account__header {
+  font-size: 24px;
+  line-height: 1;
+  font-family: $font-family-heading-large;
+  margin-bottom: 13px;
+}
+
+.account__description {
+  font-size: 14px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  font-family: $font-family-heading-medium;
+}
+
+
+/*
 .account-block {
   margin-bottom: 30px;
 
@@ -205,3 +246,4 @@ table.order-detail-totals {
     padding-left: 0;
   }
 }
+*/
