@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Pagination, Lazy, EffectFade } from 'swiper';
 import BaseSection from './base';
 import ProductDetail from '../view/product/productDetail';
 import Drawer from '../ui/drawer';
@@ -69,6 +69,7 @@ export default class ProductSection extends BaseSection {
     $(selectors.fitGuideGallery).each((index, el) => {
 
       const galleryOptions = {
+        modules: [ Pagination, Lazy ],
         watchOverflow: true,
         preloadImages: false,
         arrows: false,
@@ -85,13 +86,14 @@ export default class ProductSection extends BaseSection {
         },
       }
 
-      const swiperGallery = new Swiper($(el), galleryOptions);
+      const swiperGallery = new Swiper($(el).get(0), galleryOptions);
     });
   }
 
   initFeaturesSlider() {
     if(this.$featuresDrawerSlider.length) {
-      const featuresSlider = new Swiper(this.$featuresDrawerSlider, {
+      const featuresSlider = new Swiper(this.$featuresDrawerSlider.get(0), {
+        modules: [Lazy, Pagination, EffectFade],
         watchOverflow: true,
         preloadImages: false,
         arrows: false,

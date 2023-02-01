@@ -34,15 +34,20 @@
     "name": "Search Options",
     "settings": [
       {
-        "type": "select",
-        "id": "search_form",
-        "label": "Search Form Type",
-        "options": [
-          { "value": "default", "label": "Default Search Form" },
-          { "value": "findify", "label": "Findify Search Form" },
-          { "value": "disable", "label": "Disabled" }
-        ],
-        "default": "default"
+        "type": "checkbox",
+        "label": "Enable search bar",
+        "id": "enable_search",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "search_products_per_page",
+        "label": "Products Per Page",
+        "info": "Adjust the number of items to be shown per page",
+        "default": 24,
+        "step": 4,
+        "max": 120,
+        "min": 12
       }
     ]
   },
@@ -176,11 +181,14 @@
     "name": "collections",
     "settings": [
       {
-        "type": "number",
-        "id": "low_inventory_threshold",
-        "label": "Low Inventory Threshold",
-        "info": "Defines the value where product cards are going to display the message 'Only X Left'",
-        "default": 6
+        "type": "range",
+        "id": "products_per_page",
+        "label": "Products Per Page",
+        "info": "Adjust the number of items to be shown per page",
+        "default": 24,
+        "step": 4,
+        "max": 120,
+        "min": 12
       },
       {
         "type": "checkbox",

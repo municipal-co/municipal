@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper from 'swiper';
+import Swiper, { Navigation } from 'swiper';
 import BaseSection from './base';
 
 const selectors = {
@@ -19,6 +19,7 @@ export default class HeaderSection extends BaseSection {
 
   initSlider() {
     this.slider = new Swiper(this.$slider.get(0), {
+      modules: [Navigation],
       slidesPerView: 'auto',
       slide: selectors.slide,
       navigation: {

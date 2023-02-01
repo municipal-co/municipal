@@ -125,7 +125,9 @@
     {% comment %} Select the appropriate 'header-*' section for the theme you are building and remove the files for the others {% endcomment %}
     {% section 'header-logo-center' %}
     {% section 'navigation-v2' %}
-
+    {% if settings.enable_search %}
+    <div id="autocomplete-wrapper"></div>
+    {% endif%}
     <main role="main" id="MainContent">
       <div class="layout-main-content">
         {{ content_for_layout }}
@@ -140,9 +142,6 @@
     {% section 'ajax-cart' %}
   {% endunless %}
 
-  {% if shop.customer_accounts_enabled %}
-    {% section 'customers-drawer' %}
-  {% endif %}
   {% section 'option-selector-drawer' %}
   {% section 'bis-drawer' %}
   {% section 'marketing-subscription-drawer' %}

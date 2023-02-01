@@ -7,7 +7,7 @@ const $window = $(window);
 const selectors = {
   header: '[data-header]',
   dropdownTrigger: '[data-dropdown-trigger][data-block]',
-  toggle: '[data-search-drawer-toggle]',
+  searchButton: '[data-search-open-button]',
   searchInput: '[data-search-input]',
   searchDrawer: '[data-search-drawer]',
   closeSearchDrawer: '[data-drawer-close]',
@@ -29,10 +29,7 @@ export default class HeaderSection extends BaseSection {
 
     this.$el = $(selectors.header, this.$container);
 
-    this.$toggleSearchDrawer = $(selectors.toggle, this.$container);
-    this.$closeSearchDrawer = $(selectors.closeSearchDrawer, this.$container);
-    this.$searchInput = $(selectors.searchInput, this.$container);
-    this.$searchDrawer  = $(selectors.searchDrawer, this.$container);
+    this.$searchButton = $(selectors.searchButton, this.$container);
     this.$menuToggler= $(selectors.menuToggler, this.$container);
 
     this.initialPosition = 0;
@@ -42,15 +39,11 @@ export default class HeaderSection extends BaseSection {
 
     $window.on(this.events.SCROLL, throttle(50, this.onScroll.bind(this)));
 
-    this.$toggleSearchDrawer.on('click', this.onToggleSearchDrawer.bind(this));
-    this.$closeSearchDrawer.on('click', this.onCloseSearchDrawer.bind(this));
-    $window.on('toggleMobileMenu', this.onCloseSearchDrawer.bind(this));
+    this.$searchButton.on('click', this.openSearchDrawer.bind(this));
     $window.on('resize', throttle(50, this.compensateHeaderSpace.bind(this)));
     this.$menuToggler.on('click', this.toggleMenu.bind(this));
     this.onScroll();
     this.compensateHeaderSpace();
-
-    document.addEventListener('drawer:open', this.onCloseSearchDrawer.bind(this));
   }
 
   onScroll() {
@@ -94,31 +87,14 @@ export default class HeaderSection extends BaseSection {
     }
   }
 
-  onToggleSearchDrawer(e) {
-    e.preventDefault();
-    this.$searchDrawer.toggleClass('is-visible');
-    this.$toggleSearchDrawer.toggleClass('search-is-open');
-
-    if(this.$searchDrawer.hasClass('is-visible')) {
-      this.$searchInput.trigger('focus');
-    }
-
-    document.dispatchEvent(new CustomEvent('drawer:open', {detail: {target: 'search-bar'}}));
+  openSearchDrawer(e) {
+    document.dispatchEvent(new CustomEvent('drawer:search-open'));
+    document.dispatchEvent(new CustomEvent('drawer:open-header-drawer', {detail: {target: 'search'}}));
   }
 
   toggleMenu(e) {
     e.preventDefault();
     document.dispatchEvent(new CustomEvent('navigation:toggle'));
-  }
-
-  onCloseSearchDrawer(e) {
-    e.preventDefault();
-    if(e?.detail?.target === 'search-bar') {
-      return;
-    }
-
-    this.$searchDrawer.removeClass('is-visible');
-    this.$toggleSearchDrawer.removeClass('search-is-open');
   }
 
   compensateHeaderSpace() {
