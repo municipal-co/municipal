@@ -57,7 +57,7 @@
           <div class="swiper-slide" data-slide {{block.shopify_attributes}}>
             <div class="link-card">
               <div class="link-card__image-container frame {{s.card_aspect_ratio}}">
-                {% if bs.cta_url != blank or bs.enable_mkt_link == true %}
+                {% if bs.cta_url != blank or bs.enable_mkt_link == true or bs.enable_mentor_sub == true %}
                   <a class="link-card__link"
                      href="{{bs.cta_url | default: 'javascript:void(0);'}}"
                      aria-title="{{bs.cta_label | default: bs.cta_ada_label }}"
@@ -65,6 +65,12 @@
                       data-toggle-mkt-drawer
                       data-product-name="{{bs.mkt_product_name}}"
                       data-variable_key="{{bs.variable_key}}"
+                     {% endif %}
+                     {% if bs.enable_mentor_sub %}
+                      data-toggle-mentor-drawer
+                      {% assign mentor_info = pages[bs.mentors_page].metafields.custom_fields.mentors_list %}
+                      data-mentors-info='{{ mentor_info | json }}'
+                      data-mentor-id="{{bs.mentor_id}}"
                      {% endif %}></a>
                 {% endif %}
 
@@ -72,13 +78,19 @@
                      alt="{{bs.card_image.alt}}"
                      class="frame__inner swiper-lazy link-card__image"
                      data-image>
-                {% if bs.category_url != blank and bs.category_label != blank or bs.enable_mkt_link == true %}
+                {% if bs.category_url != blank and bs.category_label != blank or bs.enable_mkt_link == true or bs.enable_mentor_sub == true %}
                   <a href="{{bs.category_url | default: 'javascript:void(0);'}}"
                      class="link-card__category"
                      {% if bs.enable_mkt_link == true %}
                       data-toggle-mkt-drawer
                       data-product-name="{{bs.mkt_product_name}}"
                       data-variable_key="{{bs.variable_key}}"
+                     {% endif %}
+                     {% if bs.enable_mentor_sub %}
+                      data-toggle-mentor-drawer
+                      {% assign mentor_info = pages[bs.mentors_page].metafields.custom_fields.mentors_list %}
+                      data-mentors-info='{{ mentor_info }}'
+                      data-mentor-id="{{bs.mentor_id}}"
                      {% endif %}
                      >
                     {{ bs.category_label }}
@@ -272,6 +284,29 @@
           "id": "mkt_product_name",
           "label": "Product Name",
           "info": "Value to be used as a reference to replace on the drawer if placeholder is placed. See MKT Subscription Drawer settings for details"
+        },
+        {
+          "type": "header",
+          "content": "Mentor subscription form",
+          "info": "Settings to enable mentor subscription drawer"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_mentor_sub",
+          "label": "Enable mentor subscription",
+          "info": "Enables link to display the mentor subscription drawer"
+        },
+        {
+          "type": "page",
+          "id": "mentors_page",
+          "label": "Mentors Page",
+          "info": "Page containing all the mentors information,this page works the same as the shop the look page, where a single page contains all the mentors information"
+        },
+        {
+          "type": "text",
+          "id": "mentor_id",
+          "label": "Mentor ID",
+          "info": "Mentor identifier, used to pull all the mentor data"
         }
       ]
     }

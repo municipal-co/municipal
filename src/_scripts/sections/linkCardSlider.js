@@ -6,6 +6,7 @@ const selectors = {
   slider: '[data-slider]',
   slide: '[data-slide]',
   mktDrawerTrigger: '[data-toggle-mkt-drawer]',
+  mentorDrawerTrigger: '[data-toggle-mentor-drawer]',
   scrollBar: '[data-scrollbar]',
   image: '[data-image]',
 };
@@ -19,8 +20,10 @@ export default class LinkCardSlider extends BaseSection {
     this.$slides = $(selectors.slide, this.$container);
     this.$scrollBar = $(selectors.scrollBar, this.$container);
     this.$mktDrawerTrigger = $(selectors.mktDrawerTrigger, this.$container);
+    this.$mentorDrawerTrigger = $(selectors.mentorDrawerTrigger, this.$container);
     this.initSliders();
     this.$mktDrawerTrigger.on('click', this.toggleMktDrawer.bind(this));
+    this.$mentorDrawerTrigger.on('click', this.toggleMentorDrawer.bind(this));
   };
 
   initSliders() {
@@ -70,6 +73,18 @@ export default class LinkCardSlider extends BaseSection {
     const drawerData = this.buildDrawerData($link);
 
     $(window).trigger($.Event('marketing-drawer:open', {drawerData}));
+  }
+
+  toggleMentorDrawer(e) {
+    e.preventDefault();
+    const $target = e.target;
+    const mentorsData = $target.dataset.mentorsInfo;
+    const mentorId = $target.dataset.mentorId;
+
+    document.dispatchEvent(new CustomEvent('drawer-open:mentor', { detail: {
+      mentorsData,
+      mentorId
+    }}))
   }
 
   buildDrawerData($link) {
