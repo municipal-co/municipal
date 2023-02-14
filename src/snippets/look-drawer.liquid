@@ -33,7 +33,7 @@
             {% endfor %}
             <div class="swiper-slide" data-slide>
               <div class="look-drawer__product-card-image-container frame frame--1x1">
-                <img data-src="{{ current_variant.image | img_url: 'x700' }}" alt="{{ current_variant.image.alt }}" class="swiper-lazy look-drawer__product-card-image frame__inner">
+                <img data-src="{{ current_variant.image | img_url: 'x700' }}" alt="{{ current_variant.image.alt }}" class="lazyload look-drawer__product-card-image frame__inner">
               </div>
 
               <span class="look-drawer__product-card-color">
