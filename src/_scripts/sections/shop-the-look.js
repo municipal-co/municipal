@@ -125,7 +125,7 @@ export default class ShopTheLook extends BaseSection {
     this.drawerList.forEach((drawer, i) => {
       const slider = drawer.drawerObject.$el.find(selectors.lookDrawerSlider);
       const swiperSlider = new Swiper(slider.get(0), {
-        modules: [ Navigation, Lazy ],
+        modules: [ Navigation ],
         centeredSlides: true,
         loop: false,
         slidesPerView: 1.5,
@@ -134,11 +134,15 @@ export default class ShopTheLook extends BaseSection {
         navigation: {
           prevEl: '[data-arrow-prev]',
           nextEl: '[data-arrow-next]'
+<<<<<<< HEAD
         },
         lazy: {
           enabled: true,
           loadPrevNextAmount: 3
         },
+=======
+        }
+>>>>>>> bugfix/36083-shop-the-look-images
       })
       this.drawerList[i].slider = swiperSlider;
     })
