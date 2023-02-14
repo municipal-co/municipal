@@ -1,5 +1,89 @@
 {% assign s = section.settings %}
 
+{% capture cards %}
+{% for block in section.blocks %}
+{% assign bs = block.settings %}
+
+{% capture card_text_html %}
+  {% if bs.cta_label != blank or bs.enable_mkt_link == true %}
+    <a href="{{bs.cta_url}}"
+      class="btn-link link-card__cta-label"
+      {% if bs.enable_mkt_link == true %}
+        data-toggle-mkt-drawer
+        data-product-name="{{bs.mkt_product_name}}"
+        data-variable_key="{{bs.variable_key}}"
+      {% endif %}>
+      {{ bs.cta_label }}
+    </a>
+  {% endif %}
+    {% if bs.corner_small_text != blank  %}
+      <div class="link-card__corner-label">
+        {{ bs.corner_small_text }}
+      </div>
+    {% endif %}
+  {% endcapture %}
+  {% if s.enable_slider %}
+    <div class="swiper-slide" data-slide {{block.shopify_attributes}}>
+  {% else %}
+    <div {{ block.shopify_attributes }}>
+  {% endif %}
+    <div class="link-card">
+      <div class="link-card__image-container frame {{s.card_aspect_ratio}}">
+        {% if bs.cta_url != blank or bs.enable_mkt_link == true or bs.enable_mentor_sub == true %}
+          <a class="link-card__link"
+            href="{{bs.cta_url | default: 'javascript:void(0);'}}"
+            aria-title="{{bs.cta_label | default: bs.cta_ada_label }}"
+            {% if bs.enable_mkt_link == true %}
+              data-toggle-mkt-drawer
+              data-product-name="{{bs.mkt_product_name}}"
+              data-variable_key="{{bs.variable_key}}"
+            {% endif %}
+            {% if bs.enable_mentor_sub %}
+              data-toggle-mentor-drawer
+              {% assign mentor_info = pages[bs.mentors_page].metafields.custom_fields.mentors_list %}
+              data-mentors-info='{{ mentor_info | json }}'
+              data-mentor-id="{{bs.mentor_id}}"
+            {% endif %}></a>
+        {% endif %}
+
+        <img data-src="{{bs.card_image | img_url: '600x' }}"
+            alt="{{bs.card_image.alt}}"
+            class="frame__inner link-card__image {% if s.enable_slider %}swiper-lazy {% else %} lazyload {% endif %}"
+            data-image>
+        {% if bs.category_url != blank and bs.category_label != blank or bs.enable_mkt_link == true or bs.enable_mentor_sub == true %}
+          <a href="{{bs.category_url | default: 'javascript:void(0);'}}"
+            class="link-card__category"
+            {% if bs.enable_mkt_link == true %}
+              data-toggle-mkt-drawer
+              data-product-name="{{bs.mkt_product_name}}"
+              data-variable_key="{{bs.variable_key}}"
+            {% endif %}
+            {% if bs.enable_mentor_sub %}
+              data-toggle-mentor-drawer
+              {% assign mentor_info = pages[bs.mentors_page].metafields.custom_fields.mentors_list %}
+              data-mentors-info='{{ mentor_info }}'
+              data-mentor-id="{{bs.mentor_id}}"
+            {% endif %}
+            >
+            {{ bs.category_label }}
+          </a>
+        {% endif %}
+        {% if card_text_html != blank %}
+          <div class="link-card__bottom-text">
+            {{ card_text_html }}
+          </div>
+        {% endif %}
+      </div>
+      {% if bs.bottom_text != blank %}
+        <div class="link-card__outer-text">
+          {{ bs.bottom_text }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+{% endcapture %}
+
 <div id="link-card-slider-{{section.id}}" class="card-slider" data-section-type="link-card-slider" data-section-id="{{section.id}}">
   <style>
     #link-card-slider-{{section.id}} {
@@ -32,77 +116,21 @@
         {% endif %}
       </div>
     </div>
-    <div class="row card-slider__slider swiper" data-slider>
-      <div class="swiper-wrapper">
-        {% for block in section.blocks %}
-          {% assign bs = block.settings %}
-          {% capture card_text_html %}
-          {% if bs.cta_label != blank or bs.enable_mkt_link == true %}
-            <a href="{{bs.cta_url}}"
-               class="btn-link link-card__cta-label"
-               {% if bs.enable_mkt_link == true %}
-                data-toggle-mkt-drawer
-                data-product-name="{{bs.mkt_product_name}}"
-                data-variable_key="{{bs.variable_key}}"
-              {% endif %}>
-              {{ bs.cta_label }}
-            </a>
-          {% endif %}
-            {% if bs.corner_small_text != blank  %}
-              <div class="link-card__corner-label">
-                {{ bs.corner_small_text }}
-              </div>
-            {% endif %}
-          {% endcapture %}
-          <div class="swiper-slide" data-slide {{block.shopify_attributes}}>
-            <div class="link-card">
-              <div class="link-card__image-container frame {{s.card_aspect_ratio}}">
-                {% if bs.cta_url != blank or bs.enable_mkt_link == true %}
-                  <a class="link-card__link"
-                     href="{{bs.cta_url | default: 'javascript:void(0);'}}"
-                     aria-title="{{bs.cta_label | default: bs.cta_ada_label }}"
-                     {% if bs.enable_mkt_link == true %}
-                      data-toggle-mkt-drawer
-                      data-product-name="{{bs.mkt_product_name}}"
-                      data-variable_key="{{bs.variable_key}}"
-                     {% endif %}></a>
-                {% endif %}
-
-                <img data-src="{{bs.card_image | img_url: '600x' }}"
-                     alt="{{bs.card_image.alt}}"
-                     class="frame__inner swiper-lazy link-card__image"
-                     data-image>
-                {% if bs.category_url != blank and bs.category_label != blank or bs.enable_mkt_link == true %}
-                  <a href="{{bs.category_url | default: 'javascript:void(0);'}}"
-                     class="link-card__category"
-                     {% if bs.enable_mkt_link == true %}
-                      data-toggle-mkt-drawer
-                      data-product-name="{{bs.mkt_product_name}}"
-                      data-variable_key="{{bs.variable_key}}"
-                     {% endif %}
-                     >
-                    {{ bs.category_label }}
-                  </a>
-                {% endif %}
-                {% if card_text_html != blank %}
-                  <div class="link-card__bottom-text">
-                    {{ card_text_html }}
-                  </div>
-                {% endif %}
-              </div>
-              {% if bs.bottom_text != blank %}
-                <div class="link-card__outer-text">
-                  {{ bs.bottom_text }}
-                </div>
-              {% endif %}
-            </div>
-          </div>
-        {% endfor %}
+    {% if s.enable_slider %}
+      <div class="row card-slider__slider swiper" data-slider>
+        <div class="swiper-wrapper">
+        {{ cards }}
+        </div>
+        <div class="swiper-scrollbar card-slider__scrollbar" data-scrollbar></div>
+        <div class="card-slider__arrow card-slider__arrow--prev" data-arrow-prev></div>
+        <div class="card-slider__arrow card-slider__arrow--next" data-arrow-next></div>
       </div>
-      <div class="swiper-scrollbar card-slider__scrollbar" data-scrollbar></div>
-      <div class="card-slider__arrow card-slider__arrow--prev" data-arrow-prev></div>
-      <div class="card-slider__arrow card-slider__arrow--next" data-arrow-next></div>
-    </div>
+    {% else %}
+      <div class="row card-slider__grid-container">
+        {{ cards }}
+      </div>
+    {% endif %}
+
   </div>
 </div>
 
@@ -113,6 +141,12 @@
 			"type": "header",
 			"content": "Layout"
 		},
+    {
+      "type": "checkbox",
+      "id": "enable_slider",
+      "label": "Enable Slider",
+      "default": true
+    },
 		{
 			"type": "select",
 			"id": "card_aspect_ratio",
@@ -272,6 +306,29 @@
           "id": "mkt_product_name",
           "label": "Product Name",
           "info": "Value to be used as a reference to replace on the drawer if placeholder is placed. See MKT Subscription Drawer settings for details"
+        },
+        {
+          "type": "header",
+          "content": "Mentor subscription form",
+          "info": "Settings to enable mentor subscription drawer"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_mentor_sub",
+          "label": "Enable mentor subscription",
+          "info": "Enables link to display the mentor subscription drawer"
+        },
+        {
+          "type": "page",
+          "id": "mentors_page",
+          "label": "Mentors Page",
+          "info": "Page containing all the mentors information,this page works the same as the shop the look page, where a single page contains all the mentors information"
+        },
+        {
+          "type": "text",
+          "id": "mentor_id",
+          "label": "Mentor ID",
+          "info": "Mentor identifier, used to pull all the mentor data"
         }
       ]
     }
