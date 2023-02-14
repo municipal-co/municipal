@@ -166,4 +166,18 @@
   left: unset;
 }
 
+.card-slider__grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+
+  @include media-breakpoint-down('md') {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include media-breakpoint-down('xs') {
+    grid-template-columns: 1fr;
+  }
+}
+
 @import '../components/card/link-card';
