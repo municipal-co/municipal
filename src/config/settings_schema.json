@@ -23,10 +23,22 @@
         "info": "Image placed as background for the sign in, sign up and recover password form, will be used only on desktop resolution."
       },
       {
+        "type": "color",
+        "label": "Forms Background Color",
+        "id": "account_form_bg_color",
+        "info": "Background color to fill the spaces when the background image can't fill the space or is not populated"
+      },
+      {
         "type": "image_picker",
         "label": "Account Background Image",
         "id": "account_pages_bg",
         "info": "Image placed as background for the account pages, will be used only on desktop resolution."
+      },
+      {
+        "type": "color",
+        "label": "Account Background Color",
+        "id": "account_pages_bg_color",
+        "info": "Background color to fill the spaces when the background image can't fill the space or is not populated"
       }
     ]
   },

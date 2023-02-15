@@ -1,0 +1,17 @@
+<ul class="account__links">
+  <li class="account__link-item">
+    <a href="/account" class="account__link {% if template.name == 'account' and template.suffix == blank %}account__link--active {% endif %}">
+      {{'customer.account.account_details' | t }}
+    </a>
+  </li>
+  <li class="account__link-item">
+    <a href="/account?view=orders" class="account__link {% if template.name == 'account' and template.suffix == 'orders' %}account__link--active {% endif %}">
+      {{'customer.orders.title' | t }}
+    </a>
+  </li>
+  <li class="account__link-item">
+    <a href="/account/addresses" class="account__link {% if template.name == 'addresses' %}account__link--active {% endif %}">
+      {{'customer.account.addresses' | t }}
+    </a>
+  </li>
+</ul>

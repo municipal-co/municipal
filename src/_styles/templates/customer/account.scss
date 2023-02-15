@@ -9,14 +9,16 @@
   padding: 60px 20px;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   display: flex;
   align-items: center;
 
   @include media-breakpoint-down('md') {
-    height: auto;
+    min-height: auto;
     padding: 0;
     background-image: none !important;
+    background-color: $white !important;
+    align-items: flex-start;
   }
 }
 
@@ -27,6 +29,15 @@
   background-color: $white;
   border-radius: 20px;
   text-align: center;
+
+  &.account__info-container--thin-padding {
+    // max-width: 778px;
+    padding: 70px 94px;
+
+    @include media-breakpoint-down('md') {
+      padding: 50px 20px;
+    }
+  }
 }
 
 .account__header {
@@ -44,206 +55,155 @@
 }
 
 
-/*
-.account-block {
-  margin-bottom: 30px;
+.account__links {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 0;
+}
 
-  @include media-breakpoint-up('md') {
-    margin-bottom: 60px;
-  }
+.account__link-item {
+  list-style: none;
+  margin-top: 0;
+  padding: 0 5px;
+}
 
-  address {
-    margin-bottom: $spacer;
-  }
+.account__link {
+  @extend .navigation-categories__button;
+  cursor: pointer;
+  background-color: $black;
+  color: $white;
+  font-size: 10px;
 
-  .account__order-row & {
-    font-size: 16px;
+  &:hover {
+    background-color: $green;
+    color: $black;
   }
 }
 
-.account-block__title {
+.account__link--active {
+  background: $green;
+  color: $black;
+}
+
+/* Customer template */
+
+.account__customer-name {
   text-transform: uppercase;
-}
-
-.account-block__content {
-  margin: 30px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  @include p3;
-
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
-table.order-detail-totals {
-  @include media-breakpoint-up('lg') {
-    max-width: 550px;
-    margin-left: auto;
-  }
-}
-
-.account-sidebar {
-  padding: 60px 30px 30px;
-  background-color: $gray-lighter;
-
-  @include media-breakpoint-up('md') {
-    padding: 60px;
-  }
-}
-
-.account-sidebar__content {
-  height: 100%;
-
-  select {
-    background-color: $white;
-    border: 1px solid $color-dots-border;
-
-    @include media-breakpoint-up('lg') {
-      min-height: 70px;
-      padding: 23px 53px;
-    }
-
-    border-radius: 0;
-    width: 100%;
-    @extend .p2;
-    line-height: 1;
-
-    & ::placeholder {
-        @extend .p2;
-    }
-  }
-}
-
-.account-sidebar__title {
-  text-transform: uppercase;
-  margin-bottom: 45px;
-  font-weight: $font-weight-normal;
-
-  @include media-breakpoint-down('md') {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-}
-
-.account-sidebar__menu {
-  @include list-unstyled;
-
-  li {
-    margin: 21px 0;
-    font-weight: $font-weight-bold;
-    text-transform: none;
-    line-height: 1;
-
-    a {
-      vertical-align: middle;
-    }
-
-      &::after {
-        content: '';
-        padding-right: 0px;
-        width: auto;
-        height: 45px;
-        transition: all 150ms ease-in-out;
-        background-image: url('hover-arrow--black.svg');
-        background-size: contain;
-        background-position: left;
-        background-repeat: no-repeat;
-        vertical-align: middle;
-      }
-
-      &.is-active,
-      &:hover {
-        &::after {
-          padding-left: 18px;
-          margin-left: 15px;
-        }
-      }
-
-      @include media-breakpoint-up('lg') {
-        &.is-active,
-        &:hover {
-          &::after {
-            padding-left: 30px;
-            margin-left: 25px;
-          }
-        }
-      }
-  }
-}
-
-.account-content {
-  padding: 60px 30px;
-
-  @include media-breakpoint-up('md') {
-    padding: 60px;
-  }
-}
-
-.account__title {
-  margin-bottom: 30px;
-  text-transform: uppercase;
-  @include h5;
-
-  &.account__title--addresses {
-    margin-bottom: large-vw(50px, 100px);
-
-    @include media-breakpoint-down('md') {
-      margin-bottom: 50px;
-    }
-  }
-}
-
-.account__addresses-column {
   margin-bottom: 30px;
 }
 
-.account__customer-address {
-  margin: 30px 0;
-  @include p3;
-
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
-.address-btn {
-  margin-left: 20px;
-
-  @include media-breakpoint-down(md) {
-    margin-right: 15px;
-  }
-
-  &:first-child {
-    margin-left: 0;
-  }
-}
-
-.account-address__title {
-  margin-bottom: 0;
+.account__info-group {
   font-size: 14px;
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.5;
+
+  & + & {
+    margin-top: 30px;
+  }
+
+  &.account__info-group--no-space {
+    margin-top: 0;
+  }
+}
+
+.account__info-label {
+  width: 95px;
+  flex-shrink: 0;
+  margin-right: 10px;
+  color: $core-grey-2;
+  text-align: left;
+}
+
+.account__info-value {
+  text-align: left;
+  margin-right: auto;
+}
+
+.account__info-footer {
+  margin-top: 60px;
+}
+
+.account__info-edit-button {
+  border: none;
+  background: none;
+  color: $core-grey-2;
+
+  &:hover {
+    color: $black;
+  }
+
+  .icon {
+    width: 16px;
+    height: auto;
+    transition: color $transition-duration-fast $transition-timing-function-in-out-ui;
+  }
+}
+
+/* Order list page */
+
+.account__order-group {
+  display: flex;
+  align-items: start;
+  & + & {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid $core-grey-2;
+  }
+}
+
+.account__order-group-link {
+  margin-left: auto;
+  line-height: 0;
+}
+
+.account__order-link {
+  font-size: 10px;
+}
+
+.account__pagination {
+  margin-top: 30px;
+  .findify-pagination {
+    margin-bottom: 0;
+  }
+}
+
+/* Address list page */
+.account__address-group {
+  @extend .account__order-group;
+}
+
+.account__address-group-data {
+  font-size: 14px;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.account__address-default-tag {
+  font-size: 10px;
+  text-transform: uppercase;
   color: $blue;
-
-  @include media-breakpoint-down('md') {
-    font-size: 10px;
-  }
+  margin-bottom: 2px;
 }
 
-.orders-table {
-  th:first-child,
-  td:first-child {
-    padding-left: 0;
-  }
-  th:last-child,
-  td:last-child {
-    padding-right: 0;
-  }
+.account__address-group-link {
+  @extend .account__order-group-link;
 }
 
-.orders-table--mobile {
-  th {
-    padding-left: 0;
-  }
+.account__address-group-link {
+  @extend .account__order-group-button !optional;
 }
-*/
+
+.account__address-edit-button {
+  @extend .account__info-edit-button;
+}
+
+.account__address-button-container {
+  margin-top: 20px;
+}
+
+.account__address-button {
+  font-size: 12px;
+  padding: 10px 30px;
+}

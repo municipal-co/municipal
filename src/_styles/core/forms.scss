@@ -222,6 +222,7 @@ textarea.form-control {
 .form-group {
   margin-bottom: $form-group-margin-bottom;
   position: relative;
+  text-align: left;
 
   &.form-group__button {
     margin-top: 35px;
@@ -351,6 +352,14 @@ textarea.form-control {
     &.result-selected {
       background-color: $bg-white;
     }
+  }
+
+  .icon-caret-down {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
   }
 }
 

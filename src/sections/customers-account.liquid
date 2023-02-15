@@ -1,126 +1,112 @@
-{% capture sidebar_html %}
-  {% include 'account-sidebar' %}
-{% endcapture %}
-
-{% capture title %}
-  {% if customer.first_name %}
-    {{ 'Welcome, ' | append: customer.first_name | append: '!' }}
-  {% else %}
-    {{ 'customer.account.title' | t }}
-  {% endif %}
-{% endcapture %}
-
-{% paginate customer.orders by 1000 %}
-
-  <h1 class="sr-only"> {{ 'customer.account.title' | t }} </h1>
-
-  <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-account">
-    <div class="container-fluid-max">
-      <div class="row">
-
-        {{ sidebar_html }}
-
-        <div class="account-content{% if sidebar_html != blank %} col-md-12 col-lg-15{% endif %}">
-
-          {% comment %} Account Stuff {% endcomment %}
-          <div data-account-section="account">
-
-            <h2 class="account__title">{{ 'customer.account.account_details' | t | newline_to_br }}</h2>
-            <div class="row">
-              <div class="col-lg-20">
-                <div class="account-block">
-                  <div class="account-block__content"> {{ customer.name }}</div>
-                  {% if customer.default_address %}
-                  <div class="account-block__content">
-                    <h5 class="account-address__title">{{ 'customer.addresses.default_address' | t }}</h5>
-                    <span>{{ customer.default_address.address1 }}, {{ customer.default_address.address2 }}</span>
-                    <br />
-                    <span>{{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}</span>
-                    <br />
-                    <span>{{ customer.default_address.country }}</span>
-                    <div class="account__customer-address-footer">
-                      <a href="/account/addresses#edit-{{customer.default_address.id}}" class="btn btn--small btn--underlined address-btn" data-address-edit-toggle data-form-id="{{ customer.default_address.id }}">
-                        {{ 'customer.addresses.edit' | t }}
-                      </a>
-                      <a href="#" class="btn btn--small btn--underlined address-btn" data-address-delete data-form-id="{{ customer.default_address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
-                        {{ 'customer.addresses.delete' | t }}
-                      </a>
-                      <a href="/account/addresses"" class="btn btn--small btn--underlined address-btn">
-                        {{ 'customer.account.view_addresses' | t }}
-                      </a>
-                    </div>
-                  </div>
-                  {% endif %}
-                  <div class="account-block__content">{{ customer.email }}</div>
-                  <div class="account-block__content">
-                    <div>********</div>
-                    <a href="#recover" class="btn btn--underlined w-auto" data-toggle-password>{{ 'customer.recover_password.title' | t }}</a>
-                    <div class="form-success hide" id="ResetSuccess">
-                      {{ 'customer.recover_password.success' | t }}
-                    </div>
-                  </div>
+<div class="account__layout" style="background-image:url({{ settings.account_pages_bg | image_url: width: '1920' }}); background-color: {{ settings.account_pages_bg_color }};" data-section-id="{{ section.id }}" data-section-type="customers-account">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="account__info-container account__info-container--thin-padding">
+        <div data-account-section="account">
+          <div class="account__header account__customer-name">{{ customer.name }}</div>
+          <div class="account__info-buttons">
+            {% render 'account-links' %}
+          </div>
+          <div class="account__info-area">
+            <div class="account__info-group">
+              <span class="account__info-label">Name</span> background-color: {{ settings.account_pages_bg_color }};
+              <span class="account__info-value">
+                {{ customer.name }}
+              </span>
+            </div>
+            <div class="account__info-group">
+              <span class="account__info-label">Email</span>
+              <span class="account__info-value">
+                {{ customer.email }}
+              </span>
+            </div>
+            <div class="account__info-group">
+              <span class="account__info-label">Address</span>
+              <span class="account__info-value">
+                {{ customer.default_address.address1 }} {{ customer.default_address.address2 }} {{ customer.default_address.city }} {{ customer.default_address.province_code }} {{ customer.default_address.zip }}
+              </span>
+              <a href="/account/addresses#edit-{{customer.default_address.id}}" class="account__info-edit-button">
+                <div aria-hidden>
+                  {% render 'icon-edit' %}
                 </div>
-              </div>
+                <div class="sr-only">Edit Address</div>
+              </a>
+            </div>
+            <div class="account__info-group">
+              <span class="account__info-label">Password</span>
+              <span class="account__info-value">
+                ********
+              </span>
+              <button class="account__info-edit-button" data-toggle-password>
+                <div aria-hidden>
+                  {% render 'icon-edit' %}
+                </div>
+                <div class="sr-only">Reset Password</div>
+              </button>
+            </div>
+            <div class="account__info-footer">
+              <a href="/account/logout" class="btn btn-link">
+                <small>
+                  Log Out
+                </small>
+              </a>
             </div>
           </div>
+        </div>
 
-          {% if form.posted_successfully? %}
-            {% assign resetPassword = true %}
-          {% endif %}
 
-          {% comment %} Password Stuff {% endcomment %}
-          <div class="hide" data-account-section="password-recover">
 
-            <h2 class="account__title">{{ 'customer.recover_password.title' | t | newline_to_br }}</h1>
+        {% if form.posted_successfully? %}
+          {% assign resetPassword = true %}
+        {% endif %}
 
-            <div class="account-block">
-              <div class="account-block__content">
-                {{ 'customer.recover_password.subtext' | t }}
+        {% comment %} Password Stuff {% endcomment %}
+        <div class="hide" data-account-section="password-recover">
+
+          <h2 class="account__header">{{ 'customer.recover_password.title' | t | newline_to_br }}</h2>
+
+          <div class="account__description">{{ 'customer.recover_password.subtext' | t }}</div>
+
+          <div class="account-block">
+            {% form 'recover_customer_password' %}
+              <input type="hidden" name="return_to" id="redirect_url" value="" />
+
+              {% if form.posted_successfully? %}
+                <span class="hide reset-password-success"></span>
+              {% endif %}
+
+              <div class="form-group">
+                <input type="email"
+                  name="email"
+                  id="RecoverEmail"
+                  class="form-control account-form__field"
+                  spellcheck="false"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  placeholder="{{ 'customer.recover_password.email' | t }}"
+                  >
               </div>
-            </div>
-            <div class="account-block">
-              {% form 'recover_customer_password' %}
-                {{ form.errors | default_errors }}
 
-                {% if form.posted_successfully? %}
-                  <span class="hide reset-password-success"></span>
-                {% endif %}
+              {{ form.errors | default_errors | replace: '<li>', '<li class="p4">'}}
 
-                <div class="form-group">
-                  <label for="RecoverEmail" class="sr-only">
-                    {{ 'customer.recover_password.email' | t }}
-                  </label>
-                  <input type="email"
-                    name="email"
-                    id="RecoverEmail"
-                    class="form-control account-form__field"
-                    placeholder="{{ 'customer.recover_password.email' | t }}"
-                    spellcheck="false"
-                    autocomplete="off"
-                    autocapitalize="off">
+              <div class="mb-0 form-group form-group__button text-center">
+                <div class="mb-2">
+                  <input type="submit" class="btn btn-primary" value="{{ 'customer.recover_password.submit' | t }}">
                 </div>
+              </div>
 
-                <div class="form-group form-group__button text-center">
-                  <div class="mb-2">
-                    <input type="submit" class="btn btn-primary" value="{{ 'customer.recover_password.submit' | t }}">
-                  </div>
-                </div>
-
-                <div class="form-group text-center">
-                  <button type="button" class="btn btn-link" data-toggle-password>
+              <div class="form-group text-center mb-0">
+                <button type="button" class="btn btn-link" data-toggle-password>
+                  <small>
                     {{ 'customer.recover_password.cancel' | t }}
-                  </button>
-                </div>
-
-              {% endform %}
-            </div>
-
+                  </small>
+                </button>
+              </div>
+            {% endform %}
           </div>
 
         </div>
-
       </div>
     </div>
   </div>
-
-{% endpaginate %}
+</div>
