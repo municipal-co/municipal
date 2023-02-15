@@ -9,7 +9,6 @@
 .custom-control {
   position: relative;
   display: block;
-  min-height: $font-size-base * $line-height-base;
   padding-left: $custom-control-gutter + $custom-control-indicator-size;
 
   + .custom-control {
@@ -24,8 +23,15 @@
 
 .custom-control-input {
   position: absolute;
-  z-index: -1; // Put the input behind the label so it doesn't overlay text
-  opacity: 0;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: $custom-control-indicator-size;
+  height: $custom-control-indicator-size;
+  border: none;
+  background: transparent !important;
+  border-radius: 0;
+  transform: translateY(-50%);
 
   &:checked ~ .custom-control-label::before {
     color: $custom-control-indicator-checked-color;
@@ -75,8 +81,7 @@
   // Background-color and (when enabled) gradient
   &::before {
     position: absolute;
-    top: ($font-size-xs * $line-height-base - $custom-control-indicator-size) /
-      2;
+    top: 50%;
     left: -($custom-control-gutter + $custom-control-indicator-size);
     display: block;
     width: $custom-control-indicator-size;
@@ -86,20 +91,21 @@
     background-color: $custom-control-indicator-bg;
     border: $custom-control-indicator-border-color solid
       $custom-control-indicator-border-width;
+    transform: translateY(-50%);
     @include box-shadow($custom-control-indicator-box-shadow);
   }
 
   // Foreground (icon)
   &::after {
     position: absolute;
-    top: ($font-size-xs * $line-height-base - $custom-control-indicator-size) /
-      2;
+    top: 50%;
     left: -($custom-control-gutter + $custom-control-indicator-size);
     display: block;
     width: $custom-control-indicator-size;
     height: $custom-control-indicator-size;
     content: '';
     background: no-repeat 50% / #{$custom-control-indicator-bg-size};
+    transform: translatey(-50%);
   }
 }
 
@@ -108,6 +114,8 @@
 // Tweak just a few things for checkboxes.
 
 .custom-checkbox {
+  line-height: 0;
+
   .custom-control-label::before {
     @include border-radius($custom-checkbox-indicator-border-radius);
   }

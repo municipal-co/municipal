@@ -46,6 +46,12 @@
         adding: {{ 'products.product.adding' | t | json }}
       },
       moneyFormat: {{ shop.money_format | json }},
+      accountsEnabled: {{ shop.customer_accounts_enabled | json }},
+      {% if customer %}
+        customerName: {{ customer.name | json }},
+        discountMessage: {{ settings.account_discount_message | json }},
+        customerOrders: {{ customer.orders_count | json }},
+      {% endif %}
       {% if settings.enable_gwp && settings.gift_product != blank %}
         {% assign gift_product = all_products[settings.gift_product] %}
         giftWithPurchase: {

@@ -79,54 +79,48 @@
       autocapitalize="words">
   </div>
 
-  <div class="row">
-    <div class="col-md pr-md-2">
-      <div class="form-group">
-        <select
-          name="address[country]"
-          id="AddressCountry_{{ form.id }}"
-          class="form-control account-form__field"
-          data-form-id="{{ form.id }}"
-          data-default="{{ form.country }}">
-          {{ country_option_tags | replace: '---', 'Select Country' }}
-        </select>
-        {% include 'icon-caret-down' %}
-      </div>
-    </div>
+  <div class="form-group">
+    <select
+      name="address[country]"
+      id="AddressCountry_{{ form.id }}"
+      class="form-control account-form__field"
+      data-form-id="{{ form.id }}"
+      data-no-chosen
+      data-default="{{ form.country }}">
+      {{ country_option_tags | replace: '---', 'Select Country' }}
+    </select>
+    {% include 'icon-caret-down' %}
+  </div>
 
-    <div class="col-md px-md-1">
-      <div class="form-group">
-        {% assign form_country_handle = form.country | handle %}
-        {% assign state_label = 'customer.addresses.province' | t %}
-        {% if form_country_handle contains 'united-states' or form_country_handle == 'us' or form_country_handle == 'usa' %}
-          {% assign state_label = 'customer.addresses.state' | t %}
-        {% endif %}
+  <div class="form-group">
+    {% assign form_country_handle = form.country | handle %}
+    {% assign state_label = 'customer.addresses.province' | t %}
+    {% if form_country_handle contains 'united-states' or form_country_handle == 'us' or form_country_handle == 'usa' %}
+      {% assign state_label = 'customer.addresses.state' | t %}
+    {% endif %}
 
-        <span id="AddressProvinceContainer_{{ form.id }}">
-          <select
-            name="address[province]"
-            id="AddressProvince_{{ form.id }}"
-            class="form-control account-form__field"
-            required
-            data-default="{{ form.province }}">
-          </select>
-          {% include 'icon-caret-down' %}
-        </span>
-      </div>
-    </div>
+    <span id="AddressProvinceContainer_{{ form.id }}">
+      <select
+        name="address[province]"
+        id="AddressProvince_{{ form.id }}"
+        class="form-control account-form__field"
+        required
+        data-no-chosen
+        data-default="{{ form.province }}">
+      </select>
+      {% include 'icon-caret-down' %}
+    </span>
+  </div>
 
-    <div class="col-md pl-md-2">
-      <div class="form-group">
-        <input type="text"
-          name="address[zip]"
-          id="AddressZip_{{ form.id }}"
-          class="form-control account-form__field"
-          placeholder="{{ 'customer.addresses.zip' | t }}"
-          value="{{ form.zip }}"
-          required
-          autocapitalize="characters">
-      </div>
-    </div>
+  <div class="form-group">
+    <input type="text"
+      name="address[zip]"
+      id="AddressZip_{{ form.id }}"
+      class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.zip' | t }}"
+      value="{{ form.zip }}"
+      required
+      autocapitalize="characters">
   </div>
 
   <div class="form-group">
@@ -143,8 +137,8 @@
   <div class="form-group form-group__checkboxes">
     <div class="custom-control custom-checkbox">
       {% comment %}{{ form.set_as_default_checkbox }}{% endcomment %}
-      <input type="checkbox" name="address[default]" value="1" class="custom-control-input" id="address_default_address_{{ form.id }}" />
-      <label class="custom-control-label h6" for="address_default_address_{{ form.id }}">
+      <input type="checkbox" name="address[default]" value="1" class="custom-control-input" id="address_default_address_{{ form.id }}" {% if address == customer.default_address %} checked {% endif %}/>
+      <label class="custom-control-label p5" for="address_default_address_{{ form.id }}">
         {{ 'customer.addresses.set_default' | t }}
       </label>
     </div>
@@ -152,7 +146,7 @@
 
   <div class="form-group form-group__button text-center">
     <div class="mb-2">
-      <input type="submit" class="btn btn-primary" value="{{ 'customer.addresses.update' | t }}">
+      <input type="submit" class="btn btn-primary account__address-button" value="{{ 'customer.addresses.update' | t }}">
     </div>
   </div>
 

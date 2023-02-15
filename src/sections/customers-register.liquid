@@ -1,9 +1,9 @@
-<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-register">
+<div class="account__layout" data-section-id="{{ section.id }}" data-section-type="customers-register" style="background-image: url({{ settings.account_form_bg | image_url: width:'1920' }}); background-color: {{ settings.account_pages_bg_color }};">
   <div class="container">
-    <div class="row justify-content-center row-adjusted">
-      <div class="col-22 col-lg-12">
-        <h1 class="customer-drawer__title h6">{{ 'customer.register.title' | t | newline_to_br }}</h1>
-        <div class="mb-3 p3">{{ 'customer.register.subtitle' | t }}</div>
+    <div class="row justify-content-center">
+      <div class="account__info-container">
+        <h1 class="account__header">{{ 'customer.register.title' | t | newline_to_br }}</h1>
+        <div class="account__description">{{ 'customer.register.subtitle' | t }}</div>
         {% include 'customer-register-form',
                     marketing_checkbox_label: section.settings.confirmation_marketing,
                     terms_checkbox_label: section.settings.confirmation_terms,

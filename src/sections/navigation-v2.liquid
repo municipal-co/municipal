@@ -115,6 +115,18 @@
         {%- endcase -%}
       } {%- unless forloop.last -%},{%- endunless -%}
     {%- endfor -%}
+
+    {% if shop.customer_accounts_enabled %}
+    ,{
+      {% if customer %}
+        "type": "account-links",
+      {% else %}
+        "type": "account-forms",
+      {% endif %}
+      "id": "account_module",
+      "category": "Account"
+    }
+    {% endif %}
   ]
 
 </script>

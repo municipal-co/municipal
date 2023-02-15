@@ -1,0 +1,23 @@
+.account-links__title {
+  color: $white;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-family: $font-family-heading-large;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.account-links__title--highlighted-text {
+  color: $green;
+}
+
+.account-links__discount-message {
+  color: #d6d8dc;
+}
+
+.account-links__footer {
+  .btn-link {
+    color: $white;
+    font-size: 12px;
+  }
+}

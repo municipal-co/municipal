@@ -19,6 +19,10 @@ export default class PasswordValidation {
       .on('keyup', this.passwordValidation.bind(this));
 
     this.$element
+      .find(selectors.passwordValidate, selectors.passwordField)
+      .on('blur', this.passwordValidation.bind(this));
+
+    this.$element
       .find(selectors.resetPasswordForm)
       .submit(this.submitFunction.bind(this));
 
@@ -29,29 +33,37 @@ export default class PasswordValidation {
 
   passwordValidation(e) {
     const form = $(e.target).parents('form');
-    const passwordValue = form.find(selectors.passwordField).val();
-    const passwordValidateValue = form.find(selectors.passwordValidate).val();
+    const passwordField = form.find(selectors.passwordField)
+    const passwordValidateField = form.find(selectors.passwordValidate);
+    const passwordValue = passwordField.val();
+    const passwordValidateValue = passwordValidateField.val();
 
     if (passwordValue) {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[!@#$%^&*\-\.])[\w!@#$%^&*\-\.]{6,}$/;
+      const passwordRegex = /^(?=.*[\w])(?=.*[!@#$%^&*\-\.])[\w!@#$%^&*\-\.]{6,}$/;
 
       if (passwordValue.match(passwordRegex)) {
         $(selectors.formErrorMessage).text('');
         $(selectors.formErrorMessage).removeClass('show');
+        passwordField.removeClass('has-error');
 
         if (passwordValue === passwordValidateValue) {
           enableCreateCustomerSubmit = true;
+          passwordField.removeClass('has-error')
+          passwordValidateField.removeClass('has-error')
         } else {
           $(selectors.formErrorMessage).text('The passwords do not match.');
           $(selectors.formErrorMessage).addClass('show');
           enableCreateCustomerSubmit = false;
+          passwordField.addClass('has-error')
+          passwordValidateField.addClass('has-error')
         }
       } else {
         enableCreateCustomerSubmit = false;
         $(selectors.formErrorMessage).text(
-          'The password does not fulfill the conditions.'
+          'Password must be at least 6 characters with 1 symbol.'
         );
         $(selectors.formErrorMessage).addClass('show');
+        passwordField.addClass('has-error')
       }
     }
   }

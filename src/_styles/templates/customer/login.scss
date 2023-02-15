@@ -2,29 +2,32 @@
 // Login
 // -------------------------
 
-.template-login {
-  overflow-x: hidden;
+.form-success {
+  color: $black;
+  font-size: 14px;
+  background-color: $green;
+  font-family: $font-family-heading-medium;
+  line-height: 1.5;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  width: calc(100% + 200px);
+  margin-left: -100px;
+  margin-top: -40px;
 
-  .layout-content-wrapper {
-    margin: 60px 0;
-  }
-
-  .btn {
-
-  }
-
-  .custom-control-label, h5, h6 {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .btn--underlined {
-    width: auto;
+  &:before {
+    content: "";
+    display: inline-block;
+    background: $black;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    margin-right: 5px;
+    animation: blink 1s infinite;
   }
 }
 
 .errors,
-%errors {
+%errors {
   ul {
     padding: 0;
     margin: 0;
@@ -32,17 +35,10 @@
   }
 
   li {
-    @extend .h6;
+    @extend .p5;
+    color: $red;
 
-    #create_customer & {
-      color: $cyan;
-    }
-
-    #customer_login & {
-      color: $red;
-    }
-
-    a {
+    a {
       color: inherit;
       text-decoration: underline;
     }
