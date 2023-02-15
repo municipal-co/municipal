@@ -7,6 +7,7 @@
           {% render 'account-links' %}
         </div>
         {% paginate customer.orders by 5 %}
+        {% if customer.orders > 1 %}
           {% for order in customer.orders %}
             <div class="account__order-group">
               <div class="account__order-group-data">
@@ -46,11 +47,19 @@
               </div>
             </div>
           {% endfor %}
-          <div class="account__pagination">
-            {% render 'pagination'
-            paginate: paginate
-            custom_param: "view=orders" %}
-          </div>
+          {% if paginate.pages > 1 %}
+            <div class="account__pagination">
+              {% render 'pagination'
+              paginate: paginate
+              custom_param: "view=orders" %}
+            </div>
+          {% endif %}
+        {% else %}
+        <p class="p5 mb-0">
+          You haven't placed any orders yet.
+        </p>
+        {% endif %}
+
         {% endpaginate %}
       </div>
     </div>
