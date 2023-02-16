@@ -1,3 +1,46 @@
-<div class="pagination">
-  {{ paginate | default_pagination }}
+<div class="findify-pagination">
+  <a href="{%if paginate.previous.is_link %} {{paginate.previous.url}} {% else %} javascript:void(0); {% endif %}" class='pagination-item {% unless paginate.previous.is_link %} disabled{% endunless %}' {% unless paginate.previous.is_link %} disabled{% endunless %}>
+    Previous
+  </a>
+  {% liquid
+    assign start_page = 1
+    assign end_page = paginate.pages
+    assign max_page_threshold = paginate.pages | minus: 2
+
+    if paginate.current_page > 3
+      assign show_prev_spacer = true
+      assign start_page = paginate.current_page | minus: 1
+    endif
+
+    if paginate.current_page < max_page_threshold
+      assign show_next_spacer = true
+      assign end_page = paginate.current_page | plus: 1
+    endif
+  %}
+
+  {% if show_prev_spacer == true %}
+    <a href="{{ request.path }}?page=1&{{ custom_param }}" class="pagination-item">
+      <span class="sr-only">Go to page</span>
+      <span>1</span>
+    </a>
+    <div class="pagination-item"><span>...</span></div>
+  {% endif %}
+
+  {% for i in (start_page..end_page) %}
+    <a href="{{ request.path }}?page={{ i }}&{{ custom_param }}" class="pagination-item {% if i == paginate.current_page %}pagination-item--current{% endif %}">
+      <span class="sr-only">Go to page</span>
+      <span>{{ i }}</span>
+    </a>
+  {% endfor %}
+
+  {% if show_next_spacer == true %}
+    <div class="pagination-item"><span>...</span></div>
+    <a href="{{ request.path }}?page={{ end_page }}&{{ custom_param }}" class="pagination-item">
+      <span class="sr-only">Go to page</span>{{ end_page }}
+    </a>
+  {% endif %}
+
+  <a href="{%if paginate.next.is_link %} {{paginate.next.url}} {% else %} javascript:void(0); {% endif %}" class='pagination-item {% unless paginate.next.is_link %} disabled{% endunless %}' {% unless paginate.next.is_link %} disabled{% endunless %}>
+    Next
+  </a>
 </div>
