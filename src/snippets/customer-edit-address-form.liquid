@@ -134,7 +134,7 @@
       pattern="[0-9\-]*">
   </div>
 
-  <div class="form-group form-group__checkboxes">
+  <div class="form-group form-group__checkboxes text-center account__address-checkbox-container">
     <div class="custom-control custom-checkbox">
       {% comment %}{{ form.set_as_default_checkbox }}{% endcomment %}
       <input type="checkbox" name="address[default]" value="1" class="custom-control-input" id="address_default_address_{{ form.id }}" {% if address == customer.default_address %} checked {% endif %}/>

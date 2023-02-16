@@ -8,7 +8,7 @@
   min-height: 831px;
   padding: 60px 20px;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top;
   background-size: contain;
   display: flex;
   align-items: center;
@@ -192,10 +192,6 @@
   @extend .account__order-group-link;
 }
 
-.account__address-group-link {
-  @extend .account__order-group-button !optional;
-}
-
 .account__address-edit-button {
   @extend .account__info-edit-button;
 }
@@ -207,4 +203,11 @@
 .account__address-button {
   font-size: 12px;
   padding: 10px 30px;
+}
+
+.account__address-checkbox-container {
+  input[type=checkbox].custom-control-input {
+    transform: translate(0.95rem, -50%);
+    left: unset;
+  }
 }
