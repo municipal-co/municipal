@@ -51,7 +51,6 @@ export default class ProductCard {
 
     this.$singleOptionSelector.on('change', this.onOptionChange.bind(this));
     this.$optionDdrawerOpen.on('click', this.openOptionDrawer.bind(this));
-
     this.singleProductJson = JSON.parse($(selectors.singleProductJson, this.$container).html());
 
     this.setSizeDrawerData();
