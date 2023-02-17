@@ -2,9 +2,9 @@
   {% section 'findify-collection-banner' %}
 
   {% paginate collection.products by settings.search_products_per_page %}
-    <div class="findify-template-container container-fluid" data-section-type="shopify-collection" data-section-id="shopify-collection">
+    <div style="padding-top: 40px;" class="findify-template-container container-fluid" data-section-type="shopify-collection" data-section-id="shopify-collection">
       <div class="row justify-content-center">
-        <div class="col-22 col-md-20 col-lg-22 col-xl-22 content-grid content-grid--3-col content-grid--xs-1-col content-grid--sm-2-col content-grid--xl-4-col" data-collection-template>
+        <div class="col-22 col-md-20 col-lg-22 col-xl-22 content-grid content-grid--1-col content-grid--sm-2-col content-grid--lg-3-col content-grid--xl-4-col" data-collection-template>
             {% for product in collection.products %}
             <div class="content-grid__item" data-product-card>
               {% assign current_color = product.selected_or_first_available_variant | default: product.variants[0] %}
@@ -12,10 +12,10 @@
             </div>
             {% endfor %}
         </div>
-        {% if paginate.pages > 1 %}
-          {% include 'pagination' %}
-        {% endif %}
       </div>
+      {% if paginate.pages > 1 %}
+        {% include 'pagination' %}
+      {% endif %}
     </div>
   {% endpaginate %}
 {% else %}
