@@ -236,9 +236,9 @@ const productCard = ((props) => {
             {currentVariant.title}
           </div>
           <div className="product-card__price-container">
-            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at}</s>}
+            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at.toFixed(2).replace('.00', '')}</s>}
             <span className="product-price" data-product-price>
-              ${currentVariant.price}
+              ${currentVariant.price.toFixed(2).replace('.00', '')}
             </span>
           </div>
         </form>
