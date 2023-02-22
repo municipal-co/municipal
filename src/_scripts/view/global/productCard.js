@@ -3,23 +3,37 @@ import Swiper, {Scrollbar} from "swiper";
 
 const productCard = ((props) => {
 
-  const processData = () => {
+  const getMergedVariants = async () => {
+    const mergedProducts = await fetch(`${props.data.product_url}&view=merged-products`).then(res => res.json()).then(data => {return data});
+    return mergedProducts
+  }
+  const processData = async () => {
     let data = props.data;
+    const mergedVariants = await getMergedVariants();
 
+    data.variants = data.variants.concat(mergedVariants);
+
+    data.options = ['color', 'size'];
     data.variants.map(variant => {
-      if(variant.color) {
+      if(variant.color && variant.custom_fields?.old_colors) {
         variant.color = variant.custom_fields.old_colors;
       }
       if(variant.size) {
         variant.size = typeof(variant.size) == 'string' ? variant.size : variant.size[0];
+      }
+      if(variant.shopify_variant) {
+        variant.price = variant.price / 100;
+        if(variant.compare_at) {
+          variant.compare_at = variant.compare_at / 100;
+          variant.discount = variant.price / variant.compare_at * 100;
+        }
       }
 
       return variant;
     })
 
     data.variants = filterSoldOutVariants(data);
-
-    return data;
+    setProductData(data);
   }
 
   const filterSoldOutVariants = (data) => {
@@ -182,10 +196,9 @@ const productCard = ((props) => {
     }
   }
 
-  let productData = processData();
-  productData.options = ['color', 'size'];
-  const [productColors, setProductColors] = useState(getColorList(productData, 'color'));
-  const [currentVariant, setCurrentVariant] = useState(getCurrentVariant())
+  const [productData, setProductData] = useState({});
+  const [productColors, setProductColors] = useState([]);
+  const [currentVariant, setCurrentVariant] = useState({});
   const swatchSlider = useRef();
   const card = useRef();
 
@@ -206,10 +219,14 @@ const productCard = ((props) => {
   }, [productColors])
 
   useEffect(() => {
-    productData = processData();
-    setProductColors(getColorList(productData, 'color'));
-    setCurrentVariant(getCurrentVariant(productData.selected_variant_id));
+    if(productData.hasOwnProperty('variants')){
+      setProductColors(getColorList(productData, 'color'));
+      setCurrentVariant(getCurrentVariant());
+    }
+  }, [productData])
 
+  useEffect(() => {
+    processData();
   }, [props.data])
 
 

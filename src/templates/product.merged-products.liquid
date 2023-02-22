@@ -1,0 +1,28 @@
+{% layout none %}
+[
+  {% for loop_product in product.metafields.custom_fields.merge_product.value %}
+    {% for variant in loop_product.variants %}
+    {
+      "shopify_variant": true,
+      "availability": {{ variant.available }},
+      "color": {{variant.option1 | json }},
+      "id": {{ variant.id }},
+      "image_url": {{ variant.image | img_url: '450x' | json }},
+      "price": {{ variant.price }},
+      "product_url": {{ loop_product.url | append: '?variant=' | append: variant.id | json }},
+      "quantity": {{ variant.inventory_quantity }},
+      "size": {{ variant.option2 | json }},
+      "title": {{ product.title | json }},
+      "custom_fields": {
+        "mf_custom_fields_enable_notify_me": {% if variant.metafields.custom_fields.enable_notify_me %} "1" {% else %} "0" {% endif %},
+        "mf_custom_fields_enable_sold_out": {% if variant.metafields.custom_fields.enable_sold_out %} "1" {% else %} "0" {% endif %}
+      }
+      {%- if variant.compare_at_price > variant.price -%}
+        ,"compare_at": {{ variant.compare_at_price }},
+        "discount": null
+      {%- endif -%}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {% endfor %}
+    {%- unless forloop.last -%},{%- endunless -%}
+  {% endfor %}
+]
