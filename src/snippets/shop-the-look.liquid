@@ -35,10 +35,10 @@
   {% endfor %}
 
   {% if current_look != blank %}
-  {% if s.settings.enable_slider == true %}
-    <div class="shop-the-look__slide swiper-slide" data-slide>
-  {% else %}
+  {% if s.settings.enable_slider == false %}
     <div class="shop-the-look__grid-item">
+  {% else %}
+    <div class="shop-the-look__slide swiper-slide" data-slide>
   {% endif %}
       <div class="look-card" data-look-drawer-open="{{current_look.look_id}}">
         <div class="look-card__image-container frame frame--4x5">
@@ -77,7 +77,14 @@
 {% endcapture %}
 
 {% if look_ids != blank %}
-  {% if s.settings.enable_slider == true %}
+  {% if s.settings.enable_slider == false %}
+    <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look--grid container-fluid" data-section-type="shop-the-look" data-section-id="shop-the-look">
+      <div class="row shop-the-look__grid-container">
+        {{ cards }}
+      </div>
+      {{ look_drawers }}
+    </div>
+  {% else %}
     <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
       <div class="swiper shop-the-look__looks-container" data-looks-container>
         <div class="shop-the-look__slider swiper-wrapper" data-slider>
@@ -88,13 +95,6 @@
         <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
       </div>
       {{ look_drawers }}
-    </div>
-  {% else %}
-    <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look--grid container-fluid" data-section-type="shop-the-look" data-section-id="shop-the-look">
-        <div class="row shop-the-look__grid-container">
-          {{ cards }}
-        </div>
-        {{ look_drawers }}
     </div>
   {% endif %}
 {% endif %}
