@@ -35,7 +35,7 @@
   {% endfor %}
 
   {% if current_look != blank %}
-  {% if enable_slider %}
+  {% if s.settings.enable_slider == true %}
     <div class="shop-the-look__slide swiper-slide" data-slide>
   {% else %}
     <div class="shop-the-look__grid-item">
@@ -77,26 +77,24 @@
 {% endcapture %}
 
 {% if look_ids != blank %}
-{% if enable_slider == true %}
-
-  <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
-    <div class="swiper shop-the-look__looks-container" data-looks-container>
-      <div class="shop-the-look__slider swiper-wrapper" data-slider>
-        {{ cards }}
-      </div>
-      <div class="swiper-scrollbar shop-the-look__scrollbar"></div>
-      <div class="shop-the-look__arrow shop-the-look__arrow--prev" data-arrow-prev></div>
-      <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
-    </div>
-    {{ look_drawers }}
-  </div>
-  {% else %}
-   <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look--grid container-fluid" data-section-type="shop-the-look" data-section-id="shop-the-look">
-      <div class="row shop-the-look__grid-container">
-        {{ cards }}
+  {% if s.settings.enable_slider == true %}
+    <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
+      <div class="swiper shop-the-look__looks-container" data-looks-container>
+        <div class="shop-the-look__slider swiper-wrapper" data-slider>
+          {{ cards }}
+        </div>
+        <div class="swiper-scrollbar shop-the-look__scrollbar"></div>
+        <div class="shop-the-look__arrow shop-the-look__arrow--prev" data-arrow-prev></div>
+        <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
       </div>
       {{ look_drawers }}
-   </div>
-{% endif %}
-
+    </div>
+  {% else %}
+    <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look--grid container-fluid" data-section-type="shop-the-look" data-section-id="shop-the-look">
+        <div class="row shop-the-look__grid-container">
+          {{ cards }}
+        </div>
+        {{ look_drawers }}
+    </div>
+  {% endif %}
 {% endif %}
