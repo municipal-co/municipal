@@ -84,6 +84,16 @@
 {% endfor %}
 {% endcapture %}
 
+<style>
+  #link-card-slider-{{section.id}} .card-slider__grid-container {
+    {%- if s.card_aspect_ratio == "frame--9x16" -%}
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    {%- else -%}
+    grid-template-columns: 1fr 1fr 1fr;
+    {%- endif -%}
+  }
+</style>
+
 <div id="link-card-slider-{{section.id}}" class="card-slider" data-section-type="link-card-slider" data-section-id="{{section.id}}">
   <style>
     #link-card-slider-{{section.id}} {
