@@ -67,9 +67,11 @@
       placeholder="{{ 'customer.register.password_confirm' | t }}"
       data-password-validate
     >
-    <span data-password-validation-error-message class="form-password__error-message show">
-      <span class="form-password__condition">{{ 'customer.register.password_condition' | t }}</span>
+    <span data-password-validation-error-message class="form-password__error-message text-center p6 show">
+      {{ 'customer.register.password_condition' | t }}
     </span>
+  </div>
+  <div class="form-group form-group__checkboxes text-center account__address-checkbox-container">
     <div class="mt-1 custom-control custom-checkbox">
       <input class="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing" checked>
       <label class="custom-control-label p4" for="AcceptsMarketing">
@@ -89,10 +91,10 @@
   </div>
 
   <div class="form-group mb-0">
-    <div class="p5 text-center mb-3">By creating an account you agree with our <br> <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></div>
+    <div class="p6 text-center mb-3">By creating an account you agree with our <br> <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></div>
     {% if show_cancel_button %}
-    <div class="p5 text-center mt-1">
-      <a data-hide-register-form href="/account/login" class="btn-link">Already have an account? Sign In</a>
+    <div class="text-center mt-1">
+      <a data-hide-register-form href="/account/login" class="btn-link btn-small">Already have an account? Sign In</a>
     </div>
     {% endif %}
   </div>

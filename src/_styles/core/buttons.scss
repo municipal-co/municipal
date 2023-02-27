@@ -153,6 +153,10 @@ fieldset:disabled a.btn {
     pointer-events: none;
   }
 
+  &.btn-small {
+    font-size: 10px;
+  }
+
   // No need for an active state here
 }
 

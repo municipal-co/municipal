@@ -256,12 +256,13 @@ textarea.form-control {
   .form-password__condition {
     display: block;
     padding-top: 5px;
-    font-size: 14px;
+    font-size: 10px;
   }
 
   .form-password__error-message {
+    display: block;
     color: $red;
-    font-size: 12px;
+    font-size: 10px;
     opacity: 0;
     transition: opacity 0.3s ease;
 

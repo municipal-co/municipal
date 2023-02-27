@@ -68,7 +68,7 @@
 }
 
 .account__description {
-  font-size: 14px;
+  font-size: 10px;
   margin-bottom: 16px;
   line-height: 1.5;
   font-family: $font-family-heading-medium;
@@ -225,11 +225,4 @@
   padding: 10px 30px;
   width: 150px;
   max-width: 100%;
-}
-
-.account__address-checkbox-container {
-  input[type=checkbox].custom-control-input {
-    transform: translate(1.14rem, -50%);
-    left: unset;
-  }
 }

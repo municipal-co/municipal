@@ -7,11 +7,11 @@
     <img class="account__bg-image" src="{{settings.account_form_bg | image_url: width: '1920'}}" alt="">
   </div>
 {% endif %}
-<div class="account__layout" data-section-id="{{ section.id }}" data-section-type="customers-login">
+<div class="account__layout " data-section-id="{{ section.id }}" data-section-type="customers-login">
   <div class="container">
 
     <div class="row justify-content-center">
-      <div class="account__info-container">
+      <div class="account__info-container account__info-container--thin-padding">
 
         <div class="form-success hide" id="ResetSuccess">
           {{ 'customer.recover_password.success' | t }}
