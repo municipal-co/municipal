@@ -7,18 +7,37 @@
 .account__layout {
   min-height: 831px;
   padding: 60px 20px;
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: contain;
   display: flex;
   align-items: center;
+  overflow: hidden;
 
   @include media-breakpoint-down('md') {
     min-height: auto;
     padding: 0;
-    background-image: none !important;
     background-color: $white !important;
     align-items: flex-start;
+  }
+}
+
+.account__bg-image-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.account__bg-image {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: contain;
+
+  @include media-breakpoint-down('md') {
+    display: none;
   }
 }
 
@@ -29,6 +48,7 @@
   background-color: $white;
   border-radius: 20px;
   text-align: center;
+  z-index: 1;
 
   &.account__info-container--thin-padding {
     // max-width: 778px;
