@@ -134,7 +134,7 @@
       pattern="[0-9\-]*">
   </div>
 
-  <div class="form-group form-group__checkboxes">
+  <div class="form-group form-group__checkboxes text-center account__address-checkbox-container">
     <div class="custom-control custom-checkbox">
       {% comment %}{{ form.set_as_default_checkbox }}{% endcomment %}
       <input type="checkbox" name="address[default]" value="1" class="custom-control-input" id="address_default_address_{{ form.id }}" {% if address == customer.default_address %} checked {% endif %}/>
@@ -150,16 +150,26 @@
     </div>
   </div>
 
-  <div class="form-group text-center">
-    <button type="button" class="btn btn-link" data-address-edit-toggle data-form-id="{{ form.id }}">
-      {{ 'customer.addresses.cancel' | t }}
-    </button>
-  </div>
-
   <script>
     // Initialize observers on address selectors
     new Shopify.CountryProvinceSelector('AddressCountry_{{ form.id }}', 'AddressProvince_{{ form.id }}', {
       hideElement: 'AddressProvinceContainer_{{ form.id }}'
     });
   </script>
+
+  <div class="form-group text-center">
+    <form class="address-delete-form"
+        method="post"
+        action="/account/addresses/{{ address.id }}"
+    >
+      <input type="hidden" name="_method" value="delete">
+      <button type="submit" class="btn btn-outline-primary account__address-button">{{ 'customer.addresses.delete' | t }}</button>
+    </form>
+  </div>
+
+  <div class="form-group text-center">
+    <button type="button" class="btn btn-link" data-address-edit-toggle data-form-id="{{ form.id }}">
+      {{ 'customer.addresses.cancel' | t }}
+    </button>
+  </div>
 {% endform %}

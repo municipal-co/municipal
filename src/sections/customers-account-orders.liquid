@@ -1,4 +1,10 @@
-<div class="account__layout" style="background-image:url({{ settings.account_pages_bg | image_url: width: '1920' }}); background-color: {{ settings.account_pages_bg_color }};" data-section-id="{{ section.id }}" data-section-type="customers-addresses">
+{% paginate customer.orders by 5 %}
+{% if settings.account_pages_bg != blank %}
+  <div class="account__bg-image-container" style="background-color: {{ settings.account_pages_bg_color }};">
+    <img class="account__bg-image" src="{{settings.account_pages_bg | image_url: width: '1920'}}" alt="">
+  </div>
+{% endif %}
+<div class="account__layout" data-section-id="{{ section.id }}" data-section-type="customers-addresses">
   <div class="container">
     <div class="row justify-content-center">
       <div class="account__info-container account__info-container--thin-padding">
@@ -6,8 +12,7 @@
         <div class="account__info-buttons">
           {% render 'account-links' %}
         </div>
-        {% paginate customer.orders by 5 %}
-        {% if customer.orders > 1 %}
+        {% if customer.orders.size > 1 %}
           {% for order in customer.orders %}
             <div class="account__order-group">
               <div class="account__order-group-data">
@@ -59,9 +64,8 @@
           You haven't placed any orders yet.
         </p>
         {% endif %}
-
-        {% endpaginate %}
       </div>
     </div>
   </div>
 </div>
+{% endpaginate %}

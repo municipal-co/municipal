@@ -7,18 +7,37 @@
 .account__layout {
   min-height: 831px;
   padding: 60px 20px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
   display: flex;
   align-items: center;
+  overflow: hidden;
 
   @include media-breakpoint-down('md') {
     min-height: auto;
     padding: 0;
-    background-image: none !important;
     background-color: $white !important;
     align-items: flex-start;
+  }
+}
+
+.account__bg-image-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.account__bg-image {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: contain;
+
+  @include media-breakpoint-down('md') {
+    display: none;
   }
 }
 
@@ -29,6 +48,7 @@
   background-color: $white;
   border-radius: 20px;
   text-align: center;
+  z-index: 1;
 
   &.account__info-container--thin-padding {
     // max-width: 778px;
@@ -48,7 +68,7 @@
 }
 
 .account__description {
-  font-size: 14px;
+  font-size: 10px;
   margin-bottom: 16px;
   line-height: 1.5;
   font-family: $font-family-heading-medium;
@@ -113,7 +133,7 @@
   width: 95px;
   flex-shrink: 0;
   margin-right: 10px;
-  color: $core-grey-2;
+  color: rgba($black, 0.45);
   text-align: left;
 }
 
@@ -129,7 +149,7 @@
 .account__info-edit-button {
   border: none;
   background: none;
-  color: $core-grey-2;
+  color: rgba($black, 0.30);
 
   &:hover {
     color: $black;
@@ -192,10 +212,6 @@
   @extend .account__order-group-link;
 }
 
-.account__address-group-link {
-  @extend .account__order-group-button !optional;
-}
-
 .account__address-edit-button {
   @extend .account__info-edit-button;
 }
@@ -207,4 +223,6 @@
 .account__address-button {
   font-size: 12px;
   padding: 10px 30px;
+  width: 150px;
+  max-width: 100%;
 }

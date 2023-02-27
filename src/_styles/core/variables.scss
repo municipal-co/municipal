@@ -26,7 +26,7 @@ $red: #ff2b00 !default; // Custom color
 $cyan: #009dcc !default; // Custom Color
 $yellow: #FFEA06 !default; // custom Color
 $blue: #0036EB!default; // Custom Color
-$green: #BEFF00 !default; // custom color
+$green: #a3FF00 !default; // custom color
 $tan: #c3baa8 !default; // Custom color
 $brown: #452b2b !default; // custom color
 $arrow-gray: #b8b8b8 !default; // custom color
@@ -569,7 +569,7 @@ $input-focus-color: $input-color !default;
 $input-focus-width: $input-btn-focus-width !default;
 $input-focus-box-shadow: $input-btn-focus-box-shadow !default;
 
-$input-placeholder-color: $black !default;
+$input-placeholder-color: rgba($black, 0.45) !default;
 $input-plaintext-color: $body-color !default;
 
 $input-height-border: $input-border-width * 2 !default;
