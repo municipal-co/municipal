@@ -133,7 +133,7 @@
   width: 95px;
   flex-shrink: 0;
   margin-right: 10px;
-  color: $core-grey-2;
+  color: rgba($black, 0.45);
   text-align: left;
 }
 
@@ -149,7 +149,7 @@
 .account__info-edit-button {
   border: none;
   background: none;
-  color: $core-grey-2;
+  color: rgba($black, 0.30);
 
   &:hover {
     color: $black;
@@ -223,11 +223,13 @@
 .account__address-button {
   font-size: 12px;
   padding: 10px 30px;
+  width: 150px;
+  max-width: 100%;
 }
 
 .account__address-checkbox-container {
   input[type=checkbox].custom-control-input {
-    transform: translate(0.95rem, -50%);
+    transform: translate(1.14rem, -50%);
     left: unset;
   }
 }

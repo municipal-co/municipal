@@ -28,7 +28,7 @@
             <div class="account__info-group">
               <span class="account__info-label">Address</span>
               <span class="account__info-value">
-                {{ customer.default_address.address1 }} {{ customer.default_address.address2 }} {{ customer.default_address.city }} {{ customer.default_address.province_code }} {{ customer.default_address.zip }}
+                {{ customer.default_address.address1 }} <br /> {{ customer.default_address.address2 }} {{ customer.default_address.city }} {{ customer.default_address.province_code }} {{ customer.default_address.zip }}
               </span>
               <a href="/account/addresses#edit-{{customer.default_address.id}}" class="account__info-edit-button">
                 <div aria-hidden>

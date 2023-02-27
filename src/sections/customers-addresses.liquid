@@ -55,14 +55,14 @@
         </div>
       </div>
 
-      <div id="AddressNewForm" class="account__info-container accoutn__info-container--thin-padding hide" data-address-new-form>
+      <div id="AddressNewForm" class="account__info-container account__info-container--thin-padding hide" data-address-new-form>
         <div class="account__header account__customer-name">{{ 'customer.addresses.add_new' | t }}</div>
         {% include 'customer-new-address-form' %}
       </div>
 
       {% if customer.addresses.size > 0 %}
         {% for address in customer.addresses %}
-          <div id="EditAddress_{{ address.id }}" class="account__info-container accoutn__info-container--thin-padding hide" data-address-edit-form>
+          <div id="EditAddress_{{ address.id }}" class="account__info-container account__info-container--thin-padding hide" data-address-edit-form>
             <div class="account__header account__customer-name">{{ 'customer.addresses.edit_address' | t }}</div>
             {% include 'customer-edit-address-form', address: address %}
           </div>

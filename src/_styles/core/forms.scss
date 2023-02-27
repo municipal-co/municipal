@@ -64,7 +64,7 @@
       border-color: $blue;
     }
     &::placeholder {
-      color: $black;
+      color: $input-placeholder-color;
     }
     &.has-error {
       border-color: $red;
