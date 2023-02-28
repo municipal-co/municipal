@@ -146,13 +146,12 @@ const productCard = ((props) => {
     currentColorVariants.sort((variant1, variant2) => {
       const variant1Value = variant1.size || variant1.option2;
       const variant2Value = variant2.size || variant2.option2;
-      if(typeof(variant1Value) == 'number' && typeof(variant2Value) == 'number') {
+      if(Number(variant1Value) !== 'NaN' && Number(variant2Value) !== 'NaN') {
         return variant1Value - variant2Value;
       } else {
         return sortMap[variant1Value.toLowerCase()] - sortMap[variant2Value.toLowerCase()];
       }
     })
-
     return currentColorVariants;
   }
 
@@ -236,9 +235,9 @@ const productCard = ((props) => {
             {currentVariant.title}
           </div>
           <div className="product-card__price-container">
-            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at}</s>}
+            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at.toFixed(2).replace('.00', '')}</s>}
             <span className="product-price" data-product-price>
-              ${currentVariant.price}
+              ${currentVariant.price.toFixed(2).replace('.00', '')}
             </span>
           </div>
         </form>
