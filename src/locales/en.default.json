@@ -187,13 +187,13 @@
     },
     "login": {
       "main_title": "Login or Create an Account",
-      "title": "Sign in",
+      "title": "Sign In",
       "subtitle": "For quick checkout and account history.",
       "email": "Email address",
       "password": "Password",
       "forgot_password": "Forgot your password?",
-      "create_account": "Create account",
-      "sign_in": "Sign in",
+      "create_account": "Create Account",
+      "sign_in": "Sign In",
       "cancel": "Return to Store",
       "guest_title": "Continue as a guest",
       "guest_continue": "Continue"
