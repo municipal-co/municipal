@@ -113,14 +113,15 @@ const productCard = ((props) => {
   const getCurrentColorVariant = () => {
     const colorIndex = currentVariant.color == undefined ? 'option1' : 'color';
     const sortMap = {
-      's':1,
-      'm':2,
-      'l': 3,
-      'xl': 4,
-      '2xl': 5,
-      '3xl': 6,
-      '4xl': 7,
-      'os': 8,
+      'xs': 1,
+      's':2,
+      'm':3,
+      'l': 4,
+      'xl': 5,
+      '2xl': 6,
+      '3xl': 7,
+      '4xl': 8,
+      'os': 9,
     }
 
     const currentColorVariants = productData.variants.filter((variant) => {
