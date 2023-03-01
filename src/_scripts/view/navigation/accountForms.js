@@ -53,7 +53,7 @@ const AccountForms = () => {
             <div className="navigation-form__footer text-center">
               <button type="submit" className="btn btn-white navigation-form__button">Sign In</button>
               <button type="button" className="btn-link btn--small" onClick={() => {setForm('reset-password')}}>Forgot Your Password?</button>
-              <button type="button" className="btn-link navigation-form__link-button" onClick={() => {setForm('create-account')}}>Create Acount</button>
+              <button type="button" className="btn-link navigation-form__link-button" onClick={() => {setForm('create-account')}}>Create Account</button>
             </div>
           </form>
         </div>
@@ -105,7 +105,7 @@ const AccountForms = () => {
             <div className="navigation-form__header navigation-form__header--inner">
               <h6 className="navigation-form__title">Create Password:</h6>
               <p className="navigation-form__subtitle">
-                Sign up for quick checkout order history, account status and more.
+                Must be at least 6 characters with 1 symbol.
               </p>
             </div>
 
@@ -120,7 +120,7 @@ const AccountForms = () => {
 
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <div className="custom-control custom-checkbox navigation-form__checkbox-container">
                 <input className="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="NavAcceptsMarketing" />
                 <label className="custom-control-label p4" htmlFor="NavAcceptsMarketing">
@@ -132,7 +132,7 @@ const AccountForms = () => {
 
             <div className="navigation-form__footer text-center">
               <input type="submit" value="Create My Account" className="btn btn-white navigation-form__button" />
-              <div className="p5 text-center">By creating an account you agree with our <br /> <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></div>
+              <div className="p6 text-center">By creating an account you agree with our <br /> <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></div>
               <button type="button" className="btn-link navigation-form__link-button" onClick={() => {setForm('sign-in')}}>Already have an account? Sign In</button>
             </div>
           </form>
