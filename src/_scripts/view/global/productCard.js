@@ -148,7 +148,7 @@ const productCard = ((props) => {
       const variant1Value = variant1.size || variant1.option2;
       const variant2Value = variant2.size || variant2.option2;
       if(!isNaN(variant1Value) && !isNaN(variant2Value)) {
-        return variant1Value - variant2Value;
+        return parseFloat(variant1Value) - parseFloat(variant2Value);
       } else {
         return sortMap[variant1Value.toLowerCase()] - sortMap[variant2Value.toLowerCase()];
       }
