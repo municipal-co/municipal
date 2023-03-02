@@ -4,7 +4,6 @@ import PromoCard from "../global/promoCard";
 import FindifyPagination from "./findifyPagination";
 
 const ProductGrid = ((props) => {
-
   const buildItemList = () => {
     const items = props.collectionItems.items.map(product => {
       product.type = 'product';
