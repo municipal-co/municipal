@@ -13,6 +13,7 @@
   width: calc(100% + 80px);
   left: -40px;
   padding: 0 40px;
+  position: relative;
 
   @include media-breakpoint-down('md') {
     width: calc(100% + 60px);

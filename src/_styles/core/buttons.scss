@@ -153,6 +153,10 @@ fieldset:disabled a.btn {
     pointer-events: none;
   }
 
+  &.btn-small {
+    font-size: 10px;
+  }
+
   // No need for an active state here
 }
 
@@ -210,6 +214,7 @@ input[type='button'] {
 }
 
 .btn-outline-primary {
+  border: 2px solid;
   background-color: $white;
   border-color: $black;
   color: $black;

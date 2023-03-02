@@ -151,6 +151,12 @@
   line-height: 21px;
 }
 
+@mixin p6 {
+  font-family: 'SequelSans Body', sans-serif;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
 // RTE styling for long form content
 @mixin article-content {
   margin-bottom: $grid-gutter-width;

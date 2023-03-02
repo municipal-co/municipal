@@ -13,8 +13,6 @@
 
 {% form 'customer_login' %}
 
-  {{ form.errors | default_errors }}
-
   <div class="form-group">
 
     <input type="email"
@@ -39,16 +37,20 @@
     </div>
   {% endif %}
 
+  {{ form.errors | default_errors | replace: '<li>', '<li class="p6">'}}
+
   <div class="mb-0 form-group form-group__button text-center">
     <input type="submit" class="btn btn-primary" value="{{ 'customer.login.sign_in' | t }}">
   </div>
 
   {% if form.password_needed %}
-    <div class="form-group text-center">
+    <div class="form-group text-center mb-0">
       <div class="mb-2">
-        <a href="#recover" {% if is_drawer %}data-recover-password{% endif %} id="RecoverPassword" class="recover-password-link p4"><small>{{ 'customer.login.forgot_password' | t }}</small></a>
+        <a href="#recover" {% if is_drawer %}data-recover-password{% endif %} id="RecoverPassword" class="recover-password-link p6">{{ 'customer.login.forgot_password' | t }}</a>
       </div>
-      <a href="/account/register" data-register-form class="btn btn-link">{{ 'customer.login.create_account' | t }}</a>
+      <a href="/account/register" data-register-form class="btn btn-link btn-small">
+          {{ 'customer.login.create_account' | t }}
+      </a>
     </div>
   {% endif %}
 

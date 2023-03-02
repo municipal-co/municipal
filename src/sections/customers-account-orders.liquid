@@ -1,98 +1,71 @@
-
-{% capture sidebar_html %}
-  {% include 'account-sidebar' %}
-{% endcapture %}
-
-{% capture title %}
-  {% if customer.first_name %}
-    {{ 'Welcome, ' | append: customer.first_name | append: '!' }}
-  {% else %}
-    {{ 'customer.account.title' | t }}
-  {% endif %}
-{% endcapture %}
-
-{% paginate customer.orders by 1000 %}
-
-  <div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-account-orders">
-    <div class="container-fluid-max">
-
-      <div class="row">
-
-        {{ sidebar_html }}
-
-        <div class="account-content{% if sidebar_html != blank %} col-md-12 col-lg-15{% endif %}">
-
-          <h2 class="account__title">{{ 'customer.account.order_history' | t | newline_to_br }}</h2>
-          {% if customer.orders.size == 0 %}
-            <div class="account-block">
-              <div class="account-block__content">{{ 'customer.orders.none' | t }}</div>
-            </div>
-          {% else %}
-            <div class="d-block d-lg-none">
-              {% for order in customer.orders %}
-                <div style="max-width: 450px; {% unless forloop.last %}margin-bottom: 50px;{% endunless %}">
-                  <table class="orders-table orders-table--mobile table table-borderless table-sm">
-                    <tr>
-                      <th>{{ 'customer.orders.date' | t }}</th>
-                      <td>{{ order.created_at | time_tag: format: 'date' }}</td>
-                    </tr>
-                    <tr>
-                      <th>{{ 'customer.orders.shipped_to' | t }}</th>
-                      <td>{{ order.shipping_address.name }}</td>
-                    </tr>
-                    <tr>
-                      <th>{{ 'customer.orders.order_number' | t }}</th>
-                      <td>{{ order.order_number }}</td>
-                    </tr>
-                    <tr>
-                      <th>{{ 'customer.orders.payment' | t }}</th>
-                      <td>{{ order.financial_status_label }}</td>
-                    </tr>
-                    <tr>
-                      <th>{{ 'customer.orders.fulfillment' | t }}</th>
-                      <td>{{ order.fulfillment_status_label }}</td>
-                    </tr>
-                    <tr>
-                      <th>{{ 'customer.orders.amount' | t }}</th>
-                      <td>{{ order.total_price | money }}</td>
-                    </tr>
-                  </table>
-                  <a href="{{ order.customer_url }}" class="btn btn-link">{{ 'customer.orders.order_details' | t }}</a>
+{% paginate customer.orders by 5 %}
+{% if settings.account_pages_bg != blank %}
+  <div class="account__bg-image-container" style="background-color: {{ settings.account_pages_bg_color }};">
+    <img class="account__bg-image" src="{{settings.account_pages_bg | image_url: width: '1920'}}" alt="">
+  </div>
+{% endif %}
+<div class="account__layout" data-section-id="{{ section.id }}" data-section-type="customers-addresses">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="account__info-container account__info-container--thin-padding">
+        <div class="account__header account__customer-name">{{ customer.name }}</div>
+        <div class="account__info-buttons">
+          {% render 'account-links' %}
+        </div>
+        {% if customer.orders.size > 1 %}
+          {% for order in customer.orders %}
+            <div class="account__order-group">
+              <div class="account__order-group-data">
+                <div class="account__info-group account__info-group--no-space">
+                  <span class="account__info-label">Order #</span>
+                  <span class="account__info-value">
+                    {{ order.order_number }}
+                    </span>
                 </div>
-              {% endfor %}
+                <div class="account__info-group account__info-group--no-space">
+                  <span class="account__info-label">Date</span>
+                  <span class="account__info-value">
+                    {{ order.created_at | date: '%B, %d, %Y' }}
+                    </span>
+                </div>
+                <div class="account__info-group account__info-group--no-space">
+                  <span class="account__info-label">Shipped To</span>
+                  <span class="account__info-value">
+                    {{ order.shipping_address.name }}
+                    </span>
+                </div>
+                <div class="account__info-group account__info-group--no-space">
+                  <span class="account__info-label">Fulfillment</span>
+                  <span class="account__info-value">
+                    {{ order.fulfillment_status_label }}
+                    </span>
+                </div>
+                <div class="account__info-group account__info-group--no-space">
+                  <span class="account__info-label">Amount</span>
+                  <span class="account__info-value">
+                    {{ order.total_price | money }}
+                    </span>
+                </div>
+              </div>
+              <div class="account__order-group-link">
+                <a href="{{order.order_status_url}}" class="btn-link account__order-link"> Order Details </a>
+              </div>
             </div>
-            <div class="d-none d-lg-block">
-              <table class="orders-table table table-borderless">
-                <thead>
-                  <tr>
-                    <th>{{ 'customer.orders.shipped_to' | t }}</th>
-                    <th>{{ 'customer.orders.date' | t }}</th>
-                    <th>{{ 'customer.orders.order_number' | t }}</th>
-                    <th>{{ 'customer.orders.payment' | t }}</th>
-                    <th>{{ 'customer.orders.fulfillment' | t }}</th>
-                    <th>{{ 'customer.orders.amount' | t }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for order in customer.orders %}
-                    <tr>
-                      <td>{{ order.shipping_address.name }}</td>
-                      <td>{{ order.created_at | time_tag: format: 'abbreviated_date' }}</td>
-                      <td><a href="{{ order.customer_url }}" class="btn btn--smallest btn--underlined font-weight-normal">{{ order.order_number }}</a></td>
-                      <td><a href="{{ order.order_status_url }}" class="btn btn--smallest btn--underlined font-weight-normal">{{ order.financial_status_label }}</a></td>
-                      <td><a href="{{ order.order_status_url }}" class="btn btn--smallest btn--underlined font-weight-normal">{{ order.fulfillment_status_label }}</a></td>
-                      <td>{{ order.total_price | money }}</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
+          {% endfor %}
+          {% if paginate.pages > 1 %}
+            <div class="account__pagination">
+              {% render 'pagination'
+              paginate: paginate
+              custom_param: "view=orders" %}
             </div>
           {% endif %}
-
-        </div>
-
+        {% else %}
+        <p class="p5 mb-0">
+          You haven't placed any orders yet.
+        </p>
+        {% endif %}
       </div>
     </div>
   </div>
-
+</div>
 {% endpaginate %}

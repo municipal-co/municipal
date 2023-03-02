@@ -56,7 +56,7 @@ const MainNav = ((props) => {
 
   const getCategories = (components) => {
     const newCategories = [];
-    components.map( component => {
+    components.forEach( component => {
       if(newCategories.indexOf(component.category) == -1 && component.category != '') {
         newCategories.push(component.category);
       }

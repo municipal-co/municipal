@@ -15,7 +15,6 @@ import Swiper, { FreeMode, Navigation } from "swiper";
       slidesPerView: "auto",
       slideToClickedSlide: true,
       threshold: 20,
-      initialSlide: 0,
       loop: false,
       navigation: {
         nextEl: '[data-arrow-next]',

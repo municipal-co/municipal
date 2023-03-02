@@ -57,9 +57,6 @@
       placeholder="{{ 'customer.register.password' | t }}"
       data-password-field
       >
-    <div class="text-center">
-      <span class="form-password__condition">({{ 'customer.register.password_condition' | t }})</span>
-    </div>
   </div>
 
   <div class="form-group">
@@ -70,7 +67,11 @@
       placeholder="{{ 'customer.register.password_confirm' | t }}"
       data-password-validate
     >
-    <span data-password-validation-error-message class="form-password__error-message p4"></span>
+    <span data-password-validation-error-message class="form-password__error-message text-center p6 show">
+      {{ 'customer.register.password_condition' | t }}
+    </span>
+  </div>
+  <div class="form-group form-group__checkboxes text-center account__address-checkbox-container">
     <div class="mt-1 custom-control custom-checkbox">
       <input class="custom-control-input" type="checkbox" name="customer[accepts_marketing]" value="true" id="AcceptsMarketing" checked>
       <label class="custom-control-label p4" for="AcceptsMarketing">
@@ -83,17 +84,19 @@
     </div>
   </div>
 
-  <div class="form-group form-group__button text-center">
+  <div class="form-group form-group__button form-group__button--small text-center">
     <div class="mb-2">
       <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn-primary">
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group mb-0">
+    <div class="p6 text-center mb-3">By creating an account you agree with our <br> <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></div>
     {% if show_cancel_button %}
-    <div class="mb-3 p5 text-center">Already have an account? <a data-hide-register-form href="/account/login">Sign In</a></div>
+    <div class="text-center mt-1">
+      <a data-hide-register-form href="/account/login" class="btn-link btn-small">Already have an account? Sign In</a>
+    </div>
     {% endif %}
-    <div class="p5 text-center">By creating an account you agree with our <br> <a href="/pages/terms-of-service">Terms of Service</a> and <a href="/pages/privacy-policy">Privacy Policy</a></div>
   </div>
 
 {% endform %}

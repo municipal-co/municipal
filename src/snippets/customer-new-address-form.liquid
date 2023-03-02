@@ -76,52 +76,45 @@
       required
       autocapitalize="words">
   </div>
+  <div class="form-group">
+    <select
+      name="address[country]"
+      id="AddressCountryNew"
+      class="form-control account-form__field"
+      data-no-chosen
+      required
+      data-default="{{ form.country }}">
+      {{ country_option_tags | replace: '---', 'Select Country' }}
+    </select>
+    {% include 'icon-caret-down' %}
+  </div>
 
-  <div class="row">
-    <div class="col-md pr-md-2">
-      <div class="form-group">
-        <select
-          name="address[country]"
-          id="AddressCountryNew"
-          class="form-control account-form__field"
-          required
-          data-default="{{ form.country }}">
-          {{ country_option_tags | replace: '---', 'Select Country' }}
-        </select>
-        {% include 'icon-caret-down' %}
-      </div>
-    </div>
+  <div class="form-group">
+    {% assign form_country_handle = form.country | handle %}
+    {% assign state_label = 'customer.addresses.state' | t %}
 
-    <div class="col-md px-md-1">
-      <div class="form-group">
-        {% assign form_country_handle = form.country | handle %}
-        {% assign state_label = 'customer.addresses.state' | t %}
+    <span id="AddressProvinceContainerNew">
+      <select
+        name="address[province]"
+        id="AddressProvinceNew"
+        class="form-control account-form__field"
+        data-no-chosen
+        required
+        data-default="{{ form.province }}">
+      </select>
+      {% include 'icon-caret-down' %}
+    </span>
+  </div>
 
-        <span id="AddressProvinceContainerNew">
-          <select
-            name="address[province]"
-            id="AddressProvinceNew"
-            class="form-control account-form__field"
-            required
-            data-default="{{ form.province }}">
-          </select>
-          {% include 'icon-caret-down' %}
-        </span>
-      </div>
-    </div>
-
-    <div class="col-md pl-md-2">
-      <div class="form-group">
-        <input type="text"
-          name="address[zip]"
-          id="AddressZipNew"
-          class="form-control account-form__field"
-          placeholder="{{ 'customer.addresses.zip' | t }}"
-          value="{{ form.zip }}"
-          required
-          autocapitalize="characters">
-      </div>
-    </div>
+  <div class="form-group">
+    <input type="text"
+      name="address[zip]"
+      id="AddressZipNew"
+      class="form-control account-form__field"
+      placeholder="{{ 'customer.addresses.zip' | t }}"
+      value="{{ form.zip }}"
+      required
+      autocapitalize="characters">
   </div>
 
   <div class="form-group">
@@ -135,11 +128,11 @@
       pattern="[0-9\-]*">
   </div>
 
-  <div class="form-group form-group__checkboxes">
+  <div class="form-group form-group__checkboxes text-center account__address-checkbox-container">
     <div class="custom-control custom-checkbox">
       {% comment %}{{ form.set_as_default_checkbox }}{% endcomment %}
       <input type="checkbox" name="address[default]" value="1" class="custom-control-input" id="address_default_address_new" />
-      <label class="custom-control-label h6" for="address_default_address_new">
+      <label class="custom-control-label p5" for="address_default_address_new">
         {{ 'customer.addresses.set_default' | t }}
       </label>
     </div>
@@ -147,7 +140,7 @@
 
   <div class="form-group form-group__button text-center">
     <div class="mb-2">
-      <input type="submit" class="btn btn-primary" value="{{ 'customer.addresses.save' | t }}">
+      <input type="submit" class="btn btn-primary account__address-button" value="{{ 'customer.addresses.save' | t }}">
     </div>
   </div>
   <div class="form-group text-center">

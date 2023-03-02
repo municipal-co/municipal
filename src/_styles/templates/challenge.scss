@@ -3,12 +3,24 @@
 // -------------------------
 
 .shopify-challenge__container {
-  margin-top: 100px !important;
-  margin-bottom: 100px !important;
+  display: block;
 
   .shopify-challenge__message,
   .shopify-challenge__errors {
-    font-size: $font-size-sm;
-    padding: 0 20px;
-  }  
+    font-size: 12px;
+    line-height: 1;
+    margin: 13px auto 16px;
+  }
+
+  .shopify-challenge__error {
+    color: $red;
+  }
+
+  .shopify-challenge__button {
+    margin-top: 30px !important;
+
+    &:hover {
+      color: $white;
+    }
+  }
 }

@@ -4,6 +4,8 @@ import Cta from "./cta";
 import CardBlock from "./cardBlock";
 import InfoCard from "./infoCard";
 import Carousel from './carousel';
+import AccountForms from "./accountForms";
+import AccountLinks from "./accountLinks";
 
 const NavigationBlocks = ((props) => {
 
@@ -27,6 +29,10 @@ const NavigationBlocks = ((props) => {
           return <InfoCard key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
         case 'carousel':
           return <Carousel key={block.id} id={block.id} block={block} activeBlock={isActiveBlock}/>
+        case 'account-forms':
+          return <AccountForms key={block.id} id={block.id} />
+        case 'account-links':
+          return <AccountLinks key={block.id} id={block.id} />
         default:
           return false;
       }
