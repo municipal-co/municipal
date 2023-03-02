@@ -63,7 +63,8 @@
     }
   }
 
-  .shop-the-look {
+  .shop-the-look,
+  .shop-the-look--grid {
     .swiper-slide {
       max-width: unset;
     }
@@ -172,11 +173,11 @@
   gap: 20px;
 
   @include media-breakpoint-down('md') {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr !important;
   }
 
   @include media-breakpoint-down('xs') {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 }
 
