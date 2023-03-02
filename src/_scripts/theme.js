@@ -52,6 +52,9 @@ import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
 import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 import FourOFour from './sections/fourofour';
+import MentorDrawer from './sections/mentorDrawer';
+import ShopifyCollection from './sections/shopify-collection';
+import Faq from './sections/faq';
 
 // Models
 import ProductCard from './view/product/productCard';
@@ -108,6 +111,9 @@ Breakpoints.initialize();
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
+  sectionManager.register('mentor-drawer', MentorDrawer);
+  sectionManager.register('shopify-collection', ShopifyCollection);
+  sectionManager.register('faq', Faq);
 
   // Register Mobile navigation
   const navigationHolder = document.getElementById('main_navigation')

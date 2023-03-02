@@ -193,6 +193,13 @@
     "name": "collections",
     "settings": [
       {
+        "type": "checkbox",
+        "id": "enable_shopify_collection",
+        "label": "Enable Shopify Collection",
+        "default": false,
+        "info": "Emergency trigger, enable only when findify has stopped working and we need to quickly roll back to an MVP working layout"
+      },
+      {
         "type": "range",
         "id": "products_per_page",
         "label": "Products Per Page",

@@ -1,0 +1,55 @@
+<div class="mentor-drawer-container" data-section-type="mentor-drawer" data-section-id="{{section.id}}">
+  <div class="drawer mentor-drawer__container" data-drawer>
+    <div class="drawer__inner mentor-drawer__inner">
+      <div class="drawer__header mentor-drawer__header">
+        <div class="drawer__header-title mentor-drawer__title">
+          MUNICIPAL Mentors
+        </div>
+        <button class="drawer__close mentor-drawer__close" data-drawer-close>
+          {% render 'icon-close' %}
+        </button>
+      </div>
+      <div class="drawer__body-contents mentor-drawer__body" data-drawer-body>
+
+      </div>
+    </div>
+  </div>
+
+  <template data-template>
+    {% raw %}
+    <div class="mentor-drawer__content">
+      <div class="mentor-drawer__banner">
+        <img class="mentor-drawer__image" src="{{ banner }}">
+      </div>
+      <h2 class="mentor-drawer__content-title">
+        {{ title }}
+      </h2>
+      <div class="mentor-drawer__body-content p5">
+        {{{ body_content }}}
+      </div>
+    </div>
+
+    <div class="mentor-drawer__form-container">
+      <div class="mentor-drawer__arrow-container">
+        {% endraw %}
+          {% render 'icon-arrow' %}
+        {% raw %}
+      </div>
+      <h3 class="mentor-drawer__form-title">{{ form_title }}</h3>
+      <div class="mentor-drawer__form-body-content">{{ form_body_content }}</div>
+      <form class="mentor-drawer__form" action="//manage.kmail-lists.com/ajax/subscriptions/subscribe" data-mentor-form>
+        <input type="hidden" name="g" value="{{ form_id }}">
+        <input type="hidden" name="$mentor" value="{{ mentor_name }}">
+        <div class="form-group">
+          <input type="email" placeholder="Enter your email" class="form-control mentor-drawer__input">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="mentor-drawer__message" data-submit-message> </div>
+      </form>
+    </div>
+    {% endraw %}
+  </template>
+</div>

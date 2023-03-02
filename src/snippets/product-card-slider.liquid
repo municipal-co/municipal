@@ -14,8 +14,39 @@
   {% assign heading_copy = s.heading_copy %}
   {% assign heading_cta_title = s.heading_cta_title %}
   {% assign heading_cta_url = s.heading_cta_url %}
+  {% assign enable_slider = s.enable_slider %}
 {% endif %}
 
+
+{%- capture cards -%}
+  {% if type == 'metafields' %}
+    {% for card in metafields.pcs_products %}
+    {% assign current_product = all_products[card.product] %}
+      {% if current_product != blank %}
+        <div class="swiper-slide" data-card-slide>
+          {% render 'product-card'
+            card_product: current_product,
+            color: card.selected_color
+          %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% for block in section.blocks %}
+      {% assign bs = block.settings %}
+      {% if enable_slider %}
+        <div class="swiper-slide" data-card-slide {{block.shopify_attributes}}>
+      {% else %}
+        <div {{ block.shopify_attributes }}>
+      {% endif %}
+        {% render 'product-card'
+          card_product: bs.card_product,
+          color: bs.selected_color
+        %}
+      </div>
+    {% endfor %}
+  {% endif %}
+{%- endcapture -%}
 
 <div id="{{id}}" class="card-slider {{modifier_class}}" data-section-type="product-card-slider" data-section-id="{{section.id}}">
   <style>
@@ -51,35 +82,20 @@
         {% endif %}
       </div>
     </div>
-    <div class="row card-slider__slider" data-card-slider {% if modifier_class != blank %}data-slider-suffix="{{modifier_class}}"{% endif %}>
-      <div class="swiper-wrapper">
-        {% if type == 'metafields' %}
-          {% for card in metafields.pcs_products %}
-          {% assign current_product = all_products[card.product] %}
-            {% if current_product != blank %}
-              <div class="swiper-slide" data-card-slide>
-                {% render 'product-card'
-                  card_product: current_product,
-                  color: card.selected_color
-                %}
-              </div>
-            {% endif %}
-          {% endfor %}
-        {% else %}
-          {% for block in section.blocks %}
-            {% assign bs = block.settings %}
-            <div class="swiper-slide" data-card-slide {{block.shopify_attributes}}>
-              {% render 'product-card'
-                card_product: bs.card_product,
-                color: bs.selected_color
-              %}
-            </div>
-          {% endfor %}
-        {% endif %}
+    {% if enable_slider == false %}
+      <div class="row product-card__grid-container">
+        {{ cards }}
       </div>
-      <div class="swiper-scrollbar card-slider__scrollbar" data-scrollbar></div>
-      <div class="card-slider__arrow card-slider__arrow--prev" data-slider-arrow-prev></div>
-      <div class="card-slider__arrow card-slider__arrow--next" data-slider-arrow-next></div>
-    </div>
+    {% else %}
+      <div class="row card-slider__slider" data-card-slider {% if modifier_class != blank %}data-slider-suffix="{{modifier_class}}"{% endif %}>
+        <div class="swiper-wrapper">
+          {{ cards }}
+        </div>
+        <div class="swiper-scrollbar card-slider__scrollbar" data-scrollbar></div>
+        <div class="card-slider__arrow card-slider__arrow--prev" data-slider-arrow-prev></div>
+        <div class="card-slider__arrow card-slider__arrow--next" data-slider-arrow-next></div>
+      </div>
+    {% endif %}
+
   </div>
 </div>

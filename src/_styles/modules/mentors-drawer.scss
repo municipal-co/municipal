@@ -1,0 +1,130 @@
+.mentor-drawer__banner {
+  width: calc(100% + 60px);
+  margin-left: -30px;
+  margin-bottom: 10px;
+}
+
+.mentor-drawer__image {
+  max-width: 100%;
+}
+
+.mentor-drawer__content {
+  text-align: center;
+}
+
+.mentor-drawer__content-title {
+  font-size: 18px;
+  font-family: $font-family-heading-medium;
+  line-height: 1;
+  box-shadow: 0 1em 0 inset  $green;
+  display: inline;
+  padding: 0;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+.mentor-drawer__body-content {
+  p {
+    @extend .p5;
+    font-family: $font-family-heading-medium;
+    margin-bottom: 25px;
+  }
+}
+
+.mentor-drawer__arrow-container {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+  margin:auto;
+  margin-bottom: 30px;
+
+  .icon-arrow {
+    position: absolute;
+    left: -5px;
+    bottom: 0;
+    width: auto;
+    height: 40px;
+    transform: rotate(90deg);
+  }
+}
+
+.mentor-drawer__form-container {
+  text-align: center;
+}
+
+.mentor-drawer__form {
+  position: relative;
+  * {
+    opacity: 1;
+    transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
+  }
+
+  &.is-submitted,
+  &.has-error {
+    * {
+      opacity: 0;
+    }
+  }
+}
+
+.mentor-drawer__form-title {
+  font-size: 15px;
+  font-family: $font-family-heading-medium;
+  margin-bottom: 15px;
+
+  &:before {
+    content: "";
+    line-height: 0;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-bottom: 1px;
+    margin-right: 5px;
+    background-color: $green;
+    border-radius: 100%;
+    animation: blink 1s infinite;
+  }
+}
+
+.mentor-drawer__form-body-content {
+  font-size: 12px;
+  font-family: $font-family-heading-medium;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.mentor-drawer__input {
+  font-size: 16px;
+  padding: 8px 20px;
+}
+
+.mentor-drawer__message {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  font-size: 15px;
+  font-family: $font-family-heading-medium;
+  line-height: 1.5;
+  opacity: 0;
+  transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
+  pointer-events: none;
+  padding: 20px 100px;
+  border-radius: 10px;
+
+
+  .has-error &,
+  .is-submitted & {
+    opacity: 1;
+  }
+
+  .has-error & {
+    background-color: $red;
+    color: $white;
+  }
+
+  .is-submitted & {
+    background-color: $green;
+  }
+}

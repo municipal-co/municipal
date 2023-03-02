@@ -4,6 +4,7 @@
 
 .product-card {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -164,4 +165,26 @@
   font-size: 12px;
   line-height: 14.4px;
   font-family: $font-family-heading-large;
+}
+
+
+/* Product card grid */
+.product-card__grid-container {
+  display: flex;
+  width: 100%;
+  gap: 40px 20px;
+  flex-wrap: wrap;
+
+  > div {
+    width: calc(25% - 15px);
+    @include media-breakpoint-down('md') {
+      width: calc(33.33% - 15px);
+    }
+    @include media-breakpoint-down('sm') {
+      width: calc(50% - 15px);
+    }
+    @include media-breakpoint-down('xs') {
+      width: 100%;
+    }
+  }
 }

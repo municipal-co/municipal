@@ -113,14 +113,15 @@ const productCard = ((props) => {
   const getCurrentColorVariant = () => {
     const colorIndex = currentVariant.color == undefined ? 'option1' : 'color';
     const sortMap = {
-      's':1,
-      'm':2,
-      'l': 3,
-      'xl': 4,
-      '2xl': 5,
-      '3xl': 6,
-      '4xl': 7,
-      'os': 8,
+      'xs': 1,
+      's':2,
+      'm':3,
+      'l': 4,
+      'xl': 5,
+      '2xl': 6,
+      '3xl': 7,
+      '4xl': 8,
+      'os': 9,
     }
 
     const currentColorVariants = productData.variants.filter((variant) => {
@@ -146,13 +147,12 @@ const productCard = ((props) => {
     currentColorVariants.sort((variant1, variant2) => {
       const variant1Value = variant1.size || variant1.option2;
       const variant2Value = variant2.size || variant2.option2;
-      if(typeof(variant1Value) == 'number' && typeof(variant2Value) == 'number') {
-        return variant1Value - variant2Value;
+      if(!isNaN(variant1Value) && !isNaN(variant2Value)) {
+        return parseFloat(variant1Value) - parseFloat(variant2Value);
       } else {
         return sortMap[variant1Value.toLowerCase()] - sortMap[variant2Value.toLowerCase()];
       }
     })
-
     return currentColorVariants;
   }
 
@@ -236,9 +236,9 @@ const productCard = ((props) => {
             {currentVariant.title}
           </div>
           <div className="product-card__price-container">
-            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at}</s>}
+            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at.toFixed(2).replace('.00', '')}</s>}
             <span className="product-price" data-product-price>
-              ${currentVariant.price}
+              ${currentVariant.price.toFixed(2).replace('.00', '')}
             </span>
           </div>
         </form>
