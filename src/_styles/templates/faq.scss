@@ -178,8 +178,8 @@
 .accordion__title {
   color: $black;
   font-size: 15px;
-  font-weight: 600;
   line-height: 17px;
+  font-weight: 400;
   text-align: left;
 
   @include media-breakpoint-up('md') {
