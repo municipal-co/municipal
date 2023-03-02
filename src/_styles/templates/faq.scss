@@ -197,15 +197,17 @@
     display: block;
   }
 
-  & > *:not(h1,h2,h3,h4,h5,h6) {
-    font-size: 14px;
-    // font-weight: 600;
-    line-height: 21px;
+  & > * {
     color: $gray-dark;
 
-    @include media-breakpoint-up('md') {
-      font-size: 23px;
-      line-height: 37px;
+    &:not(h1,h2,h3,h4,h5,h6) {
+      font-size: 14px;
+      line-height: 21px;
+
+      @include media-breakpoint-up('md') {
+        font-size: 23px;
+        line-height: 37px;
+      }
     }
 
     &:first-child {
