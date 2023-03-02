@@ -1,42 +1,180 @@
-<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="faq">
-  <div class="container">
+{% capture nav %}
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'header' %}
+        <a href="#group-{{ block.settings.title | handleize }}" class="btn pill-menu__item">{{ block.settings.title }}</a>
+    {% endcase %}
+  {% endfor %}
+{% endcapture %}
 
-    {% include 'page-header', ph_title: page.title %}
+{%- capture accordions -%}
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'header' -%}
+        {%- if forloop.first -%}
+          <dl class="accordion-group" data-accordion-group>
+        {%- else -%}
+          </dl>
+          <dl class="accordion-group" data-accordion-group>
+        {%- endif -%}
+        <h2 id="group-{{ block.settings.title | handleize }}" class="h3 accordion-group__header">{{ block.settings.title }}</h2>
+      {%- when 'faq' -%}
+        <div class="accordion" data-accordion>
+          <dt>
+            {% if block.settings.description and block.settings.link == blank %}
+            <button type="button" class="accordion__toggle" aria-controls="faq-{{ forloop.index }}" aria-expanded="false" data-accordion-toggle>
+              <span class="accordion__title">{{ block.settings.title }}</span>
+              <span class="accordion__toggle-icon" aria-hidden="true" role="presentation"></span>
+            </button>
+            {% endif %}
 
-    {{ page.content }}
+            {% if block.settings.link != blank %}
+            <div class="accordion__toggle">
+              <span class="accordion__title"><a href="{{ block.settings.link }}"{% if block.settings.external %} target="_blank" rel="nofollow noopener"{% endif %}>{{ block.settings.title }}</a></span>
+              <svg class="accordion__toggle-icon-arrow icon icon-arrow" aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 90 90">
+                  <g fill="none" fill-rule="evenodd">
+                      <path fill="#121212" d="M64.948 19l24.873 25.813L90 45 65.193 71l-6.682-7.003L71.863 50H0V40h71.866L58.511 26.004 64.948 19z"></path>
+                  </g>
+              </svg>
+            </div>
+            {% endif %}
+          </dt>
+          {% if block.settings.description and block.settings.link == blank %}
+          <dd class="accordion__body" id="faq-{{ forloop.index }}">
+            {{ block.settings.description }}
+          </dd>
+          {% endif %}
+        </div>
+    {%- endcase -%}
+    {%- if forloop.last %}
+      </dl>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
 
-    {% for block in section.blocks %}
-      <h4>{{ block.settings.title }}</h4>
-      <div class="rte">
-        {{ block.settings.text }}
+<style>
+  {% if section.settings.text_color %}
+  .minimal-hero__header,
+  .minimal-hero__subheader {
+    color: {{ section.settings.text_color }};
+  }
+  .pill-menu__item {
+    color: {{ section.settings.text_color }};
+    border-color: {{ section.settings.text_color }};
+  }
+  .pill-menu__item:hover {
+    color: {{ section.settings.bgcolor }};
+    background-color: {{ section.settings.text_color }};
+  }
+  {% endif %}
+
+  {% if section.settings.bgcolor %}
+  .minimal-hero {
+    background-color: {{ section.settings.bgcolor }};
+  }
+  {% endif %}
+</style>
+<div
+  class="layout-content-wrapper"
+  data-section-id="{{ section.id }}"
+  data-section-type="faq"
+>
+  <div class="minimal-hero">
+    <h1 class="minimal-hero__header">{{ section.settings.header }}</h1>
+    <div class="minimal-hero__subheader">{{ section.settings.subheader }}</div>
+    {% if nav != empty %}
+      <div class="pill-menu">
+        {{ nav }}
       </div>
-      <hr />
-    {% endfor %}    
-
+    {% endif %}
   </div>
 </div>
 
+{% if accordions != empty %}
+<div class="accordions" data-accordions>
+  {{ accordions }}
+</div>
+{% endif %}
+
 {% schema %}
-  {
-    "name": "FAQ Page",
-    "settings": [],
-    "blocks":[
-      {
-        "type": "text",
-        "name": "FAQ",
-        "settings":[
-          {
-            "id": "title",
-            "type": "text",
-            "label": "Question"
-          },
-          {
-            "id": "text",
-            "type": "richtext",
-            "label": "Answer"
-          }
-        ]
-      }
-    ]    
-  }
+{
+  "name": "FAQs",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Hero Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Hero Background Color",
+      "default": "#0036EB"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "paragraph",
+      "content": "Button navigation automatically displays beneath hero header corresponding to the group headers for each FAQ section"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Hero Header"
+    },
+    {
+      "type": "text",
+      "id": "subheader",
+      "label": "Hero Subheader"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Group Header",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Header"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title"
+        },
+        {
+          "id": "description",
+          "type": "richtext",
+          "label": "Description",
+          "info": "Adding a description will create an accordion toggle when clicking the FAQ title."
+        },
+        {
+          "id": "link",
+          "type": "url",
+          "label": "Link",
+          "info": "Direct user to provided link when FAQ title is clicked. Can't be used with description above."
+        },
+        {
+          "id": "external",
+          "type": "checkbox",
+          "label": "Optionally open link in new tab"
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}
