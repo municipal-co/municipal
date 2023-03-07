@@ -19,5 +19,5 @@
 </div>
 
 <script>
-  window.searchLimit = {{ collection.metafields.custom_fields.collection_limit | default: 10 }};
+  window.searchLimit = {{ settings.search_products_per_page | default: 12 }};
 </script>
