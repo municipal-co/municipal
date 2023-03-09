@@ -16,7 +16,7 @@ const AccountForms = () => {
       passwordError.current.style.display = 'block';
     } else {
       if(mainPassword.current.value !== repeatPassword.current.value) {
-        passwordError.current.innerText = 'Password don\'t match';
+        passwordError.current.innerText = 'Passwords don\'t match';
         passwordError.current.style.display = 'block';
         mainPassword.current.classList.add('has-error');
         repeatPassword.current.classList.add('has-error');
