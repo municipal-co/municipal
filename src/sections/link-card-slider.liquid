@@ -41,7 +41,7 @@
             {% if bs.enable_mentor_sub %}
               data-toggle-mentor-drawer
               {% assign mentor_info = pages[bs.mentors_page].metafields.custom_fields.mentors_list %}
-              data-mentors-info="{{ mentor_info | json | replace: "'", "&apos;" }}"
+              data-mentors-info='{{ mentor_info | json | replace: "'", "&apos;" }}'
               data-mentor-id="{{bs.mentor_id}}"
             {% endif %}></a>
         {% endif %}
