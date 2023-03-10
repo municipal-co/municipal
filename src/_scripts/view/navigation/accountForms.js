@@ -36,7 +36,7 @@ const AccountForms = () => {
           <div className="navigation-form__header">
             <h6 className="navigation-form__title">Sign in:</h6>
             <p className="navigation-form__subtitle">
-              Quick checkout and history
+              Quick checkout, order history and more.
             </p>
           </div>
           <form method="post" action="/account/login" acceptCharset="UTF-8" data-login-with-shop="true">
@@ -84,7 +84,7 @@ const AccountForms = () => {
           <div className="navigation-form__header">
             <h6 className="navigation-form__title">Create Account:</h6>
             <p className="navigation-form__subtitle">
-              Sign up for quick checkout order history, account status and more.
+              Sign up for quick checkout, order history and more.
             </p>
           </div>
           <form method="post" action="/account" id="create_customer" acceptCharset="UTF-8" data-login-with-shop="true" onSubmit={() => {window.Shopify.recaptchaV3.addToken(this, "create_customer")} }>
