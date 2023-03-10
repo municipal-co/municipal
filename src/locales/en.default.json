@@ -263,7 +263,7 @@
     },
     "register": {
       "title": "Create Account",
-      "subtitle": "Sign up for quick checkout order history, account status and more.",
+      "subtitle": "Sign up for quick checkout, order history and more.",
       "first_name": "First Name",
       "last_name": "Last Name",
       "email": "Email",
