@@ -9,14 +9,14 @@ import $ from 'jquery';
  */
 export function find(array, key, value) {
   let found;
-  
+
   for (let i = 0; i < array.length; i++) {
     if (array[i][key] === value) {
       found = array[i];
       break;
     }
   }
-  
+
   return found;
 }
 
@@ -395,4 +395,36 @@ export function decodeEntities(encodedString) {
   const textArea = document.createElement('textarea');
   textArea.innerHTML = encodedString;
   return textArea.value;
+}
+
+function get_brightness(hexColor) {
+  hexColor = hexColor.replace('#', '');
+
+  var c_r = parseInt(hexColor.substr(0, 2),16);
+  var c_g = parseInt(hexColor.substr(2, 2),16);
+  var c_b = parseInt(hexColor.substr(4, 2),16);
+
+  return ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+}
+
+function rgb2hex(rgb) {
+  if (  rgb.search('rgb') === -1 ) {
+    return rgb;
+  } else {
+      rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+      function hex(x) {
+          return ("0" + parseInt(x).toString(16)).slice(-2);
+      }
+      return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+  }
+}
+
+/** Calculates the brightness of a color and returns
+ * a contrasting color  (black or white)
+ */
+
+export function colorIsBright (color) {
+  const isBright = get_brightness(rgb2hex(color)) > 160;
+
+  return isBright;
 }

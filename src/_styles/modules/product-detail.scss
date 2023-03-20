@@ -38,11 +38,41 @@
   flex-direction: column;
   margin: 0 -30px;
   padding-bottom: 15px;
+  z-index: 99;
+  position: relative;
 
   .product-option__single-selector {
     display: block;
     margin-bottom: 0;
-    max-width: calc(100% / 4.25);
+    max-width: calc(100% / 4.8) !important;
+    &:first-child {
+      margin-left:auto;
+    }
+
+    &:last-child {
+      margin-right: auto;
+    }
+  }
+
+  .snap-slider-wrapper {
+    gap: 10px;
+    overflow-y: hidden;
+    padding-bottom: 10px;
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+    width: calc(100% + 40px);
+    scroll-padding: 30px;
+    margin-left: -20px;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin-inline-start: 20px;
+      margin-inline-end: 20px;
+    }
   }
 
   .product-option__ui {

@@ -1,12 +1,12 @@
 import $ from 'jquery';
-import Swiper, { Scrollbar, Navigation } from 'swiper';
 import * as Currency from '../../core/currency';
+import ScrollSnapSlider from '../../managers/scrollSnapSlider';
 
 const selectors = {
   el: '[data-product-card]',
   gallerySlider: '[data-gallery-slider]',
   gallerySlide: '[data-gallery-slide]',
-  swatchSlider: '[data-swatch-slider]',
+  swatchSlider: '[data-swatches-container]',
   colorTitle: '[data-color-title]',
   singleOptionSelector: '[data-single-option-selector]',
   singleProductJson: '[data-product-json]',
@@ -48,6 +48,7 @@ export default class ProductCard {
     this.$productPrice = $(selectors.cardPrice, this.$container);
     this.$comparePrice = $(selectors.cardComparePrice, this.$container);
     this.$productUrl = $(selectors.productUrl, this.$container);
+    this.$swatchSlider = $(selectors.swatchSlider, this.$container);
 
     this.$singleOptionSelector.on('change', this.onOptionChange.bind(this));
     this.$optionDdrawerOpen.on('click', this.openOptionDrawer.bind(this));
@@ -72,33 +73,18 @@ export default class ProductCard {
 
   initSwatchSlider() {
     const $selectedColor = $(selectors.singleOptionSelector+':checked', this.$container);
-    const $scrollbar = $('.swiper-scrollbar', this.$container);
     let swatchIndex = 0
     if($selectedColor.length) {
       swatchIndex = $selectedColor.parent().index();
     }
 
-    const swatchSliderSettings = {
-      modules: [ Navigation, Scrollbar ],
-      slidesPerView: 4.5,
-      spaceBetween: 10,
-      threshold: 10,
-      initialSlide: swatchIndex,
-      nested: true,
-      watchOverflow: true,
-      centerInsufficientSlides: true,
-      scrollbar: {
-        el: $scrollbar.get(0),
-        draggable: true,
-      },
-      navigation: {
-        enabled: true,
-        prevEl: '[data-arrow-prev]',
-        nextEl: '[data-arrow-next]',
-      }
-    }
-
-    this.swatchSlider = new Swiper($(selectors.swatchSlider, this.$container).get(0), swatchSliderSettings);
+    this.swatchSlider = new ScrollSnapSlider(this.$swatchSlider.get(0), {
+      enableScrollbar: true,
+      enableArrows: true,
+      nextArrow: '[data-arrow-next]',
+      prevArrow: '[data-arrow-prev]',
+      initialSlide: swatchIndex
+    })
   }
 
   onOptionChange(evt) {

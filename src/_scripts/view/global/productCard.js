@@ -100,7 +100,6 @@ const productCard = ((props) => {
       spaceBetween: 10,
       threshold: 10,
       initialSlide: getCurrentVariantIndex(),
-      nested: true,
       watchOverflow: true,
       centerInsufficientSlides: true,
       scrollbar: {

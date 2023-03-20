@@ -1,6 +1,7 @@
 import $ from 'jquery'; // eslint-disable-line no-unused-vars
-import Swiper, { Scrollbar, Navigation, Lazy } from 'swiper';
+import Swiper, { Navigation } from 'swiper';
 import * as Currency from '../core/currency'
+import ScrollSnapSlider from '../managers/scrollSnapSlider';
 import Drawer from '../ui/drawer'
 import BaseSection from './base';
 
@@ -42,48 +43,11 @@ export default class ShopTheLook extends BaseSection {
   };
 
   initLooksSlider() {
-    const looksSliderOptions = {
-      modules: [Scrollbar, Navigation],
-      slidesPerView: 1.15,
-      loop: false,
-      spaceBetween: 15,
-      slidesOffsetBefore: 30,
-      slidesOffsetAfter: 30,
-      threshold: 10,
-      watchOverflow: true,
-      scrollbar: {
-        el: '.swiper-scrollbar',
-        draggable: true,
-      },
-      navigation: {
-        nextEl: '[data-arrow-next]',
-        prevEl: '[data-arrow-prev]'
-      }
-    }
-
-    if(this.$container.attr('id') !== 'shop-the-look-pdp') {
-      looksSliderOptions.slidesPerView = 1.3;
-      looksSliderOptions.spaceBetween = 20;
-      looksSliderOptions.slidesOffsetBefore = 30;
-      looksSliderOptions.slidesOffsetAfter = 30;
-      looksSliderOptions.breakpoints = {
-        530: {
-          slidesPerView: 2.3
-        },
-        992: {
-          slidesPerView: 3.3,
-          slidesOffsetAfter: 50,
-          slidesOffsetBefore: 50,
-        },
-        1400: {
-          slidesPerView: 4.3,
-          slidesOffsetAfter: 50,
-          slidesOffsetBefore: 50,
-        }
-      }
-    }
-
-    this.looksSlider = new Swiper(this.$looksContainer.get(0), looksSliderOptions);
+    this.looksSlider = new ScrollSnapSlider(this.$container.get(0), {
+      enableArrows: true,
+      nextArrow: '[data-arrow-next]',
+      prevArrow: '[data-arrow-prev]',
+    });
   }
 
   initLooksDrawers() {

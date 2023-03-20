@@ -23,7 +23,7 @@
 {% endfor %}
 
 {% if type == "swatch" %}
-  <div class="product-option">
+  <div class="product-option" data-swatches-container>
     <div class="product-option__header">
       <div class="product-option__header-label p4">
         {{ print_option | capitalize | append: ':'}}
@@ -32,8 +32,8 @@
         {{ current_variant[option_index] }}
       </div>
     </div>
-    <div class="product-option__swatch swiper" data-swatch-slider>
-      <div class="swiper-wrapper">
+    <div class="product-option__swatch">
+      <div class="flex" data-slider-container>
         {% assign printed_variant = "" %}
         {% for variant in product.variants %}
           {%- if printed_variant == variant[option_index] -%}
@@ -41,7 +41,7 @@
           {%- endif -%}
           {% if variant[option_index] == current_variant[option_index] or variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or variant.metafields.custom_fields['enable_sold_out'] == 1 %}
             {%- assign printed_variant = variant[option_index] -%}
-            <label class="product-option__single-selector swiper-slide" data-swatch-slide>
+            <label class="product-option__single-selector swiper-slide" data-slide>
               <input type="radio"
                     name="{{- option_prefix -}}{{option_index}}"
                     value="{{variant[option_index]}}"
@@ -86,11 +86,8 @@
           {% endfor %}
         {% endfor %}
       </div>
-      <div class="swiper-scrollbar product-option__scrollbar"></div>
-      <div class="product-option__arrows">
-        <div class="product-option__arrow product-option__arrow-prev" data-arrow-prev></div>
-        <div class="product-option__arrow product-option__arrow-next" data-arrow-next></div>
-      </div>
+      <div class="product-option__arrow product-option__arrow-prev" data-arrow-prev></div>
+      <div class="product-option__arrow product-option__arrow-next" data-arrow-next></div>
     </div>
   </div>
 {% endif %}

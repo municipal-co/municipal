@@ -62,10 +62,27 @@
 .shop-the-look__slider {
   display: flex;
   flex-wrap: nowrap;
+
+  #shop-the-look-pdp & {
+    padding-inline-start: 30px;
+    padding-inline-end: 30px;
+    scroll-padding: 0 40px;
+
+    &::-webkit-scrollbar-track {
+      margin-inline-start: 30px;
+      margin-inline-end: 30px;
+    }
+  }
+
 }
 
 .shop-the-look__slide {
   width: 90%;
+
+  #shop-the-look-pdp & {
+    flex: 1 0 100%;
+    width: 100%;
+  }
 }
 
 .shop-the-look__arrow {
