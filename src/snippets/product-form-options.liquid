@@ -172,10 +172,22 @@
               {% endfor %}
             {% endif %}
           {% endfor %}
+          {% if product.metafields.custom_fields["fg_tips_content"] != blank %}
+            <div class="blink-box blink-box--dark">
+              {% if product.metafields.custom_fields["fg_tips_title"] != blank %}
+                <h6 class="blink-box__title">
+                  {{ product.metafields.custom_fields["fg_tips_title"] }}
+                </h6>
+              {% endif %}
 
+              <div class="blink-box__content">
+                {{ product.metafields.custom_fields["fg_tips_content"] }}
+              </div>
+            </div>
+          {% endif %}
           {%- if option_downcase == "size" -%}
             {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
-            <div class="btn-container text-center">
+            <div class="btn-container text-center" style="margin-top: 10px;">
               <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
             </div>
             {%- endif -%}
