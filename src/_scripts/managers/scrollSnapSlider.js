@@ -5,6 +5,7 @@ export default class ScrollSnapSlider {
 
     this.settings = {
       initialSlide: settings.initialSlide || 0,
+      disableScrollbar: settings.disableScrollbar || false
     }
 
     this.selectors = {
@@ -58,6 +59,9 @@ export default class ScrollSnapSlider {
     const bgColor = window.getComputedStyle(this.container).backgroundColor;
     this.slider.classList.add(this.classes.sliderClass);
     this.container.classList.add(colorIsBright(bgColor) ? this.classes.dark : this.classes.light);
+    if(this.settings.disableScrollbar === true) {
+      this.slider.classList.add('noScrollBar');
+    }
   }
 
   initSlides() {
@@ -67,31 +71,45 @@ export default class ScrollSnapSlider {
   }
 
   observerCallback(entries) {
-    entries.forEach(entry => {
+    entries.forEach((entry, index) => {
       if(entry.isIntersecting) {
         entry.target.classList.add(this.classes.visible);
       } else {
         entry.target.classList.remove(this.classes.visible);
       }
     })
+
+    if(this.slideList[0].className.indexOf('is-visible') > -1 && this.arrowPrev) {
+      this.arrowPrev.disabled = true;
+    } else {
+      this.arrowPrev.disabled = false;
+    }
+
+    if(this.slideList[this.slideList.length - 1].className.indexOf('is-visible') > -1 && this.arrowNext) {
+      this.arrowNext.disabled = true;
+    } else {
+      this.arrowNext.disabled = false;
+    }
   }
 
   buildArrows() {
     if(typeof(this.selectors.prevArrow) !== 'string') {
       const newNode = document.createElement('button');
       newNode.text = 'previous';
-      this.slider.parentNode.insertBefore(newNode, this.slider);
-      newNode.addEventListener('click', this.navigateToPrevSlide.bind(this));
+      this.arrowPrev = this.slider.parentNode.insertBefore(newNode, this.slider);
+      this.arrowPrev.addEventListener('click', this.navigateToPrevSlide.bind(this));
     } else {
-      this.slider.parentNode.querySelector(this.selectors.prevArrow).addEventListener('click', this.navigateToPrevSlide.bind(this))
+      this.arrowPrev = this.slider.parentNode.querySelector(this.selectors.prevArrow);
+      this.arrowPrev.addEventListener('click', this.navigateToPrevSlide.bind(this))
     }
     if(typeof(this.selectors.nextArrow) !== 'string') {
       const newNode = document.createElement('button');
       newNode.text = 'next';
-      this.slider.parentNode.insertBefore(newNode, this.slider);
-      newNode.addEventListener('click', this.navigateToNextSlide.bind(this));
+      this.arrowNext = this.slider.parentNode.insertBefore(newNode, this.slider);
+      this.arrowNext.addEventListener('click', this.navigateToNextSlide.bind(this));
     } else {
-      this.slider.parentNode.querySelector(this.selectors.nextArrow).addEventListener('click', this.navigateToNextSlide.bind(this))
+      this.arrowNext = this.slider.parentNode.querySelector(this.selectors.nextArrow);
+      this.arrowNext.addEventListener('click', this.navigateToNextSlide.bind(this))
     }
   }
 
@@ -99,14 +117,13 @@ export default class ScrollSnapSlider {
     const lastActiveSlide = this.slideList.findLast(slide => {
       return slide.classList.contains(this.classes.visible)
     });
-    const slideIndex = this.slideList.indexOf(lastActiveSlide);
+    const firstActiveSlide = this.slideList.find(slide => {
+      return slide.classList.contains(this.classes.visible)
+    });
+    const slideIndex = this.slideList.indexOf(firstActiveSlide);
+
     if(slideIndex < this.slideList.length - 1) {
-      const firstInactiveSlide = this.slideList[slideIndex + 1];
-      const scrollableArea = this.slider.scrollWidth - this.slider.clientWidth;
-      let cardCoordinate = (firstInactiveSlide.offsetLeft + firstInactiveSlide.clientWidth - this.slider.scrollWidth) + scrollableArea;
-      if(cardCoordinate < 50) {
-        cardCoordinate+= firstInactiveSlide.clientWidth;
-      }
+      const cardCoordinate = this.slideList[slideIndex + 1].offsetLeft - Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('px', '') * 2);
       this.slider.scrollTo({
         left: cardCoordinate,
         behavior: 'smooth'
@@ -122,7 +139,7 @@ export default class ScrollSnapSlider {
     const slideIndex = this.slideList.indexOf(firstActiveSlide);
     if(slideIndex > 0) {
       const firstInactiveSlide = this.slideList[slideIndex - 1];
-      const cardCoordinate = firstInactiveSlide.offsetLeft;
+      const cardCoordinate = firstInactiveSlide.offsetLeft - Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('px', '') * 2);
       this.slider.scrollTo({
         left: cardCoordinate,
         behavior: 'smooth'
@@ -138,8 +155,7 @@ export default class ScrollSnapSlider {
       return
     }
 
-    const scrollableArea = this.slider.scrollWidth - this.slider.clientWidth;
-    const cardCoordinate = (selectedSlide.offsetLeft + (selectedSlide.clientWidth / 2) + selectedSlide.clientWidth - this.slider.scrollWidth) + scrollableArea;
+    const cardCoordinate = selectedSlide.offsetLeft - (Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('px', '') * 2))
 
     this.slider.scrollTo({
       left: cardCoordinate,

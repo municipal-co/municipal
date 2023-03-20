@@ -5,6 +5,10 @@
   line-height: 1;
   max-width: 100%;
   position: relative;
+
+  .snap-slider-wrapper {
+    gap: 10px;
+  }
 }
 
 .category-capsule {
@@ -46,11 +50,16 @@
   left: 0;
   pointer-events: all;
   opacity: 0;
+  border: none;
   background: linear-gradient(90deg, rgba($white, 0.3) 0%, transparent 100%);
   cursor: pointer;
 
   &:hover {
     opacity: 1;
+  }
+
+  @include media-breakpoint-down('md') {
+    display: none;
   }
 }
 

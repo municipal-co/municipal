@@ -1,6 +1,8 @@
 import $ from 'jquery';
-import Swiper, { Navigation } from 'swiper';
+import ScrollSnapSlider from '../managers/scrollSnapSlider';
+// import Swiper, { Navigation } from 'swiper';
 import BaseSection from './base';
+
 
 const selectors = {
   slider: '[data-slideshow]',
@@ -18,26 +20,13 @@ export default class HeaderSection extends BaseSection {
   }
 
   initSlider() {
-    this.slider = new Swiper(this.$slider.get(0), {
-      modules: [Navigation],
-      slidesPerView: 'auto',
-      slide: selectors.slide,
-      navigation: {
-        nextEl: selectors.nextArrow,
-        prevEl: selectors.prevArrow,
-      },
-      spaceBetween: 10,
-      slidesOffsetBefore: 20,
-      slidesOffsetAfter: 20,
-      threshold: 20,
-      watchOverflow: true,
-      breakpoints: {
-        992: {
-          slidesOffsetAfter: 40,
-          slidesOffsetBefore: 40,
-        }
+    this.slider = new ScrollSnapSlider(this.$container.get(0), {
+        enableArrows: true,
+        disableScrollbar: true,
+        nextArrow: '[data-arrow-next]',
+        prevArrow: '[data-arrow-prev]',
       }
-    })
+    )
   }
 
   onBlockSelect(e) {

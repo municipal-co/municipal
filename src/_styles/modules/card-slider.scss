@@ -157,14 +157,20 @@
 }
 
 .card-slider__arrow {
-  width: 5%;
   display: block;
+  width: 5%;
+  border: none;
   z-index: 2;
   height: 100%;
   top: 0;
   left: 0;
   position: absolute;
+  background-color: transparent;
   cursor: pointer;
+
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
 }
 
 .card-slider__arrow--next {
@@ -196,15 +202,21 @@
   scroll-snap-type: x proximity;
   gap: 20px;
   padding-bottom: 20px;
-  scrollbar-color: $yellow transparent;
+  scrollbar-color: #c3c2c1 transparent;
   padding-inline-start: 50px;
   padding-inline-end: 50px;
   scroll-padding: 0 50px;
 
+  &.noScrollBar {
+    padding-bottom: 0;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
   @include media-breakpoint-down('md') {
     padding-inline-start: 30px;
     padding-inline-end: 30px;
-    scroll-padding: 0;
+    scroll-padding: 0 30px;
   }
 
   &::-webkit-scrollbar {
@@ -212,10 +224,15 @@
     height: 8px;
   }
 
+  &.noScrollBar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+
   &::-webkit-scrollbar-thumb {
     background: #c3c2c1;
     border-radius: 100px;
-    scroll-padding: 20px;
   }
 
   &::-webkit-scrollbar-track {
@@ -236,6 +253,21 @@
 
 .snap-slider-slide {
   scroll-snap-align: start;
+
+  &:first-child {
+    scroll-padding-left: 50px;
+    @include media-breakpoint-down('md') {
+      scroll-padding-left: 30px;
+    }
+  }
+
+  &:last-child {
+    scroll-padding-right: 50px;
+    @include media-breakpoint-down('md') {
+      scroll-padding-right: 30px;
+    }
+
+  }
 
   @include media-breakpoint-down('md') {
     scroll-snap-align: center;

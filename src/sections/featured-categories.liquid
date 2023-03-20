@@ -9,19 +9,17 @@
   }
 </style>
 <div class="" id="featured-categories-{{section.id}}" data-section-type="featured-categories">
-  <div class="featured-categories swiper" data-slideshow>
-    <div class="swiper-wrapper">
+  <div class="featured-categories" data-slideshow>
+    <div class="flex" data-slider-container>
       {% for block in section.blocks %}
         {% assign bs = block.settings %}
         {% if bs.url != blank %}
-          <a href="{{bs.url}}" class="swiper-slide category-capsule {% if bs.highlight_link == true %} category-capsule--highlighted {% endif %}" data-slide {{block.shopify_attributes}}>{{ bs.title }}</a>
+          <a href="{{bs.url}}" class="category-capsule {% if bs.highlight_link == true %} category-capsule--highlighted {% endif %}" data-slide {{block.shopify_attributes}}>{{ bs.title }}</a>
         {% endif %}
       {% endfor %}
     </div>
-    <div class="featured-categories__navigation">
-      <span class="featured-categories__navigation-area featured-categories__navigation-area--prev" data-arrow-prev aria-label="Scroll to prev slide"></span>
-      <span class="featured-categories__navigation-area featured-categories__navigation-area--next" data-arrow-next aria-label="Scroll to next slide"></span>
-    </div>
+    <button class="featured-categories__navigation-area featured-categories__navigation-area--prev" data-arrow-prev aria-label="Scroll to prev slide"></button>
+    <button class="featured-categories__navigation-area featured-categories__navigation-area--next" data-arrow-next aria-label="Scroll to next slide"></button>
   </div>
 </div>
 
