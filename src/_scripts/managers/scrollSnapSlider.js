@@ -114,16 +114,13 @@ export default class ScrollSnapSlider {
   }
 
   navigateToNextSlide() {
-    const lastActiveSlide = this.slideList.findLast(slide => {
-      return slide.classList.contains(this.classes.visible)
-    });
     const firstActiveSlide = this.slideList.find(slide => {
       return slide.classList.contains(this.classes.visible)
     });
     const slideIndex = this.slideList.indexOf(firstActiveSlide);
 
     if(slideIndex < this.slideList.length - 1) {
-      const cardCoordinate = this.slideList[slideIndex + 1].offsetLeft - Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('px', '') * 2);
+      const cardCoordinate = this.slideList[slideIndex + 1].offsetLeft - Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('0px ', '').replace('px', '') * 2);
       this.slider.scrollTo({
         left: cardCoordinate,
         behavior: 'smooth'
@@ -139,7 +136,7 @@ export default class ScrollSnapSlider {
     const slideIndex = this.slideList.indexOf(firstActiveSlide);
     if(slideIndex > 0) {
       const firstInactiveSlide = this.slideList[slideIndex - 1];
-      const cardCoordinate = firstInactiveSlide.offsetLeft - Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('px', '') * 2);
+      const cardCoordinate = firstInactiveSlide.offsetLeft - Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('0px ', '').replace('px', '') * 2);
       this.slider.scrollTo({
         left: cardCoordinate,
         behavior: 'smooth'
@@ -155,7 +152,7 @@ export default class ScrollSnapSlider {
       return
     }
 
-    const cardCoordinate = selectedSlide.offsetLeft - (Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('px', '') * 2))
+    const cardCoordinate = selectedSlide.offsetLeft - (Number.parseInt(window.getComputedStyle(this.slider).scrollPadding.replace('0px ', '').replace('px', '') * 2))
 
     this.slider.scrollTo({
       left: cardCoordinate,
