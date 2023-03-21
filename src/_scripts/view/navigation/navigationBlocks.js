@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'preact/compat';
 import CardGrid from "./cardGrid";
 import Cta from "./cta";
 import CardBlock from "./cardBlock";

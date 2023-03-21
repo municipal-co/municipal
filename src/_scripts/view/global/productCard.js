@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'preact/compat';
 import Swiper, {Scrollbar} from "swiper";
 
 const productCard = ((props) => {

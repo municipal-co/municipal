@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from 'preact/compat';
 import sdkClient from "../../lib/findifyApi";
 import ProductCard from "../global/productCard";
 import { Swiper, SwiperSlide } from "swiper/react"

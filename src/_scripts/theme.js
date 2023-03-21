@@ -3,8 +3,7 @@ import $ from 'jquery';
 import 'chosen-js';
 import 'jquery-unveil';
 import 'lazysizes';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { render } from 'preact/compat';
 
 
 // Bootstrap JS
@@ -117,25 +116,21 @@ Breakpoints.initialize();
 
   // Register Mobile navigation
   const navigationHolder = document.getElementById('main_navigation')
-  const navigationRoot = ReactDOM.createRoot(navigationHolder);
-  navigationRoot.render(<MainNav/>);
+  render(<MainNav/>, navigationHolder);
 
   const collectionHolder = document.getElementById('collection');
   if(collectionHolder) {
-    const collectionRoot = ReactDOM.createRoot(collectionHolder);
-    collectionRoot.render(<Collection/>);
+    render(<Collection/>, collectionHolder);
   }
 
   const searchHolder = document.getElementById('search-container');
   if(searchHolder) {
-    const searchRoot = ReactDOM.createRoot(searchHolder);
-    searchRoot.render(<Search/>)
+    render(<Search/>, searchHolder)
   }
 
   const autocompleteHolder = document.getElementById('autocomplete-wrapper');
   if(autocompleteHolder) {
-    const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
-    autocompleteRoot.render(<AutocompleteSearch/>)
+    render(<AutocompleteSearch/>, autocompleteHolder)
   }
 
   $('.in-page-link').on('click', (evt) => {

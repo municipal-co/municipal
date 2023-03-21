@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'preact/compat';
 import ProductCard from "../global/productCard";
 import PromoCard from "../global/promoCard";
 import FindifyPagination from "./findifyPagination";

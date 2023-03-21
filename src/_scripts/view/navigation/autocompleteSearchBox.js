@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'preact/compat';
 const AutocompleteSearchBox = (props) => {
   const inputField = useRef();
   const updateQueryString = (evt) => {

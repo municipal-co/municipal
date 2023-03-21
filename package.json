@@ -9,6 +9,7 @@
     "@babel/preset-env": "^7.18.10",
     "@babel/register": "^7.18.9",
     "@fullhuman/postcss-purgecss": "^4.1.3",
+    "aliasify": "^2.1.0",
     "autoprefixer": "^10.4.8",
     "babel-loader": "^8.2.5",
     "babelify": "^10.0.0",
@@ -36,7 +37,6 @@
     "merge-stream": "^2.0.0",
     "path": "^0.12.7",
     "postcss": "^8.4.14",
-    "react-dom": "^18.2.0",
     "read-config": "^2.0.0",
     "sass": "^1.54.0",
     "stylelint": "^14.9.1",
@@ -63,8 +63,7 @@
     "jquery-unveil": "^1.3.2",
     "js-cookie": "^3.0.1",
     "lazysizes": "^5.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "preact": "^10.13.1",
     "swiper": "^8.4.5",
     "throttle-debounce": "^2.1.0"
   },
@@ -74,7 +73,9 @@
     ]
   },
   "browser": {
-    "jquery": "./src/assets/jquery.js"
+    "jquery": "./src/assets/jquery.js",
+    "react": "preact/compat",
+    "react-dom": "preact/compat"
   },
   "browserify-shim": {
     "jquery": "$"

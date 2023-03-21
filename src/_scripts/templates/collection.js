@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'preact/compat';
 import sdkClient from '../lib/findifyApi';
 import FindifyFilters from '../view/findify/findifyFilters';
 import FindifyHeader from '../view/findify/findifyHeader';

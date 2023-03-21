@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'preact/compat';
 import { buildUrlSearchParams } from "./utils";
 
 const FindifyPagination = ((props) => {

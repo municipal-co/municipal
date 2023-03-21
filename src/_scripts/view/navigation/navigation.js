@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'preact/compat';
 
 import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';

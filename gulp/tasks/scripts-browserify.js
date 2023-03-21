@@ -6,6 +6,7 @@ import babelify from 'babelify';
 import log from 'fancy-log';
 import mergeStream from 'merge-stream';
 import yargs from 'yargs';
+import aliasify from 'aliasify';
 
 const {dest} = gulp;
 const argv = yargs(process.argv.slice('2')).argv;
@@ -28,13 +29,20 @@ const browserifyThis = (file) => {
 
   let b = browserify(config)
     .transform(babelify, {
-    presets: [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    global: true,
-    exclude: "/\/node_modules\/(?!@findify\/)/"
-  })
+      presets: [
+        "@babel/preset-env",
+        "@babel/preset-react"
+      ],
+      global: true,
+      exclude: "/\/node_modules\/(?!@findify\/)/"
+    })
+    .transform(aliasify, {
+      global: true,
+      aliases: {
+        'react': 'preact/compat',
+        'react-dom': 'preact/compat'
+      }
+    })
 
   return bundle();
 

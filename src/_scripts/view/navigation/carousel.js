@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef} from 'preact/compat';
 import Swiper, { FreeMode, Navigation } from "swiper";
 const Carousel = ((props) => {
   const s = props.block.settings;

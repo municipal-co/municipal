@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'preact/compat';
 
 const InfoCard = ((props) => {
   const settings = props.block.settings;
