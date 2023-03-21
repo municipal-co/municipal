@@ -124,7 +124,6 @@ export default class ProductDetailForm {
     // this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
     this.$pdpDrawerToggler.on(this.events.CLICK, this._toggleOptionDrawer.bind(this));
-    Utils.chosenSelects(this.$container);
     this.productBundles = new ProductBundles(this.$container, this.productSingleObject);
     this.$singleOptionSelectors.on(this.events.CHANGE, this.onOptionChange.bind(this));
     this.$bisButton.on(this.events.CLICK, this.onBisButtonClick.bind(this));

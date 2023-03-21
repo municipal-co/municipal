@@ -1,7 +1,5 @@
 // jQuery
 import $ from 'jquery';
-import 'chosen-js';
-import 'jquery-unveil';
 import 'lazysizes';
 import React, { render } from 'preact/compat';
 
@@ -90,16 +88,10 @@ Breakpoints.initialize();
   sectionManager.register('customers-login', CustomersLoginSection);
   sectionManager.register('customers-register', CustomersRegisterSection);
   sectionManager.register('customers-account', CustomersAccountSection);
-  sectionManager.register(
-    'customers-account-orders',
-    CustomersAccountOrdersSection
-  );
+  sectionManager.register( 'customers-account-orders', CustomersAccountOrdersSection );
   sectionManager.register('customers-addresses', CustomersAddressesSection);
   sectionManager.register('customers-order', CustomersOrderSection);
-  sectionManager.register(
-    'customers-reset-password',
-    CustomersResetPasswordSection
-  );
+  sectionManager.register( 'customers-reset-password', CustomersResetPasswordSection );
   sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('featured-categories', FeaturedCategory);
   sectionManager.register('shop-the-look', ShopTheLook);
@@ -166,9 +158,6 @@ Breakpoints.initialize();
     );
   }
 
-  // Chosen JS plugin for select boxes
-  Utils.chosenSelects();
-
   // Form event handling / validation
   $body.on('change keydown', '.form-control', (e) => {
     $(e.currentTarget).removeClass('is-invalid');
@@ -201,13 +190,6 @@ Breakpoints.initialize();
     new ProductCard(el);
   });
 
-  // Add lazyloading support for background images
-  document.addEventListener('lazybeforeunveil', function(e) {
-    const bg = e.target.getAttribute('data-background');
-    if (bg) {
-      e.target.style.backgroundImage = 'url(' + bg + ')';
-    }
-  });
 
   window.getSiteSettingsJson = function() {
     return JSON.parse($('[data-theme-settings-json]').html());

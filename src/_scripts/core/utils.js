@@ -282,16 +282,6 @@ export function hashFromString(string) {
   return hash;
 }
 
-export function chosenSelects($container) {
-  const $selects = $container ? $('select.form-control', $container) : $('select.form-control');
-  $selects.not('[data-no-chosen]').chosen();
-
-  // Allows browser autofill to function properly
-  $selects.on('change', () => {
-    $(this).trigger('chosen:updated');
-  });
-}
-
 /**
  * Browser cookies are required to use the cart. This function checks if
  * cookies are enabled in the browser.
