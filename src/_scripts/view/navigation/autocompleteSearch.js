@@ -12,6 +12,7 @@ const AutocompleteSearch = (props) => {
   const [data, setData] = useState({
     recommendations: [],
     items: [],
+    redirect: ""
   })
 
   const openSearchDrawer = () => {
@@ -44,7 +45,8 @@ const AutocompleteSearch = (props) => {
     const result = await getRecommendations();
     setData({
       recommendations: result.suggestions,
-      items: result.items
+      items: result.items,
+      redirect: result.redirect ? result.redirect.url : ""
     })
   }
 
@@ -90,6 +92,7 @@ const AutocompleteSearch = (props) => {
       <AutocompleteSearchBox
         searchActive={isOpen}
         setSearchQuery={setSearchQuery}
+        data={data}
       />
       {data.items.length > 0 ?
         <>

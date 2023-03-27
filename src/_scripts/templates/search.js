@@ -54,7 +54,9 @@ const Search = (props) => {
         filter.isOpen = true;
         return filter;
       })
-
+      if(result.redirect) {
+        document.location.href = result.redirect.url
+      }
       setResultItems({ items: result.items, promos: result.promoSpots });
       setFilters(filters);
       pageTotal.current = result.meta.total;
