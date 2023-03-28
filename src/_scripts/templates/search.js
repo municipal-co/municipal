@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { sdkClient } from "../lib/findifyApi";
+import { sdkClient, client } from "../lib/findifyApi";
 import FindifyHeader from "../view/findify/findifyHeader";
 import FindifyTotalCount from "../view/findify/findifyTotalCount";
 import FindifyFilters from "../view/findify/findifyFilters";
@@ -56,6 +56,12 @@ const Search = (props) => {
         return filter;
       })
       if(result.redirect) {
+        client.sendEvent('redirect', {
+          rid: result.meta.rid,
+          name: result.redirect.name,
+          url: result.redirect.url,
+          suggestion: result.meta.q
+        })
         document.location.href = result.redirect.url
       }
       setRid(result.meta.rid);

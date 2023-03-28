@@ -5,6 +5,7 @@ import 'jquery-unveil';
 import 'lazysizes';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { client } from './lib/findifyApi';
 
 
 // Bootstrap JS
@@ -213,6 +214,24 @@ Breakpoints.initialize();
       e.target.style.backgroundImage = 'url(' + bg + ')';
     }
   });
+
+  const viewPageData = {
+    ref: document.referrer,
+    url: document.location.href,
+    height: window.screen.height,
+    width: window.screen.width,
+  }
+
+  let productData = document.querySelector('[data-product-json]');
+  if(productData) {
+    productData = JSON.parse(productData.innerHTML);
+    const variant = new URLSearchParams( document.location.search ).get('variant');
+
+    viewPageData["item_id"] = productData.id;
+    viewPageData["item_variant_id"] = variant;
+  }
+
+  client.sendEvent("view-page", viewPageData)
 
   window.getSiteSettingsJson = function() {
     return JSON.parse($('[data-theme-settings-json]').html());

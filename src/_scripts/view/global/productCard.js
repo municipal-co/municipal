@@ -175,6 +175,11 @@ const productCard = ((props) => {
     const event = new CustomEvent('option-drawer:open')
     event.optionDrawerData = data;
     document.dispatchEvent(event);
+    client.sendEvent('click-item', {
+      item_id: productData.id,
+      variant_id: currentVariant.id,
+      rid: props.rid
+    })
   }
 
   const markCurrentCard = (e) => {

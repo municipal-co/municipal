@@ -45,10 +45,11 @@ const AutocompleteSearch = (props) => {
   const fetchData = async () => {
     const result = await getRecommendations();
     setData({
+      query: result.meta.q,
       rid: result.meta.rid,
       recommendations: result.suggestions,
       items: result.items,
-      redirect: result.redirect ? result.redirect.url : ""
+      redirect: result.redirect
     })
   }
 
