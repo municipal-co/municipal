@@ -36,7 +36,7 @@ const AccountForms = () => {
           <div className="navigation-form__header">
             <h6 className="navigation-form__title">Sign in:</h6>
             <p className="navigation-form__subtitle">
-              Quick checkout and history
+              Quick checkout, order history and more.
             </p>
           </div>
           <form method="post" action="/account/login" acceptCharset="UTF-8" data-login-with-shop="true">

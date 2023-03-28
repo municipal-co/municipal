@@ -5,6 +5,8 @@ import * as Currency from '../../core/currency';
 import Drawer from '../../ui/drawer';
 import Variants from './variants';
 import ProductBundles from '../../managers/product-bundles'
+import { client } from '../../lib/findifyApi';
+import Cookies from 'js-cookie';
 
 const selectors = {
   optionsContainer: '[data-product-detail-options]',
@@ -111,7 +113,7 @@ export default class ProductDetailForm {
 
     this.optionDrawers = this._setUpOptionDrawers();
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());
-
+    this.searchParams = new URLSearchParams(document.location.search);
     this.variants = new Variants({
       $container: this.$detailOptions,
       enableHistoryState: this.settings.enableHistoryState,
@@ -138,6 +140,13 @@ export default class ProductDetailForm {
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant, true);
     this.validateSizeAvailability();
+
+    client.sendEvent('view-page', {
+      item_id: this.productSingleObject.id,
+      variant_item_id: this.searchParams.get('variant')
+    })
+
+    Cookies.set('findify-rid', this.searchParams.get('rid'))
   }
 
   onVariantChange(evt) {
