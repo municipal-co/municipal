@@ -7,6 +7,8 @@ const AutocompleteSearchBox = (props) => {
 
   const triggerRedirect = (e) => {
     if(props.data.redirect && props.data.redirect !== "") {
+      e.preventDefault();
+      e.stopPropagation();
       document.location.href = props.data.redirect;
     }
   }
