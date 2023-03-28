@@ -1,12 +1,11 @@
 import $ from 'jquery';
 import Swiper, { Scrollbar, Navigation } from 'swiper';
+import Cookies from 'js-cookie';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
 import Drawer from '../../ui/drawer';
 import Variants from './variants';
 import ProductBundles from '../../managers/product-bundles'
-import { client } from '../../lib/findifyApi';
-import Cookies from 'js-cookie';
 
 const selectors = {
   optionsContainer: '[data-product-detail-options]',
@@ -140,11 +139,6 @@ export default class ProductDetailForm {
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant, true);
     this.validateSizeAvailability();
-
-    client.sendEvent('view-page', {
-      item_id: this.productSingleObject.id,
-      variant_item_id: this.searchParams.get('variant')
-    })
 
     Cookies.set('findify-rid', this.searchParams.get('rid'))
   }

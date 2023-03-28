@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { client } from "../../lib/findifyApi";
 const AutocompleteSearchBox = (props) => {
   const inputField = useRef();
   const updateQueryString = (evt) => {
@@ -9,7 +10,13 @@ const AutocompleteSearchBox = (props) => {
     if(props.data.redirect && props.data.redirect !== "") {
       e.preventDefault();
       e.stopPropagation();
-      document.location.href = props.data.redirect;
+      client.sendEvent('redirect', {
+        rid: props.data.rid,
+        name: props.data.redirect.name,
+        url: props.data.redirect.url,
+        suggestion: props.data.query
+      })
+      document.location.href = props.data.redirect.url;
     }
   }
 
