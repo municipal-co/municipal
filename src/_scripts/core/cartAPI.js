@@ -2,6 +2,8 @@ import $ from 'jquery';
 import * as Currency from './currency';
 import * as Image from './image';
 import AJAXFormManager from '../managers/ajaxForm';
+import { client } from '../lib/findifyApi';
+import Cookies from 'js-cookie';
 
 class CartAPI {
   constructor() {
@@ -154,6 +156,16 @@ class CartAPI {
    */
   addItemFromForm($form) {
     let promise = $.Deferred();
+    const rid = Cookies.get('findify-rid');
+
+    if(rid !== 'null') {
+      client.sendEvent('add-to-cart', {
+        rid: rid,
+        item_id: $form.data('product-id'),
+        variant_item_id: $form.find('[name="id"]').val(),
+        quantity: $form.find('[name="quantity"]').val(),
+      })
+    }
 
     const bundleSelection = this.validateBundleSelection($form);
     if(bundleSelection !== false) {
@@ -164,7 +176,14 @@ class CartAPI {
         dataType: 'json',
         url: '/cart/add.js',
         data: $form.serialize(),
-        success: () => {
+        success: (response) => {
+          client.sendEvent('update-cart', {
+            line_items: [{
+              item_id: response.variant_id,
+              unit_price: response.price/100,
+              quantity: response.quantity,
+            }]
+          })
           this.getCart().then((cart) => {
             promise.resolve(cart);
           });

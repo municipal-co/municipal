@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import sdkClient from "../../lib/findifyApi";
+import {sdkClient, client} from "../../lib/findifyApi";
 import ProductCard from "../global/productCard";
 import { Swiper, SwiperSlide } from "swiper/react"
-import AutocompleteSearchBox from "./autocompleteSearchBox";
+import AutocompleteSearchBox from "./autocompleteSearchBox";;
 
 const AutocompleteSearch = (props) => {
   const searchContainer = useRef();
@@ -10,9 +10,10 @@ const AutocompleteSearch = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({
+    rid: '',
     recommendations: [],
     items: [],
-    redirect: ""
+    redirect: ''
   })
 
   const openSearchDrawer = () => {
@@ -44,9 +45,26 @@ const AutocompleteSearch = (props) => {
   const fetchData = async () => {
     const result = await getRecommendations();
     setData({
+      rid: result.meta.rid,
       recommendations: result.suggestions,
       items: result.items,
       redirect: result.redirect ? result.redirect.url : ""
+    })
+  }
+
+  const trackSuggestionClick = (evt) => {
+    const target = evt.target;
+    const rid = target.dataset.rid;
+    const suggestion = target.innerText;
+
+    client.sendEvent('click-suggestion', {
+      rid,
+      suggestion,
+    })
+
+    client.sendEvent('redirect', {
+      rid,
+      suggestion
     })
   }
 
@@ -115,7 +133,7 @@ const AutocompleteSearch = (props) => {
               >
               {data.recommendations.map((recommendation) => {
                   return (<SwiperSlide key={recommendation.value} tag="li">
-                    <a href={`/search/?q=${recommendation.value}`} className="autocomplete__recommended-query"> {recommendation.value} </a>
+                    <a href={`/search/?q=${recommendation.value}`} className="autocomplete__recommended-query" onClick={trackSuggestionClick} data-rid={data.rid}> {recommendation.value} </a>
                   </SwiperSlide>)
                 })}
               </Swiper>
@@ -132,7 +150,8 @@ const AutocompleteSearch = (props) => {
               {data.items.map((product) => {
                   return (<li key={product.id} className="content-grid__item">
                     {<ProductCard
-                    data={product}/>}
+                    data={product}
+                    rid={data.rid} />}
                   </li>)
                 })
               }

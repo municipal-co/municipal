@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { getPropByString } from '../core/utils';
 import CartAPI from '../core/cartAPI';
+import { client } from '../lib/findifyApi';
 
 const selectors = {
   addForm: 'form[action^="/cart/add"]',
@@ -64,6 +65,14 @@ class AJAXFormManager {
       CartAPI.addItemFromID(e.variantID, e.properties)
         .then((data) => {
           const event = $.Event(this.events.ADD_SUCCESS, { cart: data });
+          if(e.rid) {
+            client.sendEvent('add-to-cart', {
+              rid: e.rid,
+              item_id: e.productId,
+              item_variant_id: e.variantID,
+              quantity: 1
+            })
+          }
           $window.trigger(event);
         })
         .fail((data) => {

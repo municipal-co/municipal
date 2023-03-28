@@ -45,6 +45,7 @@ export default class OptionDrawer extends BaseSection {
     }
 
     this.processData(this.drawerData);
+    this.rid = this.drawerData.rid;
     this.$optionName.text(this.drawerData.printOption);
     this.$drawerBody.html(this.template(this.drawerData));
     this.drawer.show();
@@ -100,13 +101,14 @@ export default class OptionDrawer extends BaseSection {
     const $this = $(evt.currentTarget);
     const optionValue = $this.data('option-value');
     const variantId = $this.data('variant-id');
+    const productId = $this.data('product-id');
     const properties = {};
     const finalSaleMessage = $this.data('final-sale-message');
     if(this.drawerData.addToCart === true ){
       if(finalSaleMessage !== undefined && finalSaleMessage !== '') {
         properties['Final Sale'] = finalSaleMessage
       };
-      $(window).trigger($.Event('add_one_from_variant_id', {variantID: variantId, properties: properties}));
+      $(window).trigger($.Event('add_one_from_variant_id', {variantID: variantId, properties: properties, productId: productId, rid: this.rid}));
       this.drawer.hide();
       return false;
     }

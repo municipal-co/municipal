@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import sdkClient from "../lib/findifyApi";
+import { sdkClient } from "../lib/findifyApi";
 import FindifyHeader from "../view/findify/findifyHeader";
 import FindifyTotalCount from "../view/findify/findifyTotalCount";
 import FindifyFilters from "../view/findify/findifyFilters";
@@ -34,6 +34,7 @@ const Search = (props) => {
   const [resultItems, setResultItems] = useState({items:[], promos:[]});
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [filters, setFilters] = useState([]);
+  const [rid, setRid] = useState("");
   const activeFilters = useRef([]);
   const templateHeader = useRef();
 
@@ -57,6 +58,7 @@ const Search = (props) => {
       if(result.redirect) {
         document.location.href = result.redirect.url
       }
+      setRid(result.meta.rid);
       setResultItems({ items: result.items, promos: result.promoSpots });
       setFilters(filters);
       pageTotal.current = result.meta.total;
@@ -133,6 +135,7 @@ const Search = (props) => {
           itemCount={pageTotal.current}
           selectedProducts={document.location.hash}
           setRequestParams={setRequestParams}
+          rid={rid}
           />
       </div>
     </div>

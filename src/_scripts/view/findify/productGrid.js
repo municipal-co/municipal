@@ -4,7 +4,6 @@ import PromoCard from "../global/promoCard";
 import FindifyPagination from "./findifyPagination";
 
 const ProductGrid = ((props) => {
-
   const buildItemList = () => {
     const items = props.collectionItems.items.map(product => {
       product.type = 'product';
@@ -30,7 +29,7 @@ const ProductGrid = ((props) => {
     const items = itemList.map(item => {
       const scrollIntoView = checkScrollIntoView(item);
       if(item.type == 'product') {
-        return (<div key={item.id} className="content-grid__item"><ProductCard  data={item} scrollIntoView={scrollIntoView}/></div>)
+        return (<div key={item.id} className="content-grid__item"><ProductCard  data={item} scrollIntoView={scrollIntoView} rid={props.rid}/></div>)
       } else {
         return (<div key={item.id} className="content-grid__item"><PromoCard  data={item} /></div>)
       }
