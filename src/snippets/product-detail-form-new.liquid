@@ -3,7 +3,7 @@
 {% render 'klaviyo-product-tracking-script', current_variant: current_variant %}
 
 <div data-product-detail-form data-low-quantity-threshold="{{ settings.low_inventory_threshold | default: 0 }}">
-  {%- form 'product', product, data-add-to-cart-form:"" -%}
+  {%- form 'product', product, data-add-to-cart-form:"", data-product-id: product.id -%}
     <div data-product-detail-options>
       {%- for option in product.options -%}
         {%- if option == "color" or option == "Color" -%}

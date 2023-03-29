@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Swiper, {Scrollbar} from "swiper";
+import { client } from "../../lib/findifyApi";
 
 const productCard = ((props) => {
-
   const processData = () => {
     let data = props.data;
 
@@ -161,7 +161,9 @@ const productCard = ((props) => {
       optionIndex: 'size',
       printOption: 'Size',
       productTitle: productData.title,
+      productId: productData.id,
       addToCart: true,
+      rid: props.rid,
       variants: getCurrentColorVariant(),
     }
 
@@ -173,9 +175,23 @@ const productCard = ((props) => {
     const event = new CustomEvent('option-drawer:open')
     event.optionDrawerData = data;
     document.dispatchEvent(event);
+    client.sendEvent('click-item', {
+      item_id: productData.id,
+      variant_id: currentVariant.id,
+      rid: props.rid
+    })
   }
 
   const markCurrentCard = (e) => {
+    client.sendEvent('click-item', {
+      rid: props.rid,
+      item_id: productData.id,
+      variant_item_id: currentVariant.id
+    })
+    client.sendEvent('redirect', {
+      rid: props.rid,
+      suggestion: productData.id
+    })
     if(document.location.href.indexOf('/collections/') > -1 || document.location.href.indexOf('/search') > -1) {
       const cardId = card.current.id;
       history.replaceState(history.state, null, document.location.pathname + document.location.search + `#${cardId}`)
@@ -215,7 +231,7 @@ const productCard = ((props) => {
 
   return (
     currentVariant && <div id={`product-card-${props?.data?.id}`} className="product-card" ref={card}>
-        <a href={currentVariant.product_url} className="product-card__gallery" onClick={markCurrentCard}>
+        <a href={`${currentVariant.product_url}&rid=${props.rid}`} className="product-card__gallery" onClick={markCurrentCard}>
           <div className="product-card__gallery-slide is-active">
             <img className="product-card__image" src={currentVariant.image_url} loading='lazy' />
           </div>

@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Swiper, { Scrollbar, Navigation } from 'swiper';
+import Cookies from 'js-cookie';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
 import Drawer from '../../ui/drawer';
@@ -111,7 +112,7 @@ export default class ProductDetailForm {
 
     this.optionDrawers = this._setUpOptionDrawers();
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());
-
+    this.searchParams = new URLSearchParams(document.location.search);
     this.variants = new Variants({
       $container: this.$detailOptions,
       enableHistoryState: this.settings.enableHistoryState,
@@ -138,6 +139,8 @@ export default class ProductDetailForm {
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant, true);
     this.validateSizeAvailability();
+
+    Cookies.set('findify-rid', this.searchParams.get('rid'))
   }
 
   onVariantChange(evt) {

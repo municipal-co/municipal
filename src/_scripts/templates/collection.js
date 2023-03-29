@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import sdkClient from '../lib/findifyApi';
+import { sdkClient } from '../lib/findifyApi';
 import FindifyFilters from '../view/findify/findifyFilters';
 import FindifyHeader from '../view/findify/findifyHeader';
 import ProductGrid from '../view/findify/productGrid';
@@ -36,6 +36,7 @@ const Collection = ((props) => {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [collectionItems, setCollectionItems] = useState({items: [], promos:[]});
   const [isLoading, setIsLoading] = useState(true);
+  const [rid, setRid] = useState();
   const [requestParams, setRequestParams] = useState({
     slot: document.location.pathname,
     limit: itemCount,
@@ -56,6 +57,7 @@ const Collection = ((props) => {
     })
     setCollectionItems({ items:result.items, promos: result.promoSpots });
     setFilters(filters);
+    setRid(result.meta.rid);
     collectionTotal.current = result.meta.total;
     activeFilters.current = result.meta.filters;
     setIsLoading(false);
@@ -124,6 +126,7 @@ const Collection = ((props) => {
           itemsPerPage={itemCount}
           itemCount={collectionTotal.current}
           setRequestParams={setRequestParams}
+          rid={rid}
           />
       </div>
     </div>

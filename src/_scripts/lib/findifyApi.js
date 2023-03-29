@@ -11,4 +11,4 @@ const sdkClient = findifySdk.init({
   method: 'post'
 })
 
-export default sdkClient;
+export {sdkClient, client};
