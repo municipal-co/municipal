@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'preact/compat';
-import Swiper, {Scrollbar} from "swiper";
+import { SnapScrollSlide, SnapScrollSlider } from '../utils/ScrollSnapSlider';
+
 
 const productCard = ((props) => {
 
@@ -93,22 +94,6 @@ const productCard = ((props) => {
 
   const getCurrentVariantIndex = () => productColors.indexOf(currentVariant);
 
-  const initSwiper = () => {
-    new Swiper(swatchSlider.current, {
-      modules: [Scrollbar],
-      slidesPerView: 4.5,
-      spaceBetween: 10,
-      threshold: 10,
-      initialSlide: getCurrentVariantIndex(),
-      watchOverflow: true,
-      centerInsufficientSlides: true,
-      scrollbar: {
-        el: '.swiper-scrollbar',
-        draggable: true,
-      }
-    })
-  }
-
   const getCurrentColorVariant = () => {
     const colorIndex = currentVariant.color == undefined ? 'option1' : 'color';
     const sortMap = {
@@ -185,7 +170,6 @@ const productCard = ((props) => {
   productData.options = ['color', 'size'];
   const [productColors, setProductColors] = useState(getColorList(productData, 'color'));
   const [currentVariant, setCurrentVariant] = useState(getCurrentVariant())
-  const swatchSlider = useRef();
   const card = useRef();
 
   useEffect(() => {
@@ -199,10 +183,6 @@ const productCard = ((props) => {
       history.replaceState(history.state, null, document.location.pathname + document.location.search);
     }
   }, [])
-
-  useEffect(() => {
-    initSwiper();
-  }, [productColors])
 
   useEffect(() => {
     productData = processData();
@@ -221,11 +201,31 @@ const productCard = ((props) => {
         </a>
         <form action="/cart/add" className="product-card__content text-center">
           <div className="product-option">
-            <div className="product-option__swatch swiper" ref={swatchSlider}>
-              <div className="swiper-wrapper">
+            <div className="product-option__swatch">
+              <SnapScrollSlider
+                settings={{
+                  prevArrow: '[data-arrow-prev]',
+                  nextArrow: '[data-arrow-next]',
+                  enableArrows: true,
+                  enableScrollbar: true,
+                  paddingBefore: '20px',
+                  paddingAfter: '20px',
+                  slidesPerView: 4.5,
+                  initialSlide: getCurrentVariantIndex(),
+                  breakpoints: {
+                    768: {
+                      slidesPerView: 3.8,
+                    },
+                    1024: {
+                      slidesPerView: 4.8
+                    }
+                  }
+                }}
+              >
                 {productColors.map(color => buildColorSwatch(color))}
-              </div>
-              <div className="swiper-scrollbar product-option__scrollbar"></div>
+              </SnapScrollSlider>
+              <div className="navigation-carousel__arrow--prev" data-arrow-prev></div>
+              <div className="navigation-carousel__arrow--next" data-arrow-next></div>
             </div>
           </div>
           <div className="product-card__color-title product-card__color-title--findify">

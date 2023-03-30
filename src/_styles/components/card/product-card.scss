@@ -18,20 +18,21 @@
 
   .product-option__swatch {
     margin: 0 -20px;
-    padding: 0 20px 15px;
+    width: calc(100% + 40px);
 
     @include media-breakpoint-down('md') {
       padding: 0 20px;
     }
   }
 
-  .swiper-scrollbar.product-option__scrollbar {
-    width: calc(100% - 40px);
-    left: 20px;
-    height: 3px;
+  .snap-slider-wrapper {
+    scrollbar-width: thin;
+    gap: 8px;
+    padding-bottom: 10px;
 
-    &:hover {
-      height: 6px;
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
     }
   }
 }

@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import ScrollSnapSlider from '../managers/scrollSnapSlider';
-// import Swiper, { Navigation } from 'swiper';
 import BaseSection from './base';
 
 
@@ -23,8 +22,18 @@ export default class HeaderSection extends BaseSection {
     this.slider = new ScrollSnapSlider(this.$container.get(0), {
         enableArrows: true,
         disableScrollbar: true,
+        slidesPerView: 'auto',
+        paddingBefore: '20px',
+        paddingAfter: '20px',
         nextArrow: '[data-arrow-next]',
         prevArrow: '[data-arrow-prev]',
+        breakpoints: {
+          992: {
+            slidesPerView: 'auto',
+            paddingBefore: '40px',
+            paddingAfter: '40px',
+          }
+        }
       }
     )
   }

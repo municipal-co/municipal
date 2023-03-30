@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Swiper, { Scrollbar, Navigation } from 'swiper';
+import ScrollSnapSlider from '../../managers/scrollSnapSlider';
 import * as Utils from '../../core/utils';
 import * as Currency from '../../core/currency';
 import Drawer from '../../ui/drawer';
@@ -34,7 +34,7 @@ const selectors = {
   // Final sale messaging
   finalSaleMessaging: '[data-final-sale-message]',
   // Color Slider
-  swatchesSlider: '[data-swatch-slider]',
+  swatchesSlider: '[data-swatches-container]',
   swatchSlide: '[data-swatch-slide]',
   // Size drawer toggler
   pdpOptionDrawerToggler: '[data-pdp-drawer-toggler]',
@@ -175,11 +175,10 @@ export default class ProductDetailForm {
   }
 
   initSwatchesSlider() {
-    let currentSlide = 0;
     this.$swatchSlider.each((i, slider) => {
+      let currentSlide = 0;
       const $slider = $(slider);
       const $swatchSlides = $(selectors.swatchSlide, $slider);
-      const $scrollbar = $('.swiper-scrollbar', $slider);
 
       $swatchSlides.each((index, el) => {
         if($(el).find('input[type=radio]:checked').length) {
@@ -188,25 +187,16 @@ export default class ProductDetailForm {
         }
       })
 
-      this.swatchSlider = new Swiper(this.$swatchSlider.get(0), {
-        modules: [Scrollbar, Navigation],
-        slide: selectors.swatchSlide,
+      this.swatchSlider = new ScrollSnapSlider($slider.get(0), {
+        paddingBefore: '30px',
+        paddingAfter: '30px',
         slidesPerView: 4.7,
-        spaceBetween: 8,
-        threshold: 10,
-        initialSlide: $swatchSlides.length <= 4 ? 0 : currentSlide,
-        watchOverflow: true,
-        slidesOffsetBefore: 30,
-        slidesOffsetAfter: 30,
-        scrollbar: $swatchSlides.length <= 4 ? false : {
-          el: '.swiper-scrollbar',
-          draggable: true,
-        },
-        navigation: {
-          prevEl: '[data-arrow-prev]',
-          nextEl: '[data-arrow-next]'
-        },
-      });
+        enableArrows: true,
+        prevArrow: '[data-arrow-prev]',
+        nextArrow: '[data-arrow-next]',
+        enableScroll: true,
+        initialSlide: currentSlide,
+      })
     })
   }
 

@@ -2,10 +2,13 @@ import { colorIsBright } from '../core/utils';
 
 export default class ScrollSnapSlider {
   constructor(container, settings) {
-
     this.settings = {
       initialSlide: settings.initialSlide || 0,
-      disableScrollbar: settings.disableScrollbar || false
+      disableScrollbar: settings.disableScrollbar || false,
+      slidesPerView: settings.slidesPerView || 3.5,
+      breakpoints: settings.breakpoints,
+      paddingBefore: settings.paddingBefore || 0,
+      paddingAfter: settings.paddingAfter || 0,
     }
 
     this.selectors = {
@@ -44,12 +47,28 @@ export default class ScrollSnapSlider {
       root: this.slider,
       threshold: 0.99,
     })
+    this.mediaQueries = [];
 
+    if(this.settings.breakpoints) {
+      // eslint-disable-next-line no-restricted-syntax
+      for(const [key, value] of Object.entries(this.settings.breakpoints)) {
+        this.mediaQueries.push({
+          query: window.matchMedia(`(min-width: ${key}px)`),
+          settings: value
+        })
+      }
+    }
 
     this.initSlider();
     this.initSlides();
+    this.breakpointCallback();
+
     this.slideList.forEach(slide => {
       this.Observer.observe(slide);
+    })
+
+    this.mediaQueries.forEach(queryObject => {
+      queryObject.query.addEventListener('change', this.breakpointCallback.bind(this));
     })
 
     this.goToSlide.call(this, this.settings.initialSlide);
@@ -95,8 +114,9 @@ export default class ScrollSnapSlider {
   buildArrows() {
     if(typeof(this.selectors.prevArrow) !== 'string') {
       const newNode = document.createElement('button');
-      newNode.text = 'previous';
+      newNode.innerText = 'previous';
       this.arrowPrev = this.slider.parentNode.insertBefore(newNode, this.slider);
+      this.arrowPrev.type = 'button';
       this.arrowPrev.addEventListener('click', this.navigateToPrevSlide.bind(this));
     } else {
       this.arrowPrev = this.slider.parentNode.querySelector(this.selectors.prevArrow);
@@ -104,8 +124,9 @@ export default class ScrollSnapSlider {
     }
     if(typeof(this.selectors.nextArrow) !== 'string') {
       const newNode = document.createElement('button');
-      newNode.text = 'next';
+      newNode.innerText = 'next';
       this.arrowNext = this.slider.parentNode.insertBefore(newNode, this.slider);
+      this.arrowNext.type = 'button';
       this.arrowNext.addEventListener('click', this.navigateToNextSlide.bind(this));
     } else {
       this.arrowNext = this.slider.parentNode.querySelector(this.selectors.nextArrow);
@@ -158,5 +179,27 @@ export default class ScrollSnapSlider {
       left: cardCoordinate,
       behavior: 'smooth'
     })
+  }
+
+  breakpointCallback() {
+    const lastBreakpoint = this.mediaQueries.findLast(mediaQuery => {
+      return mediaQuery.query.matches
+    })
+
+    this.slider.style.setProperty('--paddingBefore', this.settings.paddingBefore);
+    this.slider.style.setProperty('--paddingAfter', this.settings.paddingAfter);
+    this.slider.style.setProperty('--slideWidth', Number.isNaN(this.settings.slidesPerView) ? this.settings.slidesPerView : 100/this.settings.slidesPerView + '%');
+
+    if(lastBreakpoint) {
+      if(lastBreakpoint.settings.paddingBefore) {
+        this.slider.style.setProperty('--paddingBefore', lastBreakpoint.settings.paddingBefore)
+      }
+      if(lastBreakpoint.settings.paddingAfter) {
+        this.slider.style.setProperty('--paddingAfter', lastBreakpoint.settings.paddingAfter)
+      }
+      if(lastBreakpoint.settings.slidesPerView) {
+        this.slider.style.setProperty('--slideWidth', Number.isNaN(lastBreakpoint.settings.slidesPerView) ? lastBreakpoint.settings.slidesPerView : 100/lastBreakpoint.settings.slidesPerView + '%')
+      }
+    }
   }
 }

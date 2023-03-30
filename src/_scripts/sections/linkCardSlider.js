@@ -21,7 +21,20 @@ export default class LinkCardSlider extends BaseSection {
     this.slider = new ScrollSnapSlider(this.$container.get(0), {
       nextArrow: '[data-arrow-next]',
       prevArrow: '[data-arrow-prev]',
-      enableArrows: true
+      enableArrows: true,
+      slidesPerView: 1.5,
+      paddingBefore: '30px',
+      paddingAfter: '30px',
+      breakpoints: {
+        992: {
+          paddingBefore: '50px',
+          paddingAfter: '50px',
+          slidesPerView: 3.5
+        },
+        1200: {
+          slidesPerView: 4.3,
+        }
+      }
     })
   };
 

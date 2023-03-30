@@ -43,11 +43,38 @@ export default class ShopTheLook extends BaseSection {
   };
 
   initLooksSlider() {
-    this.looksSlider = new ScrollSnapSlider(this.$container.get(0), {
-      enableArrows: true,
-      nextArrow: '[data-arrow-next]',
-      prevArrow: '[data-arrow-prev]',
-    });
+    if(this.$container.attr('id') !== 'shop-the-look-pdp') {
+      this.looksSlider = new ScrollSnapSlider(this.$container.get(0), {
+        enableArrows: true,
+        enableScroll: true,
+        nextArrow: '[data-arrow-next]',
+        prevArrow: '[data-arrow-prev]',
+        slidesPerView: 1.5,
+        paddingBefore: '30px',
+        paddingAfter: '30px',
+        breakpoints: {
+          992: {
+            paddingBefore: '50px',
+            paddingAfter: '50px',
+            slidesPerView: 3.5
+          },
+          1200: {
+            slidesPerView: 4.3,
+          }
+        }
+      });
+    } else {
+      this.looksSlider = new ScrollSnapSlider(this.$container.get(0), {
+        slidesPerView: 1.15,
+        enableScroll: true,
+        enableArrows: true,
+        prevArrow: '[data-arrow-prev]',
+        nextArrow: '[data-arrow-next]',
+        paddingBefore: '30px',
+        paddingAfter: '30px',
+      })
+    }
+
   }
 
   initLooksDrawers() {
