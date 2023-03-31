@@ -49,10 +49,15 @@ export default class ShopTheLook extends BaseSection {
         enableScroll: true,
         nextArrow: '[data-arrow-next]',
         prevArrow: '[data-arrow-prev]',
-        slidesPerView: 1.5,
+        slidesPerView: 1.2,
         paddingBefore: '30px',
         paddingAfter: '30px',
         breakpoints: {
+          768: {
+            paddingBefore: '30px',
+            paddingAfter: '30px',
+            slidesPerView: 2.5,
+          },
           992: {
             paddingBefore: '50px',
             paddingAfter: '50px',

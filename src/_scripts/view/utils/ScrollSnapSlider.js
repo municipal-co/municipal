@@ -53,7 +53,6 @@ export function SnapScrollSlider({className, children, settings}) {
   }
 
   const goToNextSlide = () => {
-    console.log('next slide');
     const firstActiveSlide = slides.current.find(slide => {
       return slide.classList.contains('is-visible')
     });

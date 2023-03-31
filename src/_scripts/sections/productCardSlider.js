@@ -22,16 +22,18 @@ export default class ProductCardSlider extends BaseSection {
   }
 
   initCardSlider() {
-    console.log(this.$container);
     if(this.$container.attr('id') !== 'product-card-slider-product-new' && this.$container.attr('id') !== 'product-card-slider-product-bundles') {
       this.cardSlider = new ScrollSnapSlider(this.$container.get(0), {
         enableArrows: true,
         prevArrow: '[data-card-slider-arrow-prev]',
         nextArrow: '[data-card-slider-arrow-next]',
-        slidesPerView: 1.5,
+        slidesPerView: 1.2,
         paddingBefore: '30px',
         paddingAfter: '30px',
         breakpoints: {
+          768: {
+            slidesPerView: 2.5,
+          },
           992: {
             paddingBefore: '50px',
             paddingAfter: '50px',
@@ -43,7 +45,6 @@ export default class ProductCardSlider extends BaseSection {
       }
     })
   } else {
-    console.log('what?');
     this.cardSlider = new ScrollSnapSlider(this.$container.get(0), {
       enableArrows: true,
       prevArrow: '[data-card-slider-arrow-prev]',

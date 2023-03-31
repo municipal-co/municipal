@@ -19,10 +19,6 @@
   .product-option__swatch {
     margin: 0 -20px;
     width: calc(100% + 40px);
-
-    @include media-breakpoint-down('md') {
-      padding: 0 20px;
-    }
   }
 
   .snap-slider-wrapper {

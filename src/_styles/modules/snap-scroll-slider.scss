@@ -24,6 +24,10 @@
     --paddingAfter: 30px;
   }
 
+  @include media-breakpoint-down('sm') {
+    scroll-snap-type: none;
+  }
+
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -64,9 +68,5 @@
 
   &:last-child {
     scroll-padding-right: var(--paddingAfter);
-  }
-
-  @include media-breakpoint-down('md') {
-    scroll-snap-align: center;
   }
 }

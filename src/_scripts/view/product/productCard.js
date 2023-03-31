@@ -86,11 +86,8 @@ export default class ProductCard {
       paddingBefore: '20px',
       paddingAfter: '20px',
       initialSlide: swatchIndex,
-      slidesPerView: 4.8,
+      slidesPerView: 3.8,
       breakpoints: {
-        768: {
-          slidesPerView: 3.8,
-        },
         1024: {
           slidesPerView: 4.8
         }
