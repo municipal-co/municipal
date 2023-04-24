@@ -84,11 +84,11 @@ const productCard = ((props) => {
 
   const buildColorSwatch = (variant) => {
     return(<label key={variant.id} className="product-option__single-selector swiper-slide">
-      <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
-      <div className="product-option__ui">
-        <img src={variant.image_url} alt="" loading="lazy"/>
-      </div>
-    </label>)
+        <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
+        <div className="product-option__ui">
+          <img src={variant.image_url} alt="" loading="lazy"/>
+        </div>
+      </label>)
   }
 
   const getCurrentVariantIndex = () => productColors.indexOf(currentVariant);
@@ -172,9 +172,10 @@ const productCard = ((props) => {
 
   const openSizeSelectorDrawer = () => {
     const data = buildSizeDrawerData();
-    const event = new CustomEvent('option-drawer:open')
-    event.optionDrawerData = data;
-    document.dispatchEvent(event);
+    document.dispatchEvent(new CustomEvent('drawerOpen', {detail: {
+      type: 'option-drawer',
+      ...data
+    }}))
     client.sendEvent('click-item', {
       item_id: productData.id,
       variant_id: currentVariant.id,

@@ -59,7 +59,7 @@
 }
 
 .bis__body-info {
-  margin-top: auto;
+  margin-top: 30px;
   font-family: $font-family-sans-serif;
   font-weight: $font-weight-bold;
   font-size: 26px;
@@ -95,6 +95,10 @@
   left: calc(100% - 55px);
   color: $black;
 
+  &:before {
+    display: none !important;
+  }
+
   &:hover {
     width: 45px;
   }
@@ -123,7 +127,7 @@
   }
 }
 
-.bis__footer-info {
+.bis__footer-info p {
   font-size: 14px;
   line-height: 1.5;
   text-align: center;

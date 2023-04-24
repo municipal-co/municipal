@@ -1,6 +1,6 @@
 ## Getting Started
 
-- Make sure your node version is set up to 17.9 (if you are using nvm you can run the command `nvm use` to pick from the .nvmrc set up for the project)
+- Make sure your node version is set up to 17.9 or newer (if you are using nvm you can run the command `nvm use` to pick from the .nvmrc set up for the project)
 - Install all dependencies using `npm install` or `yarn install`
 - Create a development theme instance by duplicating the live theme and renaming it Dev \[Initials\], e.g. Dev \[JG\]
 - Duplicate `config.yml.sample` to `config.yml` and add your store information and private app credentials:

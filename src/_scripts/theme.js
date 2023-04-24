@@ -42,19 +42,15 @@ import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
 import CustomersResetPasswordSection from './sections/customersResetPassword';
-import YotpoReviews from './sections/yotpoReviews';
-import FeaturedCategories from './sections/featuredCategories';
-import ShopTheLook from './sections/shop-the-look';
 import ShopTheLookEditor from './sections/shop-the-look-editor';
 import OptionDrawer from './sections/optionDrawer';
+import FeaturedCategory from './sections/featuredCategories'
+import ShopTheLook from './sections/shop-the-look';
 import LinkCardSlider from './sections/linkCardSlider';
 import ContentSlider from './sections/contentSlider';
-import BisDrawer from './sections/bisDrawer';
 import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
-import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 import FourOFour from './sections/fourofour';
-import MentorDrawer from './sections/mentorDrawer';
 import ShopifyCollection from './sections/shopify-collection';
 import Faq from './sections/faq';
 
@@ -69,6 +65,7 @@ import MainNav from './view/navigation/navigation';
 import Collection from './templates/collection';
 import Search from './templates/search';
 import AutocompleteSearch from './view/navigation/autocompleteSearch';
+import DrawerSystem from './view/drawer/DrawerSystem';
 
 // Do this ASAP
 Animations.initialize();
@@ -103,18 +100,14 @@ Breakpoints.initialize();
     'customers-reset-password',
     CustomersResetPasswordSection
   );
-  sectionManager.register('yotpo-reviews', YotpoReviews);
-  sectionManager.register('featured-categories', FeaturedCategories);
-  sectionManager.register('shop-the-look', ShopTheLook);
   sectionManager.register('shop-the-look-editor', ShopTheLookEditor);
   sectionManager.register('option-selector-drawer', OptionDrawer);
+  sectionManager.register('featured-categories', FeaturedCategory);
+  sectionManager.register('shop-the-look', ShopTheLook);
   sectionManager.register('link-card-slider', LinkCardSlider);
   sectionManager.register('content-slider', ContentSlider);
-  sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
-  sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
-  sectionManager.register('mentor-drawer', MentorDrawer);
   sectionManager.register('shopify-collection', ShopifyCollection);
   sectionManager.register('faq', Faq);
 
@@ -139,6 +132,12 @@ Breakpoints.initialize();
   if(autocompleteHolder) {
     const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
     autocompleteRoot.render(<AutocompleteSearch/>)
+  }
+
+  const drawerHolder = document.getElementById('drawer-container');
+  if(drawerHolder) {
+    const drawersRoot = ReactDOM.createRoot(drawerHolder);
+    drawersRoot.render(<DrawerSystem />, drawerHolder);
   }
 
   $('.in-page-link').on('click', (evt) => {
@@ -205,9 +204,9 @@ Breakpoints.initialize();
   // END - Global handler for collapse plugin to add state class for open expandable lists
 
   // Init any Product Cards on the page
-  $('[data-product-card]').each((i, el) => {
-    new ProductCard(el);
-  });
+  // $('[data-product-card]').each((i, el) => {
+  //   new ProductCard(el);
+  // });
 
   // Add lazyloading support for background images
   document.addEventListener('lazybeforeunveil', function(e) {

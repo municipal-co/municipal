@@ -2,6 +2,12 @@
   overflow: auto;
   height: 100%;
   background-color: $bg-white;
+
+  .slider-container {
+    position: relative;
+    width: calc(100% + 60px);
+    margin-left: -30px;
+  }
 }
 
 .look-drawer__body {
@@ -9,7 +15,7 @@
 }
 
 .look-drawer__slider {
-  width: calc( 100% + 60px);
+  width: calc(100% + 60px);
   margin-left: -30px;
   overflow: hidden;
 }

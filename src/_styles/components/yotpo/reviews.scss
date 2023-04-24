@@ -147,7 +147,10 @@
       display: none;
     }
   }
-
+  .yotpo-icon.rating-star,
+  .yotpo-icon.review-star {
+    background-image: unset !important;
+  }
   // Yotpo Stars
   @if $yotpo-icon-star {
     .yotpo-icon.rating-star,
@@ -166,7 +169,7 @@
 
       &:before {
         content: "";
-        background-color: $white;
+        background-color: transparent;
         background-image: url($yotpo-icon-star);
         background-repeat: no-repeat;
         background-position: center;

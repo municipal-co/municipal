@@ -10,115 +10,82 @@ const selectors = {
   productForm: '[data-product-detail-form]',
   addToCartFormDrawer: '[data-add-to-cart-drawer]',
   fitGuideToggleButton: '[data-fit-guide-toggler]',
-  fitGuideDrawer: '[data-fit-guide-drawer]',
-  fitGuideGallery: '[data-fit-guide-gallery]',
-  fitGuideGalleryIndex: '[data-fit-guide-gallery-current-index]',
   videoPlayer: '[data-video-player]',
   featuresDrawer: '[data-features-drawer]',
   featuresDrawerToggler: '[data-features-toggler]',
   featuresDrawerSlider: '[data-features-slider]',
   sliderPagination: '[data-slider-pagination]',
+  reviewsDrawerToggler: '[data-reviews-toggler]'
 };
 
 export default class ProductSection extends BaseSection {
   constructor(container) {
     super(container, 'product');
 
-    this.productDetail = new ProductDetail($(selectors.productDetail, this.$container));
+    this.productDetail = new ProductDetail(
+      $(selectors.productDetail, this.$container)
+    );
     this.$productForm = $(selectors.productForm);
     this.$featuresDrawerToggler = $(selectors.featuresDrawerToggler);
     this.$featuresDrawerSlider = $(selectors.featuresDrawerSlider);
+    this.$reviewsToggler = $(selectors.reviewsDrawerToggler);
 
-    // drawers
-    this.galleries = [];
+    this.$reviewsToggler.on('click', this.toggleReviewsModal.bind(this))
 
-    $(document).on('click', selectors.fitGuideToggleButton, this.toggleFitGuideModal.bind(this));
-    this.$featuresDrawerToggler.on('click', this.toggleFeatureDrawer.bind(this));
+    $(document).on(
+      'click',
+      selectors.fitGuideToggleButton,
+      this.toggleFitGuideModal.bind(this)
+    );
 
+    this.$featuresDrawerToggler.on(
+      'click',
+      this.toggleFeatureDrawer.bind(this)
+    );
 
     new VideoPlayer(selectors.videoPlayer);
 
-    if($(selectors.fitGuideDrawer).length) {
-      this.fitGuideDrawer = new Drawer($(selectors.fitGuideDrawer));
-      this.initFitGuideGalleries();
-      if(document.location.hash === '#fitGuide') {
-        this.fitGuideDrawer.show();
-        history.replaceState(null, '', document.location.href.replace('#fitGuide', ''));
+    if (document.querySelector('[data-fit-guide-settings]')) {
+
+      if (document.location.hash === '#fitGuide') {
+        this.toggleFitGuideModal();
+        history.replaceState(
+          null,
+          '',
+          document.location.href.replace('#fitGuide', '')
+        );
       }
     }
+  }
 
-    if(this.$featuresDrawerToggler.length) {
-      this.featuresDrawer = new Drawer($(selectors.featuresDrawer));
-      this.initFeaturesSlider();
-    }
+  toggleReviewsModal() {
+    document.dispatchEvent(new CustomEvent('drawerOpen', {
+      detail: {
+        type:'reviews'
+      }
+    }))
   }
 
   toggleFitGuideModal() {
-    $('body').addClass('drawer-open');
-    this.fitGuideDrawer.show();
+    const fitGuideSettings = JSON.parse(document.querySelector('[data-fit-guide-settings]').innerHTML)
+    console.log(fitGuideSettings);
+    setTimeout(() => {
+      document.dispatchEvent(new CustomEvent('drawerOpen', {detail: {
+        type: "sizing-drawer",
+        ...fitGuideSettings
+      }}))
+    }, 500);
   }
 
-  toggleFeatureDrawer() {
-    this.featuresDrawer.toggle();
-  }
-
-  initFitGuideGalleries() {
-    $(selectors.fitGuideGallery).each((index, el) => {
-
-      const galleryOptions = {
-        modules: [ Pagination, Lazy ],
-        watchOverflow: true,
-        preloadImages: false,
-        arrows: false,
-        observer: true,
-        observeParents: true,
-        loop: false,
-        pagination: {
-          el: '.fit-guide__gallery-pagination',
-          type: 'bullets',
-          clickable: true,
+  toggleFeatureDrawer(evt) {
+    const drawerData = JSON.parse(evt.currentTarget.dataset.content);
+    document.dispatchEvent(
+      new CustomEvent('drawerOpen', {
+        detail: {
+          type: 'pdp-features',
+          ...drawerData,
         },
-        lazy: {
-          loadPrevNext: true,
-        },
-      }
-
-      const swiperGallery = new Swiper($(el).get(0), galleryOptions);
-    });
-  }
-
-  initFeaturesSlider() {
-    if(this.$featuresDrawerSlider.length) {
-      const featuresSlider = new Swiper(this.$featuresDrawerSlider.get(0), {
-        modules: [Lazy, Pagination, EffectFade],
-        watchOverflow: true,
-        preloadImages: false,
-        arrows: false,
-        observer: true,
-        observeParents: true,
-        loop: true,
-        effect: 'fade',
-        fadeEffect: {
-          crossFade: true,
-        },
-        pagination: {
-          el: '.features-detail__slider-pagination',
-          type: 'bullets',
-          clickable: true,
-        },
-        lazy: {
-          loadPrevNext: true,
-        },
-        init: false
-      });
-
-      featuresSlider.on('slideChange', function() {
-        const sliderWidth = featuresSlider.width;
-        $(selectors.sliderPagination, this.$featuresDrawerSlider).css('top', sliderWidth + 20);
       })
-
-      featuresSlider.init();
-    }
-
+    );
   }
 }

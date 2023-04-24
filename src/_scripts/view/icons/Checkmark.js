@@ -1,0 +1,16 @@
+import React from "preact/compat";
+
+export default function Checkmark({className}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="15"
+      height="10.941"
+      viewBox="0 0 15 10.941"
+      className={`icon icon-checkmark ${className ? className : ''}`}
+      fill="currentcolor"
+    >
+      <path d="M13.257,0C10.881,2.383,8.133,5.123,5.676,7.585L1.6,4.128,0,6.011l4.936,4.2.871.733.8-.8C9.24,7.5,12.365,4.386,15,1.744Z" />
+    </svg>
+  );
+}
