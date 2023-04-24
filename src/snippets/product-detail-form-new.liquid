@@ -94,8 +94,4 @@
       {%- render 'product-json', product: product -%}
     </script>
   {%- endunless -%}
-
-  {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
-    {%- render 'fit-guide-drawer' -%}
-  {%- endif -%}
 </div>

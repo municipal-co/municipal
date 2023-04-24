@@ -4,8 +4,6 @@
   {% assign page_looks = pages[s.looks_page].metafields.custom_fields.complete_the_look %}
 {% endif %}
 
-{% assign look_drawers = blank %}
-
 {% if type == "section" %}
   {% assign look_ids = "" %}
   {% for block in s.blocks %}
@@ -86,13 +84,8 @@
         </div>
       </div>
     </div>
-
-    {% capture new_look_drawer %}
-      {% render 'look-drawer' with look: current_look %}
-    {% endcapture %}
-    {% assign look_drawers = look_drawers | append: new_look_drawer %}
-  {% endif %}
   {% assign  current_look = blank %}
+  {% endif %}
 {% endfor %}
 {% endcapture %}
 
@@ -102,7 +95,6 @@
       <div class="row shop-the-look__grid-container">
         {{ cards }}
       </div>
-      {{ look_drawers }}
     </div>
   {% else %}
     <div id="shop-the-look-{{id | default: 'pdp' }}" class="shop-the-look" data-section-type="shop-the-look" data-section-id="shop-the-look">
@@ -114,7 +106,6 @@
         <div class="shop-the-look__arrow shop-the-look__arrow--prev" data-arrow-prev></div>
         <div class="shop-the-look__arrow shop-the-look__arrow--next" data-arrow-next></div>
       </div>
-      {{ look_drawers }}
     </div>
   {% endif %}
 {% endif %}

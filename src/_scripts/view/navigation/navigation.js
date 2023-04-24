@@ -9,7 +9,7 @@ const MainNav = ((props) => {
   const getComponentData = () => {
     const components = getComponents();
     const categories = getCategories(components);
-    const currentMenu = data ? data.currentMenu : categories[0];
+    const currentMenu = categories[0];
 
     const componentData = {
       components,

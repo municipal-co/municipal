@@ -42,16 +42,12 @@ import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
 import CustomersResetPasswordSection from './sections/customersResetPassword';
-import YotpoReviews from './sections/yotpoReviews';
 import FeaturedCategory from './sections/featuredCategories'
 import ShopTheLook from './sections/shop-the-look';
-import OptionDrawer from './sections/optionDrawer';
 import LinkCardSlider from './sections/linkCardSlider';
 import ContentSlider from './sections/contentSlider';
-import BisDrawer from './sections/bisDrawer';
 import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
-import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 import FourOFour from './sections/fourofour';
 import ShopifyCollection from './sections/shopify-collection';
 import Faq from './sections/faq';
@@ -102,16 +98,12 @@ Breakpoints.initialize();
     'customers-reset-password',
     CustomersResetPasswordSection
   );
-  sectionManager.register('yotpo-reviews', YotpoReviews);
   sectionManager.register('featured-categories', FeaturedCategory);
   sectionManager.register('shop-the-look', ShopTheLook);
-  sectionManager.register('option-selector-drawer', OptionDrawer);
   sectionManager.register('link-card-slider', LinkCardSlider);
   sectionManager.register('content-slider', ContentSlider);
-  sectionManager.register('bis-drawer', BisDrawer);
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
-  sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
   sectionManager.register('shopify-collection', ShopifyCollection);
   sectionManager.register('faq', Faq);
 
@@ -140,7 +132,8 @@ Breakpoints.initialize();
 
   const drawerHolder = document.getElementById('drawer-container');
   if(drawerHolder) {
-    render(<DrawerSystem />, drawerHolder);
+    const drawersRoot = ReactDOM.createRoot(drawerHolder);
+    drawersRoot.render(<DrawerSystem />, drawerHolder);
   }
 
   $('.in-page-link').on('click', (evt) => {
@@ -207,9 +200,9 @@ Breakpoints.initialize();
   // END - Global handler for collapse plugin to add state class for open expandable lists
 
   // Init any Product Cards on the page
-  $('[data-product-card]').each((i, el) => {
-    new ProductCard(el);
-  });
+  // $('[data-product-card]').each((i, el) => {
+  //   new ProductCard(el);
+  // });
 
   // Add lazyloading support for background images
   document.addEventListener('lazybeforeunveil', function(e) {
