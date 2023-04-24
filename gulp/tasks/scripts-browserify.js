@@ -27,7 +27,7 @@ const browserifyThis = (file) => {
     entries: file.source,
     cache: {},
     packageCache: {},
-    plugin: [watchify]
+    plugin: productionMode ? [] : [watchify]
   };
 
   log(`Bundling ${file.name}`);
