@@ -7,7 +7,7 @@ const client = window.FindifyAnalytics({
 const sdkClient = findifySdk.init({
   key: '2d536f4d-7970-4bf4-885e-e16f0e21ace5',
   user: client.user,
-  log: false,
+  log: true,
   method: 'post'
 })
 
