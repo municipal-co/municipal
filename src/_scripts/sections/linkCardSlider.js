@@ -72,7 +72,10 @@ export default class LinkCardSlider extends BaseSection {
     const $link = $(e.currentTarget);
     const drawerData = this.buildDrawerData($link);
 
-    $(window).trigger($.Event('marketing-drawer:open', {drawerData}));
+    document.dispatchEvent(new CustomEvent('drawerOpen', {detail: {
+      type: 'marketing-drawer',
+      ...drawerData
+    }}))
   }
 
   toggleMentorDrawer(e) {
@@ -81,9 +84,10 @@ export default class LinkCardSlider extends BaseSection {
     const mentorsData = $target.dataset.mentorsInfo;
     const mentorId = $target.dataset.mentorId;
 
-    document.dispatchEvent(new CustomEvent('drawer-open:mentor', { detail: {
-      mentorsData,
-      mentorId
+    document.dispatchEvent(new CustomEvent('drawerOpen', { detail: {
+      type: 'mentor-drawer',
+      mentorsData: JSON.parse(mentorsData),
+      mentorId: mentorId
     }}))
   }
 

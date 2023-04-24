@@ -202,7 +202,14 @@ export default class ProductCard {
   }
 
   openOptionDrawer() {
-    $(document).trigger($.Event(events.openDrawer, {optionDrawerData: this.drawerData}));
+    document.dispatchEvent(
+      new CustomEvent('drawerOpen', {
+        detail: {
+          type: 'option-drawer',
+          ...this.drawerData,
+        },
+      })
+    );
   }
 
   updateSize() {

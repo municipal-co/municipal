@@ -5,7 +5,7 @@
   pointer-events: none;
 
 
-  .swiper-slide-active & {
+  .card-visible & {
     opacity: 1;
     pointer-events: all;
   }
@@ -22,7 +22,7 @@
   border: 2px solid transparent inset;
   transition: border $transition-duration-base $transition-timing-function-in-out-ui;
 
-  .swiper-slide-active & {
+  .card-visible & {
     border: 2px solid $black;
   }
 }

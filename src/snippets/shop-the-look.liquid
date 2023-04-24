@@ -33,6 +33,23 @@
       {% break %}
     {% endif %}
   {% endfor %}
+  {% capture look_products %}
+  [
+    {%- for i in (1..6) %}
+      {%- assign product_key = 'product_' | append: forloop.index -%}
+      {%- assign color_key = 'product_' | append: forloop.index | append: '_color' -%}
+      {%- if current_look[product_key] != blank -%}
+        {%- if forloop.index > 1 -%} , {%- endif -%}
+        {
+          "product_handle": {{ current_look[product_key] | json }} ,
+          "selected_color": {{ current_look[color_key] | json }}
+        }
+      {%- else -%}
+        {%- break -%}
+      {%- endif -%}
+    {% endfor -%}
+  ]
+  {% endcapture %}
 
   {% if current_look != blank %}
   {% if s.settings.enable_slider == false %}
@@ -40,7 +57,10 @@
   {% else %}
     <div class="shop-the-look__slide swiper-slide" data-slide>
   {% endif %}
-      <div class="look-card" data-look-drawer-open="{{current_look.look_id}}">
+      <div class="look-card"
+        data-open-look-drawer
+        data-products-info = '{{ look_products }}'
+        >
         <div class="look-card__image-container frame frame--4x5">
           {% capture card_image %}
             {% render 'cf-image',

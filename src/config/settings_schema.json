@@ -71,6 +71,13 @@
         "content": "Reviews"
       },
       {
+        "type": "number",
+        "id": "low_inventory_threshold",
+        "label": "Low Inventory Threshold",
+        "info": "Defines the value where product cards are going to display the message 'Only X Left'",
+        "default": 6
+      },
+      {
         "type": "checkbox",
         "id": "display_reviews",
         "label": "Display Reviews Modules",
@@ -347,6 +354,76 @@
         "type": "text",
         "id": "klaviyo_api_key",
         "label": "Public API Key"
+      }
+    ]
+  },
+  {
+    "name": "Marketing Drawer",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Subscription drawer settings"
+      },
+      {
+        "type": "text",
+        "id": "mkt_drwr_notify_text",
+        "label": "Notify Text",
+        "default": "Get notified when [[product]] launches",
+        "info": "Define the verbiage for the body, use [[product]] to render the product tile, updates depending on the customer selected option"
+      },
+      {
+        "type": "textarea",
+        "id": "mkt_drwr_success_message",
+        "label": "Success Message",
+        "default": "Thanks for subscribing, you'll be notified when this product launches!"
+      },
+      {
+        "type": "textarea",
+        "id": "mkt_drwr_error_message",
+        "label": "Error Message",
+        "default": "We got an error when trying to subscribe you, please try again later",
+        "info": "Generic message to let the user know that there was an error"
+      },
+      {
+        "type": "richtext",
+        "id": "mkt_drwr_footer",
+        "label": "Footer message",
+        "info": "Can be used to display a disclaimer text regarding subscribing to our list"
+      }
+    ]
+  },
+  {
+    "name": "Back in Stock",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Back in stock settings"
+      },
+      {
+        "type": "text",
+        "id": "bis_notify_text",
+        "label": "Notify Text",
+        "default": "Get notified when the [[product]] [[color]] is back in size [[size]]",
+        "info": "Define the verbiage for the body, use [[product]] to render the product tile, [[color]] for the variant color and [[size]] for the variant size (the latest will get updated depending on the customer selection)"
+      },
+      {
+        "type": "textarea",
+        "id": "bis_success_message",
+        "label": "Success Message",
+        "default": "Thanks for subscribing, you'll be notified when the product gets back!"
+      },
+      {
+        "type": "textarea",
+        "id": "bis_error_message",
+        "label": "Error Message",
+        "default": "We got an error when trying to subscribe you, please try again later",
+        "info": "Generic message to let the user know that there was an error"
+      },
+      {
+        "type": "richtext",
+        "id": "bis_footer_message",
+        "label": "Footer Message",
+        "info": "Can be used to display a disclaimer text regarding subscribing to our list"
       }
     ]
   },

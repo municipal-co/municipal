@@ -20,7 +20,7 @@ const styles = () => {
       content: ['src/**/*.liquid', 'src/_scripts/**/*.js'],
       enabled: true,
       safelist: {
-      greedy: [/swiper/, /yotpo/, /chosen/, /product-reviews/, /findify/, /shopify-challenge__container/],
+        greedy: [/swiper/, /yotpo/, /product-reviews/, /findify/, /shopify-challenge__container/],
       },
     }),
     cssnano({

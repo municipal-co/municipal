@@ -7,7 +7,7 @@ import BaseSection from './base';
 const selectors = {
   looksContainer: '[data-looks-container]',
   lookDrawers: '[data-drawer]',
-  lookDrawerOpen: '[data-look-drawer-open]',
+  lookDrawerOpen: '[data-open-look-drawer]',
   lookDrawerSlider: '[data-product-slider]',
   sizeDrawerToggler: '[data-size-drawer-toggler]',
   productForm: '[data-product-form]',
@@ -102,11 +102,13 @@ export default class ShopTheLook extends BaseSection {
 
   openDrawer(evt) {
     const $this = $(evt.currentTarget)
-    const drawerId = $this.data('look-drawer-open');
+    const drawerData = $this.data('products-info');
+    const event = new CustomEvent('drawerOpen', {detail: {
+      type: 'shop-the-look',
+      productsData: JSON.parse(drawerData),
+    }})
 
-    const drawer = this.getDrawerById(drawerId);
-
-    drawer.show();
+    document.dispatchEvent(event);
   }
 
   getDrawerById(id) {

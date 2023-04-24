@@ -83,12 +83,12 @@ const productCard = ((props) => {
   }
 
   const buildColorSwatch = (variant) => {
-    return(<label key={variant.id} className="product-option__single-selector swiper-slide">
-      <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
-      <div className="product-option__ui">
-        <img src={variant.image_url} alt="" loading="lazy"/>
-      </div>
-    </label>)
+    return(<label key={variant.id} className="product-option__single-selector">
+        <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
+        <div className="product-option__ui">
+          <img src={variant.image_url} alt="" loading="lazy"/>
+        </div>
+      </label>)
   }
 
   const getCurrentVariantIndex = () => productColors.indexOf(currentVariant);

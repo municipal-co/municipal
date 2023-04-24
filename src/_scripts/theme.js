@@ -53,7 +53,6 @@ import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
 import MktSubscriptionDrawer from './sections/mktSubscriptionDrawer';
 import FourOFour from './sections/fourofour';
-import MentorDrawer from './sections/mentorDrawer';
 import ShopifyCollection from './sections/shopify-collection';
 import Faq from './sections/faq';
 
@@ -68,6 +67,7 @@ import MainNav from './view/navigation/navigation';
 import Collection from './templates/collection';
 import Search from './templates/search';
 import AutocompleteSearch from './view/navigation/autocompleteSearch';
+import DrawerSystem from './view/drawer/DrawerSystem';
 
 // Do this ASAP
 Animations.initialize();
@@ -112,7 +112,6 @@ Breakpoints.initialize();
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('mkt-subscription-drawer', MktSubscriptionDrawer);
-  sectionManager.register('mentor-drawer', MentorDrawer);
   sectionManager.register('shopify-collection', ShopifyCollection);
   sectionManager.register('faq', Faq);
 
@@ -137,6 +136,11 @@ Breakpoints.initialize();
   if(autocompleteHolder) {
     const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
     autocompleteRoot.render(<AutocompleteSearch/>)
+  }
+
+  const drawerHolder = document.getElementById('drawer-container');
+  if(drawerHolder) {
+    render(<DrawerSystem />, drawerHolder);
   }
 
   $('.in-page-link').on('click', (evt) => {

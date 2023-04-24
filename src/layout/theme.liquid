@@ -87,7 +87,8 @@
   {% endif %}
 
   window.settings = {
-    lowInventoryThreshold: {{ settings.low_inventory_threshold | default: 0 | json }}
+    lowInventoryThreshold: {{ settings.low_inventory_threshold | default: 0 | json }},
+    finalSaleMessage: {{ settings.final_sale_message | json }}
   }
   </script>
 
@@ -160,10 +161,7 @@
     {% section 'ajax-cart' %}
   {% endunless %}
 
-  {% section 'option-selector-drawer' %}
-  {% section 'bis-drawer' %}
-  {% section 'marketing-subscription-drawer' %}
-  {% section 'mentor-drawer' %}
+  <div id="drawer-container"></div>
 
   {% include 'third-party-scripts-foot' %}
 
@@ -181,6 +179,26 @@
       {%- endif -%}
     }
   </script>
+
+  <script type="application/json" data-marketing-drawer-settings>
+    {
+      "notifyText": {{settings.mkt_drwr_notify_text | json }},
+      "successMessage": {{settings.mkt_drwr_success_message | json }},
+      "errorMessage": {{settings.mkt_drwr_error_message | json}},
+      "footerMessage": {{settings.mkt_drwr_footer | json }}
+    }
+  </script>
+
+  <script type="application/json" data-bis-drawer-settings>
+    {
+      "apiKey": {{ settings.klaviyo_api_key | json }},
+      "notifyText": {{ settings.bis_notify_text | json }},
+      "successMessage": {{ settings.bis_success_message | json }},
+      "errorMessage": {{ settings.bis_error_message | json }},
+      "footerMessage": {{ settings.bis_footer_message | json }}
+    }
+  </script>
+
   {% comment %} End Findify Integraion {% endcomment %}
   <!-- CRITEO START -->
   {% include 'criteo-tracking' %}

@@ -6,7 +6,6 @@ import NavigationSearch from './autocompleteSearchBox';
 import AutocompleteSearch from './autocompleteSearch';
 
 const MainNav = ((props) => {
-
   const getComponentData = () => {
     const components = getComponents();
     const categories = getCategories(components);

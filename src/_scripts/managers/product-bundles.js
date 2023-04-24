@@ -53,6 +53,9 @@ export default class ProductBundles {
     this.$bundleProducts.on('change', this.onProductSelectedChange.bind(this));
     this.$sizeDrawerToggler.on('click', this.openCustomSizeDrawer.bind(this));
     this.$sizeDrawerInput.on('change', this.updateActiveSelection.bind(this));
+    this.$sizeDrawerInput.each((index, el) => {
+      el.addEventListener('change', this.updateActiveSelection.bind(this));
+    })
 
     this.initProductSwatchSliders();
   }
@@ -247,7 +250,7 @@ export default class ProductBundles {
       optionIndex: $inputField.data('index'),
       productTitle: $inputField.data('product-title'),
       activeOption: $inputField.attr('data-option-value'),
-      dataField: $inputField,
+      dataField: $inputField.get(0),
       showSizing: true,
       productUrl: 'javascript:void(0);',
     }
@@ -270,6 +273,14 @@ export default class ProductBundles {
     optionDrawerData.variants = currentVariants;
 
     $(window).trigger($.Event('option-drawer:open', {optionDrawerData} ));
+    document.dispatchEvent(
+      new CustomEvent('drawerOpen', {
+        detail: {
+          type: 'option-drawer',
+          ...optionDrawerData,
+        },
+      })
+    );
   }
 
   getActiveOptions($productContainer, currentIndex) {
