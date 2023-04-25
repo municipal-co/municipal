@@ -79,7 +79,6 @@ export default function Reviews({data, index}) {
 
         const secondToLastUserField = userFieldChildren[userFieldChildren.length - 2];
         const recommendValue = secondToLastUserField.querySelector('.yotpo-user-field-answer');
-        const lastUserField = userFieldChildren[userFieldChildren.length - 1];
 
         secondToLastUserField.classList.add('recommend-field');
 
@@ -89,7 +88,6 @@ export default function Reviews({data, index}) {
           recommendValue.innerText = recommendValue.innerText.replace('No', 'No ❌');
 
         }
-        lastUserField.classList.add('recommend-field');
       })
     }
   }
