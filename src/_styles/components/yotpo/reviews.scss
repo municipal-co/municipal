@@ -428,6 +428,11 @@
       &.name-input {
         padding-bottom: 25px;
       }
+
+      &.submit-button {
+        display: flex;
+        justify-content: center;
+      }
     }
 
     input {
