@@ -85,7 +85,7 @@
   },
   "scripts": {
     "watch": "gulp watch",
-    "build": "gulp build",
+    "build": "NODE_ENV=production gulp build",
     "deploy": "NODE_ENV=production gulp deploy",
     "eslint": "eslint src/_scripts/**/*.js",
     "stylelint": "stylelint src/_styles/**/*.scss"
