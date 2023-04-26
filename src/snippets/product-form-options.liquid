@@ -54,7 +54,12 @@
                     data-single-option-selector>
 
               <div class="product-option__ui">
-                <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+                {%- render 'responsive-image'
+                  image: variant.image,
+                  image_sizes: '(max-width: 992px) 64px,48px',
+                  alt: variant.image.alt,
+                  loading: 'lazy',
+                -%}
               </div>
             </label>
           {% endif %}

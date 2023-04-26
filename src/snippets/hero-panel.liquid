@@ -21,16 +21,20 @@
     }
   </style>
   {% unless s.image_mobile == blank and s.image == blank %}
-    <img class="hero__bg hero__bg--desktop"
-          src="{{s.image | img_url: "master" }}&width=1920"
-          loading="lazy"
-          alt="{{s.image.alt}}"
-    >
-    <img class="hero__bg hero__bg--mobile"
-          src="{{s.image_mobile | img_url: "master" }}&width=1024"
-          loading="lazy"
-          alt="{{s.mobile_image.alt}}"
-    >
+    {% render 'responsive-image',
+      image: s.image
+      class: 'hero__bg hero__bg--desktop',
+      image_sizes: '100vw',
+      loading: 'lazy',
+      alt: 's.image.alt',
+    %}
+    {% render 'responsive-image',
+      image: s.image_mobile
+      class: 'hero__bg hero__bg--mobile',
+      image_sizes: '100vw',
+      loading: 'lazy',
+      alt: 's.image_mobile.alt',
+    %}
   {% endunless %}
 
 

@@ -32,17 +32,15 @@
         </div>
       </div>
     </div>
+    {%- render 'responsive-image' with
+      class: 'four04__bg-image'
+      image: section.settings.background-image,
+      image_sizes: '100vw',
+      loading: 'lazy',
+      image_alt: {{ section.settings.background-image.alt }}
+    -%}
   </div>
 </div>
-
-<style>
-  .four04 {
-    background-image: url('{{ section.settings.background-image | img_url: "1080x1080" }}');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-</style>
 
 {% schema %}
   {
