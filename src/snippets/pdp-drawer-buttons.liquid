@@ -1,25 +1,66 @@
-{% capture features_details_drawer %}
-  {% render 'pdp-features-details-drawer'
-  metafields: product.metafields.custom_fields %}
-{% endcapture %}
+{%- assign metafields = product.metafields.custom_fields -%}
+{%- capture features_details_drawer -%}
+  {%- if metafields["product_details"] != blank -%}
+    {
+      "detailItems": [
+        {%- for detail in metafields["product_details"] -%}
+          {
+            "image": "{% render 'cf-image' with image: detail['image'], print: "url" %}",
+            "content": {{ detail['body_content'] | json }}
+          }
+          {%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ],
+      "boxTitle": {{ metafields["dd_details_title"] | json }},
+      "boxDetails": {{ metafields["dd_details"] | json }}
+    }
+  {%- endif -%}
+{%- endcapture -%}
 
 <div class="pdp-drawer-buttons-container">
   {% if features_details_drawer != blank %}
-    <button class="pdp-drawer-button" data-features-toggler>
+    <button class="pdp-drawer-button" data-features-toggler data-content='{{ features_details_drawer | replace: "'", "&apos;" }}'>
       <span class="pdp-drawer-button__label"> Features & Details </span>
       <div class="pdp-drawer-button__icon">
         {% render 'icon-arrow' %}
       </div>
     </button>
   {% endif %}
-  {{ features_details_drawer }}
+
   {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
+    {% capture fit_guide_settings %}
+      {
+        "images": [
+          {%- for item in metafields["fg_images"] -%}
+            "{%- render 'cf-image' with image: item.image, print: "url" -%}"
+            {%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ],
+        "modelDescription": {{ metafields["fg_model_description"] | json }},
+        "sizeList": [
+          {%- for table_row in metafields["fg_size_list"] -%}
+            {
+              "name": {{table_row["name"] | json}},
+              "chestSize": {{table_row["chest_size"] | json}},
+              "waistSize": {{table_row["waist_size"] | json}},
+              "heightSize": {{table_row["height_size"] | json}}
+            }
+            {%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ],
+        "boxTitle": {{ metafields.fg_tips_title | json }},
+        "boxContent": {{ metafields.fg_tips_content | json }}
+      }
+    {%- endcapture -%}
     <button class="pdp-drawer-button" data-fit-guide-toggler>
       <span class="pdp-drawer-button__label"> Sizing </span>
       <div class="pdp-drawer-button__icon">
         {% render 'icon-arrow' %}
       </div>
     </button>
+    <script type="application/json" data-fit-guide-settings>
+      {{ fit_guide_settings }}
+    </script>
   {%- endif -%}
   <button class="pdp-drawer-button" data-reviews-toggler>
     <span class="pdp-drawer-button__label">

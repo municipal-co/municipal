@@ -41,6 +41,9 @@
   width: 100%;
   justify-content: center;
   bottom: unset;
+  top: 0;
+  margin-top: 103%;
+  z-index: 1;
 
   .swiper-container-horizontal > & {
     z-index: 1;

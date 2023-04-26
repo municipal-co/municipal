@@ -30,6 +30,8 @@ class AJAXFormManager {
 
     $window.on(this.events.ADD_FROM_VARIANT_ID, this.addToCartByVariantID.bind(this));
     $window.on(this.events.GWP_ADD, this.addToCartFreeGift.bind(this));
+
+    document.addEventListener(this.events.ADD_FROM_VARIANT_ID, this.addToCartByVariantID.bind(this));
   }
 
   addToCartFromForm(e) {
@@ -61,8 +63,8 @@ class AJAXFormManager {
   }
 
   addToCartByVariantID(e) {
-    if (e.variantID) {
-      CartAPI.addItemFromID(e.variantID, e.properties)
+    if (e.variantID || e?.detail?.variantID) {
+      CartAPI.addItemFromID(e.variantID || e.detail.variantID, e.properties || e.detail.properties)
         .then((data) => {
           const event = $.Event(this.events.ADD_SUCCESS, { cart: data });
           if(e.rid) {

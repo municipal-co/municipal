@@ -21,13 +21,16 @@
     }
   </style>
   {% unless s.image_mobile == blank and s.image == blank %}
-    <picture class="hero__bg">
-      {% assign mobile_image = s.image_mobile | default: s.image %}
-      {% assign mobile_image_title = mobile_image | replace:'files/', '' %}
-      {% assign desktop_image_title = s.image | replace: 'files/', '' %}
-      <source data-srcset="{{ s.image | img_url: 'master' }}" media="(min-width: 992px)">
-      <img src="{{ mobile_image | default: s.image | img_url: 'master' }}" alt="{{ s.image.alt | default: s.mobile_image.alt }}" class="hero__bg-image lazyload" loading="lazy" width="1920" height="1080">
-    </picture>
+    <img class="hero__bg hero__bg--desktop"
+          src="{{s.image | img_url: "master" }}&width=1920"
+          loading="lazy"
+          alt="{{s.image.alt}}"
+    >
+    <img class="hero__bg hero__bg--mobile"
+          src="{{s.image_mobile | img_url: "master" }}&width=1024"
+          loading="lazy"
+          alt="{{s.mobile_image.alt}}"
+    >
   {% endunless %}
 
 
