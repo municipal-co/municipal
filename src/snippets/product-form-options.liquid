@@ -54,9 +54,14 @@
                     data-single-option-selector>
 
               <div class="product-option__ui">
+                {%- if template == 'product' -%}
+                  {%- assign image_sizes = '(max-width: 992px) 20vw, 112px' -%}
+                {%- else -%}
+                  {%- assign image_sizes = '(max-width: 992px) 15vw, 5vw' -%}
+                {%- endif -%}
                 {%- render 'responsive-image'
                   image: variant.image,
-                  image_sizes: '(max-width: 992px) 64px,48px',
+                  image_sizes: image_sizes,
                   alt: variant.image.alt,
                   loading: 'lazy',
                 -%}

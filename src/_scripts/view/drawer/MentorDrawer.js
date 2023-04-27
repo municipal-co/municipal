@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "preact/compat";
 import Close from "../icons/Close";
 import ArrowDown from "../icons/ArrowDown";
+import Image from "../global/image";
 
 
 export default function MentorDrawer({data, index}) {
@@ -124,10 +125,10 @@ export default function MentorDrawer({data, index}) {
           <div className="mentor-drawer__content">
             <div className="mentor-drawer__banner">
               {mentorData?.banner && (
-                <img
+                <Image
                   className="mentor-drawer__image"
-                  src={`${mentorData?.banner}&width=600`}
-                  loading="lazy"
+                  src={mentorData?.banner}
+                  sizes="(max-width: 992px) 100vw, 560px"
                 />
               )}
             </div>
