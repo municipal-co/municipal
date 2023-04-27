@@ -29,7 +29,8 @@
       class="{{- class -}}"
       sizes="{{- image_sizes -}}"
       loading="{{ loading }}"
-      alt="{{- image_alt -}}">
+      alt="{{- image_alt -}}"
+      {{ dataAttributes }}>
 {%- else -%}
   <img src="{{ image | image_url }}"
       srcset="{%- for size in sizes -%}
@@ -39,6 +40,7 @@
       class="{{- class -}}"
       sizes="{{- image_sizes -}}"
       loading="{{ loading }}"
-      alt="{{- image_alt -}}">
+      alt="{{- image_alt -}}"
+      {{ dataAttributes }}>
 {%- endif -%}
 
