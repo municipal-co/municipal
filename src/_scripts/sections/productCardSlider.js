@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import Swiper, { Scrollbar, Navigation } from 'swiper';
 import BaseSection from './base';
-import ProductCard from '../view/product/productCard';
 
 const selectors = {
   cardSlider: '[data-card-slider]',
@@ -18,7 +17,6 @@ export default class ProductCardSlider extends BaseSection {
     this.suffix = this.$cardSlider.data('slider-suffix') || '';
     this.$scrollBar = $(selectors.scrollBar, this.$container);
     this.initCardSlider();
-    this.initCards();
   }
 
   initCardSlider() {
@@ -64,12 +62,6 @@ export default class ProductCardSlider extends BaseSection {
     }
 
     this.cardSlider = new Swiper(this.$cardSlider.get(0), sliderSettings);
-  }
-
-  initCards() {
-    this.$cards.each((i, card) => {
-      new ProductCard(card)
-    })
   }
 
   onBlockSelect(evt) {

@@ -22,5 +22,4 @@ export default class ShopifyCollection extends BaseSection {
       new ProductCard(card);
     })
   }
-
 }
