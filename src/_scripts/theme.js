@@ -49,7 +49,6 @@ import ContentSlider from './sections/contentSlider';
 import Hero from './sections/hero';
 import ProductCardSlider from './sections/productCardSlider';
 import FourOFour from './sections/fourofour';
-import ShopifyCollection from './sections/shopify-collection';
 import Faq from './sections/faq';
 
 // Models
@@ -104,7 +103,6 @@ Breakpoints.initialize();
   sectionManager.register('content-slider', ContentSlider);
   sectionManager.register('hero', Hero);
   sectionManager.register('product-card-slider', ProductCardSlider);
-  sectionManager.register('shopify-collection', ShopifyCollection);
   sectionManager.register('faq', Faq);
 
   // Register Mobile navigation
@@ -200,9 +198,9 @@ Breakpoints.initialize();
   // END - Global handler for collapse plugin to add state class for open expandable lists
 
   // Init any Product Cards on the page
-  // $('[data-product-card]').each((i, el) => {
-  //   new ProductCard(el);
-  // });
+  $('[data-product-card]').each((i, el) => {
+    new ProductCard(el);
+  });
 
   // Add lazyloading support for background images
   document.addEventListener('lazybeforeunveil', function(e) {

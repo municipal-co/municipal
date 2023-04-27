@@ -37,7 +37,6 @@ export default class ProductCard {
   constructor(el) {
     this.name = 'productCard';
     this.namespace = `.${this.name}`;
-
     this.$container = $(el);
     this.$gallerySlider = $(selectors.gallerySlider, this.$container);
     this.$slides = $(selectors.gallerySlide, this.$container);
