@@ -33,7 +33,13 @@
 <div id="lead-content-{{ section.id }}" data-section-id="{{ section.id }}" class="lead-content" data-section-type="lead-content">
   <div class="container-fluid-max {%- if text_alignment == "center" %} text-center{%- endif -%}">
     {%- if  image != blank -%}
-      <img class="lead-content__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
+    {% render 'responsive-image'
+        image: image,
+        alt: image.alt,
+        loading: "lazy",
+        image_sizes: "483px",
+        class: "lead-content__image"
+      %}
     {%- endif -%}
     {% if title != blank %}
       <{{ title_tag }} class="lead-content__title h1">
