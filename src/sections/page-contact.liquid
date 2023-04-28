@@ -16,8 +16,12 @@
         <div class="col-xl-22 col-lg-22 col-md-20 col-sm-22 col-22">
           <div class="contact__banner-container">
             {% if section.settings.contact__banner-image %}
-              <!--<img src="{{ section.settings.contact__banner-image | img_url: "1080x1080" }}" alt="contact__banner-image">-->
-              {% include 'image_tag', image: section.settings.contact__banner-image %}
+              {% render 'responsive-image'
+                image: section.settings.contact__banner-image,
+                alt: section.settings.contact__banner-image.alt,
+                loading: "lazy",
+                image_sizes: "100vw"
+              %}
             {% endif %}
           </div>
           <div class="row justify-content-center">
