@@ -123,20 +123,20 @@ export default function Reviews({data, index}) {
   }, []);
 
   return (
-    <div class="drawer reviews__drawer" ref={drawer}>
-      <div class="drawer__inner reviews__drawer-inner">
-        <div class="drawer__header reviews__drawer-header">
-          <div class="drawer__header-title reviews__drawer-title">
+    <div className="drawer reviews__drawer" ref={drawer}>
+      <div className="drawer__inner reviews__drawer-inner">
+        <div className="drawer__header reviews__drawer-header">
+          <div className="drawer__header-title reviews__drawer-title">
             Reviews
           </div>
-          <a href="javascript:void(0);"class="drawer__close" onClick={closeDrawer}>
+          <a href="javascript:void(0);"className="drawer__close" onClick={closeDrawer}>
             <Close />
-            <span class="sr-only">Close size guide</span>
+            <span className="sr-only">Close size guide</span>
           </a>
         </div>
-        <div class="drawer__body-contents reviews__drawer-body">
-          <div id="product-reviews" class="yotpo-reviews-container">
-            <div  class="yotpo yotpo-main-widget"
+        <div className="drawer__body-contents reviews__drawer-body">
+          <div id="product-reviews" className="yotpo-reviews-container">
+            <div  className="yotpo yotpo-main-widget"
                   ref={reviewsContainer}
                   data-product-id={productSettings.id}
                   data-name={productSettings.title}

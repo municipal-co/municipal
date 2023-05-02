@@ -52,7 +52,7 @@ export default function LookCard({product}) {
 
   return (
     <div className="look-drawer__product-card" key={product.id}>
-      <div class="look-drawer__product-card-image-container frame frame--1x1">
+      <div className="look-drawer__product-card-image-container frame frame--1x1">
         <Image
           src={`${currentVariant.featured_image.src}`}
           alt={currentVariant.featured_image.alt}
@@ -61,14 +61,14 @@ export default function LookCard({product}) {
         />
       </div>
 
-      <span class="look-drawer__product-card-color">
+      <span className="look-drawer__product-card-color">
         {currentVariant[`option${colorIndex + 1}`]}
       </span>
 
-      <div class="look-drawer__product-card-title h6">{product.title}</div>
+      <div className="look-drawer__product-card-title h6">{product.title}</div>
 
       <form
-        class="look-drawer__product-card-form"
+        className="look-drawer__product-card-form"
         action="/cart/add.js"
         data-product-form
       >
@@ -86,7 +86,7 @@ export default function LookCard({product}) {
         />
 
         <button
-          class={`btn btn-outline-primary btn-block product-option__drawer-btn ${
+          className={`btn btn-outline-primary btn-block product-option__drawer-btn ${
             optionSelected ? 'is-active' : ''
           }`}
           type="button"
@@ -97,7 +97,7 @@ export default function LookCard({product}) {
           onClick={openOptionDrawer}
         >
           <span
-            class="button__text"
+            className="button__text"
             data-option-text={`option${colorIndex + 1}`}
             data-print-option="Size"
             style={{ pointerEvents: 'none' }}
@@ -110,17 +110,17 @@ export default function LookCard({product}) {
             )}
           </span>
 
-          <div class="btn__ui" style={{ pointerEvents: 'none' }}>
+          <div className="btn__ui" style={{ pointerEvents: 'none' }}>
             <CaretDown />
           </div>
         </button>
         <button
-          class="btn btn-primary btn-block"
+          className="btn btn-primary btn-block"
           data-add-to-cart-button
           disabled={!enableAddToCart}
         >
           ADD TO BAG
-          <span class="look-drawer__product-card-price" data-product-price>
+          <span className="look-drawer__product-card-price" data-product-price>
             <span className="product-price" data-product-price>
               ${(currentVariant.price / 100).toFixed(2).replace('.00', '')}
             </span>
@@ -138,7 +138,7 @@ export default function LookCard({product}) {
         <input type="hidden" name="id" defaultValue={currentVariant.id} />
 
         <a
-          class="look-drawer__product-card-link btn btn-link"
+          className="look-drawer__product-card-link btn btn-link"
           href={`${product.url}?variant=${currentVariant.id}`}
           data-product-url={`${currentVariant.url}`}
         >

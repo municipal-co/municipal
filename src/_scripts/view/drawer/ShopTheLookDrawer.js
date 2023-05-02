@@ -104,19 +104,19 @@ const ShopTheLookDrawer = forwardRef(({ data, index }) => {
   }, []);
 
   return (
-    <div class="drawer look-drawer" ref={drawer} key={`modal-${index}`}>
-      <div class="drawer__inner">
-        <div class="drawer__header look-drawer__header">
-          <div class="drawer__header-title look-drawer__header-title">
+    <div className="drawer look-drawer" ref={drawer} key={`modal-${index}`}>
+      <div className="drawer__inner">
+        <div className="drawer__header look-drawer__header">
+          <div className="drawer__header-title look-drawer__header-title">
             Shop This Look
           </div>
-          <button class="drawer__close icon-close" onClick={closeDrawer}>
+          <button className="drawer__close icon-close" onClick={closeDrawer}>
             <Close />
-            <div class="sr-only">Close Look Drawer</div>
+            <div className="sr-only">Close Look Drawer</div>
           </button>
         </div>
         {productData && (
-          <div class="drawer__body-contents look-drawer__body">
+          <div className="drawer__body-contents look-drawer__body">
             <div className="slider-container">
               <Swiper
                 modules={[Navigation]}
@@ -132,11 +132,11 @@ const ShopTheLookDrawer = forwardRef(({ data, index }) => {
                 {buildDrawerProducts()}
               </Swiper>
               <div
-                class="look-drawer__arrow look-drawer__arrow--prev"
+                className="look-drawer__arrow look-drawer__arrow--prev"
                 data-arrow-prev
               ></div>
               <div
-                class="look-drawer__arrow look-drawer__arrow--next"
+                className="look-drawer__arrow look-drawer__arrow--next"
                 data-arrow-next
               ></div>
             </div>
