@@ -42,10 +42,13 @@
         <div class="bundle-item__drawer-head">
           <input type="hidden" value="{{ current_variant.id }}" data-bundle-product-id>
           <div class="bundle-item__image">
-            <img data-src="{{product.selected_or_first_available_variant.image | img_url: '100x', scale: "2" }}"
-                 alt=""
-                 class="lazyload"
-                 data-bundle-product-image>
+            {% render 'responsive-image'
+              image: product.selected_or_first_available_variant.image,
+              dataAttributes: 'data-bundle-product-image',
+              loading: "lazy",
+              alt: "",
+              image_sizes: '100px'
+            %}
           </div>
           <div class="bundle-item__product-data">
             <div class="bundle-item__product-title">

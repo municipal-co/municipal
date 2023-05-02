@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "preact/compat"
 import Arrow from "../icons/Arrow";
 import Close from "../icons/Close"
+import Image from "../global/image";
+
 export default function BackInStockDrawer({data, index}) {
   const drawer = useRef();
   const form = useRef();
@@ -106,47 +108,48 @@ export default function BackInStockDrawer({data, index}) {
   }, []);
 
   return (
-    <div class="drawer drawer--right bis__container" ref={drawer}>
-      <div class="drawer__inner bis__inner">
-        <div class="drawer__header bis__header">
-          <div class="drawer__header-title bis__title">Notify</div>
-          <button class="drawer__close bis__close" onClick={closeDrawer}>
+    <div className="drawer drawer--right bis__container" ref={drawer}>
+      <div className="drawer__inner bis__inner">
+        <div className="drawer__header bis__header">
+          <div className="drawer__header-title bis__title">Notify</div>
+          <button className="drawer__close bis__close" onClick={closeDrawer}>
             <Close />
             <div className="sr-only">Close Drawer</div>
           </button>
         </div>
-        <div class="drawer__body-contents bis__body">
-          <div class="bis__featured-image-container frame frame--1x1">
-            <div class="sticker sticker--medium bis__sticker">
-              <span class="sticker__text">
+        <div className="drawer__body-contents bis__body">
+          <div className="bis__featured-image-container frame frame--1x1">
+            <div className="sticker sticker--medium bis__sticker">
+              <span className="sticker__text">
                 Notify
                 <br />
                 Me
               </span>
             </div>
             {data.variant.featured_image && (
-              <img
+              <Image
                 src={data.variant.featured_image.src}
                 alt={data.variant.featured_image.alt}
-                class="bis__featured-image"
+                className="bis__featured-image"
+                sizes="(max-width: 992px) 100vw, 500px"
               />
             )}
           </div>
 
           <div
-            class="bis__body-info"
+            className="bis__body-info"
             dangerouslySetInnerHTML={{ __html: buildBodyInfo() }}
           ></div>
 
           <form
             action="/"
-            class={`bis__form ${submitted ? 'submitted' : ''}`}
+            className={`bis__form ${submitted ? 'submitted' : ''}`}
             ref={form}
             onSubmit={onFormSubmit}
           >
-            <div class="minimal-input-box">
+            <div className="minimal-input-box">
               <input
-                class="bis__input minimal-input-box__input"
+                className="bis__input minimal-input-box__input"
                 name="email"
                 placeholder="What's your email?"
                 type="email"
@@ -154,17 +157,17 @@ export default function BackInStockDrawer({data, index}) {
                 ref={email}
               />
               <button
-                class="bis__submit minimal-input-box__submit"
+                className="bis__submit minimal-input-box__submit"
                 type="submit"
               >
                 <Arrow />
-                <span class="icon-fallback-text">Submit</span>
+                <span className="icon-fallback-text">Submit</span>
               </button>
             </div>
           </form>
-          <div class="bis__response-message" ref={ messageContainer }>{responseMessage}</div>
+          <div className="bis__response-message" ref={ messageContainer }>{responseMessage}</div>
           <p
-            class="bis__footer-info p2"
+            className="bis__footer-info p2"
             dangerouslySetInnerHTML={{ __html: drawerSettings.footerMessage }}
           ></p>
         </div>

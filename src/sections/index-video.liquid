@@ -51,9 +51,11 @@
 
     {% if eyebrow_icon != blank %}
       <div class="video-section__eyebrow-icon frame frame--4x3">
-        {% render 'image_tag'
+        {% render 'responsive-image'
                   image: eyebrow_icon,
-                  object_fit: "cover"
+                  class: 'frame__inner'
+                  image_sizes: '45px',
+                  loading: 'lazy'
         %}
       </div>
     {% endif %}
@@ -67,18 +69,22 @@
       <div class="video-section__video-cover" data-toggle="modal" data-video-player-cover data-target="#video-modal-{{ section.id }}">
         {% if video_cover != blank %}
           <div class="video-section__video-cover-desktop">
-            {% render 'image_tag'
+            {% render 'responsive-image'
                       image: video_cover,
-                      object_fit: 'cover'
+                      alt: video_cover.alt,
+                      loading: 'lazy',
+                      image_sizes: "80vw"
             %}
           </div>
         {% endif %}
 
         {% if video_cover_mobile != blank %}
           <div class="video-section__video-cover-mobile">
-            {% render 'image_tag'
+            {% render 'responsive-image'
                       image: video_cover_mobile,
-                      object_fit: 'cover'
+                      alt: video_cover_mobile.alt,
+                      loading: 'lazy',
+                      image_sizes: "100vw"
             %}
           </div>
           {% endif %}

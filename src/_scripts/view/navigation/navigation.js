@@ -2,8 +2,6 @@ import React, {useState, useEffect, useRef} from 'react';
 
 import NavigationCategories from './navigationCategories';
 import NavigationBlocks from './navigationBlocks';
-import NavigationSearch from './autocompleteSearchBox';
-import AutocompleteSearch from './autocompleteSearch';
 
 const MainNav = ((props) => {
   const getComponentData = () => {

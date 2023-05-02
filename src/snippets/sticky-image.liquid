@@ -1,10 +1,14 @@
   <div class="sticky-image col-lg-24" data-sticky-image>
     <div class="sticky-image__background-container {% if metafields.si_mobile_image == blank %}hide-mobile{% endif %}">
       {% if metafields.si_desktop_image != blank or metafields.si_mobile_image != blank %}
-        <picture class="sticky-image__background-image">
-          <source media="(min-width: 992px)" data-srcset="{% render "cf-image", image: metafields.si_desktop_image, print: 'url' %}">
-          <img data-src="{% render "cf-image", image: metafields.si_mobile_image, print: 'url' %}" alt="{{metafields.si_image_alt}}" class="lazyload">
-        </picture>
+        <div class="sticky-image__background-image">
+          {%- capture desktop_image -%}{% render "cf-image", image: metafields.si_desktop_image, print: 'url' %}{%- endcapture -%}
+          {% render 'responsive-image'
+            image: desktop_image,
+            loading: "eager",
+            image_sizes: '66vw'
+          %}
+        </div>
       {% endif %}
       {% if metafields.si_image_caption != blank %}
         <div class="sticky-image__caption">

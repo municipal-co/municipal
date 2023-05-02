@@ -28,7 +28,13 @@
   <div class="pullquote__lining container-fluid-max">
     <blockquote class="pullquote__quote h1">{{ quote }}</blockquote>
     {%- if cite != blank -%}
-    <img data-src="{{ cite | img_url: 'master' }}" alt="{{ cite.alt }}" class="pullquote__cite lazyload">
+    {% render 'responsive-image'
+      image: cite,
+      alt: cite.alt,
+      image_sizes: "100vw",
+      class: "pullquote_cite"
+      loading: "lazy"
+    %}
     {%- endif -%}
   </div>
 </div>

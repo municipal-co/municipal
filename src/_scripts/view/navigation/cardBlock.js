@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import Image from "../global/image";
 
 const CardBlock = ((props) => {
   const settings = props.block.settings;
@@ -25,7 +26,13 @@ const CardBlock = ((props) => {
       { header }
       <div className="card-block__content">
         <div className="card-block__image-container frame frame--16x9">
-          <img className="card-block__image frame__inner" src={ settings.image } alt={ settings.image_alt } />
+          <Image
+            className="card-block__image frame__inner"
+            src={ settings.image }
+            alt={ settings.image_alt }
+            loading="lazy"
+            sizes="(max-width: 450px) 90w, (max-width: 991px) 357px, 237px"
+          />
         </div>
         <div className="card-block__body-container">
           <div className="card-block__title">

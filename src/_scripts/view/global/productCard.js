@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Swiper, {Scrollbar} from "swiper";
 import { client } from "../../lib/findifyApi";
+import Image from "./image";
 
 const productCard = ((props) => {
   const processData = () => {
@@ -84,11 +85,15 @@ const productCard = ((props) => {
 
   const buildColorSwatch = (variant) => {
     return(<label key={variant.id} className="product-option__single-selector swiper-slide">
-        <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
-        <div className="product-option__ui">
-          <img src={variant.image_url} alt="" loading="lazy"/>
-        </div>
-      </label>)
+      <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
+      <div className="product-option__ui">
+        <Image
+          src={variant.image_url}
+          alt=""
+          loading="lazy"
+          sizes="77px"/>
+      </div>
+    </label>)
   }
 
   const getCurrentVariantIndex = () => productColors.indexOf(currentVariant);
@@ -231,17 +236,31 @@ const productCard = ((props) => {
 
 
   return (
-    currentVariant && <div id={`product-card-${props?.data?.id}`} className="product-card" ref={card}>
-        <a href={`${currentVariant.product_url}&rid=${props.rid}`} className="product-card__gallery" onClick={markCurrentCard}>
+    currentVariant && (
+      <div
+        id={`product-card-${props?.data?.id}`}
+        className="product-card"
+        ref={card}
+      >
+        <a
+          href={`${currentVariant.product_url}&rid=${props.rid}`}
+          className="product-card__gallery"
+          onClick={markCurrentCard}
+        >
           <div className="product-card__gallery-slide is-active">
-            <img className="product-card__image" src={currentVariant.image_url} loading='lazy' />
+            <Image
+              className="product-card__image"
+              src={currentVariant.image_url}
+              loading="lazy"
+              sizes="(max-width: 992px) 50w, 384px"
+            />
           </div>
         </a>
         <form action="/cart/add" className="product-card__content text-center">
           <div className="product-option">
             <div className="product-option__swatch swiper" ref={swatchSlider}>
               <div className="swiper-wrapper">
-                {productColors.map(color => buildColorSwatch(color))}
+                {productColors.map((color) => buildColorSwatch(color))}
               </div>
               <div className="swiper-scrollbar product-option__scrollbar"></div>
             </div>
@@ -249,22 +268,29 @@ const productCard = ((props) => {
           <div className="product-card__color-title product-card__color-title--findify">
             {currentVariant.color}
           </div>
-          <div className="product-card__title">
-            {currentVariant.title}
-          </div>
+          <div className="product-card__title">{currentVariant.title}</div>
           <div className="product-card__price-container">
-            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at.toFixed(2).replace('.00', '')}</s>}
+            {currentVariant.compare_at && (
+              <s className="product-compare-at-price" data-compare-at-price>
+                ${currentVariant.compare_at.toFixed(2).replace('.00', '')}
+              </s>
+            )}
             <span className="product-price" data-product-price>
               ${currentVariant.price.toFixed(2).replace('.00', '')}
             </span>
           </div>
         </form>
         <div className="product-card__add-to-cart-container">
-          <button className="product-card__add-to-cart btn-link" role="button" onClick={openSizeSelectorDrawer}>
+          <button
+            className="product-card__add-to-cart btn-link"
+            role="button"
+            onClick={openSizeSelectorDrawer}
+          >
             Add It Now
           </button>
         </div>
       </div>
+    )
   );
 })
 

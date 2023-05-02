@@ -8,7 +8,7 @@ const selectors = {
   mktDrawerTrigger: '[data-toggle-mkt-drawer]',
   mentorDrawerTrigger: '[data-toggle-mentor-drawer]',
   scrollBar: '[data-scrollbar]',
-  image: '[data-image]',
+  image: '.link-card__image',
 };
 
 export default class LinkCardSlider extends BaseSection {
