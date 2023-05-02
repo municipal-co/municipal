@@ -89,7 +89,18 @@
                       data-single-option-selector>
 
                 <div class="product-option__ui">
-                  <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+                  {%- if template == 'product' -%}
+                    {%- assign image_sizes = '(max-width: 992px) 20vw, 112px' -%}
+                  {%- else -%}
+                    {%- assign image_sizes = '(max-width: 992px) 15vw, 5vw' -%}
+                  {%- endif -%}
+                  {%- render 'responsive-image'
+                    image: variant.image,
+                    image_sizes: image_sizes,
+                    alt: variant.image.alt,
+                    loading: 'lazy',
+                    class: 'product-option__image'
+                  -%}
                 </div>
               </label>
             {% endif %}
