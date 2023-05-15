@@ -4,13 +4,6 @@ import Checkmark from "../icons/Checkmark";
 
 export default function SizeDrawer({data, index}) {
   const drawer = useRef();
-  const selectedVariant = () => {
-    if( data.activeOption ) {
-      return data.variants.find(variant => {
-        return variant[data.optionIndex] == data.activeOption;
-      })
-    }
-  };
   const closeDrawer = () => {
     drawer.current.classList.remove('is-visible');
 
@@ -56,43 +49,68 @@ export default function SizeDrawer({data, index}) {
     closeDrawer();
   }
 
+  const getSizeValues = () => {
+    const optionIndex = data.optionsWithValues ? data.optionIndex.replace('option', '') - 1 : data.optionIndex;
+    let sizeValues = [];
+
+    if(data.optionsWithValues) {
+      sizeValues = data.optionsWithValues[optionIndex].values;
+    } else {
+      sizeValues = data.variants;
+    }
+
+    return sizeValues;
+  }
+
   const buildOptionSelectors = () => {
-    const optionSelectors = data.variants.map((variant, index) => {
+    let sizeValues = getSizeValues();
+    const useVariants = typeof data.optionsWithValues === 'undefined';
+
+    const optionSelectors = sizeValues.map((option, index) => {
+      let variant;
+      if(useVariants == false) {
+        variant = data.variants.find(variant => {
+          return variant[data.optionIndex] == option;
+        });
+      } else {
+        variant = option;
+      }
+
       const lowInventory = variant ? variant.inventory_quantity <= window.settings.lowInventoryThreshold : false;
       const enableBis = variant ? !variant.available && variant.metafields.enable_bis == 1 : false;
 
       return (
-        <label class="product-option__single-selector" key={`option-${index}`}>
+        <label className="product-option__single-selector" key={`option-${index}`}>
           <input
             type="radio"
             name={data.optionIndex}
-            value={variant[data.optionIndex]}
-            data-variant-id={variant.id}
+            value={typeof variant !== 'undefined' ? variant[data.optionIndex] : option}
+            data-variant-id={variant?.id || ""}
             data-final-sale-message={window.settings.finalSaleMessage}
-            class="hide"
-            defaultChecked={data.activeOption ? variant[data.optionIndex] === data.activeOption : false}
-            disabled={!variant.available}
+            className="hide"
+            defaultChecked={(typeof variant !== 'undefined' && data.activeOption) ? variant[data.optionIndex] === data.activeOption : false}
+            disabled={!variant || !variant?.available}
             onChange={handleChange}
           />
-          <div class="product-option__ui" data-option-ui>
-            <div class="product-option__ui-group-corner">
-              <div class="product-option__ui-checkmark">
+          <div className="product-option__ui" data-option-ui>
+            <div className="product-option__ui-group-corner">
+              <div className="product-option__ui-checkmark">
                 <Checkmark />
               </div>
-              <div class="product-option__ui-label">
-                {variant[data.optionIndex]}
+              <div className="product-option__ui-label">
+                {variant ? variant[data.optionIndex].replace('.00', '') : option.replace('.00', '') }
               </div>
             </div>
-            <div class="product-option__ui-group-middle">
-              <div class="product-option__ui-availability">
-                {variant.available ? 'Available' : 'Sold Out'}
+            <div className="product-option__ui-group-middle">
+              <div className="product-option__ui-availability">
+                {variant && variant.available ? 'Available' : 'Sold Out'}
               </div>
             </div>
-            <div class="product-option__ui-group-corner">
-              <div class="product-option__ui-quantity">
+            <div className="product-option__ui-group-corner">
+              <div className="product-option__ui-quantity">
                 {lowInventory && (
                   <div
-                    class="product-option__ui-low-quantity"
+                    className="product-option__ui-low-quantity"
                     data-low-quantity
                   >
                     Hurry, only {variant.inventory_quantity} left{' '}
@@ -100,11 +118,11 @@ export default function SizeDrawer({data, index}) {
                 )}
 
                 {enableBis && (
-                  <div class="product-option__ui-bis-button">
+                  <div className="product-option__ui-bis-button">
                     <button
                       type="button"
                       name="bis-button"
-                      class="btn-small btn-link btn-back-in-stock"
+                      className="btn-small btn-link btn-back-in-stock"
                       onClick={() => openBisDrawer(variant)}
                     >
                       Notify Me
@@ -148,45 +166,45 @@ export default function SizeDrawer({data, index}) {
 
   return (
     <div
-      class="drawer product-option__drawer"
+      className="drawer product-option__drawer"
       ref={drawer}
       key={`drawer-${index}`}
     >
-      <div class="drawer__inner product-option__drawer-inner">
-        <div class="drawer__header">
-          <div class="drawer__header-title">
+      <div className="drawer__inner product-option__drawer-inner">
+        <div className="drawer__header">
+          <div className="drawer__header-title">
             Select
             <span data-option-name> {data.printOption}</span>
           </div>
 
-          <a class="drawer__close" onClick={closeDrawer}>
+          <a className="drawer__close" onClick={closeDrawer}>
             <Close />
-            <div class="sr-only">
+            <div className="sr-only">
               Close
               <span data-option-name></span>
               drawer
             </div>
           </a>
         </div>
-        <div class="drawer__body-contents" data-drawer-body>
+        <div className="drawer__body-contents" data-drawer-body>
           <div>
             {buildOptionSelectors()}
             {data.fitTipsContent && (
-              <div class="blink-box blink-box--dark">
+              <div className="blink-box blink-box--dark">
                 {data.fitTipsTitle && (
-                  <h6 class="blink-box__title">{data.fitTipsTitle}</h6>
+                  <h6 className="blink-box__title">{data.fitTipsTitle}</h6>
                 )}
                 <div
-                  class="blink-box__content"
+                  className="blink-box__content"
                   dangerouslySetInnerHTML={{ __html: data.fitTipsContent }}
                 ></div>
               </div>
             )}
             {data.showSizing && (
-              <div class="btn-container text-center" style="margin-top: 10px;">
+              <div className="btn-container text-center" style="margin-top: 10px;">
                 <a
                   href={`${data.productUrl}`}
-                  class="btn-link product__size-guide-button p4"
+                  className="btn-link product__size-guide-button p4"
                 >
                   {' '}
                   Need help with sizing?{' '}
