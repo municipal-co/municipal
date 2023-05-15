@@ -6,7 +6,8 @@ const selectors = {
   gallerySlide: '[data-slide]',
   zoomToggler: '[data-zoom-toggler]',
   nextArrow: '[data-arrow-next]',
-  prevArrow: '[data-arrow-prev]'
+  prevArrow: '[data-arrow-prev]',
+  productSingleOption: '[data-single-option-selector]'
 };
 
 const classes = {
@@ -73,30 +74,40 @@ export default class productGallery extends BaseSection {
 
   onVariantChange(variant) {
     let colorIndex;
-    variant.options.forEach((option, index) => {
-      if(option === 'color' || option === 'Color') {
-        colorIndex = `option${index+1}`;
-      }
-    });
+    let colorName;
 
-    if(colorIndex !== undefined) {
-      if(this.currentColor !== variant[colorIndex]) {
-        this.currentColor = variant[colorIndex];
-
-        if(this.slider && !this.slider.destroyed) {
-          this.slider.destroy();
+    if (variant) {
+      variant.options.forEach((option, index) => {
+        if(option === 'color' || option === 'Color') {
+          colorIndex = `option${index+1}`;
         }
+      });
 
-        const colorName = variant[colorIndex];
+      if(colorIndex !== undefined) {
+        if(this.currentColor !== variant[colorIndex]) {
+          this.currentColor = variant[colorIndex];
 
-        this.$slides.forEach((slide, index) => {
-          slide.classList.remove(classes.gallerySlide);
-          if(slide.dataset.colorIdentifier.toLowerCase() === colorName.toLowerCase()) {
-            slide.classList.add(classes.gallerySlide);
+          if(this.slider && !this.slider.destroyed) {
+            this.slider.destroy();
           }
-        })
-      }
 
+          colorName = variant[colorIndex];
+        }
+      }
+    } else {
+      const colorSwatch = document.querySelector('[data-option-name=color]:checked');
+      if(colorSwatch) {
+        colorName = colorSwatch.dataset.optionValue;
+      }
+    }
+
+    if(colorName) {
+      this.$slides.forEach((slide, index) => {
+        slide.classList.remove(classes.gallerySlide);
+        if(slide.dataset.colorIdentifier.toLowerCase() === colorName.toLowerCase()) {
+          slide.classList.add(classes.gallerySlide);
+        }
+      })
       // Update variant images here
       this.slider = new Swiper(this.$container, this.gallerySettings);
       this.slider.init();
