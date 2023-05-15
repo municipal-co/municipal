@@ -4,13 +4,6 @@ import Checkmark from "../icons/Checkmark";
 
 export default function SizeDrawer({data, index}) {
   const drawer = useRef();
-  const selectedVariant = () => {
-    if( data.activeOption ) {
-      return data.variants.find(variant => {
-        return variant[data.optionIndex] == data.activeOption;
-      })
-    }
-  };
   const closeDrawer = () => {
     drawer.current.classList.remove('is-visible');
 
@@ -56,8 +49,33 @@ export default function SizeDrawer({data, index}) {
     closeDrawer();
   }
 
+  const getSizeValues = () => {
+    const optionIndex = data.optionsWithValues ? data.optionIndex.replace('option', '') - 1 : data.optionIndex;
+    let sizeValues = [];
+
+    if(data.optionsWithValues) {
+      sizeValues = data.optionsWithValues[optionIndex].values;
+    } else {
+      sizeValues = data.variants;
+    }
+
+    return sizeValues;
+  }
+
   const buildOptionSelectors = () => {
-    const optionSelectors = data.variants.map((variant, index) => {
+    let sizeValues = getSizeValues();
+    const useVariants = typeof data.optionsWithValues === 'undefined';
+
+    const optionSelectors = sizeValues.map((option, index) => {
+      let variant;
+      if(useVariants == false) {
+        variant = data.variants.find(variant => {
+          return variant[data.optionIndex] == option;
+        });
+      } else {
+        variant = option;
+      }
+
       const lowInventory = variant ? variant.inventory_quantity <= window.settings.lowInventoryThreshold : false;
       const enableBis = variant ? !variant.available && variant.metafields.enable_bis == 1 : false;
 
@@ -66,12 +84,12 @@ export default function SizeDrawer({data, index}) {
           <input
             type="radio"
             name={data.optionIndex}
-            value={variant[data.optionIndex]}
-            data-variant-id={variant.id}
+            value={typeof variant !== 'undefined' ? variant[data.optionIndex] : option}
+            data-variant-id={variant?.id || ""}
             data-final-sale-message={window.settings.finalSaleMessage}
             className="hide"
-            defaultChecked={data.activeOption ? variant[data.optionIndex] === data.activeOption : false}
-            disabled={!variant.available}
+            defaultChecked={(typeof variant !== 'undefined' && data.activeOption) ? variant[data.optionIndex] === data.activeOption : false}
+            disabled={!variant || !variant?.available}
             onChange={handleChange}
           />
           <div className="product-option__ui" data-option-ui>
@@ -80,12 +98,12 @@ export default function SizeDrawer({data, index}) {
                 <Checkmark />
               </div>
               <div className="product-option__ui-label">
-                {variant[data.optionIndex]}
+                {variant ? variant[data.optionIndex].replace('.00', '') : option.replace('.00', '') }
               </div>
             </div>
             <div className="product-option__ui-group-middle">
               <div className="product-option__ui-availability">
-                {variant.available ? 'Available' : 'Sold Out'}
+                {variant && variant.available ? 'Available' : 'Sold Out'}
               </div>
             </div>
             <div className="product-option__ui-group-corner">

@@ -18,6 +18,17 @@ const productCard = ((props) => {
       return variant;
     })
 
+    if(data.options) {
+      data.optionsWithValues = data.options.map((option, index) => {
+        return {
+          option: option,
+          position: index + 1,
+          values: data[option]
+        }
+      })
+    }
+
+
     data.variants = filterSoldOutVariants(data);
 
     return data;
@@ -193,10 +204,6 @@ const productCard = ((props) => {
       rid: props.rid,
       item_id: productData.id,
       variant_item_id: currentVariant.id
-    })
-    client.sendEvent('redirect', {
-      rid: props.rid,
-      suggestion: productData.id
     })
     if(document.location.href.indexOf('/collections/') > -1 || document.location.href.indexOf('/search') > -1) {
       const cardId = card.current.id;

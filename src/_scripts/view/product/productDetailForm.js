@@ -122,23 +122,18 @@ export default class ProductDetailForm {
     });
 
     this.$container.on('variantChange', this.onVariantChange.bind(this));
-    // this.$container.on(this.events.CLICK, selectors.variantOptionValue, this.onVariantOptionValueClick.bind(this));
     this.$shippingModalTrigger.on(this.events.CLICK, this.openShippingModal.bind(this));
     this.$pdpDrawerToggler.on(this.events.CLICK, this._toggleOptionDrawer.bind(this));
     Utils.chosenSelects(this.$container);
     this.productBundles = new ProductBundles(this.$container, this.productSingleObject);
     this.$singleOptionSelectors.on(this.events.CHANGE, this.onOptionChange.bind(this));
     this.$bisButton.on(this.events.CLICK, this.onBisButtonClick.bind(this));
-
-    this.checkVariantsAvailability(this.variants.currentVariant);
     this.productColorValidation();
-
     if(this.$swatchSlider.length){
       this.initSwatchesSlider();
     }
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant, true);
-    this.validateSizeAvailability();
 
     Cookies.set('findify-rid', this.searchParams.get('rid'))
   }
@@ -151,7 +146,6 @@ export default class ProductDetailForm {
     this.updateQuantitySelect(variant);
     this.updateVariantOptionValues(variant);
     this.updateFullDetailsLink(variant);
-    this.checkVariantsAvailability(variant);
     this.updateKlarnaPricing(variant);
     this.productColorValidation();
     this.finalSaleValidation(variant);
@@ -161,21 +155,11 @@ export default class ProductDetailForm {
 
   onOptionChange(evt) {
     const $this = $(evt.currentTarget);
+    if($this.is('select')) {$this.addClass('edited');}
     const optionIndex = $this.data('product-option');
     const optionValue = $this.val();
     const optionName = $this.data('option-name');
-
     this.updateSelectedOptionLabel(optionIndex, optionValue, optionName);
-    if($this.parents(selectors.pdpOptionDrawer).length > 0){
-      const $currentDrawer = $this.parents(selectors.pdpOptionDrawer);
-
-      for(let i = 0; i <= this.optionDrawers.length - 1; i++) {
-        if( this.optionDrawers[i].id === $currentDrawer.data('drawer-id')) {
-          this.optionDrawers[i].drawer.hide();
-          break;
-        }
-      }
-    }
   }
 
   initSwatchesSlider() {
@@ -244,7 +228,7 @@ export default class ProductDetailForm {
       this.$priceWrapper.removeClass(classes.hide);
     } else {
       this.$addToCartBtn.prop('disabled', true).show();
-      this.$addToCartBtnText.html(theme.strings.unavailable);
+      this.$addToCartBtnText.html(theme.strings.soldOut);
       this.$priceWrapper.addClass(classes.hide);
       this.$atcPrice.hide();
       return;
@@ -262,7 +246,7 @@ export default class ProductDetailForm {
       this.$addToCartBtn.show();
 
       if(this.productSingleObject.metafields.enable_sold_out !== 1 || variant.metafields.enable_sold_out !== 1) {
-        this.$addToCartBtnText.html(theme.strings.unavailable);
+        this.$addToCartBtnText.html(theme.strings.soldOut);
         this.$atcPrice.hide();
       }
 
@@ -296,8 +280,7 @@ export default class ProductDetailForm {
     if(firstCheck && this.productSingleObject.type === 'Gift Card') {
       this.$atcPrice.hide();
     }
-
-    if (variant) {
+    if (variant !== null && typeof variant !== 'undefined') {
       this.$productPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
       this.$atcPrice.html(Currency.formatMoney(variant.price, window.theme.moneyFormat).replace('.00', ''));
 
@@ -341,11 +324,11 @@ export default class ProductDetailForm {
   updateSelectedOptionLabel(index, value, name) {
     if(name === 'size' || name === 'Size' || name === 'amount' || name === 'Amount' ) {
       const updatedValue = value === 'OS' ? 'One Size' : value;
-      $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${updatedValue}</span>`);
+      $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${updatedValue.replace('.00', '')}</span>`);
       $(`[data-selected-option=${index}]`, this.$detailOptions).parent().addClass('is-active');
+      this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
     } else {
       $(`[data-selected-option=${index}]`, this.$detailOptions).text(value);
-      this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
     }
   }
 
@@ -367,7 +350,7 @@ export default class ProductDetailForm {
       $currentOption = $(`[data-product-option=${colorIndex}]:checked`, this.$detailOptions).parent();
     }
 
-    const $selectedSize = $(`[data-product-option=${sizeIndex}]:checked`, this.$detailOptions);
+    const $selectedSize = $(`[data-product-option=${sizeIndex}]`, this.$detailOptions).val();
 
     if($currentOption.is('.is-bis')) {
       $(`[data-selected-option=${sizeIndex}]`).text('Notify me when back');
@@ -376,7 +359,7 @@ export default class ProductDetailForm {
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', true);
       this._disablePurchase(true)
     } else if($selectedSize.length) {
-      const optionValue = $selectedSize.val() === 'OS' ? 'One Size' : $selectedSize.val();
+      const optionValue = $selectedSize === 'OS' ? 'One Size' : $selectedSize;
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', false);
       $(`[data-selected-option=${sizeIndex}]`).html(`Selected Size: <span class="product-option__drawer-btn-value">${optionValue}</span>`);
     } else {
@@ -575,6 +558,8 @@ export default class ProductDetailForm {
   }
 
   finalSaleValidation(variant) {
+    if(!variant) return false;
+
     if(this.$finalSaleMessaging.length === 0) {
       return false;
     }
@@ -646,17 +631,63 @@ export default class ProductDetailForm {
     return drawerList;
   }
 
-  _toggleOptionDrawer(evt) {
-    const $this = $(evt.currentTarget);
-    const drawerId = $this.data('drawer-id');
+  _buildDrawerData($button) {
+    const $optionField = $button.siblings('[data-single-option-selector]');
+    const currentOptionIndex = $optionField.data('index');
+    const productOptions = [];
+    const drawerData = {
+      optionIndex: currentOptionIndex,
+      printOption: $optionField.data('option-name'),
+      productTitle: this.productSingleObject.title,
+      addToCart: false,
+      optionsWithValues: this.productSingleObject.options_with_values,
+      dataField: $optionField.get(0),
+      activeOption: $optionField.is('.edited') ? $optionField.val() : '',
+      showSizing: true,
+      fitTipsContent: this.productSingleObject.metafields.fit_tips_content || undefined,
+      fitTipsTitle: this.productSingleObject.metafields.fit_tips_title || undefined
+    }
 
-    const drawerObject = this.optionDrawers.filter((drawerItem) => {
-      if( drawerItem.id === drawerId) {
-        return true;
+    for(let i = 1; i <= 3; i++) {
+      let option = $(`[data-single-option-selector][data-index=option${i}]:checked`, this.$detailOptions);
+
+      if (option.length === 0) {
+        option = $(`[data-single-option-selector][data-index=option${i}]`, this.$detailOptions)
       }
+
+      if(option.length === 1) {
+        productOptions.push({
+          index: option.data('index'),
+          value: option.val()
+        });
+      }
+    }
+
+    const otherOptions = productOptions.filter(option => {
+      return option.index !== currentOptionIndex
+    });
+    let filteredVariants = this.productSingleObject.variants;
+
+    otherOptions.forEach((option) => {
+      filteredVariants = filteredVariants.filter(variant => {
+        return variant[option.index] === option.value
+      });
     })
 
-    drawerObject[0].drawer.toggle();
+    drawerData.variants = filteredVariants;
+
+    return drawerData;
+  }
+
+  _toggleOptionDrawer(evt) {
+    const $this = $(evt.currentTarget);
+
+    const drawerData = this._buildDrawerData($this);
+
+    document.dispatchEvent(new CustomEvent('drawerOpen', {detail: {
+      type: 'option-drawer',
+      ...drawerData
+    }}))
   }
 
   onBisButtonClick(evt) {

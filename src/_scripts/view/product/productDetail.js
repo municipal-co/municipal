@@ -45,12 +45,18 @@ export default class ProductDetail {
 
   onVariantChange(variant) {
     this.gallery.onVariantChange(variant);
-    if(variant.compare_at_price > variant.price) {
-      $(selectors.stickyComparePrice).text(Currency.formatMoney(variant.compare_at_price, window.moneyFormat).replace('.00', '')).removeClass('hide');
+    if(variant) {
+      $(selectors.stickyPrice).show();
+      if(variant.compare_at_price > variant.price) {
+        $(selectors.stickyComparePrice).text(Currency.formatMoney(variant.compare_at_price, window.moneyFormat).replace('.00', '')).removeClass('hide');
+      } else {
+        $(selectors.stickyComparePrice).addClass('hide').text('');
+      }
+
+      $(selectors.stickyPrice).text(Currency.formatMoney(variant.price, window.moneyFormat).replace('.00', ''))
     } else {
-      $(selectors.stickyComparePrice).addClass('hide').text('');
+      $(selectors.stickyPrice).hide();
     }
 
-    $(selectors.stickyPrice).text(Currency.formatMoney(variant.price, window.moneyFormat).replace('.00', ''))
   }
 }

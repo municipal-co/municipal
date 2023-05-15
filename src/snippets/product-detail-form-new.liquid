@@ -21,13 +21,13 @@
             <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
           </div>
           {%- endif -%}
-
-          {%- render 'product-form-options',
+          {%- render 'product-form-options'
             product: product,
             type: 'drawer',
-            print_option: option_downcase
-            current_variant: current_variant
+            print_option: option,
+            current_variant: current_variant,
           -%}
+
         {%- else -%}
           {%- render 'product-form-options'
             product: product,

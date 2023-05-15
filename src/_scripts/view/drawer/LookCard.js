@@ -23,6 +23,7 @@ export default function LookCard({product}) {
       type: 'option-drawer',
       printOption,
       optionIndex,
+      optionsWithValues: product.options_with_values,
       productUrl: product.url,
       productTitle: product.title,
       variants: product.variants,
