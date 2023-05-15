@@ -42,9 +42,9 @@
         <div class="bundle-item__drawer-head">
           <input type="hidden" value="{{ current_variant.id }}" data-bundle-product-id>
           <div class="bundle-item__image">
-            <img data-src="{{product.selected_or_first_available_variant.image | img_url: '100x', scale: "2" }}"
+            <img src="{{product.selected_or_first_available_variant.image | img_url: '100x', scale: "2" }}"
                  alt=""
-                 class="lazyload"
+                 loading="lazy"
                  data-bundle-product-image>
           </div>
           <div class="bundle-item__product-data">
@@ -53,11 +53,11 @@
             </div>
             <span class="bundle-item__option" data-option-1>{{current_variant.option1}}</span>
             <span class="bundle-item__option" data-option-2>{{current_variant.option2}}</span>
-            <div class="bundle-item__variant-price" data-price-container=>
+            <div class="bundle-item__variant-price" data-price-container {% unless current_variant.available %}style="display:none;"{% endunless %}>
               <s class="bundle-item__compare-price" data-item-compare-price>{% if current_variant.price_varies %} {{current_variant.compare_at_price | money_without_trailing_zeros}} {% endif %}</s>
               <span class="bundle-item__full-price" data-item-full-price="{{ current_variant.price }}">{{current_variant.price | money_without_trailing_zeros}}</span>
             </div>
-            <div class="bundle-item__sold-out" style="display:none;" data-sold-out aria-hidden="true">
+            <div class="bundle-item__sold-out" {% if current_variant.available  %}style="display:none;" aria-hidden="true" {% endif %} data-sold-out >
               Sold Out
             </div>
           </div>

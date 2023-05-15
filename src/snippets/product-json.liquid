@@ -140,23 +140,25 @@
           {
             "name": {{ option.name | json }},
             "position": {{ option.position }},
-            "values": [
+            "values":
+            {% capture values %}
               {% for v in option.values %}
-                {{ v | json }}
-                {% unless forloop.last %},{% endunless %}
+                {{- v | json -}}
+                {%- unless forloop.last %},{% endunless -%}
               {% endfor %}
-              {% for merged_product in product.metafields.custom_fields.merge_product.value %}
-                {% for option in merged_product.options_with_values %}
-                  {% if option.position == option_position %}
+              {%- for merged_product in product.metafields.custom_fields.merge_product.value -%}
+                {%- for option in merged_product.options_with_values -%}
+                  {%- if option.position == option_position -%}
                     ,  {%- comment -%}Compensates for missing trailing comma{%- endcomment -%}
-                    {% for v in option.values %}
+                    {%- for v in option.values -%}
                       {{ v | json }}
-                      {% unless forloop.last %} , {% endunless %}
-                    {% endfor %}
-                  {% endif %}
-                {% endfor %}
-              {% endfor%}
-            ]
+                      {%- unless forloop.last -%},{%- endunless -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endfor-%}
+            {%- endcapture -%}
+            {{ option.values | split: ',' | uniq | join: ',' }}
           }
           {% unless forloop.last %},{% endunless %}
         {% endfor %}
