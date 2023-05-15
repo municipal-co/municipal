@@ -106,7 +106,7 @@ export default class Variants {
       variant: variant
     });
 
-    if (!variant) {
+    if (!variant || !this.currentVariant) {
       return;
     }
 
