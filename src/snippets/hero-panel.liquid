@@ -64,7 +64,9 @@
         alt: s.handwritten_image.alt,
         class: "hero__title-image"
         loading: 'lazy',
-        image_sizes: "(max-width: 992px) 80vw, 100vw"
+        image_sizes: "100vw"
+        width: s.handwritten_image.width,
+        height: s.handwritten_image.height
       %}
     {% endif %}
     {% if s.title != blank %}

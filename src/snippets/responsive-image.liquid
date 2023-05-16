@@ -31,6 +31,12 @@
       sizes="{{- image_sizes -}}"
       loading="{{ loading }}"
       alt="{{- image_alt -}}"
+      {% if width != blank %}
+        width="{{width}}"
+      {% endif %}
+      {% if height != blank %}
+        height="{{height}}"
+      {% endif %}
       {{ dataAttributes }}>
 {%- else -%}
   <img src="{{ image | image_url }}"
@@ -42,6 +48,12 @@
       sizes="{{- image_sizes -}}"
       loading="{{ loading }}"
       alt="{{- image_alt -}}"
+      {% if width != blank %}
+        width="{{width}}"
+      {% endif %}
+      {% if height != blank %}
+        height="{{height}}"
+      {% endif %}
       {{ dataAttributes }}>
 {%- endif -%}
 
