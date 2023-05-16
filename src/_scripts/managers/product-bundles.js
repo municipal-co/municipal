@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Swiper, {Scrollbar, Navigation} from 'swiper';
-import * as Image from '../core/image'
 import * as Currency from '../core/currency';
+import { srcSetGenerator } from '../core/utils';
 
 const selectors = {
   mainProductOptionsContainer: '[data-product-detail-options]',
@@ -142,6 +142,7 @@ export default class ProductBundles {
 
         if(optionImage) {
           $(selectors.bundleProductImage, productContainer).attr('src', optionImage);
+          $(selectors.bundleProductImage, productContainer).attr('srcset', srcSetGenerator(optionImage));
         }
 
         singleOptionSelector.trigger('change');
@@ -299,9 +300,15 @@ export default class ProductBundles {
       });
 
       if(skipCurrentIndex === true && optionIndex !== currentIndex && currentOption.length) {
-        currentOptions.push(currentOption.val());
+        currentOptions.push({
+          selector: currentOption,
+          value: currentOption.val()
+        });
       } else if(skipCurrentIndex === false && currentOption.length) {
-        currentOptions.push(currentOption.val());
+        currentOptions.push({
+          selector: currentOption,
+          value: currentOption.val()
+        });
       }
     }
 
@@ -326,8 +333,8 @@ export default class ProductBundles {
     const $this = $(evt.currentTarget);
     const activeOptions = this.getActiveOptions($this);
     const variant = this.getCurrentVariant(activeOptions);
+    let optionImage;
 
-    const optionImage = typeof variant !== 'undefined' ? variant.featured_image.src : $(evt.target).siblings('.product-option__ui').find('img').attr('src');
     if(variant) {
       $this.find(selectors.productFullPrice).text(Currency.formatMoney(variant.price, theme.moneyFormat).replace('.00', '')).attr('data-item-full-price', variant.price);
 
@@ -361,11 +368,21 @@ export default class ProductBundles {
     $this.find(selectors.bundleProductId).val(variant?.id || "");
 
     for(let i = 0; i < activeOptions.length; i++) {
-      $(`[data-option-${i+1}]`, $this).text(activeOptions[i]);
+      if(activeOptions[i].selector.is('[data-option-name="color"]')) {
+        optionImage = activeOptions[i].selector.siblings('.product-option__ui').find('img').attr('src');
+      }
+      $(`[data-option-${i+1}]`, $this).text(activeOptions[i].value);
     }
-    $this.find(selectors.bundleProductImage)
-      .attr('src', optionImage)
-      .attr('alt', variant?.featured_image?.alt || '');
+
+    if(optionImage){
+      $this.find(selectors.bundleProductImage)
+        .attr('src', optionImage)
+        .attr('alt', variant?.featured_image?.alt || '');
+      $this.find(selectors.bundleProductImage)
+        .attr('srcset', srcSetGenerator(optionImage));
+    }
+
+
 
     if($this.is(':visible')) {
       this.updateATCstate();

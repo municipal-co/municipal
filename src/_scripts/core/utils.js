@@ -9,14 +9,14 @@ import $ from 'jquery';
  */
 export function find(array, key, value) {
   let found;
-  
+
   for (let i = 0; i < array.length; i++) {
     if (array[i][key] === value) {
       found = array[i];
       break;
     }
   }
-  
+
   return found;
 }
 
@@ -395,4 +395,14 @@ export function decodeEntities(encodedString) {
   const textArea = document.createElement('textarea');
   textArea.innerHTML = encodedString;
   return textArea.value;
+}
+
+export function srcSetGenerator(url) {
+  const srcsetSizes = [48, 90, 112, 256, 320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+
+  const sizesMap = srcsetSizes.map((size) => {
+    return `${url}&width=${size} ${size}w`
+  })
+
+  return sizesMap.join(',');
 }
