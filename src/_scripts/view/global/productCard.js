@@ -18,6 +18,9 @@ const productCard = ((props) => {
       return variant;
     })
 
+    data.image_url = data.image_url.replace('_large', '');
+    data.image_2_url = data.image_url.replace('_large', '');
+
     data.variants = filterSoldOutVariants(data);
 
     return data;
@@ -28,6 +31,8 @@ const productCard = ((props) => {
     let filteredVariant = [];
 
     data.variants.forEach(variant => {
+      variant.image_url = variant?.image_url?.replace('_large.', '.');
+      variant.image_2_url = variant?.image_2_url?.replace('_large.', '.');
       if(variant.availability || variant.custom_fields.mf_custom_fields_enable_notify_me == '1' || variant.custom_fields.mf_custom_fields_enable_sold_out == '1') {
         if(availableColors.indexOf(variant.color) == -1) {
           availableColors.push(variant.color);
