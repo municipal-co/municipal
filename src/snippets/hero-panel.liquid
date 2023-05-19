@@ -21,16 +21,20 @@
     }
   </style>
   {% unless s.image_mobile == blank and s.image == blank %}
-    <img class="hero__bg hero__bg--desktop"
-          src="{{s.image | img_url: "master" }}&width=1920"
-          loading="lazy"
-          alt="{{s.image.alt}}"
-    >
-    <img class="hero__bg hero__bg--mobile"
-          src="{{s.image_mobile | img_url: "master" }}&width=1024"
-          loading="lazy"
-          alt="{{s.mobile_image.alt}}"
-    >
+    {% render 'responsive-image',
+      image: s.image
+      class: 'hero__bg hero__bg--desktop',
+      image_sizes: '100vw',
+      loading: 'lazy',
+      alt: 's.image.alt',
+    %}
+    {% render 'responsive-image',
+      image: s.image_mobile
+      class: 'hero__bg hero__bg--mobile',
+      image_sizes: '100vw',
+      loading: 'lazy',
+      alt: 's.image_mobile.alt',
+    %}
   {% endunless %}
 
 
@@ -55,7 +59,15 @@
 
   <div class="hero__inner col-20 col-lg-14">
     {% if s.handwritten_image != blank %}
-      <img data-src="{{s.handwritten_image | img_url: 'master'}}" alt="{{s.handwritten_image.alt}}" class="hero__title-image lazyload">
+      {% render 'responsive-image',
+        image: s.handwritten_image,
+        alt: s.handwritten_image.alt,
+        class: "hero__title-image"
+        loading: 'lazy',
+        image_sizes: "100vw"
+        width: s.handwritten_image.width,
+        height: s.handwritten_image.height
+      %}
     {% endif %}
     {% if s.title != blank %}
       <{{s.title_tag}} class="hero__title h1">

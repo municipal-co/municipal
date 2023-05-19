@@ -70,7 +70,6 @@ export default class ProductSection extends BaseSection {
 
   toggleFitGuideModal() {
     const fitGuideSettings = JSON.parse(document.querySelector('[data-fit-guide-settings]').innerHTML)
-    console.log(fitGuideSettings);
     setTimeout(() => {
       document.dispatchEvent(new CustomEvent('drawerOpen', {detail: {
         type: "sizing-drawer",

@@ -46,13 +46,13 @@
           data-gallery-slide
           data-image-selector="{{ alt_pieces[1] | downcase }}">
 
-        <img
-            src="{{image | image_url }}"
-            width="400px"
-            height="auto"
-            class="product-card__image"
-            alt="{{ alt_pieces[0] }}"
-            loading="lazy">
+        {% render 'responsive-image',
+          image: image,
+          class: 'product-card__image'
+          image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+          loading: 'lazy',
+          alt: image.alt,
+        %}
       </div>
     {% endif %}
   {%- endfor -%}
@@ -69,14 +69,13 @@
             href="{{merged_product.url}}?variant={{current_variant.id}}" data-product-url="{{merged_product.url}}"
             data-gallery-slide
             data-image-selector="{{ alt_pieces[1] | downcase }}">
-
-          <img
-              src="{{image | image_url }}"
-              width="400px"
-              height="auto"
-              class="product-card__image"
-              alt="{{ alt_pieces[0] }}"
-              loading="lazy">
+            {% render 'responsive-image',
+              image: image,
+              class: 'product-card__image'
+              image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+              loading: 'lazy',
+              alt: alt_pieces[0],
+            %}
         </div>
       {% endif %}
     {% endfor %}
@@ -94,13 +93,13 @@
             is-active
           {% endif %}"
           data-image-selector="{{ alt_pieces[1] }}">
-          <img
-            src="{{variant.image | image_url: width: '400', format: 'pjpg'}}"
-            class="product-card__image"
-            width="400"
-            height="auto"
-            alt="{{ alt_pieces[0] }}"
-            loading="lazy">
+          {% render 'responsive-image',
+            image: image,
+            class: 'product-card__image'
+            image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+            loading: 'lazy',
+            alt: alt_pieces[0],
+          %}
         </div>
         {% assign printed_images = printed_images | append: variant.image %}
       {% else %}
@@ -116,13 +115,13 @@
               is-active
             {% endif %}"
             data-image-selector="{{ alt_pieces[1] }}">
-            <img
-              src="{{variant.image | image_url: width: '400', format: 'pjpg'}}"
-              class="product-card__image"
-              width="400"
-              height="auto"
-              alt="{{ alt_pieces[0] }}"
-              loading="lazy">
+            {% render 'responsive-image',
+              image: image,
+              class: 'product-card__image'
+              image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+              loading: 'lazy',
+              alt: alt_pieces[0],
+            %}
           </div>
           {% assign printed_images = printed_images | append: variant.image %}
         {% else %}

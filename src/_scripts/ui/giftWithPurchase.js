@@ -77,7 +77,9 @@ export default class giftWithPurchase {
       }
     })
     this.$gwpId.val(selectedVariant[0].id);
-    this.$gwpImage.attr('src', Image.getSizedImageUrl(selectedVariant[0].featured_image.src, '160x160'));
+    this.$gwpImage.attr('src', selectedVariant[0].featured_image.src);
+    this.$gwpImage.attr('srcset', Utils.srcSetGenerator(selectedVariant[0].featured_image.src));
+    this.$gwpImage.attr('alt', selectedVariant[0].featured_image.alt);
     this.$gwpPrice.val(Currency.formatMoney(selectedVariant[0].price, theme.moneyFormat));
     if (selectedVariant[0].available) {
       this.$gwpSubmit.text(theme.strings.addToCart);

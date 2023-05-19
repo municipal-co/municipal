@@ -36,7 +36,13 @@
 <div id="endcard-{{ section.id }}" data-section-id="{{ section.id }}" class="endcard" data-section-type="endcard">
   <div class="container-fluid-max">
     {%- if  image != blank -%}
-      <img class="endcard__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
+      {% render 'responsive-image'
+        image: image,
+        alt: image.alt,
+        loading: "lazy",
+        image_sizes: "100vw",
+        class: "endcard__image"
+      %}
     {%- endif -%}
     <div class="endcard__columns">
       <div class="endcard__column">

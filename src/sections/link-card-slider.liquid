@@ -45,11 +45,13 @@
               data-mentor-id="{{bs.mentor_id}}"
             {% endif %}></a>
         {% endif %}
-
-        <img data-src="{{bs.card_image | img_url: '600x' }}"
-            alt="{{bs.card_image.alt}}"
-            class="frame__inner link-card__image {% if s.enable_slider %}swiper-lazy {% else %} lazyload {% endif %}"
-            data-image>
+        {% render 'responsive-image',
+          image: bs.card_image,
+          class: 'frame__inner link-card__image'
+          image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+          loading: 'lazy',
+          alt: bs.card_image.alt,
+        %}
         {% if bs.category_url != blank and bs.category_label != blank or bs.enable_mkt_link == true or bs.enable_mentor_sub == true %}
           <a href="{{bs.category_url | default: 'javascript:void(0);'}}"
             class="link-card__category"

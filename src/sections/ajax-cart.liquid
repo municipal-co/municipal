@@ -92,11 +92,13 @@
       <ul class="ajax-cart__list ajax-cart__list--highlight">
         <li class="ajax-cart__item">
           <div class="ajax-cart__item-image-wrapper frame frame--1x1">
-            <img class="ajax-cart__item-image"
-                  src="{{ current_variant.featured_image.src | img_url: "160x" }}" alt="{{ current_variant.featured_image.alt }}"
-                  data-object-fit="cover"
-                  data-object-position="center"
-                  data-gwp-image>
+            {%- render 'responsive-image'
+              image: current_variant.featured_image.src,
+              alt: current_variant.fetaured_image.alt,
+              class: "ajax-cart__item-image",
+              image_sizes: "(max-width: 575px) 100px, 130px"
+              dataAttributes: 'data-gwp-image'
+            -%}
           </div>
           <div class="ajax-cart__item-info">
             {% if settings.gift_notification_message != blank %}
@@ -197,7 +199,7 @@
         {{#each items}}
           <li class="ajax-cart__item {{#unless available}}ajax-cart__item--sold-out{{/unless}}" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
             <div class="ajax-cart__item-image-wrapper frame frame--1x1">
-              <img src="{{ image }}" class="ajax-cart__item-image" data-object-fit="cover" data-object-position="center">
+              <img src="{{ image }}" srcset="{{ image_srcset }}" sizes="(max-width: 540px) 100px, 130px" class="ajax-cart__item-image">
             </div>
             <div class="ajax-cart__item-info">
               <div class="ajax-cart__title-container">

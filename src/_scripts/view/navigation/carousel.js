@@ -1,5 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import Swiper, { FreeMode, Navigation } from "swiper";
+import Image from "../global/image";
+
 const Carousel = ((props) => {
   const s = props.block.settings;
   const aspectRatio = s.aspect_ratio;
@@ -33,19 +35,34 @@ const Carousel = ((props) => {
   const cards = s.cards.map((card, index) => {
     if(card.image){
       return (
-        <a href={card.url} className={`navigation-carousel__card swiper-slide ${card.highlight_card ? 'navigation-carousel--highlighted' : ''}`} key={index}>
-          <div className={`navigation-carousel__image-container frame ${aspectRatio}`}>
-              <img src={card.image} alt={card.image_alt} className='frame__inner navigation-carousel__image' />
+        <a
+          href={card.url}
+          className={`navigation-carousel__card swiper-slide ${
+            card.highlight_card ? 'navigation-carousel--highlighted' : ''
+          }`}
+          key={index}
+        >
+          <div
+            className={`navigation-carousel__image-container frame ${aspectRatio}`}
+          >
+            <Image
+              src={card.image}
+              alt={card.image_alt}
+              className="frame__inner navigation-carousel__image"
+              loading="lazy"
+              sizes={`${aspectRatio == 'frame--3x4' ? '(max-width: 450px) 45w, (max-width: 991px) 310px, 138px': '(max-width: 450px) 80w, (max-width: 991px) 310px, 257px'}`}
+            />
           </div>
           <div className="navigation-carousel__card-title">
-            { card.highlight_card &&
-            <b className="navigation-carousel__highlight-text">
-              {card.highlight_badge}
-            </b>}
-            { card.title }
+            {card.highlight_card && (
+              <b className="navigation-carousel__highlight-text">
+                {card.highlight_badge}
+              </b>
+            )}
+            {card.title}
           </div>
         </a>
-      )
+      );
     } else {
       return undefined;
     }

@@ -35,13 +35,14 @@
   }
 }
 
+
 .hero__inner {
   z-index:1;
 }
 
 .hero__title-image {
   max-width: 100%;
-  width: auto;
+  height: auto;
   margin-bottom: 21px;
   @include media-breakpoint-down('md') {
     margin-bottom: 15px;

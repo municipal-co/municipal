@@ -60,14 +60,21 @@
         data-products-info = '{{ look_products }}'
         >
         <div class="look-card__image-container frame frame--4x5">
-          {% capture card_image %}
-            {% render 'cf-image',
+          {%- capture card_image -%}
+            {%- render 'cf-image',
                       image: current_look.look_image,
+                      print: "url",
                       tag_alt: current_look.look_image.alt,
-                      tag_class: "look-card__image lazyload frame__inner" %}
-          {% endcapture %}
+                      tag_class: "look-card__image lazyload frame__inner" -%}
+          {%- endcapture -%}
 
-          {{ card_image | replace:"src=", "data-src=" }}
+          {%- render 'responsive-image',
+            image: card_image,
+            image_alt: current_look.look_image.alt,
+            class: "look-card__image frame__inner",
+            loading: "lazy",
+            image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+          -%}
         </div>
         <div class="look-card__text-container">
           {% if current_look.card_text != blank %}

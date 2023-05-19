@@ -18,9 +18,9 @@
       {% assign img_color_downcase = image_alt_pieces[1] | downcase %}
       {% assign variant_color_downcase = current_variant[option_index] | downcase %}
         {% if has_color_index %}
-          <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}">
+          <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
         {% else %}
-          <div class="product-gallery__slide swiper-slide" data-slide>
+          <div class="product-gallery__slide swiper-slide" data-slide style="aspect-ratio: {{image.width}}/{{image.height}};">
         {% endif %}
           <div class="product-gallery__zoom-toggler" data-zoom-toggler>
             {% render 'icon-zoom-in' %}
@@ -38,16 +38,16 @@
           {% assign img_color_downcase = image_alt_pieces[1] | downcase %}
           {% assign variant_color_downcase = current_variant[option_index] | downcase %}
           {% if has_color_index %}
-            <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}">
+            <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
           {% else %}
-            <div class="product-gallery__slide swiper-slide" data-slide>
+            <div class="product-gallery__slide swiper-slide" data-slide style="aspect-ratio: {{image.width}}/{{image.height}};">
           {% endif %}
             <div class="product-gallery__zoom-toggler" data-zoom-toggler>
               {% render 'icon-zoom-in' %}
               {% render 'icon-zoom-out' %}
             </div>
             <div class="swiper-zoom-container">
-              <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
+              <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="product-gallery__image">
               <span class="swiper-lazy-preloader"></span>
             </div>
           </div>

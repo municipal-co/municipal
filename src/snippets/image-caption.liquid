@@ -2,7 +2,13 @@
 {% assign caption = s.caption %}
 
 {%- if  image != blank -%}
-  <img class="image-caption__image lazyload" data-src="{{ image | img_url: 'master' }}" alt="{{ image.alt }}" />
+  {% render 'responsive-image'
+    image: image,
+    alt: image.alt,
+    loading: "lazy",
+    class: "image-caption__image",
+    image_sizes: "100vw"
+  %}
 {%- endif -%}
 {% if caption != blank %}
   <p class="image-caption__text">{{ caption }}</p>

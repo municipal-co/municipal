@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'preact/compat';
 import Arrow from '../icons/Arrow';
 import Close from '../icons/Close';
+import Image from '../global/image';
 
 export default function MarketingDrawer({data, index}) {
   const drawer = useRef(null);
@@ -24,7 +25,7 @@ export default function MarketingDrawer({data, index}) {
   const buildNotifyText = () => {
     return drawerSettings.notifyText.replace(
       '[[product]]',
-      `<span class="highlighted">${data.productName}</span>`
+      `<span className="highlighted">${data.productName}</span>`
     )
   }
 
@@ -94,43 +95,45 @@ export default function MarketingDrawer({data, index}) {
   }, []);
 
   return (
-    <div class="drawer mkt-subscription__container" ref={drawer}>
-      <div class="drawer__inner mkt-subscription__inner">
-        <div class="drawer__header mkt-subscription__header">
-          <div class="drawer__header-title mkt-subscription__title">Notify</div>
+    <div className="drawer mkt-subscription__container" ref={drawer}>
+      <div className="drawer__inner mkt-subscription__inner">
+        <div className="drawer__header mkt-subscription__header">
+          <div className="drawer__header-title mkt-subscription__title">Notify</div>
           <button
-            class="drawer__close mkt-subscription__close"
+            className="drawer__close mkt-subscription__close"
             onClick={closeDrawer}
           >
             <Close />
             <div className="sr-only">Close drawer</div>
           </button>
         </div>
-        <div class="drawer__body-contents mkt-subscription__body">
-          <div class="mkt-subscription__image-container frame frame--1x1">
+        <div className="drawer__body-contents mkt-subscription__body">
+          <div className="mkt-subscription__image-container frame frame--1x1">
             {data.image && (
-              <img
+              <Image
                 src={data.image}
-                class="mkt-subscription__image frame__inner"
+                className="mkt-subscription__image frame__inner"
+                loading="lazy"
+                sizes="(max-width: 992px) 100vw, 560px"
               />
             )}
           </div>
 
           {drawerSettings.notifyText && (
             <div
-              class="mkt-subscription__body-info"
+              className="mkt-subscription__body-info"
               dangerouslySetInnerHTML={{ __html: buildNotifyText() }}
             ></div>
           )}
 
           <form
             action="//manage.kmail-lists.com/ajax/subscriptions/subscribe"
-            class={`mkt-subscription__form ${submitted ? 'submitted' : ''}`}
+            className={`mkt-subscription__form ${submitted ? 'submitted' : ''}`}
             onSubmit={submitForm}
           >
-            <div class="minimal-input-box">
+            <div className="minimal-input-box">
               <input
-                class="mkt-subscription__input minimal-input-box__input"
+                className="mkt-subscription__input minimal-input-box__input"
                 name="email"
                 placeholder="What's your email?"
                 type="email"
@@ -138,22 +141,22 @@ export default function MarketingDrawer({data, index}) {
                 required
               />
               <button
-                class="mkt-subscription__submit minimal-input-box__submit"
+                className="mkt-subscription__submit minimal-input-box__submit"
                 type="submit"
               >
                 <Arrow />
-                <span class="icon-fallback-text">Submit</span>
+                <span className="icon-fallback-text">Submit</span>
               </button>
             </div>
           </form>
           <div
-            class="mkt-subscription__response-message"
+            className="mkt-subscription__response-message"
           >
             {responseMessage}
           </div>
           {drawerSettings.footerMessage && (
             <div
-              class="mkt-subscription__footer-info"
+              className="mkt-subscription__footer-info"
               dangerouslySetInnerHTML={{ __html: drawerSettings.footerMessage }}
             ></div>
           )}
