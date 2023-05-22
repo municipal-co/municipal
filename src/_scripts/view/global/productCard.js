@@ -209,6 +209,17 @@ const productCard = ((props) => {
     }
   }
 
+  const getBadgeThreshold = (value) => {
+    let threshold = 'discount-badge--first-threshold';
+
+    if(value >= 70) {
+      threshold = 'discount-badge--third-threshold';
+    } else if (value >= 50) {
+      threshold = 'discount-badge--second-threshold';
+    }
+    return threshold;
+  }
+
   let productData = processData();
   productData.options = ['color', 'size'];
   const [productColors, setProductColors] = useState(getColorList(productData, 'color'));
@@ -253,12 +264,10 @@ const productCard = ((props) => {
           onClick={markCurrentCard}
         >
           <div className="product-card__gallery-slide is-active">
-            <Image
-              className="product-card__image"
-              src={currentVariant.image_url}
-              loading="lazy"
-              sizes="(max-width: 992px) 50w, 384px"
-            />
+            {currentVariant.discount &&
+              <div className={`discount-badge ${getBadgeThreshold(currentVariant.discount)}`} dangerouslySetInnerHTML={{__html: `${currentVariant.discount}% <br/> OFF`}}/>
+            }
+            <img className="product-card__image" src={currentVariant.image_url} loading='lazy' />
           </div>
         </a>
         <form action="/cart/add" className="product-card__content text-center">

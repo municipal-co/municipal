@@ -135,6 +135,8 @@
 {% if card_product != blank %}
   <div id="product-card-{{ card_product.id }}" class="product-card {{ card_classes }}" data-product-card>
     <a href="{{card_product.url}}?variant={{current_variant.id}}" class="product-card__gallery" data-gallery-slider data-product-url="{{card_product.url}}">
+      <div class="discount-badge" data-discount-badge {%- unless current_variant.compare_at_price >current_variant.price %} style="display:none;" {% endunless -%}>
+      </div>
       {{ card_images }}
     </a>
     <form target="/cart/add" class="product-card__content text-center">

@@ -1,0 +1,71 @@
+.discount-badge {
+  width: 100px;
+  height: 100px;
+  border-radius: 9999px;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  display: grid;
+  place-content: center;
+  line-height: 1;
+  font-family: $font-family-heading-large;
+  transform: rotate(-15deg);
+  z-index: 1;
+  font-size: 20px;
+  color: $black;
+
+  .card-slider:not(.card-slider--pdp) &,
+  .collection__grid & {
+    width: 70px;
+    height: 70px;
+    top: 25px;
+    left: 25px;
+    font-size: 14px;
+
+    @include media-breakpoint-down('md') {
+      width: 60px;
+      height: 60px;
+      top: 25px;
+      left: 25px;
+      font-size: 12px;
+    }
+  }
+
+  .autocomplete__results & {
+    width: 60px;
+    height: 60px;
+    top: 25px;
+    left: 25px;
+    font-size: 12px;
+  }
+
+  @include media-breakpoint-down('md') {
+    width: 60px;
+    height: 60px;
+    top: 25px;
+    left: 25px;
+    font-size: 12px;
+  }
+
+
+  .product-gallery & {
+    z-index: 2;
+  }
+
+  .swiper-slide-zoomed & {
+    display: none;
+  }
+}
+
+.discount-badge--first-threshold {
+  color: $white;
+  background-color: $blue;
+}
+
+.discount-badge--second-threshold {
+  background-color: $green;
+}
+
+.discount-badge--third-threshold {
+  background-color: $pink2;
+}

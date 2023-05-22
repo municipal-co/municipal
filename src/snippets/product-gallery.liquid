@@ -22,6 +22,7 @@
         {% else %}
           <div class="product-gallery__slide swiper-slide" data-slide style="aspect-ratio: {{image.width}}/{{image.height}};">
         {% endif %}
+          <div class="discount-badge" style="display:none;" data-discount-badge></div>
           <div class="product-gallery__zoom-toggler" data-zoom-toggler>
             {% render 'icon-zoom-in' %}
             {% render 'icon-zoom-out' %}
