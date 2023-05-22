@@ -32,6 +32,7 @@ const selectors = {
   dot: '.dot',
   klarnaOnsiteMessagingPrice: '[data-purchase-amount]',
   bisButton: '[data-bis-button]',
+  discountBadge: '[data-discount-badge]',
   // Final sale messaging
   finalSaleMessaging: '[data-final-sale-message]',
   // Color Slider
@@ -108,8 +109,8 @@ export default class ProductDetailForm {
     this.$bisButton              = $(selectors.bisButton, this.$container);
     this.$swatchSlider           = $(selectors.swatchesSlider, this.$container);
     this.$finalSaleMessaging     = $(selectors.finalSaleMessaging, this.$container);
+    this.$discountBadge          = $(selectors.discountBadge, this.$container.parent().find('.product-gallery'));
     /* eslint-enable */
-
     this.optionDrawers = this._setUpOptionDrawers();
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());
     this.searchParams = new URLSearchParams(document.location.search);
@@ -134,6 +135,8 @@ export default class ProductDetailForm {
     }
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant, true);
+    this.updateDiscountBadge(this.variants.currentVariant);
+    this.validateSizeAvailability();
 
     Cookies.set('findify-rid', this.searchParams.get('rid'))
   }
@@ -149,8 +152,8 @@ export default class ProductDetailForm {
     this.updateKlarnaPricing(variant);
     this.productColorValidation();
     this.finalSaleValidation(variant);
+    this.updateDiscountBadge(variant);
     this.settings.onVariantChange(variant);
-
   }
 
   onOptionChange(evt) {
@@ -366,6 +369,27 @@ export default class ProductDetailForm {
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', false);
       $(`[data-selected-option=${sizeIndex}]`).text('Select Size');
 
+    }
+  }
+
+  updateDiscountBadge(variant) {
+    if(variant && variant.compare_at_price > variant.price) {
+      const discountPrice = 100 - (variant.price / variant.compare_at_price * 100);
+      let badgeThreshold = 'discount-badge--first-threshold';
+
+      if(discountPrice >= 70) {
+        badgeThreshold = 'discount-badge--third-threshold';
+      } else if(discountPrice >= 50) {
+        badgeThreshold = 'discount-badge--second-threshold';
+      }
+
+      this.$discountBadge.show();
+      this.$discountBadge.html(`${discountPrice}% <br/> OFF`);
+      this.$discountBadge.removeClass('discount-bage--first-threshold', 'discount-bage--second-threshold', 'discount-bage--third-threshold')
+      this.$discountBadge.addClass(badgeThreshold);
+    } else {
+      this.$discountBadge.text('');
+      this.$discountBadge.hide();
     }
   }
 

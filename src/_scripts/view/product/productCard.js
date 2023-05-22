@@ -16,10 +16,12 @@ const selectors = {
   cardPrice: '[data-product-price]',
   cardComparePrice: '[data-compare-price]',
   productUrl: '[data-product-url]',
+  discountBadge: '[data-discount-badge]',
 };
 
 const classes = {
   active: 'is-active',
+  visible: 'is-visible',
 };
 
 const events = {
@@ -47,6 +49,7 @@ export default class ProductCard {
     this.$productPrice = $(selectors.cardPrice, this.$container);
     this.$comparePrice = $(selectors.cardComparePrice, this.$container);
     this.$productUrl = $(selectors.productUrl, this.$container);
+    this.$discountBadge = $(selectors.discountBadge, this.$container);
 
     this.$singleOptionSelector.on('change', this.onOptionChange.bind(this));
     this.$optionDdrawerOpen.on('click', this.openOptionDrawer.bind(this));
@@ -100,10 +103,29 @@ export default class ProductCard {
     this.swatchSlider = new Swiper($(selectors.swatchSlider, this.$container).get(0), swatchSliderSettings);
   }
 
+  updateBadges(variant) {
+    if(variant.compare_at_price > variant.price) {
+      const discountValue = 100 - (variant.price / variant.compare_at_price * 100);
+      let discountStyle = 'discount-badge--first-threshold';
+      this.$discountBadge.show();
+      this.$discountBadge.html(`${discountValue}% <br> OFF`);
+      if(discountValue >= 70) {
+        discountStyle = 'discount-badge--third-threshold';
+      } else if(discountValue >= 50) {
+        discountStyle = 'discount-badge--second-threshold';
+      }
+
+      this.$discountBadge.addClass(discountStyle);
+    } else {
+      this.$discountBadge.hide();
+    }
+  }
+
   onOptionChange(evt) {
     const $this = $(evt.currentTarget);
-
     if($this.data('option-name') === 'color') {
+      const optionIndex = $this.data('index');
+      const optionValue = $this.data('value');
       this.updateColor.call(this, $this);
       this.updateProductOption.call(this, $this);
     } else if($this.data('option-name') === 'Size' || $this.data('option-name') === 'size' ) {
@@ -141,6 +163,7 @@ export default class ProductCard {
 
     this.updateCardPrice(this.drawerData.variants[0]);
     this.updateCardUrl(this.drawerData.variants[0]);
+    this.updateBadges(this.drawerData.variants[0]);
   }
 
   getSelectedOptions() {
