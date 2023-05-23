@@ -97,6 +97,7 @@ export default class productGallery extends BaseSection {
     } else {
       const colorSwatch = document.querySelector('[data-option-name=color]:checked');
       if(colorSwatch) {
+        this.currentColor = colorSwatch.dataset.optionValue;
         colorName = colorSwatch.dataset.optionValue;
       }
     }
