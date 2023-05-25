@@ -1,0 +1,42 @@
+<script id="elevar-dl-listener-config" type="application/json">{"data_layer_listener_script": "https://shopify-gtm-suite.getelevar.com/shops/d0c1cf577f098e787fc0acf5e8a7f0c25f71a997/3.3.0/events.js", "ss_url": null, "signing_key": null, "myshopify_domain": null}</script>
+<script>
+  (() => {
+    if (!window.__ElevarIsGtmSuiteListenerCalled) {
+      window.__ElevarIsGtmSuiteListenerCalled = true;
+      const configElement = document.getElementById(
+        "elevar-dl-listener-config"
+      );
+
+      if (!configElement) {
+        console.error("Elevar: DLL Config element not found");
+        return;
+      }
+
+      const config = JSON.parse(configElement.textContent);
+
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = config.data_layer_listener_script;
+      script.async = false;
+      script.defer = true;
+
+      script.onerror = function () {
+        console.error("Elevar: DLL JS script failed to load");
+      };
+      script.onload = function () {
+        if (!window.ElevarGtmSuiteListener) {
+          console.error("Elevar: `ElevarGtmSuiteListener` is not defined");
+          return;
+        }
+
+        window.ElevarGtmSuiteListener.handlers.listen({
+          ssUrl: config.ss_url,
+          signingKey: config.signing_key,
+          myshopifyDomain: config.myshopify_domain
+        });
+      };
+
+      document.head.appendChild(script);
+    }
+  })();
+</script>
