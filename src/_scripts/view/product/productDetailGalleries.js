@@ -12,7 +12,8 @@ const selectors = {
 const classes = {
   gallerySlide: 'swiper-slide',
   zoomedIn: 'is-zoomed',
-  zoomReady: 'is-zoomable'
+  zoomReady: 'is-zoomable',
+  enableBadge: 'enable-badge',
 };
 
 export default class productGallery extends BaseSection {
@@ -80,6 +81,7 @@ export default class productGallery extends BaseSection {
     });
 
     if(colorIndex !== undefined) {
+      let enableBadge = false;
       if(this.currentColor !== variant[colorIndex]) {
         this.currentColor = variant[colorIndex];
 
@@ -93,6 +95,10 @@ export default class productGallery extends BaseSection {
           slide.classList.remove(classes.gallerySlide);
           if(slide.dataset.colorIdentifier.toLowerCase() === colorName.toLowerCase()) {
             slide.classList.add(classes.gallerySlide);
+            if(enableBadge === false) {
+              slide.classList.add(classes.enableBadge);
+              enableBadge = true;
+            }
           }
         })
       }

@@ -185,7 +185,22 @@ export default class ProductDetailForm {
     this.$swatchSlider.each((i, slider) => {
       const $slider = $(slider);
       const $swatchSlides = $(selectors.swatchSlide, $slider);
-      const $scrollbar = $('.swiper-scrollbar', $slider);
+
+      $swatchSlides.each((index, slide) => {
+        const input = slide.querySelector('[data-single-option-selector]');
+        if(input.dataset.variantComparePrice) {
+          const discountValue = 100 - (input.dataset.variantPrice / input.dataset.variantComparePrice * 100);
+          let badgeClass = 'discount-badge--first-threshold';
+
+          if(discountValue >= 70) {
+            badgeClass = 'discount-badge--third-threshold';
+          } else if(discountValue >= 50) {
+            badgeClass = 'discount-badge--second-threshold';
+          }
+
+          slide.querySelector('.product-option__discount-badge').classList.add(badgeClass);
+        }
+      })
 
       $swatchSlides.each((index, el) => {
         if($(el).find('input[type=radio]:checked').length) {
@@ -399,7 +414,7 @@ export default class ProductDetailForm {
         badgeThreshold = 'discount-badge--second-threshold';
       }
 
-      this.$discountBadge.show();
+      this.$discountBadge.removeAttr('style');
       this.$discountBadge.html(`${discountPrice}% <br/> OFF`);
       this.$discountBadge.removeClass('discount-bage--first-threshold', 'discount-bage--second-threshold', 'discount-bage--third-threshold')
       this.$discountBadge.addClass(badgeThreshold);
