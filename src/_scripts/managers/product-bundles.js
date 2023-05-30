@@ -114,7 +114,6 @@ export default class ProductBundles {
       const $productContainer = $(productContainer);
       $productContainer.find(selectors.bundleProductImage)
       .attr('src', evt.variant.featured_image.src)
-      .attr('data-src', evt.variant.featured_image.src)
       .attr('srcset', Utils.srcSetGenerator(evt.variant.featured_image.src));
       $productContainer.find(selectors.bundleProductId).val(evt.variant.id);
       $productContainer.find(selectors.productFullPrice).attr('data-item-full-price', evt.variant.price).text(Currency.formatMoney(evt.variant.price, theme.moneyFormat).replace('.00', ''));
