@@ -75,10 +75,27 @@ export default class ProductCard {
   initSwatchSlider() {
     const $selectedColor = $(selectors.singleOptionSelector+':checked', this.$container);
     const $scrollbar = $('.swiper-scrollbar', this.$container);
+    const $slides = $('[data-swatch-slide]', this.$container);
     let swatchIndex = 0
     if($selectedColor.length) {
       swatchIndex = $selectedColor.parent().index();
     }
+
+    $slides.each((index, slide) => {
+      const input = slide.querySelector('[data-single-option-selector]');
+      if(input.dataset.variantComparePrice) {
+        const discountValue = 100 - (input.dataset.variantPrice / input.dataset.variantComparePrice * 100);
+        let badgeClass = 'discount-badge--first-threshold';
+
+        if(discountValue >= 70) {
+          badgeClass = 'discount-badge--third-threshold';
+        } else if(discountValue >= 50) {
+          badgeClass = 'discount-badge--second-threshold';
+        }
+
+        slide.querySelector('.product-option__discount-badge').classList.add(badgeClass);
+      }
+    })
 
     const swatchSliderSettings = {
       modules: [ Navigation, Scrollbar ],
@@ -105,9 +122,9 @@ export default class ProductCard {
 
   updateBadges(variant) {
     if(variant.compare_at_price > variant.price) {
+      this.$container.addClass('enable-badge');
       const discountValue = 100 - (variant.price / variant.compare_at_price * 100);
       let discountStyle = 'discount-badge--first-threshold';
-      this.$discountBadge.show();
       this.$discountBadge.html(`${discountValue}% <br> OFF`);
       if(discountValue >= 70) {
         discountStyle = 'discount-badge--third-threshold';
@@ -117,7 +134,7 @@ export default class ProductCard {
 
       this.$discountBadge.addClass(discountStyle);
     } else {
-      this.$discountBadge.hide();
+      this.$container.removeClass('enable-badge');
     }
   }
 
