@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Swiper, {Scrollbar, Navigation} from 'swiper';
 import * as Image from '../core/image'
+import * as Utils from '../core/utils';
 import * as Currency from '../core/currency';
 
 const selectors = {
@@ -111,8 +112,9 @@ export default class ProductBundles {
   updateVariant(evt) {
     this.$bundleProducts.not(':visible').each((index, productContainer) => {
       const $productContainer = $(productContainer);
-      $productContainer.find(selectors.bundleProductImage).attr('src', evt.variant.featured_image.src);
-      $productContainer.find(selectors.bundleProductImage).attr('data-src', evt.variant.featured_image.src);
+      $productContainer.find(selectors.bundleProductImage)
+      .attr('src', evt.variant.featured_image.src)
+      .attr('srcset', Utils.srcSetGenerator(evt.variant.featured_image.src));
       $productContainer.find(selectors.bundleProductId).val(evt.variant.id);
       $productContainer.find(selectors.productFullPrice).attr('data-item-full-price', evt.variant.price).text(Currency.formatMoney(evt.variant.price, theme.moneyFormat).replace('.00', ''));
 
@@ -335,7 +337,8 @@ export default class ProductBundles {
 
     $this.find(selectors.bundleProductImage)
     .attr('src', Image.getSizedImageUrl(variant.featured_image.src, '82x'))
-    .attr('alt', variant.featured_image.alt);
+    .attr('alt', variant.featured_image.alt)
+    .attr('srcset', Utils.srcSetGenerator(variant.featured_image.src));
 
     $this.find(selectors.bundleProductId).val(variant.id);
 
