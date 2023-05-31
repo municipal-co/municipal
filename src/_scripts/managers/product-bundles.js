@@ -255,11 +255,10 @@ export default class ProductBundles {
     }
 
     const currentOptions = this.getActiveOptions($productContainer, optionDrawerData.optionIndex);
-
     const currentVariants = this.productSingleObject.variants.filter((variant) => {
       let appearances = 0;
       currentOptions.forEach((option) => {
-        if(variant.option1 === option || variant.option2 === option || variant.option3 === option) {
+        if(variant.option1 === option.value || variant.option2 === option.value || variant.option3 === option.value) {
           appearances++;
         }
       })
@@ -316,7 +315,10 @@ export default class ProductBundles {
   }
 
   getCurrentVariant(optionsList) {
-    const variantTitle = optionsList.join(' / ');
+    const clearOptions = optionsList.map(option => {
+      return option.value
+    })
+    const variantTitle = clearOptions.join(' / ');
     let currentVariant;
 
     for(let i = 0; i < this.productSingleObject.variants.length; i++) {
