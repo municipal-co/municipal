@@ -5,7 +5,7 @@
   position: absolute;
   top: 40px;
   left: 40px;
-  display: grid;
+  display: none;
   place-content: center;
   line-height: 1;
   font-family: $font-family-heading-large;
@@ -13,6 +13,10 @@
   z-index: 1;
   font-size: 20px;
   color: $black;
+
+  .enable-badge & {
+    display: grid;
+  }
 
   .card-slider:not(.card-slider--pdp) &,
   .collection__grid & {
@@ -55,6 +59,16 @@
   .swiper-slide-zoomed & {
     display: none;
   }
+}
+
+.product-option__discount-badge {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  z-index: 1;
 }
 
 .discount-badge--first-threshold {
