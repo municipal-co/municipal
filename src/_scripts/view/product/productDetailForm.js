@@ -136,7 +136,6 @@ export default class ProductDetailForm {
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant, true);
     this.updateDiscountBadge(this.variants.currentVariant);
-    this.validateSizeAvailability();
 
     Cookies.set('findify-rid', this.searchParams.get('rid'))
   }
