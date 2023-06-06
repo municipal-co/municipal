@@ -33,7 +33,7 @@
       {% endif %}
       {% assign variant_color_downcase = current_variant[option_index] | downcase %}
         {% if has_color_index %}
-          <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %} {% if img_color_downcase == variant_color_downcase and rendered_images == 0 %}enable-badge{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
+          <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %} {% if print_badge and color_variant.compare_at_price > color_variant.price %}enable-badge{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
           {% if img_color_downcase == variant_color_downcase and rendered_images == 0 %}
             {% assign rendered_images = rendered_images | plus: 1 %}
           {% endif %}
@@ -83,7 +83,7 @@
             {% assign print_badge = false %}
           {% endif %}
           {% if has_color_index %}
-            <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %} {% if img_color_downcase == variant_color_downcase and rendered_images == 0 %}enable-badge{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
+            <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %} {% if print_badge and color_variant.compare_at_price > color_variant.price %}enable-badge{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
           {% else %}
             <div class="product-gallery__slide swiper-slide" data-slide style="aspect-ratio: {{image.width}}/{{image.height}};">
           {% endif %}
