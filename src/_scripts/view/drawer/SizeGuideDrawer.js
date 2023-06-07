@@ -61,7 +61,7 @@ export default function SizeGuideDrawer({data, index}) {
           </a>
         </div>
         <div className="drawer__body-contents fit-guide__body">
-          {data.images && (
+          {data.images.length > 0 && (
             <div className="fit-guide__gallery-container">
               <Swiper
                 modules={[EffectFade, Pagination]}
@@ -89,7 +89,7 @@ export default function SizeGuideDrawer({data, index}) {
             </div>
           }
 
-          {data.sizeList.length && (
+          {data.sizeList.length > 0 && (
             <table className="fit-guide__table responsible-table table-striped">
               <thead>
                 <th></th>
@@ -117,6 +117,7 @@ export default function SizeGuideDrawer({data, index}) {
               </tbody>
             </table>
           )}
+
           {data.boxContent && (
             <div className="blink-box blink-box--dark">
               {data.boxTitle && (
