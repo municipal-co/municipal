@@ -45,7 +45,7 @@
           href="{{card_product.url}}?variant={{current_variant.id}}" data-product-url="{{card_product.url}}"
           data-gallery-slide
           data-image-selector="{{ alt_pieces[1] | downcase }}">
-
+          <div class="discount-badge" data-discount-badge></div>
         {% render 'responsive-image',
           image: image,
           class: 'product-card__image'
@@ -91,8 +91,10 @@
         <div class="product-card__gallery-slide
           {% if variant == current_variant %}
             is-active
-          {% endif %}"
+          {% endif %}
+          {%- unless current_variant.compare_at_price > current_variant.price %} enable-badge {% endunless -%}"
           data-image-selector="{{ alt_pieces[1] }}">
+          <div class="discount-badge" data-discount-badge></div>
           {% render 'responsive-image',
             image: image,
             class: 'product-card__image'
@@ -113,8 +115,11 @@
           <div class="product-card__gallery-slide
             {% if variant == current_variant %}
               is-active
-            {% endif %}"
+            {% endif %}
+            {%- unless current_variant.compare_at_price > current_variant.price %} enable-badge {% endunless -%}"
             data-image-selector="{{ alt_pieces[1] }}">
+            <div class="discount-badge" data-discount-badge></div>
+
             {% render 'responsive-image',
               image: image,
               class: 'product-card__image'

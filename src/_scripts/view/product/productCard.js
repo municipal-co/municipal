@@ -16,10 +16,12 @@ const selectors = {
   cardPrice: '[data-product-price]',
   cardComparePrice: '[data-compare-price]',
   productUrl: '[data-product-url]',
+  discountBadge: '[data-discount-badge]',
 };
 
 const classes = {
   active: 'is-active',
+  visible: 'is-visible',
 };
 
 const events = {
@@ -47,6 +49,7 @@ export default class ProductCard {
     this.$productPrice = $(selectors.cardPrice, this.$container);
     this.$comparePrice = $(selectors.cardComparePrice, this.$container);
     this.$productUrl = $(selectors.productUrl, this.$container);
+    this.$discountBadge = $(selectors.discountBadge, this.$container);
 
     this.$singleOptionSelector.on('change', this.onOptionChange.bind(this));
     this.$optionDdrawerOpen.on('click', this.openOptionDrawer.bind(this));
@@ -72,10 +75,27 @@ export default class ProductCard {
   initSwatchSlider() {
     const $selectedColor = $(selectors.singleOptionSelector+':checked', this.$container);
     const $scrollbar = $('.swiper-scrollbar', this.$container);
+    const $slides = $('[data-swatch-slide]', this.$container);
     let swatchIndex = 0
     if($selectedColor.length) {
       swatchIndex = $selectedColor.parent().index();
     }
+
+    $slides.each((index, slide) => {
+      const input = slide.querySelector('[data-single-option-selector]');
+      if(input.dataset.variantComparePrice) {
+        const discountValue = 100 - (input.dataset.variantPrice / input.dataset.variantComparePrice * 100);
+        let badgeClass = 'discount-badge--first-threshold';
+
+        if(discountValue >= 70) {
+          badgeClass = 'discount-badge--third-threshold';
+        } else if(discountValue >= 50) {
+          badgeClass = 'discount-badge--second-threshold';
+        }
+
+        slide.querySelector('.product-option__discount-badge').classList.add(badgeClass);
+      }
+    })
 
     const swatchSliderSettings = {
       modules: [ Navigation, Scrollbar ],
@@ -100,10 +120,29 @@ export default class ProductCard {
     this.swatchSlider = new Swiper($(selectors.swatchSlider, this.$container).get(0), swatchSliderSettings);
   }
 
+  updateBadges(variant) {
+    if(variant.compare_at_price > variant.price) {
+      this.$container.addClass('enable-badge');
+      const discountValue = 100 - (variant.price / variant.compare_at_price * 100);
+      let discountStyle = 'discount-badge--first-threshold';
+      this.$discountBadge.html(`${discountValue}% <br> OFF`);
+      if(discountValue >= 70) {
+        discountStyle = 'discount-badge--third-threshold';
+      } else if(discountValue >= 50) {
+        discountStyle = 'discount-badge--second-threshold';
+      }
+
+      this.$discountBadge.addClass(discountStyle);
+    } else {
+      this.$container.removeClass('enable-badge');
+    }
+  }
+
   onOptionChange(evt) {
     const $this = $(evt.currentTarget);
-
     if($this.data('option-name') === 'color') {
+      const optionIndex = $this.data('index');
+      const optionValue = $this.data('value');
       this.updateColor.call(this, $this);
       this.updateProductOption.call(this, $this);
     } else if($this.data('option-name') === 'Size' || $this.data('option-name') === 'size' ) {
@@ -141,6 +180,7 @@ export default class ProductCard {
 
     this.updateCardPrice(this.drawerData.variants[0]);
     this.updateCardUrl(this.drawerData.variants[0]);
+    this.updateBadges(this.drawerData.variants[0]);
   }
 
   getSelectedOptions() {

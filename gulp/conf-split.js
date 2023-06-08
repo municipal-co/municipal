@@ -102,7 +102,7 @@ task('liveReload', (end) => {
   if(typeof config == 'undefined') {
     reject('No development environment was found, check your config.yml has at least one "development" environment');
   }
-  console.log(config);
+
   browserSync.init({
     files: ['./deploy.log'],
     proxy: `https://${config.store}/?preview_theme_id=${config.theme_id}`

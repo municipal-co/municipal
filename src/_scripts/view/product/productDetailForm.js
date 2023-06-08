@@ -109,7 +109,6 @@ export default class ProductDetailForm {
     this.$swatchSlider           = $(selectors.swatchesSlider, this.$container);
     this.$finalSaleMessaging     = $(selectors.finalSaleMessaging, this.$container);
     /* eslint-enable */
-
     this.optionDrawers = this._setUpOptionDrawers();
     this.productSingleObject  = JSON.parse($(selectors.productJson, this.$container).html());
     this.searchParams = new URLSearchParams(document.location.search);
@@ -156,7 +155,6 @@ export default class ProductDetailForm {
     this.productColorValidation();
     this.finalSaleValidation(variant);
     this.settings.onVariantChange(variant);
-
   }
 
   onOptionChange(evt) {
@@ -183,7 +181,22 @@ export default class ProductDetailForm {
     this.$swatchSlider.each((i, slider) => {
       const $slider = $(slider);
       const $swatchSlides = $(selectors.swatchSlide, $slider);
-      const $scrollbar = $('.swiper-scrollbar', $slider);
+
+      $swatchSlides.each((index, slide) => {
+        const input = slide.querySelector('[data-single-option-selector]');
+        if(input.dataset.variantComparePrice) {
+          const discountValue = 100 - (input.dataset.variantPrice / input.dataset.variantComparePrice * 100);
+          let badgeClass = 'discount-badge--first-threshold';
+
+          if(discountValue >= 70) {
+            badgeClass = 'discount-badge--third-threshold';
+          } else if(discountValue >= 50) {
+            badgeClass = 'discount-badge--second-threshold';
+          }
+
+          slide.querySelector('.product-option__discount-badge').classList.add(badgeClass);
+        }
+      })
 
       $swatchSlides.each((index, el) => {
         if($(el).find('input[type=radio]:checked').length) {

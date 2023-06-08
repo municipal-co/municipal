@@ -89,9 +89,17 @@ const productCard = ((props) => {
   }
 
   const buildColorSwatch = (variant) => {
+    let discountClass = 'discount-badge--first-threshold'
+    if(variant.discount >= 70) {
+      discountClass = 'discount-badge--third-threshold'
+    } else if (variant.discount >= 50) {
+      discountClass = 'discount-badge--second-threshold'
+    }
+
     return(<label key={variant.id} className="product-option__single-selector swiper-slide">
       <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
       <div className="product-option__ui">
+        {variant.discount && <div className={`product-option__discount-badge ${discountClass}`} />}
         <Image
           src={variant.image_url}
           alt=""
@@ -209,6 +217,17 @@ const productCard = ((props) => {
     }
   }
 
+  const getBadgeThreshold = (value) => {
+    let threshold = 'discount-badge--first-threshold';
+
+    if(value >= 70) {
+      threshold = 'discount-badge--third-threshold';
+    } else if (value >= 50) {
+      threshold = 'discount-badge--second-threshold';
+    }
+    return threshold;
+  }
+
   let productData = processData();
   productData.options = ['color', 'size'];
   const [productColors, setProductColors] = useState(getColorList(productData, 'color'));
@@ -252,13 +271,11 @@ const productCard = ((props) => {
           className="product-card__gallery"
           onClick={markCurrentCard}
         >
-          <div className="product-card__gallery-slide is-active">
-            <Image
-              className="product-card__image"
-              src={currentVariant.image_url}
-              loading="lazy"
-              sizes="(max-width: 992px) 50w, 384px"
-            />
+          <div className={`product-card__gallery-slide is-active ${currentVariant.discount ? 'enable-badge' : ''}`}>
+            {currentVariant.discount &&
+              <div className={`discount-badge ${getBadgeThreshold(currentVariant.discount)}`} dangerouslySetInnerHTML={{__html: `${currentVariant.discount}% <br/> OFF`}}/>
+            }
+            <img className="product-card__image" src={currentVariant.image_url} loading='lazy' />
           </div>
         </a>
         <form action="/cart/add" className="product-card__content text-center">

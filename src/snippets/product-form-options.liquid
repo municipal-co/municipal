@@ -51,7 +51,12 @@
                     data-option-value="{{variant[option_index] | downcase}}"
                     {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
                     data-index="{{ option_index }}"
-                    data-single-option-selector>
+                    data-single-option-selector
+                    {% if variant.compare_at_price > variant.price %}
+                      data-variant-compare-price="{{variant.compare_at_price}}"
+                      data-variant-price="{{variant.price}}"
+                    {% endif %}
+                    >
 
               <div class="product-option__ui">
                 {%- if template == 'product' -%}
@@ -59,6 +64,9 @@
                 {%- else -%}
                   {%- assign image_sizes = '(max-width: 992px) 15vw, 6vw' -%}
                 {%- endif -%}
+                {% if variant.compare_at_price > variant.price %}
+                  <div class="product-option__discount-badge"></div>
+                {% endif %}
                 {%- render 'responsive-image'
                   image: variant.image,
                   image_sizes: image_sizes,

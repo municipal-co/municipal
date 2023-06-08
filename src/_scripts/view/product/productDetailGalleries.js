@@ -6,13 +6,15 @@ const selectors = {
   gallerySlide: '[data-slide]',
   zoomToggler: '[data-zoom-toggler]',
   nextArrow: '[data-arrow-next]',
-  prevArrow: '[data-arrow-prev]'
+  prevArrow: '[data-arrow-prev]',
+  discountBadge: '[data-discount-badge]',
 };
 
 const classes = {
   gallerySlide: 'swiper-slide',
   zoomedIn: 'is-zoomed',
-  zoomReady: 'is-zoomable'
+  zoomReady: 'is-zoomable',
+  enableBadge: 'enable-badge',
 };
 
 export default class productGallery extends BaseSection {
@@ -65,10 +67,35 @@ export default class productGallery extends BaseSection {
     this.slider.on('slideChange', this.onSlideChange.bind(this));
     this.slider.init();
 
+    this.updateDiscountBadge();
+
+
     this.$zoomToggler.forEach((toggler) => {
       toggler.addEventListener('click', this.toggleSliderZoom.bind(this));
     })
 
+  }
+
+  updateDiscountBadge() {
+    const discountBadges = this.$container.querySelectorAll(selectors.discountBadge);
+    if(discountBadges && discountBadges.length) {
+      discountBadges.forEach( (badge) => {
+        const comparePrice = badge.dataset.variantComparePrice;
+        const variantPrice = badge.dataset.variantPrice;
+        let badgeThreshold = 'discount-badge--first-threshold';
+        const discountValue = 100 - (variantPrice / comparePrice * 100);
+
+        if(discountValue >= 70) {
+          badgeThreshold = 'discount-badge--third-threshold';
+        } else if(discountValue >= 50) {
+          badgeThreshold = 'discount-badge--second-threshold';
+        }
+
+        badge.innerHTML = `${discountValue}% <br /> OFF`;
+        badge.classList.remove('discount-bage--first-threshold', 'discount-bage--second-threshold', 'discount-bage--third-threshold')
+        badge.classList.add(badgeThreshold);
+      })
+    }
   }
 
   onVariantChange(variant) {
@@ -80,6 +107,7 @@ export default class productGallery extends BaseSection {
     });
 
     if(colorIndex !== undefined) {
+      let enableBadge = false;
       if(this.currentColor !== variant[colorIndex]) {
         this.currentColor = variant[colorIndex];
 
@@ -93,6 +121,10 @@ export default class productGallery extends BaseSection {
           slide.classList.remove(classes.gallerySlide);
           if(slide.dataset.colorIdentifier.toLowerCase() === colorName.toLowerCase()) {
             slide.classList.add(classes.gallerySlide);
+            if(enableBadge === false) {
+              slide.classList.add(classes.enableBadge);
+              enableBadge = true;
+            }
           }
         })
       }
@@ -100,6 +132,11 @@ export default class productGallery extends BaseSection {
       // Update variant images here
       this.slider = new Swiper(this.$container, this.gallerySettings);
       this.slider.init();
+      if(this.$discountBadge && this.$discountBadge.length) {
+        this.$discountBadge.forEach( badge => {
+          this.updateDiscountBadge(badge);
+        })
+      }
     }
   }
 
