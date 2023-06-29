@@ -503,7 +503,7 @@ export default class ProductDetailForm {
     });
 
     colorsToHide.forEach((color) => {
-      $(`${selectors.singleOptionSelector}[value="${color}"]`).parent().removeAttr('swiper-slide').hide();
+      $(`${selectors.singleOptionSelector}[value="${color}"]`, this.$container).parent().removeAttr('swiper-slide').hide();
     })
 
     soldOutColors.forEach((colorObject) => {
