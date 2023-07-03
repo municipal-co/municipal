@@ -51,10 +51,28 @@
                     data-option-value="{{variant[option_index] | downcase}}"
                     {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
                     data-index="{{ option_index }}"
-                    data-single-option-selector>
+                    data-single-option-selector
+                    {% if variant.compare_at_price > variant.price %}
+                      data-variant-compare-price="{{variant.compare_at_price}}"
+                      data-variant-price="{{variant.price}}"
+                    {% endif %}
+                    >
 
               <div class="product-option__ui">
-                <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+                {%- if template == 'product' -%}
+                  {%- assign image_sizes = '(max-width: 992px) 20vw, 112px' -%}
+                {%- else -%}
+                  {%- assign image_sizes = '(max-width: 992px) 15vw, 6vw' -%}
+                {%- endif -%}
+                {% if variant.compare_at_price > variant.price %}
+                  <div class="product-option__discount-badge"></div>
+                {% endif %}
+                {%- render 'responsive-image'
+                  image: variant.image,
+                  image_sizes: image_sizes,
+                  alt: variant.image.alt,
+                  loading: 'lazy',
+                -%}
               </div>
             </label>
           {% endif %}
@@ -79,7 +97,18 @@
                       data-single-option-selector>
 
                 <div class="product-option__ui">
-                  <img data-src="{{variant.image | img_url: '150x' }}" alt="{{ variant.image.alt }}" class="product-option__image lazyload">
+                  {%- if template == 'product' -%}
+                    {%- assign image_sizes = '(max-width: 992px) 20vw, 112px' -%}
+                  {%- else -%}
+                    {%- assign image_sizes = '(max-width: 992px) 15vw, 5vw' -%}
+                  {%- endif -%}
+                  {%- render 'responsive-image'
+                    image: variant.image,
+                    image_sizes: image_sizes,
+                    alt: variant.image.alt,
+                    loading: 'lazy',
+                    class: 'product-option__image'
+                  -%}
                 </div>
               </label>
             {% endif %}
@@ -117,7 +146,7 @@
     {% for option in product.options_with_values %}
       {% if option.name == print_option %}
         {% for value in option.values %}
-          <option>{{value}}</option>
+          <option {% if option.selected_value == value%} selected {% endif %}>{{value}}</option>
         {% endfor %}
       {% endif %}
     {% endfor %}

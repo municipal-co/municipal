@@ -39,7 +39,13 @@
                     <div class="cart-list__row">
                       <div class="cart-list__col-product">
                         <a href="{{ item.url | within: collections.all }}">
-                          <img src="{{ item | img_url: '240x240' }}" class="cart-list__item-image" alt="{{ item.title | escape }}">
+                          {%- render 'responsive-image'
+                            image: item.image,
+                            alt: item.image.alt,
+                            class: "cart-list__item-image"
+                            sizes: '(max-width: 575px) 100px, 130px'
+                            loading: 'lazy'
+                          -%}
                         </a>
                         <div class="cart-list__item-details">
                           <h5 class="cart-list__item-details-title">

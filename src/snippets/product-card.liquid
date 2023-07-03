@@ -45,14 +45,14 @@
           href="{{card_product.url}}?variant={{current_variant.id}}" data-product-url="{{card_product.url}}"
           data-gallery-slide
           data-image-selector="{{ alt_pieces[1] | downcase }}">
-
-        <img
-            src="{{image | image_url }}"
-            width="400px"
-            height="auto"
-            class="product-card__image"
-            alt="{{ alt_pieces[0] }}"
-            loading="lazy">
+          <div class="discount-badge" data-discount-badge></div>
+        {% render 'responsive-image',
+          image: image,
+          class: 'product-card__image'
+          image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+          loading: 'lazy',
+          alt: image.alt,
+        %}
       </div>
     {% endif %}
   {%- endfor -%}
@@ -69,14 +69,13 @@
             href="{{merged_product.url}}?variant={{current_variant.id}}" data-product-url="{{merged_product.url}}"
             data-gallery-slide
             data-image-selector="{{ alt_pieces[1] | downcase }}">
-
-          <img
-              src="{{image | image_url }}"
-              width="400px"
-              height="auto"
-              class="product-card__image"
-              alt="{{ alt_pieces[0] }}"
-              loading="lazy">
+            {% render 'responsive-image',
+              image: image,
+              class: 'product-card__image'
+              image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+              loading: 'lazy',
+              alt: alt_pieces[0],
+            %}
         </div>
       {% endif %}
     {% endfor %}
@@ -92,15 +91,17 @@
         <div class="product-card__gallery-slide
           {% if variant == current_variant %}
             is-active
-          {% endif %}"
+          {% endif %}
+          {%- unless current_variant.compare_at_price > current_variant.price %} enable-badge {% endunless -%}"
           data-image-selector="{{ alt_pieces[1] }}">
-          <img
-            src="{{variant.image | image_url: width: '400', format: 'pjpg'}}"
-            class="product-card__image"
-            width="400"
-            height="auto"
-            alt="{{ alt_pieces[0] }}"
-            loading="lazy">
+          <div class="discount-badge" data-discount-badge></div>
+          {% render 'responsive-image',
+            image: image,
+            class: 'product-card__image'
+            image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+            loading: 'lazy',
+            alt: alt_pieces[0],
+          %}
         </div>
         {% assign printed_images = printed_images | append: variant.image %}
       {% else %}
@@ -114,15 +115,18 @@
           <div class="product-card__gallery-slide
             {% if variant == current_variant %}
               is-active
-            {% endif %}"
+            {% endif %}
+            {%- unless current_variant.compare_at_price > current_variant.price %} enable-badge {% endunless -%}"
             data-image-selector="{{ alt_pieces[1] }}">
-            <img
-              src="{{variant.image | image_url: width: '400', format: 'pjpg'}}"
-              class="product-card__image"
-              width="400"
-              height="auto"
-              alt="{{ alt_pieces[0] }}"
-              loading="lazy">
+            <div class="discount-badge" data-discount-badge></div>
+
+            {% render 'responsive-image',
+              image: image,
+              class: 'product-card__image'
+              image_sizes: "(max-width: 529px) 90vw, (max-width: 992px) 45vw, (max-width: 1399px) 30vw, 25vw"
+              loading: 'lazy',
+              alt: alt_pieces[0],
+            %}
           </div>
           {% assign printed_images = printed_images | append: variant.image %}
         {% else %}

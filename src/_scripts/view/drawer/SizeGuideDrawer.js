@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import Close from '../icons/Close';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import { Pagination, EffectFade } from 'swiper';
+import Image from '../global/image';
 
 export default function SizeGuideDrawer({data, index}) {
   const drawer = useRef();
@@ -30,7 +31,7 @@ export default function SizeGuideDrawer({data, index}) {
   const buildImages = () => {
     return data.images.map((image) => {
       return <SwiperSlide>
-        <img className="fit-guide__gallery-image" alt="" src={`${image}&width=550`} />
+        <Image className="fit-guide__gallery-image" alt="" src={image} sizes="(max-width: 992px) 100vw, 500px"/>
       </SwiperSlide>
     })
   }
@@ -44,24 +45,24 @@ export default function SizeGuideDrawer({data, index}) {
   }, []);
 
   return (
-    <div class="drawer fit-guide__drawer col-lg-10" ref={drawer}>
-      <div class="drawer__inner fit-guide__inner">
-        <div class="drawer__header fit-guide__header">
-          <div class="drawer__header-title fit-guide__header-title">
+    <div className="drawer fit-guide__drawer col-lg-10" ref={drawer}>
+      <div className="drawer__inner fit-guide__inner">
+        <div className="drawer__header fit-guide__header">
+          <div className="drawer__header-title fit-guide__header-title">
             Size Guide
           </div>
           <a
             href="javascript:void(0);"
-            class="drawer__close fit-guide__close"
+            className="drawer__close fit-guide__close"
             onClick={closeDrawer}
           >
             <Close />
-            <span class="sr-only">Close size guide</span>
+            <span className="sr-only">Close size guide</span>
           </a>
         </div>
-        <div class="drawer__body-contents fit-guide__body">
-          {data.images && (
-            <div class="fit-guide__gallery-container">
+        <div className="drawer__body-contents fit-guide__body">
+          {data.images.length > 0 && (
+            <div className="fit-guide__gallery-container">
               <Swiper
                 modules={[EffectFade, Pagination]}
                 effect='fade'
@@ -88,8 +89,8 @@ export default function SizeGuideDrawer({data, index}) {
             </div>
           }
 
-          {data.sizeList.length && (
-            <table class="fit-guide__table responsible-table table-striped">
+          {data.sizeList.length > 0 && (
+            <table className="fit-guide__table responsible-table table-striped">
               <thead>
                 <th></th>
                 <th>
@@ -116,14 +117,15 @@ export default function SizeGuideDrawer({data, index}) {
               </tbody>
             </table>
           )}
+
           {data.boxContent && (
-            <div class="blink-box blink-box--dark">
+            <div className="blink-box blink-box--dark">
               {data.boxTitle && (
-                <h6 class="blink-box__title">{data.boxTitle}</h6>
+                <h6 className="blink-box__title">{data.boxTitle}</h6>
               )}
 
               <div
-                class="blink-box__content"
+                className="blink-box__content"
                 dangerouslySetInnerHTML={{ __html: data.boxContent }}
               />
             </div>

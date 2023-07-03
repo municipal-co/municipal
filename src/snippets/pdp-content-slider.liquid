@@ -34,7 +34,13 @@
               {% assign image_alt = slide.image.alt %}
               {% unless image == blank or image contains 'no-image' %}
                 <div class="content-slider__image-container">
-                  <img class="content-slider__img" src="{{ image }}" alt="{{image_alt}}">
+                  {% render 'responsive-image'
+                    image: slide.image,
+                    alt: slide.image.alt
+                    image_sizes: "90px",
+                    class: "content-slider__img",
+                    loading: "lazy"
+                  %}
                 </div>
               {% endunless %}
               {% if slide.title != blank %}

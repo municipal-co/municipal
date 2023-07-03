@@ -1,0 +1,366 @@
+<script>
+  (() => {
+    if (!window.__ElevarIsGtmSuiteCalled) {
+      window.__ElevarIsGtmSuiteCalled = true;
+      const init = () => {
+  window.__ElevarDataLayerQueue = [];
+  window.__ElevarListenerLoadQueue = [];
+  if (!window.dataLayer) window.dataLayer = [];
+};
+      init();
+      window.__ElevarTransformItem = event => {
+  if (typeof window.ElevarTransformFn === "function") {
+    try {
+      const result = window.ElevarTransformFn(event);
+      if (typeof result === "object" && !Array.isArray(result) && result !== null) {
+        return result;
+      } else {
+        console.error("Elevar Data Layer: `window.ElevarTransformFn` returned a value " + "that wasn't an object, so we've treated things as if this " + "function wasn't defined.");
+        return event;
+      }
+    } catch (error) {
+      console.error("Elevar Data Layer: `window.ElevarTransformFn` threw an error, so " + "we've treated things as if this function wasn't defined. The " + "exact error is shown below.");
+      console.error(error);
+      return event;
+    }
+  } else {
+    return event;
+  }
+};
+      window.ElevarPushToDataLayer = item => {
+  const enrichedItem = {
+    event_id: window.crypto.randomUUID ? window.crypto.randomUUID() : String(Math.random()).replace("0.", ""),
+    event_time: new Date().toISOString(),
+    ...item
+  };
+  const transformedEnrichedItem = window.__ElevarTransformItem ? window.__ElevarTransformItem(enrichedItem) : enrichedItem;
+  const listenerPayload = {
+    raw: enrichedItem,
+    transformed: transformedEnrichedItem
+  };
+  const getListenerNotifyEvent = () => {
+    return new CustomEvent("elevar-listener-notify", {
+      detail: listenerPayload
+    });
+  };
+  if (transformedEnrichedItem._elevar_internal?.isElevarContextPush) {
+    window.__ElevarIsContextSet = true;
+    window.__ElevarDataLayerQueue.unshift(transformedEnrichedItem);
+    if (window.__ElevarIsListenerListening) {
+      window.dispatchEvent(getListenerNotifyEvent());
+    } else {
+      window.__ElevarListenerLoadQueue.unshift(listenerPayload);
+    }
+  } else {
+    window.__ElevarDataLayerQueue.push(transformedEnrichedItem);
+    if (window.__ElevarIsListenerListening) {
+      window.dispatchEvent(getListenerNotifyEvent());
+    } else {
+      window.__ElevarListenerLoadQueue.push(listenerPayload);
+    }
+  }
+  if (window.__ElevarIsContextSet) {
+    while (window.__ElevarDataLayerQueue.length > 0) {
+      window.dataLayer.push(window.__ElevarDataLayerQueue.shift());
+    }
+  }
+};
+
+      const configElement = document.getElementById("elevar-gtm-suite-config");
+
+      if (!configElement) {
+        console.error("Elevar: DL Config element not found");
+        return;
+      }
+
+      const initialProductAnchorElements = [];
+
+      const setElements = () => {
+        if (initialProductAnchorElements.length === 0) {
+          const freshElements = Array.from(
+            document.querySelectorAll(
+              `a[href*="/products/"]:not(a[href*="/collections/products/"]:not(a[href*="/collections/products/products/"]))`
+            )
+          );
+
+          if (freshElements.length === 0) {
+            initialProductAnchorElements.push(null);
+          } else {
+            initialProductAnchorElements.push(...freshElements);
+          }
+        }
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("readystatechange", setElements);
+      } else {
+        setElements();
+      }
+
+      const config = JSON.parse(configElement.textContent);
+
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = config.gtm_suite_script;
+      script.async = false;
+      script.defer = true;
+
+      script.onerror = () => {
+        console.error("Elevar: DL JS script failed to load");
+      };
+      script.onload = async () => {
+        if (!window.ElevarGtmSuite) {
+          console.error("Elevar: `ElevarGtmSuite` is not defined");
+          return;
+        }
+
+        const cartData = {
+  attributes: {{- cart.attributes | json -}},
+  cartTotal: "{{- cart.total_price | times: 0.01 | json -}}",
+  currencyCode: {{- cart.currency.iso_code | json -}},
+  items: [
+    {%- for line_item in cart.items -%}
+      {
+        {%- if line_item.sku != blank -%}
+          id: {{- line_item.sku | json -}},
+        {%- else -%}
+          id: "{{- line_item.product_id | json -}}",
+        {%- endif -%}
+        name: {{- line_item.product.title | json -}},
+        brand: {{- line_item.vendor | json -}},
+        category: {{- line_item.product.type | json -}},
+        variant: {{- line_item.variant.title | json -}},
+        price: "{{- line_item.final_price | times: 0.01 | json -}}",
+        position: {{- forloop.index -}},
+        quantity: "{{- line_item.quantity | json -}}",
+        productId: "{{- line_item.product_id | json -}}",
+        variantId: "{{- line_item.variant_id -}}",
+        compareAtPrice: "{{- line_item.variant.compare_at_price | times: 0.01 | json -}}",
+        image: "{{- line_item.image | image_url -}}"
+      },
+    {%- endfor -%}
+  ]
+}
+;
+
+        await window.ElevarGtmSuite.handlers.cartAttributesReconcile(
+          cartData,
+          config.event_config.save_order_notes,
+          config.consent_enabled,
+          config.apex_domain
+        );
+
+        if (config.event_config.user) {
+          const data = {
+  {%- if checkout -%}
+    cartTotal: "{{- checkout.total_price | times: 0.01 | json -}}",
+    currencyCode: {{- checkout.currency | json -}},
+  {%- else -%}
+    cartTotal: "{{- cart.total_price | times: 0.01 | json -}}",
+    currencyCode: {{- cart.currency.iso_code | json -}},
+  {%- endif -%}
+  {%- if customer -%}
+    customer: {
+      id: "{{- customer.id | json -}}",
+      email: {{- customer.email | json -}},
+      firstName: {{- customer.first_name | json -}},
+      lastName: {{- customer.last_name | json -}},
+      phone: {{- customer.phone | json -}},
+      city: {{- customer.default_address.city | json -}},
+      zip: {{- customer.default_address.zip | json -}},
+      address1: {{- customer.default_address.address1 | json -}},
+      address2: {{- customer.default_address.address2 | json -}},
+      country: {{- customer.default_address.country | json -}},
+      countryCode: {{- customer.default_address.country_code | json -}},
+      province: {{- customer.default_address.province | json -}},
+      provinceCode: {{- customer.default_address.province_code | json -}},
+      tags: {{- customer.tags | join: ', ' | json -}}
+    }
+  {%- endif -%}
+};
+          window.ElevarGtmSuite.handlers.user(data);
+        }
+
+        if (config.event_config.product_add_to_cart_ajax) {
+          window.ElevarGtmSuite.handlers.productAddToCartAjax(
+            config.event_config.save_order_notes,
+            config.consent_enabled,
+            config.apex_domain
+          );
+        }
+
+        if (config.event_config.cart_reconcile) {
+          window.ElevarGtmSuite.handlers.cartItemsReconcile(cartData);
+        }
+
+        {%- if request.page_type == "cart" -%}
+        if (config.event_config.cart_view) {
+          window.ElevarGtmSuite.handlers.cartView(cartData);
+        }
+        if (config.event_config.product_remove_from_cart) {
+          window.ElevarGtmSuite.handlers.productRemoveFromCart(cartData);
+        }
+        {%- endif -%}
+
+        {%- if collection and template.name == "collection" -%}
+        const data = {%- if collection and template.name == "collection" -%}
+  {
+    currencyCode: {{- cart.currency.iso_code | json -}},
+    items: [
+      {%- assign itemIndex = 1 -%}
+      {%- for product in collection.products -%}
+        {% assign default_variant = product.selected_or_first_available_variant %}
+        {
+          {%- if default_variant.sku != blank -%}
+            id: {{- default_variant.sku | json -}},
+          {%- else -%}
+            id: "{{- default_variant.id | json -}}",
+          {%- endif -%}
+          name: {{- product.title | json -}},
+          brand: {{- product.vendor | json -}},
+          category: {{- product.type | json -}},
+          variant: {{- default_variant.title | json -}},
+          price: "{{- product.price | times: 0.01 | json -}}",
+          position: {{- itemIndex -}},
+          productId: "{{- product.id | json -}}",
+          variantId: "{{- default_variant.id | json -}}",
+          handle: {{- product.handle | json -}}
+        },
+        {%- assign itemIndex = itemIndex | plus: 1 -%}
+      {%- endfor -%}
+    ]
+  }
+{%- endif -%};
+
+        await window.ElevarGtmSuite.handlers.collectionView(
+          data,
+          config.event_config.collection_view,
+          config.event_config.defers_collection_loading,
+          initialProductAnchorElements
+        );
+
+        if (config.event_config.product_select) {
+          window.ElevarGtmSuite.handlers.productSelect(data);
+        }
+        {%- endif -%}
+
+        {%- if search.performed -%}
+        const data = {%- if search.performed -%}
+  {
+    currencyCode: {{- cart.currency.iso_code | json -}},
+    items: [
+      {%- assign itemIndex = 1 -%}
+      {%- for product in search.results -%}
+        {%- if product.object_type == 'product' -%}
+          {%- for variant in product.variants -%}
+            {
+              {%- if variant.sku != blank -%}
+                id: {{- variant.sku | json -}},
+              {%- else -%}
+                id: "{{- variant.id | json -}}",
+              {%- endif -%}
+              name: {{- product.title | json -}},
+              brand: {{- product.vendor | json -}},
+              category: {{- product.type | json -}},
+              variant: {{- variant.title | json -}},
+              price: "{{- product.price | times: 0.01 | json -}}",
+              position: {{- itemIndex -}},
+              productId: "{{- product.id | json -}}",
+              variantId: "{{- variant.id | json -}}",
+              handle: {{- product.handle | json -}}
+            },
+          {%- endfor -%}
+          {%- assign itemIndex = itemIndex | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  }
+{%- endif -%}
+;
+
+        await window.ElevarGtmSuite.handlers.searchResultsView(
+          data,
+          config.event_config.search_results_view,
+          config.event_config.defers_search_results_loading,
+          initialProductAnchorElements
+        );
+
+        if (config.event_config.product_select) {
+          window.ElevarGtmSuite.handlers.productSelect(data);
+        }
+        {%- endif -%}
+
+        {%- if product -%}
+        const data = {%- if product -%}
+  {
+    attributes: {{- cart.attributes | json -}},
+    currencyCode: {{- cart.currency.iso_code | json -}},
+    {% assign default_variant = product.selected_or_first_available_variant %}
+    {%- if default_variant != blank -%}
+      defaultVariant: {
+        {%- if default_variant.sku != blank -%}
+          id: {{- default_variant.sku | json -}},
+        {%- else -%}
+          id: "{{- default_variant.id | json -}}",
+        {%- endif -%}
+        name: {{- product.title | json -}},
+        brand: {{- product.vendor | json -}},
+        category: {{- product.type | json -}},
+        variant: {{- default_variant.title | json -}},
+        price: "{{- default_variant.price | times: 0.01 | json -}}",
+        productId: "{{- product.id | json -}}",
+        variantId: "{{- default_variant.id | json -}}",
+        compareAtPrice: "{{- default_variant.compare_at_price | times: 0.01 | json -}}",
+        image: {{- product.featured_image | json -}},
+        inventory: "{{- default_variant.inventory_quantity -}}"
+      },
+    {%- else -%}
+      defaultVariant: null,
+    {%- endif -%}
+    items: [
+      {%- for variant in product.variants -%}
+        {
+          {%- if variant.sku != blank -%}
+            id: {{- variant.sku | json -}},
+          {%- else -%}
+            id: "{{- variant.id | json -}}",
+          {%- endif -%}
+          name: {{- product.title | json -}},
+          brand: {{- product.vendor | json -}},
+          category: {{- product.type | json -}},
+          variant: {{- variant.title | json -}},
+          price: "{{- variant.price | times: 0.01 | json -}}",
+          productId: "{{- product.id | json -}}",
+          variantId: "{{- variant.id | json -}}",
+          compareAtPrice: "{{- variant.compare_at_price | times: 0.01 | json -}}",
+          image: {{- product.featured_image | json -}},
+          inventory: "{{- variant.inventory_quantity -}}"
+        },
+      {%- endfor -%}
+    ]
+  }
+{%- endif -%};
+
+        if (config.event_config.product_view) {
+          window.ElevarGtmSuite.handlers.productView(data);
+        }
+        if (config.event_config.product_add_to_cart) {
+          window.ElevarGtmSuite.handlers.productAddToCartForm(
+            data,
+            config.event_config.save_order_notes,
+            config.consent_enabled,
+            config.apex_domain
+          );
+        }
+        {%- endif -%}
+      };
+
+      document.head.appendChild(script);
+    }
+  })();
+</script>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MS6DQVQ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->

@@ -1,5 +1,7 @@
 import $ from 'jquery';
 import Swiper, {Scrollbar, Navigation} from 'swiper';
+import * as Image from '../core/image'
+import * as Utils from '../core/utils';
 import * as Currency from '../core/currency';
 import { srcSetGenerator } from '../core/utils';
 
@@ -141,8 +143,13 @@ export default class ProductBundles {
         }
 
         if(optionImage) {
-          $(selectors.bundleProductImage, productContainer).attr('src', optionImage);
-          $(selectors.bundleProductImage, productContainer).attr('srcset', srcSetGenerator(optionImage));
+          const $productContainer = $(productContainer);
+          $productContainer.find(selectors.bundleProductImage)
+          .attr('src', optionImage)
+          .attr('srcset', Utils.srcSetGenerator(optionImage));
+
+          $productContainer.find(selectors.bundleProductId).val(evt.variant.id);
+          $productContainer.find(selectors.productFullPrice).attr('data-item-full-price', evt.variant.price).text(Currency.formatMoney(evt.variant.price, theme.moneyFormat).replace('.00', ''));
         }
 
         singleOptionSelector.trigger('change');
@@ -159,9 +166,9 @@ export default class ProductBundles {
       this.$bundleProducts.each((index, product) => {
         const $product = $(product);
         if(index + 1 <= selectedQty) {
-          $(product).show();
+          $product.show();
         } else {
-          $(product).hide();
+          $product.hide();
         }
       })
     } else {
@@ -316,16 +323,16 @@ export default class ProductBundles {
   }
 
   getCurrentVariant(optionsList) {
-    const variantTitle = optionsList.join(' / ');
-    let currentVariant;
+    const clearOptions = optionsList.map(option => {
+      return option.value
+    })
+    const variantTitle = clearOptions.join(' / ');
+    let currentVariant = this.productSingleObject.variants.find((variant) => {
+      return variant.title == variantTitle
+    });
 
-    for(let i = 0; i < this.productSingleObject.variants.length; i++) {
-      if(this.productSingleObject.variants[i].title === variantTitle) {
-        currentVariant = this.productSingleObject.variants[i];
-        break;
-      }
-    }
-
+    console.log(currentVariant);
+    console.log(optionsList);
     return currentVariant;
   }
 
@@ -360,6 +367,12 @@ export default class ProductBundles {
         $this.find(selectors.productSoldOutMessage).text(theme.strings.soldOut).show();
         $this.find(selectors.productPriceContainer).hide();
       }
+
+      if(variant.metafields.enable_final_sale === true) {
+        $this.find(selectors.finalSaleMessage).attr('name', 'properties[Final Sale]');
+      } else {
+        $this.find(selectors.finalSaleMessage).removeAttr('name');
+      }
     } else {
       $this.find(selectors.productSoldOutMessage).text(theme.strings.soldOut).show();
       $this.find(selectors.productPriceContainer).hide();
@@ -376,13 +389,10 @@ export default class ProductBundles {
 
     if(optionImage){
       $this.find(selectors.bundleProductImage)
-        .attr('src', optionImage)
-        .attr('alt', variant?.featured_image?.alt || '');
-      $this.find(selectors.bundleProductImage)
-        .attr('srcset', srcSetGenerator(optionImage));
+      .attr('src', Image.getSizedImageUrl(optionImage, '82x'))
+      .attr('alt', optionImage)
+      .attr('srcset', Utils.srcSetGenerator(optionImage));
     }
-
-
 
     if($this.is(':visible')) {
       this.updateATCstate();

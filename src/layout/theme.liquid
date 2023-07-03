@@ -2,6 +2,8 @@
 <!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
 <head>
+  {% render 'elevar-head-listener' %}
+  {% render 'elevar-head' %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -115,6 +117,7 @@
 {% endcapture %}
 
 <body id="{{ page_title | handle }}" class="{{ body_class | strip | strip_newlines }}">
+  {% render 'elevar-body-end' %}
 
   <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
@@ -134,7 +137,12 @@
         {% if canonical_url contains '/challenge' %}
           {% if settings.account_pages_bg != blank %}
             <div class="account__bg-image-container" style="background-color: {{ settings.account_form_bg_color }};">
-              <img class="account__bg-image" src="{{settings.account_form_bg | image_url: width: '1920'}}" alt="">
+              {%- render 'responsive-image'
+                class: 'account__bg-image'
+                image: settings.account_form_bg,
+                alt: "",
+                image_sizes:"100vw"
+              -%}
             </div>
           {% endif %}
           <div class="account__layout">

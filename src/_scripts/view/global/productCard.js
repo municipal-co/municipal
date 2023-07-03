@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Swiper, {Scrollbar} from "swiper";
 import { client } from "../../lib/findifyApi";
+import Image from "./image";
 
 const productCard = ((props) => {
   const processData = () => {
@@ -27,6 +28,8 @@ const productCard = ((props) => {
       })
     }
 
+    data.image_url = data.image_url.replace('_large', '');
+    data.image_2_url = data.image_url.replace('_large', '');
 
     data.variants = filterSoldOutVariants(data);
 
@@ -38,6 +41,8 @@ const productCard = ((props) => {
     let filteredVariant = [];
 
     data.variants.forEach(variant => {
+      variant.image_url = variant?.image_url?.replace('_large.', '.');
+      variant.image_2_url = variant?.image_2_url?.replace('_large.', '.');
       if(variant.availability || variant.custom_fields.mf_custom_fields_enable_notify_me == '1' || variant.custom_fields.mf_custom_fields_enable_sold_out == '1') {
         if(availableColors.indexOf(variant.color) == -1) {
           availableColors.push(variant.color);
@@ -94,12 +99,24 @@ const productCard = ((props) => {
   }
 
   const buildColorSwatch = (variant) => {
+    let discountClass = 'discount-badge--first-threshold'
+    if(variant.discount >= 70) {
+      discountClass = 'discount-badge--third-threshold'
+    } else if (variant.discount >= 50) {
+      discountClass = 'discount-badge--second-threshold'
+    }
+
     return(<label key={variant.id} className="product-option__single-selector swiper-slide">
-        <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
-        <div className="product-option__ui">
-          <img src={variant.image_url} alt="" loading="lazy"/>
-        </div>
-      </label>)
+      <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
+      <div className="product-option__ui">
+        {variant.discount && <div className={`product-option__discount-badge ${discountClass}`} />}
+        <Image
+          src={variant.image_url}
+          alt=""
+          loading="lazy"
+          sizes="77px"/>
+      </div>
+    </label>)
   }
 
   const getCurrentVariantIndex = () => productColors.indexOf(currentVariant);
@@ -206,6 +223,17 @@ const productCard = ((props) => {
     }
   }
 
+  const getBadgeThreshold = (value) => {
+    let threshold = 'discount-badge--first-threshold';
+
+    if(value >= 70) {
+      threshold = 'discount-badge--third-threshold';
+    } else if (value >= 50) {
+      threshold = 'discount-badge--second-threshold';
+    }
+    return threshold;
+  }
+
   let productData = processData();
   productData.options = ['color', 'size'];
   const [productColors, setProductColors] = useState(getColorList(productData, 'color'));
@@ -238,9 +266,21 @@ const productCard = ((props) => {
 
 
   return (
-    currentVariant && <div id={`product-card-${props?.data?.id}`} className="product-card" ref={card}>
-        <a href={`${currentVariant.product_url}&rid=${props.rid}`} className="product-card__gallery" onClick={markCurrentCard}>
-          <div className="product-card__gallery-slide is-active">
+    currentVariant && (
+      <div
+        id={`product-card-${props?.data?.id}`}
+        className="product-card"
+        ref={card}
+      >
+        <a
+          href={`${currentVariant.product_url}&rid=${props.rid}`}
+          className="product-card__gallery"
+          onClick={markCurrentCard}
+        >
+          <div className={`product-card__gallery-slide is-active ${currentVariant.discount ? 'enable-badge' : ''}`}>
+            {currentVariant.discount &&
+              <div className={`discount-badge ${getBadgeThreshold(currentVariant.discount)}`} dangerouslySetInnerHTML={{__html: `${currentVariant.discount}% <br/> OFF`}}/>
+            }
             <img className="product-card__image" src={currentVariant.image_url} loading='lazy' />
           </div>
         </a>
@@ -248,7 +288,7 @@ const productCard = ((props) => {
           <div className="product-option">
             <div className="product-option__swatch swiper" ref={swatchSlider}>
               <div className="swiper-wrapper">
-                {productColors.map(color => buildColorSwatch(color))}
+                {productColors.map((color) => buildColorSwatch(color))}
               </div>
               <div className="swiper-scrollbar product-option__scrollbar"></div>
             </div>
@@ -256,22 +296,29 @@ const productCard = ((props) => {
           <div className="product-card__color-title product-card__color-title--findify">
             {currentVariant.color}
           </div>
-          <div className="product-card__title">
-            {currentVariant.title}
-          </div>
+          <div className="product-card__title">{currentVariant.title}</div>
           <div className="product-card__price-container">
-            {currentVariant.compare_at && <s className="product-compare-at-price" data-compare-at-price>${currentVariant.compare_at.toFixed(2).replace('.00', '')}</s>}
+            {currentVariant.compare_at && (
+              <s className="product-compare-at-price" data-compare-at-price>
+                ${currentVariant.compare_at.toFixed(2).replace('.00', '')}
+              </s>
+            )}
             <span className="product-price" data-product-price>
               ${currentVariant.price.toFixed(2).replace('.00', '')}
             </span>
           </div>
         </form>
         <div className="product-card__add-to-cart-container">
-          <button className="product-card__add-to-cart btn-link" role="button" onClick={openSizeSelectorDrawer}>
+          <button
+            className="product-card__add-to-cart btn-link"
+            role="button"
+            onClick={openSizeSelectorDrawer}
+          >
             Add It Now
           </button>
         </div>
       </div>
+    )
   );
 })
 

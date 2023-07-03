@@ -365,7 +365,7 @@
         "content": "Subscription drawer settings"
       },
       {
-        "type": "text",
+        "type": "textarea",
         "id": "mkt_drwr_notify_text",
         "label": "Notify Text",
         "default": "Get notified when [[product]] launches",

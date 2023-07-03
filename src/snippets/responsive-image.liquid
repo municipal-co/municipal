@@ -1,0 +1,59 @@
+{%- comment %}
+
+  Content Header
+  ------------------------------------------------------------------------------
+  Renders an image using next.js multiple sizing approach to allow the browser to
+  decide which image size it should pull for the corresponding device requesting it
+
+
+  Usage:
+
+  {% render 'responsive-image'
+              image: { image object / url } Required
+              image_alt: { string } - Optional
+              loading: { string } - Optional - Determines if the image should lazy load
+              image_sizes: { string / list of sizes } - required
+              dataAttributes: { string } - Optional
+    %}
+
+{% endcomment -%}
+
+
+{% assign sizes = "48, 90, 112, 256, 320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840" | split: ', ' %}
+
+{%- if image contains 'http' -%}
+  <img src="{{- image -}}"
+      srcset="{%- for size in sizes -%}
+        {{ image | append: "&width=" | append: size | replace: '"', '' | strip }} {{ size }}w
+        {%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}"
+      class="{{- class -}}"
+      sizes="{{- image_sizes -}}"
+      loading="{{ loading }}"
+      alt="{{- image_alt -}}"
+      {% if width != blank %}
+        width="{{width}}"
+      {% endif %}
+      {% if height != blank %}
+        height="{{height}}"
+      {% endif %}
+      {{ dataAttributes }}>
+{%- else -%}
+  <img src="{{ image | image_url }}"
+      srcset="{%- for size in sizes -%}
+        {{ image | image_url | append: '&width=' | append: size }} {{ size }}w
+        {%- unless forloop.last %},{% endunless -%}
+      {%- endfor -%}"
+      class="{{- class -}}"
+      sizes="{{- image_sizes -}}"
+      loading="{{ loading }}"
+      alt="{{- image_alt -}}"
+      {% if width != blank %}
+        width="{{width}}"
+      {% endif %}
+      {% if height != blank %}
+        height="{{height}}"
+      {% endif %}
+      {{ dataAttributes }}>
+{%- endif -%}
+

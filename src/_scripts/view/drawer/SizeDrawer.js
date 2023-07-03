@@ -32,6 +32,7 @@ export default function SizeDrawer({data, index}) {
 
     if(data.dataField) {
       data.dataField.value = evt.target.value;
+      data.dataField.classList.add('edited');
       data.dataField.dispatchEvent(new Event('input', { bubbles: true }));
       data.dataField.dispatchEvent(new Event('change', { bubbles: true }));
     }

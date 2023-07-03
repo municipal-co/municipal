@@ -3,6 +3,7 @@
 {% comment %} Can't access cart.token directly in liquid so we have to parse it out {% endcomment %}
 {%- assign cart_json = cart | json -%}
 {%- assign cart_token = cart_json | split: 'token":"' | last | split: '"' | first -%}
+{% assign sizes = "48, 90, 112, 256, 320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840" | split: ', ' %}
 
 {% layout none %}
 {
@@ -60,15 +61,19 @@
         "discounts": [
           {% for d in item.discounts %}
           {
-            "amount": {{d.amount | json }},
-            "title": {{d.title | json }}
+            "amount": {{d.amount | json }},
+            "title": {{d.title | json }}
           }{% unless forloop.last %},{% endunless %}
           {% endfor %}
         ],
         "variant_id": {{ item.variant_id | json }},
         "gift_card": {{ item.gift_card }},
         "url": {{ item.url | json }},
-        "image": {{ item.image | json }},
+        "image": {{ item.image | imgage_url | json }},
+        "image_srcset": "{%- for size in sizes -%}
+          {{ item.image | image_url | append: '&width=' | append: size }} {{ size }}w
+          {%- unless forloop.last %},{% endunless -%}
+        {%- endfor -%}",
         "handle": {{ product.handle | json }},
         "requires_shipping": {{ item.requires_shipping }},
         "product": {% include 'product-json', product: product %},
