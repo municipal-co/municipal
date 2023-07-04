@@ -104,8 +104,8 @@ export default class productGallery extends BaseSection {
 
     if (variant) {
       variant.options.forEach((option, index) => {
-        if (option === 'color' || option === 'Color') {
-          colorIndex = `option${index + 1}`;
+        if(option === 'color' || option === 'Color') {
+          colorIndex = `option${index+1}`;
         }
       });
 
@@ -115,7 +115,7 @@ export default class productGallery extends BaseSection {
         if (this.currentColor !== variant[colorIndex]) {
           this.currentColor = variant[colorIndex];
 
-          if (this.slider && !this.slider.destroyed) {
+          if(this.slider && !this.slider.destroyed) {
             this.slider.destroy();
           }
 

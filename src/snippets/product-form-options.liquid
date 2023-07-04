@@ -146,7 +146,7 @@
     {% for option in product.options_with_values %}
       {% if option.name == print_option %}
         {% for value in option.values %}
-          <option>{{value}}</option>
+          <option {% if option.selected_value == value%} selected {% endif %}>{{value}}</option>
         {% endfor %}
       {% endif %}
     {% endfor %}

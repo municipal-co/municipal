@@ -66,7 +66,9 @@
       type="submit"
       name="add"
       class="btn btn-primary btn-block product__atc-btn"
-      data-add-to-cart>
+      data-add-to-cart
+      disabled
+      >
         <span data-add-to-cart-text>
           {% if current_variant.available %}
             {{ 'products.product.add_to_cart' | t }}

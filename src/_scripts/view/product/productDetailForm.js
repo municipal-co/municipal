@@ -153,7 +153,6 @@ export default class ProductDetailForm {
 
   onOptionChange(evt) {
     const $this = $(evt.currentTarget);
-    if($this.is('select')) {$this.addClass('edited');}
     const optionIndex = $this.data('product-option');
     const optionValue = $this.val();
     const optionName = $this.data('option-name');
@@ -217,7 +216,6 @@ export default class ProductDetailForm {
    * @param {Object} variant - Shopify variant object
    */
   updateAddToCartState(variant) {
-
     const optionLenght = this.productSingleObject.options.length;
 
     let selectedOptions = 0;
@@ -225,11 +223,12 @@ export default class ProductDetailForm {
     this.$singleOptionSelectors.each((i, el) => {
       if($(el).is(':radio') && $(el).is(':checked')) {
         selectedOptions ++;
-      } else if ($(el).is('select') && $(el).val() !== '') {
+      } else if ($(el).is('select') && $(el).is('.edited') && $(el).val() !== '') {
         selectedOptions ++;
       }
     })
-
+    console.log(selectedOptions);
+    console.log(optionLenght);
     if(selectedOptions < optionLenght) {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.addToCart);
@@ -542,7 +541,6 @@ export default class ProductDetailForm {
       const colorState = this._validateColorAvailability(color, optionPosition);
       if(colorState.hideColor) {
         colorsToHide.push(color);
-
         if(this.variants.currentVariant[optionPosition] === color) {
           this._disablePurchase();
         }
@@ -557,7 +555,7 @@ export default class ProductDetailForm {
     });
 
     colorsToHide.forEach((color) => {
-      $(`${selectors.singleOptionSelector}[value="${color}"]`).parent().removeAttr('swiper-slide').hide();
+      $(`${selectors.singleOptionSelector}[value="${color}"]`, this.$container).parent().removeAttr('swiper-slide').hide();
     })
 
     soldOutColors.forEach((colorObject) => {

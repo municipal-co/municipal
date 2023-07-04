@@ -222,12 +222,13 @@ Breakpoints.initialize();
   }
 
   let productData = document.querySelector('[data-product-json]');
-  if(productData) {
+  const isProduct = $body.hasClass('template-product');
+
+  if(isProduct && productData) {
     productData = JSON.parse(productData.innerHTML);
     const variant = new URLSearchParams( document.location.search ).get('variant');
-
-    viewPageData["item_id"] = productData.id;
-    viewPageData["item_variant_id"] = variant;
+    viewPageData["item_id"] = productData.id.toString();
+    viewPageData["variant_item_id"] = variant.toString();
   }
 
   client.sendEvent("view-page", viewPageData)
