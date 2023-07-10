@@ -153,7 +153,6 @@ export default class ProductDetailForm {
 
   onOptionChange(evt) {
     const $this = $(evt.currentTarget);
-    if($this.is('select')) {$this.addClass('edited');}
     const optionIndex = $this.data('product-option');
     const optionValue = $this.val();
     const optionName = $this.data('option-name');
@@ -217,7 +216,6 @@ export default class ProductDetailForm {
    * @param {Object} variant - Shopify variant object
    */
   updateAddToCartState(variant) {
-
     const optionLenght = this.productSingleObject.options.length;
 
     let selectedOptions = 0;
@@ -225,11 +223,10 @@ export default class ProductDetailForm {
     this.$singleOptionSelectors.each((i, el) => {
       if($(el).is(':radio') && $(el).is(':checked')) {
         selectedOptions ++;
-      } else if ($(el).is('select') && $(el).val() !== '') {
+      } else if ($(el).is('select') && $(el).is('.edited') && $(el).val() !== '') {
         selectedOptions ++;
       }
     })
-
     if(selectedOptions < optionLenght) {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.addToCart);
@@ -481,6 +478,47 @@ export default class ProductDetailForm {
     }
   }
 
+  onBisSubmit(evt) {
+    evt.preventDefault();
+
+    const publicKey = this.$bisForm.data('api-key');
+    const customerEmail = this.$bisEmailInput.val();
+    const selectedVariant = $(selectors.bisVariantId, this.$bisForm).val();
+    const successMessage = this.$bisForm.data('success-message');
+    const errorMessage = this.$bisForm.data('error-message');
+
+    if (this.$bisEmailInput.get(0).checkValidity() === false) {
+      this.$bisEmailInput.addClass('has-error');
+      return;
+    }
+
+    $.ajax({
+      type: 'POST',
+      url:  'https://a.klaviyo.com/onsite/components/back-in-stock/subscribe',
+      data: {
+        a: publicKey,
+        email: customerEmail,
+        variant: selectedVariant,
+        platform: 'shopify'
+      }
+    }).done((data) => {
+      if(data.success === true) {
+        this.$bisForm.addClass(classes.submitted);
+        this.$bisResponseMessage.text(successMessage);
+        setTimeout(() => {
+          this.$bisForm.removeClass(classes.submitted);
+        }, 5000);
+      } else {
+        this.$bisForm.addClass(classes.submitted);
+        this.$bisResponseMessage.text(errorMessage);
+
+        setTimeout(() => {
+          this.$bisForm.removeClass(classes.submitted);
+        }, 5000);
+      }
+    })
+  }
+
   productColorValidation() {
     const colorsToHide = [];
     const soldOutColors = [];
@@ -501,7 +539,6 @@ export default class ProductDetailForm {
       const colorState = this._validateColorAvailability(color, optionPosition);
       if(colorState.hideColor) {
         colorsToHide.push(color);
-
         if(this.variants.currentVariant[optionPosition] === color) {
           this._disablePurchase();
         }
