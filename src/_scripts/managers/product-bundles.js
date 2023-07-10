@@ -110,46 +110,48 @@ export default class ProductBundles {
   }
 
   updateVariant(evt) {
+    const optionValues = [];
+    let optionImage;
+
+    for(let i = 1; i <= 3; i++) {
+      const option = `option${i}`;
+
+      let singleOptionSelector = $(`${selectors.mainProductOptionsContainer} [data-product-option=${option}]`);
+      if(singleOptionSelector.is('input[type=radio]')) {
+        singleOptionSelector = singleOptionSelector.filter(':checked');
+      }
+
+      const optionValue = singleOptionSelector.val();
+      if(optionValue) {
+        optionValues.push(optionValue);
+      }
+    }
+
     this.$bundleProducts.not(':visible').each((index, productContainer) => {
-      const $productContainer = $(productContainer);
-      $productContainer.find(selectors.bundleProductImage)
-      .attr('src', evt.variant.featured_image.src)
-      .attr('srcset', Utils.srcSetGenerator(evt.variant.featured_image.src));
-      $productContainer.find(selectors.bundleProductId).val(evt.variant.id);
-      $productContainer.find(selectors.productFullPrice).attr('data-item-full-price', evt.variant.price).text(Currency.formatMoney(evt.variant.price, theme.moneyFormat).replace('.00', ''));
+      optionValues.forEach((value, i) => {
+        const singleOptionSelector = $(`[data-product-option=option${i + 1}]`, productContainer);
+        if(singleOptionSelector.is('input[type=radio]')) {
+          const filteredOption = singleOptionSelector.filter(`[value="${value}"]`)
+          filteredOption.prop('checked',true);
+          if(filteredOption.data('option-name') == 'color' || filteredOption.data('option-name') == 'Color') {
+            optionImage = filteredOption.siblings('.product-option__ui').find('img').attr('data-src');
+          }
 
-      if(evt.variant.available) {
-        $productContainer.find(selectors.productPriceContainer).show();
-        $productContainer.find(selectors.productSoldOutMessage).hide();
-      } else {
-        $productContainer.find(selectors.productPriceContainer).hide();
-        $productContainer.find(selectors.productSoldOutMessage).show();
-      }
-
-      if(evt.variant.metafields.enable_final_sale === true) {
-        $productContainer.find(selectors.finalSaleMessage).attr('name', 'properties[Final Sale]');
-      } else {
-        $productContainer.find(selectors.finalSaleMessage).removeAttr('name')
-      }
-
-      if(evt.variant.compare_at_price > evt.variant.price) {
-        $productContainer.find(selectors.proudctComparePrice)
-          .attr('data-item-compare-price', evt.variant.compare_at_price)
-          .text(Currency.formatMoney(evt.variant.compare_at_price, theme.moneyFormat)
-          .replace('.00', ''));
-      } else {
-        $productContainer.find(selectors.proudctComparePrice).attr('data-item-compare-price', '').text('');
-      }
-      [1, 2, 3].forEach((i) => {
-        const optionIndex = `option${i}`;
-        if(evt.variant[optionIndex]) {
-          const optionLowercase = evt.variant[optionIndex].toLowerCase();
-          const optionValueContainer = `[data-option-${i}]`;
-
-          $productContainer.find(optionValueContainer).text(evt.variant[optionIndex]);
-          $productContainer.find(`[data-option-value="${optionLowercase}"]`).prop('checked', true);
-          $productContainer.find(`input[type=hidden][data-product-option=${optionIndex}]`).val(evt.variant[optionIndex]).trigger('change');
+        } else {
+          singleOptionSelector.val(value);
         }
+
+        if(optionImage) {
+          const $productContainer = $(productContainer);
+          $productContainer.find(selectors.bundleProductImage)
+          .attr('src', optionImage)
+          .attr('srcset', Utils.srcSetGenerator(optionImage));
+
+          $productContainer.find(selectors.bundleProductId).val(evt.variant.id);
+          $productContainer.find(selectors.productFullPrice).attr('data-item-full-price', evt.variant.price).text(Currency.formatMoney(evt.variant.price, theme.moneyFormat).replace('.00', ''));
+        }
+
+        singleOptionSelector.trigger('change');
       })
     })
   }
@@ -163,9 +165,9 @@ export default class ProductBundles {
       this.$bundleProducts.each((index, product) => {
         const $product = $(product);
         if(index + 1 <= selectedQty) {
-          $(product).show();
+          $product.show();
         } else {
-          $(product).hide();
+          $product.hide();
         }
       })
     } else {
@@ -253,16 +255,16 @@ export default class ProductBundles {
       productTitle: $inputField.data('product-title'),
       activeOption: $inputField.attr('data-option-value'),
       dataField: $inputField.get(0),
+      optionsWithValues: this.productSingleObject.options_with_values,
       showSizing: true,
       productUrl: 'javascript:void(0);',
     }
 
     const currentOptions = this.getActiveOptions($productContainer, optionDrawerData.optionIndex);
-
     const currentVariants = this.productSingleObject.variants.filter((variant) => {
       let appearances = 0;
       currentOptions.forEach((option) => {
-        if(variant.option1 === option || variant.option2 === option || variant.option3 === option) {
+        if(variant.option1 === option.value || variant.option2 === option.value || variant.option3 === option.value) {
           appearances++;
         }
       })
@@ -303,9 +305,15 @@ export default class ProductBundles {
       });
 
       if(skipCurrentIndex === true && optionIndex !== currentIndex && currentOption.length) {
-        currentOptions.push(currentOption.val());
+        currentOptions.push({
+          selector: currentOption,
+          value: currentOption.val()
+        });
       } else if(skipCurrentIndex === false && currentOption.length) {
-        currentOptions.push(currentOption.val());
+        currentOptions.push({
+          selector: currentOption,
+          value: currentOption.val()
+        });
       }
     }
 
@@ -313,16 +321,16 @@ export default class ProductBundles {
   }
 
   getCurrentVariant(optionsList) {
-    const variantTitle = optionsList.join(' / ');
-    let currentVariant;
+    const clearOptions = optionsList.map(option => {
+      return option.value
+    })
+    const variantTitle = clearOptions.join(' / ');
+    let currentVariant = this.productSingleObject.variants.find((variant) => {
+      return variant.title == variantTitle
+    });
 
-    for(let i = 0; i < this.productSingleObject.variants.length; i++) {
-      if(this.productSingleObject.variants[i].title === variantTitle) {
-        currentVariant = this.productSingleObject.variants[i];
-        break;
-      }
-    }
-
+    console.log(currentVariant);
+    console.log(optionsList);
     return currentVariant;
   }
 
@@ -330,42 +338,60 @@ export default class ProductBundles {
     const $this = $(evt.currentTarget);
     const activeOptions = this.getActiveOptions($this);
     const variant = this.getCurrentVariant(activeOptions);
+    let optionImage;
+
+    if(variant) {
+      $this.find(selectors.productFullPrice).text(Currency.formatMoney(variant.price, theme.moneyFormat).replace('.00', '')).attr('data-item-full-price', variant.price);
+
+      if(variant.metafields.enable_final_sale === true) {
+        $this.find(selectors.finalSaleMessage).attr('name', 'properties[Final Sale]');
+      } else {
+        $this.find(selectors.finalSaleMessage).removeAttr('name');
+      }
+
+      if(variant.compare_at_price > variant.price) {
+        $this.find(selectors.proudctComparePrice).text(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat).replace('.00', ''));
+      } else {
+        $this.find(selectors.proudctComparePrice).text('');
+      }
+
+      if(variant.available) {
+        $this.find(selectors.productSoldOutMessage).hide();
+        $this.find(selectors.productPriceContainer).show();
+      } else if(variant.metafields.enable_sold_out === 1) {
+        $this.find(selectors.productSoldOutMessage).text(theme.strings.soldOut).show();
+        $this.find(selectors.productPriceContainer).hide();
+      } else {
+        $this.find(selectors.productSoldOutMessage).text(theme.strings.soldOut).show();
+        $this.find(selectors.productPriceContainer).hide();
+      }
+
+      if(variant.metafields.enable_final_sale === true) {
+        $this.find(selectors.finalSaleMessage).attr('name', 'properties[Final Sale]');
+      } else {
+        $this.find(selectors.finalSaleMessage).removeAttr('name');
+      }
+    } else {
+      $this.find(selectors.productSoldOutMessage).text(theme.strings.soldOut).show();
+      $this.find(selectors.productPriceContainer).hide();
+    }
+
+    $this.find(selectors.bundleProductId).val(variant?.id || "");
 
     for(let i = 0; i < activeOptions.length; i++) {
-      $(`[data-option-${i+1}]`, $this).text(activeOptions[i]);
+      if(activeOptions[i].selector.is('[data-option-name="color"]')) {
+        optionImage = activeOptions[i].selector.siblings('.product-option__ui').find('img').attr('src');
+      }
+      $(`[data-option-${i+1}]`, $this).text(activeOptions[i].value);
     }
 
-    $this.find(selectors.bundleProductImage)
-    .attr('src', Image.getSizedImageUrl(variant.featured_image.src, '82x'))
-    .attr('alt', variant.featured_image.alt)
-    .attr('srcset', Utils.srcSetGenerator(variant.featured_image.src));
-
-    $this.find(selectors.bundleProductId).val(variant.id);
-
-    $this.find(selectors.productFullPrice).text(Currency.formatMoney(variant.price, theme.moneyFormat).replace('.00', '')).attr('data-item-full-price', variant.price);
-
-    if(variant.metafields.enable_final_sale === true) {
-      $this.find(selectors.finalSaleMessage).attr('name', 'properties[Final Sale]');
-    } else {
-      $this.find(selectors.finalSaleMessage).removeAttr('name');
+    if(optionImage){
+      $this.find(selectors.bundleProductImage)
+      .attr('src', Image.getSizedImageUrl(optionImage, '82x'))
+      .attr('alt', optionImage)
+      .attr('srcset', Utils.srcSetGenerator(optionImage));
     }
 
-    if(variant.compare_at_price > variant.price) {
-      $this.find(selectors.proudctComparePrice).text(Currency.formatMoney(variant.compare_at_price, theme.moneyFormat));
-    } else {
-      $this.find(selectors.proudctComparePrice).text('');
-    }
-
-    if(variant.available) {
-      $this.find(selectors.productSoldOutMessage).hide();
-      $this.find(selectors.productPriceContainer).show();
-    } else if(variant.metafields.enable_sold_out === 1) {
-      $this.find(selectors.productSoldOutMessage).text('Sold Out').show();
-      $this.find(selectors.productPriceContainer).hide();
-    } else {
-      $this.find(selectors.productSoldOutMessage).text('Unavailable').show();
-      $this.find(selectors.productPriceContainer).hide();
-    }
     if($this.is(':visible')) {
       this.updateATCstate();
     }
@@ -394,7 +420,7 @@ export default class ProductBundles {
       $visibleProducts.each((i, product) => {
         totalPrice += Number.parseInt($(selectors.productFullPrice, product).attr('data-item-full-price'));
         if( $(selectors.productSoldOutMessage, $(product)).is(':visible') ) {
-          if($(selectors.productSoldOutMessage, $(product)).text() === 'Unavailable') {
+          if($(selectors.productSoldOutMessage, $(product)).text() === theme.strings.soldOut) {
             unavailable = true;
           } else {
             soldOut = true;
@@ -410,11 +436,11 @@ export default class ProductBundles {
 
       if(unavailable) {
         $(selectors.productAddToCart).prop('disabled', true);
-        $(selectors.productAddToCartText).text('Unavailable');
+        $(selectors.productAddToCartText).text(theme.strings.soldOut);
         $(selectors.addToCartPrice).hide();
       }else if (soldOut){
         $(selectors.productAddToCart).prop('disabled', true);
-        $(selectors.productAddToCartText).text('Sold Out');
+        $(selectors.productAddToCartText).text(theme.strings.soldOut);
         $(selectors.addToCartPrice).show();
       } else {
         $(selectors.productAddToCart).prop('disabled', false);
@@ -439,7 +465,7 @@ export default class ProductBundles {
           } else if(currentVariant[0].metafields.enable_sold_out === 1) {
             $(selectors.productAddToCartText).text('Sold Out');
           } else {
-            $(selectors.productAddToCartText).text('Unavailable');
+            $(selectors.productAddToCartText).text(theme.strings.soldOut);
             $(selectors.productAddToCart).prop('disabled', true);
             $(selectors.addToCartPrice).hide();
           }

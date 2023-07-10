@@ -126,104 +126,43 @@
 
 {% if type == "drawer" %}
   <div class="product-option">
+    {% for option in product.options %}
+      {% if option == print_option %}
+        {% assign option_index = "option" | append: forloop.index %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    <select class="hide" name="{{option_index}}"
+      value="{{current_variant[option_index]}}"
+      data-index="{{option_index}}"
+      data-product-option="{{option_index}}"
+      data-option-name="{{ print_option | downcase }}"
+      data-single-option-selector
+      data-product-option="option{{forloop.index}}"
+      {% if product.metafields.custom_fields["show_fit_guide"] == 1 -%}
+        data-show-fit-guide="true"
+      {%- endif -%}
+    >
+    {% for option in product.options_with_values %}
+      {% if option.name == print_option %}
+        {% for value in option.values %}
+          <option>{{value}}</option>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+    </select>
     <button class="btn btn-outline-primary btn-block product-option__drawer-btn" type="button" data-pdp-drawer-toggler data-drawer-id="{{print_option}}">
-      <span class="button__text" data-selected-option="{{option_index}}">
+      <span class="button__text"
+            data-selected-option="{{option_index}}"
+            print_option="{{ option_downcase }}"
+        >
         Select
-        {{ print_option | capitalize }}
+        {{ option_downcase | capitalize }}
       </span>
       <div class="btn__ui">
         {% render 'icon-caret-down' %}
       </div>
     </button>
-
-    <div class="drawer product-option__drawer" data-pdp-option-drawer data-drawer-id="{{print_option}}">
-      <div class="drawer__inner product-option__drawer-inner">
-        <div class="drawer__header">
-          <div class="drawer__header-title">
-            Select
-            {{ print_option | capitalize }}
-          </div>
-
-          <a class="drawer__close" data-drawer-close href="javascript:void(0);">
-            {% render 'icon-close' %}
-            <div class="sr-only">Close
-              {{print_option}}
-              drawer</div>
-          </a>
-        </div>
-        <div class="drawer__body-contents">
-          {% for option in product.options_with_values %}
-            {% assign option_downcase = option.name | downcase %}
-            {% if option_downcase == print_option %}
-              {% for option_value in option.values %}
-                <label class="product-option__single-selector">
-                  <input
-                    type="radio"
-                    name="{{- option_prefix -}}{{option_index}}"
-                    value="{{option_value}}"
-                    data-option-name="{{ option.name }}"
-                    data-product-option="{{ option_index }}"
-                    data-option-value="{{option_value | downcase}}"
-                    class="hide"
-                    data-index="{{option_index}}"
-                    data-single-option-selector>
-                  <div class="product-option__ui" data-option-ui>
-                    <div class="product-option__ui-group-corner">
-                      <div class="product-option__ui-checkmark">
-                        {% render 'icon-checkmark' %}
-                      </div>
-                      <div class="product-option__ui-label">
-                        {{ option_value }}
-                      </div>
-                    </div>
-                    <div class="product-option__ui-group-middle">
-                      <div class="product-option__ui-availability" data-option-availability>
-                        {% if current_variant[option_index] == option_value and current_variant.available%}
-                          Available
-                        {% else %}
-                          Out Of Stock
-                        {% endif %}
-                      </div>
-                    </div>
-                    <div class="product-option__ui-group-corner">
-                      <div class="product-option__ui-quantity">
-                        <div class="product-option__ui-low-quantity" data-low-quantity data-message-template="Hurry, only [quantity] left">
-                        </div>
-                        <div class="product-option__ui-bis-button">
-                          <button type="button" name="bis-button" class="btn-small btn-link btn-back-in-stock" data-bis-toggler data-bis-button {% if current_variant.available or disable_bis_button == true %}  {% endif %}>
-                            Notify Me
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </label>
-              {% endfor %}
-            {% endif %}
-          {% endfor %}
-          {% if product.metafields.custom_fields["fg_tips_content"] != blank %}
-            <div class="blink-box blink-box--dark">
-              {% if product.metafields.custom_fields["fg_tips_title"] != blank %}
-                <h6 class="blink-box__title">
-                  {{ product.metafields.custom_fields["fg_tips_title"] }}
-                </h6>
-              {% endif %}
-
-              <div class="blink-box__content">
-                {{ product.metafields.custom_fields["fg_tips_content"] }}
-              </div>
-            </div>
-          {% endif %}
-          {%- if option_downcase == "size" -%}
-            {%- if product.metafields.custom_fields["show_fit_guide"] == 1 or product.metafields.custom_fields["test_fit_guide"] == 1 -%}
-            <div class="btn-container text-center" style="margin-top: 10px;">
-              <a href="javascript:void(0);" data-fit-guide-toggler class="btn-link product__size-guide-button p4"> Need help with sizing? </a>
-            </div>
-            {%- endif -%}
-          {%- endif -%}
-        </div>
-      </div>
-    </div>
   </div>
 {% endif %}
 

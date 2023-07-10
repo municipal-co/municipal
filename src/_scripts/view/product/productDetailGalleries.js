@@ -7,6 +7,7 @@ const selectors = {
   zoomToggler: '[data-zoom-toggler]',
   nextArrow: '[data-arrow-next]',
   prevArrow: '[data-arrow-prev]',
+  productSingleOption: '[data-single-option-selector]',
   discountBadge: '[data-discount-badge]',
 };
 
@@ -69,7 +70,6 @@ export default class productGallery extends BaseSection {
 
     this.updateDiscountBadge();
 
-
     this.$zoomToggler.forEach((toggler) => {
       toggler.addEventListener('click', this.toggleSliderZoom.bind(this));
     })
@@ -100,35 +100,61 @@ export default class productGallery extends BaseSection {
 
   onVariantChange(variant) {
     let colorIndex;
-    variant.options.forEach((option, index) => {
-      if(option === 'color' || option === 'Color') {
-        colorIndex = `option${index+1}`;
-      }
-    });
+    let colorName;
 
-    if(colorIndex !== undefined) {
-      let enableBadge = false;
-      if(this.currentColor !== variant[colorIndex]) {
-        this.currentColor = variant[colorIndex];
-
-        if(this.slider && !this.slider.destroyed) {
-          this.slider.destroy();
+    if (variant) {
+      variant.options.forEach((option, index) => {
+        if(option === 'color' || option === 'Color') {
+          colorIndex = `option${index+1}`;
         }
+      });
 
-        const colorName = variant[colorIndex];
+      if (colorIndex !== undefined) {
 
-        this.$slides.forEach((slide, index) => {
-          slide.classList.remove(classes.gallerySlide);
-          if(slide.dataset.colorIdentifier.toLowerCase() === colorName.toLowerCase()) {
-            slide.classList.add(classes.gallerySlide);
-            if(enableBadge === false) {
-              slide.classList.add(classes.enableBadge);
-              enableBadge = true;
-            }
+        let enableBadge = false;
+        if (this.currentColor !== variant[colorIndex]) {
+          this.currentColor = variant[colorIndex];
+
+          if(this.slider && !this.slider.destroyed) {
+            this.slider.destroy();
           }
-        })
-      }
 
+          colorName = variant[colorIndex];
+
+          this.$slides.forEach((slide, index) => {
+            slide.classList.remove(classes.gallerySlide);
+            if (
+              slide.dataset.colorIdentifier.toLowerCase() ===
+              colorName.toLowerCase()
+            ) {
+              slide.classList.add(classes.gallerySlide);
+              if (enableBadge === false) {
+                slide.classList.add(classes.enableBadge);
+                enableBadge = true;
+              }
+            }
+          });
+        }
+      }
+    } else {
+      const colorSwatch = document.querySelector(
+        '[data-option-name=color]:checked'
+      );
+      if (colorSwatch) {
+        this.currentColor = colorSwatch.dataset.optionValue;
+        colorName = colorSwatch.dataset.optionValue;
+      }
+    }
+    if (colorName) {
+      this.$slides.forEach((slide, index) => {
+        slide.classList.remove(classes.gallerySlide);
+        if (
+          slide.dataset.colorIdentifier.toLowerCase() ===
+          colorName.toLowerCase()
+        ) {
+          slide.classList.add(classes.gallerySlide);
+        }
+      });
       // Update variant images here
       this.slider = new Swiper(this.$container, this.gallerySettings);
       this.slider.init();
