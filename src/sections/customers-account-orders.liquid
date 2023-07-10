@@ -17,7 +17,7 @@
         <div class="account__info-buttons">
           {% render 'account-links' %}
         </div>
-        {% if customer.orders.size > 1 %}
+        {% if customer.orders.size >= 1 %}
           {% for order in customer.orders %}
             <div class="account__order-group">
               <div class="account__order-group-data">
