@@ -398,7 +398,7 @@ export function decodeEntities(encodedString) {
 }
 
 export function srcSetGenerator(url) {
-  const srcsetSizes = [48, 90, 112, 256, 320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+  const srcsetSizes = [48, 85, 90, 112, 256, 320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 
   const sizesMap = srcsetSizes.map((size) => {
     return `${url}&width=${size} ${size}w`

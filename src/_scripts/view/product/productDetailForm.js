@@ -227,8 +227,6 @@ export default class ProductDetailForm {
         selectedOptions ++;
       }
     })
-    console.log(selectedOptions);
-    console.log(optionLenght);
     if(selectedOptions < optionLenght) {
       this.$addToCartBtn.prop('disabled', true);
       this.$addToCartBtnText.html(theme.strings.addToCart);
@@ -541,9 +539,6 @@ export default class ProductDetailForm {
       const colorState = this._validateColorAvailability(color, optionPosition);
       if(colorState.hideColor) {
         colorsToHide.push(color);
-        if(this.variants.currentVariant[optionPosition] === color) {
-          this._disablePurchase();
-        }
       };
 
       if(colorState.soldOutColor && !colorState.hideColor) {

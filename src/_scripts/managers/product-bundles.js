@@ -59,6 +59,31 @@ export default class ProductBundles {
     })
 
     this.initProductSwatchSliders();
+    this.initProductDiscountBadges();
+  }
+
+  initProductDiscountBadges() {
+    this.$bundleProductsContainer.each((index, bundleOption) => {
+      const $discountBadge = $(bundleOption).find('[data-discount-badge]');
+
+      if($discountBadge.length) {
+        const comparePrice = $discountBadge.data('variant-compare-price');
+        const price = $discountBadge.data('variant-price');
+        const discountValue = 100 - (price / comparePrice * 100);
+
+        let badgeClass = 'discount-badge--first-threshold';
+
+        if(discountValue >= 70) {
+          badgeClass = 'discount-badge--third-threshold';
+        } else if(discountValue >= 50) {
+          badgeClass = 'discount-badge--second-threshold';
+        }
+
+        $discountBadge.addClass('product-option__discount-badge');
+        $discountBadge.addClass(badgeClass);
+
+      }
+    })
   }
 
   initProductSwatchSliders() {
@@ -339,6 +364,7 @@ export default class ProductBundles {
     const activeOptions = this.getActiveOptions($this);
     const variant = this.getCurrentVariant(activeOptions);
     let optionImage;
+    let discountBadge;
 
     if(variant) {
       $this.find(selectors.productFullPrice).text(Currency.formatMoney(variant.price, theme.moneyFormat).replace('.00', '')).attr('data-item-full-price', variant.price);
@@ -381,6 +407,7 @@ export default class ProductBundles {
     for(let i = 0; i < activeOptions.length; i++) {
       if(activeOptions[i].selector.is('[data-option-name="color"]')) {
         optionImage = activeOptions[i].selector.siblings('.product-option__ui').find('img').attr('src');
+        discountBadge = activeOptions[i].selector.siblings('.product-option__ui').find('.product-option__discount-badge');
       }
       $(`[data-option-${i+1}]`, $this).text(activeOptions[i].value);
     }
@@ -390,6 +417,18 @@ export default class ProductBundles {
       .attr('src', Image.getSizedImageUrl(optionImage, '82x'))
       .attr('alt', optionImage)
       .attr('srcset', Utils.srcSetGenerator(optionImage));
+    }
+
+    const currentBadge = $this.find(selectors.bundleProductImage).siblings('.product-option__discount-badge');
+
+    if(discountBadge.length) {
+      if(currentBadge.length) {
+        currentBadge.replaceWith(discountBadge.clone());
+      } else {
+        $this.find(selectors.bundleProductImage).parent().prepend(discountBadge.clone());
+      }
+    } else {
+      currentBadge.remove();
     }
 
     if($this.is(':visible')) {

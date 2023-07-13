@@ -76,7 +76,9 @@
             {{ 'products.product.sold_out' | t }}
           {% endif %}
         </span>
-        <span class="product__atc-price" data-add-to-cart-price style="display:none;"></span>
+        <span class="product__atc-price" data-add-to-cart-price style="display:none;">
+          {{ current_variant.price | money_without_trailing_zeros }}
+        </span>
     </button>
     {% unless product.type == "Gift Card" or product.tags contains 'klarna-hide' %}
     <klarna-placement

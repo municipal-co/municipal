@@ -42,12 +42,15 @@
         <div class="bundle-item__drawer-head">
           <input type="hidden" value="{{ current_variant.id }}" data-bundle-product-id>
           <div class="bundle-item__image">
+            {% if current_variant.compare_at_price > current_variant.price %}
+              <div data-discount-badge data-variant-compare-price="{{current_variant.compare_at_price}}" data-variant-price="{{current_variant.price}}"></div>
+            {% endif %}
             {% render 'responsive-image'
               image: product.selected_or_first_available_variant.image,
               dataAttributes: 'data-bundle-product-image',
               loading: "lazy",
               alt: "",
-              image_sizes: '100px'
+              image_sizes: '85px'
             %}
           </div>
           <div class="bundle-item__product-data">
@@ -57,7 +60,7 @@
             <span class="bundle-item__option" data-option-1>{{current_variant.option1}}</span>
             <span class="bundle-item__option" data-option-2>{{current_variant.option2}}</span>
             <div class="bundle-item__variant-price" data-price-container {% unless current_variant.available %}style="display:none;"{% endunless %}>
-              <s class="bundle-item__compare-price" data-item-compare-price>{% if current_variant.price_varies %} {{current_variant.compare_at_price | money_without_trailing_zeros}} {% endif %}</s>
+              <s class="bundle-item__compare-price" data-item-compare-price>{% if current_variant.compare_at_price > current_variant.price %} {{current_variant.compare_at_price | money_without_trailing_zeros}} {% endif %}</s>
               <span class="bundle-item__full-price" data-item-full-price="{{ current_variant.price }}">{{current_variant.price | money_without_trailing_zeros}}</span>
             </div>
             <div class="bundle-item__sold-out" {% if current_variant.available  %}style="display:none;" aria-hidden="true" {% endif %} data-sold-out >
