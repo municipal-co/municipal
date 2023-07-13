@@ -94,6 +94,10 @@
                       data-option-value="{{variant[option_index] | downcase}}"
                       {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
                       data-index="{{ option_index }}"
+                      {% if variant.compare_at_price > variant.price %}
+                        data-variant-compare-price="{{variant.compare_at_price}}"
+                        data-variant-price="{{variant.price}}"
+                      {% endif %}
                       data-single-option-selector>
 
                 <div class="product-option__ui">
@@ -102,6 +106,9 @@
                   {%- else -%}
                     {%- assign image_sizes = '(max-width: 992px) 15vw, 5vw' -%}
                   {%- endif -%}
+                  {% if variant.compare_at_price > variant.price %}
+                    <span class="product-option__discount-badge"></span>
+                  {% endif %}
                   {%- render 'responsive-image'
                     image: variant.image,
                     image_sizes: image_sizes,
