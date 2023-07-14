@@ -73,7 +73,7 @@
           {% if image_alt_pieces[1] != current_color %}
             {% assign print_badge = true %}
             {% assign current_color = image_alt_pieces[1] %}
-            {% for variant in product.variants %}
+            {% for variant in merge_product.variants %}
               {%- if variant[option_index] == current_color -%}
                 {% assign color_variant = variant %}
                 {% break %}
@@ -87,7 +87,7 @@
           {% else %}
             <div class="product-gallery__slide swiper-slide" data-slide style="aspect-ratio: {{image.width}}/{{image.height}};">
           {% endif %}
-            {% if print_badge and color_variant.compare_at_price > color_variant.price%}
+            {% if print_badge and color_variant.compare_at_price > color_variant.price %}
               <div class="discount-badge"
                   data-discount-badge
                   data-variant-compare-price="{{color_variant.compare_at_price}}"
