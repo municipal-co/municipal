@@ -28,9 +28,11 @@
   }
 };
       window.ElevarPushToDataLayer = item => {
+  const date = new Date();
+  localStorage.setItem("___ELEVAR_GTM_SUITE--lastDlPushTimestamp", String(Math.floor(date.getTime() / 1000)));
   const enrichedItem = {
     event_id: window.crypto.randomUUID ? window.crypto.randomUUID() : String(Math.random()).replace("0.", ""),
-    event_time: new Date().toISOString(),
+    event_time: date.toISOString(),
     ...item
   };
   const transformedEnrichedItem = window.__ElevarTransformItem ? window.__ElevarTransformItem(enrichedItem) : enrichedItem;
@@ -113,6 +115,8 @@
           console.error("Elevar: `ElevarGtmSuite` is not defined");
           return;
         }
+
+        window.ElevarGtmSuite.utils.emailCapture();
 
         const cartData = {
   attributes: {{- cart.attributes | json -}},
@@ -209,7 +213,7 @@
     items: [
       {%- assign itemIndex = 1 -%}
       {%- for product in collection.products -%}
-        {% assign default_variant = product.selected_or_first_available_variant %}
+        {%- assign default_variant = product.selected_or_first_available_variant -%}
         {
           {%- if default_variant.sku != blank -%}
             id: {{- default_variant.sku | json -}},
@@ -232,7 +236,7 @@
   }
 {%- endif -%};
 
-        await window.ElevarGtmSuite.handlers.collectionView(
+        const products = await window.ElevarGtmSuite.handlers.collectionView(
           data,
           config.event_config.collection_view,
           config.event_config.defers_collection_loading,
@@ -240,7 +244,7 @@
         );
 
         if (config.event_config.product_select) {
-          window.ElevarGtmSuite.handlers.productSelect(data);
+          window.ElevarGtmSuite.handlers.productSelect(data, products);
         }
         {%- endif -%}
 
@@ -278,7 +282,7 @@
 {%- endif -%}
 ;
 
-        await window.ElevarGtmSuite.handlers.searchResultsView(
+        const products = await window.ElevarGtmSuite.handlers.searchResultsView(
           data,
           config.event_config.search_results_view,
           config.event_config.defers_search_results_loading,
@@ -286,7 +290,7 @@
         );
 
         if (config.event_config.product_select) {
-          window.ElevarGtmSuite.handlers.productSelect(data);
+          window.ElevarGtmSuite.handlers.productSelect(data, products);
         }
         {%- endif -%}
 
@@ -295,7 +299,7 @@
   {
     attributes: {{- cart.attributes | json -}},
     currencyCode: {{- cart.currency.iso_code | json -}},
-    {% assign default_variant = product.selected_or_first_available_variant %}
+    {%- assign default_variant = product.selected_or_first_available_variant -%}
     {%- if default_variant != blank -%}
       defaultVariant: {
         {%- if default_variant.sku != blank -%}
@@ -311,7 +315,11 @@
         productId: "{{- product.id | json -}}",
         variantId: "{{- default_variant.id | json -}}",
         compareAtPrice: "{{- default_variant.compare_at_price | times: 0.01 | json -}}",
-        image: {{- product.featured_image | json -}},
+        {%- if default_variant.featured_image != blank -%}
+          image: {{- default_variant.featured_image.src | json -}},
+        {%- else -%}
+          image: {{- product.featured_image.src | json -}},
+        {%- endif -%}
         inventory: "{{- default_variant.inventory_quantity -}}"
       },
     {%- else -%}
@@ -333,7 +341,11 @@
           productId: "{{- product.id | json -}}",
           variantId: "{{- variant.id | json -}}",
           compareAtPrice: "{{- variant.compare_at_price | times: 0.01 | json -}}",
-          image: {{- product.featured_image | json -}},
+          {%- if variant.featured_image != blank -%}
+            image: {{- variant.featured_image.src | json -}},
+          {%- else -%}
+            image: {{- product.featured_image.src | json -}},
+          {%- endif -%}
           inventory: "{{- variant.inventory_quantity -}}"
         },
       {%- endfor -%}

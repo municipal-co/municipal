@@ -28,9 +28,11 @@
   }
 };
       window.ElevarPushToDataLayer = item => {
+  const date = new Date();
+  localStorage.setItem("___ELEVAR_GTM_SUITE--lastDlPushTimestamp", String(Math.floor(date.getTime() / 1000)));
   const enrichedItem = {
     event_id: window.crypto.randomUUID ? window.crypto.randomUUID() : String(Math.random()).replace("0.", ""),
-    event_time: new Date().toISOString(),
+    event_time: date.toISOString(),
     ...item
   };
   const transformedEnrichedItem = window.__ElevarTransformItem ? window.__ElevarTransformItem(enrichedItem) : enrichedItem;
@@ -89,6 +91,8 @@
           console.error("Elevar: `ElevarGtmSuite` is not defined");
           return;
         }
+
+        window.ElevarGtmSuite.utils.emailCapture();
 
         const cartData = {
   attributes: {{- cart.attributes | json -}},
@@ -158,13 +162,8 @@
         }
 
         {%- if checkout -%}
-        const step = Shopify?.Checkout?.step;
-        const page = Shopify?.Checkout?.page;
-        const isOnBeginCheckout = step === "contact_information";
-        const isOnThankYouPage = page?.includes("thank_you");
-
-        {% if request.path contains "thank_you" %}
-        if (config.event_config.checkout_complete && isOnThankYouPage) {
+        {%- if request.path contains "thank_you" or request.path contains "thank-you" -%}
+        if (config.event_config.checkout_complete) {
           const data = {%- if checkout -%}
   {
     currencyCode: {{- checkout.currency | json -}},
@@ -181,9 +180,9 @@
       revenue: "{{- checkout.total_price | times: 0.01 | json -}}",
       tax: "{{- checkout.tax_price | times: 0.01 | json -}}",
       shipping: "{{- checkout.shipping_price | times: 0.01 | json -}}",
-      {% if checkout.discount_applications %}
-        coupon: {{ checkout.discount_applications[0].title | json }},
-      {% endif %}
+      {%- if checkout.discount_applications -%}
+        coupon: {{- checkout.discount_applications[0].title | json -}},
+      {%- endif -%}
       {%- if order.subtotal_price -%}
         subTotal: "{{- order.subtotal_price | times: 0.01 | json -}}",
       {%- elsif checkout.subtotal_price -%}
@@ -238,10 +237,9 @@
 ;
           window.ElevarGtmSuite.handlers.checkoutComplete(data);
         }
-        {%- endif -%}
-
-        if (Shopify?.Checkout && !isOnThankYouPage) {
-          const data = {%- if checkout -%}
+        {%- else -%}
+        {%- unless request.path contains "orders" -%}
+        const data = {%- if checkout -%}
   {
     currencyCode: {{- checkout.currency | json -}},
     items: [
@@ -264,14 +262,14 @@
   }
 {%- endif -%}
 ;
-
-          if (config.event_config.cart_reconcile) {
-            window.ElevarGtmSuite.handlers.cartItemsReconcile(data);
-          }
-          if (config.event_config.checkout_step) {
-            window.ElevarGtmSuite.handlers.checkoutStep(data);
-          }
+        if (config.event_config.cart_reconcile) {
+          window.ElevarGtmSuite.handlers.cartItemsReconcile(data);
         }
+        if (config.event_config.checkout_step) {
+          window.ElevarGtmSuite.handlers.checkoutStep(data);
+        }
+        {%- endunless -%}
+        {%- endif -%}
         {%- endif -%}
       };
 
