@@ -26,7 +26,9 @@ export default function SizeDrawer({data, index}) {
     if(defaultUnit == true) {
       if(sizeUnit == 'eu') {
         unitIndex = 3;
-      } else if (data.tags.find((tag) => tag === 'gender:Womens')) {
+      } else if (data.tags.find((tag) => tag === 'gender:Womens') ||
+                 document.referrer.indexOf('women') > -1 ||
+                 document.location.search.indexOf('unit=women') > -1) {
         unitIndex = 2;
       }
     } else {
