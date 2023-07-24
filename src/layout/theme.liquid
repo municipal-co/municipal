@@ -76,6 +76,11 @@
           {% endif %}
         }
       {% endif%}
+      , SizeSelector: {
+        optionsDivider: {{ settings.size_selector_divider | json }},
+        optionsHeaders: {{ settings.size_selector_headers | json }},
+        sizeUnit: {{ settings.size_selector_default | json }},
+      }
     };
 
   {% if settings.yotpo_client_id != blank %}
@@ -114,6 +119,7 @@
   template-{{ template.name | handle }}
   {% if template.suffix != blank %} template-{{ template.name | append: '-' | append: template.suffix | handle }} {% endif %}
   {% if canonical_url contains 'search-results' %}search-results-page{% endif %}
+  {% if product.tags contains 'Footwear' %}footwear{% endif %}
 {% endcapture %}
 
 <body id="{{ page_title | handle }}" class="{{ body_class | strip | strip_newlines }}">

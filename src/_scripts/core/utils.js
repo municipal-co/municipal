@@ -406,3 +406,22 @@ export function srcSetGenerator(url) {
 
   return sizesMap.join(',');
 }
+
+export function transformFootwearSizes (optionLabel, productTags = []) {
+  const defaultUnit = !localStorage.getItem('sizeUnit');
+  const sizeUnit = localStorage.getItem('sizeUnit');
+  const sizePieces = optionLabel.split(window.theme.SizeSelector.optionsDivider);
+
+  let sizeIndex = 1;
+
+  if(defaultUnit) {
+    if(sizeUnit === 'eu') {
+      sizeIndex = 3;
+    } else if (productTags.find((tag) => tag === 'gender:Womens')) {
+      sizeIndex = 2;
+    }
+  } else {
+    sizeIndex = parseInt(localStorage.getItem('unitIndex'));
+  }
+  return sizePieces[sizeIndex - 1].trim();
+}
