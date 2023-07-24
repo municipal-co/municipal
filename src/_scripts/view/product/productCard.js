@@ -69,6 +69,7 @@ export default class ProductCard {
       fitTipsTitle: this.singleProductJson.metafields.fit_tips_title,
       fitTipsContent: this.singleProductJson.metafields.fit_tips_content,
       showSizing: this.singleProductJson.metafields.enable_fit_guide,
+      tags: this.singleProductJson.tags,
     }
   }
 
