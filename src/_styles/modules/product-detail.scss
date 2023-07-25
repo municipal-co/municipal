@@ -291,8 +291,8 @@
     min-height: 25px;
     position: relative;
     @include media-breakpoint-down('md') {
-      min-width: 15px;
-      min-height: 15px;
+      min-width: 18px;
+      min-height: 18px;
     }
 
     .icon-checkmark {
@@ -342,9 +342,11 @@
   .product-option__ui-label {
     font-size: 16px;
     margin-left: 20px;
+    line-height: 1.2;
 
     @include media-breakpoint-down('md') {
       font-size: 14px;
+      margin-left: 5px;
     }
   }
 
@@ -354,7 +356,7 @@
     text-align: center;
 
     @include media-breakpoint-down('md') {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
 
