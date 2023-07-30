@@ -358,6 +358,32 @@
     ]
   },
   {
+    "name": " Returns",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Customer Account"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_return_link",
+        "label": "Show Return Link",
+        "default": true,
+        "info": "Display a link to start a return on customer order history page"
+      },
+      {
+        "type": "range",
+        "id": "days_to_return",
+        "label": "Days to Return",
+        "info": "How many days the customer has to return/exchange items in their order",
+        "default": 60,
+        "step": 5,
+        "max": 365,
+        "min": 0
+      }
+    ]
+  },
+  {
     "name": "Marketing Drawer",
     "settings": [
       {

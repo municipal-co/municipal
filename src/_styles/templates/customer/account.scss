@@ -166,7 +166,13 @@
 
 .account__order-group {
   display: flex;
+  flex-direction: column;
   align-items: start;
+
+  @include media-breakpoint-up('sm') {
+    flex-direction: row;
+  }
+
   & + & {
     margin-top: 20px;
     padding-top: 20px;
@@ -175,12 +181,30 @@
 }
 
 .account__order-group-link {
-  margin-left: auto;
+  margin-top: 15px;
   line-height: 0;
+
+  @include media-breakpoint-up('sm') {
+    margin-top: 0;
+    margin-left: auto;
+  }
 }
 
 .account__order-link {
   font-size: 10px;
+
+  &:nth-child(2) {
+    margin-left: 35px;
+  }
+
+  @include media-breakpoint-up('sm') {
+    display: block;
+
+    &:nth-child(2) {
+      margin-top: 7px;
+      margin-left: 0;
+    }
+  }
 }
 
 .account__pagination {
