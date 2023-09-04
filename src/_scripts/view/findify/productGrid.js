@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import ProductCard from "../global/productCard";
+import ProductCard from "../findify/productCard";
 import PromoCard from "../global/promoCard";
 import FindifyPagination from "./findifyPagination";
 
