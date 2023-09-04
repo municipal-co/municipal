@@ -47,12 +47,12 @@
           bg_prefix: 'qs'
         %}
 
-        {% render 'product-card-slider'
-          type: 'metafields',
-          metafields: product.metafields.custom_fields,
-          prefix: 'product-card-slider-',
-          modifier_class: 'card-slider--pdp',
-        %}
+        <div id="pdp-you-may-also-like"></div>
+        <script id="pdp-ymal-data" type="application/json">
+          {
+            "productId": {{ product.id | json }}
+          }
+        </script>
       </div>
 
     </div>
