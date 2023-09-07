@@ -109,7 +109,7 @@ export default function SizeDrawer({data, index}) {
             </div>
             <div className="product-option__ui-group-corner">
               <div className="product-option__ui-quantity">
-                {lowInventory && (
+                {variant.inventory_management === "shopify" && lowInventory && (
                   <div
                     className="product-option__ui-low-quantity"
                     data-low-quantity
