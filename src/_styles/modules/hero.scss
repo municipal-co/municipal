@@ -95,6 +95,11 @@
 
 .hero__highlight-text {
   font-weight: $font-weight-base;
+  br {
+    @include media-breakpoint-down('md') {
+      display: none;
+    }
+  }
 }
 
 .hero--vertical-top {
