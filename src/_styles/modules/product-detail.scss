@@ -418,10 +418,22 @@
 
   &.swiper-slide {
     display: block;
+    aspect-ratio: 1680/2100;
   }
 
   &.swiper-slide-zoomed {
     z-index: 1;
+  }
+
+
+  &.product-gallery__slide--video,
+  &.product-gallery__slide--external-video {
+    video,
+    iframe {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
   }
 }
 
