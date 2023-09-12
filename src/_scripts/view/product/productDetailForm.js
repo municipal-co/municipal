@@ -133,8 +133,8 @@ export default class ProductDetailForm {
     }
     this.updateAddToCartState(this.variants.currentVariant);
     this.updateProductPrices(this.variants.currentVariant, true);
-
-    Cookies.set('findify-rid', this.searchParams.get('rid'))
+    document.addEventListener('sizeOption:changeUnit', this.validateSizeAvailability.bind(this));
+    Cookies.set('findify-rid', this.searchParams.get('rid'));
   }
 
   onVariantChange(evt) {
@@ -333,7 +333,12 @@ export default class ProductDetailForm {
 
   updateSelectedOptionLabel(index, value, name) {
     if(name === 'size' || name === 'Size' || name === 'amount' || name === 'Amount' ) {
-      const updatedValue = value === 'OS' ? 'One Size' : value;
+      let updatedValue = value === 'OS' ? 'One Size' : value;
+
+      if(this.productSingleObject.tags?.find((tag) => tag.toLowerCase() === 'footwear')) {
+        updatedValue = Utils.transformFootwearSizes(updatedValue, this.productSingleObject.tags);
+      }
+
       $(`[data-selected-option=${index}]`, this.$detailOptions).html(`Selected ${name}: <span class="product-option__drawer-btn-value">${updatedValue.replace('.00', '')}</span>`);
       $(`[data-selected-option=${index}]`, this.$detailOptions).parent().addClass('is-active');
       this.validateSizeAvailability.call(this, $(`[data-option-value="${value.toLowerCase()}"]`).parent());
@@ -355,8 +360,7 @@ export default class ProductDetailForm {
         colorIndex = `option${evalOption.position}`;
       }
     })
-
-    if(typeof currentOption === 'undefined') {
+    if(typeof currentOption === 'undefined' || currentOption?.type !== undefined) {
       $currentOption = $(`[data-product-option=${colorIndex}]:checked`, this.$detailOptions).parent();
     }
 
@@ -369,7 +373,12 @@ export default class ProductDetailForm {
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', true);
       this._disablePurchase(true)
     } else if($selectedSize.length) {
-      const optionValue = $selectedSize === 'OS' ? 'One Size' : $selectedSize;
+      let optionValue = $selectedSize === 'OS' ? 'One Size' : $selectedSize;
+
+      if(this.productSingleObject.tags?.find((tag) => tag.toLowerCase() === 'footwear')) {
+        optionValue = Utils.transformFootwearSizes(optionValue, this.productSingleObject.tags);
+      }
+
       $(`[data-selected-option=${sizeIndex}]`).parent().prop('disabled', false);
       $(`[data-selected-option=${sizeIndex}]`).html(`Selected Size: <span class="product-option__drawer-btn-value">${optionValue}</span>`);
     } else {
@@ -649,6 +658,7 @@ export default class ProductDetailForm {
       optionsWithValues: this.productSingleObject.options_with_values,
       dataField: $optionField.get(0),
       activeOption: $optionField.is('.edited') ? $optionField.val() : '',
+      tags: this.productSingleObject.tags || [],
       showSizing: true,
       fitTipsContent: this.productSingleObject.metafields.fit_tips_content || undefined,
       fitTipsTitle: this.productSingleObject.metafields.fit_tips_title || undefined

@@ -248,6 +248,10 @@
     align-items: center;
     cursor: pointer;
 
+    .footwear & {
+      padding: 10px 20px;
+    }
+
     @include media-breakpoint-up('lg') {
       &:hover,
       &:focus {
@@ -266,15 +270,15 @@
       justify-content: flex-end;
     }
 
-    @include media-breakpoint-down('sm') {
-      width: 35%;
+    + .product-option__ui-group-corner {
+      text-align: right;
     }
   }
 
   .product-option__ui-group-middle {
     width: 20%;
 
-    @include media-breakpoint-down('sm') {
+    @include media-breakpoint-down('md') {
       width: 30%;
     }
   }
@@ -283,9 +287,13 @@
     border-radius: 50%;
     background-color: $white;
     border: 1px solid $color-dots-border;
-    width: 30px;
-    height: 30px;
+    min-width: 25px;
+    min-height: 25px;
     position: relative;
+    @include media-breakpoint-down('md') {
+      min-width: 18px;
+      min-height: 18px;
+    }
 
     .icon-checkmark {
       position: absolute;
@@ -295,6 +303,9 @@
       transition: transform 150ms $transition-timing-function-in-out-ui;
       width: 15px;
 
+      @include media-breakpoint-down('md') {
+        width: 8px;
+      }
     }
   }
 
@@ -330,13 +341,23 @@
 
   .product-option__ui-label {
     font-size: 16px;
-    margin-left: 20px
+    margin-left: 20px;
+    line-height: 1.2;
+
+    @include media-breakpoint-down('md') {
+      font-size: 14px;
+      margin-left: 5px;
+    }
   }
 
   .product-option__ui-availability {
     font-size: 14px;
     margin: auto;
     text-align: center;
+
+    @include media-breakpoint-down('md') {
+      font-size: 10px;
+    }
   }
 
   .product-option__ui-quantity {

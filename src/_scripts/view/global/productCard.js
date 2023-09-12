@@ -193,6 +193,7 @@ const productCard = ((props) => {
       addToCart: true,
       rid: props.rid,
       variants: getCurrentColorVariant(),
+      tags: productData.tags,
     }
 
     return drawerData;
