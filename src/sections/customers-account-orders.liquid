@@ -69,9 +69,9 @@
                   {% comment %}Determine if fulfillment is great than 60 ago{% endcomment %}
                   {% assign diff_seconds = today | minus: fulfill_date %}
                   {% assign diff_days = diff_seconds | divided_by: 3600 | divided_by: 24 %}
-                {% if diff_days < settings.days_to_return %}
-                <a href="https://returns.municipal.com/start_return?ext_order_number={{ order.name }}&customer_id={{ customer.id }}" class="btn-link account__order-link"> Start Return </a>
-                {% endif %}
+                  {% if diff_days < settings.days_to_return %}
+                    <a href="https://municipal.loopreturns.com/?order={{order.name | handleize}}&zip={{order.shipping_address.zip}}" class="btn-link account__order-link"> Start Return </a>
+                  {% endif %}
               {% endif %}
               </div>
             </div>
