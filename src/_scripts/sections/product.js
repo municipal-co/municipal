@@ -68,7 +68,10 @@ export default class ProductSection extends BaseSection {
     }))
   }
 
-  toggleFitGuideModal() {
+  toggleFitGuideModal(evt) {
+    if(evt) {
+      evt.preventDefault();
+    }
     const fitGuideSettings = JSON.parse(document.querySelector('[data-fit-guide-settings]').innerHTML)
     setTimeout(() => {
       document.dispatchEvent(new CustomEvent('drawerOpen', {detail: {
