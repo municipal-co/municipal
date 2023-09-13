@@ -278,10 +278,8 @@ export default function SizeDrawer({data, index}) {
                 <a
                   href={`${data.productUrl}`}
                   className="btn-link product__size-guide-button p4"
-                >
-                  {' '}
-                  Need help with sizing?{' '}
-                </a>
+                  data-fit-guide-toggler
+                > Need help with sizing? </a>
               </div>
             )}
           </div>

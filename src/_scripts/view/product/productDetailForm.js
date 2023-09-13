@@ -649,6 +649,7 @@ export default class ProductDetailForm {
   _buildDrawerData($button) {
     const $optionField = $button.siblings('[data-single-option-selector]');
     const currentOptionIndex = $optionField.data('index');
+    const fitGuideSettings = !!document.querySelector('[data-fit-guide-settings]');
     const productOptions = [];
     const drawerData = {
       optionIndex: currentOptionIndex,
@@ -659,9 +660,10 @@ export default class ProductDetailForm {
       dataField: $optionField.get(0),
       activeOption: $optionField.is('.edited') ? $optionField.val() : '',
       tags: this.productSingleObject.tags || [],
-      showSizing: true,
       fitTipsContent: this.productSingleObject.metafields.fit_tips_content || undefined,
-      fitTipsTitle: this.productSingleObject.metafields.fit_tips_title || undefined
+      fitTipsTitle: this.productSingleObject.metafields.fit_tips_title || undefined,
+      showSizing: fitGuideSettings,
+      productUrl: '//' + window.location.host + '/products/' + this.productSingleObject.handle + '?variant=' + this.variants.currentVariant.id + '#fitGuide'
     }
 
     for(let i = 1; i <= 3; i++) {
