@@ -1,5 +1,6 @@
 import Swiper, { Navigation, Pagination, Scrollbar, Zoom, Lazy } from 'swiper';
 import BaseSection from '../../sections/base';
+import Player from '@vimeo/player';
 
 const selectors = {
   productGallery: '[data-product-gallery-slideshow]',
@@ -26,6 +27,7 @@ export default class productGallery extends BaseSection {
     this.$zoomToggler = this.$container.querySelectorAll(selectors.zoomToggler);
     this.$nextArrow = this.$container.closest('.product-gallery').querySelector('[data-arrow-next]');
     this.$prevArrow = this.$container.closest('.product-gallery').querySelector(selectors.prevArrow);
+    this.videoPlayers = [];
 
     this.currentColor = '';
     this.gallerySettings = {
@@ -66,6 +68,7 @@ export default class productGallery extends BaseSection {
 
     this.slider = new Swiper(this.$container, this.gallerySettings);
     this.slider.on('slideChange', this.onSlideChange.bind(this));
+    this.slider.on('slideChangeTransitionEnd', this.onSlideChangeEnd.bind(this));
     this.slider.init();
 
     this.updateDiscountBadge();
@@ -157,6 +160,8 @@ export default class productGallery extends BaseSection {
       });
       // Update variant images here
       this.slider = new Swiper(this.$container, this.gallerySettings);
+      this.slider.on('slideChange', this.onSlideChange.bind(this));
+      this.slider.on('slideChangeTransitionEnd', this.onSlideChangeEnd.bind(this));
       this.slider.init();
       if(this.$discountBadge && this.$discountBadge.length) {
         this.$discountBadge.forEach( badge => {
@@ -172,10 +177,57 @@ export default class productGallery extends BaseSection {
     }
   }
 
-  onSlideChange() {
+  _findPlayerObject(slide) {
+    return this.videoPlayers.find(playerObject => playerObject.slide === slide);
+  }
+
+  onSlideChange(e) {
     if(this.slider.zoom.enabled) {
       this.slider.zoom.out();
     }
+
+    const activeSlide = this.slider.slides.filter((slide) => {
+      return Number.parseInt(slide.dataset.swiperSlideIndex) === this.slider.realIndex && slide.className.indexOf('swiper-slide-active') !== -1;
+    });
+
+    const playerObject = this.videoPlayers.filter((filterPlayer) => {
+      return (
+        filterPlayer.playing === true && filterPlayer.slide !== activeSlide
+      );
+    });
+
+    if (playerObject.length) {
+      playerObject[0].player?.pause();
+      playerObject[0].playing = false;
+    }
+  }
+
+  onSlideChangeEnd(e) {
+    const activeSlide = this.slider.slides.filter((slide) => {
+      return Number.parseInt(slide.dataset.swiperSlideIndex) === this.slider.realIndex && slide.className.indexOf('swiper-slide-active') !== -1;
+    });
+
+    if(activeSlide.length === 0 || (activeSlide[0].className.indexOf('product-gallery__slide--external-video') === -1 && activeSlide[0].className.indexOf('product-gallery__slide--video') === -1)) {
+      return false;
+    }
+
+    let playerObject = this._findPlayerObject(activeSlide[0]);
+
+    if(!playerObject) {
+      const iframe = activeSlide[0].querySelector('iframe');
+      const video = activeSlide[0].querySelector('video');
+
+      playerObject = {
+        slide: activeSlide[0],
+        player: !!iframe ? new Player(iframe) : video,
+        playing: false,
+      };
+
+      this.videoPlayers.push(playerObject)
+    }
+
+    playerObject.player.play();
+    playerObject.playing = true;
   }
 
   destroy() {

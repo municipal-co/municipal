@@ -16,93 +16,27 @@
       {% assign rendered_images = 0 %}
       {% assign current_color = "" %}
       {% assign color_variant = "" %}
-      {% for image in product.images %}
-      {% assign image_alt_pieces = image.alt | split: '|' %}
-      {% assign img_color_downcase = image_alt_pieces[1] | downcase %}
-      {% if image_alt_pieces[1] != current_color %}
-        {% assign print_badge = true %}
-        {% assign current_color = image_alt_pieces[1] %}
-        {% for variant in product.variants %}
-          {%- if variant[option_index] == current_color -%}
-            {% assign color_variant = variant %}
-            {% break %}
-          {%- endif -%}
-        {% endfor %}
-      {%- else -%}
-        {% assign print_badge = false %}
-      {% endif %}
-      {% assign variant_color_downcase = current_variant[option_index] | downcase %}
-        {% if has_color_index %}
-          <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %} {% if print_badge and color_variant.compare_at_price > color_variant.price %}enable-badge{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
-          {% if img_color_downcase == variant_color_downcase and rendered_images == 0 %}
-            {% assign rendered_images = rendered_images | plus: 1 %}
-          {% endif %}
-        {% else %}
-          <div class="product-gallery__slide swiper-slide"
-               data-slide
-               style="aspect-ratio: {{image.width}}/{{image.height}};"
-               {% if color_variant.compare_at_price > color_variant.price %}
-                  data-variant-compare-price="{{color_variant.compare_at_price}}"
-                  data-variant-price="{{color_variant.price}}"
-                {% endif %}>
-        {% endif %}
-        {% if print_badge and color_variant.compare_at_price > color_variant.price %}
-          <div class="discount-badge"
-               data-discount-badge
-               data-variant-compare-price="{{color_variant.compare_at_price}}"
-               data-variant-price="{{color_variant.price}}"
-          ></div>
-        {% endif %}
-          <div class="product-gallery__zoom-toggler" data-zoom-toggler>
-            {% render 'icon-zoom-in' %}
-            {% render 'icon-zoom-out' %}
-          </div>
-          <div class="swiper-zoom-container">
-            <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
-            <span class="swiper-lazy-preloader"></span>
-          </div>
-        </div>
+      {% for media in product.media %}
+        {% render 'gallery-media-item',
+          media: media,
+          product: product,
+          option_index: option_index,
+          current_variant: current_variant,
+          has_color_index: has_color_index,
+        %}
       {% endfor %}
+
       {% for merge_product in product.metafields.custom_fields.merge_product.value %}
         {% assign current_color = "" %}
         {% assign color_variant = "" %}
-        {% for image in merge_product.images %}
-          {% assign image_alt_pieces = image.alt | split: '|' %}
-          {% assign img_color_downcase = image_alt_pieces[1] | downcase %}
-          {% assign variant_color_downcase = current_variant[option_index] | downcase %}
-          {% if image_alt_pieces[1] != current_color %}
-            {% assign print_badge = true %}
-            {% assign current_color = image_alt_pieces[1] %}
-            {% for variant in merge_product.variants %}
-              {%- if variant[option_index] == current_color -%}
-                {% assign color_variant = variant %}
-                {% break %}
-              {%- endif -%}
-            {% endfor %}
-          {%- else -%}
-            {% assign print_badge = false %}
-          {% endif %}
-          {% if has_color_index %}
-            <div class="product-gallery__slide {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %} {% if print_badge and color_variant.compare_at_price > color_variant.price %}enable-badge{% endif %}" data-slide data-color-identifier="{{image_alt_pieces[1]}}" data-image-url="{{image | image_url }}" style="aspect-ratio: {{image.width}}/{{image.height}};">
-          {% else %}
-            <div class="product-gallery__slide swiper-slide" data-slide style="aspect-ratio: {{image.width}}/{{image.height}};">
-          {% endif %}
-            {% if print_badge and color_variant.compare_at_price > color_variant.price %}
-              <div class="discount-badge"
-                  data-discount-badge
-                  data-variant-compare-price="{{color_variant.compare_at_price}}"
-                  data-variant-price="{{color_variant.price}}"
-              ></div>
-            {% endif %}
-            <div class="product-gallery__zoom-toggler" data-zoom-toggler>
-              {% render 'icon-zoom-in' %}
-              {% render 'icon-zoom-out' %}
-            </div>
-            <div class="swiper-zoom-container">
-              <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
-              <span class="swiper-lazy-preloader"></span>
-            </div>
-          </div>
+        {% for media in merge_product.media %}
+          {% render 'gallery-media-item',
+            media: media,
+            product: product,
+            option_index: option_index,
+            current_variant: current_variant,
+            has_color_index: has_color_index,
+          %}
         {% endfor %}
       {% endfor %}
     </div>
