@@ -1,0 +1,67 @@
+{% liquid
+  assign media_alt_pieces = media.alt | split: '|'
+  assign img_color_downcase = media_alt_pieces[1] | downcase
+  if media_alt_pieces[1] != current_color
+    assign print_badge = true
+    assign current_color = media_alt_pieces[1]
+    for variant in product.variants
+      if variant[option_index] == current_color
+        assign color_variant = variant
+        break
+      endif
+    endfor
+  else
+    assign print_badge = false
+  endif
+%}
+{% assign variant_color_downcase = current_variant[option_index] | downcase %}
+{% if has_color_index %}
+  <div class="product-gallery__slide
+  product-gallery__slide--{{media.media_type | replace: '_', '-'}}
+  {% if img_color_downcase == variant_color_downcase %}swiper-slide{% endif %}
+  {% if print_badge and color_variant.compare_at_price > color_variant.price %}enable-badge{% endif %}"
+  data-slide data-color-identifier="{{media_alt_pieces[1]}}"
+  data-image-url="{{media | image_url }}"
+  {% if media.media_type == 'external_video' or media.media_type == 'video' %}
+    data-external-video="{{media.host}}"
+  {% endif %}
+  >
+  {% if img_color_downcase == variant_color_downcase and rendered_images == 0 %}
+    {% assign rendered_images = rendered_images | plus: 1 %}
+  {% endif %}
+{% else %}
+  <div class="product-gallery__slide swiper-slide"
+      data-slide
+      {% if color_variant.compare_at_price > color_variant.price %}
+          data-variant-compare-price="{{color_variant.compare_at_price}}"
+          data-variant-price="{{color_variant.price}}"
+        {% endif %}>
+{% endif %}
+{% if print_badge and color_variant.compare_at_price > color_variant.price %}
+  <div class="discount-badge"
+      data-discount-badge
+      data-variant-compare-price="{{color_variant.compare_at_price}}"
+      data-variant-price="{{color_variant.price}}"
+  ></div>
+{% endif %}
+{% if media.media_type == "image" %}
+  {% assign image = media %}
+  <div class="product-gallery__zoom-toggler" data-zoom-toggler>
+    {% render 'icon-zoom-in' %}
+    {% render 'icon-zoom-out' %}
+  </div>
+  <div class="swiper-zoom-container">
+    <img data-src="{{ image | image_url }}" alt="{{image.alt}}" class="swiper-lazy product-gallery__image">
+    <span class="swiper-lazy-preloader"></span>
+  </div>
+{% elsif media.media_type == "video" %}
+  <video data-gallery-video playsinline="playsinline" preload="metadata" poster="{{media.preview_image | image_url }}" muted loop>
+    {% for source in media.sources %}
+      <source src="{{ source.url }}" type="{{ source.mime_type }}"> </source>
+    {% endfor %}
+    <img src="{{ media.preview_image | image_url: width:'515px' }}" alt="">
+  </video>
+{% elsif media.media_type == "external_video" %}
+  {{ media | external_video_url: loop: '1', muted: '1', controls: '0'  | external_video_tag }}
+{% endif %}
+</div>

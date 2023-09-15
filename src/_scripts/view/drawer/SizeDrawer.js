@@ -137,8 +137,7 @@ export default function SizeDrawer({data, index}) {
       } else {
         variant = option;
       }
-
-      let optionName = variant ? variant[data.optionIndex].replace('.00', '') : option.replace('.00', '');
+      let optionName = variant ? variant[data.optionIndex]?.replace('.00', '') : option?.replace('.00', '');
 
       if(enableSizeSelector) {
         const optionNamePieces = optionName.split(optionsDivider);
@@ -146,7 +145,7 @@ export default function SizeDrawer({data, index}) {
       }
 
       const lowInventory = variant ? variant.inventory_quantity <= window.settings.lowInventoryThreshold : false;
-      const enableBis = variant ? !variant.available && variant.metafields.enable_bis == 1 : false;
+      const enableBis = variant ? !(variant.available || variant.availability) && variant.metafields.enable_bis == 1 : false;
 
       return (
         <label className="product-option__single-selector" key={`option-${index}`}>
@@ -158,7 +157,7 @@ export default function SizeDrawer({data, index}) {
             data-final-sale-message={window.settings.finalSaleMessage}
             className="hide"
             defaultChecked={(typeof variant !== 'undefined' && data.activeOption) ? variant[data.optionIndex] === data.activeOption : false}
-            disabled={!variant || !variant?.available}
+            disabled={!variant || (!variant?.available && !variant.availability)}
             onChange={handleChange}
           />
           <div className="product-option__ui" data-option-ui>
@@ -172,7 +171,7 @@ export default function SizeDrawer({data, index}) {
             </div>
             <div className="product-option__ui-group-middle">
               <div className="product-option__ui-availability">
-                {variant && variant.available ? 'Available' : 'Sold Out'}
+                {variant && (variant.available || variant.availability) ? 'Available' : 'Sold Out'}
               </div>
             </div>
             <div className="product-option__ui-group-corner">
@@ -278,10 +277,8 @@ export default function SizeDrawer({data, index}) {
                 <a
                   href={`${data.productUrl}`}
                   className="btn-link product__size-guide-button p4"
-                >
-                  {' '}
-                  Need help with sizing?{' '}
-                </a>
+                  data-fit-guide-toggler
+                > Need help with sizing? </a>
               </div>
             )}
           </div>

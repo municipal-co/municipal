@@ -77,7 +77,7 @@
         },
       {% endif%}
       SizeSelector: {
-        optionsDivider: {{ settings.size_selector_divider | json }},
+        optionsDivider: {{ settings.size_selector_divider | default: "|" | json }},
         optionsHeaders: {{ settings.size_selector_headers | json }},
         sizeUnit: {{ settings.size_selector_default | json }},
       }
