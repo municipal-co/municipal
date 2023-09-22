@@ -5,6 +5,7 @@
 
 {% assign animation_speed_mobile = section.settings.scroll_animation_mobile | append: 's' %}
 {% assign animation_speed_desktop = section.settings.scroll_animation_desktop | append: 's' %}
+{% assign marquee_direction = section.settings.marquee_direction %}
 
 {% capture marquee_content %}
   {% for block in section.blocks %}
@@ -19,22 +20,22 @@
   {% if show_banner == true %}
     <div class="pencil-banner {% if light_text == true %}pencil-banner--light{% endif %}" style="background-color: {{ background_color }};" data-pencil-banner>
       {% if section.blocks.size > 1 %}
-        <div 
-          class="pencil-banner__content-container" 
-          style="--animation-duration-desktop: {{ animation_speed_desktop }}; --animation-duration-mobile: {{ animation_speed_mobile }};" 
+        <div
+          class="pencil-banner__content-container{% if marquee_direction == 'ltr' %} pencil-banner__content-container--reverse{% endif %}"
+          style="--animation-duration-desktop: {{ animation_speed_desktop }}; --animation-duration-mobile: {{ animation_speed_mobile }};"
           data-marquee-content-container>
           {{ marquee_content }}
           {{ marquee_content }}
           {{ marquee_content }}
-        </div> 
-        <div 
-          class="pencil-banner__content-container" 
-          style="--animation-duration-desktop: {{ animation_speed_desktop }}; --animation-duration-mobile: {{ animation_speed_mobile }};" 
+        </div>
+        <div
+          class="pencil-banner__content-container{% if marquee_direction == 'ltr' %} pencil-banner__content-container--reverse{% endif %}"
+          style="--animation-duration-desktop: {{ animation_speed_desktop }}; --animation-duration-mobile: {{ animation_speed_mobile }};"
           data-marquee-content-container>
           {{ marquee_content }}
           {{ marquee_content }}
           {{ marquee_content }}
-        </div> 
+        </div>
       {% elsif section.blocks.size == 1 %}
         <div class="container">
           <div class="pencil-banner__content">{{ section.blocks[0].settings.banner_content }}</div>
@@ -105,9 +106,25 @@
         "unit": "s",
         "label": "Scrolling Text Duration - Desktop",
         "default": 20
+      },
+      {
+        "type": "select",
+        "id": "marquee_direction",
+        "label": "Direction",
+        "options": [
+          {
+            "value": "ltr",
+            "label": "Left to Right →"
+          },
+          {
+            "value": "rtl",
+            "label": "← Right to Left"
+          }
+        ],
+        "default": "ltr"
       }
     ],
-    "blocks": [      
+    "blocks": [
       {
         "type": "content",
         "name": "Content",
