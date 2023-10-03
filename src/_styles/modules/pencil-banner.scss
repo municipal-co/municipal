@@ -39,6 +39,10 @@
       animation-duration: var(--animation-duration-desktop);
     }
 
+    &--reverse {
+      animation-name: marquee-reverse;
+    }
+
     &.marquee-paused {
       animation-play-state: paused;
     }
@@ -80,4 +84,9 @@
 @keyframes marquee {
   0% { transform: translate(0, 0); }
   100% { transform: translate(-100%, 0); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translate(-100%, 0); }
+  100% { transform: translate(0, 0); }
 }
