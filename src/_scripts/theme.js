@@ -65,6 +65,7 @@ import Collection from './templates/collection';
 import Search from './templates/search';
 import AutocompleteSearch from './view/navigation/autocompleteSearch';
 import DrawerSystem from './view/drawer/DrawerSystem';
+import ProductYmal from './view/product/productYmal.js';
 
 // Do this ASAP
 Animations.initialize();
@@ -136,6 +137,13 @@ Breakpoints.initialize();
   if(drawerHolder) {
     const drawersRoot = ReactDOM.createRoot(drawerHolder);
     drawersRoot.render(<DrawerSystem />, drawerHolder);
+  }
+
+  const ymalHolder = document.getElementById('pdp-you-may-also-like');
+
+  if(ymalHolder) {
+    const ymalRoot = ReactDOM.createRoot(ymalHolder);
+    ymalRoot.render(<ProductYmal />, ymalHolder);
   }
 
   $('.in-page-link').on('click', (evt) => {

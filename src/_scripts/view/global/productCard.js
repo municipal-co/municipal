@@ -1,330 +1,231 @@
 import React, { useEffect, useRef, useState } from "react";
-import Swiper, {Scrollbar} from "swiper";
-import { client } from "../../lib/findifyApi";
+import { Swiper, Scrollbar, Navigation } from "swiper";
 import Image from "./image";
+import * as Currency from '../../core/currency';
 
-const productCard = ((props) => {
-  const processData = () => {
-    let data = props.data;
+const ProductCard = ((props) => {
+  const { product, variantId } = props;
+  const card = useRef();
+  const swatchSlider = useRef();
+  const colorOption = product.options_with_values.find(option => {
+    return option.name === 'Color' || option.name === 'color';
+  })
 
-    data.variants.map(variant => {
-      if(variant.color) {
-        variant.color = variant.custom_fields.old_colors;
-      }
-      if(variant.size) {
-        variant.size = typeof(variant.size) == 'string' ? variant.size : variant.size[0];
-      }
+  const sizeOption = product.options_with_values.find(option => {
+    return option.name === 'Size' || option.name === 'size';
+  })
 
-      if(data.title.indexOf('Gift Card')) {
-        variant.option1 = 'unique';
-        variant.option2 = "$" +variant.price;
-      }
 
-      return variant;
-    })
-
-    if(data.options) {
-      data.optionsWithValues = data.options.map((option, index) => {
-        return {
-          option: option,
-          position: index + 1,
-          values: data[option]
-        }
-      })
+  product.variants = product.variants.map((variant) => {
+    if(variant.compare_at_price && variant.compare_at_price > variant.price) {
+      variant.discount = ((variant.compare_at_price - variant.price) / variant.compare_at_price) * 100;
     }
 
-    data.image_url = data.image_url.replace('_large', '');
-    data.image_2_url = data.image_url.replace('_large', '');
-
-    data.variants = filterSoldOutVariants(data);
-
-    return data;
-  }
-
-  const filterSoldOutVariants = (data) => {
-    const availableColors = [];
-    let filteredVariant = [];
-
-    data.variants.forEach(variant => {
-      variant.image_url = variant?.image_url?.replace('_large.', '.');
-      variant.image_2_url = variant?.image_2_url?.replace('_large.', '.');
-      if(variant.availability || variant.custom_fields.mf_custom_fields_enable_notify_me == '1' || variant.custom_fields.mf_custom_fields_enable_sold_out == '1') {
-        if(availableColors.indexOf(variant.color) == -1) {
-          availableColors.push(variant.color);
-        }
-      }
-    })
-
-    filteredVariant = data.variants.filter(variant => availableColors.indexOf(variant.color) > -1 )
-
-    return filteredVariant;
-  }
+    return variant;
+  })
 
   const getCurrentVariant = (variantId) => {
     let selectedVariant = {};
+
     if(variantId) {
-      selectedVariant = productData.variants.find(variant => variant.id == variantId);
+      selectedVariant = product.variants.find(variant => variant.id === variantId);
     } else {
-      selectedVariant = productData.variants.find(variant => variant.id == productData.selected_variant_id);
+      selectedVariant = product.variants.find(variant => {
+      return variant.available
+      });
     }
 
-    if(!selectedVariant) {
-      selectedVariant = productData.variants[0];
+    if (!selectedVariant) {
+      selectedVariant = product.variants[0];
     }
+
     return selectedVariant;
   }
 
-  const getColorList = (productObject, variantOption) => {
-    const colors = [];
-    const colorList = [];
-    productObject.variants.forEach(variant => {
-      if(variant[variantOption] !== undefined) {
-        if(typeof variant[variantOption] === 'string' && colorList.indexOf(variant[variantOption]) === -1) {
-          colors.push(variant);
-          colorList.push(variant[variantOption]);
-        } else if(typeof variant[variantOption] === 'object' && colorList.indexOf(variant[variantOption][0]) === -1) {
-          colors.push(variant);
-          colorList.push(variant[variantOption][0]);
-        }
-      }
-    })
+  const getColorList = () => {
+    const productVariants = [];
+    const printedColors = [];
 
-    return colors;
-  }
+    product.variants.forEach(function(variant) {
+      const productColor = variant[`option${colorOption.position}`];
+      if (
+        !printedColors.find((printedColor) => printedColor === productColor) &&
+        typeof variant.featured_image.src !== 'undefined'
+      ) {
+        printedColors.push(productColor);
+        productVariants.push(variant);
+      }});
+
+    return productVariants;
+  };
 
   const updateCurrentVariant = (e) => {
-    const option = e.target;
-    const value = option.dataset.optionValue;
-    const optionIndex = option.dataset.index;
-    let selectedVariant = productData.variants.find(variant => variant[optionIndex] == value);
+    const newVariant = product.variants.find(loopVariant => {
+      return loopVariant[`option${colorOption.position}`] === e.target.value
+    });
 
-    if(selectedVariant) {
-      setCurrentVariant(selectedVariant);
-    }
-  }
-
-  const buildColorSwatch = (variant) => {
-    let discountClass = 'discount-badge--first-threshold'
-    if(variant.discount >= 70) {
-      discountClass = 'discount-badge--third-threshold'
-    } else if (variant.discount >= 50) {
-      discountClass = 'discount-badge--second-threshold'
-    }
-
-    return(<label key={variant.id} className="product-option__single-selector swiper-slide">
-      <input type="radio" name="color" value={ variant['color'] } style={{display: 'none'}} data-product-option='color' data-option-value={variant['color']} data-index="color" checked={variant.color == currentVariant.color} onChange={updateCurrentVariant} />
-      <div className="product-option__ui">
-        {variant.discount && <div className={`product-option__discount-badge ${discountClass}`} />}
-        <Image
-          src={variant.image_url}
-          alt=""
-          loading="lazy"
-          sizes="77px"/>
-      </div>
-    </label>)
-  }
-
-  const getCurrentVariantIndex = () => productColors.indexOf(currentVariant);
-
-  const initSwiper = () => {
-    new Swiper(swatchSlider.current, {
-      modules: [Scrollbar],
-      slidesPerView: 4.5,
-      spaceBetween: 10,
-      threshold: 10,
-      initialSlide: getCurrentVariantIndex(),
-      nested: true,
-      watchOverflow: true,
-      centerInsufficientSlides: true,
-      scrollbar: {
-        el: '.swiper-scrollbar',
-        draggable: true,
-      }
-    })
+    setCurrentVariant(newVariant);
   }
 
   const getCurrentColorVariant = () => {
-    const colorIndex = currentVariant.color == undefined ? 'option1' : 'color';
-    const sortMap = {
-      'xs': 1,
-      's':2,
-      'm':3,
-      'l': 4,
-      'xl': 5,
-      '2xl': 6,
-      '3xl': 7,
-      '4xl': 8,
-      'os': 9,
-    }
-
-    const currentColorVariants = productData.variants.filter((variant) => {
-      return variant[colorIndex] == currentVariant[colorIndex];
+    const currentColor = currentVariant[`option${colorOption.position}`];
+    const currentColorVariants = product.variants.filter((variant) => {
+      return variant[`option${colorOption.position}`] === currentColor;
     })
 
-    currentColorVariants.map(variant => {
-      variant.id = Number.parseInt(variant.id);
-      variant.featured_image = {src: variant.image_url, alt: variant.title};
-      variant.inventory_quantity = variant.quantity;
-      variant.available = variant.quantity > 0;
-      variant.metafields = {
-        enable_bis: variant.custom_fields.mf_custom_fields_enable_notify_me == '1' ? true : undefined,
-      };
-      variant.options = [
-        'color',
-        'size'
-      ];
-      if(variant.color) {
-        variant.option1 = variant.color;
-      }
-      if(variant.size) {
-        variant.option2 = variant.size;
-      }
-    })
-
-    currentColorVariants.sort((variant1, variant2) => {
-      const variant1Value = variant1.size || variant1.option2;
-      const variant2Value = variant2.size || variant2.option2;
-      if(!isNaN(variant1Value) && !isNaN(variant2Value)) {
-        return parseFloat(variant1Value) - parseFloat(variant2Value);
-      } else {
-        return sortMap[variant1Value.toLowerCase()] - sortMap[variant2Value.toLowerCase()];
-      }
-    })
     return currentColorVariants;
   }
 
   const buildSizeDrawerData = () => {
     const drawerData = {
-      optionIndex: productData.title.indexOf('Gift') > -1 ? 'option2' : 'size',
-      printOption: productData.title.indexOf('Gift') > -1 ? 'Amount' : 'Size',
-      productTitle: productData.title,
-      productId: productData.id,
+      optionIndex: `option${sizeOption.position}`,
+      printOption: 'Size',
+      productTitle: product.title,
+      productId: product.id,
       addToCart: true,
-      rid: props.rid,
-      variants: getCurrentColorVariant(),
-      tags: productData.tags,
+      variants: getCurrentColorVariant()
     }
 
     return drawerData;
   }
 
-  const openSizeSelectorDrawer = () => {
+  const triggerSizeSelector = () => {
     const data = buildSizeDrawerData();
-    document.dispatchEvent(new CustomEvent('drawerOpen', {detail: {
-      type: 'option-drawer',
-      ...data
-    }}))
-    client.sendEvent('click-item', {
-      item_id: productData.id,
-      variant_id: currentVariant.id,
-      rid: props.rid
-    })
+    document.dispatchEvent(new CustomEvent('drawerOpen', {
+      detail: {
+        type: 'option-drawer',
+        ...data
+      }
+    }))
   }
 
-  const markCurrentCard = (e) => {
-    client.sendEvent('click-item', {
-      rid: props.rid,
-      item_id: productData.id,
-      variant_item_id: currentVariant.id
-    })
-    if(document.location.href.indexOf('/collections/') > -1 || document.location.href.indexOf('/search') > -1) {
-      const cardId = card.current.id;
-      history.replaceState(history.state, null, document.location.pathname + document.location.search + `#${cardId}`)
+  const getBadgeThreshold = (variant) => {
+    let badgeClass = 'discount-badge--first-threshold';
+
+    if(!variant) {
+      if(currentVariant.discount >= 70) {
+        badgeClass = 'discount-badge--third-threshold';
+      } else if (currentVariant.discount >= 50) {
+        badgeClass = 'discount-badge--second-threshold';
+      }
+    } else {
+      if(variant.discount >= 70) {
+        badgeClass = 'discount-badge--third-threshold';
+      } else if (variant.discount >= 50) {
+        badgeClass = 'discount-badge--second-threshold';
+      }
     }
+
+    return badgeClass;
   }
 
-  const getBadgeThreshold = (value) => {
-    let threshold = 'discount-badge--first-threshold';
+  const [currentVariant, setCurrentVariant] = useState(getCurrentVariant(variantId));
 
-    if(value >= 70) {
-      threshold = 'discount-badge--third-threshold';
-    } else if (value >= 50) {
-      threshold = 'discount-badge--second-threshold';
-    }
-    return threshold;
-  }
-
-  let productData = processData();
-  productData.options = ['color', 'size'];
-  const [productColors, setProductColors] = useState(getColorList(productData, 'color'));
-  const [currentVariant, setCurrentVariant] = useState(getCurrentVariant())
-  const swatchSlider = useRef();
-  const card = useRef();
-
+  const productColors = getColorList();
+  const currentColorIndex = productColors.findIndex((variant) => {
+    return variant[`option${colorOption.position}`] === currentVariant[`option${colorOption.position}`]
+  });
   useEffect(() => {
-    if(props.scrollIntoView == true) {
-      card.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center'
+    new Swiper( swatchSlider.current ,
+      {
+        modules: [Navigation, Scrollbar],
+        slidesPerView: 4.5,
+        spaceBetween: 10,
+        threshold: 10,
+        nested: true,
+        watchOverflow: true,
+        centerInsufficientSlides: true,
+        initialSlide: currentColorIndex,
+        watchOverflow: true,
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          draggable: true,
+        },
+        navigation: {
+          enabled: true,
+          prevEl: '.product-option__arrow-prev',
+          nextEl: '.product-option__arrow-next',
+        }
       })
-
-      history.replaceState(history.state, null, document.location.pathname + document.location.search);
-    }
   }, [])
-
-  useEffect(() => {
-    initSwiper();
-  }, [productColors])
-
-  useEffect(() => {
-    productData = processData();
-    setProductColors(getColorList(productData, 'color'));
-    setCurrentVariant(getCurrentVariant(productData.selected_variant_id));
-
-  }, [props.data])
-
 
   return (
     currentVariant && (
-      <div
-        id={`product-card-${props?.data?.id}`}
-        className="product-card"
-        ref={card}
-      >
-        <a
-          href={`${currentVariant.product_url}&rid=${props.rid}`}
-          className="product-card__gallery"
-          onClick={markCurrentCard}
-        >
-          <div className={`product-card__gallery-slide is-active ${currentVariant.discount ? 'enable-badge' : ''}`}>
+      <div className="product-card" ref={card}>
+        <a href={`${product.url}?&variant=${currentVariant.id}`} className="product-card__gallery">
+          <div className={`product-card__gallery-slide is-active ${currentVariant.discount && 'enable-badge'}`}>
             {currentVariant.discount &&
-              <div className={`discount-badge ${getBadgeThreshold(currentVariant.discount)}`} dangerouslySetInnerHTML={{__html: `${currentVariant.discount}% <br/> OFF`}}/>
+              <div className={`discount-badge ${getBadgeThreshold()}`}>
+                {currentVariant.discount}%<br /> OFF
+              </div>
             }
-            <img className="product-card__image" src={currentVariant.image_url} loading='lazy' />
+            <Image
+              src={currentVariant.featured_image.src}
+              alt={currentVariant.featured_image.alt}
+              loading="lazy"
+              className="product-card__image"
+              sizes="480px"
+            />
           </div>
         </a>
         <form action="/cart/add" className="product-card__content text-center">
+          <a href={`${product.url}?&variant=${currentVariant.id}`} className="product-card__url"></a>
           <div className="product-option">
             <div className="product-option__swatch swiper" ref={swatchSlider}>
               <div className="swiper-wrapper">
-                {productColors.map((color) => buildColorSwatch(color))}
+                {productColors.map((variant) => {
+                  return <label
+                    key={variant.id}
+                    className="product-option__single-selector swiper-slide"
+                  >
+                    <input
+                      type="radio"
+                      name="color"
+                      style={{ display: 'none' }}
+                      value={variant[`option${colorOption.position}`]}
+                      data-index={`option${colorOption.position}`}
+                      defaultChecked={variant[`option${colorOption.position}`] === currentVariant[`option${colorOption.position}`]}
+                      onChange={updateCurrentVariant}
+                    />
+                    <div className="product-option__ui">
+                      {variant.discount &&
+                        <div className={`product-option__discount-badge ${getBadgeThreshold(variant)}`}></div>
+                      }
+
+                      <Image
+                        src={variant?.featured_image?.src}
+                        alt={variant?.featured_image?.alt}
+                        loading="lazy"
+                        sizes="94px"
+                      />
+                    </div>
+                  </label>
+                })}
+              </div>
+              <div className="product-option__arrows">
+                <div className="product-option__arrow product-option__arrow-prev"></div>
+                <div className="product-option__arrow product-option__arrow-next"></div>
               </div>
               <div className="swiper-scrollbar product-option__scrollbar"></div>
             </div>
           </div>
-          <div className="product-card__color-title product-card__color-title--findify">
-            {currentVariant.color}
+          <div className="product-card__color-title">
+            {currentVariant[`option${colorOption.position}`]}
           </div>
-          <div className="product-card__title">{currentVariant.title}</div>
+          <h4 class="product-card__title">{product.title}</h4>
           <div className="product-card__price-container">
-            {currentVariant.compare_at && (
-              <s className="product-compare-at-price" data-compare-at-price>
-                ${currentVariant.compare_at.toFixed(2).replace('.00', '')}
-              </s>
-            )}
-            <span className="product-price" data-product-price>
-              ${currentVariant.price.toFixed(2).replace('.00', '')}
-            </span>
+            {currentVariant.compare_at_price > currentVariant.price &&
+              <s className="product-card__compare-price">{Currency.formatMoney(currentVariant.compare_at_price).replace('.00', '')}</s>
+            }
+            <span className="product-price">{Currency.formatMoney(currentVariant.price).replace('.00', '')}</span>
           </div>
         </form>
         <div className="product-card__add-to-cart-container">
           <button
-            className="product-card__add-to-cart btn-link"
-            role="button"
-            onClick={openSizeSelectorDrawer}
-          >
-            Add It Now
+            class="product-card__add-to-cart btn-link"
+            style={{color: '#fff', borderColor:'#fff'}}
+            onClick={triggerSizeSelector}>
+            Add it now
           </button>
         </div>
       </div>
@@ -332,4 +233,4 @@ const productCard = ((props) => {
   );
 })
 
-export default productCard;
+export default ProductCard;
