@@ -1,8 +1,6 @@
 import $ from 'jquery';
-import Swiper, { Pagination, Lazy, EffectFade } from 'swiper';
 import BaseSection from './base';
 import ProductDetail from '../view/product/productDetail';
-import Drawer from '../ui/drawer';
 import VideoPlayer from '../ui/videoPlayer';
 
 const selectors = {
