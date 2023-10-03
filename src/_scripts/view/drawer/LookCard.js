@@ -51,9 +51,41 @@ export default function LookCard({product}) {
     setEnableAddToCart(true);
   }
 
+  const updateDiscount = () => {
+    console.log(currentVariant);
+    if(currentVariant.compare_at_price && currentVariant.compare_at_price > currentVariant.price) {
+      currentVariant.discountValue = ((currentVariant.compare_at_price - currentVariant.price) / currentVariant.compare_at_price) * 100;
+    }
+  }
+
+  const getBadgeClass = () => {
+    let badgeClass = 'discount-badge--first-threshold';
+
+    if(currentVariant.discountValue >= 70) {
+      badgeClass = 'discount-badge--third-threshold';
+    } else if(currentVariant.discountValue >= 50) {
+      badgeClass = 'discount-badge--second-threshold';
+    }
+
+    return badgeClass;
+  }
+
+  updateDiscount();
+
   return (
     <div className="look-drawer__product-card" key={product.id}>
-      <div className="look-drawer__product-card-image-container frame frame--1x1">
+      <div className="look-drawer__product-card-image-container frame frame--1x1 enable-badge">
+        {currentVariant.discountValue &&
+          <div className={`discount-badge ${getBadgeClass()}`} style={{
+            fontSize: "14px",
+            height: "70px",
+            width: "70px",
+            left: "25px",
+            top: "25px",
+          }}>
+            {currentVariant.discountValue}% <br/> OFF
+          </div>
+        }
         <Image
           src={`${currentVariant.featured_image.src}`}
           alt={currentVariant.featured_image.alt}
