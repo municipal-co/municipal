@@ -50,7 +50,8 @@ const ProductCard = ((props) => {
       const productColor = variant[`option${colorOption.position}`];
       if (
         !printedColors.find((printedColor) => printedColor === productColor) &&
-        typeof variant.featured_image.src !== 'undefined'
+        typeof variant.featured_image.src !== 'undefined' &&
+        (variant.available || variant.metafields.enable_bis === 1 || variant.metafields.enable_sold_out === 1)
       ) {
         printedColors.push(productColor);
         productVariants.push(variant);
