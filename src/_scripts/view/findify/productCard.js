@@ -15,6 +15,11 @@ const productCard = ((props) => {
         variant.size = typeof(variant.size) == 'string' ? variant.size : variant.size[0];
       }
 
+      if(data.title.indexOf('Gift Card')) {
+        variant.option1 = 'unique';
+        variant.option2 = "$" +variant.price;
+      }
+
       return variant;
     })
 
@@ -168,8 +173,12 @@ const productCard = ((props) => {
         'color',
         'size'
       ];
-      variant.option1 = variant.color;
-      variant.option2 = variant.size;
+      if(variant.color) {
+        variant.option1 = variant.color;
+      }
+      if(variant.size) {
+        variant.option2 = variant.size;
+      }
     })
 
     currentColorVariants.sort((variant1, variant2) => {
@@ -186,13 +195,14 @@ const productCard = ((props) => {
 
   const buildSizeDrawerData = () => {
     const drawerData = {
-      optionIndex: 'size',
-      printOption: 'Size',
+      optionIndex: productData.title.indexOf('Gift') > -1 ? 'option2' : 'size',
+      printOption: productData.title.indexOf('Gift') > -1 ? 'Amount' : 'Size',
       productTitle: productData.title,
       productId: productData.id,
       addToCart: true,
       rid: props.rid,
       variants: getCurrentColorVariant(),
+      tags: productData.tags,
     }
 
     return drawerData;
