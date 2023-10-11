@@ -118,6 +118,44 @@
     }
   }
 
+  .drawer__size-selector {
+    display: flex;
+    width: 100%;
+    border: 1px solid $color-dots-border;
+    border-radius: 999px;
+    margin-bottom: 40px;
+  }
+
+  .drawer__size-selector-option-container {
+    width: 33.33%;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .drawer__size-selector-option {
+    font-size: 14px;
+    color: $black;
+    background-color: $white;
+    border-radius: 900px;
+    text-align: center;
+    transition: $transition-duration-base $transition-timing-function-in-out-ui;
+    transition-property: color, background-color;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    line-height: 30px;
+
+    @include media-breakpoint-down('sm') {
+      font-size: 12px;
+    }
+  }
+
+  input[type="radio"]:checked + .drawer__size-selector-option {
+    color: $white;
+    background-color: $blue;
+  }
+
+
   .drawer__footer {
     margin-top: 20px;
     padding: $headings-margin-bottom 0 0;

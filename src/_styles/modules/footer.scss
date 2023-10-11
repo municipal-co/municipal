@@ -76,6 +76,10 @@
   }
 }
 
+.footer-banner__text--reverse {
+  animation: 20s linear infinite marquee-reverse;
+}
+
 .footer-colophon {}
 
 .marketing-morsel {

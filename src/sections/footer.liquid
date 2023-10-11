@@ -85,11 +85,12 @@
 {% comment %} Marquee {% endcomment %}
 {% assign marquee = section.settings.marquee %}
 {% assign highlight_color = section.settings.highlight_color %}
+{% assign marquee_direction = section.settings.marquee_direction %}
 
 {% capture marquee_capture %}
 <div class="footer-banner">
   {% for i in (1..6) %}
-  <div class="footer-banner__text">{{ marquee | replace: '<strong>', '<span class="highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}&nbsp;</div>
+  <div class="footer-banner__text{% if marquee_direction == 'ltr' %} footer-banner__text--reverse{% endif %}">{{ marquee | replace: '<strong>', '<span class="highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}&nbsp;</div>
   {% endfor %}
 </div>
 {% endcapture %}
@@ -269,6 +270,22 @@
         "id": "marquee",
         "label": "Marquee",
         "info": "Use Bold to create a color highlight on the text"
+      },
+      {
+        "type": "select",
+        "id": "marquee_direction",
+        "label": "Direction",
+        "options": [
+          {
+            "value": "ltr",
+            "label": "Left to Right →"
+          },
+          {
+            "value": "rtl",
+            "label": "← Right to Left"
+          }
+        ],
+        "default": "ltr"
       },
       {
         "type": "header",

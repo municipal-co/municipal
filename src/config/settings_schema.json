@@ -68,6 +68,31 @@
     "settings": [
       {
         "type": "header",
+        "content": "Shoes Size Selector"
+      },
+      {
+        "type": "text",
+        "label": "Options Divider",
+        "id": "size_selector_divider",
+        "info": "Indicates the character that divides each variant piece, defaults to pipe symbol (|)",
+        "default": "|"
+      },
+      {
+        "type": "text",
+        "label": "Options Headers",
+        "id": "size_selector_headers",
+        "info": "Indicates the labels that will be shown for the customer to select, they must match the number, order and divider of the size variant option text (Example: US M|US W|EU)",
+        "default": "MEN|WOMEN|EU"
+      },
+      {
+        "type": "text",
+        "label": "Default Selection",
+        "id": "size_selector_default",
+        "info": "Indicates the option that is going to be used by default when the customer hasn't made any selection",
+        "default": "US"
+      },
+      {
+        "type": "header",
         "content": "Reviews"
       },
       {

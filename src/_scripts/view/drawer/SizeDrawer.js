@@ -3,7 +3,68 @@ import Close from "../icons/Close";
 import Checkmark from "../icons/Checkmark";
 
 export default function SizeDrawer({data, index}) {
+  const [ defaultUnit, setDefaultUnit ] = useState(!localStorage.getItem('sizeUnit'));
   const drawer = useRef();
+  const { optionsDivider, optionsHeaders } = window.theme.SizeSelector;
+  const enableSizeSelector = data?.tags?.find((tag) => {
+    return tag.toLowerCase() == 'footwear';
+  });
+
+  const getSizeUnit = () => {
+    let sizeUnit = localStorage.getItem('sizeUnit');
+
+    if(!sizeUnit) {
+      sizeUnit = window.theme.SizeSelector.sizeUnit;
+      setDefaultUnit(true);
+    }
+
+    return sizeUnit;
+  }
+
+  const getUnitIndex = () => {
+    let unitIndex = 1;
+    if(defaultUnit == true) {
+      if(sizeUnit == 'eu') {
+        unitIndex = 3;
+      } else if (data.tags && data.tags.find((tag) => tag === 'gender:Womens') ||
+                 document.referrer.indexOf('women') > -1 ||
+                 document.location.search.indexOf('unit=women') > -1) {
+        unitIndex = 2;
+      }
+    } else {
+      unitIndex = parseInt(localStorage.getItem('unitIndex'));
+    }
+
+    return unitIndex;
+  }
+
+  const updateUnitIndex = (evt) => {
+    const $this = evt.target;
+    const sizeUnit = $this.dataset.sizeUnit;
+    const unitIndex = $this.value;
+
+    setUnitIndex(unitIndex);
+    localStorage.setItem('unitIndex', unitIndex);
+    setSizeUnit(sizeUnit);
+    localStorage.setItem('sizeUnit', sizeUnit);
+    const updateEvent = new CustomEvent('sizeOption:changeUnit');
+    document.dispatchEvent(updateEvent);
+  }
+
+  const buildSizeSelector = () => {
+    let options = optionsHeaders.split(optionsDivider);
+    options = options.map((option, index) => {
+      const fixedIndex = index+1;
+      return <label className="drawer__size-selector-option-container">
+        <input type="radio" name="indexSelector" onChange={updateUnitIndex}  value={fixedIndex}  defaultChecked={ fixedIndex == unitIndex } data-size-unit={option.toLowerCase() == 'eu' ? 'EU' : 'USA'} style={{"display": "none"}}/>
+        <span className="drawer__size-selector-option">{ option }</span>
+      </label>
+    })
+    return <div className="drawer__size-selector">
+      { options }
+    </div>;
+  }
+
   const closeDrawer = () => {
     drawer.current.classList.remove('is-visible');
 
@@ -76,9 +137,15 @@ export default function SizeDrawer({data, index}) {
       } else {
         variant = option;
       }
+      let optionName = variant ? variant[data.optionIndex]?.replace('.00', '') : option?.replace('.00', '');
+
+      if(enableSizeSelector) {
+        const optionNamePieces = optionName.split(optionsDivider);
+        optionName = optionNamePieces[unitIndex - 1].trim();
+      }
 
       const lowInventory = variant ? variant.inventory_quantity <= window.settings.lowInventoryThreshold : false;
-      const enableBis = variant ? !variant.available && variant.metafields.enable_bis == 1 : false;
+      const enableBis = variant ? !(variant.available || variant.availability) && variant.metafields.enable_bis == 1 : false;
 
       return (
         <label className="product-option__single-selector" key={`option-${index}`}>
@@ -90,7 +157,7 @@ export default function SizeDrawer({data, index}) {
             data-final-sale-message={window.settings.finalSaleMessage}
             className="hide"
             defaultChecked={(typeof variant !== 'undefined' && data.activeOption) ? variant[data.optionIndex] === data.activeOption : false}
-            disabled={!variant || !variant?.available}
+            disabled={!variant || (!variant?.available && !variant.availability)}
             onChange={handleChange}
           />
           <div className="product-option__ui" data-option-ui>
@@ -99,22 +166,22 @@ export default function SizeDrawer({data, index}) {
                 <Checkmark />
               </div>
               <div className="product-option__ui-label">
-                {variant ? variant[data.optionIndex].replace('.00', '') : option.replace('.00', '') }
+                { optionName }
               </div>
             </div>
             <div className="product-option__ui-group-middle">
               <div className="product-option__ui-availability">
-                {variant && variant.available ? 'Available' : 'Sold Out'}
+                {variant && (variant.available || variant.availability) ? 'Available' : 'Sold Out'}
               </div>
             </div>
             <div className="product-option__ui-group-corner">
               <div className="product-option__ui-quantity">
-                {lowInventory && (
+                {variant.inventory_management === "shopify" && lowInventory && (
                   <div
                     className="product-option__ui-low-quantity"
                     data-low-quantity
                   >
-                    Hurry, only {variant.inventory_quantity} left{' '}
+                    {variant.inventory_quantity} left
                   </div>
                 )}
 
@@ -157,6 +224,9 @@ export default function SizeDrawer({data, index}) {
     drawer.current.removeEventListener('transitionend', submitCloseEvent);
   }
 
+  const [ sizeUnit, setSizeUnit ] = useState(getSizeUnit());
+  const [ unitIndex, setUnitIndex ] = useState(getUnitIndex());
+
   useEffect(() => {
     drawer.current.classList.add('is-visible');
     document.addEventListener('closeDrawerOnIndex', closeDrawerOnIndex);
@@ -189,6 +259,7 @@ export default function SizeDrawer({data, index}) {
         </div>
         <div className="drawer__body-contents" data-drawer-body>
           <div>
+            {enableSizeSelector && buildSizeSelector()}
             {buildOptionSelectors()}
             {data.fitTipsContent && (
               <div className="blink-box blink-box--dark">
@@ -206,10 +277,8 @@ export default function SizeDrawer({data, index}) {
                 <a
                   href={`${data.productUrl}`}
                   className="btn-link product__size-guide-button p4"
-                >
-                  {' '}
-                  Need help with sizing?{' '}
-                </a>
+                  data-fit-guide-toggler
+                > Need help with sizing? </a>
               </div>
             )}
           </div>
