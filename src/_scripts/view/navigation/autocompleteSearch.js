@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import {sdkClient, client} from "../../lib/findifyApi";
-import ProductCard from "../global/productCard";
+import ProductCard from "../findify/productCard";
 import { Swiper, SwiperSlide } from "swiper/react"
 import AutocompleteSearchBox from "./autocompleteSearchBox";;
 
