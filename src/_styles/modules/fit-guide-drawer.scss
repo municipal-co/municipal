@@ -77,8 +77,11 @@
     text-align: center;
     font-size: 14px;
     font-family: $font-family-base;
+    width: 33%;
+  }
 
-    &:first-child {
+  &.fit-guide__table--with-name {
+    td:first-child {
       font-weight: bold;
       font-family: $font-family-heading-medium;
       font-size: 18px;
@@ -90,6 +93,16 @@
       @include media-breakpoint-down('md') {
         width: 30px;
       }
+    }
+  }
+
+  &.fit-guide__table--no-name {
+    td:first-child {
+      padding-left: 0;
+      font-weight: normal;
+      width: unset;
+      text-align: center;
+      font-size: 14px;
     }
   }
 }

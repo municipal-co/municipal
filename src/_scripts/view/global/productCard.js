@@ -15,7 +15,6 @@ const ProductCard = ((props) => {
     return option.name === 'Size' || option.name === 'size';
   })
 
-
   product.variants = product.variants.map((variant) => {
     if(variant.compare_at_price && variant.compare_at_price > variant.price) {
       variant.discount = ((variant.compare_at_price - variant.price) / variant.compare_at_price) * 100;
