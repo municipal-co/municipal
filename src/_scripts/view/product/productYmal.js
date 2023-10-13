@@ -109,7 +109,7 @@ export default function ProductYmal(props) {
         <div className="row">
           <div className="card-slider__heading">
             <div className="card-slider__info-container">
-              <h2 class="card-slider__title h2">You will need these too</h2>
+              <h2 class="card-slider__title h2">You will like these too</h2>
             </div>
           </div>
         </div>
