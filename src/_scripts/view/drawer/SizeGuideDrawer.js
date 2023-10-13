@@ -7,6 +7,9 @@ import Image from '../global/image';
 export default function SizeGuideDrawer({data, index}) {
   const drawer = useRef();
   const sliderPagination = useRef();
+  const enableFootwearUpdates = data?.productTags?.find((tag) => tag === 'Footwear');
+  const hasNameColumn = data?.sizeList?.find((row) => row.name);
+
   const closeDrawer = () => {
     drawer.current.classList.remove('is-visible');
 
@@ -34,6 +37,39 @@ export default function SizeGuideDrawer({data, index}) {
         <Image className="fit-guide__gallery-image" alt="" src={image} sizes="(max-width: 992px) 100vw, 500px"/>
       </SwiperSlide>
     })
+  }
+
+  const buildTableHeader = () => {
+    if(enableFootwearUpdates) {
+      const tableHeader = [];
+
+      for(let i = 1; i <= 3; i++) {
+        if(i == 1 && hasNameColumn) {
+          tableHeader.push(<th key={`table-header-0`}></th>)
+        }
+        const headerIndex = 'tableHeader' + i;
+          if(data[headerIndex]) {
+            tableHeader.push(<th key={`table-header-${i}`}>
+            <b>{ data[headerIndex] }</b>
+          </th>)
+        }
+      }
+
+      return tableHeader
+    } else {
+      return (<>
+        <th></th>
+        <th>
+          <b>Chest</b>
+        </th>
+        <th>
+          <b>Waist</b>
+        </th>
+        <th>
+          <b>Height</b>
+        </th>
+      </>)
+    }
   }
 
   useEffect(() => {
@@ -90,27 +126,28 @@ export default function SizeGuideDrawer({data, index}) {
           }
 
           {data.sizeList.length > 0 && (
-            <table className="fit-guide__table responsible-table table-striped">
+            <table className={`fit-guide__table responsible-table table-striped
+            ${!hasNameColumn ? 'fit-guide__table--no-name' : 'fit-guide__table--with-name'}
+            ${enableFootwearUpdates ? 'fit-guide__table--footwear' : ''}`}>
               <thead>
-                <th></th>
-                <th>
-                  <b>Chest</b>
-                </th>
-                <th>
-                  <b>Waist</b>
-                </th>
-                <th>
-                  <b>Height</b>
-                </th>
+                {buildTableHeader()}
               </thead>
               <tbody>
                 {data.sizeList.map((row) => {
                   return (
                     <tr>
-                      <td> {row.name} </td>
-                      <td> {row.chestSize} </td>
-                      <td> {row.waistSize} </td>
-                      <td> {row.heightSize} </td>
+                      {hasNameColumn &&
+                        <td> <b>{row.name}</b> </td>
+                      }
+                      {row.chestSize &&
+                        <td> {row.chestSize} </td>
+                      }
+                      {row.waistSize &&
+                        <td> {row.waistSize} </td>
+                      }
+                      {row.heightSize &&
+                        <td> {row.heightSize} </td>
+                      }
                     </tr>
                   );
                 })}

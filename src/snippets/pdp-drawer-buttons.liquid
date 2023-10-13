@@ -37,6 +37,9 @@
           {%- endfor -%}
         ],
         "modelDescription": {{ metafields["fg_model_description"] | json }},
+        "tableHeader1": {{ metafields["fg_table_header_1"] | json }},
+        "tableHeader2": {{ metafields["fg_table_header_2"] | json }},
+        "tableHeader3": {{ metafields["fg_table_header_3"] | json }},
         "sizeList": [
           {%- for table_row in metafields["fg_size_list"] -%}
             {
@@ -48,6 +51,7 @@
             {%- unless forloop.last -%},{%- endunless -%}
           {%- endfor -%}
         ],
+        "productTags": {{ product.tags | json }},
         "boxTitle": {{ metafields.fg_tips_title | json }},
         "boxContent": {{ metafields.fg_tips_content | json }}
       }
