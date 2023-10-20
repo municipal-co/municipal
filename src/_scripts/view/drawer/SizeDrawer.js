@@ -141,7 +141,9 @@ export default function SizeDrawer({data, index}) {
 
       if(enableSizeSelector) {
         const optionNamePieces = optionName.split(optionsDivider);
-        optionName = optionNamePieces[unitIndex - 1].trim();
+        if(typeof optionNamePieces[unitIndex - 1] !== 'undefined') {
+          optionName = optionNamePieces[unitIndex - 1].trim();
+        }
       }
 
       const lowInventory = variant ? variant.inventory_quantity <= window.settings.lowInventoryThreshold : false;
