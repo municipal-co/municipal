@@ -37,7 +37,8 @@
   ul, ol, p, span {
     color: $black;
     font-size: 14px;
-    margin-bottom: 0;
+    margin-bottom: 20px;
+    line-height: 27px;
 
     .blink-box--dark & {
       color: white;
