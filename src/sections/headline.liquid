@@ -7,15 +7,19 @@
 {% assign text_wrapping = section.settings.text_wrapping %}
 {% assign image = section.settings.image %}
 {% assign inline_image = section.settings.inline_image %}
+{% assign overlap = section.settings.overlap | divided_by: 100.0 %}
 
 {% capture inline %}
+  <span class="headline__image-inline-wrapper">
   {% render 'responsive-image'
     image: inline_image,
     alt: inline_image.alt,
     loading: "lazy",
     image_sizes: "1480px",
-    class: "headline__image-inline"
+    class: "headline__image-inline",
+    dataAttributes: "role='presentation'"
   %}
+  </span>
 {% endcapture %}
 
 <style>
@@ -35,6 +39,54 @@
   #headline-{{ section.id }} .highlight-text {
     color: {{ highlight_color }};
   }
+
+  {%-
+    # Height of letters is less than defined font size. Can't use font-sze as
+    # reference and instead have to manually figure out. We need to calculate the
+    # decrease in font size between desktop and mobile to determine the
+    # placeholder size on mobile. This allows overlaid image to float atop of
+    # the placeholder which takes up space in the natural flow of the text while
+    # still allowing the image to overlap.
+    # Desktop Font Size: 108px (77px letter size)
+    # Mobile Font Size: 50px (36px letter size)
+    # .4675 decrease in font size
+  -%}
+  {% assign mobile_diff = 36 | divided_by: 77.0 %}
+  {% assign overlay_w = inline_image.width %}
+  {% assign overlay_h = inline_image.height %}
+  {% assign overlay_w_mobile = overlay_w | times: mobile_diff %}
+  {% assign overlay_h_mobile = overlay_h | times: mobile_diff %}
+  {% assign placeholder_w = overlay_w %}
+  {% assign placeholder_w_mobile = overlay_w | times: mobile_diff %}
+  {% assign placeholder_h_mobile = overlay_h | times: mobile_diff %}
+  {% if overlap > 0 %}
+    {% assign placeholder_w = overlay_w | times: overlap | minus: overlay_w | abs %}
+    {% assign placeholder_w_mobile = overlay_w_mobile | times: overlap | minus: overlay_w_mobile | abs %}
+  {% endif %}
+
+  #headline-{{ section.id }} .headline__image-inline-wrapper:before {
+    width: {{ overlay_w }}px;
+    height: {{ overlay_h }}px;
+    background-image: url('{{ inline_image | image_url: width: overlay_w }}');
+    background-size: {{ overlay_w }}px {{ overlay_h }}px;
+  }
+
+  #headline-{{ section.id }} .headline__image-inline {
+    width: {{ placeholder_w }}px;
+  }
+
+  @media screen and (max-width: 767px) {
+    #headline-{{ section.id }} .headline__image-inline-wrapper:before {
+      width: {{ overlay_w_mobile }}px;
+      height: {{ overlay_h_mobile }}px;
+      background-size: {{ overlay_w_mobile }}px {{ overlay_h_mobile }}px;
+    }
+
+    #headline-{{ section.id }} .headline__image-inline {
+      width: {{ placeholder_w_mobile }}px; /* 532 * 46.75% (% diff between font heights 77 => 36) => with horizontal overlap 532-(532*46.75%)*overlap)=199 */
+    }
+  }
+
 </style>
 
 <div id="headline-{{ section.id }}" data-section-id="{{ section.id }}" class="headline" data-section-type="headline">
@@ -159,6 +211,17 @@
       "id": "inline_image",
       "label": "Inline Image",
       "info": "Image used within the flow of text"
+    },
+    {
+      "type": "range",
+      "id": "overlap",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Horizontal Overlap",
+      "default": 30,
+      "info": "Percentage amount that the image should overlap adjacent text"
     }
   ],
   "presets": [
