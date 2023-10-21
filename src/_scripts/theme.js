@@ -47,6 +47,7 @@ import LinkCardSlider from './sections/linkCardSlider';
 import ContentSlider from './sections/contentSlider';
 import Hero from './sections/hero';
 import ContentMedia from './sections/contentMedia';
+import Parallax from './sections/parallax';
 import ProductCardSlider from './sections/productCardSlider';
 import FourOFour from './sections/fourofour';
 import Faq from './sections/faq';
@@ -104,6 +105,7 @@ Breakpoints.initialize();
   sectionManager.register('content-slider', ContentSlider);
   sectionManager.register('hero', Hero);
   sectionManager.register('content-media', ContentMedia);
+  sectionManager.register('parallax', Parallax);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('faq', Faq);
 
