@@ -76,11 +76,16 @@
 @import 'components/blink-box.scss';
 @import 'components/sticker.scss';
 @import 'components/lead-content.scss';
+@import 'components/text-block.scss';
+@import 'components/headline.scss';
+@import 'components/image.scss';
+@import 'components/image-image.scss';
 @import 'components/pullquote.scss';
 @import 'components/end-card.scss';
 @import 'components/profiles.scss';
 @import 'components/image-caption.scss';
 @import 'components/heading-media.scss';
+@import 'components/content-media.scss';
 @import 'components/navigation/search.scss';
 @import 'components/navigation/cta.scss';
 @import 'components/navigation/card-grid.scss';
@@ -104,6 +109,7 @@
 @import 'modules/product-detail';
 @import 'modules/navigation';
 @import 'modules/hero';
+@import 'modules/video';
 @import 'modules/product-overview';
 @import 'modules/product-features';
 @import 'modules/collection-banner';

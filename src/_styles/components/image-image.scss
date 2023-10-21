@@ -1,0 +1,42 @@
+// -------------------------
+// Heading + Media
+// -------------------------
+.heading-image {
+  padding: 50px;
+
+  @include media-breakpoint-down('md') {
+    padding: 30px 20px;
+  }
+}
+
+.heading-image__columns {
+  @include media-breakpoint-up('md') {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.heading-image__column {
+  @include media-breakpoint-up('md') {
+    width: 50%;
+  }
+
+  &:last-child {
+    margin-top: 60px;
+
+    @include media-breakpoint-up('md') {
+      margin-top: 0;
+      margin-left: 60px;
+    }
+  }
+}
+
+.image-caption__text {
+  font-family: $font-family-secondary;
+  font-size: 25px;
+  line-height: 1.233;
+
+  @include media-breakpoint-up('md') {
+    font-size: 50px;
+  }
+}
