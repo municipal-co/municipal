@@ -1,0 +1,212 @@
+{% assign bgcolor = section.settings.bgcolor %}
+{% assign aspect_ratio = section.settings.aspect_ratio %}
+{% assign cta_text = section.settings.cta_text %}
+{% assign cta_url = section.settings.cta_url %}
+{% assign cta_bg_color = section.settings.cta_bg_color %}
+{% assign cta_text_color = section.settings.cta_text_color %}
+{% assign cta_border_color = section.settings.cta_border_color %}
+{% assign bg_image = section.settings.bg_image %}
+{% assign bg_image_mobile = section.settings.bg_image_mobile %}
+{% assign image = section.settings.image %}
+{% assign scroll_label = section.settings.scroll_label %}
+{% assign scroll_color = section.settings.scroll_color %}
+
+<style>
+  {% if bgcolor != blank %}
+    #parallax-{{ section.id }} {
+      background-color: {{ bgcolor }};
+    }
+  {% endif %}
+
+  #parallax-{{ section.id }} .parallax__cta {
+    background-color: {{ cta_bg_color }};
+    border-color: {{ cta_border_color }};
+    color: {{ cta_text_color }};
+  }
+  #parallax-{{ section.id }} .parallax__cta:hover {
+    background-color: {{ cta_border_color }};
+    color: {{ cta_bg_color }};
+  }
+
+  {% if aspect_ratio != "full" %}
+    @media screen and (min-width: 992px) {
+      #parallax-{{ section.id }} .parallax__lining {
+        aspect-ratio: {{ aspect_ratio }};
+        width: auto;
+        height: auto;
+      }
+    }
+  {% endif %}
+
+  {% if scroll_color != blank %}
+    #parallax-{{ section.id }} .parallax__scroll,
+    #parallax-{{ section.id }} .parallax__scroll-label {
+      color: {{ scroll_color }}
+    }
+  {% endif %}
+
+</style>
+
+<div id="parallax-{{ section.id }}" data-section-id="{{ section.id }}" class="parallax" data-section-type="parallax">
+  <div class="parallax__lining jarallax" data-parallax>
+    {% unless bg_image == blank %}
+      {% render 'responsive-image',
+        image: bg_image
+        class: "parallax__bg parallax__bg--desktop jarallax-img",
+        image_sizes: '100vw',
+        alt: bg_image.alt,
+        dataAttributes: 'data-parallax-bg-desktop'
+      %}
+    {% endunless %}
+    {% unless bg_image_mobile == blank %}
+      {% render 'responsive-image',
+        image: bg_image_mobile
+        class: "parallax__bg parallax__bg--mobile jarallax-img",
+        image_sizes: '100vw',
+        alt: bg_image_mobile.alt,
+        dataAttributes: 'data-parallax-bg-mobile'
+      %}
+    {% endunless %}
+    <div class="parallax__content-wrap">
+      <div class="container-fluid-max parallax__content">
+        {% unless bg_image == blank %}
+          {% render 'responsive-image'
+            image: image,
+            class: "parallax__image",
+            image_sizes: "1480px",
+            alt: image.alt
+          %}
+        {% endunless %}
+        {%- if cta_text != blank and cta_url != blank -%}
+          <a href="{{ cta_url }}" class="parallax__cta">
+            {{ cta_text }}
+          </a>
+        {%- endif -%}
+        {% if scroll_label != blank %}
+        <div class="parallax__scroll">
+          <div class="parallax__scroll-label">{{ scroll_label }}</div>
+          {% include 'icon-caret-down' %}
+          </div>
+        </div>
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Parallax",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Section Size",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full Viewport"
+        },
+        {
+          "value": "16/9",
+          "label": "16:9"
+        },
+        {
+          "value": "4/3",
+          "label": "4:3"
+        },
+        {
+          "value": "3/2",
+          "label": "3:2"
+        }
+      ],
+      "default": "full",
+      "info": "Set an aspect ratio to be used for the section's layout"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image (Desktop)",
+      "info": "Recommended Size: 1800w"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image_mobile",
+      "label": "Background Image (Mobile)",
+      "info": "Recommended Size: 820w"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main Image",
+      "info": "Recommended Size: 1480w"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_border_color",
+      "label": "Border Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Keep Scrolling"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scrolling Label",
+      "default": "Keep Scrolling"
+    },
+    {
+      "type": "color",
+      "id": "scroll_color",
+      "label": "Scrolling Color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 - Parallax",
+      "category": "Misc"
+    }
+  ]
+}
+{% endschema %}
