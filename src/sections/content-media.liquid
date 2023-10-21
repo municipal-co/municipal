@@ -79,9 +79,11 @@
                 data-background-video
                 data-desktop-video-webm="{{desktop_video_webm}}"
                 data-desktop-video-mp4="{{desktop_video_mp4}}"
-                {% if autoplay %}data-autoplay-video{% endif %}
+                {% if autoplay %}
+                  data-autoplay-video
+                  muted
+                {% endif %}
                 loop
-                muted
                 playsinline
               >
                 <source type="video/webm" src="{{desktop_video_webm}}" data-webm-video>
