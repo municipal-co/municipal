@@ -127,7 +127,8 @@
   }
 
   .drawer__size-selector-option-container {
-    width: 33.33%;
+    width: 100%;
+    min-width: 33.33%;
     text-align: center;
     margin-bottom: 0;
   }

@@ -226,9 +226,11 @@ Breakpoints.initialize();
 
   if (isProduct && productData) {
     productData = JSON.parse(productData.innerHTML);
-    const variant = new URLSearchParams(document.location.search).get(
-      'variant'
-    );
+    let variant = new URLSearchParams(document.location.search).get('variant');
+
+    if (!variant) {
+      variant = productData.variants[0].id.toString();
+    }
 
     viewPageData['item_id'] = productData.id.toString();
     viewPageData['variant_item_id'] = variant.toString();
