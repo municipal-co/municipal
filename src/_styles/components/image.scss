@@ -1,0 +1,15 @@
+// -------------------------
+// Image Block
+// -------------------------
+.image-block {
+  padding: 50px;
+
+  @include media-breakpoint-down('md') {
+    padding: 30px 20px;
+  }
+}
+
+.image-block__image-inline {
+  width: 100%;
+  height: auto;;
+}

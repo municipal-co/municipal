@@ -1,0 +1,23 @@
+// -------------------------
+// Text Block
+// -------------------------
+.text-block {
+  padding: 50px;
+
+  @include media-breakpoint-down('md') {
+    padding: 30px 20px;
+  }
+}
+
+.text-block__title {
+  margin: 0 auto;
+  max-width: 1480px;
+  text-transform: none;
+  font-family: $font-family-secondary;
+  font-size: 35px;
+  line-height: 1.233;
+
+  @include media-breakpoint-up('md') {
+    font-size: 70px;
+  }
+}

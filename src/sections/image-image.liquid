@@ -1,0 +1,97 @@
+{% assign text_color = section.settings.text_color %}
+{% assign highlight_color = section.settings.highlight_color %}
+{% assign bgcolor = section.settings.bgcolor %}
+
+<style>
+  {% if bgcolor != blank %}
+  #heading-image-{{ section.id }} {
+    background-color: {{ bgcolor }};
+  }
+  {% endif %}
+
+  #heading-image-{{ section.id }} .image-caption__text {
+    color: {{ text_color }};
+  }
+</style>
+
+<div id="heading-image-{{ section.id }}" data-section-id="{{ section.id }}" class="heading-image" data-section-type="heading-image">
+  <div class="container-fluid-max">
+    <div class="heading-image__columns">
+      <div class="heading-image__column">
+
+        {% include 'image-caption'
+          id: section.id,
+          s.image: section.settings.image_1,
+          s.caption: section.settings.caption_1
+        %}
+
+      </div>
+      <div class="heading-image__column">
+
+        {% include 'image-caption'
+          id: section.id,
+          s.image: section.settings.image_2,
+          s.caption: section.settings.caption_2
+        %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "2 Col - Image + Image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Content - 1st Column"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image"
+    },
+    {
+      "type": "textarea",
+      "id": "caption_1",
+      "label": "Caption"
+    },
+    {
+      "type": "header",
+      "content": "Content - 2nd Column"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image"
+    },
+    {
+      "type": "textarea",
+      "id": "caption_2",
+      "label": "Caption"
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 - 2 Col - Image + Image",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}

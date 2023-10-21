@@ -1,0 +1,137 @@
+{% assign text_color = section.settings.text_color %}
+{% assign highlight_color = section.settings.highlight_color %}
+{% assign bgcolor = section.settings.bgcolor %}
+{% assign text_alignment = section.settings.text_alignment %}
+{% assign title_tag = section.settings.title_tag %}
+{% assign title = section.settings.title %}
+{% assign text_wrapping = section.settings.text_wrapping %}
+
+<style>
+  {% if bgcolor != blank %}
+  #text-block-{{ section.id }} {
+    background-color: {{ bgcolor }};
+  }
+  {% endif %}
+
+  #text-block-{{ section.id }} .text-block__title {
+    color: {{ text_color }};
+    {% if text_wrapping %}
+    text-wrap: balance;
+    {% endif %}
+  }
+
+  #text-block-{{ section.id }} .highlight-text {
+    color: {{ highlight_color }};
+  }
+</style>
+
+<div id="text-block-{{ section.id }}" data-section-id="{{ section.id }}" class="text-block" data-section-type="text-block">
+  <div class="container-fluid-max {%- if text_alignment == "center" %} text-center{%- endif -%}">
+    {% if title != blank %}
+      <{{ title_tag }} class="text-block__title h1">
+        {{ title | replace: '<strong>', '<span class="highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}
+      </{{ title_tag }}>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text Block",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight Color",
+      "default": "#FF00FF",
+      "info": "Color for the highlighted text on the title of the module"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+     "type": "select",
+     "id": "text_alignment",
+     "label": "Text Alignment",
+     "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "h1"
+        },
+        {
+          "value": "h2",
+          "label": "h2"
+        },
+        {
+          "value": "h3",
+          "label": "h3"
+        },
+        {
+          "value": "h4",
+          "label": "h4"
+        },
+        {
+          "value": "h5",
+          "label": "h5"
+        },
+        {
+          "value": "h6",
+          "label": "h6"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "info": "Use Bold to create a color highlight on the text"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_wrapping",
+      "label": "Text Wrapping",
+      "default": false,
+      "info": "Let the browser handle when text should wrap. Can help eliminate content orphans."
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 - Text Block",
+      "category": "Misc"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,35 @@
+// -------------------------
+// Headline
+// -------------------------
+.headline {
+  padding: 50px;
+
+  @include media-breakpoint-down('md') {
+    padding: 30px 20px;
+  }
+}
+
+.headline__inner {
+  margin: 0 auto;
+  max-width: 1480px;
+}
+
+.headline__image + .headline__title {
+  margin-top: 30px;
+
+  @include media-breakpoint-up('md') {
+    margin-top: 80px;
+  }
+}
+
+.headline__title {
+  margin-bottom: 0;
+  font-family: $font-family-secondary;
+  font-size: 50px;
+  line-height: 1.08;
+
+  @include media-breakpoint-up('md') {
+    font-size: 108px;
+    line-height: 1;
+  }
+}
