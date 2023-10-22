@@ -19,21 +19,21 @@
 }
 
 .headline__image + .headline__title {
-  margin-top: 30px;
+  margin-top: 16px;
 
   @include media-breakpoint-up('md') {
-    margin-top: 80px;
+    margin-top: 40px;
   }
 }
 
 .headline__title {
   margin-bottom: 0;
   font-family: $font-family-secondary;
-  font-size: 50px;
+  font-size: 35px;
   line-height: 1.08;
 
   @include media-breakpoint-up('md') {
-    font-size: 108px;
+    font-size: 87px;
     line-height: 1;
   }
 }
@@ -56,12 +56,12 @@
 }
 
 .headline__image-inline {
-  height: 36px; // 50px font-size
+  height: 25px; // 35px font-size
   max-width: 100%;
   opacity: 0;
   visibility: hidden;
 
   @include media-breakpoint-up('md') {
-    height: 77px; // 108px font-size
+    height: 62px; // 87px font-size
   }
 }

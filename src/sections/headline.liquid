@@ -47,11 +47,11 @@
     # placeholder size on mobile. This allows overlaid image to float atop of
     # the placeholder which takes up space in the natural flow of the text while
     # still allowing the image to overlap.
-    # Desktop Font Size: 108px (77px letter size)
-    # Mobile Font Size: 50px (36px letter size)
+    # Desktop Font Size: 87px (62px letter size)
+    # Mobile Font Size: 35px (25px letter size)
     # .4675 decrease in font size
   -%}
-  {% assign mobile_diff = 36 | divided_by: 77.0 %}
+  {% assign mobile_diff = 25 | divided_by: 62.0 %}
   {% assign overlay_w = inline_image.width %}
   {% assign overlay_h = inline_image.height %}
   {% assign overlay_w_mobile = overlay_w | times: mobile_diff %}
