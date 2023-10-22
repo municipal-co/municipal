@@ -36,11 +36,11 @@
   margin-bottom: 0;
   text-transform: none;
   font-size: 25px;
-  line-height: 1.233;
+  line-height: 1;
   font-family: $font-family-secondary;
 
   @include media-breakpoint-up('md') {
-    font-size: 50px;
+    font-size: 36px;
   }
 }
 

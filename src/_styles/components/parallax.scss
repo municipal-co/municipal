@@ -6,6 +6,7 @@
 .parallax__lining {
   width: 100vw;
   height: calc(100vh - 70px);
+  min-height: 800px;
   position: relative;
   z-index: 0;
   opacity: 0;
@@ -13,6 +14,7 @@
 
   @include media-breakpoint-down('md') {
     height: calc(100vh - 50px);
+    min-height: 700px;
   }
 
   &.is-initialized {
@@ -84,6 +86,8 @@
   line-height: 1;
   transition: $transition-timing-function-in-out-ui $transition-duration-fast;
   transition-property: color, background-color;
+  position: relative;
+  z-index: 10;
 
   color: $white;
   background-color: $black;
