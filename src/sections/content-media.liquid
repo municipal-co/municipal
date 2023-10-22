@@ -19,6 +19,9 @@
 {% if desktop_video_webm == blank or desktop_video_mp4 == blank %}
   {% if image != blank %}
     {% assign image_class = 'content-media__image' %}
+    {% unless autoplay %}
+      {% assign image_class = ' is-cover' | prepend: image_class  %}
+    {% endunless %}
   {% endif %}
 {% endif %}
 {% capture image_class_capture %}
@@ -66,6 +69,7 @@
               image_sizes: '100vw',
               loading: 'lazy',
               alt: image.alt,
+              dataAttributes: "data-video-image"
             %}
           {% endunless %}
 

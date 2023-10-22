@@ -111,6 +111,11 @@
 .content-media__image {
   width: 100%;
   height: auto;
+
+  &.is-cover {
+    position: relative;
+    z-index: 2;
+  }
 }
 
 .content-media__bg {

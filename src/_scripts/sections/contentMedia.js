@@ -8,6 +8,7 @@ const selectors = {
   webmVideo: '[data-webm-video]',
   playBtn: '[data-video-play-button]',
   pauseBtn: '[data-video-pause-button]',
+  image: '[data-video-image]',
 };
 
 export default class contentMedia extends BaseSection {
@@ -20,6 +21,7 @@ export default class contentMedia extends BaseSection {
     this.$webmVideo = $(selectors.webmVideo, this.$container);
     this.$playBtn = $(selectors.playBtn, this.$container);
     this.$pauseBtn = $(selectors.pauseBtn, this.$container);
+    this.$image = $(selectors.image, this.$container);
 
     this.state = {
       playing: false,
@@ -50,6 +52,7 @@ export default class contentMedia extends BaseSection {
 
   onBtnClickPlay() {
     this.startVideo();
+    this.$image.removeClass('is-cover');
   }
 
   onBtnClickPause() {
@@ -58,14 +61,14 @@ export default class contentMedia extends BaseSection {
 
   startVideo(evt) {
     this.$backgroundVideo.get(0).play();
-    if (this.state.playing == false) {
+    if (this.state.playing === false) {
       this.toggleClass();
     }
   }
 
   pauseVideo(evt) {
     this.$backgroundVideo.get(0).pause();
-    if (this.state.playing == true) {
+    if (this.state.playing === true) {
       this.toggleClass();
     }
   }
