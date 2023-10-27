@@ -34,10 +34,11 @@
 .shop-the-look__grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+  gap: 40px;
 
   @include media-breakpoint-down(md) {
     grid-template-columns: 1fr 1fr;
+    gap: 30px;
   }
 
   @include media-breakpoint-down(xs) {
