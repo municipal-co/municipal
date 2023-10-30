@@ -1,0 +1,54 @@
+<style>
+  {% if s.bgcolor != blank %}
+  #video-{{ id }} {
+    background-color: {{ s.bgcolor }};
+  }
+  {% endif %}
+
+  {% if s.width == "full" %}
+    #video-{{ id }} {
+      padding: 0;
+    }
+  {% endif %}
+</style>
+
+<div id="video-{{id}}" class="video container-fluid" data-section-id="{{id}}" data-section-type="video">
+  <div class="video__inner container-fluid">
+    {% unless s.image_mobile == blank and s.image == blank %}
+      {% render 'responsive-image',
+        image: s.image
+        class: 'video__bg video__bg--desktop',
+        image_sizes: '100vw',
+        loading: 'lazy',
+        alt: s.image.alt,
+      %}
+      {% render 'responsive-image',
+        image: s.image_mobile
+        class: 'video__bg video__bg--mobile',
+        image_sizes: '100vw',
+        loading: 'lazy',
+        alt: s.image_mobile.alt,
+      %}
+    {% endunless %}
+
+
+    {% if s.desktop_video_webm != blank or s.desktop_video_mp4 != blank or s.mobile_video_webm != blank or s.mobile_video_mp4 != blank %}
+      <div class="video__video-container">
+        <video
+          data-background-video
+          data-desktop-video-webm="{{s.desktop_video_webm}}"
+          data-desktop-video-mp4="{{s.desktop_video_mp4}}"
+          data-mobile-video-webm="{{s.mobile_video_webm}}"
+          data-mobile-video-mp4="{{s.mobile_video_mp4}}"
+          autoplay
+          loop
+          muted
+          playsinline
+        >
+          <source type="video/webm" src="{{s.desktop_video_webm}}" data-webm-video>
+          <source type="video/mp4" src="{{s.desktop_video_mp4}}" data-mp4-video>
+        </video>
+      </div>
+    {% endif %}
+  </div>
+</div>
