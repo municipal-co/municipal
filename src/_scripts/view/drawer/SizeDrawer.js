@@ -60,9 +60,16 @@ export default function SizeDrawer({data, index}) {
         <span className="drawer__size-selector-option">{ option }</span>
       </label>
     })
-    return <div className="drawer__size-selector">
-      { options }
-    </div>;
+    return (
+      <div className="drawer__size-selector-wrapper">
+        <div className="drawer__size-selector">
+          { options }
+        </div>
+        <div className="drawer__size-selector-disclaimer">
+          Make sure to select your size within the correct column above
+        </div>
+      </div>
+    );
   }
 
   const closeDrawer = () => {
