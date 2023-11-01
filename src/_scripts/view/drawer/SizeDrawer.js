@@ -3,23 +3,12 @@ import Close from "../icons/Close";
 import Checkmark from "../icons/Checkmark";
 
 export default function SizeDrawer({data, index}) {
-  const [ defaultUnit, setDefaultUnit ] = useState(!localStorage.getItem('sizeUnit'));
+  const [ defaultUnit, setDefaultUnit ] = useState(true);
   const drawer = useRef();
   const { optionsDivider, optionsHeaders } = window.theme.SizeSelector;
   const enableSizeSelector = data?.tags?.find((tag) => {
     return tag.toLowerCase() == 'footwear';
   });
-
-  const getSizeUnit = () => {
-    let sizeUnit = localStorage.getItem('sizeUnit');
-
-    if(!sizeUnit) {
-      sizeUnit = window.theme.SizeSelector.sizeUnit;
-      setDefaultUnit(true);
-    }
-
-    return sizeUnit;
-  }
 
   const getUnitIndex = () => {
     let unitIndex = 1;
@@ -233,7 +222,7 @@ export default function SizeDrawer({data, index}) {
     drawer.current.removeEventListener('transitionend', submitCloseEvent);
   }
 
-  const [ sizeUnit, setSizeUnit ] = useState(getSizeUnit());
+  const [ sizeUnit, setSizeUnit ] = useState(window.theme.SizeSelector.sizeUnit);
   const [ unitIndex, setUnitIndex ] = useState(getUnitIndex());
 
   useEffect(() => {
