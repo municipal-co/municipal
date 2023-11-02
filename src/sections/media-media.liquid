@@ -1,6 +1,27 @@
 {% assign text_color = section.settings.text_color %}
 {% assign highlight_color = section.settings.highlight_color %}
 {% assign bgcolor = section.settings.bgcolor %}
+{% liquid
+  assign look_enabled = false
+  if section.settings.looks_page != blank
+    assign look_enabled = true
+    assign looks = pages[section.settings.looks_page].metafields.custom_fields.complete_the_look
+    assign current_look_id_1 = section.settings.look_id_1
+    assign current_look_id_2 = section.settings.look_id_2
+    assign current_look_1 = blank
+    assign current_look_2 = blank
+    for i in (1..2)
+      for look in looks
+        if look.look_id == current_look_id_1
+          assign current_look_1 = look
+        endif
+        if look.look_id == current_look_id_2
+          assign current_look_2 = look
+        endif
+      endfor
+    endfor
+  endif
+%}
 
 <style>
   {% if bgcolor != blank %}
@@ -19,22 +40,62 @@
   <div class="container-fluid-max">
     <div class="heading-media__columns">
       <div class="heading-media__column">
-
+        {% if look_enabled == true and current_look_1 != blank %}
+          <a href="javascript:void(0)" class="image-caption__link"
+          data-shop-the-look-trigger
+          data-shop-the-look-products='
+            [
+              {%- for i in (1..6) -%}
+                {%- assign product_key = 'product_' | append: forloop.index -%}
+                {%- assign color_key = 'product_' | append: forloop.index | append: '_color' -%}
+                {%- if current_look_1[product_key] != blank -%}
+                  {%- if forloop.index > 1 -%} , {%- endif -%}
+                  { "product_handle": {{ current_look_1[product_key] | json }},
+                    "selected_color": {{ current_look_1[color_key] | json }}}
+                {%- else -%}
+                  {% break %}
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          '>
+        {% endif %}
         {% include 'image-caption'
           id: section.id,
           s.image: section.settings.image_1,
           s.caption: section.settings.caption_1
         %}
-
+        {% if look_enabled == true and current_look_1 != blank %}
+          </a>
+        {% endif %}
       </div>
       <div class="heading-media__column">
-
+        {% if look_enabled == true and current_look_2 != blank %}
+          <a href="javascript:void(0)" class="image-caption__link"
+          data-shop-the-look-trigger
+          data-shop-the-look-products='
+            [
+              {%- for i in (1..6) -%}
+                {%- assign product_key = 'product_' | append: forloop.index -%}
+                {%- assign color_key = 'product_' | append: forloop.index | append: '_color' -%}
+                {%- if current_look_2[product_key] != blank -%}
+                  {%- if forloop.index > 1 -%} , {%- endif -%}
+                  { "product_handle": {{ current_look_2[product_key] | json }},
+                    "selected_color": {{ current_look_2[color_key] | json }}}
+                {%- else -%}
+                  {% break %}
+                {%- endif -%}
+              {%- endfor -%}
+            ]
+          '>
+        {% endif %}
         {% include 'image-caption'
           id: section.id,
           s.image: section.settings.image_2,
           s.caption: section.settings.caption_2
         %}
-
+        {% if look_enabled == true and current_look_1 != blank %}
+          </a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -60,6 +121,12 @@
       "label": "Background Color"
     },
     {
+      "type": "page",
+      "id": "looks_page",
+      "label": "Looks",
+      "info": "Page containing all the looks metafields populated (if look drawers willl be used)"
+    },
+    {
       "type": "header",
       "content": "Content - 1st Column"
     },
@@ -67,6 +134,12 @@
       "type": "image_picker",
       "id": "image_1",
       "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "look_id_1",
+      "label": "Look ID",
+      "info": "Unique identifier for the look set on the metafield Look ID"
     },
     {
       "type": "textarea",
@@ -81,6 +154,12 @@
       "type": "image_picker",
       "id": "image_2",
       "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "look_id_2",
+      "label": "Look ID",
+      "info": "Unique identifier for the look set on the metafield Look ID"
     },
     {
       "type": "textarea",

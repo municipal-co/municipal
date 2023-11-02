@@ -1,6 +1,9 @@
 {% assign image = s.image %}
 {% assign caption = s.caption %}
 
+{% if look_enabled %}
+  <div class="image-caption__img-container">
+{% endif %}
 {%- if  image != blank -%}
   {% render 'responsive-image'
     image: image,
@@ -11,6 +14,13 @@
     width: image.width,
   %}
 {%- endif -%}
+{% if look_enabled %}
+  <div class="image-caption__shop-btn">
+    {% render 'icon-bag-2-full-color' %}
+  </div>
+</div>
+{% endif %}
+
 {% if caption != blank %}
   <p class="image-caption__text">{{ caption }}</p>
 {% endif %}
