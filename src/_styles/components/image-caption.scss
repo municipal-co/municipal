@@ -20,6 +20,10 @@
   max-width: 100%;
   margin: auto;
   position: relative;
+
+  .heading-media__column & {
+    width: 100%;
+  }
 }
 
 .image-caption__image {
