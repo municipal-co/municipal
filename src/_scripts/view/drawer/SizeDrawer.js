@@ -55,7 +55,7 @@ export default function SizeDrawer({data, index}) {
           { options }
         </div>
         <div className="drawer__size-selector-disclaimer">
-          Make sure to select your size within the correct column above
+          <span>Make sure to select your size within the correct column above</span>
         </div>
       </div>
     );

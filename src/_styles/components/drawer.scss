@@ -134,6 +134,11 @@
     margin-top: 20px;
     line-height: 1.5;
     font-family: $font-family-heading-medium;
+    display: flex;
+
+    span {
+      display: inline-block;
+    }
 
     &:before {
       content: "";
@@ -144,6 +149,7 @@
       border-radius: 50%;
       margin-right: 12px;
       margin-bottom: 0;
+      margin-top: 3px;
       animation: blink 1.1s step-start infinite;
     }
   }
