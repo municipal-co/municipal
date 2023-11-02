@@ -15,8 +15,15 @@
   {% assign heading_cta_title = s.heading_cta_title %}
   {% assign heading_cta_url = s.heading_cta_url %}
   {% assign enable_slider = s.enable_slider %}
+  {% assign cta_bg_color = s.cta_bg_color %}
+  {% assign cta_text_color = s.cta_text_color %}
+  {% assign cta_border_color = s.cta_border_color %}
 {% endif %}
 
+{% assign btn_class = 'btn-link' %}
+{% if modifier_class == 'product-carousel' %}
+  {% assign btn_class = 'btn' %}
+{% endif %}
 
 {%- capture cards -%}
   {% if type == 'metafields' %}
@@ -60,6 +67,16 @@
       border-color: {{ text_color }};
     }
 
+    #{{id}}.{{modifier_class}} .card-slider__button {
+      background-color: {{ cta_bg_color }};
+      border-color: {{ cta_border_color }};
+      color: {{ cta_text_color }};
+    }
+    #{{id}}.{{modifier_class}} .card-slider__button:hover {
+      background-color: {{ cta_border_color }};
+      color: {{ cta_bg_color }};
+    }
+
   </style>
   <div class="container-fluid">
     <div class="row">
@@ -77,7 +94,7 @@
         </div>
         {% if heading_cta_title != blank and heading_cta_url != blank %}
           <div class="card-slider__cta-container">
-            <a class="btn-link card-slider__button" href="{{heading_cta_url}}">{{heading_cta_title}}</a>
+            <a class="card-slider__button {{btn_class}}" href="{{heading_cta_url}}">{{heading_cta_title}}</a>
           </div>
         {% endif %}
       </div>
@@ -95,6 +112,11 @@
         <div class="card-slider__arrow card-slider__arrow--prev" data-slider-arrow-prev></div>
         <div class="card-slider__arrow card-slider__arrow--next" data-slider-arrow-next></div>
       </div>
+      {% if heading_cta_title != blank and heading_cta_url != blank and modifier_class == 'product-carousel' %}
+        <div class="text-center">
+          <a class="card-slider__button card-slider__button--mobile {{btn_class}}" href="{{heading_cta_url}}">{{heading_cta_title}}</a>
+        </div>
+      {% endif %}
     {% endif %}
 
   </div>
