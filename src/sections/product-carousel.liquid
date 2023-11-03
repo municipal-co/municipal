@@ -1,0 +1,140 @@
+{% render 'product-card-slider'
+  type: 'section',
+  section: section,
+  modifier_class: 'product-carousel'
+%}
+
+{% schema %}
+{
+	"name": "Product Carousel",
+	"settings": [{
+			"type": "header",
+			"content": "Layout"
+		},
+    {
+      "type": "checkbox",
+      "id": "enable_slider",
+      "label": "Enable Slider",
+      "default": true
+    },
+		{
+			"type": "color",
+			"id": "text_color",
+			"label": "Text Color",
+			"default": "#ffffff"
+		},
+		{
+			"type": "color",
+			"id": "bg_color",
+			"label": "Background Color",
+			"default": "#393d49"
+		},
+		{
+			"type": "header",
+			"content": "Content"
+		},
+    {
+			"type": "select",
+			"id": "title_tag",
+			"label": "Title Tag",
+			"options": [{
+					"value": "h1",
+					"label": "h1"
+				},
+				{
+					"value": "h2",
+					"label": "h2"
+				},
+				{
+					"value": "h3",
+					"label": "h3"
+				},
+				{
+					"value": "h4",
+					"label": "h4"
+				},
+				{
+					"value": "h5",
+					"label": "h5"
+				},
+				{
+					"value": "h6",
+					"label": "h6"
+				}
+			],
+			"default": "h2",
+			"info": "This will not change the text styling (font size)"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Main Title"
+		},
+		{
+			"type": "textarea",
+			"id": "heading_copy",
+			"label": "Heading Copy",
+			"default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse et explicabo iste deserunt corrupti sed perspiciatis hic. "
+		},
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "heading_cta_title",
+      "label": "CTA Text"
+    },
+    {
+      "type": "url",
+      "id": "heading_cta_url",
+      "label": "CTA Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_border_color",
+      "label": "Border Color",
+      "default": "#FFFFFF"
+    }
+	],
+  "blocks": [
+    {
+     "name": "Card",
+     "type": "link-card",
+      "settings": [
+        {
+        "type": "product",
+        "id": "card_product",
+        "label": "Product",
+        "info": "Defines the product to be displayed on the card"
+        },
+        {
+          "type": "text",
+          "id": "selected_color",
+          "label": "Selected color",
+          "info": "Defines the color to be used as default when the card loads, this text should match exactly with the variant color name"
+        }
+      ]
+    }
+  ],
+ "presets": [
+   {
+     "category": "layout",
+     "name":"V2 - Product Carousel"
+   }
+ ]
+}
+{% endschema %}
