@@ -128,7 +128,7 @@
   .product-carousel & {
     max-width: map-get($grid-breakpoints, 'xl');
     font-family: $font-family-secondary;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 1.233;
 
     @include media-breakpoint-down('md') {
