@@ -78,27 +78,27 @@
     }
 
   </style>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="card-slider__heading">
-        <div class="card-slider__info-container">
-          {% if title != blank %}
-            <{{title_tag}} class="card-slider__title h2">{{ title }}</{{title_tag}}>
-          {% endif %}
+  <div class="container-fluid{% if modifier_class == 'product-carousel' %}-max{% endif %}">
+    <div class="card-slider__heading">
+      <div class="card-slider__info-container">
+        {% if title != blank %}
+          <{{title_tag}} class="card-slider__title h2">{{ title }}</{{title_tag}}>
+        {% endif %}
 
-          {% if heading_copy %}
-          <p class="card-slider__copy p3">
-            {{ heading_copy }}
-          </p>
-          {% endif %}
-        </div>
-        {% if heading_cta_title != blank and heading_cta_url != blank %}
-          <div class="card-slider__cta-container">
-            <a class="card-slider__button {{btn_class}}" href="{{heading_cta_url}}">{{heading_cta_title}}</a>
-          </div>
+        {% if heading_copy %}
+        <p class="card-slider__copy p3">
+          {{ heading_copy }}
+        </p>
         {% endif %}
       </div>
+      {% if heading_cta_title != blank and heading_cta_url != blank %}
+        <div class="card-slider__cta-container">
+          <a class="card-slider__button {{btn_class}}" href="{{heading_cta_url}}">{{heading_cta_title}}</a>
+        </div>
+      {% endif %}
     </div>
+  </div>
+  <div class="container-fluid">
     {% if enable_slider == false %}
       <div class="row product-card__grid-container">
         {{ cards }}
