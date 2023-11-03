@@ -1,0 +1,11 @@
+{
+  "name": "content",
+  "sections": {
+    "main": {
+      "type": "collection"
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
