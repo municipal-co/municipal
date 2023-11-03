@@ -23,14 +23,14 @@ export default class contentMedia extends BaseSection {
     this.$pauseBtn = $(selectors.pauseBtn, this.$container);
     this.$image = $(selectors.image, this.$container);
 
-    this.state = {
-      playing: false,
-      autoplay: this.$backgroundVideo[0].hasAttribute('data-autoplay-video'),
-      desktop_mp4: this.$backgroundVideo.data('desktop-video-mp4'),
-      desktop_webm: this.$backgroundVideo.data('desktop-video-webm'),
-    };
-
     if (this.$backgroundVideo.length) {
+      this.state = {
+        playing: false,
+        autoplay: this.$backgroundVideo[0].hasAttribute('data-autoplay-video'),
+        desktop_mp4: this.$backgroundVideo.data('desktop-video-mp4'),
+        desktop_webm: this.$backgroundVideo.data('desktop-video-webm'),
+      };
+
       this.$backgroundVideo.on('play', this.onPlayVideo.bind(this));
       this.$backgroundVideo.on('pause', this.onPauseVideo.bind(this));
       this.$playBtn.on('click', this.onBtnClickPlay.bind(this));
