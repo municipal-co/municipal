@@ -13,11 +13,11 @@ export default function BackInStockDrawer({data, index}) {
   const drawerSettings = JSON.parse(document.querySelector('[data-bis-drawer-settings]').innerHTML);
 
   const getOption = (option) => {
-    const optionIndex = data.variant.options.findIndex((variantOption) => {
-      return variantOption.toLowerCase() == option.toLowerCase();
+    const optionObject = data.variant.options.find((variantOption) => {
+      return variantOption.name.toLowerCase() == option.toLowerCase();
     })
 
-    return data.variant[`option${optionIndex + 1}`];
+    return data.variant[`option${optionObject.position}`];
   }
 
   const closeDrawer = () => {

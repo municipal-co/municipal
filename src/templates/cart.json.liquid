@@ -32,6 +32,9 @@
         {% if item.quantity >= variant_quantity_limit %}
           {% assign variant_quantity_limit = item.quantity %}
         {% endif %}
+        {% if product.type == 'Gift Cards' %}
+          {% assign variant_quantity_limit = null %}
+        {% endif %}
       {% endif %}
 
       {% capture variant_title %}
@@ -82,7 +85,7 @@
         "product_description": {{ product.description | json }},
         "product_type": {{ product.type | json }},
         "variant_title": {{ variant_title | json }},
-        "variant_quantity_limit": {{ variant_quantity_limit }},
+        "variant_quantity_limit": {{ variant_quantity_limit | json }},
         "available": {{ item.variant.available | json }},
         "variant_options": [
           {% if item.variant.option1 != blank %}{{ item.variant.option1 | json }}{% endif %}
