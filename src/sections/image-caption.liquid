@@ -3,13 +3,13 @@
 {% liquid
   assign look_enabled = false
   if section.settings.looks_page != blank
-    assign look_enabled = true
     assign looks = pages[section.settings.looks_page].metafields.custom_fields.complete_the_look
     assign current_look_id = section.settings.look_id
     assign current_look = blank
     for look in looks
       if look.look_id == current_look_id
         assign current_look = look
+        assign look_enabled = true
         break
       endif
     endfor

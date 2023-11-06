@@ -2,23 +2,26 @@
 {% assign highlight_color = section.settings.highlight_color %}
 {% assign bgcolor = section.settings.bgcolor %}
 {% liquid
-  assign look_enabled = false
+  assign look_1_enabled = false
+  assign look_2_enabled = false
   if section.settings.looks_page != blank
-    assign look_enabled = true
-    assign looks = pages[section.settings.looks_page].metafields.custom_fields.complete_the_look
-    assign current_look_id_1 = section.settings.look_id_1
-    assign current_look_id_2 = section.settings.look_id_2
+  assign looks = pages[section.settings.looks_page].metafields.custom_fields.complete_the_look
+  assign current_look_id_1 = section.settings.look_id_1
+  assign current_look_id_2 = section.settings.look_id_2
     assign current_look_1 = blank
     assign current_look_2 = blank
-    for i in (1..2)
-      for look in looks
-        if look.look_id == current_look_id_1
-          assign current_look_1 = look
-        endif
-        if look.look_id == current_look_id_2
-          assign current_look_2 = look
-        endif
-      endfor
+    for look in looks
+      if look.look_id == current_look_id_1
+        assign look_1_enabled = true
+        assign current_look_1 = look
+      endif
+      if look.look_id == current_look_id_2
+        assign look_2_enabled = true
+        assign current_look_2 = look
+      endif
+      if look_1_enabled == true and look_2_enabled == true
+        break
+      endif
     endfor
   endif
 %}
@@ -40,7 +43,7 @@
   <div class="container-fluid-max">
     <div class="heading-media__columns">
       <div class="heading-media__column">
-        {% if look_enabled == true and current_look_1 != blank %}
+        {% if look_1_enabled == true %}
           <a href="javascript:void(0)" class="image-caption__link"
           data-shop-the-look-trigger
           data-shop-the-look-products='
@@ -63,13 +66,14 @@
           id: section.id,
           s.image: section.settings.image_1,
           s.caption: section.settings.caption_1
+          look_enabled: look_1_enabled
         %}
-        {% if look_enabled == true and current_look_1 != blank %}
+        {% if look_1_enabled == true %}
           </a>
         {% endif %}
       </div>
       <div class="heading-media__column">
-        {% if look_enabled == true and current_look_2 != blank %}
+        {% if look_2_enabled == true %}
           <a href="javascript:void(0)" class="image-caption__link"
           data-shop-the-look-trigger
           data-shop-the-look-products='
@@ -91,9 +95,10 @@
         {% include 'image-caption'
           id: section.id,
           s.image: section.settings.image_2,
-          s.caption: section.settings.caption_2
+          s.caption: section.settings.caption_2,
+          look_enabled: look_2_enabled,
         %}
-        {% if look_enabled == true and current_look_1 != blank %}
+        {% if look_2_enabled == true %}
           </a>
         {% endif %}
       </div>
