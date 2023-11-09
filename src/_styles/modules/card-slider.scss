@@ -3,6 +3,11 @@
 
   @include media-breakpoint-down('md') {
     padding: 60px 30px;
+
+    &.product-carousel {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
   }
 
   .card-slider__categories .swiper-slide {
@@ -96,8 +101,16 @@
 }
 
 .card-slider__info-container {
+
+  .product-carousel & {
+    padding-right: 20px;
+  }
   @include media-breakpoint-down('md') {
     padding-right: 20px;
+
+    .product-carousel & {
+      padding-right: 0;
+    }
   }
 }
 
@@ -146,6 +159,14 @@
     width: 100%;
     text-align: center;
   }
+  .product-carousel & {
+    font-family: $font-family-secondary;
+    font-size: 77px;
+
+    @include media-breakpoint-down('md') {
+      font-size: 30px;
+    }
+  }
 }
 
 .card-slider__copy {
@@ -155,6 +176,17 @@
     max-width: 800px;
     margin: auto;
     text-align: center;
+  }
+  .product-carousel & {
+    max-width: map-get($grid-breakpoints, 'xl');
+    font-family: $font-family-secondary;
+    font-size: 30px;
+    line-height: 1.233;
+
+    @include media-breakpoint-down('md') {
+      font-size: 18px;
+      line-height: 1.056;
+    }
   }
 }
 
@@ -170,6 +202,10 @@
     margin-left: auto;
     margin-top: 0;
     align-self: flex-start;
+
+    .product-carousel & {
+      display: none;
+    }
   }
 }
 
@@ -187,6 +223,48 @@
     font-size: 12px;
     line-height: 1.5;
   }
+
+  &.btn {
+    padding: 12px 32px;
+    width: fit-content;
+    border-radius: 100px;
+    font-family: $font-family-heading-medium;
+    display: inline-block;
+    font-size: 13px;
+    white-space: nowrap;
+    line-height: 1;
+    transition: $transition-timing-function-in-out-ui $transition-duration-fast;
+    transition-property: color, background-color;
+    position: relative;
+    z-index: 10;
+
+    color: $white;
+    background-color: $black;
+    border: 2px solid $white;
+
+    @include media-breakpoint-up('md') {
+      padding: 14px 42px;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    @include media-breakpoint-up('lg') {
+      padding: 15px 53px;
+    }
+
+    &:hover,
+    &:focus {
+      color: $black;
+      background-color: $white;
+    }
+  }
+
+  &.card-slider__button--mobile {
+    margin-top: 50px;
+    @include media-breakpoint-up('md') {
+      display: none;
+    }
+  }
 }
 
 .card-slider__slider {
@@ -202,6 +280,13 @@
   .card-slider--pdp & {
     width: calc(100% + 60px);
     margin-left: -30px;
+  }
+
+  .product-carousel & {
+    @include media-breakpoint-down('md') {
+      width: calc(100% + 50px);
+      margin-left: -30px;
+    }
   }
 }
 

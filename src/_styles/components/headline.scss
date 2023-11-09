@@ -1,0 +1,67 @@
+// -------------------------
+// Headline
+// -------------------------
+.headline {
+  padding: 50px;
+
+  @include media-breakpoint-down('md') {
+    padding: 30px 20px;
+  }
+}
+
+.headline__inner {
+  margin: 0 auto;
+  max-width: 1480px;
+}
+
+.headline__image {
+  max-width: 100%;
+}
+
+.headline__image + .headline__title {
+  margin-top: 16px;
+
+  @include media-breakpoint-up('md') {
+    margin-top: 40px;
+  }
+}
+
+.headline__title {
+  margin-bottom: 0;
+  font-family: $font-family-secondary;
+  font-size: 35px;
+  line-height: 1.08;
+
+  @include media-breakpoint-up('md') {
+    font-size: 87px;
+    line-height: 1;
+  }
+}
+
+.headline__image-inline-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: inline-block;
+    background-repeat: no-repeat;
+    transform: translate3d(-50%, -50%, 0);
+    overflow: hidden;
+  }
+}
+
+.headline__image-inline {
+  height: 25px; // 35px font-size
+  max-width: 100%;
+  opacity: 0;
+  visibility: hidden;
+
+  @include media-breakpoint-up('md') {
+    height: 62px; // 87px font-size
+  }
+}

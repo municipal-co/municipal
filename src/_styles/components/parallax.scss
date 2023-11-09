@@ -1,0 +1,164 @@
+// -------------------------
+// Parallax
+// -------------------------
+.parallax {}
+
+.parallax__lining {
+  width: 100vw;
+  height: calc(100vh - 70px);
+  min-height: 800px;
+  position: relative;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity $transition-timing-function-in-out-ui $transition-duration-base;
+
+  @include media-breakpoint-down('md') {
+    height: calc(100vh - 50px);
+    min-height: 700px;
+  }
+
+  &.is-initialized {
+    opacity: 1;
+  }
+}
+
+.parallax__bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+}
+
+.parallax__bg--desktop {
+  @include media-breakpoint-down('md') {
+    display: none;
+  }
+}
+
+.parallax__bg--mobile {
+  display: none;
+  @include media-breakpoint-down('md') {
+    display: block;
+  }
+}
+
+.parallax__content-wrap {
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
+
+  @include media-breakpoint-down('md') {
+    padding: 0 20px;
+  }
+}
+
+.parallax__content {
+  margin: 0 auto;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.parallax__image {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.parallax__cta {
+  margin-top: 30px;
+  padding: 12px 32px;
+  width: fit-content;
+  border-radius: 100px;
+  font-family: $font-family-heading-medium;
+  display: inline-block;
+  font-size: 13px;
+  white-space: nowrap;
+  line-height: 1;
+  transition: $transition-timing-function-in-out-ui $transition-duration-fast;
+  transition-property: color, background-color;
+  position: relative;
+  z-index: 10;
+
+  color: $white;
+  background-color: $black;
+  border: 2px solid $white;
+
+  @include media-breakpoint-up('md') {
+    margin-top: 80px;
+    padding: 14px 42px;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  @include media-breakpoint-up('lg') {
+    padding: 15px 53px;
+  }
+
+  &:hover,
+  &:focus {
+    color: $black;
+    background-color: $white;
+  }
+}
+
+.parallax__scroll {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: $white;
+
+  > .icon-caret-down {
+    width: 25px;
+    height: 17px;
+    opacity: 0;
+    animation: pulses 2s $transition-timing-function-in-out-ui 3s infinite;
+  }
+}
+
+.parallax__scroll-label {
+  font-family: $font-family-secondary;
+  font-size: 18px;
+  line-height: 1.233;
+  text-transform: uppercase;
+  color: $white;
+  opacity: 0;
+  animation: fadeInUp 1s $transition-timing-function-hard-in 3s forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 200%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes pulses {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  80% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+}

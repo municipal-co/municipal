@@ -1,0 +1,127 @@
+{% assign bgcolor = section.settings.bgcolor %}
+{% assign width = section.settings.width %}
+{% assign aspect_ratio = section.settings.aspect_ratio %}
+{% assign image = section.settings.image %}
+{% assign fixed_background = section.settings.fixed_background %}
+
+{% if image != blank %}
+<style>
+  {% if bgcolor != blank %}
+    #image-block-{{ section.id }} {
+      background-color: {{ bgcolor }};
+    }
+  {% endif %}
+
+  {% if width == "full" %}
+    #image-block-{{ section.id }} {
+      padding: 0;
+    }
+  {% endif %}
+
+  {% if fixed_background %}
+    .image-block__image-{{ section.id }} {
+      aspect-ratio: {{ aspect_ratio }};
+      background-image: url("{{ image | img_url: 'master' }}");
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      }
+
+    @media only screen and (max-device-width: 1366px) {
+      .image-block__image-{{ section.id }} {
+        background-attachment: scroll;
+      }
+    }
+  {% endif %}
+</style>
+
+<div id="image-block-{{ section.id }}" data-section-id="{{ section.id }}" class="image-block" data-section-type="image-block">
+  <div class="image-block__image-{{ section.id }}{% if width == "constrained" %} container-fluid-max{% endif %}">
+    {%- unless  fixed_background -%}
+      {% render 'responsive-image'
+        image: image,
+        alt: image.alt,
+        loading: "lazy",
+        class: "image-block__image-inline"
+      %}
+    {%- endunless -%}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "constrained",
+          "label": "Constrained"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ],
+      "default": "constrained"
+    },
+    {
+      "type": "checkbox",
+      "id": "fixed_background",
+      "label": "Fixed Background",
+      "default": false,
+      "info": "Keep the background image stationary while scrolling the page (desktop only)"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Section Size",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "16:9"
+        },
+        {
+          "value": "4/3",
+          "label": "4:3"
+        },
+        {
+          "value": "3/2",
+          "label": "3:2"
+        }
+      ],
+      "default": "16/9",
+      "info": "Set an aspect ratio to be used when Fixed Background is checked."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "1480w. When using a fixed background, use an image height that corresponds with the section size above (e.g. 16/9 => 1440x810)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 - Image",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}

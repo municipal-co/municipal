@@ -1,0 +1,285 @@
+{% assign text_color = section.settings.text_color %}
+{% assign highlight_color = section.settings.highlight_color %}
+{% assign bgcolor = section.settings.bgcolor %}
+{% assign orientation = section.settings.orientation %}
+{% assign title_tag = section.settings.title_tag %}
+{% assign title = section.settings.title %}
+{% assign content = section.settings.content %}
+{% assign cta_text = section.settings.cta_text %}
+{% assign cta_url = section.settings.cta_url %}
+{% assign cta_bg_color = section.settings.cta_bg_color %}
+{% assign cta_text_color = section.settings.cta_text_color %}
+{% assign cta_border_color = section.settings.cta_border_color %}
+{% assign image = section.settings.image %}
+{% assign image_class = 'content-media__bg' %}
+{% assign desktop_video_mp4 = section.settings.desktop_video_mp4 %}
+{% assign desktop_video_webm = section.settings.desktop_video_webm %}
+{% assign autoplay = section.settings.autoplay %}
+
+{% if desktop_video_webm == blank or desktop_video_mp4 == blank %}
+  {% if image != blank %}
+    {% assign image_class = 'content-media__image' %}
+    {% unless autoplay %}
+      {% assign image_class = ' is-cover' | prepend: image_class  %}
+    {% endunless %}
+  {% endif %}
+{% endif %}
+{% capture image_class_capture %}
+  {{ image_class }}
+{% endcapture %}
+
+<style>
+  {% if bgcolor != blank %}
+  #content-media-{{ section.id }} {
+    background-color: {{ bgcolor }};
+  }
+  {% endif %}
+
+  #content-media-{{ section.id }} .content-media__title,
+  #content-media-{{ section.id }} .content-media__content {
+    color: {{ text_color }};
+  }
+
+  #content-media-{{ section.id }} .highlight-text {
+    color: {{ highlight_color }};
+  }
+
+  #content-media-{{ section.id }} .content-media__cta {
+    background-color: {{ cta_bg_color }};
+    border-color: {{ cta_border_color }};
+    color: {{ cta_text_color }};
+  }
+  #content-media-{{ section.id }} .content-media__cta:hover {
+    background-color: {{ cta_border_color }};
+    color: {{ cta_bg_color }};
+  }
+</style>
+
+<div id="content-media-{{ section.id }}" data-section-id="{{ section.id }}" class="content-media" data-section-type="content-media">
+  <div class="container-fluid-max">
+    <div class="content-media__columns{% if orientation == "content_first" %} content-media__columns--reverse{% endif %}">
+      <div class="content-media__column">
+        {% if desktop_video_webm != blank or desktop_video_mp4 != blank %}
+        <div class="content-media__inner is-paused" data-video-wrapper>
+        {% endif %}
+          {% unless image == blank %}
+            {% render 'responsive-image',
+              image: image
+              class: image_class_capture,
+              image_sizes: '100vw',
+              loading: 'lazy',
+              alt: image.alt,
+              dataAttributes: "data-video-image"
+            %}
+          {% endunless %}
+
+          {% if desktop_video_webm != blank or desktop_video_mp4 != blank %}
+            <div class="content-media__video-play-button" data-video-play-button>
+              {% include 'icon-play-full-color' %}
+            </div>
+            <div class="content-media__video-pause-button" data-video-pause-button></div>
+            <div class="content-media__video-container">
+              <video
+                data-background-video
+                data-desktop-video-webm="{{desktop_video_webm}}"
+                data-desktop-video-mp4="{{desktop_video_mp4}}"
+                {% if autoplay %}
+                  data-autoplay-video
+                  muted
+                {% endif %}
+                loop
+                playsinline
+              >
+                <source type="video/webm" src="{{desktop_video_webm}}" data-webm-video>
+                <source type="video/mp4" src="{{desktop_video_mp4}}" data-mp4-video>
+              </video>
+            </div>
+          {% endif %}
+        {% if desktop_video_webm != blank or desktop_video_mp4 != blank %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="content-media__column">
+        {% if title != blank %}
+          <{{ title_tag }} class="content-media__title">
+            {{ title | replace: '<strong>', '<span class="highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}
+          </{{ title_tag }}>
+        {% endif %}
+        {% if content != blank %}
+          <div class="content-media__content">
+            {{ content | replace: '<strong>', '<span class="highlight-text">' | replace: '</strong>', '</span>' | remove: '<p>' | remove: '</p>'}}
+          </div>
+        {% endif %}
+        {%- if cta_text != blank and cta_url != blank -%}
+        <a href="{{ cta_url }}" class="content-media__cta">
+          {{ cta_text }}
+        </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "2 Col - Content + Video",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight Color",
+      "default": "#FF00FF",
+      "info": "Color for the highlighted text on the title of the module"
+    },
+    {
+      "type": "color",
+      "id": "bgcolor",
+      "label": "Background Color"
+    },
+    {
+     "type": "select",
+     "id": "orientation",
+     "label": "Desktop Orientation",
+     "options": [
+        {
+          "value": "content_first",
+          "label": "Content → Video"
+        },
+        {
+          "value": "video_first",
+          "label": "Video → Content"
+        }
+      ],
+      "default": "content_first",
+      "info": "Mobile stacking order: video then content"
+    },
+    {
+      "type": "header",
+      "content": "Content - 1st Column"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title Tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "h1"
+        },
+        {
+          "value": "h2",
+          "label": "h2"
+        },
+        {
+          "value": "h3",
+          "label": "h3"
+        },
+        {
+          "value": "h4",
+          "label": "h4"
+        },
+        {
+          "value": "h5",
+          "label": "h5"
+        },
+        {
+          "value": "h6",
+          "label": "h6"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "info": "Use Bold to create a color highlight on the text"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_border_color",
+      "label": "Border Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Content - 2nd Column"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommended Ratio: 1x1"
+    },
+    {
+      "type": "text",
+      "id": "desktop_video_mp4",
+      "label": "Desktop Video (MP4)",
+      "info": "Replaces desktop background image for a video, aspect ratio required 1x1"
+    },
+    {
+      "type": "text",
+      "id": "desktop_video_webm",
+      "label": "Video (WEBM)",
+      "info": "Replaces desktop background image for a video, aspect ratio required 1x1"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay Video",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "V2 - 2 Col - Content + Video",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}

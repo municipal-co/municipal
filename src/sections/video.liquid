@@ -1,0 +1,88 @@
+
+{% include 'video-panel'
+  id: section.id,
+  s: section.settings
+%}
+
+{% schema %}
+  {
+    "name": "Video",
+    "settings":[
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "color",
+        "id": "bgcolor",
+        "label": "Background Color"
+      },
+      {
+        "type": "select",
+        "id": "width",
+        "label": "Width",
+        "options": [
+          {
+            "value": "constrained",
+            "label": "Constrained"
+          },
+          {
+            "value": "full",
+            "label": "Full"
+          }
+        ],
+        "default": "constrained"
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "header",
+        "content": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Desktop Image",
+        "info": "Recommended Size: 1440w x 660h"
+      },
+      {
+        "type": "text",
+        "id": "desktop_video_mp4",
+        "label": "Desktop Video (MP4)",
+        "info": "Replaces desktop background image for a video, aspect ratio required 16x9"
+      },
+      {
+        "type": "text",
+        "id": "desktop_video_webm",
+        "label": "Desktop Video (WEBM)",
+        "info": "Replaces desktop background image for a video, aspect ratio required 16x9"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Mobile Image",
+        "info": "Recommended Size: 485w x 437h"
+      },
+      {
+        "type": "text",
+        "id": "mobile_video_mp4",
+        "label": "Mobile Video (MP4)",
+        "info": "Replaces mobile image for a looping video"
+      },
+      {
+        "type": "text",
+        "id": "mobile_video_webm",
+        "label": "Mobile Video (WEBM)",
+        "info": "Replaces mobile image for a looping video"
+      }
+    ],
+    "presets": [
+      {
+        "name": "V2 - Video",
+        "category": "Media"
+      }
+    ]
+  }
+{% endschema %}

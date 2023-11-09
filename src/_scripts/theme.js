@@ -7,7 +7,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { client } from './lib/findifyApi';
 
-
 // Bootstrap JS
 import 'bootstrap/js/dist/collapse';
 import 'bootstrap/js/dist/modal';
@@ -42,11 +41,13 @@ import CustomersAccountOrdersSection from './sections/customersAccountOrders';
 import CustomersAddressesSection from './sections/customersAddresses';
 import CustomersOrderSection from './sections/customersOrder';
 import CustomersResetPasswordSection from './sections/customersResetPassword';
-import FeaturedCategory from './sections/featuredCategories'
+import FeaturedCategory from './sections/featuredCategories';
 import ShopTheLook from './sections/shop-the-look';
 import LinkCardSlider from './sections/linkCardSlider';
 import ContentSlider from './sections/contentSlider';
 import Hero from './sections/hero';
+import ContentMedia from './sections/contentMedia';
+import Parallax from './sections/parallax';
 import ProductCardSlider from './sections/productCardSlider';
 import FourOFour from './sections/fourofour';
 import Faq from './sections/faq';
@@ -103,41 +104,43 @@ Breakpoints.initialize();
   sectionManager.register('link-card-slider', LinkCardSlider);
   sectionManager.register('content-slider', ContentSlider);
   sectionManager.register('hero', Hero);
+  sectionManager.register('content-media', ContentMedia);
+  sectionManager.register('parallax', Parallax);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('faq', Faq);
 
   // Register Mobile navigation
-  const navigationHolder = document.getElementById('main_navigation')
+  const navigationHolder = document.getElementById('main_navigation');
   const navigationRoot = ReactDOM.createRoot(navigationHolder);
-  navigationRoot.render(<MainNav/>);
+  navigationRoot.render(<MainNav />);
 
   const collectionHolder = document.getElementById('collection');
-  if(collectionHolder) {
+  if (collectionHolder) {
     const collectionRoot = ReactDOM.createRoot(collectionHolder);
-    collectionRoot.render(<Collection/>);
+    collectionRoot.render(<Collection />);
   }
 
   const searchHolder = document.getElementById('search-container');
-  if(searchHolder) {
+  if (searchHolder) {
     const searchRoot = ReactDOM.createRoot(searchHolder);
-    searchRoot.render(<Search/>)
+    searchRoot.render(<Search />);
   }
 
   const autocompleteHolder = document.getElementById('autocomplete-wrapper');
-  if(autocompleteHolder) {
+  if (autocompleteHolder) {
     const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
-    autocompleteRoot.render(<AutocompleteSearch/>)
+    autocompleteRoot.render(<AutocompleteSearch />);
   }
 
   const drawerHolder = document.getElementById('drawer-container');
-  if(drawerHolder) {
+  if (drawerHolder) {
     const drawersRoot = ReactDOM.createRoot(drawerHolder);
     drawersRoot.render(<DrawerSystem />, drawerHolder);
   }
 
   const ymalHolder = document.getElementById('pdp-you-may-also-like');
 
-  if(ymalHolder) {
+  if (ymalHolder) {
     const ymalRoot = ReactDOM.createRoot(ymalHolder);
     ymalRoot.render(<ProductYmal />, ymalHolder);
   }
@@ -152,7 +155,7 @@ Breakpoints.initialize();
   // Target tables to make them scrollable
   RTE.wrapTables({
     $tables: $('.rte table'),
-    tableWrapperClass: 'table-responsive'
+    tableWrapperClass: 'table-responsive',
   });
 
   // Target iframes to make them responsive
@@ -161,7 +164,7 @@ Breakpoints.initialize();
 
   RTE.wrapIframe({
     $iframes: $(iframeSelectors),
-    iframeWrapperClass: 'rte__video-wrapper'
+    iframeWrapperClass: 'rte__video-wrapper',
   });
 
   // Apply UA classes to the document
@@ -169,10 +172,11 @@ Breakpoints.initialize();
 
   // Apply a specific class to the html element for browser support of cookies.
   if (Utils.cookiesEnabled()) {
-    document.documentElement.className = document.documentElement.className.replace(
-      'supports-no-cookies',
-      'supports-cookies'
-    );
+    document.documentElement.className =
+      document.documentElement.className.replace(
+        'supports-no-cookies',
+        'supports-cookies'
+      );
   }
 
   // Chosen JS plugin for select boxes
@@ -187,21 +191,15 @@ Breakpoints.initialize();
   const isOpenClass = 'is-open';
 
   $document.on('show.bs.collapse', '.collapse', (e) => {
-    $(e.currentTarget)
-      .parents('.expandable-list')
-      .addClass(isOpenClass);
+    $(e.currentTarget).parents('.expandable-list').addClass(isOpenClass);
   });
 
   $document.on('hide.bs.collapse', '.collapse', (e) => {
-    $(e.currentTarget)
-      .parents('.expandable-list')
-      .removeClass(isOpenClass);
+    $(e.currentTarget).parents('.expandable-list').removeClass(isOpenClass);
   });
 
-  $('.collapse.show').each(function() {
-    $(this)
-      .parents('.expandable-list')
-      .addClass(isOpenClass);
+  $('.collapse.show').each(function () {
+    $(this).parents('.expandable-list').addClass(isOpenClass);
   });
   // END - Global handler for collapse plugin to add state class for open expandable lists
 
@@ -211,7 +209,7 @@ Breakpoints.initialize();
   });
 
   // Add lazyloading support for background images
-  document.addEventListener('lazybeforeunveil', function(e) {
+  document.addEventListener('lazybeforeunveil', function (e) {
     const bg = e.target.getAttribute('data-background');
     if (bg) {
       e.target.style.backgroundImage = 'url(' + bg + ')';
@@ -223,24 +221,29 @@ Breakpoints.initialize();
     url: document.location.href,
     height: window.screen.height,
     width: window.screen.width,
-  }
+  };
 
   let productData = document.querySelector('[data-product-json]');
   const isProduct = $body.hasClass('template-product');
 
-  if(isProduct && productData) {
+  if (isProduct && productData) {
     productData = JSON.parse(productData.innerHTML);
-    const variant = new URLSearchParams( document.location.search ).get('variant');
+    let variant = new URLSearchParams(document.location.search).get('variant');
 
-    viewPageData["item_id"] = productData.id.toString();
-    viewPageData["variant_item_id"] = variant.toString();
+    if (!variant) {
+      variant = productData.variants[0].id.toString();
+    }
+
+    viewPageData['item_id'] = productData.id.toString();
+    viewPageData['variant_item_id'] = variant.toString();
   }
 
-  client.sendEvent("view-page", viewPageData)
+  client.sendEvent('view-page', viewPageData);
 
-  window.getSiteSettingsJson = function() {
+  window.getSiteSettingsJson = function () {
     return JSON.parse($('[data-theme-settings-json]').html());
   }
+
   const lookTriggers = document.querySelectorAll('[data-shop-the-look-trigger]');
 
   lookTriggers.forEach(trigger => {
@@ -254,5 +257,5 @@ Breakpoints.initialize();
         document.dispatchEvent(event);
       }
     })
-  })
+  });
 })(Modernizr);

@@ -8,7 +8,7 @@ const productCard = ((props) => {
     let data = props.data;
 
     data.variants.map(variant => {
-      if(variant.color) {
+      if(variant.color && variant.custom_fields.old_colors) {
         variant.color = variant.custom_fields.old_colors;
       }
       if(variant.size) {
