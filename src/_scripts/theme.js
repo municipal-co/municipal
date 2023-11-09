@@ -246,7 +246,7 @@ Breakpoints.initialize();
 
   window.getSiteSettingsJson = function () {
     return JSON.parse($('[data-theme-settings-json]').html());
-  };
+  }
 
   const lookTriggers = document.querySelectorAll('[data-shop-the-look-trigger]');
 
@@ -261,5 +261,5 @@ Breakpoints.initialize();
         document.dispatchEvent(event);
       }
     })
-  })
+  });
 })(Modernizr);
