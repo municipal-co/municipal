@@ -31,6 +31,8 @@ export default class HeaderSection extends BaseSection {
       slidesOffsetAfter: 20,
       threshold: 20,
       watchOverflow: true,
+      centerInsufficientSlides: true,
+      observer: true,
       breakpoints: {
         992: {
           slidesOffsetAfter: 40,
