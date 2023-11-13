@@ -242,5 +242,20 @@ Breakpoints.initialize();
 
   window.getSiteSettingsJson = function () {
     return JSON.parse($('[data-theme-settings-json]').html());
-  };
+  }
+
+  const lookTriggers = document.querySelectorAll('[data-shop-the-look-trigger]');
+
+  lookTriggers.forEach(trigger => {
+    trigger.addEventListener('click', function(e) {
+      if(e.currentTarget.hasAttribute('data-shop-the-look-trigger')) {
+        const event = new CustomEvent('drawerOpen', {detail: {
+          type: 'shop-the-look',
+          productsData: JSON.parse(e.currentTarget.dataset.shopTheLookProducts),
+        }})
+
+        document.dispatchEvent(event);
+      }
+    })
+  });
 })(Modernizr);

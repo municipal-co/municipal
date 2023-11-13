@@ -6,13 +6,17 @@
 
 {% if type == "section" %}
   {% assign look_ids = "" %}
+  {% assign look_categories = "" %}
   {% for block in s.blocks %}
     {% assign look_ids = look_ids | append: block.settings.title %}
+    {% assign look_categories = look_categories | append: block.settings.category %}
     {% unless forloop.last %}
       {% assign look_ids = look_ids | append: ', '%}
+      {% assign look_categories = look_categories | append: ', ' %}
     {% endunless %}
   {% endfor %}
   {% assign look_ids = look_ids | split: ', ' %}
+  {% assign look_categories = look_categories | split: ', ' %}
 {% else %}
   {% for block in s.look_ids %}
     {% assign look_ids = look_ids | append: block.look_ids %}
@@ -49,11 +53,22 @@
   ]
   {% endcapture %}
 
+  {% liquid
+    assign enable_card = false
+    if default_category == blank
+      assign enable_card = true
+    else
+      if look_categories[forloop.index0] contains default_category
+        assign enable_card = true
+      endif
+    endif
+  %}
+
   {% if current_look != blank %}
   {% if s.settings.enable_slider == false %}
-    <div class="shop-the-look__grid-item">
+    <div class="shop-the-look__grid-item shop-the-look__item" {%unless enable_card == true%}style="display:none;"{% endunless %} data-slide data-category="{{ look_categories[forloop.index0] | default: '' }}">
   {% else %}
-    <div class="shop-the-look__slide swiper-slide" data-slide>
+    <div class="shop-the-look__slide shop-the-look__item {% if enable_card == true %} swiper-slide {% endif %}" {%unless enable_card == true%}style="display:none;"{% endunless %} data-slide data-category="{{ look_categories[forloop.index0] | default: '' }}">
   {% endif %}
       <div class="look-card"
         data-open-look-drawer
@@ -83,11 +98,9 @@
             </div>
           {% endif %}
 
-          {% if current_look.button_label != blank %}
-            <span class="btn-link look-card__btn">
-              {{ current_look.button_label }}
+            <span class="look-card__btn">
+              {% render 'icon-bag-2-full-color' %}
             </span>
-          {% endif %}
         </div>
       </div>
     </div>

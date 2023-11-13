@@ -1,0 +1,191 @@
+<div id="shop-the-look-{{section.id}}" class="card-slider shop-the-look-slider">
+  {% assign s = section.settings %}
+  <style>
+    #shop-the-look-{{section.id}} {
+      background-color: {{s.bg_color}};
+    }
+    #shop-the-look-{{section.id}} .card-slider__heading {
+      color: {{s.text_color}};
+    }
+    #shop-the-look-{{section.id}} .card-slider__heading strong,
+    #shop-the-look-{{section.id}} .card-slider__copy strong {
+      color: {{ s.highlight_color }};
+      font-weight: 400;
+    }
+  </style>
+  {% assign categories = '' %}
+  {% for block in section.blocks %}
+    {% if categories == '' %}
+      {% unless block.settings.category == blank %}
+        {% assign categories = categories | append: block.settings.category %}
+      {% endunless %}
+    {% else %}
+      {% unless block.settings.category == blank %}
+        {% assign categories = categories | append: ',' | append: block.settings.category %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign categories = categories | split:',' | uniq %}
+  {% assign default_category = section.settings.default_category | default: categories[0] %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card-slider__heading card-slider__heading--stl">
+        <div class="card-slider__info card-slider__info--stl">
+          {% if s.title != blank %}
+            <{{s.title_tag}} class="card-slider__title card-slider__title--stl h2">
+              {{ s.title | replace: '<p>', '' | replace: '</p>', ''}}
+            </{{s.title_tag}}>
+          {% endif %}
+
+          {% if s.heading_copy %}
+            {{ s.heading_copy | replace: '<p', '<p class="card-slider__copy card-slider__copy--stl p3"' }}
+          {% endif %}
+        </div>
+
+        {% if s.heading_cta_title != blank and s.heading_cta_url != blank %}
+          <div class="card-slider__cta card-slider__cta--stl">
+            <a class="btn-link card-slider__button card-slider__button--stl" href="{{s.heading_cta_url}}">{{s.heading_cta_title}}</a>
+          </div>
+        {% endif %}
+        <div class="card-slider__categories card-slider__categories--stl">
+          <div class="swiper" data-category-slider>
+            <div class="swiper-wrapper">
+              {% for category in categories %}
+                <button class="card-slider__category card-slider__category--stl swiper-slide {% if category == default_category %}card-slider__category--active{% endif %}" data-category-button="{{category}}">{{category}}</button>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include 'shop-the-look'
+    s: section,
+    type: 'section'
+    id: section.id
+  %}
+</div>
+
+{% schema %}
+  {
+  "name": "Look Slider (w/ Filters)",
+  "settings": [
+   {
+     "type": "page",
+     "id": "looks_page",
+     "label": "Looks",
+     "info": "Page containing all the looks metafields populated"
+   },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider",
+      "label": "Enable Slider",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#393d49"
+    },
+    {
+      "type": "color",
+      "id": "highlight_color",
+      "label": "Highlight Color",
+      "default": "#00ff00"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Section Title Tag",
+      "options": [{
+          "value": "h1",
+          "label": "h1"
+        },
+        {
+          "value": "h2",
+          "label": "h2"
+        },
+        {
+          "value": "h3",
+          "label": "h3"
+        },
+        {
+          "value": "h4",
+          "label": "h4"
+        },
+        {
+          "value": "h5",
+          "label": "h5"
+        },
+        {
+          "value": "h6",
+          "label": "h6"
+        }
+      ],
+      "default": "h2",
+      "info": "This will not change the text styling (font size)"
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "<p>Main Title</p>",
+      "info": "Use bold style to highlight the text with the defined color"
+    },
+    {
+      "type": "richtext",
+      "id": "heading_copy",
+      "label": "Heading Copy",
+      "default": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse et explicabo iste deserunt corrupti sed perspiciatis hic.</p>"
+    },
+    {
+      "type": "text",
+      "id": "default_category",
+      "label": "Default Group",
+      "info": "Defines the group/category that will be active when the module loads (if groups are populated and this setting doesn't match any the first one will be used)"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Look",
+      "type": "look",
+      "settings": [
+       {
+        "type": "text",
+        "id": "category",
+        "label": "Look Category",
+        "info": "Group/category that will be used to filter the look cards"
+       },
+       {
+         "type": "text",
+         "id": "title",
+         "label": "Look ID",
+         "info": "Unique identifier for the look set on the metafield Look ID"
+       }
+      ]
+    }
+  ],
+  "presets":  [
+    {
+      "name": "Shop the look with filters"
+    }
+  ]
+}
+{% endschema %}

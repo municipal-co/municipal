@@ -18,28 +18,79 @@ const selectors = {
   productId: '[data-product-id]',
   addToCartButton: '[data-add-to-cart-button]',
   finalSaleField: '[data-final-sale-message]',
+  productCategories: '[data-category-slider]',
+  categoryButton: '[data-category-button]',
+  lookSlides: '[data-slide]',
 };
 
 export default class ShopTheLook extends BaseSection {
   constructor(container) {
     super(container, 'shopTheLook');
 
-    this.drawerList = [];
-
     this.$looksContainer = $(selectors.looksContainer, this.$container);
     this.$looksDrawers = $(selectors.lookDrawers, this.$container);
     this.$lookDrawerOpen = $(selectors.lookDrawerOpen, this.$container);
     this.$sizeDrawerOpen = $(selectors.sizeDrawerToggler, this.$container);
     this.$productForms = $(selectors.productForm, this.$container);
+    this.$productCategories = $(selectors.productCategories, this.$container.parent());
+    this.$categoryButton = $(selectors.categoryButton, this.$container.parent());
+    this.$slides = $(selectors.lookSlides, this.$container);
 
     this.$lookDrawerOpen.on('click', this.openDrawer.bind(this));
     this.$sizeDrawerOpen.on('click', this.openSizeDrawer.bind(this));
     this.$productForms.on('change', selectors.productOption, this.updateFormState.bind(this));
+    this.$categoryButton.on('click', this.updateCategory.bind(this));
+    if(this.$productCategories.length > 0) {
+      this.initCategorySlider();
+    }
 
     this.initLooksSlider();
-    this.initLooksDrawers();
-    this.initDrawerSlider();
   };
+
+  initCategorySlider() {
+    const categorySliderOptions = {
+      centerInsufficientSlides: true,
+      slidesPerView: 'auto',
+      loop: false,
+      spaceBetween: 15,
+      threshold: 10,
+      watchOverflow: true,
+      slideActiveClass: 'swiper-slide-active',
+      slideToClickedSlide: true,
+      observer: true,
+      slidesOffsetAfter: 30,
+      slidesOffsetBefore: 30,
+    }
+
+    this.categorySlider = new Swiper(this.$productCategories.get(0), categorySliderOptions);
+  }
+
+  updateCategory(evt) {
+    const $this = $(evt.target);
+    const category = $(evt.target).data('category-button');
+    const isSlider = typeof(this.looksSlider) !== 'undefined' && this.looksSlider.initialized;
+
+    this.$categoryButton.removeClass('card-slider__category--active');
+    $this.addClass('card-slider__category--active');
+    if(isSlider) {
+      this.looksSlider.destroy();
+      this.$slides.removeClass('swiper-slide').hide();
+    }
+    this.$slides.hide();
+
+    this.$slides.each((index, slide) => {
+      if($(slide).data('category').indexOf(category) > -1) {
+        $(slide).show();
+        if(isSlider) {
+          $(slide).addClass('swiper-slide');
+        }
+      }
+    });
+
+    if(isSlider) {
+      this.initLooksSlider();
+    }
+  }
 
   initLooksSlider() {
     const looksSliderOptions = {
@@ -86,20 +137,6 @@ export default class ShopTheLook extends BaseSection {
     this.looksSlider = new Swiper(this.$looksContainer.get(0), looksSliderOptions);
   }
 
-  initLooksDrawers() {
-    this.$looksDrawers.each((i, drawer) => {
-      const $this = $(drawer);
-      const id = $this.data('drawer-id');
-
-      const drawerObject = new Drawer($this);
-
-      this.drawerList.push({
-        drawerObject,
-        id
-      })
-    })
-  }
-
   openDrawer(evt) {
     const $this = $(evt.currentTarget)
     const drawerData = $this.data('products-info');
@@ -109,37 +146,6 @@ export default class ShopTheLook extends BaseSection {
     }})
 
     document.dispatchEvent(event);
-  }
-
-  getDrawerById(id) {
-    let currentDrawer = null;
-
-    this.drawerList.forEach(drawer => {
-      if(drawer.id === id) {
-        currentDrawer = drawer.drawerObject;
-      }
-    });
-
-    return currentDrawer;
-  }
-
-  initDrawerSlider() {
-    this.drawerList.forEach((drawer, i) => {
-      const slider = drawer.drawerObject.$el.find(selectors.lookDrawerSlider);
-      const swiperSlider = new Swiper(slider.get(0), {
-        modules: [ Navigation ],
-        centeredSlides: true,
-        loop: false,
-        slidesPerView: 1.5,
-        spaceBetween: 15,
-        threshold: 20,
-        navigation: {
-          prevEl: '[data-arrow-prev]',
-          nextEl: '[data-arrow-next]'
-        }
-      })
-      this.drawerList[i].slider = swiperSlider;
-    })
   }
 
   openSizeDrawer(evt) {

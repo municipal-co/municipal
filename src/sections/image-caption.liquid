@@ -1,5 +1,20 @@
 {% assign text_color = section.settings.text_color %}
 {% assign bgcolor = section.settings.bgcolor %}
+{% liquid
+  assign look_enabled = false
+  if section.settings.looks_page != blank
+    assign looks = pages[section.settings.looks_page].metafields.custom_fields.complete_the_look
+    assign current_look_id = section.settings.look_id
+    assign current_look = blank
+    for look in looks
+      if look.look_id == current_look_id
+        assign current_look = look
+        assign look_enabled = true
+        break
+      endif
+    endfor
+  endif
+%}
 
 <style>
   #image-caption-{{ section.id }} {
@@ -12,14 +27,36 @@
 </style>
 
 <div id="image-caption-{{ section.id }}" data-section-id="{{ section.id }}" class="image-caption" data-section-type="image-caption">
+{% if look_enabled %}
+  <a href="javascript:void(0)" class="image-caption__link"
+  data-shop-the-look-trigger
+  data-shop-the-look-products='
+    [
+      {%- for i in (1..6) -%}
+        {%- assign product_key = 'product_' | append: forloop.index -%}
+        {%- assign color_key = 'product_' | append: forloop.index | append: '_color' -%}
+        {%- if current_look[product_key] != blank -%}
+          {%- if forloop.index > 1 -%} , {%- endif -%}
+          { "product_handle": {{ current_look[product_key] | json }},
+            "selected_color": {{ current_look[color_key] | json }}}
+        {%- else -%}
+          {% break %}
+        {%- endif -%}
+      {%- endfor -%}
+    ]
+  '>
+{% endif %}
   <div class="container-fluid-max">
-
     {% include 'image-caption'
       id: section.id,
-      s: section.settings
+      s: section.settings,
+      look_enabled: look_enabled
     %}
-
   </div>
+
+{% if look_enabled %}
+  </a>
+{% endif %}
 </div>
 
 {% schema %}
@@ -54,6 +91,18 @@
       "type": "textarea",
       "id": "caption",
       "label": "Caption"
+    },
+    {
+      "type": "page",
+      "id": "looks_page",
+      "label": "Looks",
+      "info": "Page containing all the looks metafields populated"
+    },
+    {
+      "type": "text",
+      "id": "look_id",
+      "label": "Look ID",
+      "info": "Unique identifier for the look set on the metafield Look ID"
     }
   ],
   "presets": [

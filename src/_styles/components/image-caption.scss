@@ -8,10 +8,34 @@
     padding: 60px;
   }
 }
+
+.image-caption__link {
+  z-index: 1;
+  position: relative;
+  display: block;
+}
+
+.image-caption__img-container {
+  width: max-content;
+  max-width: 100%;
+  margin: auto;
+  position: relative;
+
+  .heading-media__column & {
+    width: 100%;
+  }
+}
+
 .image-caption__image {
   margin: 0 auto;
   max-width: 100%;
-  display: block;;
+  display: block;
+}
+
+.image-caption__shop-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
 }
 
 .image-caption__text {

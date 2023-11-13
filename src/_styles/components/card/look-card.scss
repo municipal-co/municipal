@@ -33,6 +33,7 @@
   position: absolute;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   bottom: 16px;
   color: $white;
   font-size: 15px;
@@ -46,4 +47,10 @@
   margin-left: auto;
   color: $white;
   display: inline-block;
+
+  .icon-bag-2-full-color {
+    width: 40px;
+    height: 40px;
+    line-height: 1;
+  }
 }
