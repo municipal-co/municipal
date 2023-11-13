@@ -5,7 +5,15 @@
   line-height: 1;
   max-width: 100%;
   position: relative;
+
+  &:not(.swiper-initialized) .swiper-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
 }
+
+
 
 .category-capsule {
   border: 2px solid $white;
