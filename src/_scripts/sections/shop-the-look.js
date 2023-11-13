@@ -57,6 +57,7 @@ export default class ShopTheLook extends BaseSection {
       watchOverflow: true,
       slideActiveClass: 'swiper-slide-active',
       slideToClickedSlide: true,
+      observer: true,
       slidesOffsetAfter: 30,
       slidesOffsetBefore: 30,
     }

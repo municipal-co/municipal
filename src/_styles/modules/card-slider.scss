@@ -117,6 +117,12 @@
 .card-slider__categories {
   margin-top: 45px;
 
+  :not(.swiper-initialized) .swiper-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
   @include media-breakpoint-down ('md') {
     margin-top: 20px;
     width: calc(100% + 60px);
