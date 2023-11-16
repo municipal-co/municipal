@@ -10,6 +10,11 @@
 {% assign cta_bg_color = section.settings.cta_bg_color %}
 {% assign cta_text_color = section.settings.cta_text_color %}
 {% assign cta_border_color = section.settings.cta_border_color %}
+{% assign cta_text_2 = section.settings.cta_text_2 %}
+{% assign cta_url_2 = section.settings.cta_url_2 %}
+{% assign cta_bg_color_2 = section.settings.cta_bg_color_2 %}
+{% assign cta_text_color_2 = section.settings.cta_text_color_2 %}
+{% assign cta_border_color_2 = section.settings.cta_border_color_2 %}
 {% assign image = section.settings.image %}
 {% assign image_class = 'content-media__bg' %}
 {% assign desktop_video_mp4 = section.settings.desktop_video_mp4 %}
@@ -52,6 +57,16 @@
   #content-media-{{ section.id }} .content-media__cta:hover {
     background-color: {{ cta_border_color }};
     color: {{ cta_bg_color }};
+  }
+
+  #content-media-{{ section.id }} .content-media__cta.content-media__cta--alt {
+    background-color: {{ cta_bg_color_2 }};
+    border-color: {{ cta_border_color_2 }};
+    color: {{ cta_text_color_2 }};
+  }
+  #content-media-{{ section.id }} .content-media__cta.content-media__cta--alt:hover {
+    background-color: {{ cta_border_color_2 }};
+    color: {{ cta_bg_color_2 }};
   }
 </style>
 
@@ -111,9 +126,14 @@
           </div>
         {% endif %}
         {%- if cta_text != blank and cta_url != blank -%}
-        <a href="{{ cta_url }}" class="content-media__cta">
-          {{ cta_text }}
-        </a>
+          <a href="{{ cta_url }}" class="content-media__cta">
+            {{ cta_text }}
+          </a>
+        {%- endif -%}
+        {%- if cta_text_2 != blank and cta_url_2 != blank -%}
+          <a href="{{ cta_url_2 }}" class="content-media__cta content-media__cta--alt">
+            {{ cta_text_2 }}
+          </a>
         {%- endif -%}
       </div>
     </div>
@@ -239,6 +259,38 @@
     {
       "type": "color",
       "id": "cta_border_color",
+      "label": "Border Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button 2"
+    },
+    {
+      "type": "text",
+      "id": "cta_text_2",
+      "label": "CTA Text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url_2",
+      "label": "CTA Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color_2",
+      "label": "Background Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color_2",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "cta_border_color_2",
       "label": "Border Color",
       "default": "#FFFFFF"
     },
