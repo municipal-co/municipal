@@ -66,7 +66,7 @@ export default function SizeGuideDrawer({data, index}) {
           <b>Waist</b>
         </th>
         <th>
-          <b>Height</b>
+          <b>Length</b>
         </th>
       </>)
     }
