@@ -83,7 +83,8 @@ const ProductCard = ((props) => {
       productTitle: product.title,
       productId: product.id,
       addToCart: true,
-      variants: getCurrentColorVariant()
+      variants: getCurrentColorVariant(),
+      tags: product.tags,
     }
 
     return drawerData;
