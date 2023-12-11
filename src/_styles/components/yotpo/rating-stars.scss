@@ -114,17 +114,11 @@
   @if $yotpo-icon-star-empty {
     .yotpo-icon-default-empty-star,
     .yotpo-icon-empty-star {
-      width: large-vw(20px, 24px) !important;
-      height: large-vw(20px, 24px) !important;
       border: 0px solid transparent;
       margin: 1px;
       display: block;
       float: left;
       position: relative;
-      // margin-right: 2px;
-      // &:last-child {
-      //   margin-right: 0;
-      // }
 
       @include media-breakpoint-down('md') {
         width: 20px !important;
