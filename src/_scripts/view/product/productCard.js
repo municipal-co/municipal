@@ -132,7 +132,7 @@ export default class ProductCard {
       } else if(discountValue >= 50) {
         discountStyle = 'discount-badge--second-threshold';
       }
-
+      this.$discountBadge.removeClass('discount-badge--first-threshold discount-badge--second-threshold discount-badge--third-threshold');
       this.$discountBadge.addClass(discountStyle);
     } else {
       this.$container.removeClass('enable-badge');
@@ -142,8 +142,6 @@ export default class ProductCard {
   onOptionChange(evt) {
     const $this = $(evt.currentTarget);
     if($this.data('option-name') === 'color') {
-      const optionIndex = $this.data('index');
-      const optionValue = $this.data('value');
       this.updateColor.call(this, $this);
       this.updateProductOption.call(this, $this);
     } else if($this.data('option-name') === 'Size' || $this.data('option-name') === 'size' ) {
