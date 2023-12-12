@@ -218,6 +218,16 @@
         "id": "final_sale_message",
         "label": "Message",
         "default": "This product cannot be returned after purchase"
+      },
+      {
+        "type": "header",
+        "content": "You may also like"
+      },
+      {
+        "type": "checkbox",
+        "label": "Allow for sale items",
+        "id": "ymal_allow_sale",
+        "default": false
       }
     ]
   },

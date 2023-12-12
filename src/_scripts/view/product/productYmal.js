@@ -23,6 +23,8 @@ export default function ProductYmal(props) {
     setProductCards(productSlides);
   }
 
+  const allowSaleItems = window.theme.PdpYmal.enableSale;
+
   const getProducts = async () => {
     let recommendationsData;
     let products = [];
@@ -52,7 +54,7 @@ export default function ProductYmal(props) {
             validProduct = false;
           }
         }
-        if(validProduct){
+        if(validProduct && !allowSaleItems){
           variants = product.variants.filter((variant) => {
             if(!variant.compare_at_price) {
               return true;
@@ -60,9 +62,10 @@ export default function ProductYmal(props) {
               return !(variant.compare_at_price > variant.price)
             }
           });
-        }
-        if(variants.length === 0) {
-          validProduct = false;
+
+          if(variants.length === 0) {
+            validProduct = false;
+          }
         }
 
         return validProduct;
