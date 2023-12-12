@@ -80,7 +80,10 @@
         optionsDivider: {{ settings.size_selector_divider | default: "|" | json }},
         optionsHeaders: {{ settings.size_selector_headers | json }},
         sizeUnit: {{ settings.size_selector_default | json }},
-      }
+      },
+      PdpYmal: {
+        enableSale: {{ settings.ymal_allow_sale | json}},
+      },
     };
 
   {% if settings.yotpo_client_id != blank %}
