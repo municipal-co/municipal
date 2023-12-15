@@ -15,7 +15,7 @@ const productCard = ((props) => {
         variant.size = typeof(variant.size) == 'string' ? variant.size : variant.size[0];
       }
 
-      if(data.title.indexOf('Gift Card')) {
+      if(data.title.indexOf('Gift Card') > -1) {
         variant.option1 = 'unique';
         variant.option2 = "$" +variant.price;
       }
@@ -26,7 +26,7 @@ const productCard = ((props) => {
     if(data.options) {
       data.optionsWithValues = data.options.map((option, index) => {
         return {
-          option: option,
+          name: option,
           position: index + 1,
           values: data[option]
         }
@@ -156,10 +156,13 @@ const productCard = ((props) => {
       '4xl': 8,
       'os': 9,
     }
-
     const currentColorVariants = productData.variants.filter((variant) => {
+      if(Array.isArray(variant[colorIndex])) {
+        return variant[colorIndex][0] == currentVariant[colorIndex][0];
+      }
       return variant[colorIndex] == currentVariant[colorIndex];
     })
+
 
     currentColorVariants.map(variant => {
       variant.id = Number.parseInt(variant.id);
@@ -170,8 +173,16 @@ const productCard = ((props) => {
         enable_bis: variant.custom_fields.mf_custom_fields_enable_notify_me == '1' ? true : undefined,
       };
       variant.options = [
-        'color',
-        'size'
+        {
+          name: 'color',
+          position: 1,
+          values: variant.color
+        },
+        {
+          name: 'size',
+          position: 2,
+          values: variant.size
+        }
       ];
       if(variant.color) {
         variant.option1 = variant.color;
@@ -190,13 +201,14 @@ const productCard = ((props) => {
         return sortMap[variant1Value.toLowerCase()] - sortMap[variant2Value.toLowerCase()];
       }
     })
+
     return currentColorVariants;
   }
 
   const buildSizeDrawerData = () => {
     const drawerData = {
-      optionIndex: productData.title.indexOf('Gift') > -1 ? 'option2' : 'size',
-      printOption: productData.title.indexOf('Gift') > -1 ? 'Amount' : 'Size',
+      optionIndex: productData.title.indexOf('Gift Card') > -1 ? 'option2' : 'size',
+      printOption: productData.title.indexOf('Gift Card') > -1 ? 'Amount' : 'Size',
       productTitle: productData.title,
       productId: productData.id,
       addToCart: true,
