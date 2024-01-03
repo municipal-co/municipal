@@ -19,6 +19,25 @@
         color: {{ s.highlight_color_m }};
       }
     }
+    #hero-{{id}} .hero__cta {
+    background-color: {{ s.cta_bg_color }};
+    border-color: {{ s.cta_border_color }};
+    color: {{ s.cta_text_color }};
+    }
+    #hero-{{id}} .hero__cta:hover {
+      background-color: {{ s.cta_border_color }};
+      color: {{ s.cta_bg_color }};
+    }
+
+    #hero-{{id}} .hero__cta.hero__cta--alt {
+      background-color: {{ s.cta_bg_color_2 }};
+      border-color: {{ s.cta_border_color_2 }};
+      color: {{ s.cta_text_color_2 }};
+    }
+    #hero-{{id}} .hero__cta.hero__cta--alt:hover {
+      background-color: {{ s.cta_border_color_2 }};
+      color: {{ s.cta_bg_color_2 }};
+    }
   </style>
   {% unless s.image == blank %}
     {% render 'responsive-image',
@@ -81,11 +100,18 @@
         {{ s.body_content }}
       </p>
     {% endif %}
-    {% if s.cta_text != blank and s.cta_url != blank%}
+    {% if s.cta_text != blank or s.cta_text_2 != blank %}
     <div>
-      <a href="{{s.cta_url}}" class="btn {{ s.button_style }} {{ s.button_style_m }} hero__btn">
-        {{ s.cta_text }}
-      </a>
+      {%- if s.cta_text != blank and s.cta_url != blank -%}
+        <a href="{{ s.cta_url }}" class="hero__cta">
+          {{ s.cta_text }}
+        </a>
+      {%- endif -%}
+      {%- if s.cta_text_2 != blank and s.cta_url_2 != blank -%}
+        <a href="{{ s.cta_url_2 }}" class="hero__cta hero__cta--alt">
+          {{ s.cta_text_2 }}
+        </a>
+      {%- endif -%}
     </div>
     {% endif %}
   </div>

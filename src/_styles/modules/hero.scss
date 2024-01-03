@@ -68,21 +68,52 @@
 }
 
 .hero__title {
-  margin-bottom: 21px;
-  margin-top: 0;
+  .hero--v2 & {
+    margin-bottom: 0;
+    font-family: $font-family-secondary;
+    font-size: 35px;
+    line-height: 1.08;
 
-  @include media-breakpoint-down('md') {
-    margin-bottom: 15px;
+    @include media-breakpoint-up('md') {
+      font-size: 92px;
+      line-height: 1;
+    }
+  }
+
+  .hero--v1 & {
+    margin-bottom: 21px;
+    margin-top: 0;
+
+    @include media-breakpoint-down('md') {
+      margin-bottom: 15px;
+    }
   }
 }
 
 .hero__text {
-  @include media-breakpoint-up('lg') {
-    font-size: 25px;
-    line-height: 1.44;
+  .hero--v2 & {
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 12px;
+    line-height: 1.233;
+    font-family: $font-family-secondary;
+
+    @include media-breakpoint-up('md') {
+      margin-top: 30px;
+      font-size: 19px;
+    }
+  }
+  .hero--v1 & {
+    @include media-breakpoint-up('lg') {
+      font-size: 25px;
+      line-height: 1.44;
+    }
   }
 }
 
+/**
+ * .hero__btn used in V1 module
+ */
 .hero__btn {
   font-size: 17px;
   padding:15px 58px;
@@ -147,3 +178,45 @@
   }
 }
 
+/**
+ * .hero__cta used in V2 module
+ */
+.hero__cta {
+  margin-top: 30px;
+  margin-right: 30px;
+  padding: 12px 32px;
+  width: fit-content;
+  border-radius: 100px;
+  font-family: $font-family-heading-medium;
+  display: inline-block;
+  font-size: 13px;
+  white-space: nowrap;
+  line-height: 1;
+  transition: $transition-timing-function-in-out-ui $transition-duration-fast;
+  transition-property: color, background-color;
+
+  color: $white;
+  background-color: $black;
+  border: 2px solid $white;
+
+  @include media-breakpoint-up('md') {
+    margin-top: 40px;
+    padding: 14px 42px;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  @include media-breakpoint-up('lg') {
+    padding: 15px 53px;
+  }
+
+  &:hover,
+  &:focus {
+    color: $black;
+    background-color: $white;
+  }
+}
+
+.hero__cta--alt {
+  margin-right: 0;
+}

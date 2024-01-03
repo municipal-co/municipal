@@ -1,8 +1,6 @@
-
-{% include 'hero-panel'
+{% include 'hero'
   id: section.id,
-  s: section.settings,
-  classes: 'hero--v1'
+  s: section.settings
 %}
 
 {% schema %}
@@ -91,6 +89,10 @@
         "label": "Body content"
       },
       {
+      "type": "header",
+      "content": "CTA Button"
+      },
+      {
         "type": "text",
         "id": "cta_text",
         "label": "CTA Text"
@@ -101,42 +103,54 @@
         "label": "CTA Link"
       },
       {
-        "type": "select",
-        "id": "button_style",
-        "label": "Button Color Desktop",
-        "options": [
-          {
-            "value": "btn-primary",
-            "label": "Black"
-          },
-          {
-            "value": "btn-secondary",
-            "label": "Blue"
-          },
-          {
-            "value": "btn-white",
-            "label": "White"
-          }
-        ]
+        "type": "color",
+        "id": "cta_bg_color",
+        "label": "Background Color",
+        "default": "#121212"
       },
       {
-        "type": "select",
-        "id": "button_style_m",
-        "label": "Button Color Mobile",
-        "options": [
-          {
-            "value": "btn-primary-m",
-            "label": "Black"
-          },
-          {
-            "value": "btn-secondary-m",
-            "label": "Blue"
-          },
-          {
-            "value": "btn-white-m",
-            "label": "White"
-          }
-        ]
+        "type": "color",
+        "id": "cta_text_color",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "cta_border_color",
+        "label": "Border Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "CTA Button 2"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2",
+        "label": "CTA Link"
+      },
+      {
+        "type": "color",
+        "id": "cta_bg_color_2",
+        "label": "Background Color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "cta_text_color_2",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "cta_border_color_2",
+        "label": "Border Color",
+        "default": "#FFFFFF"
       },
       {
         "type": "header",
@@ -253,7 +267,7 @@
     ],
     "presets": [
       {
-        "name": "Hero",
+        "name": "V2 - Hero",
         "category": "Layout"
       }
     ]
