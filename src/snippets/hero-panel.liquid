@@ -20,7 +20,7 @@
       }
     }
   </style>
-  {% unless s.image_mobile == blank and s.image == blank %}
+  {% unless s.image == blank %}
     {% render 'responsive-image',
       image: s.image
       class: 'hero__bg hero__bg--desktop',
@@ -28,6 +28,8 @@
       loading: 'lazy',
       alt: 's.image.alt',
     %}
+  {% endunless %}
+  {% unless s.image_mobile == blank %}
     {% render 'responsive-image',
       image: s.image_mobile
       class: 'hero__bg hero__bg--mobile',
