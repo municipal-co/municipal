@@ -2,13 +2,25 @@
   width: 100%;
   position: relative;
   display: flex;
-  padding: 60px;
   aspect-ratio: 1440/660;
 
   @include media-breakpoint-down('md') {
-    padding: 30px;
     min-height: 600px;
     aspect-ratio: unset;
+  }
+
+  &.hero--v2 {
+    padding: 50px;
+    @include media-breakpoint-down('md') {
+      padding: 30px 20px;
+    }
+  }
+
+  &.hero--v1 {
+    padding: 60px;
+    @include media-breakpoint-down('md') {
+      padding: 30px;
+    }
   }
 }
 
