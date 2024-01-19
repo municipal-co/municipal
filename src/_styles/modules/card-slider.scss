@@ -270,6 +270,12 @@
       color: $black;
       background-color: $white;
     }
+
+    #blog-product-card-slider &{
+      border-color: $green;
+      color: $green;
+      background: transparent;
+    }
   }
 
   &.card-slider__button--mobile {

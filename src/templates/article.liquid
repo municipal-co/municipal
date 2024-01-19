@@ -1,1 +1,7 @@
 {% section 'article' %}
+{% render 'product-card-slider'
+  type: 'metafields',
+  metafields: article.metafields.custom_fields
+  modifier_class: 'product-carousel'
+  id: "blog-product-card-slider"
+%}

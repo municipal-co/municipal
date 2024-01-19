@@ -161,8 +161,15 @@
 @mixin article-content {
   margin-bottom: $grid-gutter-width;
 
+  p {
+    font-family: $font-family-secondary;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     margin: $spacer*2.5 0 $spacer*2;
+    font-family: $font-family-secondary;
   }
 
   p + p {

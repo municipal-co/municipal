@@ -1,23 +1,56 @@
-{% if type == 'metafields' %}
-  {% assign id = prefix | append: section.id %}
-  {% assign bg_color = "#393d49" %}
-  {% assign text_color = "#ffffff" %}
-  {% assign title_tag = 'h2' %}
-  {% assign title = metafields.pcs_title %}
-{% else %}
-  {% assign s = section.settings %}
+{% assign s = section.settings %}
+{% if id == blank %}
   {% assign id = 'link-card-slider-' | append: section.id %}
-  {% assign bg_color = s.bg_color %}
-  {% assign text_color = s.text_color %}
-  {% assign title_tag = s.title_tag %}
-  {% assign title = s.title %}
-  {% assign heading_copy = s.heading_copy %}
-  {% assign heading_cta_title = s.heading_cta_title %}
-  {% assign heading_cta_url = s.heading_cta_url %}
-  {% assign enable_slider = s.enable_slider %}
-  {% assign cta_bg_color = s.cta_bg_color %}
-  {% assign cta_text_color = s.cta_text_color %}
-  {% assign cta_border_color = s.cta_border_color %}
+{% endif %}
+{% assign bg_color = s.bg_color %}
+{% assign text_color = s.text_color %}
+{% assign title_tag = s.title_tag %}
+{% assign title = s.title %}
+{% assign heading_copy = s.heading_copy %}
+{% assign heading_cta_title = s.heading_cta_title %}
+{% assign heading_cta_url = s.heading_cta_url %}
+{% assign enable_slider = s.enable_slider %}
+{% assign cta_bg_color = s.cta_bg_color %}
+{% assign cta_text_color = s.cta_text_color %}
+{% assign cta_border_color = s.cta_border_color %}
+
+{% if metafields != blank %}
+  {% if id == blank %}
+    {% assign id = prefix | append: section.id %}
+  {% endif %}
+
+  {% if metafields.pcs_text_color != blank %}
+    {% assign text_color = metafields.pcs_text_color %}
+  {% else %}
+    {% assign text_color = "#ffffff" %}
+  {% endif %}
+
+  {% if metafields.pcs_background_color != blank %}
+    {% assign bg_color = metafields.pcs_background_color %}
+  {% else %}
+    {% assign bg_color = "#393d49" %}
+  {% endif %}
+
+  {% assign title_tag = 'h2' %}
+
+  {% if metafields.pcs_title != blank %}
+    {% assign title = metafields.pcs_title %}
+  {% endif %}
+
+  {% if metafields.pcs_description != blank %}
+    {% assign heading_copy = metafields.pcs_description | newline_to_br %}
+  {% endif %}
+
+  {% if metafields.pcs_cta_title != blank %}
+    {% assign heading_cta_title = metafields.pcs_cta_title %}
+  {% endif %}
+
+  {% if metafields.pcs_cta_url %}
+    {% assign heading_cta_url = metafields.pcs_cta_url %}
+  {% endif %}
+  {% if metafields.pcs_enable_slider != blank %}
+    {% assign enable_slider = metafields.pcs_enable_slider %}
+  {% endif %}
 {% endif %}
 
 {% assign btn_class = 'btn-link' %}
@@ -26,11 +59,15 @@
 {% endif %}
 
 {%- capture cards -%}
-  {% if type == 'metafields' %}
+  {% if metafields != blank %}
     {% for card in metafields.pcs_products %}
     {% assign current_product = all_products[card.product] %}
       {% if current_product != blank %}
-        <div class="swiper-slide" data-card-slide>
+        {% if enable_slider %}
+          <div class="swiper-slide" data-card-slide>
+        {% else %}
+          <div>
+        {% endif %}
           {% render 'product-card'
             card_product: current_product,
             color: card.selected_color
@@ -85,10 +122,10 @@
           <{{title_tag}} class="card-slider__title h2">{{ title }}</{{title_tag}}>
         {% endif %}
 
-        {% if heading_copy %}
-        <p class="card-slider__copy p3">
-          {{ heading_copy }}
-        </p>
+        {% if heading_copy != blank %}
+          <p class="card-slider__copy p3">
+            {{ heading_copy }}
+          </p>
         {% endif %}
       </div>
       {% if heading_cta_title != blank and heading_cta_url != blank %}
@@ -103,6 +140,11 @@
       <div class="row product-card__grid-container">
         {{ cards }}
       </div>
+      {% if heading_cta_title != blank and heading_cta_url != blank and modifier_class == 'product-carousel' %}
+        <div class="text-center">
+          <a class="card-slider__button card-slider__button--mobile {{btn_class}}" href="{{heading_cta_url}}">{{heading_cta_title}}</a>
+        </div>
+      {% endif %}
     {% else %}
       <div class="row card-slider__slider" data-card-slider {% if modifier_class != blank %}data-slider-suffix="{{modifier_class}}"{% endif %}>
         <div class="swiper-wrapper">
