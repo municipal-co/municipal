@@ -50,6 +50,11 @@
 
 .hero__inner {
   z-index:1;
+
+  .hero--v2 & {
+    margin: 0 auto;
+    max-width: 1480px;
+  }
 }
 
 .hero__title-image {
@@ -58,6 +63,16 @@
   margin-bottom: 21px;
   @include media-breakpoint-down('md') {
     margin-bottom: 15px;
+  }
+
+  .hero--v2 & {
+    max-width: 45.8333333333%;
+    @include media-breakpoint-down('md') {
+      max-width: 83.3333333333%;
+    }
+  }
+  .hero--horizontal-center.hero--v2 & {
+    margin: 0 auto;
   }
 }
 
