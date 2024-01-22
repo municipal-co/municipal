@@ -67,6 +67,9 @@
 
   .hero--v2 & {
     max-width: 45.8333333333%;
+    @include media-breakpoint-down('md') {
+      max-width: 83.3333333333%;
+    }
   }
   .hero--horizontal-center.hero--v2 & {
     margin: 0 auto;
