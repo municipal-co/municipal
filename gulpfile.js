@@ -123,6 +123,9 @@ task('watch', () => {
           middleware: (req, res, next) => {
             const prefix = req.url.indexOf('?') > -1 ? '&' : '?';
             req.url += prefix + '_fd=0';
+            if(config.key) {
+              res.setHeader('set-cookie', `storefront_digest=${config.key}`)
+            }
             next();
           }
         },

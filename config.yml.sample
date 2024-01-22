@@ -10,26 +10,33 @@
 # For more information on this config file:
 #   Configuration variables | http://shopify.github.io/themekit/configuration/
 #   Ignore patterns | http://shopify.github.io/themekit/ignores/
+#
+# Key value can be obtained by going to admin -> themes -> theme options (... next to the theme name)
+# the copy the preview URL, it will be a parameter within the link obtained
+
 
 ---
 
 development:
-  password: 
-  theme_id: 
-  store: 
+  password:
+  theme_id:
+  key:
+  store:
   ignore_files:
     - settings_data.json
 
 production:
-  password: 
-  theme_id: 
-  store: 
+  password:
+  theme_id:
+  key:
+  store:
   ignore_files:
     - settings_data.json
 
 staging:
-  password: 
-  theme_id: 
-  store: 
+  password:
+  theme_id:
+  key:
+  store:
   ignore_files:
     - settings_data.json
