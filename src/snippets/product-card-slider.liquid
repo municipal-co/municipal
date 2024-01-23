@@ -48,7 +48,8 @@
   {% if metafields.pcs_cta_url %}
     {% assign heading_cta_url = metafields.pcs_cta_url %}
   {% endif %}
-  {% if metafields.pcs_enable_slider != blank %}
+  {% assign enable_slider = true %}
+  {% if metafields.pcs_enable_slider != nil %}
     {% assign enable_slider = metafields.pcs_enable_slider %}
   {% endif %}
 {% endif %}
