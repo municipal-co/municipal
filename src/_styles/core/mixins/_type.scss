@@ -161,7 +161,7 @@
 @mixin article-content {
   margin-bottom: $grid-gutter-width;
 
-  p {
+  &, p {
     font-family: $font-family-secondary;
     font-size: inherit;
     line-height: inherit;
