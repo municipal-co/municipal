@@ -17,6 +17,8 @@
 
 .article__hero-image {
   margin-bottom: 100px;
+  max-height: 660px;
+  overflow: hidden;
 
   @include media-breakpoint-down('md') {
     margin-bottom: 50px;
