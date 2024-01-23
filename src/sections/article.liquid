@@ -37,7 +37,7 @@
           image: image_url,
         %}
       {% endif %}
-      by {{ article.author }} on {{ article_date }}
+      by {{ article.author }} on {{ article.published_at | date: '%B %d, %Y' }}
     </div>
 
     <div class="article__content rte" itemprop="articleBody" data-article-content>
