@@ -17,7 +17,7 @@
     {% if article.tags != blank%}
       <div class="article__tags-container">
         {% for tag in article.tags %}
-          <a href="/blogs/{{ blog.handle }}/{{tag}}" class="category-capsule"> {{tag}}</a>
+          <a href="/blogs/{{ blog.handle }}/tagged/{{tag}}" class="category-capsule"> {{tag}}</a>
         {% endfor %}
       </div>
     {% endif %}
