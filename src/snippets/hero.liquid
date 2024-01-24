@@ -19,6 +19,35 @@
         color: {{ s.highlight_color_m }};
       }
     }
+    #hero-{{id}} .hero__cta {
+    background-color: {{ s.cta_bg_color }};
+    border-color: {{ s.cta_border_color }};
+    color: {{ s.cta_text_color }};
+    }
+    #hero-{{id}} .hero__cta:hover {
+      background-color: {{ s.cta_border_color }};
+      color: {{ s.cta_bg_color }};
+    }
+
+    #hero-{{id}} .hero__cta.hero__cta--alt {
+      background-color: {{ s.cta_bg_color_2 }};
+      border-color: {{ s.cta_border_color_2 }};
+      color: {{ s.cta_text_color_2 }};
+    }
+    #hero-{{id}} .hero__cta.hero__cta--alt:hover {
+      background-color: {{ s.cta_border_color_2 }};
+      color: {{ s.cta_bg_color_2 }};
+    }
+
+    #hero-{{id}} .hero__cta--coming-soon {
+      background-color: {{ s.coming_soon_cta_bg_color }};
+      border-color: {{ s.coming_soon_cta_border_color }};
+      color: {{ s.coming_soon_cta_text_color }};
+    }
+    #hero-{{id}} .hero__cta--coming-soon:hover {
+      background-color: {{ s.coming_soon_cta_border_color }};
+      color: {{ s.coming_soon_cta_bg_color }};
+    }
   </style>
   {% unless s.image == blank %}
     {% render 'responsive-image',
@@ -59,7 +88,7 @@
     </div>
   {% endif %}
 
-  <div class="hero__inner col-20 col-lg-11">
+  <div class="hero__inner">
     {% if s.handwritten_image != blank %}
       {% render 'responsive-image',
         image: s.handwritten_image,
@@ -81,12 +110,28 @@
         {{ s.body_content }}
       </p>
     {% endif %}
-    {% if s.cta_text != blank and s.cta_url != blank%}
-    <div>
-      <a href="{{s.cta_url}}" class="btn {{ s.button_style }} {{ s.button_style_m }} hero__btn">
-        {{ s.cta_text }}
-      </a>
-    </div>
+    {% if s.enable_coming_soon != true %}
+      {% if s.cta_text != blank or s.cta_text_2 != blank %}
+      <div>
+        {%- if s.cta_text != blank and s.cta_url != blank -%}
+          <a href="{{ s.cta_url }}" class="hero__cta">
+            {{ s.cta_text }}
+          </a>
+        {%- endif -%}
+        {%- if s.cta_text_2 != blank and s.cta_url_2 != blank -%}
+          <a href="{{ s.cta_url_2 }}" class="hero__cta hero__cta--alt">
+            {{ s.cta_text_2 }}
+          </a>
+        {%- endif -%}
+      </div>
+      {% endif %}
+    {% else %}
+      <div>
+        <button class="hero__cta hero__cta--coming-soon" data-mkt-drawer-trigger data-image="{{s.coming_soon_product_image | image_url: width: '2000'}}" data-product="{{s.coming_soon_product_title}}">
+          {{ s.coming_soon_cta_label }}
+        </button>
+      </div>
     {% endif %}
+
   </div>
 </div>

@@ -1,8 +1,7 @@
-
-{% include 'hero-panel'
+{% include 'hero'
   id: section.id,
   s: section.settings,
-  classes: 'hero--v1'
+  classes: 'hero--v2'
 %}
 
 {% schema %}
@@ -91,6 +90,10 @@
         "label": "Body content"
       },
       {
+      "type": "header",
+      "content": "CTA Button"
+      },
+      {
         "type": "text",
         "id": "cta_text",
         "label": "CTA Text"
@@ -101,42 +104,54 @@
         "label": "CTA Link"
       },
       {
-        "type": "select",
-        "id": "button_style",
-        "label": "Button Color Desktop",
-        "options": [
-          {
-            "value": "btn-primary",
-            "label": "Black"
-          },
-          {
-            "value": "btn-secondary",
-            "label": "Blue"
-          },
-          {
-            "value": "btn-white",
-            "label": "White"
-          }
-        ]
+        "type": "color",
+        "id": "cta_bg_color",
+        "label": "Background Color",
+        "default": "#121212"
       },
       {
-        "type": "select",
-        "id": "button_style_m",
-        "label": "Button Color Mobile",
-        "options": [
-          {
-            "value": "btn-primary-m",
-            "label": "Black"
-          },
-          {
-            "value": "btn-secondary-m",
-            "label": "Blue"
-          },
-          {
-            "value": "btn-white-m",
-            "label": "White"
-          }
-        ]
+        "type": "color",
+        "id": "cta_text_color",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "cta_border_color",
+        "label": "Border Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "header",
+        "content": "CTA Button 2"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2",
+        "label": "CTA Link"
+      },
+      {
+        "type": "color",
+        "id": "cta_bg_color_2",
+        "label": "Background Color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "cta_text_color_2",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "cta_border_color_2",
+        "label": "Border Color",
+        "default": "#FFFFFF"
       },
       {
         "type": "header",
@@ -249,11 +264,57 @@
         "id": "mobile_video_webm",
         "label": "Mobile Video (WEBM)",
         "info": "Replaces mobile image for a looping video"
+      },
+      {
+        "type": "header",
+        "content": "Marketing drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_coming_soon",
+        "label": "Enable Coming Soon",
+        "default": false,
+        "info": "When enabled replaces the two CTAs populated above in favor of this one that will trigger the marketing drawer"
+      },
+      {
+        "type" : "text",
+        "id": "coming_soon_cta_label",
+        "label": "CTA Label"
+      },
+      {
+        "type": "color",
+        "id": "coming_soon_cta_bg_color",
+        "label": "Background Color",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "coming_soon_cta_text_color",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "coming_soon_cta_border_color",
+        "label": "Border Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "id": "coming_soon_product_title",
+        "label": "Product Title",
+        "info": "Title of the product that is coming soon, this is used to add to the customers klaviyo profile when they sign up for the coming soon notification."
+      },
+      {
+        "type": "image_picker",
+        "id": "coming_soon_product_image",
+        "label": "Product Image",
+        "info": "Image of the product to be displayed on the coming soon drawer"
       }
     ],
     "presets": [
       {
-        "name": "Hero",
+        "name": "V2 - Hero",
         "category": "Layout"
       }
     ]
