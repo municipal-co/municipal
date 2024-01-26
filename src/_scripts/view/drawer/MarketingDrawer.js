@@ -25,7 +25,7 @@ export default function MarketingDrawer({data, index}) {
   const buildNotifyText = () => {
     return drawerSettings.notifyText.replace(
       '[[product]]',
-      `<span className="highlighted">${data.productName}</span>`
+      `<span class="highlighted">${data.productName}</span>`
     )
   }
 
@@ -63,7 +63,7 @@ export default function MarketingDrawer({data, index}) {
     }).then(res => {
       switch(res.status) {
         case 200:
-          setResponseMessage('Thanks for your entry! We\'ll reach out soon if you\'re selected.');
+          setResponseMessage(drawerSettings.successMessage);
           setSubmitted(true);
           break;
         default:
