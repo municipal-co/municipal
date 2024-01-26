@@ -1,3 +1,13 @@
+{% assign author_name = 'MUNICIPAL' %}
+{% if article.metafields.custom.author_name != blank %}
+  {% assign author_name = article.metafields.custom.author_name %}
+{% endif %}
+
+{% assign author_image = 'blog_profile.jpeg' | asset_url | replace: '//', 'https://' %}
+{% if article.metafields.custom.author_image != blank %}
+  {% assign author_image = article.metafields.custom.author_image %}
+{% endif %}
+
 {% assign has_image = false %}
 {% if article.image %}
   {% assign has_image = true %}
@@ -27,17 +37,10 @@
     </h1>
 
     <div class="article__author">
-      {% if article.user.image %}
-        {% render 'image_tag'
-        image: article.user.image,
-        %}
-      {% else %}
-        {% assign image_url = 'blog_profile.jpeg' | asset_url | replace: '//', 'https://' %}
-        {% render 'image_tag',
-          image: image_url,
-        %}
-      {% endif %}
-      by {{ article.author }} on {{ article.published_at | date: '%B %d, %Y' }}
+      {% render 'image_tag',
+        image: author_image,
+      %}
+      by {{ author_name }} on {{ article.published_at | date: '%B %d, %Y' }}
     </div>
 
     <div class="article__content rte" itemprop="articleBody" data-article-content>
