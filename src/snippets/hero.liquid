@@ -112,24 +112,30 @@
     {% endif %}
     {% if s.enable_coming_soon != true %}
       {% if s.cta_text != blank or s.cta_text_2 != blank %}
-      <div>
+      <div class="hero__cta-wrap">
         {%- if s.cta_text != blank and s.cta_url != blank -%}
-          <a href="{{ s.cta_url }}" class="hero__cta">
-            {{ s.cta_text }}
-          </a>
+          <span>
+            <a href="{{ s.cta_url }}" class="hero__cta">
+              {{ s.cta_text }}
+            </a>
+          </span>
         {%- endif -%}
         {%- if s.cta_text_2 != blank and s.cta_url_2 != blank -%}
-          <a href="{{ s.cta_url_2 }}" class="hero__cta hero__cta--alt">
-            {{ s.cta_text_2 }}
-          </a>
+          <span>
+            <a href="{{ s.cta_url_2 }}" class="hero__cta hero__cta--alt">
+              {{ s.cta_text_2 }}
+            </a>
+          </span>
         {%- endif -%}
       </div>
       {% endif %}
     {% else %}
-      <div>
-        <button class="hero__cta hero__cta--coming-soon" data-mkt-drawer-trigger data-image="{{s.coming_soon_product_image | image_url: width: '2000'}}" data-product="{{s.coming_soon_product_title}}">
-          {{ s.coming_soon_cta_label }}
-        </button>
+      <div class="hero__cta-wrap">
+        <span>
+          <button class="hero__cta hero__cta--coming-soon" data-mkt-drawer-trigger data-image="{{s.coming_soon_product_image | image_url: width: '2000'}}" data-product="{{s.coming_soon_product_title}}">
+            {{ s.coming_soon_cta_label }}
+          </button>
+        </span>
       </div>
     {% endif %}
 
