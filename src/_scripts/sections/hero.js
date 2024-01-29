@@ -5,7 +5,7 @@ const selectors = {
   backgroundVideo: '[data-background-video]',
   mp4Video: '[data-mp4-video]',
   webmVideo: '[data-webm-video]',
-
+  mktDrawerTrigger: '[data-mkt-drawer-trigger]',
 }
 
 export default class Hero extends BaseSection{
@@ -15,6 +15,7 @@ export default class Hero extends BaseSection{
     this.$backgroundVideo = $(selectors.backgroundVideo, this.$container);
     this.$mp4Video = $(selectors.mp4Video, this.$container);
     this.$webmVideo = $(selectors.webmVideo, this.$container);
+    this.$mktDrawerTrigger = $(selectors.mktDrawerTrigger, this.$container);
 
     this.state = {
       playing: false,
@@ -35,6 +36,22 @@ export default class Hero extends BaseSection{
 
       this.onBreakpointChange(this.matchMedia);
     }
+
+    this.$mktDrawerTrigger.on('click', this.toggleMktDrawer.bind(this));
+  }
+
+  toggleMktDrawer() {
+    const drawerData = {
+      productName: this.$mktDrawerTrigger.data('product'),
+      image: this.$mktDrawerTrigger.data('image'),
+    }
+
+    const evt = new CustomEvent('drawerOpen', { detail: {
+      type: 'marketing-drawer',
+      ...drawerData
+    }})
+
+    document.dispatchEvent(evt);
   }
 
   onPlayVideo() {

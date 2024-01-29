@@ -1,59 +1,73 @@
+{% assign author_name = 'MUNICIPAL' %}
+{% if article.metafields.custom.author_name != blank %}
+  {% assign author_name = article.metafields.custom.author_name %}
+{% endif %}
+
+{% assign author_image = 'blog_profile.jpeg' | asset_url | replace: '//', 'https://' %}
+{% if article.metafields.custom.author_image != blank %}
+  {% assign author_image = article.metafields.custom.author_image %}
+{% endif %}
+
 {% assign has_image = false %}
 {% if article.image %}
   {% assign has_image = true %}
 {% endif %}
 
-{% capture article_date %}{{ article.published_at | time_tag: format: 'month_day' }}{% endcapture %}
+{% capture article_date %}{{ article.published_at | time_tag: format: 'date' }}{% endcapture %}
 {% capture subtitle %}{{ 'blogs.article.author_on_date_html' | t: author: article.author, date: article_date }}{% endcapture %}
 
-<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="article">
-
-  <div class="article-content-wrapper" data-article-content-wrapper>
-    <article role="article" itemscope itemtype="http://schema.org/Article">
-
-      <div class="container-fluid-max">
-        {% include 'page-hero',
-                    ph_id: article.id,
-                    ph_background_image: article.image,
-                    ph_light_text: has_image,
-                    ph_title: article.title,
-                    ph_subtitle: subtitle
-        %}
-      </div>
-      
-      <div class="container">
-
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-
-            {% if settings.social_sharing_blog %}
-              {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
-            {% endif %}
-
-            {% if article.tags.size > 0 %}
-              <ul class="list-inline">
-                {% for tag in article.tags %}
-                  <li>
-                    <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endif %}        
-
-            <div class="rte" itemprop="articleBody" data-article-content>
-              {{ article.content }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
+<article class="article">
+  <div class="article__hero-image">
+    {% render 'image_tag'
+      image: article.image,
+      image_alt: article.image.alt,
+    %}
   </div>
+  <div class="article__body container">
+    {% if article.tags != blank%}
+      <div class="article__tags-container">
+        {% for tag in article.tags %}
+          <a href="/blogs/{{ blog.handle }}/tagged/{{tag}}" class="category-capsule"> {{tag}}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
 
-</div>
+    <h1 class="article__title">
+      {{ article.title }}
+    </h1>
 
-{% schema %}
+    <div class="article__author">
+      {% render 'image_tag',
+        image: author_image,
+      %}
+      by {{ author_name }} on {{ article.published_at | date: '%B %d, %Y' }}
+    </div>
+
+    <div class="article__content rte" itemprop="articleBody" data-article-content>
+      {{ article.content }}
+    </div>
+  </div>
+</article>
+
+<script type="application/ld+json">
   {
-    "name": "Article",
-    "settings": []
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "image": {{ article.image.src | json }},
+    "author": {
+      "@type": "Organization",
+      "name": "Municipal",
+      "url": "{{ shop.url }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Municipal",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ 'logo.svg' | asset_url }}"
+      }
+    },
+    "datePublished": {{ article.published_at | date: '%Y-%m-%d %H:%M:%S.%6N %Z' | json }}
   }
-{% endschema %}
+  </script>
