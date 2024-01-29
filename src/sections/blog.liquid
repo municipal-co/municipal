@@ -1,63 +1,71 @@
-{% comment %} assign defaults {% endcomment %}
-{% assign hero_title = blog.title %}
-{% assign hero_light_text = section.settings.content_light_text %}
-{% assign hero_background_image = section.settings.hero_background_image %}
+{% assign blog_title = blog.title %}
+{% assign highlight_color = section.settings.highlight_color %}
 
 {% if section.settings.title != blank %}
-  {% assign hero_title = section.settings.title %}
+  {% assign blog_title = section.settings.title %}
 {% endif %}
 
-{% comment %} Override the defaults if a block specific to the current blog is found {% endcomment %}
-{% for block in section.blocks %}
-  {% if block.settings.blog == blog.handle and block.settings.article != blank %}
-    {% assign article = articles[block.settings.article] %}
-    {% assign blog_handle = article.url | replace: 'blogs/', '' | replace: '/', ' ' | split: ' ' | first %}  {% comment %} Shopify doesn't have a way to access article.blog directly so we have to parse out the url {% endcomment %}
-    {% assign hero_background_image = article.image %}
-    {% assign hero_light_text = block.settings.content_light_text %}
-    {% assign hero_title = article.title %}
-    {% assign hero_title_link = article.url %}
-    {% capture hero_toptitle %}
-      {% if article.tags.size > 0 %}
-        {% for tag in article.tags %}
-          <a href="/blogs/{{ blog_handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
-          {% unless forloop.last %}&middot;{% endunless %}
-        {% endfor %}
+{% assign blog_description = section.settings.body_content %}
+
+{% if blog.current_tags != blank%}
+  {% for block in section.blocks %}
+    {% if blog.current_tags contains block.blog %}
+      {% if block.settings.title != blank %}
+        {% assign blog_title = block.settings.title %}
       {% endif %}
-    {% endcapture %}
-    {% capture hero_subtitle %}
-      <div class="text-transform-none">
-        {% if article.author != blank %}
-          By {{ article.author }} | 
-        {% endif %}
-        {{ article.published_at | date: "%B %e" }}
+      {% if block.settings.body_content != blank %}
+        {% assign blog_description = block.settings.body_content %}
+      {% endif %}
+      {% if block.settings.highlight_color != blank %}
+        {% assign highlight_color = block.settings.highlight_color %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% capture category_tags %}
+  {%- for tag in blog.all_tags -%}
+    {%- if tag contains 'category:' -%}
+      {%- unless forloop.first -%},{%- endunless -%}{{- tag -}}
+    {%- endif -%}
+  {%- endfor -%}
+{% endcapture %}
+
+{% assign category_tags = category_tags | split: ',' %}
+
+<style>
+  #{{section.id}} .blog-header__title strong {
+    font-weight: normal;
+    color: {{ highlight_color }};
+  }
+</style>
+<div id="{{ section.id }}" class="blog" data-section-id="{{ section.id }}" data-section-type="blog">
+  <div class="blog-header container-fluid-max text-center">
+    <h1 class="h1 blog-header__title">
+      {{ blog_title | replace: '<p>', '' | replace: '</p>', '' }}
+    </h1>
+    {% if section.settings.body_content %}
+      <div class="blog-header__description">
+        {{ blog_description | replace: '<p>', '<p class="p3">'}}
       </div>
-    {% endcapture %}
-    {% break %}
-  {% endif %}
-{% endfor %}
+    {% endif %}
+    {% if section.settings.show_filters == true %}
+      <div class="blog-header__filters">
+        <div class="swiper">
+          <div class="swiper-wrapper" >
+                <a href="{{ blog.url }}" class="blog-header__filters__item category-capsule{% if current_tags == blank %} category-capsule--highlighted{% endif %} swiper-slide">all</a>
+            {% for tag in category_tags %}
+              {% assign clean_tag = tag | strip %}
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="blog-header__filters__item category-capsule{% if current_tags contains clean_tag %} category-capsule--highlighted{% endif %} swiper-slide">{{ tag | remove: 'category:' }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
 
-<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="blog">
   {% paginate blog.articles by 16 %}
-
-   {% include 'page-hero',
-               ph_id: section.id,
-               ph_background_image: hero_background_image,
-               ph_title: hero_title,
-               ph_toptitle: hero_toptitle,
-               ph_subtitle: hero_subtitle,
-               ph_title_link: hero_title_link,
-               ph_content_alignment: 'center',
-               ph_light_text: hero_light_text
-     %}
-
     <div class="container">
-
-      {% comment %}
-
-      Article Previews
-      ====================
-      {% endcomment %}
-
       <div class="content-grid">
         {% for article in blog.articles %}
           <div class="content-grid__item">
@@ -66,11 +74,9 @@
         {% endfor %}
       </div>
 
-      {% if paginate.next.is_link %}
-        {% comment %} See _scripts/sections/blog.js {% endcomment %}
-        <div class="text-center" style="padding: 10px 0" data-pagination>
-          <a href="{{ paginate.next.url }}" data-next-page>Load More</a>
-        </div>
+
+      {% if paginate.pages > 1 %}
+        {% include 'pagination' %}
       {% endif %}
     </div>
 
@@ -83,25 +89,37 @@
     "settings": [
       {
         "type": "header",
-        "content": "Page Hero",
-        "info": "Used as the fallback hero if a blog-specific one is not selected.  See 'Add blog hero' below."
-      },
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Title",
-        "info": "Title of the selected blog will be used if blank"
+        "content": "General Settings"
       },
       {
         "type": "checkbox",
-        "id" : "content_light_text",
-        "label": "Light Text",
-        "default": false
+        "id": "show_filters",
+        "label": "Show Filters",
+        "info": "Enables filter bubbles below the page title"
       },
       {
-        "type": "image_picker",
-        "id": "hero_background_image",
-        "label": "Image"
+        "type": "header",
+        "content": "General page header",
+        "info": "Used as the general header if a blog-specific one is not selected.  See 'Add blog hero' below."
+      },
+      {
+        "type": "color",
+        "id": "highlight_color",
+        "label": "Highlight Color",
+        "info": "Color of the highlighted text",
+        "default": "#00ff00"
+      },
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Title",
+        "info": "Title of the selected blog will be used if blank, set the text to bold to place the color highlight"
+      },
+      {
+        "type": "richtext",
+        "id": "body_content",
+        "label": "Body Content",
+        "info": "Small text below the title"
       }
     ],
     "blocks" : [
@@ -112,27 +130,35 @@
           {
             "type": "header",
             "content": "Page Hero",
-            "info": "These settings will affect the page hero for the selected blog home page."
+            "info": "These settings will affect the page hero for the selected filtered home page."
+          },
+          {
+            "type": "color",
+            "id": "highlight_color",
+            "label": "Highlight Color",
+            "info": "Color of the highlighted text",
+            "default": "#00ff00"
           },
           {
             "type": "blog",
             "id": "blog",
-            "label": "Blog"
+            "label": "Blog",
+            "info": "Refers to the filter that is applied to the blog articles, so when the filter is enabled, the title will be overridden by this settings"
           },
           {
-             "type": "article",
-             "id": "article",
-             "label": "Article",
-             "info" : "The featured image for this article will be used as the background image"
+            "type": "richtext",
+            "id": "title",
+            "label": "Title",
+            "info": "Title of the selected blog will be used if blank"
           },
           {
-            "type": "checkbox",
-            "id" : "content_light_text",
-            "label": "Light Text",
-            "default": false
+            "type": "richtext",
+            "id": "body_content",
+            "label": "Body Content",
+            "info": "Small text below the title"
           }
         ]
-      }    
+      }
     ]
   }
 {% endschema %}
