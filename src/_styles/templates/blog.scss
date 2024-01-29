@@ -1,0 +1,43 @@
+.blog {
+  background-color: $black;
+
+  .findify-pagination .pagination-item {
+    color: $white;
+
+    &:hover {
+      color: $blue;
+    }
+  }
+
+  .category-capsule:hover {
+    border-color: $green;
+    background: $green;
+  }
+
+  .category-capsule--highlighted {
+    background: $green;
+    border-color: $green;
+    color: $black;
+  }
+}
+
+.blog-header {
+  padding-top: 160px;
+  padding-bottom: 160px;
+}
+
+.blog-header__title, .blog-header__description * {
+  color: $white;
+}
+
+.blog-header__description p {
+  font-family: $font-family-secondary;
+}
+
+.blog-header__filters {
+  .swiper-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+}
