@@ -15,6 +15,15 @@
 
 {% capture article_date %}{{ article.published_at | time_tag: format: 'date' }}{% endcapture %}
 {% capture subtitle %}{{ 'blogs.article.author_on_date_html' | t: author: article.author, date: article_date }}{% endcapture %}
+{% capture filter_tags %}
+  {%- for tag in article.tags -%}
+    {%- if tag contains 'category:' -%}
+      {%- unless forloop.first -%},{%- endunless -%}{{- tag | remove: 'category:' -}}
+    {%- endif -%}
+  {%- endfor -%}
+{% endcapture %}
+
+{% assign filter_tags = filter_tags | split: ',' %}
 
 <article class="article">
   <div class="article__hero-image">
@@ -24,9 +33,9 @@
     %}
   </div>
   <div class="article__body container">
-    {% if article.tags != blank%}
+    {% if filter_tags != blank%}
       <div class="article__tags-container">
-        {% for tag in article.tags %}
+        {% for tag in filter_tags %}
           <a href="/blogs/{{ blog.handle }}/tagged/{{tag}}" class="category-capsule"> {{tag}}</a>
         {% endfor %}
       </div>
@@ -45,6 +54,16 @@
 
     <div class="article__content rte" itemprop="articleBody" data-article-content>
       {{ article.content }}
+    </div>
+    <div class="article__tag-list">
+      {% assign printed = 0 %}
+      {% for tag in article.tags %}
+        {% unless tag contains 'category:' %}
+          {% if printed > 0 %}, {% endif %}
+          <a href="/blogs/{{ blog.handle }}/tagged/{{tag}}" class="article__tag-link">{{tag}}</a>
+          {% assign printed = printed | plus: 1 %}
+        {% endunless %}
+      {% endfor %}
     </div>
   </div>
 </article>

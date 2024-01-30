@@ -86,11 +86,11 @@
 }
 
 .article__content {
-  margin-top: 120px;
+  margin: 110px 0;
   padding: 0 20px;
 
   @include media-breakpoint-down('md') {
-    margin-top: 50px;
+    margin: 50px 0;
   }
 
   h1 {
@@ -134,3 +134,28 @@
   }
 }
 
+.article__tag-list {
+  color: $green;
+  font-family: $font-family-secondary;
+  font-size: 19px;
+  padding: 0 20px 110px;
+  margin-top: 110px;
+
+  @include media-breakpoint-down('md') {
+    padding: 0 20px 50px;
+    margin-top: 50px;
+  }
+
+  @include media-breakpoint-down('sm') {
+    font-size: 12px;
+  }
+
+  a {
+    text-decoration: none;
+    color: $green;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
