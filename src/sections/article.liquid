@@ -36,7 +36,7 @@
     {% if filter_tags != blank%}
       <div class="article__tags-container">
         {% for tag in filter_tags %}
-          <a href="/blogs/{{ blog.handle }}/tagged/{{tag}}" class="category-capsule"> {{tag}}</a>
+          <a href="/blogs/{{ blog.handle }}/tagged/{{tag | handleize}}" class="category-capsule"> {{tag}}</a>
         {% endfor %}
       </div>
     {% endif %}
@@ -60,7 +60,7 @@
       {% for tag in article.tags %}
         {% unless tag contains 'category:' %}
           {% if printed > 0 %}, {% endif %}
-          <a href="/blogs/{{ blog.handle }}/tagged/{{tag | handleieze}}" class="article__tag-link">{{tag}}</a>
+          <a href="/blogs/{{ blog.handle }}/tagged/{{tag | handleize}}" class="article__tag-link">{{tag}}</a>
           {% assign printed = printed | plus: 1 %}
         {% endunless %}
       {% endfor %}
