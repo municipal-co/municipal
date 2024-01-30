@@ -1,5 +1,10 @@
 .blog {
   background-color: $black;
+  padding-bottom: 60px;
+
+  .findify-pagination {
+    margin-top: 40px;
+  }
 
   .findify-pagination .pagination-item {
     color: $white;
@@ -19,11 +24,28 @@
     border-color: $green;
     color: $black;
   }
+
+  .container-fluid-max {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 .blog-header {
   padding-top: 160px;
   padding-bottom: 160px;
+  @include media-breakpoint-down('md') {
+    padding-top: 135px;
+    padding-bottom: 70px;
+  }
+}
+
+.blog-header__title {
+  @include media-breakpoint-down('md') {
+    font-size: 55px;
+    line-height: 51px;
+    margin-bottom: 23px;
+  }
 }
 
 .blog-header__title, .blog-header__description * {
@@ -39,5 +61,9 @@
     display: flex;
     justify-content: center;
     gap: 20px;
+  }
+
+  @include media-breakpoint-down('md') {
+    margin-top: 51px;
   }
 }

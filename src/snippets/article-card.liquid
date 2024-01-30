@@ -23,7 +23,7 @@
       </a>
     {% endif %}
     <a href="{{ article.url }}" class="article-card__info">
-      <h3 class="article-card__info-title">{{ article.title }}</h3>
+      <h3 class="article-card__info-title">{{ article.title | truncate: 60}}</h3>
 
       <div class="article-card__footer">
 
