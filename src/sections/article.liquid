@@ -60,7 +60,7 @@
       {% for tag in article.tags %}
         {% unless tag contains 'category:' %}
           {% if printed > 0 %}, {% endif %}
-          <a href="/blogs/{{ blog.handle }}/tagged/{{tag}}" class="article__tag-link">{{tag}}</a>
+          <a href="/blogs/{{ blog.handle }}/tagged/{{tag | handleieze}}" class="article__tag-link">{{tag}}</a>
           {% assign printed = printed | plus: 1 %}
         {% endunless %}
       {% endfor %}
