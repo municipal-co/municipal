@@ -40,47 +40,47 @@
   }
 </style>
 <div id="{{ section.id }}" class="blog" data-section-id="{{ section.id }}" data-section-type="blog">
-  <div class="blog-header container-fluid-max text-center">
-    <h1 class="h1 blog-header__title">
-      {{ blog_title | replace: '<p>', '' | replace: '</p>', '' }}
-    </h1>
-    {% if section.settings.body_content %}
-      <div class="blog-header__description">
-        {{ blog_description | replace: '<p>', '<p class="p3">'}}
-      </div>
-    {% endif %}
-    {% if section.settings.show_filters == true %}
-      <div class="blog-header__filters">
-        <div class="swiper">
-          <div class="swiper-wrapper" >
-                <a href="{{ blog.url }}" class="blog-header__filters__item category-capsule{% if current_tags == blank %} category-capsule--highlighted{% endif %} swiper-slide">all</a>
-            {% for tag in category_tags %}
-              {% assign clean_tag = tag | strip %}
-              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="blog-header__filters__item category-capsule{% if current_tags contains clean_tag %} category-capsule--highlighted{% endif %} swiper-slide">{{ tag | remove: 'category:' }}</a>
-            {% endfor %}
+    <div class="blog-header container-fluid-max text-center">
+      <h1 class="h1 blog-header__title">
+        {{ blog_title | replace: '<p>', '' | replace: '</p>', '' }}
+      </h1>
+      {% if section.settings.body_content %}
+        <div class="blog-header__description">
+          {{ blog_description | replace: '<p>', '<p class="p3">'}}
+        </div>
+      {% endif %}
+      {% if section.settings.show_filters == true %}
+        <div class="blog-header__filters">
+          <div class="swiper">
+            <div class="swiper-wrapper" >
+                  <a href="{{ blog.url }}" class="blog-header__filters__item category-capsule{% if current_tags == blank %} category-capsule--highlighted{% endif %} swiper-slide">all</a>
+              {% for tag in category_tags %}
+                {% assign clean_tag = tag | strip %}
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="blog-header__filters__item category-capsule{% if current_tags contains clean_tag %} category-capsule--highlighted{% endif %} swiper-slide">{{ tag | remove: 'category:' }}</a>
+              {% endfor %}
+            </div>
           </div>
         </div>
-      </div>
-    {% endif %}
-  </div>
-
-  {% paginate blog.articles by 16 %}
-    <div class="container">
-      <div class="content-grid">
-        {% for article in blog.articles %}
-          <div class="content-grid__item">
-            {% include 'article-card', article: article, show_author: false, show_tags: false %}
-          </div>
-        {% endfor %}
-      </div>
-
-
-      {% if paginate.pages > 1 %}
-        {% include 'pagination' %}
       {% endif %}
     </div>
 
-  {% endpaginate %}
+    {% paginate blog.articles by 16 %}
+      <div class="container-fluid-max">
+        <div class="content-grid content-grid--1-col content-grid--md-2-col content-grid--lg-3-col">
+          {% for article in blog.articles %}
+            <div class="content-grid__item">
+              {% include 'article-card', article: article, show_author: false, show_tags: false %}
+            </div>
+          {% endfor %}
+        </div>
+
+
+        {% if paginate.pages > 1 %}
+          {% include 'pagination' %}
+        {% endif %}
+      </div>
+
+    {% endpaginate %}
 </div>
 
 {% schema %}

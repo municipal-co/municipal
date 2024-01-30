@@ -39,7 +39,7 @@
   margin-bottom: 21px;
   text-transform: uppercase;
 
-  @include media-breakpoint-up('md') {
+  @include media-breakpoint-down('md') {
     font-size: 35px;
   }
 }

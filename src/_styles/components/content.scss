@@ -54,6 +54,10 @@ $content-grid-item-vertical-spacing-loose: $grid-gutter-width * 2;
 
   @include media-breakpoint-down('md') {
     margin-bottom: 65px;
+
+    .blog & {
+      margin-bottom: 20px;
+    }
   }
 
   @include media-breakpoint-down('xs') {
