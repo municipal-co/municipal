@@ -23,7 +23,7 @@
   {%- endfor -%}
 {% endcapture %}
 
-{% assign filter_tags = filter_tags | split: ',' %}
+{% assign filter_tags = filter_tags | strip | split: ',' %}
 
 <article class="article">
   <div class="article__hero-image">
