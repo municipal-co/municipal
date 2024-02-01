@@ -129,7 +129,8 @@
     border-radius: 999px;
   }
 
-  .drawer__size-selector-disclaimer {
+  .drawer__size-selector-disclaimer,
+  .drawer__bis-noity-text {
     font-size: 12px;
     margin-top: 20px;
     line-height: 1.5;
@@ -153,6 +154,11 @@
       animation: blink 1.1s step-start infinite;
       flex-shrink: 0;
     }
+  }
+
+  .drawer__bis-noity-text {
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 
   .drawer__size-selector-option-container {

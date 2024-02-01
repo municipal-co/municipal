@@ -188,6 +188,12 @@
   {% comment %} Findify Integraion {% endcomment %}
   {% include 'findify-tagging' %}
 
+  <script type="application/json" data-size-drawer-settings>
+    {
+      "notifyText": {{ settings.bis_size_drawer_notification | json }}
+    }
+  </script>
+
   <script type="application/json" data-theme-settings-json>
     {
       "lowInventoryThreshold": {{ settings.low_inventory_threshold | json }}

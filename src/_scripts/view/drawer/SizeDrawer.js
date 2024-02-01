@@ -4,6 +4,8 @@ import Checkmark from "../icons/Checkmark";
 
 export default function SizeDrawer({data, index}) {
   const [ defaultUnit, setDefaultUnit ] = useState(true);
+  const [ showBISMessage, setShowBISMessage ] = useState(true);
+  const globalSettings = JSON.parse(document.querySelector('[data-size-drawer-settings]').innerHTML);
   const drawer = useRef();
   const { optionsDivider, optionsHeaders } = window.theme.SizeSelector;
   const enableSizeSelector = data?.tags?.find((tag) => {
@@ -134,7 +136,9 @@ export default function SizeDrawer({data, index}) {
         variant = option;
       }
       let optionName = variant ? variant[data.optionIndex]?.replace('.00', '') : option?.replace('.00', '');
-
+      if(variant && (variant.available || variant.metafields.enable_sold_out == 1)) {
+        setShowBISMessage(false);
+      }
       if(enableSizeSelector) {
         const optionNamePieces = optionName.split(optionsDivider);
         if(typeof optionNamePieces[unitIndex - 1] !== 'undefined') {
@@ -233,6 +237,7 @@ export default function SizeDrawer({data, index}) {
     };
   }, []);
 
+
   return (
     <div
       className="drawer product-option__drawer"
@@ -258,6 +263,9 @@ export default function SizeDrawer({data, index}) {
         <div className="drawer__body-contents" data-drawer-body>
           <div>
             {enableSizeSelector && buildSizeSelector()}
+            {showBISMessage && globalSettings?.notifyText !== null && (
+              <div className="drawer__bis-noity-text"> {globalSettings.notifyText} </div>
+            )}
             {buildOptionSelectors()}
             {data.fitTipsContent && (
               <div className="blink-box blink-box--dark">
