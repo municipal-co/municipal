@@ -139,7 +139,7 @@ export default function SizeDrawer({data, index}) {
       if(variant && variant.available) {
         hasAvailableVariants = true;
       }
-      if(variant && variant.metafields.enable_bis == 1) {
+      if(variant && !variant.available && variant.metafields.enable_bis == 1) {
         setShowBISMessage(true);
       }
 
