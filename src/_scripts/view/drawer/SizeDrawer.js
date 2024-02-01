@@ -4,7 +4,7 @@ import Checkmark from "../icons/Checkmark";
 
 export default function SizeDrawer({data, index}) {
   const [ defaultUnit, setDefaultUnit ] = useState(true);
-  const [ showBISMessage, setShowBISMessage ] = useState(true);
+  const [ showBISMessage, setShowBISMessage ] = useState(false);
   const globalSettings = JSON.parse(document.querySelector('[data-size-drawer-settings]').innerHTML);
   const drawer = useRef();
   const { optionsDivider, optionsHeaders } = window.theme.SizeSelector;
@@ -125,7 +125,7 @@ export default function SizeDrawer({data, index}) {
   const buildOptionSelectors = () => {
     let sizeValues = getSizeValues();
     const useVariants = typeof data.optionsWithValues === 'undefined';
-
+    let hasAvailableVariants = false;
     const optionSelectors = sizeValues.map((option, index) => {
       let variant;
       if(useVariants == false) {
@@ -136,9 +136,13 @@ export default function SizeDrawer({data, index}) {
         variant = option;
       }
       let optionName = variant ? variant[data.optionIndex]?.replace('.00', '') : option?.replace('.00', '');
-      if(variant && (variant.available || variant.metafields.enable_sold_out == 1)) {
-        setShowBISMessage(false);
+      if(variant && variant.available) {
+        hasAvailableVariants = true;
       }
+      if(variant && variant.metafields.enable_bis == 1) {
+        setShowBISMessage(true);
+      }
+
       if(enableSizeSelector) {
         const optionNamePieces = optionName.split(optionsDivider);
         if(typeof optionNamePieces[unitIndex - 1] !== 'undefined') {
@@ -205,6 +209,10 @@ export default function SizeDrawer({data, index}) {
         </label>
       );
     })
+
+    if(hasAvailableVariants) {
+      setShowBISMessage(false);
+    }
     return optionSelectors;
   }
 
