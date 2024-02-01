@@ -458,7 +458,7 @@
     "settings": [
       {
         "type": "header",
-        "content": "Size drawer settings",
+        "content": "Size drawer settings"
       },
       {
         "type": "text",
