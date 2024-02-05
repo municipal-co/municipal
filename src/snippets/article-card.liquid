@@ -10,7 +10,6 @@
   %}
 
 {% endcomment -%}
-
 {% if article != blank %}
   <div class="article-card">
     {% if article.image %}
@@ -31,7 +30,11 @@
           {{ article.published_at | time_tag: format: 'date' }}
         </div>
         <div class="article-card__arrow">
-          {% render 'icon-arrow' %}
+          {% if article.metafields.custom_fields.is_video_post == true %}
+            {% render 'icon-play-bw-full-color' %}
+          {% else %}
+            {% render 'icon-arrow' %}
+          {% endif %}
         </div>
       </div>
     </a>
