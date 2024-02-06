@@ -4,6 +4,8 @@ import Checkmark from "../icons/Checkmark";
 
 export default function SizeDrawer({data, index}) {
   const [ defaultUnit, setDefaultUnit ] = useState(true);
+  const [ showBISMessage, setShowBISMessage ] = useState(false);
+  const globalSettings = JSON.parse(document.querySelector('[data-size-drawer-settings]').innerHTML);
   const drawer = useRef();
   const { optionsDivider, optionsHeaders } = window.theme.SizeSelector;
   const enableSizeSelector = data?.tags?.find((tag) => {
@@ -123,7 +125,7 @@ export default function SizeDrawer({data, index}) {
   const buildOptionSelectors = () => {
     let sizeValues = getSizeValues();
     const useVariants = typeof data.optionsWithValues === 'undefined';
-
+    let hasAvailableVariants = false;
     const optionSelectors = sizeValues.map((option, index) => {
       let variant;
       if(useVariants == false) {
@@ -134,6 +136,12 @@ export default function SizeDrawer({data, index}) {
         variant = option;
       }
       let optionName = variant ? variant[data.optionIndex]?.replace('.00', '') : option?.replace('.00', '');
+      if(variant && variant.available) {
+        hasAvailableVariants = true;
+      }
+      if(variant && !variant.available && variant.metafields.enable_bis == 1) {
+        setShowBISMessage(true);
+      }
 
       if(enableSizeSelector) {
         const optionNamePieces = optionName.split(optionsDivider);
@@ -201,6 +209,10 @@ export default function SizeDrawer({data, index}) {
         </label>
       );
     })
+
+    if(hasAvailableVariants) {
+      setShowBISMessage(false);
+    }
     return optionSelectors;
   }
 
@@ -233,6 +245,7 @@ export default function SizeDrawer({data, index}) {
     };
   }, []);
 
+
   return (
     <div
       className="drawer product-option__drawer"
@@ -258,6 +271,9 @@ export default function SizeDrawer({data, index}) {
         <div className="drawer__body-contents" data-drawer-body>
           <div>
             {enableSizeSelector && buildSizeSelector()}
+            {showBISMessage && globalSettings?.notifyText !== null && (
+              <div className="drawer__bis-noity-text"> {globalSettings.notifyText} </div>
+            )}
             {buildOptionSelectors()}
             {data.fitTipsContent && (
               <div className="blink-box blink-box--dark">

@@ -563,12 +563,7 @@ export default class ProductDetailForm {
     })
 
     soldOutColors.forEach((colorObject) => {
-      if(colorObject.enableBis) {
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).parent().addClass(classes.bis);
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).siblings('.product-option__ui').append('<span class="product-option__bis-message">Notify<br>Me</span>');
-      } else {
-        $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).parent().addClass(classes.soldOut);
-      }
+      $(`${selectors.singleOptionSelector}[value="${colorObject.color}"]`, this.$container).parent().addClass(classes.soldOut);
     })
   }
 

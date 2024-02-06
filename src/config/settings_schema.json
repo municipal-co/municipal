@@ -458,6 +458,17 @@
     "settings": [
       {
         "type": "header",
+        "content": "Size drawer settings"
+      },
+      {
+        "type": "text",
+        "id": "bis_size_drawer_notification",
+        "label": "Size drawer notification message",
+        "info": "Message shown on the size drawer when all the variants are sold out and have the BIS metafield enabled",
+        "default": "Select your size to get notified when it's back in stock"
+      },
+      {
+        "type": "header",
         "content": "Back in stock settings"
       },
       {
