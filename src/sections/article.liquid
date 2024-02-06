@@ -18,7 +18,7 @@
 {% capture filter_tags %}
   {%- for tag in article.tags -%}
     {%- if tag contains 'category:' -%}
-      {%- unless forloop.first -%},{%- endunless -%}{{- tag | remove: 'category:' -}}
+      {%- unless forloop.first -%},{%- endunless -%}{{- tag -}}
     {%- endif -%}
   {%- endfor -%}
 {% endcapture %}
@@ -36,7 +36,7 @@
     {% if filter_tags != blank%}
       <div class="article__tags-container">
         {% for tag in filter_tags %}
-          <a href="/blogs/{{ blog.handle }}/tagged/{{tag | handleize}}" class="category-capsule"> {{tag}}</a>
+          <a href="/blogs/{{ blog.handle }}/tagged/{{tag | handleize}}" class="category-capsule"> {{tag | remove: 'category:'}}</a>
         {% endfor %}
       </div>
     {% endif %}
