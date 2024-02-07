@@ -250,12 +250,6 @@
         "step": 4,
         "max": 120,
         "min": 12
-      },
-      {
-        "type": "checkbox",
-        "id": "show_findify_badges",
-        "label": "Show findify badges",
-        "info": "When enable it lets the badges shown by findify cards to be displayed, otherwise they will remain hidden"
       }
     ]
   },
@@ -383,12 +377,13 @@
       {
         "type": "text",
         "id": "klaviyo_list_id",
-        "label": "List ID"
+        "label": "List ID",
+        "info": "ID used on the footer newsletter form, defines the klaviyo list where submissions are sent to"
       },
       {
         "type": "text",
         "id": "klaviyo_api_key",
-        "label": "Public API Key"
+        "label": "Public API Key, used on the Back In Stock product flow"
       }
     ]
   },
@@ -424,6 +419,12 @@
       {
         "type": "header",
         "content": "Subscription drawer settings"
+      },
+      {
+        "type": "text",
+        "id": "mkt_drwr_list_id",
+        "label": "Klaviyo List ID",
+        "info": "Klaviyo ID to send submissions to, the submissions are added to the customer as a custom field labeled: Notify - [Product name] where product name is replaced by the name referenced in the module that triggers the drawer"
       },
       {
         "type": "textarea",
@@ -507,74 +508,6 @@
         "id": "favicon",
         "label": "Favicon image",
         "info": "Should be at least 180px x 180px"
-      }
-    ]
-  },
-  {
-    "name": "Mailing List",
-    "settings": [
-      {
-        "type": "text",
-        "id": "newsletter_form_action",
-        "label": "Newsletter Form Action URL"
-      }
-    ]
-  },
-  {
-    "name": "Animations Controls",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Sections Animations"
-      },
-      {
-        "type": "paragraph",
-        "content": "Use this to control the threshold line where the sections are animating in, please note that all the sections will use the same settings"
-      },
-      {
-        "type": "range",
-        "id": "section_load_threshold",
-        "label": "Sections load threshold",
-        "min": 0,
-        "max": 400,
-        "step": 10,
-        "unit": "px",
-        "default": 200
-      },
-      {
-        "type": "checkbox",
-        "id": "section_negative_threshold",
-        "label": "Negative threshold",
-        "default": true,
-        "info": "Enabling this will make the sections to animate when they are higher inside of the viewport area while positive numbers will make them animate off-screen"
-      },
-      {
-        "type": "header",
-        "content": "Background Animations"
-      },
-      {
-        "type": "paragraph",
-        "content": "Use this to control the thresholds (2) where the background is change, consider that top threshold is for items scrolling from top, while bottom one is used for items scrolling from the bottom"
-      },
-      {
-        "type": "range",
-        "id": "background_top_threshold",
-        "label": "Background top threshold",
-        "min": 0,
-        "max": 100,
-        "step": 10,
-        "unit": "%",
-        "default": 40
-      },
-      {
-        "type": "range",
-        "id": "background_bottom_threshold",
-        "label": "Background bottom threshold",
-        "min": 0,
-        "max": 100,
-        "step": 10,
-        "unit": "%",
-        "default": 60
       }
     ]
   },
