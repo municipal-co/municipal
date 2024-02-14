@@ -3,8 +3,11 @@
 [
 {%- if search.performed -%}
     {%- if search.results_count > 0 -%}
+    {% assign lowcaseSearch = search.terms | downcase %}
     {% for item in search.results %}
-        {% render 'product-json' with product: item %}
+        {% render 'product-json',
+          product: item,
+          color_selected: search.terms | downcase %}
         {%- unless forloop.last -%}
           ,
         {%- endunless -%}

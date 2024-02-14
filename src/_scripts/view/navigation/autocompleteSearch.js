@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import {sdkClient, client} from "../../lib/findifyApi";
 import ProductCard from "../findify/productCard";
+import { default as ShopifyProductCard } from '../global/productCard';
 import { Swiper, SwiperSlide } from "swiper/react"
 import AutocompleteSearchBox from "./autocompleteSearchBox";;
 
-const AutocompleteSearch = (props) => {
+const AutocompleteSearch = ({enableFindify}) => {
   const searchContainer = useRef();
-  const recommendationSlider = useRef()
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState({
@@ -28,36 +29,68 @@ const AutocompleteSearch = (props) => {
   }
 
   const getRecommendations = async () => {
-    return await sdkClient.send({
-      type: 'autocomplete',
-      params: {
-        q: searchQuery,
-        limits: {
-          items: 6,
-          suggestions: 6,
+    if(enableFindify) {
+      return await sdkClient.send({
+        type: 'autocomplete',
+        params: {
+          q: searchQuery,
+          limits: {
+            items: 6,
+            suggestions: 6,
+          }
         }
-      }
-    }).then(response => {
-      return response;
+      }).then(response => {
+        return response;
+      })
+    }
+
+    const autocompleteQueries = await fetch(`${window.Shopify.routes.root}search/suggest.json?q=${searchQuery}&resources[type]=query&resources[limit_scope]=each`, {
+      method: 'GET',
     })
+    .then(response => response.json())
+    .then(data => {
+      return data?.resources?.results?.queries
+    });
+
+    const productsResults = await fetch(`${window.Shopify.routes.root}search?q=${searchQuery}&view=json&type=product`, {
+      method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => data);
+
+    return {
+      products: productsResults,
+      queries: autocompleteQueries
+    }
   }
 
   const fetchData = async () => {
     const result = await getRecommendations();
-    setData({
-      query: result.meta.q,
-      rid: result.meta.rid,
-      recommendations: result.suggestions,
-      items: result.items,
-      redirect: result.redirect
-    })
+
+    if(enableFindify) {
+      setData({
+        query: result.meta.q,
+        rid: result.meta.rid,
+        recommendations: result.suggestions,
+        items: result.items,
+        redirect: result.redirect
+      })
+    } else {
+      setData({
+        query: searchQuery,
+        items: result.products,
+        recommendations: result.queries
+      })
+    }
+
+    setLoading(false);
   }
 
   const trackSuggestionClick = (evt) => {
     const target = evt.target;
     const rid = target.dataset.rid;
     const suggestion = target.innerText;
-
+    if(!rid) { return };
     client.sendEvent('click-suggestion', {
       rid,
       suggestion,
@@ -71,7 +104,7 @@ const AutocompleteSearch = (props) => {
 
   useEffect(() => {
     document.addEventListener('drawer:search-open', openSearchDrawer);
-    document.addEventListener('drawer:open-header-drawer', closeSearchDrawer)
+    document.addEventListener('drawer:open-header-drawer', closeSearchDrawer);
     return (() => {
       document.removeEventListener('drawer:search-open', openSearchDrawer);
       document.removeEventListener('drawer:open-header-drawer', closeSearchDrawer)
@@ -80,7 +113,14 @@ const AutocompleteSearch = (props) => {
 
 
   useEffect(() => {
-    fetchData();
+    setLoading(true);
+    const performSearch = setTimeout(() => {
+      fetchData();
+    }, 500);
+
+    return () => {
+      clearTimeout(performSearch);
+    };
   }, [searchQuery])
 
   useEffect(() => {
@@ -98,86 +138,134 @@ const AutocompleteSearch = (props) => {
 
   return (
     <>
-    <div className={`autocomplete-container ${isOpen ? 'is-open' : ''}`} ref={searchContainer}>
-      <div className="autocomplete__header">
-        <div className="autocomplete__title">Search</div>
-        <div className="autocomplete__close-button">
-          <div className="autocomplete__close" ref={searchContainer} onClick={() => {setIsOpen(false)}}>
-            <div className="sr-only">Close Autocomplete</div>
-            <div className="icon-close"></div>
-          </div>
-        </div>
-      </div>
-      <AutocompleteSearchBox
-        searchActive={isOpen}
-        setSearchQuery={setSearchQuery}
-        data={data}
-      />
-      {data.items.length > 0 ?
-        <>
-          <div className="autocomplete__recommendations">
-            <h3 className="autocomplete__heading">
-              {searchQuery == '' ?
-                "Popular Searches" : "Search Suggestions"
-              }
-            </h3>
-            <div className="autocomplete__slider swiper swiper-container">
-              <Swiper
-                tag="ul"
-                slidesPerView="auto"
-                spaceBetween={10}
-                threshold={10}
-                slidesOffsetAfter={30}
-                slidesOffsetBefore={30}
-                watchOverflow={true}
-                className="autocomplete__recommended-queries"
-              >
-              {data.recommendations.map((recommendation) => {
-                  return (<SwiperSlide key={recommendation.value} tag="li">
-                    <a href={`/search/?q=${recommendation.value}`} className="autocomplete__recommended-query" onClick={trackSuggestionClick} data-rid={data.rid}> {recommendation.value} </a>
-                  </SwiperSlide>)
-                })}
-              </Swiper>
+      <div
+        className={`autocomplete-container ${isOpen ? 'is-open' : ''}`}
+        ref={searchContainer}
+      >
+        <div className="autocomplete__header">
+          <div className="autocomplete__title">Search</div>
+          <div className="autocomplete__close-button">
+            <div
+              className="autocomplete__close"
+              ref={searchContainer}
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              <div className="sr-only">Close Autocomplete</div>
+              <div className="icon-close"></div>
             </div>
           </div>
-          <div className="autocomplete__results">
-            <h3 className="autocomplete__heading">
-              {searchQuery == '' ?
-                "Trending Products" : "Product Matches"
-              }
-
-            </h3>
-            <ul className="autocomplete__grid content-grid content-grid--1-col content-grid--md-2-col">
-              {data.items.map((product) => {
-                  return (<li key={product.id} className="content-grid__item">
-                    {<ProductCard
-                    data={product}
-                    rid={data.rid} />}
-                  </li>)
-                })
-              }
-            </ul>
-            {searchQuery !== '' &&
-            <a href={`/search/?q=${searchQuery}`} className="cta cta--bottom-space">
-              <span className="cta__label">
-                See all results
-              </span>
-              <div className="cta__icon">
-                <span className="cta__arrow-icon"></span>
+        </div>
+        <AutocompleteSearchBox
+          searchActive={isOpen}
+          setSearchQuery={setSearchQuery}
+          data={data}
+        />
+        {data.items.length > 0 ? (
+          <>
+            {data.recommendations.length > 0 && (
+              <div className="autocomplete__recommendations">
+                <h3 className="autocomplete__heading">
+                  {searchQuery == ''
+                    ? 'Popular Searches'
+                    : 'Search Suggestions'}
+                </h3>
+                <div className="autocomplete__slider swiper swiper-container">
+                  <Swiper
+                    tag="ul"
+                    slidesPerView="auto"
+                    spaceBetween={10}
+                    threshold={10}
+                    slidesOffsetAfter={30}
+                    slidesOffsetBefore={30}
+                    watchOverflow={true}
+                    className="autocomplete__recommended-queries"
+                  >
+                    {data.recommendations.map((recommendation) => {
+                      return (
+                        <SwiperSlide
+                          key={
+                            enableFindify
+                              ? recommendation.value
+                              : recommendation.text
+                          }
+                          tag="li"
+                        >
+                          <a
+                            href={
+                              enableFindify
+                                ? `/search/?q=${recommendation.value}`
+                                : recommendation.url
+                            }
+                            className="autocomplete__recommended-query"
+                            onClick={trackSuggestionClick}
+                            data-rid={data.rid}
+                          >
+                            {enableFindify
+                              ? recommendation.value
+                              : recommendation.text}
+                          </a>
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
+                </div>
               </div>
-            </a>
-            }
+            )}
+            <div className="autocomplete__results">
+              <h3 className="autocomplete__heading">
+                {searchQuery == '' ? 'Trending Products' : 'Product Matches'}
+              </h3>
+              <ul className="autocomplete__grid content-grid content-grid--1-col content-grid--md-2-col">
+                {data.items.map((product) => {
+                  return (
+                    <li key={product.id} className="content-grid__item">
+                      {enableFindify ? (
+                        <ProductCard data={product} rid={data.rid} />
+                      ) : (
+                        <ShopifyProductCard
+                          product={product}
+                          variantId={product.selected_variant}
+                          textColor='dark'
+                        />
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+              {searchQuery !== '' && (
+                <a
+                  href={`/search/?q=${searchQuery}`}
+                  className="cta cta--bottom-space"
+                >
+                  <span className="cta__label">See all results</span>
+                  <div className="cta__icon">
+                    <span className="cta__arrow-icon"></span>
+                  </div>
+                </a>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="autocomplete__no-results-text text-center">
+            {!enableFindify &&
+              searchQuery == '' &&
+              'Start typing to see results'}
+            {searchQuery !== '' && !loading &&
+              `There were no results for the query "${searchQuery}"`}
+            {searchQuery !== '' && loading && 'Loading...'}
           </div>
-        </>
-      :
-        <div className="autocomplete__no-results-text text-center">There were no results for the query "{searchQuery}"</div>
-      }
-
-
-    </div>
-    <div className={`autocomplete-backdrop ${isOpen ? 'is-open' : ''}`} onClick={() => {setIsOpen(false)}}></div>
+        )}
+      </div>
+      <div
+        className={`autocomplete-backdrop ${isOpen ? 'is-open' : ''}`}
+        onClick={() => {
+          setIsOpen(false);
+        }}
+      ></div>
     </>
-  )
+  );
 }
 
 export default AutocompleteSearch;

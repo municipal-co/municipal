@@ -191,6 +191,7 @@
 
   <script type="application/json" data-theme-settings-json>
     {
+      "enableFindify": {{ setings.enable_findify | default: false | json }},
       "lowInventoryThreshold": {{ settings.low_inventory_threshold | json }}
       {%- if filter_url != blank -%}
         ,"filterUrl": {{ filter_url | json }}

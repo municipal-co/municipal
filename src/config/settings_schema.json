@@ -52,13 +52,19 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "label": "Enable Findify",
+        "id": "enable_findify",
+        "default": false
+      },
+      {
         "type": "range",
         "id": "search_products_per_page",
         "label": "Products Per Page",
         "info": "Adjust the number of items to be shown per page",
         "default": 24,
         "step": 4,
-        "max": 120,
+        "max": 48,
         "min": 12
       }
     ]

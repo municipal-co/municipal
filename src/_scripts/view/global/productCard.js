@@ -4,7 +4,7 @@ import Image from "./image";
 import * as Currency from '../../core/currency';
 
 const ProductCard = ((props) => {
-  const { product, variantId } = props;
+  const { product, variantId, textColor } = props;
   const card = useRef();
   const swatchSlider = useRef();
   const colorOption = product.options_with_values.find(option => {
@@ -153,13 +153,20 @@ const ProductCard = ((props) => {
   return (
     currentVariant && (
       <div className="product-card" ref={card}>
-        <a href={`${product.url}?&variant=${currentVariant.id}`} className="product-card__gallery">
-          <div className={`product-card__gallery-slide is-active ${currentVariant.discount && 'enable-badge'}`}>
-            {currentVariant.discount &&
+        <a
+          href={`${product.url}?&variant=${currentVariant.id}`}
+          className="product-card__gallery"
+        >
+          <div
+            className={`product-card__gallery-slide is-active ${
+              currentVariant.discount && 'enable-badge'
+            }`}
+          >
+            {currentVariant.discount && (
               <div className={`discount-badge ${getBadgeThreshold()}`}>
                 {currentVariant.discount}%<br /> OFF
               </div>
-            }
+            )}
             <Image
               src={currentVariant.featured_image.src}
               alt={currentVariant.featured_image.alt}
@@ -170,37 +177,49 @@ const ProductCard = ((props) => {
           </div>
         </a>
         <form action="/cart/add" className="product-card__content text-center">
-          <a href={`${product.url}?&variant=${currentVariant.id}`} className="product-card__url"></a>
+          <a
+            href={`${product.url}?&variant=${currentVariant.id}`}
+            className="product-card__url"
+          ></a>
           <div className="product-option">
             <div className="product-option__swatch swiper" ref={swatchSlider}>
               <div className="swiper-wrapper">
                 {productColors.map((variant) => {
-                  return <label
-                    key={variant.id}
-                    className="product-option__single-selector swiper-slide"
-                  >
-                    <input
-                      type="radio"
-                      name="color"
-                      style={{ display: 'none' }}
-                      value={variant[`option${colorOption.position}`]}
-                      data-index={`option${colorOption.position}`}
-                      defaultChecked={variant[`option${colorOption.position}`] === currentVariant[`option${colorOption.position}`]}
-                      onChange={updateCurrentVariant}
-                    />
-                    <div className="product-option__ui">
-                      {variant.discount &&
-                        <div className={`product-option__discount-badge ${getBadgeThreshold(variant)}`}></div>
-                      }
-
-                      <Image
-                        src={variant?.featured_image?.src}
-                        alt={variant?.featured_image?.alt}
-                        loading="lazy"
-                        sizes="94px"
+                  return (
+                    <label
+                      key={variant.id}
+                      className="product-option__single-selector swiper-slide"
+                    >
+                      <input
+                        type="radio"
+                        name="color"
+                        style={{ display: 'none' }}
+                        value={variant[`option${colorOption.position}`]}
+                        data-index={`option${colorOption.position}`}
+                        defaultChecked={
+                          variant[`option${colorOption.position}`] ===
+                          currentVariant[`option${colorOption.position}`]
+                        }
+                        onChange={updateCurrentVariant}
                       />
-                    </div>
-                  </label>
+                      <div className="product-option__ui">
+                        {variant.discount && (
+                          <div
+                            className={`product-option__discount-badge ${getBadgeThreshold(
+                              variant
+                            )}`}
+                          ></div>
+                        )}
+
+                        <Image
+                          src={variant?.featured_image?.src}
+                          alt={variant?.featured_image?.alt}
+                          loading="lazy"
+                          sizes="94px"
+                        />
+                      </div>
+                    </label>
+                  );
                 })}
               </div>
               <div className="product-option__arrows">
@@ -215,17 +234,28 @@ const ProductCard = ((props) => {
           </div>
           <h4 class="product-card__title">{product.title}</h4>
           <div className="product-card__price-container">
-            {currentVariant.compare_at_price > currentVariant.price &&
-              <s className="product-card__compare-price">{Currency.formatMoney(currentVariant.compare_at_price).replace('.00', '')}</s>
-            }
-            <span className="product-price">{Currency.formatMoney(currentVariant.price).replace('.00', '')}</span>
+            {currentVariant.compare_at_price > currentVariant.price && (
+              <s className="product-card__compare-price">
+                {Currency.formatMoney(currentVariant.compare_at_price).replace(
+                  '.00',
+                  ''
+                )}
+              </s>
+            )}
+            <span className="product-price">
+              {Currency.formatMoney(currentVariant.price).replace('.00', '')}
+            </span>
           </div>
         </form>
         <div className="product-card__add-to-cart-container">
           <button
             class="product-card__add-to-cart btn-link"
-            style={{color: '#fff', borderColor:'#fff'}}
-            onClick={triggerSizeSelector}>
+            style={{
+              color: textColor == 'dark' ? '#000' : '#fff',
+              borderColor: textColor == 'dark' ? '#000' : '#fff',
+            }}
+            onClick={triggerSizeSelector}
+          >
             Add it now
           </button>
         </div>

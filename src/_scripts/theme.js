@@ -120,16 +120,18 @@ Breakpoints.initialize();
     collectionRoot.render(<Collection />);
   }
 
+  const themeSettingsData = document.querySelector('[data-theme-settings-json]');
+  const themeSettings = themeSettingsData ? JSON.parse(themeSettingsData.innerHTML) : {};
   const searchHolder = document.getElementById('search-container');
   if (searchHolder) {
     const searchRoot = ReactDOM.createRoot(searchHolder);
-    searchRoot.render(<Search />);
+    searchRoot.render(<Search enableFindify={themeSettings?.enableFindify} />);
   }
 
   const autocompleteHolder = document.getElementById('autocomplete-wrapper');
   if (autocompleteHolder) {
     const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
-    autocompleteRoot.render(<AutocompleteSearch />);
+    autocompleteRoot.render(<AutocompleteSearch enableFindify={themeSettings?.enableFindify}/>);
   }
 
   const drawerHolder = document.getElementById('drawer-container');

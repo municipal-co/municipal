@@ -8,10 +8,21 @@
     - variant.inventory_management
     - variant.inventory_quantity
     - variant.metafields
+    - current_variant (if a variant is selected by search returns the variant id)
 
 {% endcomment %}
 
 {% if product %}
+
+{% if color_selected != blank %}
+  {% for variant in product.variants %}
+    {% assign lowercase_variant = variant.title | downcase %}
+    {% if lowercase_variant contains color_selected %}
+      {% assign current_variant = variant.id %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
 
   {% capture product_json %}
 
@@ -39,6 +50,7 @@
       "compare_at_price_min": {{ product.compare_at_price_min }},
       "compare_at_price_varies": {{ product.compare_at_price_varies }},
       "has_only_default_variant": {{ product.has_only_default_variant }},
+      "selected_variant": {{ selected_variant | json }},
       "variants": [
         {% for variant in product.variants %}
           {
