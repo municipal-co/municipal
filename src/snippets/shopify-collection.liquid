@@ -1,5 +1,5 @@
 {% paginate collection.products by settings.search_products_per_page %}
-    <div style="padding-top: 40px;" class="findify-template-container container-fluid" data-section-type="shopify-product-grid" data-section-id="shopify-collection">
+    <div class="findify-template-container container-fluid" data-section-type="shopify-product-grid" data-section-id="shopify-collection">
       <div class="row justify-content-center">
         <div class="col-22 col-md-20 col-lg-22 col-xl-22">
           {% render 'product-grid-header', source: collection%}
