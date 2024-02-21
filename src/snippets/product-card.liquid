@@ -15,7 +15,7 @@
 {% comment %} Defaults {% endcomment %}
 {% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 
-{% assign current_variant = product.variants[0] %}
+{% assign current_variant = card_product.first_available_variant | default: card_product.variants[0] %}
 
 {% for variant in card_product.variants %}
   {% if variant.title contains color %}

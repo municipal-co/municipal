@@ -1,0 +1,24 @@
+{% paginate collection.products by settings.search_products_per_page %}
+    <div style="padding-top: 40px;" class="findify-template-container container-fluid" data-section-type="shopify-product-grid" data-section-id="shopify-collection">
+      <div class="row justify-content-center">
+        <div class="col-22 col-md-20 col-lg-22 col-xl-22">
+          {% render 'product-grid-header', source: collection%}
+          <div class="product-grid__body row">
+            {% render 'product-grid-filters', source: collection %}
+            <div class="collection__grid col-24" data-product-grid>
+              <div class="row content-grid content-grid--1-col content-grid--md-2-col content-grid--lg-3-col content-grid--xl-4-col">
+                {% for product in collection.products %}
+                  <div class="content-grid__item">
+                    {% render 'product-card', card_product: product %}
+                  </div>
+                {% endfor %}
+              </div>
+              {% if paginate.pages > 1 %}
+                {% render 'pagination', paginate: paginate %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endpaginate %}

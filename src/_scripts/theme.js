@@ -51,6 +51,7 @@ import Parallax from './sections/parallax';
 import ProductCardSlider from './sections/productCardSlider';
 import FourOFour from './sections/fourofour';
 import Faq from './sections/faq';
+import ShopifyProductGrid from './sections/product-grid.js';
 
 // Models
 import ProductCard from './view/product/productCard';
@@ -108,6 +109,7 @@ Breakpoints.initialize();
   sectionManager.register('parallax', Parallax);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('faq', Faq);
+  sectionManager.register('shopify-product-grid', ShopifyProductGrid);
 
   // Register Mobile navigation
   const navigationHolder = document.getElementById('main_navigation');
