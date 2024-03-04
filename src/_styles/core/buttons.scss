@@ -365,3 +365,28 @@ input[type='button'] {
   display: inline-block;
   margin-left: 10px;
 }
+
+// Buttons Site V3
+.button {
+  @apply text-base leading-tight px-8 py-2 rounded-full focus:outline bg-white inline-block;
+
+  &.disabled, &:disabled {
+    @apply bg-white/50 pointer-events-none;
+  }
+}
+
+.button--outline {
+  @apply border-2 hover:bg-current border-black;
+
+  &.disabled, &:disabled {
+    @apply border-black/50 pointer-events-none;
+  }
+}
+
+.button--link {
+  @apply text-base leading-[1.1em] focus:outline hover:bg-none hover:underline;
+
+  .icon-link-arrow {
+    @apply w-[0.8em] h-[0.8em] align-super ml-0;
+  }
+}

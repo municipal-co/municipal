@@ -3,194 +3,159 @@
   Remove before deploying to production/publishing your theme.
 {% endcomment %}
 
+<div class="container mx-auto px-2 lg:px-5">
+  {% include 'page-header',
+    ph_title: 'Styleguide',
+    ph_subtitle: 'This page is here to show off styles for standard page elements such as typography, form elements, and icons. These are hard coded in an alternate page template file named <code>page.styles.liquid</code>.'
+  %}
+  <div class="block py-2.5"></div>
+  <h2 class="text-h2">Table of contents</h2>
+  <ul>
+    <li><a href="#docs-type">Type</a></li>
+    <li><a href="#docs-colors">Colors</a></li>
+    <li><a href="#docs-typography">Typography</a></li>
+    <li><a href="#docs-buttons">Buttons</a></li>
+    <li><a href="#docs-forms">Forms</a></li>
+    <li><a href="#docs-page-elements">Page Elements</a></li>
+    <li><a href="#docs-frames">Frames</a></li>
+    <li><a href="#docs-cards">Cards</a></li>
+    <li><a href="#docs-misc-elements">Miscellaneous elements</a></li>
+    <li><a href="#docs-iconography">Iconography</a></li>
+    <li>
+      <a href="#docs-ui-elements">UI Elements</a>
+      <ul>
+        <li><a href="#docs-arrows">Arrows</a></li>
+        <li><a href="#docs-breadcrumbs">Breadcrumbs</a></li>
+        <li><a href="#docs-pagination">Pagination</a></li>
+        <li><a href="#docs-social-sharing">Social Sharing</a></li>
+        <li><a href="#docs-minimal-input">Minimal Input</a></li>
+        <li><a href="#docs-dots">Dots</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2 id="docs-type" class="docs-title">Type</h2>
+  <div class="text-h2">
+    <p style="word-wrap: break-word;">Sequel Sans disp</p>
+    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+    <p style="word-wrap: break-word;">0123456789</p>
+  </div>
+
+  <br />
+  <div style="font-size: 18px;">
+    <p style="word-wrap: break-word;">Sequel Sans Roman Body</p>
+    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+    <p style="word-wrap: break-word;">0123456789</p>
+  </div>
+  <br />
+  <div class="font-weight-bold" style="font-size: 18px;">
+    <p style="word-wrap: break-word;">Sequel Sans Bold Body</p>
+    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+    <p style="word-wrap: break-word;">0123456789</p>
+  </div>
+  <br />
+  <div class="p2" style="font-size: 18px;">
+    <p style="word-wrap: break-word;">Sequel Sans SemiBold Body</p>
+    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
+    <p style="word-wrap: break-word;">0123456789</p>
+  </div>
+
+  <h2 id="docs-colors" class="docs-title">Colors</h2>
+
+  {% assign gray_scale_colors = '' %}
+  {% assign gray_scale_colors = gray_scale_colors | append: 'black:Black:#121212:$black' | append: '|' %}
+  {% assign gray_scale_colors = gray_scale_colors | append: 'gray:Gray:#424446:$gray' | append: '|' %}
+  {% assign gray_scale_colors = gray_scale_colors | append: 'white:White:#fff:$color-white' | append: '|' %}
+  {% assign gray_scale_colors = gray_scale_colors | split: '|' %}
+
+  <h4 class="docs-subtitle">Grayscale</h4>
+  <div>
+    {% for color in gray_scale_colors %}
+      {% assign parts = color | split: ':' %}
+      <div class="styleguide-color">
+        <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
+        <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% assign main_colors = '' %}
+  {% assign main_colors = main_colors | append: 'green:Green:#4a5d36:$green' | append: '|' %}
+  {% assign main_colors = main_colors | append: 'blue:Blue:#2c6275:$blue' | append: '|' %}
+  {% assign main_colors = main_colors | append: 'brown:Brown:#452b2b:$brown' | append: '|' %}
+  {% assign main_colors = main_colors | append: 'tan:Tan:#c3baa8:$tan' | append: '|' %}
+  {% assign main_colors = main_colors | append: 'red:Red:#ff2b00:$red' | append: '|' %}
+  {% assign main_colors = main_colors | append: 'cyan:Cyan:#009dcc:$cyan' | append: '|' %}
+  {% assign main_colors = main_colors | append: 'yellow:Yellow:#ccff00:$yellow' | append: '|' %}
+
+  {% assign main_colors = main_colors | split: '|' %}
+
+  <h4 class="docs-subtitle">Main</h4>
+  <div>
+    {% for color in main_colors %}
+      {% assign parts = color | split: ':' %}
+      <div class="styleguide-color">
+        <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
+        <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <h2 id="docs-typography" class="docs-title">Typography</h2>
+
+  <h4 class="docs-subtitle">Headings</h4>
+  <div class="mb-6">
+    <h1 class="lg:text-display text-display-m">Display - Sequel Sans Bold Display</h1>
+    <h1 class="lg:text-h1 text-h1-m">H1 Sequel Sans Bold Display</h1>
+    <h2 class="lg:text-h2 text-h2-m">H2 Sequel Sans Bold Display</h2>
+    <h3 class="lg:text-h3 text-h3-m">H3 Sequel Sans Bold Display</h3>
+    <h4 class="lg:text-h4 text-h4-m">H4 Sequel Sans Bold Display</h4>
+    <h5 class="lg:text-h5 text-h5-m">H5 Sequel Sans Bold Head</h5>
+    <h6 class="lg:text-h6 text-h6-m">H6 Sequel Sans Semi Bold Head</h6>
+  </div>
+
+  <h4 class="docs-subtitle">Type variations</h4>
+  <div class="mb-6">
+    <p class="lg:text-p1 text-p1-m">P1 Sequel Sans Semi Bold Body</p>
+    <p class="lg:text-p2 text-p2-m">P2 Sequel Sans Semi Bold Body</p>
+    <p class="lg:text-p3 text-p3-m">P3 Sequel Sans Semi Bold Body</p>
+    <p class="lg:text-p4 text-p4-m">P4 Sequel Sans Semi Bold Body</p>
+    <p class="lg:text-p5 text-p5-m">P5 Sequel Sans Semi Bold Body</p>
+    <p class="lg:text-p6 text-p6-m">P6 Sequel Sans Semi Bold Body</p>
+  </div>
+
+  <h4 class="docs-subtitle">Paragraphs</h4>
+  <p class="lg:text-p1 text-p1-m">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eleifend, enim nec tempor facilisis, urna dui hendrerit odio, sed laoreet ex metus commodo enim. Praesent vehicula malesuada ornare. Nulla in velit sit amet ligula convallis placerat ut sit amet nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus lobortis justo eu condimentum gravida. Aenean a sapien laoreet, scelerisque libero sit amet, ultrices est. Maecenas eu odio suscipit, maximus ligula eu, scelerisque sapien.
+  </p>
+  <p class="lg:text-p2 text-p2-m">
+  Mauris justo purus, bibendum ut molestie vitae, hendrerit in ipsum. Fusce commodo justo in lorem mattis, ut sagittis erat auctor. Maecenas dignissim, felis eu tempor varius, lorem nulla luctus augue, non volutpat massa sem nec felis. Suspendisse accumsan aliquam ornare. Suspendisse commodo nec arcu id imperdiet. Praesent tincidunt condimentum est non fermentum. Donec id malesuada enim. Nullam finibus arcu nulla, vestibulum egestas leo aliquet vel. Phasellus sed maximus eros.
+  </p>
+  <p class="lg:text-p3 text-p3-m">
+  Pellentesque imperdiet velit eu fringilla sagittis. Duis enim nibh, mattis id justo sed, euismod posuere diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas ultricies nunc a bibendum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras volutpat tellus tincidunt blandit efficitur. Sed maximus leo ultricies massa auctor egestas. Pellentesque aliquet aliquam porta. Vestibulum convallis libero et metus ornare, sit amet posuere dolor semper.
+  </p>
+
+  <h4 class="docs-subtitle">Type styles</h4>
+  <ul class="docs-text-list">
+    <li><strong>Strong</strong></li>
+    <li><em>Emphasis</em></li>
+    <li><a href="#">Inline link</a></li>
+    <li><span class="line-through">Strike</span></li>
+    <li><sup>Sup</sup></li>
+  </ul>
+
+</div>
+
 <div class="layout-content-wrapper">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-22">
 
-        {% include 'page-header',
-                    ph_title: 'Styleguide',
-                    ph_subtitle: 'This page is here to show off styles for standard page elements such as typography, form elements, and icons. These are hard coded in an alternate page template file named <code>page.styles.liquid</code>.'
-        %}
-
         <h2 class="docs-title">Table of Contents</h2>
-        <ul>
-          <li><a href="#docs-type">Type</a></li>
-          <li><a href="#docs-colors">Colors</a></li>
-          <li><a href="#docs-typography">Typography</a></li>
-          <li><a href="#docs-grid-system">Grid System</a></li>
-          <li><a href="#docs-content-grid">Content Grid</a></li>
-          <li><a href="#docs-tables">Tables</a></li>
-          <li><a href="#docs-buttons">Buttons</a></li>
-          <li><a href="#docs-forms">Forms</a></li>
-          <li><a href="#docs-page-elements">Page Elements</a></li>
-          <li><a href="#docs-frames">Frames</a></li>
-          <li><a href="#docs-cards">Cards</a></li>
-          <li><a href="#docs-misc-elements">Miscellaneous elements</a></li>
-          <li><a href="#docs-iconography">Iconography</a></li>
-          <li>
-            <a href="#docs-ui-elements">UI Elements</a>
-            <ul>
-              <li><a href="#docs-arrows">Arrows</a></li>
-              <li><a href="#docs-breadcrumbs">Breadcrumbs</a></li>
-              <li><a href="#docs-pagination">Pagination</a></li>
-              <li><a href="#docs-social-sharing">Social Sharing</a></li>
-              <li><a href="#docs-minimal-input">Minimal Input</a></li>
-              <li><a href="#docs-dots">Dots</a></li>
-            </ul>
-          </li>
-        </ul>
-
-
-        <h2 id="docs-type" class="docs-title">Type</h2>
-        <div class="font-weight-bold" style="font-size: 18px;">
-          <p style="word-wrap: break-word;">Sequel Sans disp</p>
-          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-          <p style="word-wrap: break-word;">0123456789</p>
-        </div>
-        <br />
-        <div style="font-size: 18px;">
-          <p style="word-wrap: break-word;">Sequel Sans Roman Body</p>
-          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-          <p style="word-wrap: break-word;">0123456789</p>
-        </div>
-        <br />
-        <div class="font-weight-bold" style="font-size: 18px;">
-          <p style="word-wrap: break-word;">Sequel Sans Bold Body</p>
-          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-          <p style="word-wrap: break-word;">0123456789</p>
-        </div>
-        <br />
-        <div class="p2" style="font-size: 18px;">
-          <p style="word-wrap: break-word;">Sequel Sans SemiBold Body</p>
-          <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-          <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-          <p style="word-wrap: break-word;">0123456789</p>
-        </div>
-
-        <h2 id="docs-colors" class="docs-title">Colors</h2>
-
-        {% assign gray_scale_colors = '' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'black:Black:#121212:$black' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'gray:Gray:#424446:$gray' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | append: 'white:White:#fff:$color-white' | append: '|' %}
-        {% assign gray_scale_colors = gray_scale_colors | split: '|' %}
-
-        <h4 class="docs-subtitle">Grayscale</h4>
-        <div>
-          {% for color in gray_scale_colors %}
-            {% assign parts = color | split: ':' %}
-            <div class="styleguide-color">
-              <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
-              <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
-            </div>
-          {% endfor %}
-        </div>
-
-        {% assign main_colors = '' %}
-        {% assign main_colors = main_colors | append: 'green:Green:#4a5d36:$green' | append: '|' %}
-        {% assign main_colors = main_colors | append: 'blue:Blue:#2c6275:$blue' | append: '|' %}
-        {% assign main_colors = main_colors | append: 'brown:Brown:#452b2b:$brown' | append: '|' %}
-        {% assign main_colors = main_colors | append: 'tan:Tan:#c3baa8:$tan' | append: '|' %}
-        {% assign main_colors = main_colors | append: 'red:Red:#ff2b00:$red' | append: '|' %}
-        {% assign main_colors = main_colors | append: 'cyan:Cyan:#009dcc:$cyan' | append: '|' %}
-        {% assign main_colors = main_colors | append: 'yellow:Yellow:#ccff00:$yellow' | append: '|' %}
-
-        {% assign main_colors = main_colors | split: '|' %}
-
-        <h4 class="docs-subtitle">Main</h4>
-        <div>
-          {% for color in main_colors %}
-            {% assign parts = color | split: ':' %}
-            <div class="styleguide-color">
-              <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
-              <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
-            </div>
-          {% endfor %}
-        </div>
-
-
-        <h2 id="docs-typography" class="docs-title">Typography</h2>
-
-        <h4 class="docs-subtitle">Headings</h4>
-        <h1>H1 Sequel Sans Bold Display</h1>
-        <h2>H2 Sequel Sans Bold Display</h2>
-        <h3>H3 Sequel Sans Bold Display</h3>
-        <h4>H4 Sequel Sans Bold Display</h4>
-        <h5>H5 Sequel Sans Bold Head</h5>
-        <h6>H6 Sequel Sans Semi Bold Head</h6>
-        <h6 class="h7">H7 Sequel Sans Semi Bold Head</h6>
-
-        <h4 class="docs-subtitle">Type variations</h4>
-        <p class="p1">P1 Sequel Sans Semi Bold Body</p>
-        <p class="p2">P2 Sequel Sans Semi Bold Body</p>
-        <p class="p3">P3 Sequel Sans Semi Bold Body</p>
-        <p class="p4">P4 Sequel Sans Semi Bold Body</p>
-
-        <h4 class="docs-subtitle">Paragraphs</h4>
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eleifend, enim nec tempor facilisis, urna dui hendrerit odio, sed laoreet ex metus commodo enim. Praesent vehicula malesuada ornare. Nulla in velit sit amet ligula convallis placerat ut sit amet nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus lobortis justo eu condimentum gravida. Aenean a sapien laoreet, scelerisque libero sit amet, ultrices est. Maecenas eu odio suscipit, maximus ligula eu, scelerisque sapien.
-        </p>
-        <p>
-        Mauris justo purus, bibendum ut molestie vitae, hendrerit in ipsum. Fusce commodo justo in lorem mattis, ut sagittis erat auctor. Maecenas dignissim, felis eu tempor varius, lorem nulla luctus augue, non volutpat massa sem nec felis. Suspendisse accumsan aliquam ornare. Suspendisse commodo nec arcu id imperdiet. Praesent tincidunt condimentum est non fermentum. Donec id malesuada enim. Nullam finibus arcu nulla, vestibulum egestas leo aliquet vel. Phasellus sed maximus eros.
-        </p>
-        <p>
-        Pellentesque imperdiet velit eu fringilla sagittis. Duis enim nibh, mattis id justo sed, euismod posuere diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas ultricies nunc a bibendum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras volutpat tellus tincidunt blandit efficitur. Sed maximus leo ultricies massa auctor egestas. Pellentesque aliquet aliquam porta. Vestibulum convallis libero et metus ornare, sit amet posuere dolor semper.
-        </p>
-
-        <h4 class="docs-subtitle">Type styles</h4>
-        <ul class="docs-text-list">
-          <li><strong>Strong</strong></li>
-          <li><em>Emphasis</em></li>
-          <li><a href="#">Inline link</a></li>
-          <li><span style="text-decoration: line-through;">Strike</span></li>
-          <li><sup>Sup</sup></li>
-        </ul>
-
-        <h4 class="docs-subtitle">Text Utilities</h4>
-        <ul class="docs-text-list">
-          <li class="font-weight-normal">.font-weight-normal</li>
-          <li class="font-weight-bold">.font-weight-bold</li>
-          <li class="letter-spacing-base">.letter-spacing-base</li>
-          <li class="text-black">.text-black</li>
-          <li class="text-gray-darkest">.text-gray-darkest</li>
-          <li class="text-gray-darker">.text-gray-darker</li>
-          <li class="text-gray-dark">.text-gray-dark</li>
-          <li class="text-gray">.text-gray</li>
-          <li class="text-gray-light">.text-gray-light</li>
-          <li class="text-gray-lighter">.text-gray-lighter</li>
-          <li class="text-white">.text-white</li>
-          <li class="text-muted">.text-muted</li>
-          <li class="text-black-50">.text-black-50</li>
-          <li class="text-white-50">.text-white-50</li>
-          <li class="text-primary">.text-primary</li>
-          <li class="text-secondary">.text-secondary</li>
-          <li class="text-success">.text-success</li>
-          <li class="text-info">.text-info</li>
-          <li class="text-warning">.text-warning</li>
-          <li class="text-danger">.text-danger</li>
-        </ul>
-
-        <h4 class="docs-subtitle">Background Color Utilities</h4>
-        <ul class="docs-text-list">
-          <li class="bg-black text-white">.bg-black</li>
-          <li class="bg-gray-darkest text-white">.bg-gray-darkest</li>
-          <li class="bg-gray-darker text-white">.bg-gray-darker</li>
-          <li class="bg-gray-dark">.bg-gray-dark</li>
-          <li class="bg-gray">.bg-gray</li>
-          <li class="bg-gray-light">.bg-gray-light</li>
-          <li class="bg-gray-lighter">.bg-gray-lighter</li>
-          <li class="bg-white">.bg-white</li>
-          <li class="bg-primary">.bg-primary</li>
-          <li class="bg-secondary">.bg-secondary</li>
-          <li class="bg-success">.bg-success</li>
-          <li class="bg-info">.bg-info</li>
-          <li class="bg-warning">.bg-warning</li>
-          <li class="bg-danger">.bg-danger</li>
-        </ul>
 
         <h4 class="docs-subtitle">Blockquotes</h4>
         <blockquote class="blockquote">
@@ -287,341 +252,54 @@
         </div>
         <p><small><strong>Note:</strong> Any table elements that come out of the rich text editor are will automatically have a responsive wrapper applied to them.  This allows them to scroll on small screens without breaking the site layout.</small></p>
 
-        <h2 id="docs-grid-system" class="docs-title">Grid System</h2>
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped">
-            <thead>
-              <tr class="text-center">
-                <th></th>
-                <th>Extra Small<br /><small>(&lt;576px)</small></th>
-                <th>Small<br /><small>(≥576px)</small></th>
-                <th>Medium<br/><small>(≥768px)</small></th>
-                <th>Large<br /><small>(≥992px)</small></th>
-                <th>Extra Large<br /><small>(≥1200px)</small></th>
-                <th>Extra Extra Large<br /><small>(≥1480px)</small></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th class="text-nowrap" scope="row">Max Container width</th>
-                <td>None (auto)</td>
-                <td>540px</td>
-                <td>720px</td>
-                <td>960px</td>
-                <td>1140px</td>
-                <td>1440px</td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">Class prefix</th>
-                <td><code>.col-</code></td>
-                <td><code>.col-sm-</code></td>
-                <td><code>.col-md-</code></td>
-                <td><code>.col-lg-</code></td>
-                <td><code>.col-xl-</code></td>
-                <td><code>.col-xxl-</code></td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row"># of columns</th>
-                <td colspan="6">12</td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">Gutter width</th>
-                <td colspan="6">30px (15px on each side of a column)</td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">Nestable</th>
-                <td colspan="6">Yes</td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">Offsets</th>
-                <td colspan="6">Yes</td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">Column ordering</th>
-                <td colspan="6">Yes</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="row show-grid">
-          <div class="col-md-8">.col-md-8</div>
-          <div class="col-md-4">.col-md-4</div>
-        </div>
-        <div class="row show-grid">
-          <div class="col-md-4">.col-md-4</div>
-          <div class="col-md-4">.col-md-4</div>
-          <div class="col-md-4">.col-md-4</div>
-        </div>
-        <div class="row show-grid">
-          <div class="col-md-6">.col-md-6</div>
-          <div class="col-md-6">.col-md-6</div>
-        </div>
-
-        <h2 id="docs-content-grid" class="docs-title">Content Grid</h2>
-        <p>The content grid is an alternative way to layout content similar to the Bootstrap grid but it doesn't rely on rows and columns.  It used the same sizing and gutters to ensure layout consistency, but the usage is slightly different.</p>
-        <p>The content grid relies on a parent <code>.content-grid</code> element with any number of direct child <code>.content-grid__item</code> elements.  The child element sizing is parent on the parent grid element and any modifier classes it may have.  The default grid is responsive and initially displays 1 item per row and expands to show 2, and 3 items per row as the screen crosses the <code>small</code> and <code>large</code> breakpoints respectively.</p>
-        <p>Responsive modifier classes are available to generate 1 -> 6 columns per breakpoint and work similar to Bootstrap responsive utilities.  Any breakpoint class applies to that breakpoint and <em>up</em>.  If you add another class for a larger breakpoint it will override any ones applying at smaller breakpoints.</p>
-
-        <p>Below is an example of the default content grid.</p>
-
-        <div class="content-grid show-grid">
-          {% for i in (1..6) %}
-            <div class="content-grid__item">
-              <div>Grid item {{ i }}</div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <h4 class="docs-subtitle">Responsive Content Grid Layouts</h4>
-        <p>Modifier classes are available to create alternate grid layouts</p>
-
-        <p>Use <code>.content-grid--sm-3-col.content-grid--xxl-6-col</code> to create a 3 column grid on screens large than the <code>sm</code> breakpoint and a 6 column grid on screens larger than the <code>xxl</code> breakpoint.</p>
-        <div class="content-grid content-grid--sm-3-col content-grid--xxl-6-col show-grid">
-          {% for i in (1..6) %}
-            <div class="content-grid__item">
-              <div>Grid item {{ i }}</div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <h4 class="docs-subtitle">Alternate Content Grid Spacing</h4>
-        <p>Use the <code>content-grid--flush</code> modifier class to make all grid items flush with each other.</p>
-        <div class="content-grid content-grid--flush show-grid">
-          {% for i in (1..6) %}
-            <div class="content-grid__item">
-              <div>Grid item {{ i }}</div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <br />
-        <p>Combine with frames to make tiled layouts.</p>
-
-        <div class="content-grid content-grid--flush">
-          {% assign bg_colors = '2892D7:173753:7880B5:1B4353:1D70A2:3891A6' | split: ':' %}
-          {% for i in (1..6) %}
-            <div class="content-grid__item" style="background-color: #{{ bg_colors[forloop.index0] }}">
-              <div class="frame frame--6x4">
-                <div class="frame__inner flex align-items-center justify-content-center">
-                  <span class="text-white">Grid item {{ forloop.index }}</span>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <br />
-        <p>Use the <code>.content-grid--tight</code> and <code>.content-grid--loose</code> modifier classes to adjust vertical spacing between grid items.</p>
-        <br />
-        <h5>Tight Grid</h5>
-        <div class="content-grid content-grid--tight show-grid">
-          {% for i in (1..6) %}
-            <div class="content-grid__item">
-              <div>Grid item {{ i }}</div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <br />
-        <h5>Loose Grid</h5>
-        <div class="content-grid content-grid--loose show-grid">
-          {% for i in (1..6) %}
-            <div class="content-grid__item">
-              <div>Grid item {{ i }}</div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <h2 id="docs-tables" class="docs-title">Tables</h2>
-        <h4 class="docs-subtitle">Responsive Tables</h4>
-        <p>Wrap tables with a <code>.table-responsive</code> element to enable horizontal scrolling on small screens.  All child table elements of an <code>.rte</code> element are wrapped by default via javascript.</p>
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Order</th>
-                <th>Date</th>
-                <th>Payment Status</th>
-                <th>Fulfillment Status</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>#1001</td>
-                <td>December 22, 2015</td>
-                <td>Authorized</td>
-                <td>Unfulfilled</td>
-                <td>$43.03</td>
-              </tr>
-              <tr>
-                <td>#1002</td>
-                <td>December 23, 2015</td>
-                <td>Authorized</td>
-                <td>Unfulfilled</td>
-                <td>$44.03</td>
-              </tr>
-              <tr>
-                <td>#1003</td>
-                <td>December 24, 2015</td>
-                <td>Authorized</td>
-                <td>Unfulfilled</td>
-                <td>$45.03</td>
-              </tr>
-              <tr>
-                <td>#1004</td>
-                <td>December 25, 2015</td>
-                <td>Authorized</td>
-                <td>Unfulfilled</td>
-                <td>$46.03</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {% capture table_contents %}
-          <thead>
-            <tr>
-              <th>Sizes</th>
-              <th>XXS</th>
-              <th>XS</th>
-              <th>S</th>
-              <th>M</th>
-              <th>L</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Bust</td>
-              <td></td>
-              <td>32"-34"</td>
-              <td>34"-36"</td>
-              <td>36"-38"</td>
-              <td>38"-40"</td>
-            </tr>
-            <tr>
-              <td>Under Bust</td>
-              <td></td>
-              <td>32"-34"</td>
-              <td>34"-36"</td>
-              <td>36"-38"</td>
-              <td>38"-40"</td>
-            </tr>
-            <tr>
-              <td>Waist</td>
-              <td>23.5"-24.5"</td>
-              <td>32"-34"</td>
-              <td>34"-36"</td>
-              <td>36"-38"</td>
-              <td>38"-40"</td>
-            </tr>
-            <tr>
-              <td>Hip</td>
-              <td>33"-34"</td>
-              <td>32"-34"</td>
-              <td>34"-36"</td>
-              <td>36"-38"</td>
-              <td>38"-40"</td>
-            </tr>
-          </tbody>
-        {% endcapture %}
-
-        <h4 class="docs-subtitle">Small Tables</h4>
-        <div class="table-responsive">
-          <table class="table table-sm">
-            {{ table_contents }}
-          </table>
-        </div>
-
-        <h4 class="docs-subtitle">Border-less Tables</h4>
-        <div class="table-responsive">
-          <table class="table table-borderless">
-            {{ table_contents }}
-          </table>
-        </div>
-
         <h2 id="docs-buttons" class="docs-title">Buttons</h2>
 
         <div class="docs-well">
           <p>
-            <a href="#" class="btn btn-primary">
+            <a href="#" class="button button--primary">
               Primary button
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span>
             </a>
             <br>
-            <a href="#" class="btn btn-secondary">
+            <a href="#" class="button button--secondary">
               Secondary button
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span>
             </a>
             <br>
-            <a href="#" class="btn btn-white">
+            <a href="#" class="button button-white">
               Secondary button
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span>
             </a>
             <br>
-            <a href="#" class="btn btn-outline-primary">Primary Outline button
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span>
+            <a href="#" class="button button--outline-primary">Primary Outline button
             </a>
             <br>
-            <a href="#" class="btn btn-outline-secondary">Secondary Outline button
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span>
-            </a>
+            <a href="#" class="button button--outline-secondary">Secondary Outline button</a>
           </p>
           <p>
-            <a href="#" class="btn btn-primary disabled">Primary button (Disabled)
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span></a>
-            <a href="#" class="btn btn-secondary disabled">Secondary button (Disabled)
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span></a>
-            <a href="#" class="btn btn-outline-primary disabled">Primary Outline button (Disabled)
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span></a>
-            <a href="#" class="btn btn-outline-secondary disabled">Secondary Outline button (Disabled)
-              <span class="btn__ui">
-                {% include 'icon-arrow' %}
-              </span></a>
+            <a href="#" class="button button--primary disabled">Button (Disabled) </a>
+            <a href="#" class="button button--outline disabled">Outline button (Disabled) </a>
           </p>
         </div>
 
         <div class="docs-well">
-          <a href="#" class="btn btn-block btn-primary">Block Level Primary Button</a>
-          <a href="#" class="btn btn-block btn-secondary">Block Level Secondary Button</a>
-          <a href="#" class="btn btn-block btn-outline-primary">Primary Outline button</a>
-          <a href="#" class="btn btn-block btn-outline-secondary">Secondary Outline button</a>
+          <a href="#" class="button block w-full button--primary">Block Level Button</a>
+          <a href="#" class="button block w-full button--secondary">Block Level Secondary Button</a>
+          <a href="#" class="button block w-full button--outline">Outline button</a>
         </div>
 
         <div class="docs-well">
-          <a href="#" class="btn btn-link">
+          <a href="#" class="button button--link">
             Link Button
-            <span class="btn__ui">
-              {% include 'icon-arrow' %}
-            </span>
+            {% render 'icon-link-arrow' %}
           </a>
         </div>
 
         <div class="docs-well">
           <p>
-            <a href="#" class="btn btn-sm btn-primary">Small Primary Button</a>
-            <a href="#" class="btn btn-sm btn-secondary">Small Secondary Button</a>
+            <a href="#" class="button button-sm button--primary">Small Primary Button</a>
+            <a href="#" class="button button-sm button--secondary">Small Secondary Button</a>
           </p>
           <p class="mb-0">
-            <a href="#" class="btn btn-lg btn-primary">Large Primary Button</a>
-            <a href="#" class="btn btn-lg btn-secondary">Large Secondary Button</a>
+            <a href="#" class="button button-lg button--primary">Large Primary Button</a>
+            <a href="#" class="button button-lg button--secondary">Large Secondary Button</a>
           </p>
         </div>
 
@@ -756,7 +434,7 @@
           <label for="exampleInputEmail2" class="sr-only">Email</label>
           <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
 
-          <button type="submit" class="btn btn-primary">Send invitation</button>
+          <button type="submit" class="button button--primary">Send invitation</button>
         </form>
 
         <h4 class="docs-subtitle">Other Form Elements</h4>
@@ -806,7 +484,7 @@
             <input id="file1" type="file">
             <small class="form-text">Example block-level help text here.</small>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="button button--primary">Submit</button>
         </form>
 
         <h4 class="docs-subtitle">Custom Forms</h4>
@@ -874,7 +552,7 @@
         </div>
 
         <div class="content-footer">
-          <a href="#" class="btn btn-primary">CTA Goes down here</a>
+          <a href="#" class="button button--primary">CTA Goes down here</a>
         </div>
 
         <h2 id="docs-frames" class="docs-title">Frames</h2>
@@ -927,7 +605,7 @@
             <div class="card-body">
               <h5 class="card-title">Card title</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <a href="#" class="button button--primary">Go somewhere</a>
             </div>
             <div class="card-footer">
               Card Footer
