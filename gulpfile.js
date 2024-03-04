@@ -100,7 +100,7 @@ task('watch', () => {
     }
 
     const fileWatcher = watch(['src/templates/**/**', 'src/snippets/**', 'src/sections/**', 'src/layout/**', 'src/config/**', 'src/locales/**'], series("files"));
-    watch(['./src/_styles/**/*.scss', './src/_styles/**/*.css'], series("styles"))
+    watch(['./src/_styles/**/*.scss', './src/_styles/**/*.css', './src/**/*.liquid'], series("styles"))
     watch('./src/icons/**/*', series("icons"));
     // watch('./src/_scripts/**/*.js', series("scripts"));
     scripts();
