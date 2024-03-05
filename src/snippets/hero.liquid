@@ -49,6 +49,9 @@
       color: {{ s.coming_soon_cta_bg_color }};
     }
   </style>
+  {% if s.enable_overlay == true %}
+    <div class="hero__overlay"></div>
+  {% endif %}
   {% unless s.image == blank %}
     {% render 'responsive-image',
       image: s.image
