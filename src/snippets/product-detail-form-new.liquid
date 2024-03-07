@@ -1,6 +1,15 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
 {% render 'klaviyo-product-tracking-script', current_variant: current_variant %}
+<script type="text/javascript">
+  function fireConversionTag_AddtoBag_Button(){
+    console.log('firing simpli-fi add to cart')
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = "https://tag.simpli.fi/sifitag/967cc392-30cf-4a31-83f9-941295386011";
+    document.getElementsByTagName('head')[0].appendChild(s);
+  }
+</script>
 
 <div data-product-detail-form data-low-quantity-threshold="{{ settings.low_inventory_threshold | default: 0 }}">
   {%- form 'product', product, data-add-to-cart-form:"", data-product-id: product.id -%}
@@ -68,8 +77,8 @@
       class="btn btn-primary btn-block product__atc-btn"
       data-add-to-cart
       disabled
+      onclick="fireConversionTag_AddtoBag_Button();"
       >
-        <script async src='https://tag.simpli.fi/sifitag/967cc392-30cf-4a31-83f9-941295386011'></script>
         <span data-add-to-cart-text>
           {% if current_variant.available %}
             {{ 'products.product.add_to_cart' | t }}
