@@ -27,7 +27,6 @@
 @import 'core/mixins';
 @import 'core/root';
 @import 'core/reboot';
-@import 'core/fonts';
 @import 'core/type';
 @import 'core/helpers';
 @import 'core/images';
@@ -45,6 +44,8 @@
 @import 'core/close';
 @import 'core/modal';
 @import 'core/utilities';
+// Moved off of SASS and Bootstrap
+@import 'core/fontV3';
 
 /**
  * COMPONENTS
@@ -175,6 +176,10 @@
 
 
 // Background animation styles
+body, html {
+  font-size: 16px;
+}
+
 body {
   will-change: background-color;
   transition: background-color $transition-duration-medium

@@ -16,10 +16,6 @@
     <li><a href="#docs-typography">Typography</a></li>
     <li><a href="#docs-buttons">Buttons</a></li>
     <li><a href="#docs-forms">Forms</a></li>
-    <li><a href="#docs-page-elements">Page Elements</a></li>
-    <li><a href="#docs-frames">Frames</a></li>
-    <li><a href="#docs-cards">Cards</a></li>
-    <li><a href="#docs-misc-elements">Miscellaneous elements</a></li>
     <li><a href="#docs-iconography">Iconography</a></li>
     <li>
       <a href="#docs-ui-elements">UI Elements</a>
@@ -35,33 +31,33 @@
   </ul>
 
   <h2 id="docs-type" class="docs-title">Type</h2>
-  <div class="text-h2">
-    <p style="word-wrap: break-word;">Sequel Sans disp</p>
-    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-    <p style="word-wrap: break-word;">0123456789</p>
+  <div class="font-sequel-roman">
+    <p class="text-p6-m lg:text-p6">Sequel Sans Roman Head</p>
+    <p class="text-p6-m lg:text-p6">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p class="text-p6-m lg:text-p6">abcdefghijklmnopqrstuvwxyz</p>
+    <p class="text-p6-m lg:text-p6">0123456789</p>
   </div>
 
   <br />
-  <div style="font-size: 18px;">
-    <p style="word-wrap: break-word;">Sequel Sans Roman Body</p>
-    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-    <p style="word-wrap: break-word;">0123456789</p>
+  <div class="font-sequel-medium">
+    <p class="text-p6-m lg:text-p6">Sequel Sans Medium head</p>
+    <p class="text-p6-m lg:text-p6">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p class="text-p6-m lg:text-p6">abcdefghijklmnopqrstuvwxyz</p>
+    <p class="text-p6-m lg:text-p6">0123456789</p>
   </div>
   <br />
-  <div class="font-weight-bold" style="font-size: 18px;">
-    <p style="word-wrap: break-word;">Sequel Sans Bold Body</p>
-    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-    <p style="word-wrap: break-word;">0123456789</p>
+  <div class="font-sequel-semi">
+    <p class="text-p6-m lg:text-p6">Sequel Sans SemiBold head</p>
+    <p class="text-p6-m lg:text-p6">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p class="text-p6-m lg:text-p6">abcdefghijklmnopqrstuvwxyz</p>
+    <p class="text-p6-m lg:text-p6">0123456789</p>
   </div>
   <br />
-  <div class="p2" style="font-size: 18px;">
-    <p style="word-wrap: break-word;">Sequel Sans SemiBold Body</p>
-    <p style="word-wrap: break-word;">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-    <p style="word-wrap: break-word;">abcdefghijklmnopqrstuvwxyz</p>
-    <p style="word-wrap: break-word;">0123456789</p>
+  <div class="font-bold">
+    <p class="text-p6-m lg:text-p6">Inter Bold</p>
+    <p class="text-p6-m lg:text-p6">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p class="text-p6-m lg:text-p6">abcdefghijklmnopqrstuvwxyz</p>
+    <p class="text-p6-m lg:text-p6">0123456789</p>
   </div>
 
   <h2 id="docs-colors" class="docs-title">Colors</h2>
@@ -78,7 +74,7 @@
       {% assign parts = color | split: ':' %}
       <div class="styleguide-color">
         <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
-        <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
+        <p class="text-p6-m lg:text-p6">{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
       </div>
     {% endfor %}
   </div>
@@ -100,7 +96,7 @@
       {% assign parts = color | split: ':' %}
       <div class="styleguide-color">
         <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
-        <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
+        <p class="text-p6-m lg:text-p6">{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
       </div>
     {% endfor %}
   </div>
@@ -109,23 +105,23 @@
 
   <h4 class="docs-subtitle">Headings</h4>
   <div class="mb-6">
-    <h1 class="lg:text-display text-display-m">Display - Sequel Sans Bold Display</h1>
-    <h1 class="lg:text-h1 text-h1-m">H1 Sequel Sans Bold Display</h1>
-    <h2 class="lg:text-h2 text-h2-m">H2 Sequel Sans Bold Display</h2>
-    <h3 class="lg:text-h3 text-h3-m">H3 Sequel Sans Bold Display</h3>
-    <h4 class="lg:text-h4 text-h4-m">H4 Sequel Sans Bold Display</h4>
-    <h5 class="lg:text-h5 text-h5-m">H5 Sequel Sans Bold Head</h5>
-    <h6 class="lg:text-h6 text-h6-m">H6 Sequel Sans Semi Bold Head</h6>
+    <h1 class="lg:text-display text-display-m font-sequel-roman">Display - Sequel Sans Roman Head</h1>
+    <h1 class="lg:text-h1 text-h1-m font-sequel-roman">H1 Sequel Sans Roman Head</h1>
+    <h2 class="lg:text-h2 text-h2-m font-sequel-roman">H2 Sequel Sans Roman Head</h2>
+    <h3 class="lg:text-h3 text-h3-m font-sequel-roman">H3 Sequel Sans Roman Head</h3>
+    <h4 class="lg:text-h4 text-h4-m font-sequel-medium">H4 Sequel Sans Medium Head</h4>
+    <h5 class="lg:text-h5 text-h5-m font-sequel-medium">H5 Sequel Sans Medium Head</h5>
+    <h6 class="lg:text-h6 text-h6-m font-sequel-medium">H6 Sequel Sans Medium Head</h6>
   </div>
 
   <h4 class="docs-subtitle">Type variations</h4>
   <div class="mb-6">
-    <p class="lg:text-p1 text-p1-m">P1 Sequel Sans Semi Bold Body</p>
-    <p class="lg:text-p2 text-p2-m">P2 Sequel Sans Semi Bold Body</p>
-    <p class="lg:text-p3 text-p3-m">P3 Sequel Sans Semi Bold Body</p>
-    <p class="lg:text-p4 text-p4-m">P4 Sequel Sans Semi Bold Body</p>
-    <p class="lg:text-p5 text-p5-m">P5 Sequel Sans Semi Bold Body</p>
-    <p class="lg:text-p6 text-p6-m">P6 Sequel Sans Semi Bold Body</p>
+    <p class="lg:text-p1 text-p1-m font-sequel-roman">P1 Sequel Sans Roman Body</p>
+    <p class="lg:text-p2 text-p2-m font-sequel-roman">P2 Sequel Sans Roman Body</p>
+    <p class="lg:text-p3 text-p3-m font-sequel-roman">P3 Sequel Sans Roman Body</p>
+    <p class="lg:text-p4 text-p4-m font-sequel-roman">P4 Sequel Sans Roman Body</p>
+    <p class="lg:text-p5 text-p5-m font-sequel-roman">P5 Sequel Sans Roman Body</p>
+    <p class="lg:text-p6 text-p6-m font-sequel-roman">P6 Sequel Sans Roman Body</p>
   </div>
 
   <h4 class="docs-subtitle">Paragraphs</h4>
@@ -138,6 +134,12 @@
   <p class="lg:text-p3 text-p3-m">
   Pellentesque imperdiet velit eu fringilla sagittis. Duis enim nibh, mattis id justo sed, euismod posuere diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas ultricies nunc a bibendum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras volutpat tellus tincidunt blandit efficitur. Sed maximus leo ultricies massa auctor egestas. Pellentesque aliquet aliquam porta. Vestibulum convallis libero et metus ornare, sit amet posuere dolor semper.
   </p>
+  <p class="lg:text-p4 text-p4-m">
+  Pellentesque imperdiet velit eu fringilla sagittis. Duis enim nibh, mattis id justo sed, euismod posuere diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas ultricies nunc a bibendum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras volutpat tellus tincidunt blandit efficitur. Sed maximus leo ultricies massa auctor egestas. Pellentesque aliquet aliquam porta. Vestibulum convallis libero et metus ornare, sit amet posuere dolor semper.
+  </p>
+  <p class="lg:text-p5 text-p5-m">
+  Pellentesque imperdiet velit eu fringilla sagittis. Duis enim nibh, mattis id justo sed, euismod posuere diam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas ultricies nunc a bibendum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras volutpat tellus tincidunt blandit efficitur. Sed maximus leo ultricies massa auctor egestas. Pellentesque aliquet aliquam porta. Vestibulum convallis libero et metus ornare, sit amet posuere dolor semper.
+  </p>
 
   <h4 class="docs-subtitle">Type styles</h4>
   <ul class="docs-text-list">
@@ -148,746 +150,608 @@
     <li><sup>Sup</sup></li>
   </ul>
 
-</div>
+  <h2 class="docs-title">Table of Contents</h2>
 
-<div class="layout-content-wrapper">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-22">
+  <h4 class="docs-subtitle">Blockquotes</h4>
+  <blockquote class="blockquote">
+    <p>Eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+    <cite>The author of the quote</cite>
+  </blockquote>
 
-        <h2 class="docs-title">Table of Contents</h2>
-
-        <h4 class="docs-subtitle">Blockquotes</h4>
-        <blockquote class="blockquote">
-          <p>Eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
-          <cite>The author of the quote</cite>
-        </blockquote>
-
-        <h4 class="docs-subtitle">Lists</h4>
-        <div class="table-responsive">
-          <table>
-            <tbody>
-              <tr>
-                <td width="40%">
-                  <h6><code>ul</code> (default)</h6>
-                </td>
-                <td>
-                  <ul>
-                    <li>One</li>
-                    <li>Two</li>
-                    <li>Three</li>
-                    <li>Four</li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h6>Numeric bullet <code>ol</code> (default)</h6>
-                </td>
-                <td>
-                  <ol>
-                    <li>One</li>
-                    <li>Two</li>
-                    <li>Three</li>
-                    <li>Four</li>
-                  </ol>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h6>Child lists (to match the RTE styles)</h6>
-                </td>
-                <td>
-                  <ul>
-                    <li>One</li>
-                    <li>Two</li>
-                    <li>Three, with child list
-                      <ul>
-                        <li>First sub item</li>
-                        <li>Second sub item</li>
-                        <li>Third sub item, with child list
-                          <ul>
-                            <li>Third level item</li>
-                            <li>Another third level item</li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>Four</li>
-                  </ul>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 class="docs-subtitle">RTE</h4>
-        <p>Styles specific to text that comes out of the rich text editor.</p>
-        <br />
-        <div class="rte">
-          <ul>
-          <li>One</li>
-          <li>Two</li>
-          <li>Three, with child list
+  <h4 class="docs-subtitle">Lists</h4>
+  <div class="table-responsive">
+    <table>
+      <tbody>
+        <tr>
+          <td width="40%">
+            <h6><code>ul</code> (default)</h6>
+          </td>
+          <td>
             <ul>
-              <li>First sub item</li>
-              <li>Second sub item</li>
-              <li>Third sub item, with ordered child list
-                <ol>
-                  <li>Third level item</li>
-                  <li>Another third level item</li>
-                </ol>
-              </li>
+              <li>One</li>
+              <li>Two</li>
+              <li>Three</li>
+              <li>Four</li>
             </ul>
-          </li>
-          <li>Four</li>
-        </ul>
-        </div>
-        <br />
-        <div class="rte">
-          <p>This is an example paragraph that comes out of the rich text editor.  This sentence <a href="#">contains a link</a> so you can verify what link styles look like.  Free-market sprawl garage hotdog monofilament tube dolphin sunglasses kanji vehicle pen ablative Shibuya range-rover marketing assassin. Sub-orbital tanto sign military-grade tattoo corrupted camera lights dead cardboard j-pop marketing apophenia film jeans. Fetishism concrete claymore mine table j-pop nano-geodesic post-rain carbon garage sign savant refrigerator saturation point grenade.</p>
-          <p>This is an example paragraph that comes out of the rich text editor.  This sentence <a href="#">contains a link</a> so you can verify what link styles look like.  Free-market sprawl garage hotdog monofilament tube dolphin sunglasses kanji vehicle pen ablative Shibuya range-rover marketing assassin. Sub-orbital tanto sign military-grade tattoo corrupted camera lights dead cardboard j-pop marketing apophenia film jeans. Fetishism concrete claymore mine table j-pop nano-geodesic post-rain carbon garage sign savant refrigerator saturation point grenade.</p>
-          <h2>RTE Heading</h2>
-          <p>This is an example paragraph that comes out of the rich text editor.  This sentence <a href="#">contains a link</a> so you can verify what link styles look like.  Free-market sprawl garage hotdog monofilament tube dolphin sunglasses kanji vehicle pen ablative Shibuya range-rover marketing assassin. Sub-orbital tanto sign military-grade tattoo corrupted camera lights dead cardboard j-pop marketing apophenia film jeans. Fetishism concrete claymore mine table j-pop nano-geodesic post-rain carbon garage sign savant refrigerator saturation point grenade.</p>
-        </div>
-        <p><small><strong>Note:</strong> Any table elements that come out of the rich text editor are will automatically have a responsive wrapper applied to them.  This allows them to scroll on small screens without breaking the site layout.</small></p>
-
-        <h2 id="docs-buttons" class="docs-title">Buttons</h2>
-
-        <div class="docs-well">
-          <p>
-            <a href="#" class="button button--primary">
-              Primary button
-            </a>
-            <br>
-            <a href="#" class="button button--secondary">
-              Secondary button
-            </a>
-            <br>
-            <a href="#" class="button button-white">
-              Secondary button
-            </a>
-            <br>
-            <a href="#" class="button button--outline-primary">Primary Outline button
-            </a>
-            <br>
-            <a href="#" class="button button--outline-secondary">Secondary Outline button</a>
-          </p>
-          <p>
-            <a href="#" class="button button--primary disabled">Button (Disabled) </a>
-            <a href="#" class="button button--outline disabled">Outline button (Disabled) </a>
-          </p>
-        </div>
-
-        <div class="docs-well">
-          <a href="#" class="button block w-full button--primary">Block Level Button</a>
-          <a href="#" class="button block w-full button--secondary">Block Level Secondary Button</a>
-          <a href="#" class="button block w-full button--outline">Outline button</a>
-        </div>
-
-        <div class="docs-well">
-          <a href="#" class="button button--link">
-            Link Button
-            {% render 'icon-link-arrow' %}
-          </a>
-        </div>
-
-        <div class="docs-well">
-          <p>
-            <a href="#" class="button button-sm button--primary">Small Primary Button</a>
-            <a href="#" class="button button-sm button--secondary">Small Secondary Button</a>
-          </p>
-          <p class="mb-0">
-            <a href="#" class="button button-lg button--primary">Large Primary Button</a>
-            <a href="#" class="button button-lg button--secondary">Large Secondary Button</a>
-          </p>
-        </div>
-
-        <h2 id="docs-forms" class="docs-title">Forms</h2>
-
-        <p>Forms are based on Bootstrap 4's form component.  Simple examples to listed here to use as a reference for styling, for more detailed information about how they work, please see the <a href="https://getbootstrap.com/docs/4.0/components/forms">official documentation</a>.</p>
-
-        <h4 class="docs-subtitle">Default Forms</h4>
-
-        <form>
-          <div class="form-group">
-            <label for="textDefault1">Label</label>
-            <input type="text" id="textDefault1" placeholder="Input 1" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="textDefault2">Label 2</label>
-            <input type="text" id="textDefault2" placeholder="Input 2" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="textDefault3">Text Field (Valid)</label>
-            <input type="text" id="textDefault3" class="form-control is-valid" value="Valid Entry">
-            <div class="valid-feedback">
-              Validation Feedback goes here
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="textDefault4">Text Field (Error)</label>
-            <input type="text" id="textDefault4" class="form-control is-invalid" value="Invalid Entry">
-            <div class="invalid-feedback">
-              Invalid Feedback goes here
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="selectHorizontal1">Label 3</label>
-            <select id="selectHorizontal1" class="form-control">
-              <option value="0">-- Choose --</option>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-            </select>
-            <small class="form-text">I'm helper text to explain what's going on with this form input.</small>
-          </div>
-        </form>
-
-        <h4 class="docs-subtitle">Invisible labels</h4>
-
-        <p>Add a class of <code>sr-only</code> to a label to visually hide it, while keeping it accessible to screen readers. Use the <code>placeholder</code> attribute as your visible label.</p>
-        <p><small><strong>Note:</strong> The <code>placeholder</code> attribute only works in IE10+, so invisible labels are disabled in IE9 and below.</small></p>
-
-        <form>
-          <div class="form-group">
-            <label for="testInvisibleLabel1" class="sr-only">First Name</label>
-            <input type="text" id="testInvisibleLabel1" name="testInvisibleLabel1" placeholder="First Name" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="testInvisibleLabel2" class="sr-only">Last Name</label>
-            <input type="text" id="testInvisibleLabel2" name="testInvisibleLabel2" placeholder="Last Name" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="testInvisibleLabel3" class="sr-only">Email</label>
-            <input type="text" id="testInvisibleLabel3" name="testInvisibleLabel3" placeholder="Email" class="form-control">
-          </div>
-        </form>
-
-        <h4 class="docs-subtitle">Horizontal Forms</h4>
-
-        <p>Create horizontal forms with the grid by adding the <code>.row</code> class to form groups and using the <code>.col-*-*</code> classes to specify the width of your labels and controls. Be sure to add <code>.col-form-label</code> to your label elements as well so they’re vertically centered with their associated form controls.</p>
-
-        <form>
-          <div class="form-group row">
-            <label for="text1" class="col-sm-4 col-form-label">Text Field</label>
-            <div class="col-sm-10">
-              <input type="text" id="text1" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="text2" class="col-sm-4 col-form-label">Placeholder</label>
-            <div class="col-sm-10">
-              <input type="text" id="text2" placeholder="Placeholder text" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="text3" class="col-sm-4 col-form-label">Disabled Field</label>
-            <div class="col-sm-10">
-              <input type="text" id="text3" disabled="disabled" class="form-control">
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="text5" class="col-sm-4 col-form-label">Text Field (Valid)</label>
-            <div class="col-sm-10">
-              <input type="text" id="text5" class="form-control is-valid" value="Valid Entry">
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="text4" class="col-sm-4 col-form-label">Text Field (Error)</label>
-            <div class="col-sm-10">
-              <input type="text" id="text4" class="form-control is-invalid" value="Invalid Entry">
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="select1" class="col-sm-4 col-form-label">Select Field</label>
-            <div class="col-sm-10">
-              <select id="select1" class="form-control">
-                <option value="0">-- Choose --</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-                <option value="4">Option 4</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label for="text6" class="col-sm-4 col-form-label">Text Area</label>
-            <div class="col-sm-10">
-              <textarea type="text" id="text6" class="form-control" value="Invalid Entry" rows="5"></textarea>
-            </div>
-          </div>
-        </form>
-
-        <h4 class="docs-subtitle">Inline Forms</h4>
-        <form class="form-inline">
-          <label for="exampleInputName2" class="sr-only">Name</label>
-          <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-
-          <label for="exampleInputEmail2" class="sr-only">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-
-          <button type="submit" class="button button--primary">Send invitation</button>
-        </form>
-
-        <h4 class="docs-subtitle">Other Form Elements</h4>
-        <form>
-
-          <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-              <label class="form-check-label" for="defaultCheck1">
-                Default checkbox
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
-              <label class="form-check-label" for="defaultCheck2">
-                Disabled checkbox
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">
-                Default radio
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-              <label class="form-check-label" for="exampleRadios2">
-                Second default radio
-              </label>
-            </div>
-            <div class="form-check disabled">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-              <label class="form-check-label" for="exampleRadios3">
-                Disabled radio
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="textarea1">Textarea</label>
-            <textarea id="textarea1" placeholder="Placeholder text" class="form-control"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="file1">File Field</label>
-            <input id="file1" type="file">
-            <small class="form-text">Example block-level help text here.</small>
-          </div>
-          <button type="submit" class="button button--primary">Submit</button>
-        </form>
-
-        <h4 class="docs-subtitle">Custom Forms</h4>
-
-        <p>Use completely custom form elements to replace browser defaults.</p>
-
-        <form>
-          <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck2">
-              <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="custom-control custom-radio">
-              <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-              <label class="custom-control-label" for="customRadio1">
-                Toggle this custom radio
-              </label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-              <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
-            </div>
-          </div>
-        </form>
-
-        <h4 class="docs-subtitle">Note About Select Elements</h4>
-        <p>This theme is using the <a href="https://harvesthq.github.io/chosen/" target="_blank">Chosen</a> library to enhance native select tags.  By default, any <code>select.form-control</code> elements are targeted and initialized on page load.  If you want to avoid this, add the <code>data-no-chosen</code> attribute to your select tag and it will be left alone.</p>
-
-        <h2 id="docs-page-elements" class="docs-title">Page Elements</h2>
-
-        <h4 class="docs-subtitle">Page Header</h4>
-
-        <p>Use this element at the top of pages to add consistent titles + subtitles.  You can also use this element without the subtitle if necessary.  This element also works with <strong>left</strong> and <strong>right</strong> modifier classes to change text alignment.</p>
-
-        {% include 'page-header',
-            title: "I'm a page title",
-            subtitle: "I'm a page subtitle.  I have a maximum width applied to prevent lines of text from getting unnecessarily long and becoming hard to read."
-        %}
-
-        <h4 class="docs-subtitle">Content Header / Footer</h4>
-        <p>Use these elements to create sections of content throughout the body of the page.  While page header should be used once at the top, the content header can be used multiple times.</p>
-
-        {% include 'content-header',
-            ch_title: "Content Header Title Goes Here",
-            ch_subtitle: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        %}
-
-        <div class="content-grid content-grid--flush">
-          {% assign bg_colors = '2892D7:173753:7880B5' | split: ':' %}
-          {% for i in (1..3) %}
-            <div class="content-grid__item" style="background-color: #{{ bg_colors[forloop.index0] }}">
-              <div class="frame frame--16x9">
-                <div class="frame__inner flex align-items-center justify-content-center">
-                  <span class="text-white">Content</span>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-
-        <div class="content-footer">
-          <a href="#" class="button button--primary">CTA Goes down here</a>
-        </div>
-
-        <h2 id="docs-frames" class="docs-title">Frames</h2>
-        <p>Use frames to create elements with defined aspect ratios.  All frames require the <code>.frame</code> base class and a modifier class to define their aspect ratio.  See <code>/_styles/components/frames.scss</code> to adjust available ratios.</p>
-        <p>There is also a child element <code>.frame__inner</code> that is positioned absolutely and stretches the full dimensions of the frame.</p>
-        <div class="row">
-          {% assign ratios = '16x9 6x4 4x3 1x1 3x4 4x6 9x16' | split: " " %}
-          {% for ratio in ratios %}
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-              <div style="margin-bottom: 30px;">
-                <div class="frame frame--{{ ratio }}" style="background-color: white; border: 1px solid #d8d8d8">
-                  <div class="frame__inner flex align-items-center justify-content-center">
-                    {{ ratio }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-        <h4 class="docs-subtitle">Responsive Frames</h4>
-        <p>Responsive frame sizing is available and works similar to Bootstrap responsive utilities, any breakpoint class applies to that breakpoint and <em>up</em>.  If you add another class for a larger breakpoint it will override any ones applying at smaller breakpoints.  Frame sizing being applied to screen sizes smaller than <code>$grid-breakpoints('sm')</code> do not need a responsive class.</p>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="frame frame--16x9 frame--sm-6x4 frame--md-1x1 frame--lg-3x4 frame--xl-4x6 frame--xxl-4x6" style="border: 1px solid #d8d8d8">
-                <div class="frame__inner flex flex-column align-items-center justify-content-center text-center" style="padding: 10px;">
-                  <code>.frame</code><br />
-                  <code>.frame--16x9</code><br />
-                  <code>.frame--sm-6x4</code><br />
-                  <code>.frame--md-1x1</code><br />
-                  <code>.frame--lg-3x4</code><br />
-                  <code>.frame--xl-4x6</code>
-                </div>
-            </div>
-          </div>
-        </div>
-
-        <h2 id="docs-cards" class="docs-title">Cards</h2>
-
-        <p><em class="text-muted">From Bootstrap:</em> A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display.  See the <a href="https://getbootstrap.com/docs/4.1/components/card/" target="_blank">official documentation</a> for full list of options.</p>
-        <p>Use these in conjunction with the <code>collapse.js</code> plugin markup to create elements with toggle-able visibility and accordion-like behavior.  See the <a href="/pages/components#docs-collapse">collapse component</a> for implementation.</p>
-
-        <div class="docs-well">
-          <div class="card">
-            <h3 class="card-header">
-              <span class="card-header__title">
-                Featured
-                <span class="card-header__title-icon">{% include 'icon-rss' %}</span>
-              </span>
-            </h3>
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="button button--primary">Go somewhere</a>
-            </div>
-            <div class="card-footer">
-              Card Footer
-            </div>
-          </div>
-        </div>
-
-        <p><span class="font-weight-bold">NOTE:</span> These elements have nothing in common with the more specific card snippets that we have created as Shopify theme components (<code>.article-card</code>, <code>.product-card</code>, etc..).  It is just an unfortunate naming clash as these elements were created before switching over to Bootstrap 4.</p>
-
-        <h2 id="docs-misc-elements" class="docs-title">Miscellaneous elements</h2>
-
-        <h4 class="docs-subtitle">Horizontal Rules</h4>
-        <p>Default <code>hr</code></p>
-        <hr>
-
-        <h4 class="docs-subtitle">Alerts</h4>
-        <div class="alert alert-primary">I'm a primary alert</div>
-        <div class="alert alert-secondary">I'm a secondary alert</div>
-        <div class="alert alert-success">I'm a success alert</div>
-        <div class="alert alert-info">I'm a info alert</div>
-        <div class="alert alert-warning">I'm a warning alert</div>
-        <div class="alert alert-danger">I'm a danger alert</div>
-        <div class="alert alert-light">I'm a light alert</div>
-        <div class="alert alert-dark">I'm a dark alert</div>
-
-        <h2 id="docs-iconography" class="docs-title">Iconography</h2>
-        <p>Read more about using, creating, and editing SVG icons in Slate's documentation.</p>
-
-        <h4 class="docs-subtitle">Social icons</h4>
-        <ul class="styleguide-icons">
-          <li>{% include 'icon-facebook' %}</li>
-          <li>{% include 'icon-facebook-alt' %}</li>
-          <li>{% include 'icon-instagram' %}</li>
-          <li>{% include 'icon-twitter' %}</li>
-          <li>{% include 'icon-youtube' %}</li>
-          <li>{% include 'icon-pinterest' %}</li>
-          <li>{% include 'icon-linkedin' %}</li>
-          <li>{% include 'icon-reddit' %}</li>
-          <li>{% include 'icon-discourse' %}</li>
-          <li>{% include 'icon-mail' %}</li>
-          <li>{% include 'icon-tumblr' %}</li>
-        </ul>
-
-        <h4 class="docs-subtitle">General icons</h4>
-        <ul class="styleguide-icons">
-          <li>{% include 'icon-account' %}</li>
-          <li>{% include 'icon-caret' %}</li>
-          <li>{% include 'icon-close' %}</li>
-          <li>{% include 'icon-hamburger' %}</li>
-          <li>{% include 'icon-minus-full-color' %}</li>
-          <li>{% include 'icon-plus-full-color' %}</li>
-          <li>{% include 'icon-rss' %}</li>
-          <li>{% include 'icon-arrow-right' %}</li>
-          <li>{% include 'icon-checkmark' %}</li>
-          <li>{% include 'icon-play-full-color' %}</li>
-          <li>{% include 'icon-info' %}</li>
-          <li>{% include 'icon-filters' %}</li>
-          <li>{% include 'icon-arrow' %}</li>
-          <li>{% include 'icon-hamburger' %}</li>
-          <li>{% include 'icon-more-full-color' %}</li>
-          <li>{% include 'icon-arrow-circled-full-color'  %}</li>
-          <li>{% include 'icon-search' %}</li>
-        </ul>
-        <br><br>
-        <ul class="styleguide-icons">
-          <li>{% include 'icon-municipal-circle'  %}</li>
-          <li>{% include 'icon-gear' %}</li>
-        </ul>
-
-        <h2 id="docs-ui-elements" class="docs-title">UI Elements</h2>
-
-        <h4 id="docs-arrows" class="docs-subtitle">Arrows</h4>
-        <p>Arrow elements are mostly used for slideshow controls.  The root element has the base <code>arrow</code> class applied to it and directional modifier classes are available.  By default, it has one child element that makes up the actual arrow icon.</p>
-        <a href="#" class="arrow arrow--up">
-          <span class="arrow__icon"></span>
-        </a>
-        <a href="#" class="arrow">
-          <span class="arrow__icon"></span>
-        </a>
-        <a href="#" class="arrow arrow--down">
-          <span class="arrow__icon"></span>
-        </a>
-        <a href="#" class="arrow arrow--left">
-          <span class="arrow__icon"></span>
-        </a>
-        <br /><br />
-
-        <p>This child element easily be swapped out for a png, svg, or other icon made of pseudo elements.</p>
-
-        <a href="#" class="arrow arrow--up">
-          {% include 'icon-arrow-right' %}
-        </a>
-        <a href="#" class="arrow">
-          {% include 'icon-arrow-right' %}
-        </a>
-        <a href="#" class="arrow arrow--down">
-          {% include 'icon-arrow-right' %}
-        </a>
-        <a href="#" class="arrow arrow--left">
-          {% include 'icon-arrow-right' %}
-        </a>
-
-        <h4 id="docs-breadcrumbs" class="docs-subtitle">Breadcrumbs</h4>
-
-        <nav class="breadcrumbs">
-          <div class="breadcrumbs__crumb">
-            <a href="#">Step 1</a>
-          </div>
-          <div class="breadcrumbs__crumb">
-            <a href="#">Step 2</a>
-          </div>
-          <div class="breadcrumbs__crumb">Step 3</div>
-        </nav>
-
-        <h4 id="docs-pagination" class="docs-subtitle">Pagination</h4>
-
-        <div class="pagination">
-          <span class="prev"><a href="#">Prev</a></span>
-          <span class="page"><a href="#" title="">1</a></span>
-          <span class="page current">2</span>
-          <span class="page"><a href="#" title="">3</a></span>
-          <span class="deco">…</span>
-          <span class="page"><a href="#" title="">10</a></span>
-          <span class="next"><a href="#" title="">Next</a></span>
-        </div>
-
-        <h4 id="docs-social-sharing" class="docs-subtitle">Social Sharing</h4>
-        {% include 'social-sharing' %}
-
-        <h4 id="docs-minimal-input" class="docs-subtitle">Minimal Input</h4>
-        <p>Normal</p>
-        <div class="docs-well docs-well--accent">
-          <div class="minimal-input-box">
-            <div class="icon-search-container">
-              {% include 'icon-search' %}
-            </div>
-            <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
-            <button type="submit" class="minimal-input-box__submit">
-              {% include 'icon-arrow' %}
-              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-            </button>
-          </div>
-        </div>
-
-        <br /><br />
-        <p>Inverted</p>
-        <div class="docs-well docs-well--dark">
-          <div class="minimal-input-box minimal-input-box--inverted">
-            <div class="icon-search-container">
-              {% include 'icon-search' %}
-            </div>
-            <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
-            <button type="submit" class="minimal-input-box__submit">
-              {% include 'icon-arrow' %}
-              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-            </button>
-          </div>
-        </div>
-
-        <br /><br />
-        <p>Large</p>
-        <div class="docs-well docs-well--accent">
-          <div class="minimal-input-box minimal-input-box--large">
-            <div class="icon-search-container">
-              {% include 'icon-search' %}
-            </div>
-            <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
-            <button type="submit" class="minimal-input-box__submit">
-              {% include 'icon-arrow' %}
-              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-            </button>
-          </div>
-        </div>
-
-        <p>Search Enabled (not working on this instance)</p>
-        <div class="docs-well docs-well--accent" style="padding-bottom: 320px;">
-          <div class="minimal-input-box">
-            <div class="icon-search-container">
-              {% include 'icon-search' %}
-            </div>
-            <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
-            <button type="submit" class="minimal-input-box__submit">
-              {% include 'icon-arrow' %}
-              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-            </button>
-            <div class="autocomplete-results-container">
-              <ul class="autocomplete-results">
-                <li class="autocomplete-item"><a href="#">item1</a></li>
-                <li class="autocomplete-item"><a href="#">item2</a></li>
-                <li class="autocomplete-item"><a href="#">item3</a></li>
-                <li class="autocomplete-item"><a href="#">item4</a></li>
-                <li class="autocomplete-item"><a href="#">item5</a></li>
-                <li class="autocomplete-item"><a href="#">item6</a></li>
-                <li class="autocomplete-item"><a href="#">item7</a></li>
-                <li class="autocomplete-item"><a href="#">item8</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <h4 id="docs-dots" class="docs-subtitle">Dots</h4>
-
-        <p>Dots are an alternate UI used primarily for displaying / selecting variant option values. They respond to the two state classes <code>.is-active</code> and <code>.is-disabled</code>.  Active dots will show a border around them, disabled dots will show with partial opacity and a strike through.</p>
-        <div class="dots">
-          <div class="dot is-active" title="Small">
-            <div class="dot__inner">S</div>
-          </div>
-          <div class="dot" title="Medium">
-            <div class="dot__inner">M</div>
-          </div>
-          <div class="dot" title="Large">
-            <div class="dot__inner">L</div>
-          </div>
-          <div class="dot" title="Extra Large">
-            <div class="dot__inner">XL</div>
-          </div>
-          <div class="dot is-disabled" title="Extra Large">
-            <div class="dot__inner">OS</div>
-          </div>
-        </div>
-
-        <br /><br />
-
-        <p>Use the <code>.dots--small</code> modifier class to create smaller dots when space is tight.</p>
-
-        <div class="dots dots--small">
-          <div class="dot is-active" title="Small">
-            <div class="dot__inner">S</div>
-          </div>
-          <div class="dot" title="Medium">
-            <div class="dot__inner">M</div>
-          </div>
-          <div class="dot" title="Large">
-            <div class="dot__inner">L</div>
-          </div>
-          <div class="dot" title="Extra Large">
-            <div class="dot__inner">XL</div>
-          </div>
-          <div class="dot is-disabled" title="Extra Large">
-            <div class="dot__inner">OS</div>
-          </div>
-        </div>
-
-        <br /><br />
-
-        <p>Apply a background color or background image to the <code>.dot__inner</code> element to use them as swatches.</p>
-        <div class="dots dots--color">
-          <div class="dot is-active" title="Navy">
-            <div class="dot__inner" style="background-color:#081847;"></div>
-          </div>
-          <div class="dot" title="Maroon">
-            <div class="dot__inner" style="background-color:#AD172B;"></div>
-          </div>
-          <div class="dot" title="Maude">
-            <div class="dot__inner" style="background-color:#A06B6B;"></div>
-          </div>
-          <div class="dot" title="Gold">
-            <div class="dot__inner" style="background-image: url({{ 'test-swatch-1.png' | asset_img_url: '50x50', crop: 'center' }})"></div>
-          </div>
-          <div class="dot" title="Multi Plaid">
-            <div class="dot__inner" style="background-image: url({{ 'test-swatch-2.png' | asset_img_url: '50x50', crop: 'center' }})"></div>
-          </div>
-          <div class="dot" title="Red Plaid">
-            <div class="dot__inner" style="background-image: url({{ 'test-swatch-3.png' | asset_img_url: '50x50', crop: 'center' }})"></div>
-          </div>
-        </div>
-        <br /><br />
-        <p>Or apply a modifier class to apply a background color as defined in the swatch palette.  The list of available color-modifier classes is below.</p>
-
-        {% assign colors = 'blue:indigo:purple:pink:red:orange:yellow:green:teal:cyan:khaki:brown:tan:white:gray:gray-dark:black' | split: ':' %}
-
-        <div class="dots dots--color">
-          {% for c in colors %}
-            <div class="dot dot--solid dot--{{ c }}">
-              <div class="dot__inner">
-                {% include 'icon-check' %}
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h6>Numeric bullet <code>ol</code> (default)</h6>
+          </td>
+          <td>
+            <ol>
+              <li>One</li>
+              <li>Two</li>
+              <li>Three</li>
+              <li>Four</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h6>Child lists (to match the RTE styles)</h6>
+          </td>
+          <td>
+            <ul>
+              <li>One</li>
+              <li>Two</li>
+              <li>Three, with child list
+                <ul>
+                  <li>First sub item</li>
+                  <li>Second sub item</li>
+                  <li>Third sub item, with child list
+                    <ul>
+                      <li>Third level item</li>
+                      <li>Another third level item</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>Four</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="docs-subtitle">RTE</h4>
+  <p>Styles specific to text that comes out of the rich text editor.</p>
+  <br />
+  <div class="rte">
+    <ul>
+    <li>One</li>
+    <li>Two</li>
+    <li>Three, with child list
+      <ul>
+        <li>First sub item</li>
+        <li>Second sub item</li>
+        <li>Third sub item, with ordered child list
+          <ol>
+            <li>Third level item</li>
+            <li>Another third level item</li>
+          </ol>
+        </li>
+      </ul>
+    </li>
+    <li>Four</li>
+  </ul>
+  </div>
+  <br />
+  <div class="rte">
+    <p>This is an example paragraph that comes out of the rich text editor.  This sentence <a href="#">contains a link</a> so you can verify what link styles look like.  Free-market sprawl garage hotdog monofilament tube dolphin sunglasses kanji vehicle pen ablative Shibuya range-rover marketing assassin. Sub-orbital tanto sign military-grade tattoo corrupted camera lights dead cardboard j-pop marketing apophenia film jeans. Fetishism concrete claymore mine table j-pop nano-geodesic post-rain carbon garage sign savant refrigerator saturation point grenade.</p>
+    <p>This is an example paragraph that comes out of the rich text editor.  This sentence <a href="#">contains a link</a> so you can verify what link styles look like.  Free-market sprawl garage hotdog monofilament tube dolphin sunglasses kanji vehicle pen ablative Shibuya range-rover marketing assassin. Sub-orbital tanto sign military-grade tattoo corrupted camera lights dead cardboard j-pop marketing apophenia film jeans. Fetishism concrete claymore mine table j-pop nano-geodesic post-rain carbon garage sign savant refrigerator saturation point grenade.</p>
+    <h2>RTE Heading</h2>
+    <p>This is an example paragraph that comes out of the rich text editor.  This sentence <a href="#">contains a link</a> so you can verify what link styles look like.  Free-market sprawl garage hotdog monofilament tube dolphin sunglasses kanji vehicle pen ablative Shibuya range-rover marketing assassin. Sub-orbital tanto sign military-grade tattoo corrupted camera lights dead cardboard j-pop marketing apophenia film jeans. Fetishism concrete claymore mine table j-pop nano-geodesic post-rain carbon garage sign savant refrigerator saturation point grenade.</p>
+  </div>
+  <p><small><strong>Note:</strong> Any table elements that come out of the rich text editor are will automatically have a responsive wrapper applied to them.  This allows them to scroll on small screens without breaking the site layout.</small></p>
+
+  <h2 id="docs-buttons" class="docs-title">Buttons</h2>
+
+  <div class="docs-well">
+    <p>
+      <a href="#" class="btn-v3">
+        Button (no icon)
+      </a>
+    </p>
+    <p>
+      <a href="#" class="btn-v3">
+        Button with icon
+        {% include 'icon-arrow' %}
+      </a>
+    </p>
+    <p>
+      <a href="#" class="btn-v3 btn-v3--blink">
+        Button with blink
+        {% include 'icon-arrow' %}
+      </a>
+    </p>
+    <p>
+      <a href="#" class="btn-v3 disabled">Button (Disabled) </a>
+    </p>
+  </div>
+
+  <div class="docs-well">
+    <p>
+      <a href="#" class="btn-v3 block w-full text-center text-p5-m">Mobile Button (w/o icon)</a>
+    </p>
+    <p>
+      <a href="#" class="btn-v3 w-full flex justify-center items-center text-p5-m">
+        Mobile Button
+        {% render 'icon-arrow' %}
+      </a>
+    </p>
+  </div>
+
+  <div class="docs-well">
+    <a href="#" class="cta-link block">
+      Link Button
+    </a>
+    <a href="#" class="cta-link !font-bold block">
+      Link Button (Bold)
+    </a>
+  </div>
+
+  <div class="docs-well">
+    <a href="#" class="hero-button">
+      View Now
+    </a>
+  </div>
+
+  <h2 id="docs-forms" class="docs-title">Forms</h2>
+
+  <p>Forms are based on Bootstrap 4's form component.  Simple examples to listed here to use as a reference for styling, for more detailed information about how they work, please see the <a href="https://getbootstrap.com/docs/4.0/components/forms">official documentation</a>.</p>
+
+  <h4 class="docs-subtitle">Default Forms</h4>
+
+  <form>
+    <div class="form-group">
+      <label for="textDefault1">Label</label>
+      <input type="text" id="textDefault1" placeholder="Input 1" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="textDefault2">Label 2</label>
+      <input type="text" id="textDefault2" placeholder="Input 2" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="textDefault3">Text Field (Valid)</label>
+      <input type="text" id="textDefault3" class="form-control is-valid" value="Valid Entry">
+      <div class="valid-feedback">
+        Validation Feedback goes here
       </div>
     </div>
+    <div class="form-group">
+      <label for="textDefault4">Text Field (Error)</label>
+      <input type="text" id="textDefault4" class="form-control is-invalid" value="Invalid Entry">
+      <div class="invalid-feedback">
+        Invalid Feedback goes here
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="selectHorizontal1">Label 3</label>
+      <select id="selectHorizontal1" class="form-control">
+        <option value="0">-- Choose --</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+      <small class="form-text">I'm helper text to explain what's going on with this form input.</small>
+    </div>
+  </form>
+
+  <h4 class="docs-subtitle">Invisible labels</h4>
+
+  <p>Add a class of <code>sr-only</code> to a label to visually hide it, while keeping it accessible to screen readers. Use the <code>placeholder</code> attribute as your visible label.</p>
+  <p><small><strong>Note:</strong> The <code>placeholder</code> attribute only works in IE10+, so invisible labels are disabled in IE9 and below.</small></p>
+
+  <form>
+    <div class="form-group">
+      <label for="testInvisibleLabel1" class="sr-only">First Name</label>
+      <input type="text" id="testInvisibleLabel1" name="testInvisibleLabel1" placeholder="First Name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="testInvisibleLabel2" class="sr-only">Last Name</label>
+      <input type="text" id="testInvisibleLabel2" name="testInvisibleLabel2" placeholder="Last Name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="testInvisibleLabel3" class="sr-only">Email</label>
+      <input type="text" id="testInvisibleLabel3" name="testInvisibleLabel3" placeholder="Email" class="form-control">
+    </div>
+  </form>
+
+  <h4 class="docs-subtitle">Horizontal Forms</h4>
+
+  <p>Create horizontal forms with the grid by adding the <code>.row</code> class to form groups and using the <code>.col-*-*</code> classes to specify the width of your labels and controls. Be sure to add <code>.col-form-label</code> to your label elements as well so they’re vertically centered with their associated form controls.</p>
+
+  <form>
+    <div class="form-group row">
+      <label for="text1" class="col-sm-4 col-form-label">Text Field</label>
+      <div class="col-sm-10">
+        <input type="text" id="text1" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="text2" class="col-sm-4 col-form-label">Placeholder</label>
+      <div class="col-sm-10">
+        <input type="text" id="text2" placeholder="Placeholder text" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="text3" class="col-sm-4 col-form-label">Disabled Field</label>
+      <div class="col-sm-10">
+        <input type="text" id="text3" disabled="disabled" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="text5" class="col-sm-4 col-form-label">Text Field (Valid)</label>
+      <div class="col-sm-10">
+        <input type="text" id="text5" class="form-control is-valid" value="Valid Entry">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="text4" class="col-sm-4 col-form-label">Text Field (Error)</label>
+      <div class="col-sm-10">
+        <input type="text" id="text4" class="form-control is-invalid" value="Invalid Entry">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="text6" class="col-sm-4 col-form-label">Text Area</label>
+      <div class="col-sm-10">
+        <textarea type="text" id="text6" class="form-control" value="Invalid Entry" rows="5"></textarea>
+      </div>
+    </div>
+  </form>
+
+  <h4 class="docs-subtitle">Inline Forms</h4>
+  <form class="form-inline">
+    <label for="exampleInputName2" class="sr-only">Name</label>
+    <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+
+    <label for="exampleInputEmail2" class="sr-only">Email</label>
+    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+
+    <button type="submit" class="button button--primary">Send invitation</button>
+  </form>
+
+  <h4 class="docs-subtitle">Other Form Elements</h4>
+  <form>
+
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Default checkbox
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+        <label class="form-check-label" for="defaultCheck2">
+          Disabled checkbox
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+        <label class="form-check-label" for="exampleRadios1">
+          Default radio
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+        <label class="form-check-label" for="exampleRadios2">
+          Second default radio
+        </label>
+      </div>
+      <div class="form-check disabled">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+        <label class="form-check-label" for="exampleRadios3">
+          Disabled radio
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="textarea1">Textarea</label>
+      <textarea id="textarea1" placeholder="Placeholder text" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="file1">File Field</label>
+      <input id="file1" type="file">
+      <small class="form-text">Example block-level help text here.</small>
+    </div>
+    <button type="submit" class="button button--primary">Submit</button>
+  </form>
+
+  <h4 class="docs-subtitle">Custom Forms</h4>
+
+  <p>Use completely custom form elements to replace browser defaults.</p>
+
+  <form>
+    <div class="form-group">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheck1">
+        <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="customCheck2">
+        <label class="custom-control-label" for="customCheck2">Check this custom checkbox</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio1">
+          Toggle this custom radio
+        </label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+        <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+      </div>
+    </div>
+  </form>
+
+  <h2 id="docs-iconography" class="docs-title">Iconography</h2>
+  <p>Read more about using, creating, and editing SVG icons in Slate's documentation.</p>
+
+  <h4 class="docs-subtitle">Social icons</h4>
+  <ul class="styleguide-icons">
+    <li>{% include 'icon-facebook' %}</li>
+    <li>{% include 'icon-facebook-alt' %}</li>
+    <li>{% include 'icon-instagram' %}</li>
+    <li>{% include 'icon-twitter' %}</li>
+    <li>{% include 'icon-youtube' %}</li>
+    <li>{% include 'icon-pinterest' %}</li>
+    <li>{% include 'icon-linkedin' %}</li>
+    <li>{% include 'icon-reddit' %}</li>
+    <li>{% include 'icon-discourse' %}</li>
+    <li>{% include 'icon-mail' %}</li>
+    <li>{% include 'icon-tumblr' %}</li>
+  </ul>
+
+  <h4 class="docs-subtitle">General icons</h4>
+  <ul class="styleguide-icons">
+    <li>{% include 'icon-account' %}</li>
+    <li>{% include 'icon-caret' %}</li>
+    <li>{% include 'icon-close' %}</li>
+    <li>{% include 'icon-hamburger' %}</li>
+    <li>{% include 'icon-minus-full-color' %}</li>
+    <li>{% include 'icon-plus-full-color' %}</li>
+    <li>{% include 'icon-rss' %}</li>
+    <li>{% include 'icon-arrow-right' %}</li>
+    <li>{% include 'icon-checkmark' %}</li>
+    <li>{% include 'icon-play-full-color' %}</li>
+    <li>{% include 'icon-info' %}</li>
+    <li>{% include 'icon-filters' %}</li>
+    <li>{% include 'icon-arrow' %}</li>
+    <li>{% include 'icon-hamburger' %}</li>
+    <li>{% include 'icon-more-full-color' %}</li>
+    <li>{% include 'icon-arrow-circled-full-color'  %}</li>
+    <li>{% include 'icon-search' %}</li>
+  </ul>
+  <br><br>
+  <ul class="styleguide-icons">
+    <li>{% include 'icon-municipal-circle'  %}</li>
+    <li>{% include 'icon-gear' %}</li>
+  </ul>
+
+  <h2 id="docs-ui-elements" class="docs-title">UI Elements</h2>
+
+  <h4 id="docs-arrows" class="docs-subtitle">Arrows</h4>
+  <p>Arrow elements are mostly used for slideshow controls.  The root element has the base <code>arrow</code> class applied to it and directional modifier classes are available.  By default, it has one child element that makes up the actual arrow icon.</p>
+  <a href="#" class="arrow arrow--up">
+    <span class="arrow__icon"></span>
+  </a>
+  <a href="#" class="arrow">
+    <span class="arrow__icon"></span>
+  </a>
+  <a href="#" class="arrow arrow--down">
+    <span class="arrow__icon"></span>
+  </a>
+  <a href="#" class="arrow arrow--left">
+    <span class="arrow__icon"></span>
+  </a>
+  <br /><br />
+
+  <p>This child element easily be swapped out for a png, svg, or other icon made of pseudo elements.</p>
+
+  <a href="#" class="arrow arrow--up">
+    {% include 'icon-arrow-right' %}
+  </a>
+  <a href="#" class="arrow">
+    {% include 'icon-arrow-right' %}
+  </a>
+  <a href="#" class="arrow arrow--down">
+    {% include 'icon-arrow-right' %}
+  </a>
+  <a href="#" class="arrow arrow--left">
+    {% include 'icon-arrow-right' %}
+  </a>
+
+  <h4 id="docs-breadcrumbs" class="docs-subtitle">Breadcrumbs</h4>
+
+  <nav class="breadcrumbs">
+    <div class="breadcrumbs__crumb">
+      <a href="#">Step 1</a>
+    </div>
+    <div class="breadcrumbs__crumb">
+      <a href="#">Step 2</a>
+    </div>
+    <div class="breadcrumbs__crumb">Step 3</div>
+  </nav>
+
+  <h4 id="docs-pagination" class="docs-subtitle">Pagination</h4>
+
+  <div class="pagination">
+    <span class="prev"><a href="#">Prev</a></span>
+    <span class="page"><a href="#" title="">1</a></span>
+    <span class="page current">2</span>
+    <span class="page"><a href="#" title="">3</a></span>
+    <span class="deco">…</span>
+    <span class="page"><a href="#" title="">10</a></span>
+    <span class="next"><a href="#" title="">Next</a></span>
+  </div>
+
+  <h4 id="docs-social-sharing" class="docs-subtitle">Social Sharing</h4>
+  {% include 'social-sharing' %}
+
+  <h4 id="docs-minimal-input" class="docs-subtitle">Minimal Input</h4>
+  <p>Normal</p>
+  <div class="docs-well docs-well--accent">
+    <div class="minimal-input-box">
+      <div class="icon-search-container">
+        {% include 'icon-search' %}
+      </div>
+      <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
+      <button type="submit" class="minimal-input-box__submit">
+        {% include 'icon-arrow' %}
+        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+      </button>
+    </div>
+  </div>
+
+  <br /><br />
+  <p>Inverted</p>
+  <div class="docs-well docs-well--dark">
+    <div class="minimal-input-box minimal-input-box--inverted">
+      <div class="icon-search-container">
+        {% include 'icon-search' %}
+      </div>
+      <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
+      <button type="submit" class="minimal-input-box__submit">
+        {% include 'icon-arrow' %}
+        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+      </button>
+    </div>
+  </div>
+
+  <br /><br />
+  <p>Large</p>
+  <div class="docs-well docs-well--accent">
+    <div class="minimal-input-box minimal-input-box--large">
+      <div class="icon-search-container">
+        {% include 'icon-search' %}
+      </div>
+      <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
+      <button type="submit" class="minimal-input-box__submit">
+        {% include 'icon-arrow' %}
+        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+      </button>
+    </div>
+  </div>
+
+  <p>Search Enabled (not working on this instance)</p>
+  <div class="docs-well docs-well--accent" style="padding-bottom: 320px;">
+    <div class="minimal-input-box">
+      <div class="icon-search-container">
+        {% include 'icon-search' %}
+      </div>
+      <input type="search" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" />
+      <button type="submit" class="minimal-input-box__submit">
+        {% include 'icon-arrow' %}
+        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+      </button>
+      <div class="autocomplete-results-container">
+        <ul class="autocomplete-results">
+          <li class="autocomplete-item"><a href="#">item1</a></li>
+          <li class="autocomplete-item"><a href="#">item2</a></li>
+          <li class="autocomplete-item"><a href="#">item3</a></li>
+          <li class="autocomplete-item"><a href="#">item4</a></li>
+          <li class="autocomplete-item"><a href="#">item5</a></li>
+          <li class="autocomplete-item"><a href="#">item6</a></li>
+          <li class="autocomplete-item"><a href="#">item7</a></li>
+          <li class="autocomplete-item"><a href="#">item8</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h4 id="docs-dots" class="docs-subtitle">Dots</h4>
+
+  <p>Dots are an alternate UI used primarily for displaying / selecting variant option values. They respond to the two state classes <code>.is-active</code> and <code>.is-disabled</code>.  Active dots will show a border around them, disabled dots will show with partial opacity and a strike through.</p>
+  <div class="dots">
+    <div class="dot is-active" title="Small">
+      <div class="dot__inner">S</div>
+    </div>
+    <div class="dot" title="Medium">
+      <div class="dot__inner">M</div>
+    </div>
+    <div class="dot" title="Large">
+      <div class="dot__inner">L</div>
+    </div>
+    <div class="dot" title="Extra Large">
+      <div class="dot__inner">XL</div>
+    </div>
+    <div class="dot is-disabled" title="Extra Large">
+      <div class="dot__inner">OS</div>
+    </div>
+  </div>
+
+  <br /><br />
+
+  <p>Use the <code>.dots--small</code> modifier class to create smaller dots when space is tight.</p>
+
+  <div class="dots dots--small">
+    <div class="dot is-active" title="Small">
+      <div class="dot__inner">S</div>
+    </div>
+    <div class="dot" title="Medium">
+      <div class="dot__inner">M</div>
+    </div>
+    <div class="dot" title="Large">
+      <div class="dot__inner">L</div>
+    </div>
+    <div class="dot" title="Extra Large">
+      <div class="dot__inner">XL</div>
+    </div>
+    <div class="dot is-disabled" title="Extra Large">
+      <div class="dot__inner">OS</div>
+    </div>
+  </div>
+
+  <br /><br />
+
+  <p>Apply a background color or background image to the <code>.dot__inner</code> element to use them as swatches.</p>
+  <div class="dots dots--color">
+    <div class="dot is-active" title="Navy">
+      <div class="dot__inner" style="background-color:#081847;"></div>
+    </div>
+    <div class="dot" title="Maroon">
+      <div class="dot__inner" style="background-color:#AD172B;"></div>
+    </div>
+    <div class="dot" title="Maude">
+      <div class="dot__inner" style="background-color:#A06B6B;"></div>
+    </div>
+    <div class="dot" title="Gold">
+      <div class="dot__inner" style="background-image: url({{ 'test-swatch-1.png' | asset_img_url: '50x50', crop: 'center' }})"></div>
+    </div>
+    <div class="dot" title="Multi Plaid">
+      <div class="dot__inner" style="background-image: url({{ 'test-swatch-2.png' | asset_img_url: '50x50', crop: 'center' }})"></div>
+    </div>
+    <div class="dot" title="Red Plaid">
+      <div class="dot__inner" style="background-image: url({{ 'test-swatch-3.png' | asset_img_url: '50x50', crop: 'center' }})"></div>
+    </div>
+  </div>
+  <br /><br />
+  <p>Or apply a modifier class to apply a background color as defined in the swatch palette.  The list of available color-modifier classes is below.</p>
+
+  {% assign colors = 'blue:indigo:purple:pink:red:orange:yellow:green:teal:cyan:khaki:brown:tan:white:gray:gray-dark:black' | split: ':' %}
+
+  <div class="dots dots--color">
+    {% for c in colors %}
+      <div class="dot dot--solid dot--{{ c }}">
+        <div class="dot__inner">
+          {% include 'icon-check' %}
+        </div>
+      </div>
+    {% endfor %}
   </div>
 </div>

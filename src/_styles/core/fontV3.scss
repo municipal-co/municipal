@@ -1,0 +1,45 @@
+@layer base {
+  @font-face {
+    font-family: "Inter";
+      src: url("Inter-Regular.eot?#iefix");
+      src: url("Inter-Regular.eot?#iefix") format('embedded-opentype'),
+          url("Inter-Regular.woff") format('woff'),
+          url("Inter-Regular.ttf") format('truetype'),
+          url("Inter-Regular.svg#Inter-Regular") format('svg');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Sequel Sans Medium";
+      src: url("SequelSans-MediumHead.eot?#iefix");
+      src: url("SequelSans-MediumHead.eot?#iefix") format('embedded-opentype'),
+          url("SequelSans-MediumHead.woff") format('woff'),
+          url("SequelSans-MediumHead.ttf") format('truetype'),
+          url("SequelSans-MediumHead.svg#SequelSans-MediumHead") format('svg');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Sequel Sans Roman";
+      src: url("SequelSans-RomanHead.eot?#iefix");
+      src: url("SequelSans-RomanHead.eot?#iefix") format('embedded-opentype'),
+          url("SequelSans-RomanHead.woff") format('woff'),
+          url("SequelSans-RomanHead.ttf") format('truetype'),
+          url("SequelSans-RomanHead.svg#SequelSans-RomanHead") format('svg');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Sequel Sans SemiBold";
+      src: url("SequelSans-SemiBoldHead.eot?#iefix");
+      src: url("SequelSans-SemiBoldHead.eot?#iefix") format('embedded-opentype'),
+          url("SequelSans-SemiBoldHead.woff") format('woff'),
+          url("SequelSans-SemiBoldHead.ttf") format('truetype'),
+          url("SequelSans-SemiBoldHead.svg#SequelSans-SemiBoldHead") format('svg');
+    font-weight: 400;
+    font-style: normal;
+  }
+}

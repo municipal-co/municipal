@@ -7,14 +7,14 @@ export default {
     extend: {
       colors: {
         'black': '#121212',
-        'gray': '#424446',
+        'bg-white': '#f5f5f6',
+        'gray': '#b1b17c2',
         'core-gray-1': '#f1f1f1',
         'core-gray-2': '#b1b7c2',
         'core-gray-3': '#393d49',
         'account-gray': '#979797',
         'arrow-gray': '#b8b8b8',
         'brownish-red': '#752c2e',
-        'bg-white': '#f5f5f5',
         'green': '#00ff00',
         'cyan': '#009dcc',
         'yellow': '#ffea06',
@@ -25,63 +25,63 @@ export default {
       },
       fontSize: {
         'display': [
-          '140px',
+          '115px',
           {
-            lineHeight: '120px',
+            lineHeight: '0.87em',
           }
         ],
         'display-m': [
           '40px',
           {
-            lineHeight: '38px'
+            lineHeight: '0.975em'
           }
         ],
         'h1': [
           '100px',
           {
-            lineHeight: '95px',
+            lineHeight: '1.03em',
           }
         ],
         'h1-m': [
           '32px',
           {
-            lineHeight: '1em'
+            lineHeight: '1.063em'
           }
         ],
         'h2': [
           '60px',
           {
-            lineHeight: '55px',
+            lineHeight: '0.917em',
           }
         ],
         'h2-m': [
-          '20px',
+          '32px',
           {
-            lineHeight: '1em'
+            lineHeight: '1.063em'
           }
         ],
         'h3': [
           '40px',
           {
-            lineHeight: '1em',
+            lineHeight: '1.125em',
           }
         ],
         'h3-m': [
-          '15px',
+          '21px',
           {
-            lineHeight: '1em'
+            lineHeight: '1.19em'
           }
         ],
         'h4': [
           '30px',
           {
-            lineHeight: '33px',
+            lineHeight: '1.1em',
           }
         ],
         'h4-m': [
-          '12px',
+          '17px',
           {
-            lineHeight: '1em'
+            lineHeight: '1.176em'
           }
         ],
         'h5': [
@@ -91,9 +91,9 @@ export default {
           }
         ],
         'h5-m': [
-          '10px',
+          '15px',
           {
-            lineHeight: '10px'
+            lineHeight: '1.33em'
           }
         ],
         'h6': [
@@ -103,9 +103,9 @@ export default {
           }
         ],
         'h6-m': [
-          '8px',
+          '12px',
           {
-            lineHeight: '1em'
+            lineHeight: '1.167em'
           }
         ],
         'p1': [
@@ -115,9 +115,9 @@ export default {
           }
         ],
         'p1-m': [
-          '20px',
+          '27px',
           {
-            lineHeight: '1.2em'
+            lineHeight: '1.148em'
           }
         ],
         'p2': [
@@ -127,9 +127,9 @@ export default {
           }
         ],
         'p2-m': [
-          '17px',
+          '24px',
           {
-            lineHeight: '1.294em'
+            lineHeight: '1.208em'
           }
         ],
         'p3': [
@@ -139,51 +139,66 @@ export default {
           }
         ],
         'p3-m': [
-          '14px',
+          '20px',
           {
-            lineHeight: '1.357em'
+            lineHeight: '1.2em'
           }
         ],
         'p4': [
-          '20px',
+          '26px',
           {
-            lineHeight: '1.35em',
+            lineHeight: '1.154em',
           }
         ],
         'p4-m': [
-          '11px',
+          '18px',
           {
-            lineHeight: '1.455em'
+            lineHeight: '1.2em'
           }
         ],
         'p5': [
-          '15px',
+          '20px',
           {
             lineHeight: '1.667em',
           }
         ],
         'p5-m': [
-          '10px',
+          '15px',
           {
-            lineHeight: '1.5'
+            lineHeight: '1.2em'
           }
         ],
         'p6': [
-          '12px',
+          '18px',
           {
-            lineHeight: '1.583em',
+            lineHeight: '1.389em',
           }
         ],
         'p6-m': [
-          '9px',
+          '13px',
           {
-            lineHeight: '1.529em'
+            lineHeight: '1.154em'
           }
         ],
         'container': {
           center: true,
           padding: '20px',
         }
+      },
+      fontFamily: {
+        'sequel-roman': ['Sequel\\ Sans\\ Roman', 'sans-serif'],
+        'sequel-medium': ['Sequel\\ Sans\\ Medium', 'sans-serif'],
+        'sequel-semi': ['Sequel\\ Sans\\ SemiBold', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
+      },
+      keyframes: {
+        'fade-pulse': {
+          '0%, 100%': { opacit: 1 },
+          '50%': { opacity: 0 }
+        }
+      },
+      animation: {
+        'fade-pulse': 'fade-pulse 2s infinite',
       },
     },
   },
