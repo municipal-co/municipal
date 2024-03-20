@@ -15,17 +15,17 @@
 {% comment %} Defaults {% endcomment %}
 {% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 
-{% assign current_variant = product.variants[0] %}
+{% assign current_variant = card_product.first_available_variant | default: card_product.variants[0] %}
 
 {% for variant in card_product.variants %}
-  {% if variant.title contains color %}
+  {% if variant.title contains color or variant.title contains colour %}
     {% assign current_variant = variant %}
     {% break %}
   {% endif %}
 {% endfor %}
 
 {% for option in card_product.options_with_values %}
-  {% if option.name == 'color' or option.name == 'Color' %}
+  {% if option.name == 'color' or option.name == 'Color' or option.name == 'colour' or option.name == 'Colour' %}
     {% assign color_index = 'option' | append: forloop.index %}
   {% endif %}
   {% if option.name == 'size' or option.name == 'Size' %}

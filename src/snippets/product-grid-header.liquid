@@ -1,0 +1,32 @@
+{%- capture active_filter -%}
+  {%- for filter in source.filters -%}
+    {%- if filter.active_values.size > 0 -%}
+      true
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+<div class="product-grid-header">
+  <div class="product-grid-header__filter-container">
+    <button class="product-grid-header__filter-toggle-btn" data-filter-toggler>
+      <div class="product-grid-header__filter-icon icon-filter">
+        <span class="icon-filter__dots"></span>
+      </div>
+      <span class="sr-only" data-filter-action-text>Open</span>
+      <div class="product-grid-header__filter-title">Filters</div>
+    </button>
+    <button class="product-grid-header__clear-filters-btn {% if active_filter == 'true' %}hide d-lg-block{%else%}hide{%endif%}" data-clear-filters data-location="desktop" style="display: none !important">
+      Clear <span class="sr-only">Filter</span> Results
+    </button>
+
+  </div>
+  <div class="product-grid-header__sort-container">
+    <span class="product-grid-header__sort-label">SORT BY:</span>
+    <select name="sort_by" class="product-grid-header__sort-select" data-sort-select>
+      {% for option in source.sort_options %}
+        <option value="{{option.value}}">{{ option.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>

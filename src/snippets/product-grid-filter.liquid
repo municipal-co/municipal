@@ -1,0 +1,53 @@
+<div class="filter is-open" data-filter-group="{{filter.param_name}}">
+  <div class="filter__header">
+    <h6 class="filter__title">{{ filter.label }}</h6>
+    <div class="filter__toggle" data-filter-group-toggler data-filter-name="{{ filter.param_name }}">
+      <div class="sr-only"><span data-filter-action-label>Close</span> Filter Group</div>
+      <div class="filter__toggle-icon-container"></div>
+    </div>
+  </div>
+  <div class="filter__body">
+    {% if filter.type == 'boolean' %}
+      <label>
+        <input type="checkbox" checked={{ filter.false_value }} name="{{ filter.param_name }}" value="true">
+        <span className="filter__checkbox-ui"></span>
+        {{ filter.label }}
+      </label>
+    {% endif %}
+
+    {% if filter.type == 'list' %}
+      {% for filter_value in filter.values %}
+      <label class="filter__option-container filter__option">
+          <input type="checkbox" value="{{filter_value.value}}" {% if filter_value.active %} checked {% endif %} name="{{filter.param_name}}">
+          <span className="filter__checkbox-ui"></span>
+          <span class="filter__name"> {{ filter_value.label }} </span>
+        <span class="filter__count"> {{ filter_value.count }} </span>
+      </label>
+      {% endfor %}
+    {% endif %}
+
+    {% if filter.type == 'price_range' %}
+      <div class="filter__price-range">
+        <div class="filter__input" >
+          <span class="filter__input-symbol">$</span>
+          <input type="number"
+          {% if filter.min_value.value > 0 %}
+            value="{{filter.min_value.value | divided_by: 100}}"
+          {% endif %}
+          max="{{filter.range_max}}" name="{{filter.param_name | append: '.min'}}" data-price-range-min/>
+        </div>
+        <span class="filter__divider">-</span>
+        <div class="filter__input" >
+          <span class="filter__input-symbol">$</span>
+          <input type="number"
+          {% if filter.max_value.value > 0 %}
+            value="{{filter.max_value.value | divided_by: 100}}"
+          {% endif %}
+          max="{{filter.range_max}}" name="{{filter.param_name | append: '.max'}}" data-price-range-max/>
+        </div>
+        <button type="button" class="filter__input-button" data-apply-price-change>Go</button>
+      </div>
+    {% endif %}
+  </div>
+</div>
+

@@ -51,6 +51,7 @@ import Parallax from './sections/parallax';
 import ProductCardSlider from './sections/productCardSlider';
 import FourOFour from './sections/fourofour';
 import Faq from './sections/faq';
+import ShopifyProductGrid from './sections/product-grid.js';
 
 // Models
 import ProductCard from './view/product/productCard';
@@ -108,6 +109,7 @@ Breakpoints.initialize();
   sectionManager.register('parallax', Parallax);
   sectionManager.register('product-card-slider', ProductCardSlider);
   sectionManager.register('faq', Faq);
+  sectionManager.register('shopify-product-grid', ShopifyProductGrid);
 
   // Register Mobile navigation
   const navigationHolder = document.getElementById('main_navigation');
@@ -120,16 +122,18 @@ Breakpoints.initialize();
     collectionRoot.render(<Collection />);
   }
 
+  const themeSettingsData = document.querySelector('[data-theme-settings-json]');
+  const themeSettings = themeSettingsData ? JSON.parse(themeSettingsData.innerHTML) : {};
   const searchHolder = document.getElementById('search-container');
   if (searchHolder) {
     const searchRoot = ReactDOM.createRoot(searchHolder);
-    searchRoot.render(<Search />);
+    searchRoot.render(<Search enableFindify={themeSettings?.enableFindify} />);
   }
 
   const autocompleteHolder = document.getElementById('autocomplete-wrapper');
   if (autocompleteHolder) {
     const autocompleteRoot = ReactDOM.createRoot(autocompleteHolder);
-    autocompleteRoot.render(<AutocompleteSearch />);
+    autocompleteRoot.render(<AutocompleteSearch enableFindify={themeSettings?.enableFindify}/>);
   }
 
   const drawerHolder = document.getElementById('drawer-container');

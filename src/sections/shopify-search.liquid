@@ -1,0 +1,42 @@
+<div class="collection-banner findify-collection-banner light layout-content-wrapper">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-xl-22 col-lg-22 col-md-20 col-sm-22 col-22 collection-banner-inner-wrapper">
+        <div>
+          <h2 class="collection-banner__title text-left h1">Search <br class="d-block d-sm-none"> Results</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% paginate search.results by settings.search_products_per_page %}
+  <div class="findify-template-container container-fluid" data-section-type="shopify-product-grid" data-section-id="{{section.id}}">
+    <div class="row justify-content-center">
+      <div class="col-22 col-md-20 col-lg-22 col-xl-22">
+        {% if search.performed == true %}
+          <p class="findify-result-summary">Showing {{search.results_count }} results for "{{ search.terms }}" </p>
+          {% render 'product-grid-header', source: search %}
+          <div class="product-grid__body row">
+            {% render 'product-grid-filters', source: search %}
+            <div class="collection__grid col-24" data-product-grid>
+              <div class="row content-grid content-grid--1-col content-grid--md-2-col content-grid--lg-3-col content-grid--xl-4-col">
+                {% for product in search.results %}
+                  <div class="content-grid__item">
+                    {% render 'product-card', card_product: product %}
+                  </div>
+                {% endfor %}
+              </div>
+              {% assign custom_param = 'q=' | append: search.terms %}
+              {% render 'pagination', paginate: paginate, custom_param: custom_param %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endpaginate %}
+
+<script>
+  window.searchLimit = {{ settings.search_products_per_page | default: 16 }};
+</script>

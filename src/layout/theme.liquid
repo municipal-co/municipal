@@ -86,11 +86,6 @@
       },
     };
 
-  {% if settings.yotpo_client_id != blank %}
-    window.yotpoConfig = {
-      appKey: '{{ settings.yotpo_client_id }}'
-    };
-  {% endif %}
 
   {% if settings.section_negative_threshold == true %}
     {% assign section_animation_threshold = settings.section_load_threshold | times: '-1' %}
@@ -182,7 +177,7 @@
 
   {% include 'third-party-scripts-foot' %}
 
-  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=P5FsAy"></script>
+  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id={{ settings.klaviyo_api_key }}"></script>
 
   {% comment %}{% section 'newsletter-slideup' %}{% endcomment %}
   {% comment %} Findify Integraion {% endcomment %}
@@ -196,6 +191,7 @@
 
   <script type="application/json" data-theme-settings-json>
     {
+      "enableFindify": {{ settings.enable_findify | default: false | json }},
       "lowInventoryThreshold": {{ settings.low_inventory_threshold | json }}
       {%- if filter_url != blank -%}
         ,"filterUrl": {{ filter_url | json }}
@@ -205,6 +201,7 @@
 
   <script type="application/json" data-marketing-drawer-settings>
     {
+      "listId": {{settings.mkt_drwr_list_id | json }},
       "notifyText": {{settings.mkt_drwr_notify_text | json }},
       "successMessage": {{settings.mkt_drwr_success_message | json }},
       "errorMessage": {{settings.mkt_drwr_error_message | json}},

@@ -1,0 +1,24 @@
+<div class="product-grid__filters col-lg-8 col-xl-6" data-filter-drawer>
+  <div class="product-grid__filters-mobile-header">
+    <h4 class="product-grid__filters-mobile-title">Filters</h4>
+    <button class="findify-header__clear-filters-btn {% unless source.filters.active_values != blank %}hide{%endunless%}" data-clear-filters data-location="mobile">
+      Clear <div class="sr-only">Filter</div> Results
+    </button>
+    <button type="button" class="product-grid__filters-close-button" data-close-filters>
+      <div class="product-grid__filter-icon-close">
+        <div class="sr-only">Close filters</div>
+      </div>
+    </button>
+  </div>
+
+  {% for filter in source.filters %}
+    {% render 'product-grid-filter', filter:filter %}
+  {% endfor %}
+
+  <div class="product-grid__filters-apply-btn-container">
+    <button class="product-grid__filters-apply-btn btn btn--primary btn-block" data-run-filters>
+      See results
+      <span class="icon-arrow"></span>
+    </button>
+  </div>
+</div>

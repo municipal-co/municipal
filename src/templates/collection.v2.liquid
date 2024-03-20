@@ -1,26 +1,7 @@
+{% section 'findify-collection-banner' %}
 {% if settings.enable_shopify_collection %}
-  {% section 'findify-collection-banner' %}
-
-  {% paginate collection.products by settings.search_products_per_page %}
-    <div style="padding-top: 40px;" class="findify-template-container container-fluid" data-section-type="shopify-collection" data-section-id="shopify-collection">
-      <div class="row justify-content-center">
-        <div class="col-22 col-md-20 col-lg-22 col-xl-22 content-grid content-grid--1-col content-grid--sm-2-col content-grid--lg-3-col content-grid--xl-4-col" data-collection-template>
-            {% for product in collection.products %}
-            <div class="content-grid__item">
-              {% assign current_color = product.selected_or_first_available_variant | default: product.variants[0] %}
-              {% render 'product-card' with card_product: product , color: current_color.option1 %}
-            </div>
-            {% endfor %}
-        </div>
-      </div>
-      {% if paginate.pages > 1 %}
-        {% include 'pagination' %}
-      {% endif %}
-    </div>
-  {% endpaginate %}
+  {% render 'shopify-collection' %}
 {% else %}
-  {% section 'findify-collection-banner' %}
-
   <div class="findify-template-container container-fluid">
     <div class="row justify-content-center">
       <div class="col-22 col-md-20 col-lg-22 col-xl-22" data-collection-template id="collection">

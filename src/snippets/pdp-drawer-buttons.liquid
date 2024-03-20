@@ -66,11 +66,11 @@
       {{ fit_guide_settings }}
     </script>
   {%- endif -%}
-  <button class="pdp-drawer-button" data-reviews-toggler>
-    <span class="pdp-drawer-button__label">
-      {% render 'rating-stars' %}
-    </span>
-    {% if settings.display_reviews == true %}
+  {% if settings.display_reviews == true %}
+    <button class="pdp-drawer-button" data-reviews-toggler>
+      <span class="pdp-drawer-button__label">
+        {% render 'rating-stars' %}
+      </span>
       <div class="pdp-drawer-button__icon">
         {% render 'icon-arrow' %}
       </div>

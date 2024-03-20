@@ -62,7 +62,7 @@ const ShopTheLookDrawer = forwardRef(({ data, index }) => {
 
     productsData.forEach((product, index) => {
       const colorIndex = product.options.findIndex((option) => {
-        return option == 'Color' || option == 'color';
+        return option == 'Color' || option == 'color' || option == 'Colour' || option == 'colour';
       });
       if (colorIndex > -1) {
         product.colorIndex = `option${colorIndex + 1}`;

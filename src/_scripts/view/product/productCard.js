@@ -141,7 +141,7 @@ export default class ProductCard {
 
   onOptionChange(evt) {
     const $this = $(evt.currentTarget);
-    if($this.data('option-name') === 'color') {
+    if($this.data('option-name') === 'color' || $this.data('option-name') === 'colour') {
       this.updateColor.call(this, $this);
       this.updateProductOption.call(this, $this);
     } else if($this.data('option-name') === 'Size' || $this.data('option-name') === 'size' ) {

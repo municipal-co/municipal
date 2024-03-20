@@ -1,4 +1,4 @@
-.findify__filters {
+.findify__filters, .product-grid__filters {
   max-width: 0;
   overflow: hidden;
   display: none;
@@ -34,7 +34,7 @@
   }
 }
 
-.findify__filters-mobile-header {
+.findify__filters, .product-grid__filters-mobile-header {
   padding: 30px;
   display: flex;
   justify-content: space-between;
@@ -45,7 +45,7 @@
   }
 }
 
-.findify__filter-icon-close {
+.findify__filter, .product-grid__filter-icon-close {
   &:before {
     content: "";
     display: block;
@@ -57,13 +57,13 @@
   }
 }
 
-.findify__filters-mobile-title {
+.findify__filters, .product-grid__filters-mobile-title {
   font-size: 20px;
   color: $black;
   margin-bottom: 0;
 }
 
-.findify__filters-close-button {
+.findify__filters, .product-grid__filters-close-button {
   background: transparent;
   border: none;
   padding: 0;
@@ -257,7 +257,7 @@
   margin-left: 5px;
 }
 
-.findify__filters-apply-btn-container {
+.findify__filters, .product-grid__filters-apply-btn-container {
   margin-top: 20px;
   padding: 20px;
   border-top: 3px solid $black;
@@ -267,7 +267,7 @@
   }
 }
 
-.findify__filters-apply-btn {
+.findify__filters, .product-grid__filters-apply-btn {
   padding: 15px 20px;
   min-height: unset;
 
@@ -283,7 +283,7 @@
   }
 }
 
-.findify__filters-backdrop {
+.findify__filters, .product-grid__filters-backdrop {
   @include media-breakpoint-down('md') {
     background-color: rgba($black, 0.8);
     position: fixed;
@@ -297,7 +297,7 @@
     cursor: pointer;
     transition: opacity $transition-duration-base $transition-timing-function-in-out-ui;
 
-    .findify__filters.is-open ~ & {
+    .findify__filters, .product-grid__filters.is-open ~ & {
       opacity: 1;
       pointer-events: all;
     }

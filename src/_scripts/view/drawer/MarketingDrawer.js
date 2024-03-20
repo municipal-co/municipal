@@ -43,7 +43,7 @@ export default function MarketingDrawer({data, index}) {
     const fieldName = `Notify - ${data.productName}`;
 
     const formData = {
-      g: "Jgkkps",
+      g: drawerSettings.listId,
       $email: email.current.value,
       $source: 'Marketing Drawer',
       $fields: `$source, $email, ${fieldName}`,

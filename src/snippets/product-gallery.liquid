@@ -1,7 +1,7 @@
 {% assign image_loading_placeholder = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% for option in product.options %}
-  {% if option == "color" or option == "Color" %}
+  {% if option == "color" or option == "Color" or option == "colour" or option == "Colour" %}
     {% assign option_index = "option" | append: forloop.index %}
   {% endif %}
 {% endfor %}
