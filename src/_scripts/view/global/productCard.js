@@ -8,7 +8,7 @@ const ProductCard = ((props) => {
   const card = useRef();
   const swatchSlider = useRef();
   const colorOption = product.options_with_values.find(option => {
-    return option.name === 'Color' || option.name === 'color';
+    return option.name === 'Color' || option.name === 'color' || option.name === 'Colour' || option.name === 'colour';
   })
 
   const sizeOption = product.options_with_values.find(option => {

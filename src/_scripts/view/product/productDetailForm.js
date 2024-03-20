@@ -356,7 +356,7 @@ export default class ProductDetailForm {
       if(evalOption.name === 'size' || evalOption.name === 'Size') {
         sizeIndex = `option${evalOption.position}`;
       }
-      if(evalOption.name === 'Color' || evalOption.name === 'color') {
+      if(evalOption.name === 'Color' || evalOption.name === 'color' || evalOption.name === 'colour' || evalOption.name === 'Colour') {
         colorIndex = `option${evalOption.position}`;
       }
     })
@@ -406,7 +406,7 @@ export default class ProductDetailForm {
     let colorOptionIndex;
 
     $.each(this.productSingleObject.options_with_values, (i, option) => {
-      if(option.name === 'Color' || option.name === 'color') {
+      if(option.name === 'Color' || option.name === 'color' || option.name === 'colour' || option.name === 'Colour') {
         colorOptionIndex = `option${option.position}`;
       }
     });
@@ -533,7 +533,7 @@ export default class ProductDetailForm {
     const soldOutColors = [];
 
     const colorOption = this.productSingleObject.options_with_values.filter((option) => {
-      if (option.name === 'Color' || option.name === 'color') {
+      if (option.name === 'Color' || option.name === 'color' || option.name === 'colour' || option.name === 'Colour') {
         return true;
       };
       return false;

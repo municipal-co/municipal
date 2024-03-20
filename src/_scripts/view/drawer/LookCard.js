@@ -5,7 +5,7 @@ import Image from "../global/image";
 export default function LookCard({product}) {
   const sizeOption = useRef();
   const colorIndex = product.options.findIndex(option => {
-    return option == 'Color' || option == 'color'
+    return option == 'Color' || option == 'color' || option == 'Colour' || option == 'colour'
   });
   const sizeIndex = product.options.findIndex(option => {
     return option == 'Size' || option == 'size'

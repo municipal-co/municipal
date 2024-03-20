@@ -6,11 +6,11 @@
   {%- form 'product', product, data-add-to-cart-form:"", data-product-id: product.id -%}
     <div data-product-detail-options>
       {%- for option in product.options -%}
-        {%- if option == "color" or option == "Color" -%}
+        {%- if option == "color" or option == "Color" or option == "colour" or option == "Colour" -%}
           {%- render 'product-form-options',
             product: product,
             type: 'swatch',
-            print_option: 'color',
+            print_option: option,
             current_variant: current_variant,
             merge_products: product.metafields.custom_fields.merge_product.value
           %}

@@ -158,7 +158,7 @@ export default class ProductBundles {
         if(singleOptionSelector.is('input[type=radio]')) {
           const filteredOption = singleOptionSelector.filter(`[value="${value}"]`)
           filteredOption.prop('checked',true);
-          if(filteredOption.data('option-name') == 'color' || filteredOption.data('option-name') == 'Color') {
+          if(filteredOption.data('option-name') == 'color' || filteredOption.data('option-name') == 'Color' || filteredOption.data('option-name') == 'colour' || filteredOption.data('option-name') == 'Colour' ) {
             optionImage = filteredOption.siblings('.product-option__ui').find('img').attr('data-src');
           }
 

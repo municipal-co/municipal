@@ -107,7 +107,7 @@ export default class productGallery extends BaseSection {
 
     if (variant) {
       variant.options.forEach((option) => {
-        if(option.name === 'color' || option.name === 'Color') {
+        if(option.name === 'color' || option.name === 'Color' || option.name === 'Colour' || option.name === 'colour') {
           colorIndex = `option${option.position}`;
         }
       });

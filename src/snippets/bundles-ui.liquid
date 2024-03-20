@@ -80,7 +80,7 @@
         <div class="bundle-item__drawer-body" data-product-drawer>
           {% assign option_prefix = 'bundle_product_{option}_' | replace: '{option}', forloop.index %}
           {% for option in product.options %}
-            {% if option == 'color' or option == "Color" %}
+            {% if option == 'color' or option == 'Color' or option == 'colour' or option == 'Colour' %}
               {% render 'product-form-options',
                 type: 'swatch',
                 print_option: 'color',
