@@ -111,8 +111,10 @@ Breakpoints.initialize();
 
   // Register Mobile navigation
   const navigationHolder = document.getElementById('main_navigation');
-  const navigationRoot = ReactDOM.createRoot(navigationHolder);
-  navigationRoot.render(<MainNav />);
+  if(navigationHolder) {
+    const navigationRoot = ReactDOM.createRoot(navigationHolder);
+    navigationRoot.render(<MainNav />);
+  }
 
   const collectionHolder = document.getElementById('collection');
   if (collectionHolder) {

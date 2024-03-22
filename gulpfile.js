@@ -103,6 +103,7 @@ task('watch', () => {
     watch(['./src/_styles/**/*.scss', './src/_styles/**/*.css', './src/**/*.liquid'], series("styles"))
     watch('./src/icons/**/*', series("icons"));
     // watch('./src/_scripts/**/*.js', series("scripts"));
+    watch('./src/_scripts/**/*.js', series("styles"));
     scripts();
 
     fileWatcher.on('unlink', function(currPath) {

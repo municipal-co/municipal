@@ -25,6 +25,7 @@ const processSvg = ($, file) => {
     $newSvg.addClass('icon--full-color');
   }
 
+  $newSvg.addClass('{{classes}}');
   $newSvg.addClass(fileName).append($svg.contents());
 
   $newSvg.append($svg.contents());

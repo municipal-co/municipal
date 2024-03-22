@@ -1,14 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import {sdkClient, client} from "../../lib/findifyApi";
+import TabFocus from "../../utils/TabFocus";
+import ScrollLock from "../../utils/ScrollLock";
 import ProductCard from "../findify/productCard";
 import { Swiper, SwiperSlide } from "swiper/react"
-import AutocompleteSearchBox from "./autocompleteSearchBox";;
+import AutocompleteSearchBox from "./autocompleteSearchBox";
+import ArrowLink from "../../icons/ArrowLink";
+import Close from "../../icons/Close";
 
 const AutocompleteSearch = (props) => {
   const searchContainer = useRef();
+  const header = document.querySelector('header');
+  const headerHeight = header.offsetHeight;
+  const headerOffset = header.offsetTop;
+
   const recommendationSlider = useRef()
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [referrer, setReferrer] = useState(null);
   const [data, setData] = useState({
     rid: '',
     recommendations: [],
@@ -16,14 +25,20 @@ const AutocompleteSearch = (props) => {
     redirect: ''
   })
 
+  const toggleSearchDrawer = (evt) => {
+    setReferrer(evt.detail.referrer);
+    if(isOpen) {
+      closeSearchDrawer();
+    } else {
+      openSearchDrawer();
+    }
+  }
+
   const openSearchDrawer = () => {
     setIsOpen(true);
   }
 
-  const closeSearchDrawer = (evt) => {
-    if(evt && evt.detail && evt.detail.target == 'search') {
-      return;
-    }
+  const closeSearchDrawer = () => {
     setIsOpen(false);
   }
 
@@ -33,7 +48,7 @@ const AutocompleteSearch = (props) => {
       params: {
         q: searchQuery,
         limits: {
-          items: 6,
+          items: 4,
           suggestions: 6,
         }
       }
@@ -69,115 +84,159 @@ const AutocompleteSearch = (props) => {
     })
   }
 
-  useEffect(() => {
-    document.addEventListener('drawer:search-open', openSearchDrawer);
-    document.addEventListener('drawer:open-header-drawer', closeSearchDrawer)
-    return (() => {
-      document.removeEventListener('drawer:search-open', openSearchDrawer);
-      document.removeEventListener('drawer:open-header-drawer', closeSearchDrawer)
-    })
-  }, [])
-
+  const escListener = (evt) => {
+    if(evt.key === 'Escape') {
+      closeSearchDrawer();
+    }
+  }
 
   useEffect(() => {
     fetchData();
   }, [searchQuery])
 
   useEffect(() => {
+    document.addEventListener('drawer:search-toggle', toggleSearchDrawer);
+    searchContainer.current.addEventListener('keyup', escListener);
     const action = isOpen ? 'add' : 'remove';
-    const body = document.querySelector('body');
+    const header = document.getElementById('header');
+    const searchToggler = document.querySelector('.header__search-toggler');
 
     searchContainer.current.scrollTo({
       top: 0
     })
 
-    if(body) {
-      body.classList[action]('drawer-open');
+    if(header) {
+      header.classList[action]('drawer-open');
     }
+    if(searchToggler) {
+      searchToggler.classList[action]('before:!opacity-100');
+    }
+
+    return (() => {
+      document.removeEventListener('drawer:search-toggle', toggleSearchDrawer);
+      searchContainer.current.removeEventListener('keyup', escListener);
+    })
   }, [isOpen])
 
   return (
     <>
-    <div className={`autocomplete-container ${isOpen ? 'is-open' : ''}`} ref={searchContainer}>
-      <div className="autocomplete__header">
-        <div className="autocomplete__title">Search</div>
-        <div className="autocomplete__close-button">
-          <div className="autocomplete__close" ref={searchContainer} onClick={() => {setIsOpen(false)}}>
-            <div className="sr-only">Close Autocomplete</div>
-            <div className="icon-close"></div>
+      <div
+        className={`autocomplete-container transition-all duration-300 ease-in-out bg-white w-full lg:pt-10 rounded-t-[20px] lg:rounded-t-none absolute t-0 !z-10 overflow-y-auto
+    ${
+      isOpen === true
+        ? 'translate-y-0 opacity-[1]'
+        : 'pointer-events-none opacity-0 -translate-y-[90px]'
+    }`}
+        ref={searchContainer}
+        style={{
+          'height': 'calc(100dvh - 80px)',
+        }}
+      >
+        <div className="block lg:hidden text-right">
+          <div className="relative">
+            <button
+              type="button"
+              className="autocomplete__close px-4 pt-4"
+              ref={searchContainer}
+              onClick={() => {
+                closeSearchDrawer(false);
+              }}
+            >
+              <div className="sr-only">Close Autocomplete Search</div>
+              <Close className="w-4 h-4" />
+            </button>
           </div>
         </div>
-      </div>
-      <AutocompleteSearchBox
-        searchActive={isOpen}
-        setSearchQuery={setSearchQuery}
-        data={data}
-      />
-      {data.items.length > 0 ?
-        <>
-          <div className="autocomplete__recommendations">
-            <h3 className="autocomplete__heading">
-              {searchQuery == '' ?
-                "Popular Searches" : "Search Suggestions"
-              }
-            </h3>
-            <div className="autocomplete__slider swiper swiper-container">
-              <Swiper
-                tag="ul"
-                slidesPerView="auto"
-                spaceBetween={10}
-                threshold={10}
-                slidesOffsetAfter={30}
-                slidesOffsetBefore={30}
-                watchOverflow={true}
-                className="autocomplete__recommended-queries"
-              >
-              {data.recommendations.map((recommendation) => {
-                  return (<SwiperSlide key={recommendation.value} tag="li">
-                    <a href={`/search/?q=${recommendation.value}`} className="autocomplete__recommended-query" onClick={trackSuggestionClick} data-rid={data.rid}> {recommendation.value} </a>
-                  </SwiperSlide>)
-                })}
-              </Swiper>
-            </div>
-          </div>
-          <div className="autocomplete__results">
-            <h3 className="autocomplete__heading">
-              {searchQuery == '' ?
-                "Trending Products" : "Product Matches"
-              }
-
-            </h3>
-            <ul className="autocomplete__grid content-grid content-grid--1-col content-grid--md-2-col">
-              {data.items.map((product) => {
-                  return (<li key={product.id} className="content-grid__item">
-                    {<ProductCard
-                    data={product}
-                    rid={data.rid} />}
-                  </li>)
-                })
-              }
-            </ul>
-            {searchQuery !== '' &&
-            <a href={`/search/?q=${searchQuery}`} className="cta cta--bottom-space">
-              <span className="cta__label">
-                See all results
-              </span>
-              <div className="cta__icon">
-                <span className="cta__arrow-icon"></span>
+        <AutocompleteSearchBox
+          searchActive={isOpen}
+          setSearchQuery={setSearchQuery}
+          data={data}
+        />
+        {data.items.length > 0 ? (
+          <>
+            <div className="autocomplete__recommendations w-full text-center my-[20px] md:my-10">
+              <h3 className="autocomplete__heading text-h6 px-[20px]">
+                {searchQuery == '' ? 'Popular Searches' : 'Search Suggestions'}
+              </h3>
+              <div className="autocomplete__slider">
+                <Swiper
+                  tag="ul"
+                  slidesPerView="auto"
+                  spaceBetween={10}
+                  threshold={10}
+                  slidesOffsetAfter={20}
+                  slidesOffsetBefore={20}
+                  watchOverflow={true}
+                  centerInsufficientSlides={true}
+                  className="autocomplete__recommended-queries"
+                >
+                  {data.recommendations.map((recommendation) => {
+                    return (
+                      <SwiperSlide
+                        key={recommendation.value}
+                        tag="li"
+                        className="!w-max inline-block"
+                      >
+                        <a
+                          href={`/search/?q=${recommendation.value}`}
+                          className="autocomplete__recommended-query inline-block border-2 rounded-full px-4 py-1 border-black hover:bg-black hover:text-white transition-color duration-150 ease-in-out"
+                          onClick={trackSuggestionClick}
+                          data-rid={data.rid}
+                        >
+                          {recommendation.value}
+                        </a>
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
               </div>
-            </a>
-            }
+            </div>
+            <div className="autocomplete__results px-[20px]">
+              <h3 className="autocomplete__heading text-center text-h6 mx-auto">
+                {searchQuery == '' ? 'Trending Products' : 'Product Matches'}
+              </h3>
+              <ul className="autocomplete__grid max-w-layout mx-auto px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {data.items.map((product) => {
+                  return (
+                    <li key={product.id} className="block">
+                      {<ProductCard data={product} rid={data.rid} />}
+                    </li>
+                  );
+                })}
+              </ul>
+              {searchQuery !== '' && (
+                <div className="text-center py-[20px]">
+                  <a
+                    href={`/search/?q=${searchQuery}`}
+                    className="btn-v3"
+                  >
+                    See all results
+                    <ArrowLink className="icon" />
+                  </a>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="autocomplete__no-results-text text-center">
+            There were no results for the query "{searchQuery}"
           </div>
+        )}
+      </div>
+      { isOpen && (
+        <>
+          <TabFocus container={searchContainer.current} referrer={referrer} updateTriggers={data.items} />
+          <ScrollLock />
         </>
-      :
-        <div className="autocomplete__no-results-text text-center">There were no results for the query "{searchQuery}"</div>
-      }
-
-
-    </div>
-    <div className={`autocomplete-backdrop ${isOpen ? 'is-open' : ''}`} onClick={() => {setIsOpen(false)}}></div>
+      )}
+      <div
+        className={`autocomplete-backdrop ${isOpen ? 'is-open' : ''}`}
+        onClick={() => {
+          setIsOpen(false);
+        }}
+      ></div>
     </>
-  )
+  );
 }
 
 export default AutocompleteSearch;

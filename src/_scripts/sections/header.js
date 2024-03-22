@@ -88,8 +88,9 @@ export default class HeaderSection extends BaseSection {
   }
 
   openSearchDrawer(e) {
-    document.dispatchEvent(new CustomEvent('drawer:search-open'));
-    document.dispatchEvent(new CustomEvent('drawer:open-header-drawer', {detail: {target: 'search'}}));
+    document.dispatchEvent(new CustomEvent('drawer:search-toggle', {detail: {
+      referrer: e.currentTarget
+    }}));
   }
 
   toggleMenu(e) {

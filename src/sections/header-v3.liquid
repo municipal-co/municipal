@@ -1,0 +1,137 @@
+{% assign linkClasses = 'relative before:-bottom-2 before:block before:absolute before:block before:h-0.5 before:rounded-full before:bg-current before:w-0 hover:before:w-full before:left-1/2 before:-translate-x-1/2 before:transition-all before:duration-150 before:ease-in-out' %}
+{% assign buttonClasses = 'block relative text-white hover:text-white transition-color duration-300 ease-in-out group-[.drawer-open]:!text-black' %}
+{% assign utilityIconsClasses = 'min-w-10 relative before:block before:w-full before:aspect-square before:bg-bg-white before:rounded-full before:absolute before:left-1/2 before:top-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:opacity-0 before:transition-all before:duration-150 before:ease-in-out before:z-[-1] group-[.drawer-open]:!text-black' %}
+
+<section id="header" name="header" class="sticky top-0 group bg-black [&.drawer-open]:!bg-white z-50" data-section-id="{{section.id}}" data-section-type="header">
+  <header class="header__body w-full max-w-layout px-5 mx-auto flex justify-between items-center py-2" data-header>
+    <div class="header__logo w-[140px]">
+      <a href="/" class="header-logo__link {{buttonClasses}}" label="Home">
+        {% render 'icon-new-logo' %}
+      </a>
+    </div>
+    <div class="header__desktop-nav hide md:flex">
+      {% for block in section.blocks %}
+        <div class="px-4 relative">
+          {% case block.type %}
+            {% when 'link-drawer' %}
+              {% if block.settings.link != blank %}
+                <a href="{{block.settings.link}}" data-open-drawer="{{ block.settings.drawer_name }}" class="{{linkClasses}} {{buttonClasses}}">
+                  {{ block.settings.label }}
+                </a>
+                <button data-open-drawer="{{block.settings.drawer_name}}" class="opacity-0 focus:opacity-100 absolute right-0 top-0 text-white">
+                  <div class="sr-only">Open {{block.settings.label}} drawer</div>
+                  {% render 'icon-caret-down' classes:'!w-4 !h-4 text-current' %}
+                </button>
+              {% else %}
+                <button class="{{linkClasses}} {{buttonClasses}}" data-open-drawer="{{ block.settings.drawer_name }}"> {{ block.settings.label }} </button>
+              {% endif %}
+            {% when 'link' %}
+              <a href="{{block.settings.link}}" class="{{linkClasses}} {{buttonClasses}}">
+                {{ block.settings.label }}
+              </a>
+          {% endcase %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="header__action-buttons gap-2 flex">
+      {% if section.settings.enable_search == "true" %}
+      <button class="header__search-toggler {{buttonClasses}} {{utilityIconsClasses}} block" data-search-open-button>
+        {% render 'icon-search' classes:"!w-7 !h-7 z-[1]" %}
+        <div class="sr-only">Open Search</div>
+      </button>
+      {% endif %}
+      {% if section.settings.enable_account == "true" %}
+        <a href="/account" class="header__account {{buttonClasses}} {{utilityIconsClasses}}">
+          {% render 'icon-account' classes:"!w-8 !h-8 z-[1]" %}
+          <div class="sr-only">Go to your account</div>
+        </a>
+      {% endif %}
+      <a href="/cart" class="header__cart {{buttonClasses}} {{utilityIconsClasses}}" data-ajax-cart-trigger>
+        {% render 'icon-bag' classes:"!w-8 !h-8 z-[1]" %}
+        <span class="header__badge-count absolute leading-none -bottom-0.5 right-2 text-xs text-green" data-cart-badge-count>0</span>
+        <div class="sr-only">Open your cart</div>
+      </a>
+    </div>
+  </header>
+</section>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "select",
+      "id": "enable_search",
+      "label": "Enable Search Button",
+      "options": [
+        {
+          "label": "Yes",
+          "value": "true"
+        },
+        {
+          "label": "No",
+          "value": "false"
+        }
+      ],
+      "default": "true"
+    },
+    {
+      "type": "select",
+      "id": "enable_account",
+      "label": "Enable Account button",
+      "options": [
+        {
+          "label": "Yes",
+          "value": "true"
+        },
+        {
+          "label": "No",
+          "value": "false"
+        }
+      ],
+      "default": "true"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link-drawer",
+      "name": "Link Drawer",
+      "settings": [
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "(Optional) this defines if the main link is clicable and has a redirection, if not populated when the button is clicked it will just open the associated drawer"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "drawer_name",
+          "label": "Drawer Name",
+          "info": "Defines the name of the drawer to open when the link is hovered (on desktop)"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

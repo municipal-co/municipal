@@ -4,12 +4,6 @@
 // Base styles
 //
 
-button:focus,
-button.focus {
-  outline: 0 !important;
-  box-shadow: none !important;
-}
-
 .btn {
   display: inline-block;
   font-family: 'Sequel Sans Small Title', sans-serif;
@@ -369,7 +363,7 @@ input[type='button'] {
 // Buttons Site V3
 @layer components {
   .btn-v3 {
-    @apply leading-[1.1] text-p5-m lg:text-p5 w-full lg:w-auto flex justify-center items-center lg:inline-block px-10 py-4 rounded-full focus:outline border-[3px] lg:border-4 border-black bg-white font-bold font-inter;
+    @apply leading-[1.1] text-p5-m lg:text-p5 w-full lg:w-auto flex justify-center items-center lg:inline-block px-10 py-3 rounded-full focus:outline border-[3px] lg:border-4 border-black bg-white font-bold font-inter;
 
     .icon {
       @apply w-5 h-5 lg:w-8 lg:h-8 text-current ml-[20px] lg:ml-12 inline-block;

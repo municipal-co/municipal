@@ -4,7 +4,14 @@
 export default {
   content: ['./src/**/*.liquid', './src/_scripts/**/*.js'],
   theme: {
+    container: {
+      center: true,
+      padding: '20px',
+    },
     extend: {
+      maxWidth: {
+        layout: '1376px',
+      },
       colors: {
         'black': '#121212',
         'bg-white': '#f5f5f6',
@@ -180,10 +187,6 @@ export default {
             lineHeight: '1.154em'
           }
         ],
-        'container': {
-          center: true,
-          padding: '20px',
-        }
       },
       fontFamily: {
         'sequel-roman': ['Sequel\\ Sans\\ Roman', 'sans-serif'],
