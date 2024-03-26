@@ -7,6 +7,7 @@ const ProductCard = ((props) => {
   const { product, variantId, textColor } = props;
   const card = useRef();
   const swatchSlider = useRef();
+  const moneyFormat = window.theme.moneyFormat;
   const colorOption = product.options_with_values.find(option => {
     return option.name === 'Color' || option.name === 'color' || option.name === 'Colour' || option.name === 'colour';
   })
@@ -236,14 +237,14 @@ const ProductCard = ((props) => {
           <div className="product-card__price-container">
             {currentVariant.compare_at_price > currentVariant.price && (
               <s className="product-card__compare-price">
-                {Currency.formatMoney(currentVariant.compare_at_price).replace(
+                {Currency.formatMoney(currentVariant.compare_at_price, moneyFormat).replace(
                   '.00',
                   ''
                 )}
               </s>
             )}
             <span className="product-price">
-              {Currency.formatMoney(currentVariant.price).replace('.00', '')}
+              {Currency.formatMoney(currentVariant.price, moneyFormat).replace('.00', '')}
             </span>
           </div>
         </form>
