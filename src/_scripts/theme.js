@@ -67,6 +67,7 @@ import Search from './templates/search';
 import AutocompleteSearch from './view/navigation/autocompleteSearch';
 import DrawerSystem from './view/drawer/DrawerSystem';
 import ProductYmal from './view/product/productYmal.js';
+import Geolocation from './view/global/geolocate';
 
 // Do this ASAP
 Animations.initialize();
@@ -143,10 +144,17 @@ Breakpoints.initialize();
   }
 
   const ymalHolder = document.getElementById('pdp-you-may-also-like');
-
   if (ymalHolder) {
     const ymalRoot = ReactDOM.createRoot(ymalHolder);
     ymalRoot.render(<ProductYmal />, ymalHolder);
+  }
+  const geolocationSettings = JSON.parse(document.querySelector('[data-geolocation-settings]').innerHTML);
+
+  if(geolocationSettings.enableGeolocation) {
+    const geolocationHolder = document.createElement('div');
+    document.querySelector('body').appendChild(geolocationHolder);
+    const geolocationRoot = ReactDOM.createRoot(geolocationHolder);
+    geolocationRoot.render(<Geolocation />);
   }
 
   $('.in-page-link').on('click', (evt) => {

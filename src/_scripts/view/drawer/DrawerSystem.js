@@ -7,6 +7,7 @@ import BackInStockDrawer from './BackInStockDrawer';
 import FeaturesDrawer from './FeaturesDrawer';
 import SizeGuideDrawer from './SizeGuideDrawer';
 import Reviews from './Reviews';
+import CountrySelector from './CountrySelector';
 
 export default function DrawerSystem() {
   const [drawers, setDrawers] = useState([]);
@@ -80,6 +81,14 @@ export default function DrawerSystem() {
           return (
             <Reviews key={`drawer-${index}`} index={index} />
           )
+        case 'country-selector':
+          return (
+            <CountrySelector
+              key={`drawer-${index}`}
+              index={index}
+              countryData={drawer.countryData}
+            />
+          );
       }
     });
   };

@@ -1,0 +1,60 @@
+<script data-geolocation-settings type="application/json">
+  {
+    "enableGeolocation": {{ section.settings.enable_geolocation | json }},
+    "defaultCountry": {{ section.settings.default_country | json }},
+    "countrySelectors": [
+      {% for block in section.blocks %}
+        {
+          "storeUrl": "{{ block.settings.store_url }}",
+          "countryName": "{{ block.settings.title }}"
+        }
+        {% unless forloop.last %}, {% endunless %}
+      {% endfor %}
+    ]
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "Geolocation",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Use the settings below to define the store's geolocation settings. The blocks on this section will be used to define the country buttons that will appear on the store's selector"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_geolocation",
+        "label": "Enable Geolocation",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "default_country",
+        "label": "Default Country",
+        "default": "US",
+        "info": "Enter the store's current country code (e.g. US, CA, etc.), used to determine if the country selector should be displayed"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "country-selector",
+        "name": "Country Selector",
+        "settings": [
+          {
+            "type": "url",
+            "label": "Store URL",
+            "id": "store_url",
+            "info": "Link of the store's homepage that the customer should be redirected to after selecting this option"
+          },
+          {
+            "type": "text",
+            "label": "Country Name",
+            "id": "title",
+            "info": "Name of the country that will be displayed on the button, leave empty to use this button to close the selector"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
