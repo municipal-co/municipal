@@ -1,0 +1,28 @@
+.country-selector__container {
+  @include media-breakpoint-down('md') {
+    height: max-content !important;
+  }
+}
+
+.country-selector__text {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 17px;
+  line-height: 1.588;
+}
+
+.country-selector__buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+
+  .btn {
+    height: 60px;
+    width: 254px;
+    max-width: 100%;
+    font-size: 17px;
+  }
+}
