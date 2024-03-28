@@ -39,50 +39,10 @@
           {%- if printed_variant == variant[option_index] -%}
             {%- continue -%}
           {%- endif -%}
-          {% if variant[option_index] == current_variant[option_index] or variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or variant.metafields.custom_fields['enable_sold_out'] == 1 %}
-            {%- assign printed_variant = variant[option_index] -%}
-            <label class="product-option__single-selector swiper-slide" data-swatch-slide>
-              <input type="radio"
-                    name="{{- option_prefix -}}{{option_index}}"
-                    value="{{variant[option_index]}}"
-                    class="hide"
-                    data-option-name="{{option_downcase}}"
-                    data-product-option="{{ option_index }}"
-                    data-option-value="{{variant[option_index] | downcase}}"
-                    {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
-                    data-index="{{ option_index }}"
-                    data-single-option-selector
-                    {% if variant.compare_at_price > variant.price %}
-                      data-variant-compare-price="{{variant.compare_at_price}}"
-                      data-variant-price="{{variant.price}}"
-                    {% endif %}
-                    >
-
-              <div class="product-option__ui">
-                {%- if template == 'product' -%}
-                  {%- assign image_sizes = '(max-width: 992px) 20vw, 112px' -%}
-                {%- else -%}
-                  {%- assign image_sizes = '(max-width: 992px) 15vw, 6vw' -%}
-                {%- endif -%}
-                {% if variant.compare_at_price > variant.price %}
-                  <div class="product-option__discount-badge"></div>
-                {% endif %}
-                {%- render 'responsive-image'
-                  image: variant.image,
-                  image_sizes: image_sizes,
-                  alt: variant.image.alt,
-                  loading: 'lazy',
-                -%}
-              </div>
-            </label>
-          {% endif %}
-        {% endfor %}
-        {% for merge_product in merge_products %}
-          {% for variant in merge_product.variants %}
-            {%- if printed_variant == variant[option_index] -%}
-              {%- continue -%}
-            {%- endif -%}
-            {% if variant[option_index] == current_variant[option_index] or variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or variant.metafields.custom_fields['enable_sold_out'] == 1 %}
+          {% unless variant.featured_image == blank %}
+            {% if variant[option_index] == current_variant[option_index] or
+                  variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or
+                  variant.metafields.custom_fields['enable_sold_out'] == 1 %}
               {%- assign printed_variant = variant[option_index] -%}
               <label class="product-option__single-selector swiper-slide" data-swatch-slide>
                 <input type="radio"
@@ -94,31 +54,79 @@
                       data-option-value="{{variant[option_index] | downcase}}"
                       {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
                       data-index="{{ option_index }}"
+                      data-single-option-selector
                       {% if variant.compare_at_price > variant.price %}
                         data-variant-compare-price="{{variant.compare_at_price}}"
                         data-variant-price="{{variant.price}}"
                       {% endif %}
-                      data-single-option-selector>
+                      >
 
                 <div class="product-option__ui">
                   {%- if template == 'product' -%}
                     {%- assign image_sizes = '(max-width: 992px) 20vw, 112px' -%}
                   {%- else -%}
-                    {%- assign image_sizes = '(max-width: 992px) 15vw, 5vw' -%}
+                    {%- assign image_sizes = '(max-width: 992px) 15vw, 6vw' -%}
                   {%- endif -%}
                   {% if variant.compare_at_price > variant.price %}
-                    <span class="product-option__discount-badge"></span>
+                    <div class="product-option__discount-badge"></div>
                   {% endif %}
                   {%- render 'responsive-image'
                     image: variant.image,
                     image_sizes: image_sizes,
                     alt: variant.image.alt,
                     loading: 'lazy',
-                    class: 'product-option__image'
                   -%}
                 </div>
               </label>
             {% endif %}
+          {% endunless %}
+        {% endfor %}
+        {% for merge_product in merge_products %}
+          {% for variant in merge_product.variants %}
+            {%- if printed_variant == variant[option_index] -%}
+              {%- continue -%}
+            {%- endif -%}
+            {% unless variant.featured_image == blank %}
+              {% if variant[option_index] == current_variant[option_index] or
+                    variant.available == true or variant.metafields.custom_fields['enable_notify_me'] == 1 or
+                    variant.metafields.custom_fields['enable_sold_out'] == 1 %}
+                {%- assign printed_variant = variant[option_index] -%}
+                <label class="product-option__single-selector swiper-slide" data-swatch-slide>
+                  <input type="radio"
+                        name="{{- option_prefix -}}{{option_index}}"
+                        value="{{variant[option_index]}}"
+                        class="hide"
+                        data-option-name="{{option_downcase}}"
+                        data-product-option="{{ option_index }}"
+                        data-option-value="{{variant[option_index] | downcase}}"
+                        {% if variant[option_index] == current_variant[option_index] %} checked="checked" {% endif %}
+                        data-index="{{ option_index }}"
+                        {% if variant.compare_at_price > variant.price %}
+                          data-variant-compare-price="{{variant.compare_at_price}}"
+                          data-variant-price="{{variant.price}}"
+                        {% endif %}
+                        data-single-option-selector>
+
+                  <div class="product-option__ui">
+                    {%- if template == 'product' -%}
+                      {%- assign image_sizes = '(max-width: 992px) 20vw, 112px' -%}
+                    {%- else -%}
+                      {%- assign image_sizes = '(max-width: 992px) 15vw, 5vw' -%}
+                    {%- endif -%}
+                    {% if variant.compare_at_price > variant.price %}
+                      <span class="product-option__discount-badge"></span>
+                    {% endif %}
+                    {%- render 'responsive-image'
+                      image: variant.image,
+                      image_sizes: image_sizes,
+                      alt: variant.image.alt,
+                      loading: 'lazy',
+                      class: 'product-option__image'
+                    -%}
+                  </div>
+                </label>
+              {% endif %}
+            {% endunless %}
           {% endfor %}
         {% endfor %}
       </div>
