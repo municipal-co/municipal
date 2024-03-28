@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Z-Theme",
-    "theme_version": "0.1.0",
-    "theme_author": "Zehner Group",
-    "theme_documentation_url": "https://github.com/zehnergroup/z-theme/wiki",
-    "theme_support_url": "https://github.com/zehnergroup/z-theme"
+    "theme_name": "Municipal",
+    "theme_version": "3.0.0",
+    "theme_author": "Municipal / Romezis",
+    "theme_documentation_url": "https://github.com/municipal-co/municipal/blob/production-v2/README.md",
+    "theme_support_url": "https://github.com/municipal-co/municipal"
   },
   {
     "name": "Account pages",

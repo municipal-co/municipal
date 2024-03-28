@@ -3,59 +3,68 @@
 // Defaults style for all the html fields, so they don't have to be re-styled afterwards.
 html,
 body {
-  @include p1;
+
 }
 
-h1, h2, h3, h4, h5, h6,
-.h1,.h2,.h3,.h4,.h5,.h6,.h7 {
-  font-weight: normal;
+h1, .h1 {
+  @apply text-h1-m lg:text-h1 font-sequel-roman;
 }
-
-h1, .h1 { @include h1; }
-h2, .h2 { @include h2; }
-h3, .h3 { @include h3; }
-h4, .h4 { @include h4; }
-h5, .h5 { @include h5; }
-h6, .h6 { @include h6; }
-.h7 { @include h7; }
+h2, .h2 {
+  @apply text-h2-m lg:text-h2 font-sequel-roman;
+}
+h3, .h3 {
+  @apply text-h3-m lg:text-h3 font-sequel-roman;
+}
+h4, .h4 {
+  @apply text-h4-m lg:text-h4 font-sequel-medium;
+}
+h5, .h5 {
+  @apply text-h5-m lg:text-h5 font-sequel-medium;
+}
+h6, .h6 {
+  @apply text-h6-m lg:text-h6 font-sequel-medium;
+}
 
 .lead {
-  @include font-size($lead-font-size);
-  font-weight: $lead-font-weight;
+ @apply text-h1-m lg:text-h1 font-sequel-roman;
 }
 
 // Type display classes
 .display-1 {
-  @include font-size($display1-size);
-  font-weight: $display1-weight;
-  line-height: $display-line-height;
+  @apply text-display-m lg:text-display font-sequel-roman;
 }
 .display-2 {
-  @include font-size($display2-size);
-  font-weight: $display2-weight;
-  line-height: $display-line-height;
+  @apply text-display-m lg:text-display font-sequel-roman;
 }
 .display-3 {
-  @include font-size($display3-size);
-  font-weight: $display3-weight;
-  line-height: $display-line-height;
+  @apply text-display-m lg:text-display font-sequel-roman;
 }
 .display-4 {
-  @include font-size($display4-size);
-  font-weight: $display4-weight;
-  line-height: $display-line-height;
+  @apply text-display-m lg:text-display font-sequel-roman;
 }
 
 //
 // Paragraphs
 //
 
-p, .p1 { @include p1; }
-.p2 { @include p2; }
-.p3 { @include p3; }
-.p4 { @include p4; }
-.p5 { @include p5; }
-.p6 { @include p6; }
+p, .p1 {
+  @apply text-p1-m lg:text-p1;
+ }
+.p2 {
+  @apply text-p2-m lg:text-p2;
+ }
+.p3 {
+  @apply text-p3-m lg:text-p3;
+ }
+.p4 {
+  @apply text-p4-m lg:text-p4;
+ }
+.p5 {
+  @apply text-p5-m lg:text-p5;
+ }
+.p6 {
+  @apply text-p6-m lg:text-p6;
+ }
 
 //
 // Horizontal rules
@@ -73,12 +82,6 @@ hr {
 // Emphasis
 //
 
-small,
-.small {
-  @include font-size($small-font-size);
-  font-weight: $font-weight-normal;
-}
-
 mark,
 .mark {
   padding: $mark-padding;
@@ -91,12 +94,10 @@ mark,
 //
 
 .list-unstyled {
-  @include list-unstyled;
 }
 
 // Inline turns list items into inline-block
 .list-inline {
-  @include list-unstyled;
 }
 .list-inline-item {
   display: inline-block;
@@ -113,19 +114,16 @@ mark,
 
 // Builds on `abbr`
 .initialism {
-  @include font-size(90%);
   text-transform: uppercase;
 }
 
 // Blockquotes
 .blockquote {
   margin-bottom: $spacer;
-  @include font-size($blockquote-font-size);
 }
 
 .blockquote-footer {
   display: block;
-  @include font-size($blockquote-small-font-size);
   color: $blockquote-small-color;
 
   &::before {

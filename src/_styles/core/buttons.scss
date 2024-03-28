@@ -365,3 +365,55 @@ input[type='button'] {
   display: inline-block;
   margin-left: 10px;
 }
+
+// Buttons Site V3
+@layer components {
+  .btn-v3 {
+    @apply leading-[1.1] text-p5-m lg:text-p5 w-full lg:w-auto flex justify-center items-center lg:inline-block px-10 py-4 rounded-full focus:outline border-[3px] lg:border-4 border-black bg-white font-bold font-inter;
+
+    .icon {
+      @apply w-5 h-5 lg:w-8 lg:h-8 text-current ml-[20px] lg:ml-12 inline-block;
+    }
+    &:hover {
+      @apply bg-black text-white;
+
+      .icon {
+        @apply text-green;
+      }
+    }
+
+    &.disabled, &:disabled {
+      @apply opacity-50 pointer-events-none;
+    }
+  }
+
+  .btn-v3--link {
+    @apply text-base leading-[1.1em] focus:outline hover:bg-none hover:underline font-inter font-bold;
+
+    .icon-link-arrow {
+      @apply w-[0.8em] h-[0.8em] align-super ml-0;
+    }
+  }
+
+  .cta-link {
+    @apply relative text-p5-m lg:text-p5 before:inline-block after:inline-block hover:after:scale-100 hover:before:border-black hover:after:border-black font-inter;
+
+    &:before {
+      @apply align-middle w-[30px] mr-2.5 border-[1px] border-green transition-all duration-150 ease-in-out;
+    }
+
+    &:after {
+      @apply w-[11px] h-[11px] absolute left-[20px] mt-0.5 border-green border-t-2 border-r-2 rotate-45 top-1/2 -translate-y-1/2 scale-0 transition-all duration-150 ease-in-out;
+    }
+  }
+
+  .btn-v3--blink {
+    .icon {
+      @apply animate-fade-pulse text-green;
+    }
+  }
+
+  .hero-button {
+    @apply flex items-center justify-center text-p5-m lg:text-p5 rounded-full border-[5px] bg-transparent border-black font-inter font-bold text-black hover:text-green hover:bg-black transition-colors w-[100px] h-[100px] lg:w-40 lg:h-40 ;
+  }
+}
